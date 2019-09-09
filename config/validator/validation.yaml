@@ -1,0 +1,10 @@
+App\Entity\Stammdaten:
+    properties:
+        name:
+            - NotBlank: ~
+        vorname:
+            - NotBlank: ~
+        strasse:
+              - NotBlank: ~
+        einkommen:
+              - NotBlank: ~

@@ -3,6 +3,6 @@
         <h1 class="cover-heading">{{ stadt.name }}</h1>
         <p class="lead">Melden Sie hier ihre Kinder für die Ganztagsbetreuung der Stadt {{ stadt.name }} an</p>
         <p class="lead">
-            <a href="#" class="btn btn-lg btn-secondary">Hier meine Kinder anmelden</a>
+            <a href="{{ path('workflow_adresse',{'stadt':stadt.slug}) }}" class="btn btn-lg btn-secondary">Hier meine Kinder anmelden</a>
         </p>
 {% endblock %}
