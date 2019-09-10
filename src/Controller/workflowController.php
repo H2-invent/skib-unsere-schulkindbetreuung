@@ -38,12 +38,12 @@ class workflowController  extends AbstractController
         $adresse->setCreatedAt(new \DateTime());
         $city = $this->getDoctrine()->getRepository(Schule::class)->findOneBy(array('slug'=>$stadt));
         $form = $this->createFormBuilder($adresse)
-            ->add('name', TextType::class)
-            ->add('vorname', TextType::class)
-            ->add('strasse', TextType::class)
-            ->add('adresszusatz', TextType::class)
-            ->add('einkommen', NumberType::class)
-            ->add('submit', SubmitType::class, ['label' => 'Speichern'])
+            ->add('name', TextType::class,['label'=>'Name','translation_domain' => 'form'])
+            ->add('vorname', TextType::class,['label'=>'Vorname','translation_domain' => 'form'])
+            ->add('strasse', TextType::class,['label'=>'Straße','translation_domain' => 'form'])
+            ->add('adresszusatz', TextType::class,['label'=>'Adresszusatz','translation_domain' => 'form'])
+            ->add('einkommen', NumberType::class,['label'=>'Einkommen','translation_domain' => 'form'])
+            ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
             ->getForm();
         $form->handleRequest($request);
         $errors = array();
