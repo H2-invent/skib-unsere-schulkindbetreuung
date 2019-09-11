@@ -108,6 +108,9 @@
     "nikic/php-parser": {
         "version": "v4.2.4"
     },
+    "nikolaposa/version": {
+        "version": "3.2.0"
+    },
     "ocramius/package-versions": {
         "version": "1.5.1"
     },
@@ -146,6 +149,9 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "shivas/versioning-bundle": {
+        "version": "3.2.1"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.1"
