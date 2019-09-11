@@ -6,5 +6,7 @@ App\Entity\Stammdaten:
             - NotBlank: ~
         strasse:
               - NotBlank: ~
-        einkommen:
+        notfallkontakt:
+              - NotBlank: ~
+        iban:
               - NotBlank: ~
