@@ -7,12 +7,17 @@
             <!-- Count item widget-->
             <div class=" col-12 card">
                 <div class="card-header">
-                  <h1>{% trans %}Städte{% endtrans %}</h1>
+                  <h1> {% trans %}Städte{% endtrans %}  <a href="#"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                         <i class="material-icons">add</i>
+                      </button></a></h1>
                 </div>
+
                 <ul class="list-group">
+
+
                 {% for c in city %}
                     <li class="list-group-item">
-                        <a href="#" ><i class="material-icons">edit</i></a> {{ c.name }}
+                         {{ c.name }}
                         <div class="btn-group">
                             <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">more_vert</i>

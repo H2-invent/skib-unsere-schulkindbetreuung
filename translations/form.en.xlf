@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="de" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target>Last name</target>
+      </trans-unit>
+      <trans-unit id="0td7b.p" resname="Vorname">
+        <source>Vorname</source>
+        <target>First name</target>
+      </trans-unit>
+      <trans-unit id="WKN3jBj" resname="Straße">
+        <source>Straße</source>
+        <target>Street</target>
+      </trans-unit>
+      <trans-unit id="Jznf_ZI" resname="Adresszusatz">
+        <source>Adresszusatz</source>
+        <target>Adress additional</target>
+      </trans-unit>
+      <trans-unit id="1zm99PQ" resname="Netto Haushaltseinkommen">
+        <source>Netto Haushaltseinkommen</source>
+        <target>Netto Income</target>
+      </trans-unit>
+      <trans-unit id="9rL.OfV" resname="Speichern">
+        <source>Speichern</source>
+        <target>Save</target>
+      </trans-unit>
+      <trans-unit id="ocfCnkj" resname="Kind im Kindergarten">
+        <source>Kind im Kindergarten</source>
+        <target>Kids in the Kindergarten</target>
+      </trans-unit>
+      <trans-unit id=".1vHbRv" resname="BUK Empfänger">
+        <source>BUK Empfänger</source>
+        <target>BUC reciever</target>
+      </trans-unit>
+      <trans-unit id="U5zZGkQ" resname="Berufliche Situation der Eltern">
+        <source>Berufliche Situation der Eltern</source>
+        <target>Profession of the parents</target>
+      </trans-unit>
+      <trans-unit id="soWzzWN" resname="Notfallkontakt">
+        <source>Notfallkontakt</source>
+        <target>Emergency contact</target>
+      </trans-unit>
+      <trans-unit id="ap89FH4" resname="IBAN für das Lastschriftmandat">
+        <source>IBAN für das Lastschriftmandat</source>
+        <target>IBAN for SEPA</target>
+      </trans-unit>
+      <trans-unit id="g0ZIpDI" resname="SEPA-LAstschrift Mandat wird elektromisch erteilt">
+        <source>SEPA-LAstschrift Mandat wird elektromisch erteilt</source>
+        <target>SEPA electronic</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

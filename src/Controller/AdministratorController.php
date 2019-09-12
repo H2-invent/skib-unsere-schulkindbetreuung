@@ -23,7 +23,7 @@ class AdministratorController extends AbstractController
     public function stadtverwaltung()
     {
         $city = $this->getDoctrine()->getRepository(Stadt::class)->findAll();
-    
+
         return $this->render('administrator/stadt.html.twig', [
             'city'=>$city
         ]);

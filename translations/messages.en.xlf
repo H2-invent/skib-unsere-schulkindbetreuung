@@ -21,6 +21,26 @@
         <source>Beginnen Sie mit der Eingabe Ihrer Daten</source>
         <target>Start with your adress</target>
       </trans-unit>
+      <trans-unit id="h7YL9VW" resname="Städte">
+        <source>Städte</source>
+        <target>Cities</target>
+      </trans-unit>
+      <trans-unit id="hORe5zQ" resname="Bearbeiten">
+        <source>Bearbeiten</source>
+        <target>Edit</target>
+      </trans-unit>
+      <trans-unit id="KW4_Eg9" resname="Städte Administratoren">
+        <source>Städte Administratoren</source>
+        <target>City Administrators</target>
+      </trans-unit>
+      <trans-unit id="hHiom2z" resname="Schulen">
+        <source>Schulen</source>
+        <target>Shools</target>
+      </trans-unit>
+      <trans-unit id="0rh74eB" resname="Organisationen">
+        <source>Organisationen</source>
+        <target>Organisations</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
