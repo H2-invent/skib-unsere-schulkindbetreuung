@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('css/fontastic.css') }}">
     <!-- Google fonts - Roboto -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- jQuery Circle-->
     <link rel="stylesheet" href="{{ asset('css/grasp_mobile_progress_circle-1.0.0.min.css') }}">
     <!-- Custom Scrollbar-->
@@ -132,19 +133,20 @@
                             </ul>
                         </li>
                         <!-- Languages dropdown    -->
-                        <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="img/flags/16/GB.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
+                        <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="{{ asset('images/flags/16/GB.png') }}" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
                             <ul aria-labelledby="languages" class="dropdown-menu">
-                                <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/DE.png" alt="English" class="mr-2"><span>German</span></a></li>
-                                <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/FR.png" alt="English" class="mr-2"><span>French                                                         </span></a></li>
+                                <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="{{ asset('images/flags/16/DE.png') }}" alt="English" class="mr-2"><span>German</span></a></li>
+                                <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="{{ asset('images/flags/16/FR.png') }}" alt="English" class="mr-2"><span>French                                                         </span></a></li>
                             </ul>
                         </li>
                         <!-- Log out-->
-                        <li class="nav-item"><a href="login.html" class="nav-link logout"> <span class="d-none d-sm-inline-block">Logout</span><i class="fa fa-sign-out"></i></a></li>
+                        <li class="nav-item"><a href="{{ path('fos_user_security_logout') }}" class="nav-link logout"> <span class="d-none d-sm-inline-block">Logout</span><i class="fa fa-sign-out"></i></a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+    {% block content %}
     <!-- Counts Section -->
     <section class="dashboard-counts section-padding">
         <div class="container-fluid">
@@ -545,6 +547,7 @@
             </div>
         </div>
     </section>
+    {% endblock %}
     <footer class="main-footer">
         <div class="container-fluid">
             <div class="row">
