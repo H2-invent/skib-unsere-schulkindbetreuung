@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class AdministratorController extends AbstractController
+class StadtverwaltungController extends AbstractController
 {
     /**
      * @Route("/admin/index", name="admin_index")
