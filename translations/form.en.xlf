@@ -53,6 +53,14 @@
         <source>SEPA-LAstschrift Mandat wird elektromisch erteilt</source>
         <target>SEPA electronic</target>
       </trans-unit>
+      <trans-unit id="KAAmbDC" resname="Name der Stadt">
+        <source>Name der Stadt</source>
+        <target>Name of the city</target>
+      </trans-unit>
+      <trans-unit id="5mcEF4b" resname="Slug der Stadt">
+        <source>Slug der Stadt</source>
+        <target>Slug of the city</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

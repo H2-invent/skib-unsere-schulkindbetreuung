@@ -41,6 +41,22 @@
         <source>Organisationen</source>
         <target>Organisations</target>
       </trans-unit>
+      <trans-unit id="2bHhPzu" resname="Neu">
+        <source>Neu</source>
+        <target>New</target>
+      </trans-unit>
+      <trans-unit id="bC01IWH" resname="Löschen">
+        <source>Löschen</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="wcIksDz" resname="Admin">
+        <source>Admin</source>
+        <target>Admin</target>
+      </trans-unit>
+      <trans-unit id="Inm9E03" resname="Stadt">
+        <source>Stadt</source>
+        <target>City</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

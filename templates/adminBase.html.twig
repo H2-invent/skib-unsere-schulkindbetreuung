@@ -30,6 +30,7 @@
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
 </head>
 <body>
 <!-- Side Navbar -->
@@ -46,8 +47,13 @@
         </div>
         <!-- Sidebar Navigation Menus-->
         <div class="main-menu">
-            <h5 class="sidenav-heading">Main</h5>
+
             <ul id="side-main-menu" class="side-menu list-unstyled">
+            {% if is_granted('ROLE_ADMIN') %}
+                <h5 class="sidenav-heading">{% trans %}Admin{% endtrans %}</h5>
+                <li><a href="{{ path('admin_stadt') }}"> <i class="icon-home"></i>{% trans %}Städte{% endtrans %}</a></li>
+            {% endif %}
+                <h5 class="sidenav-heading">Main</h5>
                 <li><a href="index.html"> <i class="icon-home"></i>Home                             </a></li>
                 <li><a href="forms.html"> <i class="icon-form"></i>Forms                             </a></li>
                 <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts                             </a></li>
@@ -575,6 +581,7 @@
 <!-- Main File-->
 <script src="{{ asset('js/front.js') }}"></script>
 <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+<script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
 <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
 <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
 </body>

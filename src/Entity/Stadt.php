@@ -43,6 +43,16 @@ class Stadt
      */
     private $schules;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $deleted = false;
+
     public function __construct()
     {
         $this->anmeldefristens = new ArrayCollection();
@@ -168,6 +178,30 @@ class Stadt
                 $schule->setStadt(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }

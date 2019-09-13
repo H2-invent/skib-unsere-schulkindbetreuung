@@ -10,3 +10,9 @@ App\Entity\Stammdaten:
               - NotBlank: ~
         iban:
               - NotBlank: ~
+App\Entity\Stadt:
+    properties:
+        Name:
+            - NotBlank: ~
+        slug:
+            - NotBlank: ~
