@@ -57,6 +57,34 @@
         <source>Stadt</source>
         <target>City</target>
       </trans-unit>
+      <trans-unit id="0_KlttH" resname="Stadt Administratoren">
+        <source>Stadt Administratoren</source>
+        <target>City Administrators</target>
+      </trans-unit>
+      <trans-unit id="_Kc4j.e" resname="Stadt anlegen">
+        <source>Stadt anlegen</source>
+        <target>New City</target>
+      </trans-unit>
+      <trans-unit id="3N7cZyG" resname="Stadt bearbeiten">
+        <source>Stadt bearbeiten</source>
+        <target>Edit City</target>
+      </trans-unit>
+      <trans-unit id="QAUpUIQ" resname="Neuen Stadtmitarbeiter anlegen">
+        <source>Neuen Stadtmitarbeiter anlegen</source>
+        <target>Add new City employee</target>
+      </trans-unit>
+      <trans-unit id="HXIh5Jc" resname="Stadt Administratoren für %stadt%">
+        <source>Stadt Administratoren für %stadt%</source>
+        <target>City Administrators for %stadt%</target>
+      </trans-unit>
+      <trans-unit id="a8htxPu" resname="Fehler: %error%">
+        <source>Fehler: %error%</source>
+        <target>Error: %error%</target>
+      </trans-unit>
+      <trans-unit id="a.Bg5sG" resname="Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse">
+        <source>Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse</source>
+        <target>This Email is already registered</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

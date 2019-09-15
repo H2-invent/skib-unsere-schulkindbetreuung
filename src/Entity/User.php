@@ -38,7 +38,10 @@ protected $id;
      * @ORM\Column(type="text", nullable=true)
      */
     private $nachname;
-
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $birthday;
 public function __construct()
 {
 parent::__construct();
@@ -65,6 +68,47 @@ public function getNachname(): ?string
 public function setNachname(?string $nachname): self
 {
     $this->nachname = $nachname;
+
+    return $this;
+}
+
+public function getId(): ?int
+{
+    return $this->id;
+}
+
+public function getBirthday(): ?\DateTimeInterface
+{
+    return $this->birthday;
+}
+
+public function setBirthday(?\DateTimeInterface $birthday): self
+{
+    $this->birthday = $birthday;
+
+    return $this;
+}
+
+public function getStadt(): ?Stadt
+{
+    return $this->stadt;
+}
+
+public function setStadt(?Stadt $stadt): self
+{
+    $this->stadt = $stadt;
+
+    return $this;
+}
+
+public function getOrganisation(): ?Organisation
+{
+    return $this->organisation;
+}
+
+public function setOrganisation(?Organisation $organisation): self
+{
+    $this->organisation = $organisation;
 
     return $this;
 }

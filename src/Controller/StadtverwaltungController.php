@@ -60,8 +60,8 @@ class StadtverwaltungController extends AbstractController
             }
 
         }
-
-        return $this->render('administrator/neu.html.twig',array('stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
+        $title = $translator->trans('Stadt anlegen');
+        return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
     }
     /**
      * @Route("/admin/stadtverwaltung/edit", name="admin_stadt_edit",methods={"GET","POST"} )
@@ -87,7 +87,8 @@ class StadtverwaltungController extends AbstractController
             }
 
         }
-        return $this->render('administrator/edit.html.twig',array('stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
+        $title = $translator->trans('Stadt bearbeiten');
+        return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
     }
     /**
      * @Route("/admin/stadtverwaltung/delete", name="admin_stadt_delete", methods={"GET"})

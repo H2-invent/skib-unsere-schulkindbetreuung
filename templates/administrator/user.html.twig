@@ -7,32 +7,39 @@
             <!-- Count item widget-->
             <div class=" col-12 card">
                 <div class="card-header">
-                  <h1> {% trans %}Stadt Admministratoren{% endtrans %}  <a href="{{ path('admin_stadt_neu') }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                  <h1> {% trans with {'%stadt%':city.name} %}Stadt Administratoren für %stadt%{% endtrans %}  <a href="{{ path('admin_stadtadmin_neu',{'id':city.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
                          <i class="material-icons">add</i>
                       </button></a></h1>
                 </div>
+<div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Username</th>
+                        <th>Vorname</th>
+                        <th>Nachname</th>
+                        <th>Geburtstage</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for u in user %}
+                    <tr>
+                        <td></td>
+                        <td>{{ u.username }}</td>
+                        <td>{{ u.vorname }}</td>
+                        <td>{{ u.nachname }}</td>
+                        <td>{{ u.birthday|date('d.m.Y') }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+</div>
 
-                <ul class="list-group">
+                {% for u in user %}
 
-
-                {% for c in city %}
-                    <li class="list-group-item">
-                         {{ c.name }}
-                        <div class="btn-group">
-                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons">more_vert</i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-                                <a class="dropdown-item" href="{{ path('admin_stadt_edit',{'id':c.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
-                                <a class="dropdown-item" href="#">{% trans %}Städte Administratoren{% endtrans %}</a>
-                                <a class="dropdown-item" href="#">{% trans %}Schulen{% endtrans %}</a>
-                                <a class="dropdown-item" href="#">{% trans %}Organisationen{% endtrans %}</a>
-                                <a class="dropdown-item" href="{{ path('admin_stadt_delete',{'id':c.id}) }}">{% trans %}Löschen{% endtrans %}</a>
-                            </div>
-                        </div>
-                    </li>
                 {% endfor %}
-                </ul>
+
             </div>
         </div>
     </div>

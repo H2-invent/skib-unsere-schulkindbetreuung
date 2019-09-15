@@ -24,7 +24,7 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
                                 <a class="dropdown-item" href="{{ path('admin_stadt_edit',{'id':c.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
-                                <a class="dropdown-item" href="#">{% trans %}Städte Administratoren{% endtrans %}</a>
+                                <a class="dropdown-item" href="{{ path('admin_stadtadmin',{'id':c.id}) }}">{% trans %}Städte Administratoren{% endtrans %}</a>
                                 <a class="dropdown-item" href="#">{% trans %}Schulen{% endtrans %}</a>
                                 <a class="dropdown-item" href="#">{% trans %}Organisationen{% endtrans %}</a>
                                 <a class="dropdown-item" href="{{ path('admin_stadt_delete',{'id':c.id}) }}">{% trans %}Löschen{% endtrans %}</a>

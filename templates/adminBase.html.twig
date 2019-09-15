@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.default.css') }}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
@@ -583,6 +584,12 @@
 <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
 <script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
 <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+<script>
+    $(document).ready( function () {
+        $('table').DataTable();
+    } );
+</script>
 </body>
 </html>
