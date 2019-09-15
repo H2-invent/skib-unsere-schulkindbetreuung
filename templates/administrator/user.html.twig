@@ -16,20 +16,37 @@
                     <thead>
                     <tr>
                         <th></th>
-                        <th>Username</th>
-                        <th>Vorname</th>
-                        <th>Nachname</th>
-                        <th>Geburtstage</th>
+                        <th>{% trans %}Username{% endtrans %}</th>
+                        <th>{% trans %}Vorname{% endtrans %}</th>
+                        <th>{% trans %}Nachname{% endtrans %}</th>
+                        <th>{% trans %}Geburtstag{% endtrans %}</th>
+                        <th>{% trans %}Rolle{% endtrans %}</th>
+                        <th>{% trans %}Status{% endtrans %}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for u in user %}
                     <tr>
-                        <td></td>
+                        <td> <div class="btn-group">
+                                <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                    <a class="dropdown-item" href="{{ path('admin_stadtadmin_edit',{'id':u.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                    <a class="dropdown-item" href="{{ path('admin_stadtadmin_toggleAdmin',{'id':u.id}) }}">{% trans %}Admin toggeln{% endtrans %}</a>
+                                    <a class="dropdown-item" href="{{ path('admin_stadtadmin_deactivate',{'id':u.id}) }}">{% trans %}Account Deaktivieren{% endtrans %}</a>
+                                    <a class="dropdown-item" href="{{ path('admin_stadtadmin_changePw',{'id':u.id}) }}">{% trans %}Password ändern{% endtrans %}</a>
+                                    <a class="dropdown-item" href="{{ path('dashboard',{'_switch_user': u.username}) }}">{% trans %}Zu diesem User wechseln{% endtrans %}</a>
+
+                                </div>
+                            </div></td>
                         <td>{{ u.username }}</td>
                         <td>{{ u.vorname }}</td>
                         <td>{{ u.nachname }}</td>
                         <td>{{ u.birthday|date('d.m.Y') }}</td>
+                        <td>{{ u.hasRole('ROLE_CITY_ADMIN')?"Admin":"Kein Admin" }}</td>
+                        <td>{{ u.enabled?"Activ":"Deaktiviert" }}</td>
+
                     </tr>
                     {% endfor %}
                     </tbody>

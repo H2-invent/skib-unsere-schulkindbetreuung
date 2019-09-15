@@ -50,10 +50,29 @@
         <div class="main-menu">
 
             <ul id="side-main-menu" class="side-menu list-unstyled">
+                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                  <li> <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">{% trans %}Original Account{% endtrans %}</a></li>
+                {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 <h5 class="sidenav-heading">{% trans %}Admin{% endtrans %}</h5>
                 <li><a href="{{ path('admin_stadt') }}"> <i class="icon-home"></i>{% trans %}Städte{% endtrans %}</a></li>
+
             {% endif %}
+                {% if is_granted('ROLE_CITY_ADMIN') %}
+                   <li></li>
+                    <h5 class="sidenav-heading">{{ app.user.stadt.name }}</h5>
+                    <li><a href="{{ path('city_admin_schule_show') }}"> <i class="icon-home"></i>{% trans %}Schulen{% endtrans %}</a></li>
+                    <li><a href="#"> <i class="icon-home"></i>{% trans %}Organisationen{% endtrans %}</a></li>
+
+                    <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="material-icons">people</i>{% trans %}Mitarbeiter{% endtrans %} </a>
+                        <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                            <li><a href="#">{% trans %}Stadt{% endtrans %}</a></li>
+                            <li><a href="#">{% trans %}Schulen{% endtrans %}</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+                <h5 class="sidenav-heading">{% trans %}Einstellungen{% endtrans %}</h5>
+                <li><a href="{{ path('fos_user_change_password') }}"> <i class="icon-home"></i>{% trans %}Passwort ändern{% endtrans %}</a></li>
                 <h5 class="sidenav-heading">Main</h5>
                 <li><a href="index.html"> <i class="icon-home"></i>Home                             </a></li>
                 <li><a href="forms.html"> <i class="icon-form"></i>Forms                             </a></li>

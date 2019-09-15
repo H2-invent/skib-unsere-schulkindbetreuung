@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="hHiom2z" resname="Schulen">
         <source>Schulen</source>
-        <target>Shools</target>
+        <target>Schools</target>
       </trans-unit>
       <trans-unit id="0rh74eB" resname="Organisationen">
         <source>Organisationen</source>
@@ -84,6 +84,66 @@
       <trans-unit id="a.Bg5sG" resname="Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse">
         <source>Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse</source>
         <target>This Email is already registered</target>
+      </trans-unit>
+      <trans-unit id="TabP5k8" resname="Passwort ändern">
+        <source>Passwort ändern</source>
+        <target>Change password</target>
+      </trans-unit>
+      <trans-unit id="9ERKqla" resname="Admin toggeln">
+        <source>Admin toggeln</source>
+        <target>Toggle admin</target>
+      </trans-unit>
+      <trans-unit id="_Q5iOsg" resname="Account Deaktivieren">
+        <source>Account Deaktivieren</source>
+        <target>Deactivate acount</target>
+      </trans-unit>
+      <trans-unit id="a_rW1dR" resname="Password ändern">
+        <source>Password ändern</source>
+        <target>Change password</target>
+      </trans-unit>
+      <trans-unit id="pDIoMbq" resname="Das Passwort konnte nich geändert werden">
+        <source>Das Passwort konnte nich geändert werden</source>
+        <target>The password could not be changed</target>
+      </trans-unit>
+      <trans-unit id="9XUKXXI" resname="Einstellungen">
+        <source>Einstellungen</source>
+        <target>Settings</target>
+      </trans-unit>
+      <trans-unit id="47ienTP" resname="Username">
+        <source>Username</source>
+        <target>Username</target>
+      </trans-unit>
+      <trans-unit id="0td7b.p" resname="Vorname">
+        <source>Vorname</source>
+        <target>First name</target>
+      </trans-unit>
+      <trans-unit id="slNY7dS" resname="Nachname">
+        <source>Nachname</source>
+        <target>Last name</target>
+      </trans-unit>
+      <trans-unit id="ADipz4Z" resname="Rolle">
+        <source>Rolle</source>
+        <target>Role</target>
+      </trans-unit>
+      <trans-unit id="kg5BPH1" resname="Status">
+        <source>Status</source>
+        <target>State</target>
+      </trans-unit>
+      <trans-unit id="VwsWrux" resname="Zu diesem User wechseln">
+        <source>Zu diesem User wechseln</source>
+        <target>Impersonate to this User</target>
+      </trans-unit>
+      <trans-unit id="JS90orN" resname="Geburtstag">
+        <source>Geburtstag</source>
+        <target>Birthday</target>
+      </trans-unit>
+      <trans-unit id="iaxN3xl" resname="Original Account">
+        <source>Original Account</source>
+        <target>Original account</target>
+      </trans-unit>
+      <trans-unit id="9Mtokbn" resname="Mitarbeiter">
+        <source>Mitarbeiter</source>
+        <target>Employee</target>
       </trans-unit>
     </body>
   </file>

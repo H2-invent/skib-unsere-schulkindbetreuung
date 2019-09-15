@@ -45,12 +45,12 @@ class StadtadminController extends AbstractController
     public function neu(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
         $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
-        $defaultData = [];
+        $defaultData = $this->manager->createUser();;
         $errors = array();
         $form = $this->createFormBuilder($defaultData)
             ->add('username', TextType::class,array('label'=>'Username*','required'=>true,'translation_domain' => 'form'))
             ->add('email', EmailType::class,array('label'=>'Email*','required'=>true,'translation_domain' => 'form'))
-            ->add('password', TextType::class,array('required'=>false,'label'=>'Password*','translation_domain' => 'form'))
+            ->add('password', TextType::class,array('required'=>true,'label'=>'Password*','translation_domain' => 'form'))
             ->add('vorname', EmailType::class,array('label'=>'Vorname','required'=>true,'translation_domain' => 'form'))
             ->add('nachname', EmailType::class,array('label'=>'Name','required'=>true,'translation_domain' => 'form'))
             ->add('birthday', BirthdayType::class,array('label'=>'Geburtstag','required'=>true,'translation_domain' => 'form'))
@@ -61,18 +61,10 @@ class StadtadminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $defaultData = $form->getData();
-                $userManager = $this->manager;
-                $user = $userManager->createUser();
-                $user->setPlainPassword($defaultData['password']);
-                $user->setEmail($defaultData['email']);
-                $user->setUsername($defaultData['username']);
-                $user->setVorname($defaultData['vorname']);
-                $user->setNachname($defaultData['nachname']);
-                $user->setBirthday($defaultData['birthday']);
-                $user->setStadt($city);
-                $user->setEnabled(true);
-                $userManager->updateUser($user);
-
+                $defaultData->setStadt($city);
+                $defaultData->setEnabled(true);
+                $defaultData->addRole('ROLE_CTY_ADMIN');
+                $this->manager->updateUser($defaultData);
                 return $this->redirectToRoute('admin_stadtadmin',array('id'=>$city->getId()));
             }catch ( \Exception $e) {
                 $errorText = $translator->trans('Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse');
@@ -86,6 +78,126 @@ class StadtadminController extends AbstractController
 
         $title = $translator->trans('Neuen Stadtmitarbeiter anlegen');
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
+
+    }
+    /**
+     * @Route("/admin/stadtUser/edit", name="admin_stadtadmin_edit")
+     */
+    public function edit(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
+    {
+        $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $defaultData = $this->manager->findUserBy(array('id'=>$request->get('id')));
+
+        $errors = array();
+        $form = $this->createFormBuilder($defaultData)
+            ->add('username', TextType::class,array('label'=>'Username*','required'=>true,'translation_domain' => 'form'))
+            ->add('email', EmailType::class,array('label'=>'Email*','required'=>true,'translation_domain' => 'form'))
+            ->add('vorname', EmailType::class,array('label'=>'Vorname','required'=>true,'translation_domain' => 'form'))
+            ->add('nachname', EmailType::class,array('label'=>'Name','required'=>true,'translation_domain' => 'form'))
+            ->add('birthday', BirthdayType::class,array('label'=>'Geburtstag','required'=>true,'translation_domain' => 'form'))
+            ->add('save', SubmitType::class, ['label' => 'Save'])
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $defaultData = $form->getData();
+                $userManager = $this->manager;
+                $userManager->updateUser($defaultData);
+                return $this->redirectToRoute('admin_stadtadmin',array('id'=>$defaultData->getStadt()->getId()));
+            }catch ( \Exception $e) {
+                $errorText = $translator->trans('Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse');
+                return $this->render(
+                    'administrator/error.html.twig',
+                    array('error' => $errorText)
+                );
+
+            }
+        }
+
+        $title = $translator->trans('Neuen Stadtmitarbeiter anlegen');
+        return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
+
+    }
+    /**
+     * @Route("/admin/stadtUser/changePw", name="admin_stadtadmin_changePw")
+     */
+    public function changePw(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
+    {
+        $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $defaultData = $this->manager->findUserBy(array('id' => $request->get('id')));
+        $errors = array();
+        $form = $this->createFormBuilder($defaultData)
+            ->add(
+                'plainPassword',
+                TextType::class,
+                array('label' => 'Password*', 'required' => true, 'translation_domain' => 'form')
+            )
+            ->add('save', SubmitType::class, ['label' => 'Save'])
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $defaultData = $form->getData();
+                $userManager = $this->manager;
+                $userManager->updateUser($defaultData);
+
+                return $this->redirectToRoute('admin_stadtadmin', array('id' => $defaultData->getStadt()->getId()));
+            } catch (\Exception $e) {
+                $errorText = $translator->trans(
+                    'Das Passwort konnte nich geändert werden'
+                );
+
+                return $this->render(
+                    'administrator/error.html.twig',
+                    array('error' => $errorText)
+                );
+
+            }
+        }
+        $title = $translator->trans('Passwort ändern');
+        return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
+
+    }
+    /**
+     * @Route("/admin/stadtUser/toggleAdmin", name="admin_stadtadmin_toggleAdmin")
+     */
+    public function toggleAdmin(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
+    {
+        $user = $this->manager->findUserBy(array('id' => $request->get('id')));
+        if($user->hasRole('ROLE_CITY_ADMIN')){
+            $user->removeRole('ROLE_CITY_ADMIN');
+        }else{
+            $user->addRole('ROLE_CITY_ADMIN');
+        }
+        $this->manager->updateUser($user);
+        return $this->redirectToRoute('admin_stadtadmin', array('id' => $user->getStadt()->getId()));  $referer = $request
+        ->headers
+        ->get('referer');
+        return $this->redirect($referer);
+    }
+    /**
+     * @Route("/admin/stadtUser/deactivate", name="admin_stadtadmin_deactivate")
+     */
+    public function deactivateAccount(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
+    {
+        $user = $this->manager->findUserBy(array('id' => $request->get('id')));
+        if($user->isEnabled()){
+            $user->setEnabled(false);
+        }else{
+            $user->setEnabled(true);
+        }
+        $this->manager->updateUser($user);
+        $previous = $request->getSession()->get('previous');
+        $url = "";
+        if ($previous) {
+            $url = $previous;
+        }
+        $referer = $request
+            ->headers
+            ->get('referer');
+        return $this->redirect($referer);
 
     }
 }
