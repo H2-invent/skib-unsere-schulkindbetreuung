@@ -145,6 +145,34 @@
         <source>Mitarbeiter</source>
         <target>Employee</target>
       </trans-unit>
+      <trans-unit id="e.yBlit" resname="Schule anlegen">
+        <source>Schule anlegen</source>
+        <target>New School</target>
+      </trans-unit>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="0VOH7Mb" resname="Slug">
+        <source>Slug</source>
+        <target>Slug</target>
+      </trans-unit>
+      <trans-unit id="56JB3rr" resname="URL">
+        <source>URL</source>
+        <target>URL</target>
+      </trans-unit>
+      <trans-unit id="bRCf2Pa" resname="Organisation anlegen">
+        <source>Organisation anlegen</source>
+        <target>New organisation</target>
+      </trans-unit>
+      <trans-unit id="eeXPIN4" resname="Adresse">
+        <source>Adresse</source>
+        <target>Adress</target>
+      </trans-unit>
+      <trans-unit id="SPRSWT_" resname="Organisations Administratoren">
+        <source>Organisations Administratoren</source>
+        <target>Organisation Administrators</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

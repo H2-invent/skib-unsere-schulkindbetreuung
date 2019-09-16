@@ -25,7 +25,7 @@ class Schule
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="schule")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $organisation;
 
@@ -35,9 +35,34 @@ class Schule
     private $zeitblocks;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\stadt", inversedBy="schules")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="schules")
      */
     private $stadt;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $adresszusatz;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $plz;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $ort;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $deleted = false;
 
     public function __construct()
     {
@@ -112,6 +137,66 @@ class Schule
     public function setStadt(?stadt $stadt): self
     {
         $this->stadt = $stadt;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getAdresszusatz(): ?string
+    {
+        return $this->adresszusatz;
+    }
+
+    public function setAdresszusatz(?string $adresszusatz): self
+    {
+        $this->adresszusatz = $adresszusatz;
+
+        return $this;
+    }
+
+    public function getPlz(): ?string
+    {
+        return $this->plz;
+    }
+
+    public function setPlz(string $plz): self
+    {
+        $this->plz = $plz;
+
+        return $this;
+    }
+
+    public function getOrt(): ?string
+    {
+        return $this->ort;
+    }
+
+    public function setOrt(string $ort): self
+    {
+        $this->ort = $ort;
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }

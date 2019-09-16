@@ -16,3 +16,25 @@ App\Entity\Stadt:
             - NotBlank: ~
         slug:
             - NotBlank: ~
+App\Entity\Schule:
+    properties:
+        name:
+            - NotBlank: ~
+        adresse:
+            - NotBlank: ~
+        plz:
+            - NotBlank: ~
+        ort:
+            - NotBlank: ~
+App\Entity\Organisation:
+    properties:
+        name:
+            - NotBlank: ~
+        adresse:
+            - NotBlank: ~
+        plz:
+            - NotBlank: ~
+        ort:
+            - NotBlank: ~
+        ort:
+            - NotBlank: ~

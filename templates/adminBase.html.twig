@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bootstrap Dashboard by Bootstrapious.com</title>
+    <title>Schulkindbetreuung SKB2020</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -61,8 +61,8 @@
                 {% if is_granted('ROLE_CITY_ADMIN') %}
                    <li></li>
                     <h5 class="sidenav-heading">{{ app.user.stadt.name }}</h5>
-                    <li><a href="{{ path('city_admin_schule_show') }}"> <i class="icon-home"></i>{% trans %}Schulen{% endtrans %}</a></li>
-                    <li><a href="#"> <i class="icon-home"></i>{% trans %}Organisationen{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"> <i class="icon-home"></i>{% trans %}Schulen{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_admin_organisation_show',{'id':app.user.stadt.id}) }}"> <i class="icon-home"></i>{% trans %}Organisationen{% endtrans %}</a></li>
 
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="material-icons">people</i>{% trans %}Mitarbeiter{% endtrans %} </a>
                         <ul id="exampledropdownDropdown" class="collapse list-unstyled ">

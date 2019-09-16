@@ -77,6 +77,22 @@
         <source>Geburtstag</source>
         <target>Birthday</target>
       </trans-unit>
+      <trans-unit id="57ZpmAx" resname="Name der Schule">
+        <source>Name der Schule</source>
+        <target>Name of the School</target>
+      </trans-unit>
+      <trans-unit id="xhJ.1EZ" resname="PLZ">
+        <source>PLZ</source>
+        <target>PLZ</target>
+      </trans-unit>
+      <trans-unit id="Inm9E03" resname="Stadt">
+        <source>Stadt</source>
+        <target>City</target>
+      </trans-unit>
+      <trans-unit id="wyhu2rk" resname="Name der Organisation">
+        <source>Name der Organisation</source>
+        <target>Name of the organisation</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -6,6 +6,8 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "friendsofsymfony/user-bundle": "~2.0",
+        "league/flysystem-bundle": "^1.2",
+        "oneup/flysystem-bundle": "^3.1",
         "sensio/framework-extra-bundle": "^5.4",
         "shivas/versioning-bundle": "^3.2",
         "symfony/apache-pack": "^1.0",
