@@ -22,7 +22,7 @@ Stadt: City
 Name der Organisation: Name of the organisation
 BIC: BIC
 Name der Bank: Name of the Bank
-Gläubiger ID: Gläubiger ID
+Gläubiger ID: __Gläubiger ID
 Info Text: Info text
 Telefonnummer: Phone
 Email: EMail
@@ -30,4 +30,5 @@ SMTP Server: SMTP Server
 SMTP Port: SMTP Port
 SMTP Username: SMTP Username
 SMTP Passwort: SMTP Password
+Ansprechpartner: __Ansprechpartner
 

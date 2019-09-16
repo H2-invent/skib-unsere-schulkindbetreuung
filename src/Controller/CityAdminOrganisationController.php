@@ -50,6 +50,7 @@ class CityAdminOrganisationController extends AbstractController
             ->add('adresszusatz', TextType::class,['label'=>'Adresszusatz','translation_domain' => 'form'])
             ->add('plz', TextType::class,['label'=>'PLZ','translation_domain' => 'form'])
             ->add('ort', TextType::class,['label'=>'Stadt','translation_domain' => 'form'])
+            ->add('ansprechpartner', TextType::class,['label'=>'Ansprechpartner','translation_domain' => 'form'])
             ->add('iban', TextType::class,['label'=>'IBAN für das Lastschriftmandat','translation_domain' => 'form'])
             ->add('bic', TextType::class,['label'=>'BIC','translation_domain' => 'form'])
             ->add('bankName', TextType::class,['label'=>'Name der Bank','translation_domain' => 'form'])
