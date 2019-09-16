@@ -8,6 +8,7 @@
         "friendsofsymfony/user-bundle": "~2.0",
         "sensio/framework-extra-bundle": "^5.4",
         "shivas/versioning-bundle": "^3.2",
+        "symfony/apache-pack": "^1.0",
         "symfony/asset": "4.3.*",
         "symfony/console": "4.3.*",
         "symfony/dotenv": "4.3.*",
