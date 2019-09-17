@@ -70,6 +70,7 @@ class CityAdminOrganisationController extends AbstractController
     {
 
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $city = $organisation->getStadt();
         if($organisation->getStadt() != $this->getUser()->getStadt()){
             throw new \Exception('Wrong City');
         }
@@ -79,7 +80,6 @@ class CityAdminOrganisationController extends AbstractController
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $organisation = $form->getData();
-            $organisation->setStadt($city);
             $errors = $validator->validate($organisation);
             if(count($errors)== 0) {
                 $em = $this->getDoctrine()->getManager();
@@ -90,7 +90,7 @@ class CityAdminOrganisationController extends AbstractController
 
         }
         $title = $translator->trans('Organisation anlegen');
-        return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
+        return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
 
     }
 }
