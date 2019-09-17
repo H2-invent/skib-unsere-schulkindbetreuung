@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Stadt;
 
+use App\Form\Type\StadtType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -11,11 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class StadtverwaltungController extends AbstractController
 {
     /**
-     * @Route("/admin/index", name="admin_index")
+     * @Route("/admin/index", name="admin_index",methods={"GET"})
      */
     public function index()
     {
@@ -40,12 +42,7 @@ class StadtverwaltungController extends AbstractController
     public function newStadt(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
         $city = new Stadt();
-
-        $form = $this->createFormBuilder($city)
-            ->add('name', TextType::class,['label'=>'Name der Stadt','translation_domain' => 'form'])
-            ->add('slug', TextType::class,['label'=>'Slug der Stadt','translation_domain' => 'form'])
-            ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
-            ->getForm();
+        $form = $this->createForm(StadtType::class, $city);
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
@@ -69,11 +66,7 @@ class StadtverwaltungController extends AbstractController
     public function editStadt(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
         $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
-        $form = $this->createFormBuilder($city)
-            ->add('name', TextType::class,['label'=>'Name der Stadt','translation_domain' => 'form'])
-            ->add('slug', TextType::class,['label'=>'Slug der Stadt','translation_domain' => 'form'])
-            ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
-            ->getForm();
+        $form = $this->createForm(StadtType::class, $city);
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {

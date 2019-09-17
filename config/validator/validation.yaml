@@ -16,6 +16,21 @@ App\Entity\Stadt:
             - NotBlank: ~
         slug:
             - NotBlank: ~
+        email:
+            - NotBlank: ~
+        telefon:
+            - NotBlank: ~
+        adresse:
+            - NotBlank: ~
+        plz:
+            - NotBlank: ~
+        ort:
+            - NotBlank: ~
+        ansprechpartner:
+            - NotBlank: ~
+        infoText:
+            - NotBlank: ~
+
 App\Entity\Schule:
     properties:
         name:
@@ -33,8 +48,6 @@ App\Entity\Organisation:
         adresse:
             - NotBlank: ~
         plz:
-            - NotBlank: ~
-        ort:
             - NotBlank: ~
         ort:
             - NotBlank: ~

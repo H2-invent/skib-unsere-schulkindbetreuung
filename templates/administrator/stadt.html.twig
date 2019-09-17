@@ -38,7 +38,7 @@
                                 </td>
                                 <td>{{ c.name }}</td>
                                 <td>{{ c.slug }}</td>
-                                <td><a href="{{ url('workflow_start',{'stadt':c.slug}) }}"> {{ url('workflow_start',{'stadt':c.slug}) }}</a></td>
+                                <td><a href="{{ url('workflow_start',{'slug':c.slug}) }}"> {{ url('workflow_start',{'slug':c.slug}) }}</a></td>
                             </tr>
                         {% endfor %}
                         </tbody>

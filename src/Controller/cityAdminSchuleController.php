@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class cityAdminSchuleController extends AbstractController
 {
@@ -55,6 +57,13 @@ class cityAdminSchuleController extends AbstractController
                 'choice_label' => 'name',
                 'class' => Organisation::class,
                 'choices' => $organisations,
+            ])
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Löschen',
+                'label'=>'Logo hochladen',
+                'translation_domain' => 'form'
             ])
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
             ->getForm();
@@ -100,6 +109,13 @@ class cityAdminSchuleController extends AbstractController
                 'choice_label' => 'name',
                 'class' => Organisation::class,
                 'choices' => $organisations,
+            ])
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Löschen',
+                'label'=>'Logo hochladen',
+                'translation_domain' => 'form'
             ])
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
             ->getForm();

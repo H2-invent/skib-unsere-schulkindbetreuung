@@ -9,6 +9,8 @@ namespace App\Controller;
 
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use App\Form\Type\StadtType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -21,14 +23,14 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class workflowController  extends AbstractController
 {
     /**
-    * @Route("/{stadt}/start",name="workflow_start",methods={"GET"})
+    * @Route("/{slug}/start",name="workflow_start",methods={"GET"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
     */
-    public function welcomeAction(Request $request, $stadt)
+    public function welcomeAction(Request $request, Stadt $stadt)
     {
 
-       $city = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(['slug'=>$stadt]);
 
-        return $this->render('workflow/start.html.twig',array('stadt'=>$city));
+        return $this->render('workflow/start.html.twig',array('stadt'=>$stadt));
     }
     /**
      * @Route("/{stadt}/adresse",name="workflow_adresse",methods={"GET","POST"})

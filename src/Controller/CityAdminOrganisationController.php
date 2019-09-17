@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Organisation;
 use App\Entity\Stadt;
+use App\Form\Type\OrganisationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -43,27 +44,37 @@ class CityAdminOrganisationController extends AbstractController
             throw new \Exception('Wrong City');
         }
         $organisation = new Organisation();
+        $form = $this->createForm(OrganisationType::class, $organisation);
+        $form->handleRequest($request);
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $organisation = $form->getData();
+            $organisation->setStadt($city);
+            $errors = $validator->validate($organisation);
+            if(count($errors)== 0) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($organisation);
+                $em->flush();
+                return $this->redirectToRoute('city_admin_organisation_show',array('id'=>$city->getId()));
+            }
 
-        $form = $this->createFormBuilder($organisation)
-            ->add('name', TextType::class,['label'=>'Name der Organisation','translation_domain' => 'form'])
-            ->add('adresse', TextType::class,['label'=>'Straße','translation_domain' => 'form'])
-            ->add('adresszusatz', TextType::class,['label'=>'Adresszusatz','translation_domain' => 'form'])
-            ->add('plz', TextType::class,['label'=>'PLZ','translation_domain' => 'form'])
-            ->add('ort', TextType::class,['label'=>'Stadt','translation_domain' => 'form'])
-            ->add('ansprechpartner', TextType::class,['label'=>'Ansprechpartner','translation_domain' => 'form'])
-            ->add('iban', TextType::class,['label'=>'IBAN für das Lastschriftmandat','translation_domain' => 'form'])
-            ->add('bic', TextType::class,['label'=>'BIC','translation_domain' => 'form'])
-            ->add('bankName', TextType::class,['label'=>'Name der Bank','translation_domain' => 'form'])
-            ->add('glauaubigerId', TextType::class,['label'=>'Gläubiger ID','translation_domain' => 'form'])
-            ->add('infoText', TextareaType::class,['label'=>'Info Text','translation_domain' => 'form'])
-            ->add('telefon', TextType::class,['label'=>'Telefonnummer','translation_domain' => 'form'])
-            ->add('email', TextType::class,['label'=>'Email','translation_domain' => 'form'])
-            ->add('smptServer', TextType::class,['label'=>'SMTP Server','translation_domain' => 'form'])
-            ->add('smtpPort', TextType::class,['label'=>'SMTP Port','translation_domain' => 'form'])
-            ->add('smtpUser', TextType::class,['label'=>'SMTP Username','translation_domain' => 'form'])
-            ->add('smtpPassword', TextType::class,['label'=>'SMTP Passwort','translation_domain' => 'form'])
-            ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
-            ->getForm();
+        }
+        $title = $translator->trans('Organisation anlegen');
+        return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
+
+    }
+    /**
+     * @Route("/city/admin/organisation/edit", name="city_admin_organisation_edit",methods={"GET","POST"})
+     */
+    public function editSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
+    {
+
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        if($organisation->getStadt() != $this->getUser()->getStadt()){
+            throw new \Exception('Wrong City');
+        }
+
+        $form = $this->createForm(OrganisationType::class, $organisation);
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {

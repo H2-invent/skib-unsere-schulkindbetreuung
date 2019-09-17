@@ -25,10 +25,14 @@ Name der Bank: Name of the Bank
 Gläubiger ID: __Gläubiger ID
 Info Text: Info text
 Telefonnummer: Phone
-Email: EMail
+Email: Email
 SMTP Server: SMTP Server
 SMTP Port: SMTP Port
 SMTP Username: SMTP Username
 SMTP Passwort: SMTP Password
 Ansprechpartner: __Ansprechpartner
+Hauptfarbe(HTML Code): __Hauptfarbe(HTML Code)
+Akzentfarbe (HTML Code): __Akzentfarbe (HTML Code)
+Akzentfarbe Fehler (HTML Code): __Akzentfarbe Fehler (HTML Code)
+Logo hochladen: Upload logo
 
