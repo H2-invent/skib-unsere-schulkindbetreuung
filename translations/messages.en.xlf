@@ -177,6 +177,34 @@
         <source>Details</source>
         <target>Detail</target>
       </trans-unit>
+      <trans-unit id="0xns7kQ" resname="Adresse:">
+        <source>Adresse:</source>
+        <target>__Adresse:</target>
+      </trans-unit>
+      <trans-unit id="_mkG127" resname="Telefon">
+        <source>Telefon</source>
+        <target>__Telefon</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>__Email</target>
+      </trans-unit>
+      <trans-unit id="OsNmCHb" resname="Ansprechpartner">
+        <source>Ansprechpartner</source>
+        <target>__Ansprechpartner</target>
+      </trans-unit>
+      <trans-unit id="FwMioy8" resname="Info">
+        <source>Info</source>
+        <target>__Info</target>
+      </trans-unit>
+      <trans-unit id="hospV8O" resname="Organistaion">
+        <source>Organistaion</source>
+        <target>__Organistaion</target>
+      </trans-unit>
+      <trans-unit id="q1LKl78" resname="Mitarbeiter der Stadt %stadt%">
+        <source>Mitarbeiter der Stadt %stadt%</source>
+        <target>__Mitarbeiter der Stadt %stadt%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
