@@ -3,9 +3,9 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
     role_hierarchy:
-        ROLE_ADMIN:       [ROLE_USER,ROLE_ALLOWED_TO_SWITCH]
         ROLE_SUPER_ADMIN: ROLE_ADMIN
-        ROLE_CITY_ADMIN: ROLE_CITY_SCHOOL
+        ROLE_ADMIN:       [ROLE_USER,ROLE_ALLOWED_TO_SWITCH; ROLE_CITY_ADMIN]
+        ROLE_CITY_ADMIN: [ROLE_CITY_SCHOOL, ROLE_ORG_ADMIN]
         ROLE_ORG_CHILD_CHANGE: ROLE_ORG_CHILD_SHOW
         ROLE_ORG_ACCOUNTING: ROLE_ORG_CHILD_SHOW
         ROLE_ORG_ADMIN: ROLE_ORG_BLOCK_MANAGEMENT
@@ -38,7 +38,7 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/city/admin/, role: ROLE_CITY_ADMIN }
         - { path: ^/city/dashboard/, role: ROLE_CITY_DASHBOARD }
-        - { path: ^/city/shool/, role: ROLE_CITY_SCHOOL }
+        - { path: ^/city/schule/, role: ROLE_CITY_SCHOOL }
         - { path: ^/city/report/, role: ROLE_CITY_REPORT }
         - { path: ^/org/admin/, role: ROLE_ORG_ADMIN }
         - { path: ^/org/report/, role: ROLE_ORG_REPORT }

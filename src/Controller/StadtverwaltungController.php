@@ -37,7 +37,7 @@ class StadtverwaltungController extends AbstractController
         ]);
     }
     /**
-     * @Route("/admin/stadtverwaltung/neu", name="admin_stadt_neu",methods={"GET","POST"} )
+     * @Route("/city/admin/stadtverwaltung/neu", name="admin_stadt_neu",methods={"GET","POST"} )
      */
     public function newStadt(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
@@ -61,7 +61,7 @@ class StadtverwaltungController extends AbstractController
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
     }
     /**
-     * @Route("/admin/stadtverwaltung/edit", name="admin_stadt_edit",methods={"GET","POST"} )
+     * @Route("/city/admin/stadtverwaltung/edit", name="admin_stadt_edit",methods={"GET","POST"} )
      */
     public function editStadt(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {

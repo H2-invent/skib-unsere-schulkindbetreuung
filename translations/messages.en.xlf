@@ -173,6 +173,10 @@
         <source>Organisations Administratoren</source>
         <target>Organisation Administrators</target>
       </trans-unit>
+      <trans-unit id="RZid5J_" resname="Details">
+        <source>Details</source>
+        <target>Detail</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

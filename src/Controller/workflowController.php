@@ -10,6 +10,8 @@ namespace App\Controller;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Form\Type\StadtType;
+use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
+use Beelab\Recaptcha2Bundle\Validator\Constraints\Recaptcha2;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -54,7 +56,12 @@ class workflowController  extends AbstractController
             ->add('notfallkontakt', TextType::class,['label'=>'Notfallkontakt','translation_domain' => 'form'])
             ->add('iban', TextType::class,['label'=>'IBAN für das Lastschriftmandat','translation_domain' => 'form'])
             ->add('sepaInfo', CheckboxType::class,['label'=>'SEPA-LAstschrift Mandat wird elektromisch erteilt','translation_domain' => 'form'])
+           // ->add('captcha', RecaptchaType::class, [
+                // "groups" option is not mandatory
+
+            //])
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
+
             ->getForm();
         $form->handleRequest($request);
         $errors = array();

@@ -90,7 +90,8 @@ class StadtadminController extends AbstractController
 
         $errors = array();
         $form = $this->createFormBuilder($defaultData)
-             ->add('email', EmailType::class,array('label'=>'Email*','required'=>true,'translation_domain' => 'form'))
+            ->add('username', TextType::class,array('label'=>'Username*','required'=>true,'translation_domain' => 'form'))
+            ->add('email', EmailType::class,array('label'=>'Email*','required'=>true,'translation_domain' => 'form'))
             ->add('vorname', EmailType::class,array('label'=>'Vorname','required'=>true,'translation_domain' => 'form'))
             ->add('nachname', EmailType::class,array('label'=>'Name','required'=>true,'translation_domain' => 'form'))
             ->add('birthday', BirthdayType::class,array('label'=>'Geburtstag','required'=>true,'translation_domain' => 'form'))

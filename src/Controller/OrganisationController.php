@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class CityAdminOrganisationController extends AbstractController
+class OrganisationController extends AbstractController
 {
     /**
      * @Route("/city/admin/organisation/show", name="city_admin_organisation_show")
@@ -64,7 +64,7 @@ class CityAdminOrganisationController extends AbstractController
 
     }
     /**
-     * @Route("/city/admin/organisation/edit", name="city_admin_organisation_edit",methods={"GET","POST"})
+     * @Route("/org/admin/organisation/edit", name="city_admin_organisation_edit",methods={"GET","POST"})
      */
     public function editSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
@@ -91,6 +91,37 @@ class CityAdminOrganisationController extends AbstractController
         }
         $title = $translator->trans('Organisation anlegen');
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
+
+    }
+    /**
+     * @Route("/city/admin/organisation/delete", name="city_admin_organisation_delete",methods={"GET"})
+     */
+    public function deleteSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $city = $organisation->getStadt();
+        if($organisation->getStadt() != $this->getUser()->getStadt()){
+            throw new \Exception('Wrong City');
+        }
+
+        $organisation->setDeleted(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($organisation);
+        $em->flush();
+        return $this->redirectToRoute('city_admin_organisation_show',array('id'=>$city->getId()));
+    }
+    /**
+     * @Route("/city/admin/organisation/detail", name="city_admin_organisation_detail",methods={"GET"})
+     */
+    public function detailSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        dump($organisation);
+        $city = $organisation->getStadt();
+        if($organisation->getStadt() != $this->getUser()->getStadt()){
+            throw new \Exception('Wrong City');
+        }
+        return $this->render('cityAdminOrganisation/organisationDetail.html.twig',array('stadt'=>$city,'organisation'=>$organisation));
 
     }
 }

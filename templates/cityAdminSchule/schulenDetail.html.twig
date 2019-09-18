@@ -1,0 +1,41 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+<section class="dashboard-counts section-padding">
+    <div class="container-fluid ">
+        <div class="row">
+            <!-- Count item widget-->
+            <div class=" col-12 card">
+                <div class="card-header">
+                  <h1> {{ schule.name }}<a href="{{ path('city_admin_schule_edit',{'id':schule.id}) }}"> <button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                              <i class="material-icons">edit</i>
+                          </button></a></h1>
+                </div>
+               <div class="card-header">
+                   <div class="row">
+                       <div class="col-md-6">
+                           <img src="{{ vich_uploader_asset(schule,'imageFile') }}" class="img-thumbnail">
+                       </div>
+                       <div class=" col-md-6">
+                           <ul class="list-group">
+                               <li class="list-group-item">
+                                   <h2>{% trans %}Adresse{% endtrans %}: </h2>
+                                   {{ schule.adresse }}
+                                   {{ schule.adresszusatz }},
+                                   {{ schule.plz }} {{ schule.ort }}
+                               </li>
+                               <li class="list-group-item"><h2>{% trans %} Organistaion{% endtrans %}: </h2> <a href="{{ path('city_admin_organisation_detail',{'id':schule.organisation.id}) }}"> {{ schule.organisation.name }}</a></li>
+
+                           </ul>
+                       </div>
+
+                   </div>
+
+               </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

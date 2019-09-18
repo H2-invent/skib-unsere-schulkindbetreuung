@@ -17,10 +17,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class cityAdminSchuleController extends AbstractController
+class SchuleController extends AbstractController
 {
     /**
-     * @Route("/city/admin/schule/show", name="city_admin_schule_show",methods={"GET"})
+     * @Route("/city/schule/show", name="city_admin_schule_show",methods={"GET"})
      */
     public function index(Request $request)
     {
@@ -36,7 +36,7 @@ class cityAdminSchuleController extends AbstractController
         ]);
     }
     /**
-     * @Route("/city/admin/schule/new", name="city_admin_schule_new",methods={"GET","POST"})
+     * @Route("/city/schule/new", name="city_admin_schule_new",methods={"GET","POST"})
      */
     public function newSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
@@ -86,7 +86,7 @@ class cityAdminSchuleController extends AbstractController
 
     }
     /**
-     * @Route("/city/admin/schule/edit", name="city_admin_schule_edit",methods={"GET","POST"})
+     * @Route("/city/schule/edit", name="city_admin_schule_edit",methods={"GET","POST"})
      */
     public function editSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
@@ -137,7 +137,7 @@ class cityAdminSchuleController extends AbstractController
 
     }
     /**
-     * @Route("/city/admin/schule/delete", name="city_admin_schule_delete",methods={"GET"})
+     * @Route("/city/schule/delete", name="city_admin_schule_delete",methods={"GET"})
      */
     public function deleteSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
@@ -149,8 +149,21 @@ class cityAdminSchuleController extends AbstractController
 
         $school->setDeleted(true);
         $em = $this->getDoctrine()->getManager();
-        $em->persist($city);
+        $em->persist($school);
         $em->flush();
         return $this->redirectToRoute('city_admin_schule_show',array('id'=>$city->getId()));
+    }
+    /**
+     * @Route("/city/schule/detail", name="city_admin_schule_detail",methods={"GET"})
+     */
+    public function detailSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
+    {
+        $school = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('id'));
+        $city = $school->getStadt();
+        if($city != $this->getUser()->getStadt()){
+            throw new \Exception('Wrong City');
+        }
+        return $this->render('cityAdminSchule/schulenDetail.html.twig',array('stadt'=>$city,'schule'=>$school));
+
     }
 }

@@ -93,6 +93,66 @@
         <source>Name der Organisation</source>
         <target>Name of the organisation</target>
       </trans-unit>
+      <trans-unit id="2Bz6Sw." resname="BIC">
+        <source>BIC</source>
+        <target>BIC</target>
+      </trans-unit>
+      <trans-unit id="e1gvFKc" resname="Name der Bank">
+        <source>Name der Bank</source>
+        <target>Name of the Bank</target>
+      </trans-unit>
+      <trans-unit id="lvu8ikT" resname="Gläubiger ID">
+        <source>Gläubiger ID</source>
+        <target>__Gläubiger ID</target>
+      </trans-unit>
+      <trans-unit id="08zDV_x" resname="Info Text">
+        <source>Info Text</source>
+        <target>Info text</target>
+      </trans-unit>
+      <trans-unit id="trRMl.i" resname="Telefonnummer">
+        <source>Telefonnummer</source>
+        <target>Phone</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="lxAV2Ac" resname="SMTP Server">
+        <source>SMTP Server</source>
+        <target>SMTP Server</target>
+      </trans-unit>
+      <trans-unit id="DR22.sp" resname="SMTP Port">
+        <source>SMTP Port</source>
+        <target>SMTP Port</target>
+      </trans-unit>
+      <trans-unit id="OfICate" resname="SMTP Username">
+        <source>SMTP Username</source>
+        <target>SMTP Username</target>
+      </trans-unit>
+      <trans-unit id="0SVxZk_" resname="SMTP Passwort">
+        <source>SMTP Passwort</source>
+        <target>SMTP Password</target>
+      </trans-unit>
+      <trans-unit id="OsNmCHb" resname="Ansprechpartner">
+        <source>Ansprechpartner</source>
+        <target>__Ansprechpartner</target>
+      </trans-unit>
+      <trans-unit id="2JrUH.8" resname="Hauptfarbe(HTML Code)">
+        <source>Hauptfarbe(HTML Code)</source>
+        <target>__Hauptfarbe(HTML Code)</target>
+      </trans-unit>
+      <trans-unit id=".GQ_BWL" resname="Akzentfarbe (HTML Code)">
+        <source>Akzentfarbe (HTML Code)</source>
+        <target>__Akzentfarbe (HTML Code)</target>
+      </trans-unit>
+      <trans-unit id="0XAGtFj" resname="Akzentfarbe Fehler (HTML Code)">
+        <source>Akzentfarbe Fehler (HTML Code)</source>
+        <target>__Akzentfarbe Fehler (HTML Code)</target>
+      </trans-unit>
+      <trans-unit id="Bm5i4vE" resname="Logo hochladen">
+        <source>Logo hochladen</source>
+        <target>Upload logo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

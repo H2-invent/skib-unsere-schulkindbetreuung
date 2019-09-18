@@ -30,8 +30,8 @@
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
                                             <a class="dropdown-item" href="{{ path('city_admin_organisation_edit',{'id':o.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
-                                            <a class="dropdown-item" href="#">{% trans %}Details{% endtrans %}</a>
-                                            <a class="dropdown-item" href="#">{% trans %}Löschen{% endtrans %}</a>
+                                            <a class="dropdown-item" href="{{ path('city_admin_organisation_detail',{'id':o.id}) }}">{% trans %}Details{% endtrans %}</a>
+                                            <a class="dropdown-item" href="{{ path('city_admin_organisation_delete',{'id':o.id}) }}">{% trans %}Löschen{% endtrans %}</a>
                                         </div>
                                     </div>
                                 </td>
