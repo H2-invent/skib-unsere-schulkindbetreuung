@@ -61,17 +61,17 @@
         <source>Slug der Stadt</source>
         <target>Slug of the city</target>
       </trans-unit>
-      <trans-unit id="bRV2_kJ" resname="Username*">
-        <source>Username*</source>
-        <target>Username*</target>
+      <trans-unit id="47ienTP" resname="Username">
+        <source>Username</source>
+        <target>Username</target>
       </trans-unit>
-      <trans-unit id="Yd.wICY" resname="Email*">
-        <source>Email*</source>
-        <target>Email*</target>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
       </trans-unit>
-      <trans-unit id="7MN.vDM" resname="Password*">
-        <source>Password*</source>
-        <target>Password*</target>
+      <trans-unit id="o2wQFXD" resname="Passwort">
+        <source>Passwort</source>
+        <target>Password</target>
       </trans-unit>
       <trans-unit id="JS90orN" resname="Geburtstag">
         <source>Geburtstag</source>
@@ -113,10 +113,6 @@
         <source>Telefonnummer</source>
         <target>Phone</target>
       </trans-unit>
-      <trans-unit id="lpzL089" resname="Email">
-        <source>Email</source>
-        <target>Email</target>
-      </trans-unit>
       <trans-unit id="lxAV2Ac" resname="SMTP Server">
         <source>SMTP Server</source>
         <target>SMTP Server</target>
@@ -152,6 +148,18 @@
       <trans-unit id="Bm5i4vE" resname="Logo hochladen">
         <source>Logo hochladen</source>
         <target>Upload logo</target>
+      </trans-unit>
+      <trans-unit id="bRV2_kJ" resname="Username*">
+        <source>Username*</source>
+        <target>Username*</target>
+      </trans-unit>
+      <trans-unit id="Yd.wICY" resname="Email*">
+        <source>Email*</source>
+        <target>Email*</target>
+      </trans-unit>
+      <trans-unit id="7MN.vDM" resname="Password*">
+        <source>Password*</source>
+        <target>Password*</target>
       </trans-unit>
     </body>
   </file>

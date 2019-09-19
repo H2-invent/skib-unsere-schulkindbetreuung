@@ -44,8 +44,8 @@
                         <td>{{ u.vorname }}</td>
                         <td>{{ u.nachname }}</td>
                         <td>{{ u.birthday|date('d.m.Y') }}</td>
-                        <td>{{ u.hasRole('ROLE_CITY_ADMIN')?"Admin":"Kein Admin" }}</td>
-                        <td>{{ u.enabled?"Activ":"Deaktiviert" }}</td>
+                        <td>{{ u.hasRole('ROLE_CITY_ADMIN')?"Admin":"Kein Admin"|trans }}</td>
+                        <td>{{ u.enabled?"Activ":"Deaktiviert"|trans }}</td>
 
                     </tr>
                     {% endfor %}

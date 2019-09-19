@@ -6,6 +6,7 @@ use App\Entity\Stadt;
 use App\Entity\User;
 
 
+use App\Form\Type\UserType;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -47,15 +48,8 @@ class StadtadminController extends AbstractController
         $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         $defaultData = $this->manager->createUser();;
         $errors = array();
-        $form = $this->createFormBuilder($defaultData)
-            ->add('username', TextType::class,array('label'=>'Username*','required'=>true,'translation_domain' => 'form'))
-            ->add('email', EmailType::class,array('label'=>'Email*','required'=>true,'translation_domain' => 'form'))
-            ->add('password', TextType::class,array('required'=>true,'label'=>'Password*','translation_domain' => 'form'))
-            ->add('vorname', EmailType::class,array('label'=>'Vorname','required'=>true,'translation_domain' => 'form'))
-            ->add('nachname', EmailType::class,array('label'=>'Name','required'=>true,'translation_domain' => 'form'))
-            ->add('birthday', BirthdayType::class,array('label'=>'Geburtstag','required'=>true,'translation_domain' => 'form'))
-            ->add('save', SubmitType::class, ['label' => 'Save'])
-            ->getForm();
+        $form = $this->createForm(UserType::class, $defaultData);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -89,14 +83,8 @@ class StadtadminController extends AbstractController
         $defaultData = $this->manager->findUserBy(array('id'=>$request->get('id')));
 
         $errors = array();
-        $form = $this->createFormBuilder($defaultData)
-            ->add('username', TextType::class,array('label'=>'Username*','required'=>true,'translation_domain' => 'form'))
-            ->add('email', EmailType::class,array('label'=>'Email*','required'=>true,'translation_domain' => 'form'))
-            ->add('vorname', EmailType::class,array('label'=>'Vorname','required'=>true,'translation_domain' => 'form'))
-            ->add('nachname', EmailType::class,array('label'=>'Name','required'=>true,'translation_domain' => 'form'))
-            ->add('birthday', BirthdayType::class,array('label'=>'Geburtstag','required'=>true,'translation_domain' => 'form'))
-            ->add('save', SubmitType::class, ['label' => 'Save'])
-            ->getForm();
+        $form = $this->createForm(UserType::class, $defaultData);
+        $form->remove('plainPassword');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -115,7 +103,7 @@ class StadtadminController extends AbstractController
             }
         }
 
-        $title = $translator->trans('Neuen Stadtmitarbeiter anlegen');
+        $title = $translator->trans('Stadtmitarbeiter bearbeiten');
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
 
     }

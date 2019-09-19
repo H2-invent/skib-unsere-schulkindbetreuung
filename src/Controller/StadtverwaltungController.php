@@ -37,12 +37,13 @@ class StadtverwaltungController extends AbstractController
         ]);
     }
     /**
-     * @Route("/city/admin/stadtverwaltung/neu", name="admin_stadt_neu",methods={"GET","POST"} )
+     * @Route("/admin/stadtverwaltung/neu", name="admin_stadt_neu",methods={"GET","POST"} )
      */
     public function newStadt(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
         $city = new Stadt();
         $form = $this->createForm(StadtType::class, $city);
+
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
@@ -61,12 +62,37 @@ class StadtverwaltungController extends AbstractController
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
     }
     /**
-     * @Route("/city/admin/stadtverwaltung/edit", name="admin_stadt_edit",methods={"GET","POST"} )
+     * @Route("/admin/stadtverwaltung/edit", name="admin_stadt_edit",methods={"GET","POST"} )
      */
     public function editStadt(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
         $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         $form = $this->createForm(StadtType::class, $city);
+        $form->remove('slug');
+        $form->handleRequest($request);
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $city = $form->getData();
+            $errors = $validator->validate($city);
+            if(count($errors)== 0) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($city);
+                $em->flush();
+                return $this->redirectToRoute('admin_stadt');
+            }
+
+        }
+        $title = $translator->trans('Stadt bearbeiten');
+        return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
+    }
+    /**
+     * @Route("/city/admin/stadtverwaltung/edit", name="city_admin_stadt_edit",methods={"GET","POST"} )
+     */
+    public function editCityAdminStadt(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
+    {
+        $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $form = $this->createForm(StadtType::class, $city);
+        $form->remove('slug');
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
@@ -95,4 +121,5 @@ class StadtverwaltungController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('admin_stadt');
     }
+
 }

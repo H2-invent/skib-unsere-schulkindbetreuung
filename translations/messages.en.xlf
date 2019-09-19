@@ -205,6 +205,18 @@
         <source>Mitarbeiter der Stadt %stadt%</source>
         <target>__Mitarbeiter der Stadt %stadt%</target>
       </trans-unit>
+      <trans-unit id="jjBUF66" resname="Berechtigungen verwalten">
+        <source>Berechtigungen verwalten</source>
+        <target>__Berechtigungen verwalten</target>
+      </trans-unit>
+      <trans-unit id="ifwhezW" resname="Deaktiviert">
+        <source>Deaktiviert</source>
+        <target>__Deaktiviert</target>
+      </trans-unit>
+      <trans-unit id="yTLzQls" resname="Kein Admin">
+        <source>Kein Admin</source>
+        <target>__Kein Admin</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

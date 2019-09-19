@@ -12,9 +12,9 @@ IBAN für das Lastschriftmandat: IBAN for SEPA
 SEPA-LAstschrift Mandat wird elektromisch erteilt: SEPA electronic
 Name der Stadt: Name of the city
 Slug der Stadt: Slug of the city
-Username*: Username*
-Email* : Email*
-Password*: Password*
+Username: Username
+Email: Email
+Passwort: Password
 Geburtstag: Birthday
 Name der Schule: Name of the School
 PLZ: PLZ
@@ -25,7 +25,6 @@ Name der Bank: Name of the Bank
 Gläubiger ID: __Gläubiger ID
 Info Text: Info text
 Telefonnummer: Phone
-Email: Email
 SMTP Server: SMTP Server
 SMTP Port: SMTP Port
 SMTP Username: SMTP Username
