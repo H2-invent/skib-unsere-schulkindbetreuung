@@ -4,11 +4,11 @@ security:
 
     role_hierarchy:
         ROLE_SUPER_ADMIN: ROLE_ADMIN
-        ROLE_ADMIN:       [ROLE_USER,ROLE_ALLOWED_TO_SWITCH, ROLE_USER]
-        ROLE_CITY_ADMIN: [ROLE_CITY_SCHOOL, ROLE_ORG_ADMIN,ROLE_USER]
+        ROLE_ADMIN:       [ROLE_USER,ROLE_ALLOWED_TO_SWITCH, ROLE_USER,ROLE_CITY_EITOR]
+        ROLE_CITY_ADMIN: [ROLE_CITY_SCHOOL, ROLE_USER,ROLE_ORG_EDITOR,ROLE_CITY_EDITOR]
         ROLE_ORG_CHILD_CHANGE: ROLE_ORG_CHILD_SHOW
         ROLE_ORG_ACCOUNTING: ROLE_ORG_CHILD_SHOW
-        ROLE_ORG_ADMIN: ROLE_ORG_BLOCK_MANAGEMENT
+        ROLE_ORG_ADMIN: [ROLE_ORG_BLOCK_MANAGEMENT,ROLE_ORG_EDITOR]
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         fos_userbundle:
@@ -36,14 +36,16 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login/, role: ROLE_USER }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/city/admin/, role: ROLE_CITY_ADMIN }
-        - { path: ^/city/dashboard/, role: ROLE_CITY_DASHBOARD }
-        - { path: ^/city/schule/, role: ROLE_CITY_SCHOOL }
-        - { path: ^/city/report/, role: ROLE_CITY_REPORT }
-        - { path: ^/org/admin/, role: ROLE_ORG_ADMIN }
-        - { path: ^/org/report/, role: ROLE_ORG_REPORT }
-        - { path: ^/org/child/change/, role: ROLE_ORG_CHILD_CHANGE }
-        - { path: ^/org/child/show/, role: ROLE_ORG_CHILD_SHOW }
-        - { path: ^/org/accounting, role: ROLE_ORG_ACCOUNTING }
-        - { path: ^/org/block/, role: ROLE_ORG_BLOCK_MANAGEMENT }
-        - { path: ^/org/shool/, role: ROLE_ORG_SHOOL }
+        - { path: ^/city_admin/, role: ROLE_CITY_ADMIN }
+        - { path: ^/city_edit/, role: ROLE_CITY_EDITOR }
+        - { path: ^/city_dashboard/, role: ROLE_CITY_DASHBOARD }
+        - { path: ^/city_schule/, role: ROLE_CITY_SCHOOL }
+        - { path: ^/city_report/, role: ROLE_CITY_REPORT }
+        - { path: ^/org_admin/, role: ROLE_ORG_ADMIN }
+        - { path: ^/org_edit/, role: ROLE_ORG_EDITOR }
+        - { path: ^/org_report/, role: ROLE_ORG_REPORT }
+        - { path: ^/org_child/change/, role: ROLE_ORG_CHILD_CHANGE }
+        - { path: ^/org_child/show/, role: ROLE_ORG_CHILD_SHOW }
+        - { path: ^/org_accounting, role: ROLE_ORG_ACCOUNTING }
+        - { path: ^/org_block/, role: ROLE_ORG_BLOCK_MANAGEMENT }
+        - { path: ^/org_shool/, role: ROLE_ORG_SHOOL }

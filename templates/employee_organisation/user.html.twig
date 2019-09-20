@@ -7,7 +7,7 @@
             <!-- Count item widget-->
             <div class=" col-12 card">
                 <div class="card-header">
-                  <h1> {% trans with {'%stadt%':city.name} %}Mitarbeiter der Stadt %stadt%{% endtrans %}  <a href="{{ path('city_employee_new',{'id':city.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                  <h1> {% trans with {'%org%':organisation.name} %}Mitarbeiter der Organisation %org%{% endtrans %}  <a href="{{ path('organisation_employee_new',{'id':organisation.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
                          <i class="material-icons">add</i>
                       </button></a></h1>
                 </div>
@@ -33,10 +33,12 @@
                                     <i class="material-icons">more_vert</i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                    {% if is_granted('ROLE_ORG_ADMIN') %}
                                     <a class="dropdown-item" href="{{ path('city_employee_edit',{'id':u.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
-                                    <a class="dropdown-item" href="{{ path('city_admin_city_employee_deactivate',{'id':u.id}) }}">{{ u.enabled== false?'Aktivieren':'Deaktivieren'|trans }}</a>
                                     <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_changePw',{'id':u.id}) }}">{% trans %}Password ändern{% endtrans %}</a>
                                     <a class="dropdown-item" href="#">{% trans %}Berechtigungen verwalten{% endtrans %}</a>
+                                    {% endif %}
+                                    <a class="dropdown-item" href="{{ path('city_admin_city_employee_deactivate',{'id':u.id}) }}">{{ u.enabled== false?'Aktivieren':'Deaktivieren'|trans }}</a>
                                     <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_delete',{'id':u.id}) }}">{% trans %}Löschen{% endtrans %}</a>
 
                                 </div>

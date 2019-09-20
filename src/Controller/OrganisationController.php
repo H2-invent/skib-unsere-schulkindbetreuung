@@ -17,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class OrganisationController extends AbstractController
 {
     /**
-     * @Route("/city/admin/organisation/show", name="city_admin_organisation_show")
+     * @Route("/city_admin/organisation/show", name="city_admin_organisation_show")
      */
     public function index(Request $request)
     {
@@ -35,7 +35,7 @@ class OrganisationController extends AbstractController
     }
 
     /**
-     * @Route("/city/admin/organisation/new", name="city_admin_organisation_new",methods={"GET","POST"})
+     * @Route("/city_admin/organisation/new", name="city_admin_organisation_new",methods={"GET","POST"})
      */
     public function newSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
@@ -64,7 +64,7 @@ class OrganisationController extends AbstractController
 
     }
     /**
-     * @Route("/org/admin/organisation/edit", name="city_admin_organisation_edit",methods={"GET","POST"})
+     * @Route("/org_edit/organisation/edit", name="city_admin_organisation_edit",methods={"GET","POST"})
      */
     public function editSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
@@ -94,7 +94,7 @@ class OrganisationController extends AbstractController
 
     }
     /**
-     * @Route("/city/admin/organisation/delete", name="city_admin_organisation_delete",methods={"GET"})
+     * @Route("/city_admin/organisation/delete", name="city_admin_organisation_delete",methods={"GET"})
      */
     public function deleteSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
@@ -111,7 +111,7 @@ class OrganisationController extends AbstractController
         return $this->redirectToRoute('city_admin_organisation_show',array('id'=>$city->getId()));
     }
     /**
-     * @Route("/city/admin/organisation/detail", name="city_admin_organisation_detail",methods={"GET"})
+     * @Route("/city_admin/organisation/detail", name="city_admin_organisation_detail",methods={"GET"})
      */
     public function detailSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {

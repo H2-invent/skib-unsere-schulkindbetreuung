@@ -217,6 +217,42 @@
         <source>Kein Admin</source>
         <target>__Kein Admin</target>
       </trans-unit>
+      <trans-unit id="YXWA8Pf" resname="Unbekannter Fehler">
+        <source>Unbekannter Fehler</source>
+        <target>__Unbekannter Fehler</target>
+      </trans-unit>
+      <trans-unit id="8azWWO_" resname="Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername">
+        <source>Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername</source>
+        <target>__Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername</target>
+      </trans-unit>
+      <trans-unit id="19a8pLe" resname="Stadtmitarbeiter bearbeiten">
+        <source>Stadtmitarbeiter bearbeiten</source>
+        <target>__Stadtmitarbeiter bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="eobplLX" resname="Deaktivieren">
+        <source>Deaktivieren</source>
+        <target>__Deaktivieren</target>
+      </trans-unit>
+      <trans-unit id="l5.2GBi" resname="Neuen Organisationsmitarbeiter anlegen">
+        <source>Neuen Organisationsmitarbeiter anlegen</source>
+        <target>__Neuen Organisationsmitarbeiter anlegen</target>
+      </trans-unit>
+      <trans-unit id="RkPL0Rv" resname="Mitarbeiter der Organisation">
+        <source>Mitarbeiter der Organisation</source>
+        <target>__Mitarbeiter der Organisation</target>
+      </trans-unit>
+      <trans-unit id="RU3Nh0d" resname="Mitarbeiter der Organisationen der Stadt %stadt%">
+        <source>Mitarbeiter der Organisationen der Stadt %stadt%</source>
+        <target>__Mitarbeiter der Organisationen der Stadt %stadt%</target>
+      </trans-unit>
+      <trans-unit id="NQvjZDz" resname="Organisation">
+        <source>Organisation</source>
+        <target>__Organisation</target>
+      </trans-unit>
+      <trans-unit id="qrKDvng" resname="Mitarbeiter der Organisation %org%">
+        <source>Mitarbeiter der Organisation %org%</source>
+        <target>__Mitarbeiter der Organisation %org%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

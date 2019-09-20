@@ -63,8 +63,8 @@
                 {% if app.user.stadt is not null %}
                     <h5 class="sidenav-heading">{{ app.user.stadt.name }}</h5>
                 {% endif %}
-                {% if is_granted('ROLE_CITY_ADMIN') %}
-                    <li><a href="{{ path('city_admin_stadt_edit',{'id':app.user.stadt.id}) }}"> <i class="icon-home"></i>{% trans %}Stadt bearbeiten{% endtrans %}</a></li>
+                {% if is_granted('ROLE_CITY_EDITOR') and app.user.stadt is not null %}
+                    <li><a href="{{ path('admin_stadt_edit',{'id':app.user.stadt.id}) }}"> <i class="icon-home"></i>{% trans %}Stadt bearbeiten{% endtrans %}</a></li>
                 {% endif %}
                 {% if is_granted('ROLE_CITY_SCHOOL') %}
                     <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"> <i class="icon-home"></i>{% trans %}Schulen{% endtrans %}</a></li>
@@ -76,7 +76,7 @@
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="material-icons">people</i>{% trans %}Mitarbeiter{% endtrans %} </a>
                         <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
                             <li><a href="{{ path('city_employee_show',{'id':app.user.stadt.id}) }}">{% trans %}Stadt{% endtrans %}</a></li>
-                            <li><a href="#">{% trans %}Organisationen{% endtrans %}</a></li>
+                            <li><a href="{{ path('city_employee_org_show',{'id':app.user.stadt.id}) }}">{% trans %}Organisationen{% endtrans %}</a></li>
                         </ul>
                     </li>
                 {% endif %}

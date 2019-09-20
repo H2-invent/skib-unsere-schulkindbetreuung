@@ -20,7 +20,7 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 class SchuleController extends AbstractController
 {
     /**
-     * @Route("/city/schule/show", name="city_admin_schule_show",methods={"GET"})
+     * @Route("/city_schule/show", name="city_admin_schule_show",methods={"GET"})
      */
     public function index(Request $request)
     {
@@ -36,7 +36,7 @@ class SchuleController extends AbstractController
         ]);
     }
     /**
-     * @Route("/city/schule/new", name="city_admin_schule_new",methods={"GET","POST"})
+     * @Route("/city_schule/new", name="city_admin_schule_new",methods={"GET","POST"})
      */
     public function newSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
@@ -86,7 +86,7 @@ class SchuleController extends AbstractController
 
     }
     /**
-     * @Route("/city/schule/edit", name="city_admin_schule_edit",methods={"GET","POST"})
+     * @Route("/city_schule/edit", name="city_admin_schule_edit",methods={"GET","POST"})
      */
     public function editSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
@@ -137,7 +137,7 @@ class SchuleController extends AbstractController
 
     }
     /**
-     * @Route("/city/schule/delete", name="city_admin_schule_delete",methods={"GET"})
+     * @Route("/city_schule/delete", name="city_admin_schule_delete",methods={"GET"})
      */
     public function deleteSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
@@ -154,7 +154,7 @@ class SchuleController extends AbstractController
         return $this->redirectToRoute('city_admin_schule_show',array('id'=>$city->getId()));
     }
     /**
-     * @Route("/city/schule/detail", name="city_admin_schule_detail",methods={"GET"})
+     * @Route("/city_schule/detail", name="city_admin_schule_detail",methods={"GET"})
      */
     public function detailSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
