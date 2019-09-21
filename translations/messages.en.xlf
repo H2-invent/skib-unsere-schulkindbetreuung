@@ -211,15 +211,15 @@
       </trans-unit>
       <trans-unit id="ifwhezW" resname="Deaktiviert">
         <source>Deaktiviert</source>
-        <target>__Deaktiviert</target>
+        <target>Deactivated</target>
       </trans-unit>
       <trans-unit id="yTLzQls" resname="Kein Admin">
         <source>Kein Admin</source>
-        <target>__Kein Admin</target>
+        <target>No Admin</target>
       </trans-unit>
       <trans-unit id="YXWA8Pf" resname="Unbekannter Fehler">
         <source>Unbekannter Fehler</source>
-        <target>__Unbekannter Fehler</target>
+        <target>Unknown Error</target>
       </trans-unit>
       <trans-unit id="8azWWO_" resname="Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername">
         <source>Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername</source>
@@ -227,31 +227,39 @@
       </trans-unit>
       <trans-unit id="19a8pLe" resname="Stadtmitarbeiter bearbeiten">
         <source>Stadtmitarbeiter bearbeiten</source>
-        <target>__Stadtmitarbeiter bearbeiten</target>
+        <target>Edit city employee</target>
       </trans-unit>
       <trans-unit id="eobplLX" resname="Deaktivieren">
         <source>Deaktivieren</source>
-        <target>__Deaktivieren</target>
+        <target>Deactivate</target>
       </trans-unit>
       <trans-unit id="l5.2GBi" resname="Neuen Organisationsmitarbeiter anlegen">
         <source>Neuen Organisationsmitarbeiter anlegen</source>
-        <target>__Neuen Organisationsmitarbeiter anlegen</target>
+        <target>New organisation employee</target>
       </trans-unit>
       <trans-unit id="RkPL0Rv" resname="Mitarbeiter der Organisation">
         <source>Mitarbeiter der Organisation</source>
-        <target>__Mitarbeiter der Organisation</target>
+        <target>Employee of the Organisation</target>
       </trans-unit>
       <trans-unit id="RU3Nh0d" resname="Mitarbeiter der Organisationen der Stadt %stadt%">
         <source>Mitarbeiter der Organisationen der Stadt %stadt%</source>
-        <target>__Mitarbeiter der Organisationen der Stadt %stadt%</target>
+        <target>Employee of the city %stadt%</target>
       </trans-unit>
       <trans-unit id="NQvjZDz" resname="Organisation">
         <source>Organisation</source>
-        <target>__Organisation</target>
+        <target>Organisation</target>
       </trans-unit>
       <trans-unit id="qrKDvng" resname="Mitarbeiter der Organisation %org%">
         <source>Mitarbeiter der Organisation %org%</source>
-        <target>__Mitarbeiter der Organisation %org%</target>
+        <target>Employee in the orgnisation %org%</target>
+      </trans-unit>
+      <trans-unit id="l3.7Thr" resname="Alle User">
+        <source>Alle User</source>
+        <target>All Users</target>
+      </trans-unit>
+      <trans-unit id="UGw_6pk" resname="Admin ernennen">
+        <source>Admin ernennen</source>
+        <target>Promote Admin</target>
       </trans-unit>
     </body>
   </file>

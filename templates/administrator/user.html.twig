@@ -7,9 +7,13 @@
             <!-- Count item widget-->
             <div class=" col-12 card">
                 <div class="card-header">
+                    {% if city is defined %}
                   <h1> {% trans with {'%stadt%':city.name} %}Stadt Administratoren für %stadt%{% endtrans %}  <a href="{{ path('admin_stadtadmin_neu',{'id':city.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
                          <i class="material-icons">add</i>
                       </button></a></h1>
+                    {% else %}
+                        <h1> {% trans %}Alle User{% endtrans %}  </h1>
+                    {% endif %}
                 </div>
 <div class="table-responsive">
                 <table class="table table-hover">
@@ -33,7 +37,7 @@
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
                                     <a class="dropdown-item" href="{{ path('admin_stadtadmin_edit',{'id':u.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
-                                    <a class="dropdown-item" href="{{ path('admin_stadtadmin_toggleAdmin',{'id':u.id}) }}">{% trans %}Admin toggeln{% endtrans %}</a>
+                                    <a class="dropdown-item" href="{{ path('admin_stadtadmin_toggleAdmin',{'id':u.id}) }}">{{ u.hasRole('ROLE_CITY_ADMIN')?"Admin entfernen":"Admin ernennen"|trans }}</a>
                                     <a class="dropdown-item" href="{{ path('admin_stadtadmin_deactivate',{'id':u.id}) }}">{% trans %}Account Deaktivieren{% endtrans %}</a>
                                     <a class="dropdown-item" href="{{ path('admin_stadtadmin_changePw',{'id':u.id}) }}">{% trans %}Password ändern{% endtrans %}</a>
                                     <a class="dropdown-item" href="{{ path('dashboard',{'_switch_user': u.username}) }}">{% trans %}Zu diesem User wechseln{% endtrans %}</a>

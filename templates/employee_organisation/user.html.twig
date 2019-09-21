@@ -36,10 +36,15 @@
                                     {% if is_granted('ROLE_ORG_ADMIN') %}
                                     <a class="dropdown-item" href="{{ path('city_employee_edit',{'id':u.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
                                     <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_changePw',{'id':u.id}) }}">{% trans %}Password ändern{% endtrans %}</a>
-                                    <a class="dropdown-item" href="#">{% trans %}Berechtigungen verwalten{% endtrans %}</a>
+
                                     {% endif %}
-                                    <a class="dropdown-item" href="{{ path('city_admin_city_employee_deactivate',{'id':u.id}) }}">{{ u.enabled== false?'Aktivieren':'Deaktivieren'|trans }}</a>
-                                    <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_delete',{'id':u.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                    <a class="dropdown-item" href="#">{% trans %}Berechtigungen verwalten{% endtrans %}</a>
+                                    {% if is_granted('ROLE_CITY_ADMIN') %}
+                                        <a class="dropdown-item" href="{{ path('organisation_employee_setAdmin',{'id':u.id}) }}">{{ u.hasRole('ROLE_ORG_ADMIN')?"Admin entfernen":"Admin ernennen"|trans }}</a>
+
+                                    {% endif %}
+                                    <a class="dropdown-item" href="{{ path('organisation_employee_activate',{'id':u.id}) }}">{{ u.enabled== false?'Aktivieren':'Deaktivieren'|trans }}</a>
+                                    <a class="dropdown-item" href="{{ path('organisation_employee_delete',{'id':u.id}) }}">{% trans %}Löschen{% endtrans %}</a>
 
                                 </div>
                             </div></td>
@@ -47,6 +52,7 @@
                         <td>{{ u.vorname }}</td>
                         <td>{{ u.nachname }}</td>
                         <td>{{ u.birthday|date('d.m.Y') }}</td>
+
                         <td>{{ u.enabled?"Activ":"Deaktiviert"|trans }}</td>
 
                     </tr>

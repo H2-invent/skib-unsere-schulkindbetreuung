@@ -73,16 +73,15 @@ class EmployeeOrganisationController extends AbstractController
                 $errorText = $translator->trans(
                     'Unbekannter Fehler'
                 );
-                if($userManager->findUserByEmail($defaultData->getEmail())){
+                if ($userManager->findUserByEmail($defaultData->getEmail())) {
                     $errorText = $translator->trans(
                         'Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse'
                     );
-                }elseif($userManager->findUserByUsername($defaultData->getUsername())) {
+                } elseif ($userManager->findUserByUsername($defaultData->getUsername())) {
                     $errorText = $translator->trans(
                         'Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername'
                     );
                 }
-
 
 
                 return $this->render(
@@ -93,10 +92,72 @@ class EmployeeOrganisationController extends AbstractController
             }
         }
         $title = $translator->trans('Neuen Organisationsmitarbeiter anlegen');
+
         return $this->render(
             'administrator/neu.html.twig',
             array('title' => $title, 'form' => $form->createView(), 'errors' => $errors)
         );
+    }
 
+    /**
+     * @Route("/org_edit/mitarbeiter/organisation/activate", name="organisation_employee_activate")
+     */
+    public function activate(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
+    {
+       $user = $this->manager->findUserBy(array('id'=>$request->get('id')));
+        $organisation = $user->getOrganisation();
+        if ($organisation->getStadt() != $this->getUser()->getStadt()) {
+            throw new \Exception('Wrong City');
+        }
+       if($user->isEnabled()){
+            $user->setEnabled(false);
+        }else{
+           $user->setEnabled(true);
+        }
+        $this->manager->updateUser($user);
+                $referer = $request
+                    ->headers
+                    ->get('referer');
+        return $this->redirect($referer);
+    }
+    /**
+     * @Route("/org_edit/mitarbeiter/organisation/delete", name="organisation_employee_delete")
+     */
+    public function delete(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
+    {
+        $user = $this->manager->findUserBy(array('id'=>$request->get('id')));
+        $organisation = $user->getOrganisation();
+        if ($organisation->getStadt() != $this->getUser()->getStadt()) {
+            throw new \Exception('Wrong City');
+        }
+
+        $this->manager->deleteUser($user);
+        $referer = $request
+            ->headers
+            ->get('referer');
+        return $this->redirect($referer);
+    }
+    /**
+     * @Route("/city_edit/mitarbeiter/organisation/toggleAdmin", name="organisation_employee_setAdmin")
+     */
+    public function makeAdmin(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
+    {
+        $user = $this->manager->findUserBy(array('id'=>$request->get('id')));
+        $organisation = $user->getOrganisation();
+        if ($organisation->getStadt() != $this->getUser()->getStadt()) {
+            throw new \Exception('Wrong City');
+        }
+
+        $user = $this->manager->findUserBy(array('id' => $request->get('id')));
+        if($user->hasRole('ROLE_ORG_ADMIN')){
+            $user->removeRole('ROLE_ORG_ADMIN');
+        }else{
+            $user->addRole('ROLE_ORG_ADMIN');
+        }
+        $this->manager->updateUser($user);
+        $referer = $request
+            ->headers
+            ->get('referer');
+        return $this->redirect($referer);
     }
 }

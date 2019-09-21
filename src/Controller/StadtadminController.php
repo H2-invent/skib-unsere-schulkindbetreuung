@@ -41,6 +41,20 @@ class StadtadminController extends AbstractController
         ]);
     }
     /**
+     * @Route("/admin/allUser", name="admin_showAllUser")
+     */
+    public function allUSer(Request $request)
+    {
+
+        $user = $this->manager->findUsers();
+        dump($user);
+
+        return $this->render('administrator/user.html.twig', [
+            'user' => $user,
+
+        ]);
+    }
+    /**
      * @Route("/admin/stadtUser/neu", name="admin_stadtadmin_neu")
      */
     public function neu(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
@@ -160,7 +174,7 @@ class StadtadminController extends AbstractController
             $user->addRole('ROLE_CITY_ADMIN');
         }
         $this->manager->updateUser($user);
-        return $this->redirectToRoute('admin_stadtadmin', array('id' => $user->getStadt()->getId()));  $referer = $request
+        $referer = $request
         ->headers
         ->get('referer');
         return $this->redirect($referer);
