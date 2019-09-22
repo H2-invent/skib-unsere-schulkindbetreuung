@@ -38,14 +38,15 @@
                                     <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_changePw',{'id':u.id}) }}">{% trans %}Password ändern{% endtrans %}</a>
 
                                     {% endif %}
-                                    <a class="dropdown-item" href="#">{% trans %}Berechtigungen verwalten{% endtrans %}</a>
-                                    {% if is_granted('ROLE_CITY_ADMIN') %}
+                                     {% if is_granted('ROLE_CITY_ADMIN') %}
                                         <a class="dropdown-item" href="{{ path('organisation_employee_setAdmin',{'id':u.id}) }}">{{ u.hasRole('ROLE_ORG_ADMIN')?"Admin entfernen":"Admin ernennen"|trans }}</a>
 
                                     {% endif %}
-                                    <a class="dropdown-item" href="{{ path('organisation_employee_activate',{'id':u.id}) }}">{{ u.enabled== false?'Aktivieren':'Deaktivieren'|trans }}</a>
+                                    {% if is_granted('ROLE_ORG_EDITOR') %}
+                                        <a class="dropdown-item" href="{{ path('org_admin_mitarbeiter_roles',{'id':u.id}) }}">{% trans %}Berechtigungen verwalten{% endtrans %}</a>
+                                        <a class="dropdown-item" href="{{ path('organisation_employee_activate',{'id':u.id}) }}">{{ u.enabled== false?'Aktivieren':'Deaktivieren'|trans }}</a>
                                     <a class="dropdown-item" href="{{ path('organisation_employee_delete',{'id':u.id}) }}">{% trans %}Löschen{% endtrans %}</a>
-
+                                    {% endif %}
                                 </div>
                             </div></td>
                         <td>{{ u.username }}</td>

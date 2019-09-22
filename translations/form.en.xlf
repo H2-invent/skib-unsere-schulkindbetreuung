@@ -149,6 +149,18 @@
         <source>Logo hochladen</source>
         <target>Upload logo</target>
       </trans-unit>
+      <trans-unit id="roLM7g7" resname="ROLE_CITY_DASHBOARD">
+        <source>ROLE_CITY_DASHBOARD</source>
+        <target>__Darf das Dashboard sehen</target>
+      </trans-unit>
+      <trans-unit id="BknEXmv" resname="ROLE_CITY_SCHOOL">
+        <source>ROLE_CITY_SCHOOL</source>
+        <target>__Darf Schulen sehen und bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="ECv3Tkr" resname="ROLE_CITY_REPORT">
+        <source>ROLE_CITY_REPORT</source>
+        <target>__Darf Report zu den ORganisationen sehen</target>
+      </trans-unit>
       <trans-unit id="bRV2_kJ" resname="Username*">
         <source>Username*</source>
         <target>Username*</target>

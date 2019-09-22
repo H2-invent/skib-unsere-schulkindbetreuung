@@ -36,7 +36,7 @@
                                     <a class="dropdown-item" href="{{ path('city_employee_edit',{'id':u.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
                                     <a class="dropdown-item" href="{{ path('city_admin_city_employee_deactivate',{'id':u.id}) }}">{{ u.enabled== false?'Aktivieren':'Deaktivieren'|trans }}</a>
                                     <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_changePw',{'id':u.id}) }}">{% trans %}Password ändern{% endtrans %}</a>
-                                    <a class="dropdown-item" href="#">{% trans %}Berechtigungen verwalten{% endtrans %}</a>
+                                    <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_roles',{'id':u.id}) }}">{% trans %}Berechtigungen verwalten{% endtrans %}</a>
                                     <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_delete',{'id':u.id}) }}">{% trans %}Löschen{% endtrans %}</a>
 
                                 </div>

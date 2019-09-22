@@ -8,6 +8,8 @@ use App\Entity\User;
 use App\Form\Type\UserType;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -55,6 +57,7 @@ class EmployeeOrganisationController extends AbstractController
         }
         $defaultData = $this->manager->createUser();
         $defaultData->setOrganisation($organisation);
+        $defaultData->setStadt($organisation->getStadt());
         $errors = array();
         $form = $this->createForm(UserType::class, $defaultData);
 
@@ -66,8 +69,8 @@ class EmployeeOrganisationController extends AbstractController
                 $defaultData->setEnabled(true);
                 $userManager = $this->manager;
                 $userManager->updateUser($defaultData);
-
-                return $this->redirectToRoute('city_employee_org_show', array('id' => $organisation->getId()));
+                $text = $translator->trans('Erfolgreich gespeichert');
+                return $this->redirectToRoute('city_employee_org_show', array('snack'=>$text,'id' => $organisation->getId()));
             } catch (\Exception $e) {
                 $userManager = $this->manager;
                 $errorText = $translator->trans(
@@ -159,5 +162,66 @@ class EmployeeOrganisationController extends AbstractController
             ->headers
             ->get('referer');
         return $this->redirect($referer);
+    }
+    /**
+     * @Route("login/org_edit/userRoles", name="org_admin_mitarbeiter_roles")
+     */
+    public function UserRoles(Request $request, TranslatorInterface $translator)
+    {
+        $user = $this->manager->findUserBy(array('id'=>$request->get('id')));
+        $organisation = $user->getOrganisation();
+        if ($user->getStadt() != $this->getUser()->getStadt()) {
+            throw new \Exception('Wrong City');
+        }
+
+        $roles = array();
+        foreach ($user->getRoles() as $data) {
+            $roles[$data] = true;
+        }
+
+        $availRole = array(
+            'ROLE_ORG_REPORT' => 'ROLE_ORG_REPORT',
+            'ROLE_ORG_CHILD_CHANGE' => 'ROLE_ORG_CHILD_CHANGE',
+            'ROLE_ORG_CHILD_SHOW' => 'ROLE_ORG_CHILD_SHOW',
+            'ROLE_ORG_ACCOUNTING'=>'ROLE_ORG_ACCOUNTING',
+            'ROLE_ORG_BLOCK_MANAGEMENT'=>'ROLE_ORG_BLOCK_MANAGEMENT',
+            'ROLE_ORG_SHOOL'=>'ROLE_ORG_SHOOL'
+
+        );
+
+        $form = $this->createFormBuilder($roles);
+        foreach ($availRole as $key => $data) {
+            $form->add(
+                $key,
+                CheckboxType::class,
+                array('required' => false, 'label' => $data,'translation_domain' => 'form')
+            );
+        }
+        $form->add('Speichern', SubmitType::class,array('translation_domain' => 'form'));
+        $formI = $form->getForm();
+        $formI->handleRequest($request);
+
+
+        if ($formI->isSubmitted() && $formI->isValid()) {
+
+            $roles = $formI->getData();
+
+            foreach ($user->getRoles() as $item) {
+                $user->removeRole($item);
+            }
+            $user->addRole('ROLE_USER');
+
+            foreach ($roles as $key => $item) {
+                if ($item == true) {
+                    $user->addRole($key);
+                }
+            }
+            $this->manager->updateUser($user);
+
+            $text = $translator->trans('Erfolgreich gespeichert');
+            return $this->redirectToRoute('city_employee_org_show', array('snack'=>$text,'id' => $user->getOrganisation()->getId()));
+        }
+
+        return $this->render('administrator/EditRoles.twig', array('user'=>$user, 'form' => $formI->createView()));
     }
 }

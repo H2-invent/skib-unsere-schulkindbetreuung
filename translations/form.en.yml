@@ -34,4 +34,6 @@ Hauptfarbe(HTML Code): __Hauptfarbe(HTML Code)
 Akzentfarbe (HTML Code): __Akzentfarbe (HTML Code)
 Akzentfarbe Fehler (HTML Code): __Akzentfarbe Fehler (HTML Code)
 Logo hochladen: Upload logo
-
+ROLE_CITY_DASHBOARD: __Darf das Dashboard sehen
+ROLE_CITY_SCHOOL: __Darf Schulen sehen und bearbeiten
+ROLE_CITY_REPORT: __Darf Report zu den ORganisationen sehen

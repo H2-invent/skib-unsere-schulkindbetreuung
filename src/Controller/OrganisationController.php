@@ -71,7 +71,7 @@ class OrganisationController extends AbstractController
 
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
         $city = $organisation->getStadt();
-        if($organisation->getStadt() != $this->getUser()->getStadt()){
+        if($organisation->getStadt() != $this->getUser()->getStadt() && $this->getUser()->getOrganisation()!= $organisation){
             throw new \Exception('Wrong City');
         }
 
@@ -85,7 +85,7 @@ class OrganisationController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($organisation);
                 $em->flush();
-                return $this->redirectToRoute('city_admin_organisation_show',array('id'=>$city->getId()));
+                return $this->redirectToRoute('city_admin_organisation_detail',array('id'=>$organisation->getId()));
             }
 
         }
@@ -111,14 +111,13 @@ class OrganisationController extends AbstractController
         return $this->redirectToRoute('city_admin_organisation_show',array('id'=>$city->getId()));
     }
     /**
-     * @Route("/city_admin/organisation/detail", name="city_admin_organisation_detail",methods={"GET"})
+     * @Route("/org_edit/organisation/detail", name="city_admin_organisation_detail",methods={"GET"})
      */
     public function detailSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
-        dump($organisation);
         $city = $organisation->getStadt();
-        if($organisation->getStadt() != $this->getUser()->getStadt()){
+        if($organisation->getStadt() != $this->getUser()->getStadt() && $this->getUser()->getOrganisation()!= $organisation){
             throw new \Exception('Wrong City');
         }
         return $this->render('cityAdminOrganisation/organisationDetail.html.twig',array('stadt'=>$city,'organisation'=>$organisation));

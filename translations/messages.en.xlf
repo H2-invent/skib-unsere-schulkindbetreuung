@@ -261,6 +261,14 @@
         <source>Admin ernennen</source>
         <target>Promote Admin</target>
       </trans-unit>
+      <trans-unit id="8DI4NlC" resname="Erfolgreich gespeichert">
+        <source>Erfolgreich gespeichert</source>
+        <target>Sucessfull saved</target>
+      </trans-unit>
+      <trans-unit id="mUvkJi5" resname="Berechtigungen für %vorname% %nachname%">
+        <source>Berechtigungen für %vorname% %nachname%</source>
+        <target>Accessrights for Employee %vorname% %nachname%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

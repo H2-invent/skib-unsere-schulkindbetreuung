@@ -86,7 +86,7 @@ class SchuleController extends AbstractController
 
     }
     /**
-     * @Route("/city_schule/edit", name="city_admin_schule_edit",methods={"GET","POST"})
+     * @Route("/org_shool/edit", name="city_admin_schule_edit",methods={"GET","POST"})
      */
     public function editSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
@@ -154,7 +154,7 @@ class SchuleController extends AbstractController
         return $this->redirectToRoute('city_admin_schule_show',array('id'=>$city->getId()));
     }
     /**
-     * @Route("/city_schule/detail", name="city_admin_schule_detail",methods={"GET"})
+     * @Route("/org_shool/detail", name="city_admin_schule_detail",methods={"GET"})
      */
     public function detailSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
