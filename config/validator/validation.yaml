@@ -10,3 +10,44 @@ App\Entity\Stammdaten:
               - NotBlank: ~
         iban:
               - NotBlank: ~
+App\Entity\Stadt:
+    properties:
+        Name:
+            - NotBlank: ~
+        slug:
+            - NotBlank: ~
+        email:
+            - NotBlank: ~
+        telefon:
+            - NotBlank: ~
+        adresse:
+            - NotBlank: ~
+        plz:
+            - NotBlank: ~
+        ort:
+            - NotBlank: ~
+        ansprechpartner:
+            - NotBlank: ~
+        infoText:
+            - NotBlank: ~
+
+App\Entity\Schule:
+    properties:
+        name:
+            - NotBlank: ~
+        adresse:
+            - NotBlank: ~
+        plz:
+            - NotBlank: ~
+        ort:
+            - NotBlank: ~
+App\Entity\Organisation:
+    properties:
+        name:
+            - NotBlank: ~
+        adresse:
+            - NotBlank: ~
+        plz:
+            - NotBlank: ~
+        ort:
+            - NotBlank: ~

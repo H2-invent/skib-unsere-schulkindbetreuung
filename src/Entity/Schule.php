@@ -5,9 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SchuleRepository")
+ * @Vich\Uploadable
  */
 class Schule
 {
@@ -25,7 +28,7 @@ class Schule
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="schule")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $organisation;
 
@@ -35,9 +38,51 @@ class Schule
     private $zeitblocks;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\stadt", inversedBy="schules")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="schules")
      */
     private $stadt;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $adresszusatz;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $plz;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $ort;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $deleted = false;
+    /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     * @var string
+     */
+    private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="profil_picture", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -114,5 +159,92 @@ class Schule
         $this->stadt = $stadt;
 
         return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getAdresszusatz(): ?string
+    {
+        return $this->adresszusatz;
+    }
+
+    public function setAdresszusatz(?string $adresszusatz): self
+    {
+        $this->adresszusatz = $adresszusatz;
+
+        return $this;
+    }
+
+    public function getPlz(): ?string
+    {
+        return $this->plz;
+    }
+
+    public function setPlz(string $plz): self
+    {
+        $this->plz = $plz;
+
+        return $this;
+    }
+
+    public function getOrt(): ?string
+    {
+        return $this->ort;
+    }
+
+    public function setOrt(string $ort): self
+    {
+        $this->ort = $ort;
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
     }
 }

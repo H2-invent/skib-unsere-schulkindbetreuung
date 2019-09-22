@@ -9,6 +9,10 @@ namespace App\Controller;
 
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use App\Form\Type\StadtType;
+use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
+use Beelab\Recaptcha2Bundle\Validator\Constraints\Recaptcha2;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -21,14 +25,14 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class workflowController  extends AbstractController
 {
     /**
-    * @Route("/{stadt}/start",name="workflow_start",methods={"GET"})
+    * @Route("/{slug}/start",name="workflow_start",methods={"GET"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
     */
-    public function welcomeAction(Request $request, $stadt)
+    public function welcomeAction(Request $request, Stadt $stadt)
     {
 
-       $city = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(['slug'=>$stadt]);
 
-        return $this->render('workflow/start.html.twig',array('stadt'=>$city));
+        return $this->render('workflow/start.html.twig',array('stadt'=>$stadt));
     }
     /**
      * @Route("/{stadt}/adresse",name="workflow_adresse",methods={"GET","POST"})
@@ -52,7 +56,12 @@ class workflowController  extends AbstractController
             ->add('notfallkontakt', TextType::class,['label'=>'Notfallkontakt','translation_domain' => 'form'])
             ->add('iban', TextType::class,['label'=>'IBAN für das Lastschriftmandat','translation_domain' => 'form'])
             ->add('sepaInfo', CheckboxType::class,['label'=>'SEPA-LAstschrift Mandat wird elektromisch erteilt','translation_domain' => 'form'])
+           // ->add('captcha', RecaptchaType::class, [
+                // "groups" option is not mandatory
+
+            //])
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
+
             ->getForm();
         $form->handleRequest($request);
         $errors = array();
@@ -63,8 +72,10 @@ class workflowController  extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($adresse);
                 $em->flush();
+            }else{
+                // return $this->redirectToRoute('task_success');
             }
-           // return $this->redirectToRoute('task_success');
+
         }
 
         return $this->render('workflow/adresse.html.twig',array('stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));

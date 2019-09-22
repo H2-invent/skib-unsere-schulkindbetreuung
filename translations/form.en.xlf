@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="de" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target>Last name</target>
+      </trans-unit>
+      <trans-unit id="0td7b.p" resname="Vorname">
+        <source>Vorname</source>
+        <target>First name</target>
+      </trans-unit>
+      <trans-unit id="WKN3jBj" resname="Straße">
+        <source>Straße</source>
+        <target>Street</target>
+      </trans-unit>
+      <trans-unit id="Jznf_ZI" resname="Adresszusatz">
+        <source>Adresszusatz</source>
+        <target>Adress additional</target>
+      </trans-unit>
+      <trans-unit id="1zm99PQ" resname="Netto Haushaltseinkommen">
+        <source>Netto Haushaltseinkommen</source>
+        <target>Netto Income</target>
+      </trans-unit>
+      <trans-unit id="9rL.OfV" resname="Speichern">
+        <source>Speichern</source>
+        <target>Save</target>
+      </trans-unit>
+      <trans-unit id="ocfCnkj" resname="Kind im Kindergarten">
+        <source>Kind im Kindergarten</source>
+        <target>Kids in the Kindergarten</target>
+      </trans-unit>
+      <trans-unit id=".1vHbRv" resname="BUK Empfänger">
+        <source>BUK Empfänger</source>
+        <target>BUC reciever</target>
+      </trans-unit>
+      <trans-unit id="U5zZGkQ" resname="Berufliche Situation der Eltern">
+        <source>Berufliche Situation der Eltern</source>
+        <target>Profession of the parents</target>
+      </trans-unit>
+      <trans-unit id="soWzzWN" resname="Notfallkontakt">
+        <source>Notfallkontakt</source>
+        <target>Emergency contact</target>
+      </trans-unit>
+      <trans-unit id="ap89FH4" resname="IBAN für das Lastschriftmandat">
+        <source>IBAN für das Lastschriftmandat</source>
+        <target>IBAN for SEPA</target>
+      </trans-unit>
+      <trans-unit id="g0ZIpDI" resname="SEPA-LAstschrift Mandat wird elektromisch erteilt">
+        <source>SEPA-LAstschrift Mandat wird elektromisch erteilt</source>
+        <target>SEPA electronic</target>
+      </trans-unit>
+      <trans-unit id="KAAmbDC" resname="Name der Stadt">
+        <source>Name der Stadt</source>
+        <target>Name of the city</target>
+      </trans-unit>
+      <trans-unit id="5mcEF4b" resname="Slug der Stadt">
+        <source>Slug der Stadt</source>
+        <target>Slug of the city</target>
+      </trans-unit>
+      <trans-unit id="47ienTP" resname="Username">
+        <source>Username</source>
+        <target>Username</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="o2wQFXD" resname="Passwort">
+        <source>Passwort</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="JS90orN" resname="Geburtstag">
+        <source>Geburtstag</source>
+        <target>Birthday</target>
+      </trans-unit>
+      <trans-unit id="57ZpmAx" resname="Name der Schule">
+        <source>Name der Schule</source>
+        <target>Name of the School</target>
+      </trans-unit>
+      <trans-unit id="xhJ.1EZ" resname="PLZ">
+        <source>PLZ</source>
+        <target>PLZ</target>
+      </trans-unit>
+      <trans-unit id="Inm9E03" resname="Stadt">
+        <source>Stadt</source>
+        <target>City</target>
+      </trans-unit>
+      <trans-unit id="wyhu2rk" resname="Name der Organisation">
+        <source>Name der Organisation</source>
+        <target>Name of the organisation</target>
+      </trans-unit>
+      <trans-unit id="2Bz6Sw." resname="BIC">
+        <source>BIC</source>
+        <target>BIC</target>
+      </trans-unit>
+      <trans-unit id="e1gvFKc" resname="Name der Bank">
+        <source>Name der Bank</source>
+        <target>Name of the Bank</target>
+      </trans-unit>
+      <trans-unit id="lvu8ikT" resname="Gläubiger ID">
+        <source>Gläubiger ID</source>
+        <target>__Gläubiger ID</target>
+      </trans-unit>
+      <trans-unit id="08zDV_x" resname="Info Text">
+        <source>Info Text</source>
+        <target>Info text</target>
+      </trans-unit>
+      <trans-unit id="trRMl.i" resname="Telefonnummer">
+        <source>Telefonnummer</source>
+        <target>Phone</target>
+      </trans-unit>
+      <trans-unit id="lxAV2Ac" resname="SMTP Server">
+        <source>SMTP Server</source>
+        <target>SMTP Server</target>
+      </trans-unit>
+      <trans-unit id="DR22.sp" resname="SMTP Port">
+        <source>SMTP Port</source>
+        <target>SMTP Port</target>
+      </trans-unit>
+      <trans-unit id="OfICate" resname="SMTP Username">
+        <source>SMTP Username</source>
+        <target>SMTP Username</target>
+      </trans-unit>
+      <trans-unit id="0SVxZk_" resname="SMTP Passwort">
+        <source>SMTP Passwort</source>
+        <target>SMTP Password</target>
+      </trans-unit>
+      <trans-unit id="OsNmCHb" resname="Ansprechpartner">
+        <source>Ansprechpartner</source>
+        <target>__Ansprechpartner</target>
+      </trans-unit>
+      <trans-unit id="2JrUH.8" resname="Hauptfarbe(HTML Code)">
+        <source>Hauptfarbe(HTML Code)</source>
+        <target>__Hauptfarbe(HTML Code)</target>
+      </trans-unit>
+      <trans-unit id=".GQ_BWL" resname="Akzentfarbe (HTML Code)">
+        <source>Akzentfarbe (HTML Code)</source>
+        <target>__Akzentfarbe (HTML Code)</target>
+      </trans-unit>
+      <trans-unit id="0XAGtFj" resname="Akzentfarbe Fehler (HTML Code)">
+        <source>Akzentfarbe Fehler (HTML Code)</source>
+        <target>__Akzentfarbe Fehler (HTML Code)</target>
+      </trans-unit>
+      <trans-unit id="Bm5i4vE" resname="Logo hochladen">
+        <source>Logo hochladen</source>
+        <target>Upload logo</target>
+      </trans-unit>
+      <trans-unit id="roLM7g7" resname="ROLE_CITY_DASHBOARD">
+        <source>ROLE_CITY_DASHBOARD</source>
+        <target>__Darf das Dashboard sehen</target>
+      </trans-unit>
+      <trans-unit id="BknEXmv" resname="ROLE_CITY_SCHOOL">
+        <source>ROLE_CITY_SCHOOL</source>
+        <target>__Darf Schulen sehen und bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="ECv3Tkr" resname="ROLE_CITY_REPORT">
+        <source>ROLE_CITY_REPORT</source>
+        <target>__Darf Report zu den ORganisationen sehen</target>
+      </trans-unit>
+      <trans-unit id="bRV2_kJ" resname="Username*">
+        <source>Username*</source>
+        <target>Username*</target>
+      </trans-unit>
+      <trans-unit id="Yd.wICY" resname="Email*">
+        <source>Email*</source>
+        <target>Email*</target>
+      </trans-unit>
+      <trans-unit id="7MN.vDM" resname="Password*">
+        <source>Password*</source>
+        <target>Password*</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

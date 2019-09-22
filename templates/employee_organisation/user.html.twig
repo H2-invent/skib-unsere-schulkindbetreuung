@@ -1,0 +1,75 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+<section class="dashboard-counts section-padding">
+    <div class="container-fluid ">
+        <div class="row">
+            <!-- Count item widget-->
+            <div class=" col-12 card">
+                <div class="card-header">
+                  <h1> {% trans with {'%org%':organisation.name} %}Mitarbeiter der Organisation %org%{% endtrans %}  <a href="{{ path('organisation_employee_new',{'id':organisation.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                         <i class="material-icons">add</i>
+                      </button></a></h1>
+                </div>
+<div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>{% trans %}Username{% endtrans %}</th>
+                        <th>{% trans %}Vorname{% endtrans %}</th>
+                        <th>{% trans %}Nachname{% endtrans %}</th>
+                        <th>{% trans %}Geburtstag{% endtrans %}</th>
+
+                        <th>{% trans %}Status{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for u in user %}
+                        {% if not u.hasRole('ROLE_CITY_ADMIN') %}
+                    <tr>
+                        <td> <div class="btn-group">
+                                <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                    {% if is_granted('ROLE_ORG_ADMIN') %}
+                                    <a class="dropdown-item" href="{{ path('org_employee_edit',{'id':u.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                    <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_changePw',{'id':u.id}) }}">{% trans %}Password ändern{% endtrans %}</a>
+
+                                    {% endif %}
+                                     {% if is_granted('ROLE_CITY_ADMIN') %}
+                                        <a class="dropdown-item" href="{{ path('organisation_employee_setAdmin',{'id':u.id}) }}">{{ u.hasRole('ROLE_ORG_ADMIN')?"Admin entfernen":"Admin ernennen"|trans }}</a>
+
+                                    {% endif %}
+                                    {% if is_granted('ROLE_ORG_EDITOR') %}
+                                        <a class="dropdown-item" href="{{ path('org_admin_mitarbeiter_roles',{'id':u.id}) }}">{% trans %}Berechtigungen verwalten{% endtrans %}</a>
+                                        <a class="dropdown-item" href="{{ path('organisation_employee_activate',{'id':u.id}) }}">{{ u.enabled== false?'Aktivieren':'Deaktivieren'|trans }}</a>
+                                    <a class="dropdown-item" href="{{ path('organisation_employee_delete',{'id':u.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                    {% endif %}
+                                </div>
+                            </div></td>
+                        <td>{{ u.username }}</td>
+                        <td>{{ u.vorname }}</td>
+                        <td>{{ u.nachname }}</td>
+                        <td>{{ u.birthday|date('d.m.Y') }}</td>
+
+                        <td>{{ u.enabled?"Activ":"Deaktiviert"|trans }}</td>
+
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+</div>
+
+                {% for u in user %}
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

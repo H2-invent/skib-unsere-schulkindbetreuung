@@ -10,3 +10,30 @@ Berufliche Situation der Eltern: Profession of the parents
 Notfallkontakt: Emergency contact
 IBAN für das Lastschriftmandat: IBAN for SEPA
 SEPA-LAstschrift Mandat wird elektromisch erteilt: SEPA electronic
+Name der Stadt: Name of the city
+Slug der Stadt: Slug of the city
+Username: Username
+Email: Email
+Passwort: Password
+Geburtstag: Birthday
+Name der Schule: Name of the School
+PLZ: PLZ
+Stadt: City
+Name der Organisation: Name of the organisation
+BIC: BIC
+Name der Bank: Name of the Bank
+Gläubiger ID: __Gläubiger ID
+Info Text: Info text
+Telefonnummer: Phone
+SMTP Server: SMTP Server
+SMTP Port: SMTP Port
+SMTP Username: SMTP Username
+SMTP Passwort: SMTP Password
+Ansprechpartner: __Ansprechpartner
+Hauptfarbe(HTML Code): __Hauptfarbe(HTML Code)
+Akzentfarbe (HTML Code): __Akzentfarbe (HTML Code)
+Akzentfarbe Fehler (HTML Code): __Akzentfarbe Fehler (HTML Code)
+Logo hochladen: Upload logo
+ROLE_CITY_DASHBOARD: __Darf das Dashboard sehen
+ROLE_CITY_SCHOOL: __Darf Schulen sehen und bearbeiten
+ROLE_CITY_REPORT: __Darf Report zu den ORganisationen sehen

@@ -19,7 +19,7 @@ class Kind
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\stammdaten", inversedBy="kinds")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Stammdaten", inversedBy="kinds")
      * @ORM\JoinColumn(nullable=false)
      */
     private $eltern;

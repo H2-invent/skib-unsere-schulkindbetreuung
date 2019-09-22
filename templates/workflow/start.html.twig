@@ -1,5 +1,6 @@
 {% extends 'workflow/base.html.twig' %}
 {% block content %}
+    <img class=" card-img" src="{{ vich_uploader_asset(stadt, 'imageFile') }}">
         <h1 class="cover-heading">{{ stadt.name }}</h1>
         <p class="lead">{% trans with {"%name%":stadt.name} %}Melden Sie hier ihre Kinder für die Ganztagsbetreuung der Stadt %name% an{% endtrans %}</p>
         <p class="lead">

@@ -1,0 +1,53 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+<section class="dashboard-counts section-padding">
+    <div class="container-fluid ">
+        <div class="row">
+            <!-- Count item widget-->
+            <div class=" col-12 card">
+                <div class="card-header">
+                  <h1> {% trans %}Städte{% endtrans %}  <a href="{{ path('admin_stadt_neu') }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                         <i class="material-icons">add</i>
+                      </button></a></h1>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>{% trans %}Name{% endtrans %}</th>
+                            <th>{% trans %}Slug{% endtrans %}</th>
+                            <th>{% trans %}URL{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for c in city %}
+                            <tr>
+                                <td>
+                                    <div class="btn-group">
+                                        <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="material-icons">more_vert</i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                            <a class="dropdown-item" href="{{ path('admin_stadt_edit',{'id':c.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                            <a class="dropdown-item" href="{{ path('admin_stadtadmin',{'id':c.id}) }}">{% trans %}Städte Administratoren{% endtrans %}</a>
+                                            <a class="dropdown-item" href="{{ path('admin_stadt_delete',{'id':c.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ c.name }}</td>
+                                <td>{{ c.slug }}</td>
+                                <td><a href="{{ url('workflow_start',{'slug':c.slug}) }}"> {{ url('workflow_start',{'slug':c.slug}) }}</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

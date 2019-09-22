@@ -1,0 +1,7 @@
+/* your styles go here */
+td{
+    vertical-align: middle!important;
+}
+.required:after {
+    content: "*";
+}

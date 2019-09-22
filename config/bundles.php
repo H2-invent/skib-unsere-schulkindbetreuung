@@ -16,4 +16,8 @@ return [
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
     FOS\UserBundle\FOSUserBundle::class => ['all' => true],
     Shivas\VersioningBundle\ShivasVersioningBundle::class => ['all' => true],
+    League\FlysystemBundle\FlysystemBundle::class => ['all' => true],
+    Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
+    Beelab\Recaptcha2Bundle\BeelabRecaptcha2Bundle::class => ['all' => true],
+    JMS\I18nRoutingBundle\JMSI18nRoutingBundle::class => ['all' => true],
 ];
