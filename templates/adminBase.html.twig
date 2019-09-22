@@ -173,10 +173,12 @@
                             </ul>
                         </li>
                         <!-- Languages dropdown    -->
-                        <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="{{ asset('images/flags/16/GB.png') }}" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
+                        <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><span class="d-none d-sm-inline-block">{% trans %}Sprache{% endtrans %}</span></a>
                             <ul aria-labelledby="languages" class="dropdown-menu">
-                                <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="{{ asset('images/flags/16/DE.png') }}" alt="English" class="mr-2"><span>German</span></a></li>
-                                <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="{{ asset('images/flags/16/FR.png') }}" alt="English" class="mr-2"><span>French                                                         </span></a></li>
+                                <li><a rel="nofollow" href="{{ path("dashboard", {"_locale": "de"}) }}" class="dropdown-item"> <img src="{{ asset('images/flags/16/DE.png') }}" alt="English" class="mr-2"><span>German</span></a></li>
+                                <li><a rel="nofollow" href="{{ path("dashboard", {"_locale": "fr"}) }}" class="dropdown-item"> <img src="{{ asset('images/flags/16/FR.png') }}" alt="English" class="mr-2"><span>French</span></a></li>
+                                <li><a rel="nofollow" href="{{ path("dashboard", {"_locale": "en"}) }}" class="dropdown-item"> <img src="{{ asset('images/flags/16/GB.png') }}" alt="English" class="mr-2"><span>English</span></a></li>
+
                             </ul>
                         </li>
                         <!-- Log out-->
