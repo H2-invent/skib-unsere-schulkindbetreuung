@@ -73,7 +73,8 @@ class StadtadminController extends AbstractController
                 $defaultData->setEnabled(true);
                 $defaultData->addRole('ROLE_CTY_ADMIN');
                 $this->manager->updateUser($defaultData);
-                return $this->redirectToRoute('admin_stadtadmin',array('id'=>$city->getId()));
+                $text = $translator->trans('Erfolgreich angelegt');
+                return $this->redirectToRoute('admin_stadtadmin',array('snack'=>$text,'id'=>$city->getId()));
             }catch ( \Exception $e) {
                 $errorText = $translator->trans('Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse');
                 return $this->render(
@@ -106,7 +107,8 @@ class StadtadminController extends AbstractController
                 $defaultData = $form->getData();
                 $userManager = $this->manager;
                 $userManager->updateUser($defaultData);
-                return $this->redirectToRoute('admin_stadtadmin',array('id'=>$defaultData->getStadt()->getId()));
+                $text = $translator->trans('Erfolgreich geändert');
+                return $this->redirectToRoute('admin_stadtadmin',array('snack'=>$text,'id'=>$defaultData->getStadt()->getId()));
             }catch ( \Exception $e) {
                 $errorText = $translator->trans('Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse');
                 return $this->render(
@@ -144,8 +146,8 @@ class StadtadminController extends AbstractController
                 $defaultData = $form->getData();
                 $userManager = $this->manager;
                 $userManager->updateUser($defaultData);
-
-                return $this->redirectToRoute('admin_stadtadmin', array('id' => $defaultData->getStadt()->getId()));
+                $text = $translator->trans('Passwort erfolgreich geändert');
+                return $this->redirectToRoute('admin_stadtadmin', array('snack'=>$text,'id' => $defaultData->getStadt()->getId()));
             } catch (\Exception $e) {
                 $errorText = $translator->trans(
                     'Das Passwort konnte nich geändert werden'

@@ -45,7 +45,51 @@ class EmployeeOrganisationController extends AbstractController
             ]
         );
     }
+    /**
+     * @Route("/org_admin/mitarbeiter/edit", name="org_employee_edit",methods={"POST","GET"})
+     */
+    public function edit(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
+    {
 
+        $defaultData = $this->manager->findUserBy(array('id' => $request->get('id')));
+        if ($defaultData->getOrganisation() != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong City');
+        }
+        $city = $defaultData->getStadt();
+        $errors = array();
+        $form = $this->createForm(UserType::class, $defaultData);
+        $form->remove('plainPassword');
+        $form->remove('username');
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $defaultData = $form->getData();
+                $userManager = $this->manager;
+                $userManager->updateUser($defaultData);
+                $text = $translator->trans('Erfolgreich gespeichert');
+                return $this->redirectToRoute('city_employee_org_show', array('snack'=>$text,'id' => $defaultData->getOrganisation()->getId()));
+            } catch (\Exception $e) {
+                $errorText = $translator->trans(
+                    'Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse'
+                );
+
+                return $this->render(
+                    'administrator/error.html.twig',
+                    array('error' => $errorText)
+                );
+
+            }
+        }
+
+        $title = $translator->trans('Neuen Stadtmitarbeiter anlegen');
+
+        return $this->render(
+            'administrator/neu.html.twig',
+            array('title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors)
+        );
+
+    }
     /**
      * @Route("/org_edit/mitarbeiter/organisation/neu", name="organisation_employee_new")
      */

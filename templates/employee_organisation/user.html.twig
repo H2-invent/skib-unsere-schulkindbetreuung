@@ -34,7 +34,7 @@
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
                                     {% if is_granted('ROLE_ORG_ADMIN') %}
-                                    <a class="dropdown-item" href="{{ path('city_employee_edit',{'id':u.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                    <a class="dropdown-item" href="{{ path('org_employee_edit',{'id':u.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
                                     <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_changePw',{'id':u.id}) }}">{% trans %}Password ändern{% endtrans %}</a>
 
                                     {% endif %}

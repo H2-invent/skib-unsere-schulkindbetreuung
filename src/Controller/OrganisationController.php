@@ -55,7 +55,8 @@ class OrganisationController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($organisation);
                 $em->flush();
-                return $this->redirectToRoute('city_admin_organisation_show',array('id'=>$city->getId()));
+                $text = $translator->trans('Erfolgreich angelegt');
+                return $this->redirectToRoute('city_admin_organisation_show',array('snack'=>$text,'id'=>$city->getId()));
             }
 
         }
@@ -85,7 +86,8 @@ class OrganisationController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($organisation);
                 $em->flush();
-                return $this->redirectToRoute('city_admin_organisation_detail',array('id'=>$organisation->getId()));
+                $text = $translator->trans('Erfolgreich geändert');
+                return $this->redirectToRoute('city_admin_organisation_detail',array('snack'=>$text,'id'=>$organisation->getId()));
             }
 
         }
@@ -108,7 +110,8 @@ class OrganisationController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($organisation);
         $em->flush();
-        return $this->redirectToRoute('city_admin_organisation_show',array('id'=>$city->getId()));
+        $text = $translator->trans('Erfolgreich gelöscht');
+        return $this->redirectToRoute('city_admin_organisation_show',array('snack'=>$text,'id'=>$city->getId()));
     }
     /**
      * @Route("/org_edit/organisation/detail", name="city_admin_organisation_detail",methods={"GET"})

@@ -24,7 +24,7 @@
                                    {{ schule.adresszusatz }},
                                    {{ schule.plz }} {{ schule.ort }}
                                </li>
-                               <li class="list-group-item"><h2>{% trans %} Organistaion{% endtrans %}: </h2> <a href="{{ path('city_admin_organisation_detail',{'id':schule.organisation.id}) }}"> {{ schule.organisation.name }}</a></li>
+                               <li class="list-group-item"><h2>{% trans %} Organistaion{% endtrans %}: </h2> {% if schule.organisation is not null %}<a href="{{ path('city_admin_organisation_detail',{'id':schule.organisation.id}) }}"> {{ schule.organisation.name }}</a>{% else %}{% trans %}Keine Organisation angegeben{% endtrans %}{% endif %}</li>
 
                            </ul>
                        </div>

@@ -50,7 +50,7 @@ class SchuleController extends AbstractController
         $form = $this->createFormBuilder($school)
             ->add('name', TextType::class,['label'=>'Name der Schule','translation_domain' => 'form'])
             ->add('adresse', TextType::class,['label'=>'Straße','translation_domain' => 'form'])
-            ->add('adresszusatz', TextType::class,['label'=>'Adresszusatz','translation_domain' => 'form'])
+            ->add('adresszusatz', TextType::class,['required'=>false,'label'=>'Adresszusatz','translation_domain' => 'form'])
             ->add('plz', TextType::class,['label'=>'PLZ','translation_domain' => 'form'])
             ->add('ort', TextType::class,['label'=>'Stadt','translation_domain' => 'form'])
             ->add('organisation', EntityType::class, [
@@ -102,7 +102,7 @@ class SchuleController extends AbstractController
         $form = $this->createFormBuilder($school)
             ->add('name', TextType::class,['label'=>'Name der Schule','translation_domain' => 'form'])
             ->add('adresse', TextType::class,['label'=>'Straße','translation_domain' => 'form'])
-            ->add('adresszusatz', TextType::class,['label'=>'Adresszusatz','translation_domain' => 'form'])
+            ->add('adresszusatz', TextType::class,['required'=>false,'label'=>'Adresszusatz','translation_domain' => 'form'])
             ->add('plz', TextType::class,['label'=>'PLZ','translation_domain' => 'form'])
             ->add('ort', TextType::class,['label'=>'Stadt','translation_domain' => 'form'])
             ->add('organisation', EntityType::class, [

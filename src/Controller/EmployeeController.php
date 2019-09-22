@@ -33,7 +33,7 @@ class EmployeeController extends AbstractController
         if ($city != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
-        $user = $this->getDoctrine()->getRepository(User::class)->findBy(array('stadt' => $city));
+        $user = $this->getDoctrine()->getRepository(User::class)->findBy(array('stadt' => $city,'organisation'=>null));
 
         return $this->render(
             'employee/user.html.twig',
@@ -63,9 +63,10 @@ class EmployeeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $defaultData = $form->getData();
+                $defaultData->setEnabled(true);
                 $userManager = $this->manager;
                 $userManager->updateUser($defaultData);
-                $text = $translator->trans('Erfolgreich gespeichert');
+                $text = $translator->trans('Erfolgreich angelegt');
                 return $this->redirectToRoute('city_employee_show', array('snack'=>$text,'id' => $city->getId()));
             } catch (\Exception $e) {
                 $userManager = $this->manager;
@@ -113,6 +114,7 @@ class EmployeeController extends AbstractController
         $errors = array();
         $form = $this->createForm(UserType::class, $defaultData);
         $form->remove('plainPassword');
+        $form->remove('username');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -242,9 +244,10 @@ class EmployeeController extends AbstractController
         }
         $this->manager->deleteUser($user);
         if ($user->getStadt() != null) {
+            $text = $translator->trans('Erfolgreich gelöscht');
             return $this->redirectToRoute(
                 'city_employee_show',
-                array('id' => $user->getStadt()->getId())
+                array('snack'=>$text,'id' => $user->getStadt()->getId())
             );
 
         }
@@ -301,7 +304,7 @@ class EmployeeController extends AbstractController
             }
             $this->manager->updateUser($user);
 
-            $text = $translator->trans('Erfolgreich gespeichert');
+            $text = $translator->trans('Rechte erfolgreich gesetzt');
             return $this->redirectToRoute('city_employee_show', array('snack'=>$text,'id' => $user->getStadt()->getId()));
         }
 

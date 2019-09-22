@@ -269,6 +269,38 @@
         <source>Berechtigungen für %vorname% %nachname%</source>
         <target>Accessrights for Employee %vorname% %nachname%</target>
       </trans-unit>
+      <trans-unit id="2Hxrhyc" resname="Erfolgreich angelegt">
+        <source>Erfolgreich angelegt</source>
+        <target>Sucessfully Added</target>
+      </trans-unit>
+      <trans-unit id="bnIcZGC" resname="Erfolgreich gelöscht">
+        <source>Erfolgreich gelöscht</source>
+        <target>Successfully deleted</target>
+      </trans-unit>
+      <trans-unit id="YP0iY.T" resname="Rechte erfolgreich gesetzt">
+        <source>Rechte erfolgreich gesetzt</source>
+        <target>Permissinons set</target>
+      </trans-unit>
+      <trans-unit id="5a91K2w" resname="Erfolgreich geändert">
+        <source>Erfolgreich geändert</source>
+        <target>SUcessfully changed</target>
+      </trans-unit>
+      <trans-unit id="ULTPo.F" resname="Passwort erfolgreich geändert">
+        <source>Passwort erfolgreich geändert</source>
+        <target>Password sucessfully changed</target>
+      </trans-unit>
+      <trans-unit id="YTAWjT5" resname="meine Organisation">
+        <source>meine Organisation</source>
+        <target>My organisation</target>
+      </trans-unit>
+      <trans-unit id="K9IjwaJ" resname="User für %stadt%">
+        <source>User für %stadt%</source>
+        <target>User for city %stadt%</target>
+      </trans-unit>
+      <trans-unit id="1AFgdf6" resname="Keine Organisation angegeben">
+        <source>Keine Organisation angegeben</source>
+        <target>No organisation set</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

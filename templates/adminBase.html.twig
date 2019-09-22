@@ -69,8 +69,13 @@
                 {% if is_granted('ROLE_CITY_SCHOOL') %}
                     <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"> <i class="icon-home"></i>{% trans %}Schulen{% endtrans %}</a></li>
                {% endif %}
-                {% if is_granted('ROLE_ORG_EDITOR') %}
+                {% if is_granted('ROLE_CITY_ADMIN') %}
                     <li><a href="{{ path('city_admin_organisation_show',{'id':app.user.stadt.id}) }}"> <i class="icon-home"></i>{% trans %}Organisationen{% endtrans %}</a></li>
+                {% endif %}
+                {% if is_granted('ROLE_ORG_ADMIN') %}
+                    <li><a href="{{ path('city_admin_organisation_detail',{'id':app.user.organisation.id}) }}"> <i class="icon-home"></i>{% trans %}meine Organisation{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_employee_org_show',{'id':app.user.organisation.id}) }}"> <i class="material-icons">people</i> {% trans %}Mitarbeiter{% endtrans %}</a></li>
+
                 {% endif %}
                 {% if is_granted('ROLE_CITY_ADMIN') %}
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="material-icons">people</i>{% trans %}Mitarbeiter{% endtrans %} </a>

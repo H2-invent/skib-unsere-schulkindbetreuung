@@ -129,6 +129,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "jms/i18n-routing-bundle": {
+        "version": "3.0.3"
+    },
     "jms/metadata": {
         "version": "2.0.0"
     },
