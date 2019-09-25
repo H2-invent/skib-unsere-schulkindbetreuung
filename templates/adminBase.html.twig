@@ -589,7 +589,16 @@
             </div>
         </div>
     </section>
+
+
     {% endblock %}
+    <div class="modal fade" id="loadContentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
     <footer class="main-footer">
         <div class="container-fluid">
             <div class="row">
@@ -605,6 +614,7 @@
         </div>
     </footer>
 </div>
+
 <!-- JavaScript files-->
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/popper.js/umd/popper.min.js') }}"> </script>
@@ -633,6 +643,15 @@
         $.snackbar(options);
 {% endif %}
     } );
+</script>
+<script>
+    $('.loadContent').click(function(e){
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $('#loadContentModal').modal('show');
+        $('#loadContentModal .modal-content').load(url);
+    });
+
 </script>
 
 </body>

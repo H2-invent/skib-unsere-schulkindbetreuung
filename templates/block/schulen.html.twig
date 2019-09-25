@@ -1,0 +1,23 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+<section class="dashboard-counts section-padding">
+    <div class="container-fluid ">
+        <div class="row">
+            <!-- Count item widget-->
+            {% for s in schule %}
+            <div class="card" style="width: 18rem; margin-right: 8px ">
+                <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}" alt="{{ s.name }}"style="max-height: 300px">
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ s.name }}</h5>
+                    <p class="card-text">{{ s.infoText }}</p>
+                    <a href="{{ path('block_schule_schow',{'id':s.id}) }}" class="btn btn-primary">{% trans %}Zeitblöcke{% endtrans %}</a>
+            </div>
+        </div>
+            {% endfor %}
+
+    </div>
+</section>
+
+{% endblock %}

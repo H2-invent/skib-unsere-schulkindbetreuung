@@ -26,10 +26,7 @@ class Active
      */
     private $bis;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\zeitblock", inversedBy="active", cascade={"persist", "remove"})
-     */
-    private $zeitblock;
+
 
 
 

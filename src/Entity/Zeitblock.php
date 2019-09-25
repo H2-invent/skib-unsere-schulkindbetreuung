@@ -19,31 +19,45 @@ class Zeitblock
     private $id;
 
     /**
+     * @ORM\Column(type="time")
+     */
+    private $von;
+
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $bis;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Schule", inversedBy="zeitblocks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $schule;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Kind", inversedBy="zeitblocks")
      */
     private $kind;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\schule", inversedBy="zeitblocks")
-     */
-    private $schule;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Active", mappedBy="zeitblock", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Active", cascade={"persist", "remove"})
      */
     private $active;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Abwesend", mappedBy="zeitblock")
      */
-    private $abwesends;
+    private $abwesenheit;
 
-
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $wochentag;
 
     public function __construct()
     {
         $this->kind = new ArrayCollection();
-        $this->abwesends = new ArrayCollection();
+        $this->abwesenheit = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,15 +65,51 @@ class Zeitblock
         return $this->id;
     }
 
+    public function getVon(): ?\DateTimeInterface
+    {
+        return $this->von;
+    }
+
+    public function setVon(\DateTimeInterface $von): self
+    {
+        $this->von = $von;
+
+        return $this;
+    }
+
+    public function getBis(): ?\DateTimeInterface
+    {
+        return $this->bis;
+    }
+
+    public function setBis(\DateTimeInterface $bis): self
+    {
+        $this->bis = $bis;
+
+        return $this;
+    }
+
+    public function getSchule(): ?Schule
+    {
+        return $this->schule;
+    }
+
+    public function setSchule(?Schule $schule): self
+    {
+        $this->schule = $schule;
+
+        return $this;
+    }
+
     /**
-     * @return Collection|kind[]
+     * @return Collection|Kind[]
      */
     public function getKind(): Collection
     {
         return $this->kind;
     }
 
-    public function addKind(kind $kind): self
+    public function addKind(Kind $kind): self
     {
         if (!$this->kind->contains($kind)) {
             $this->kind[] = $kind;
@@ -68,23 +118,11 @@ class Zeitblock
         return $this;
     }
 
-    public function removeKind(kind $kind): self
+    public function removeKind(Kind $kind): self
     {
         if ($this->kind->contains($kind)) {
             $this->kind->removeElement($kind);
         }
-
-        return $this;
-    }
-
-    public function getSchule(): ?schule
-    {
-        return $this->schule;
-    }
-
-    public function setSchule(?schule $schule): self
-    {
-        $this->schule = $schule;
 
         return $this;
     }
@@ -98,45 +136,49 @@ class Zeitblock
     {
         $this->active = $active;
 
-        // set (or unset) the owning side of the relation if necessary
-        $newZeitblock = $active === null ? null : $this;
-        if ($newZeitblock !== $active->getZeitblock()) {
-            $active->setZeitblock($newZeitblock);
-        }
-
         return $this;
     }
 
     /**
      * @return Collection|Abwesend[]
      */
-    public function getAbwesends(): Collection
+    public function getAbwesenheit(): Collection
     {
-        return $this->abwesends;
+        return $this->abwesenheit;
     }
 
-    public function addAbwesend(Abwesend $abwesend): self
+    public function addAbwesenheit(Abwesend $abwesenheit): self
     {
-        if (!$this->abwesends->contains($abwesend)) {
-            $this->abwesends[] = $abwesend;
-            $abwesend->setZeitblock($this);
+        if (!$this->abwesenheit->contains($abwesenheit)) {
+            $this->abwesenheit[] = $abwesenheit;
+            $abwesenheit->setZeitblock($this);
         }
 
         return $this;
     }
 
-    public function removeAbwesend(Abwesend $abwesend): self
+    public function removeAbwesenheit(Abwesend $abwesenheit): self
     {
-        if ($this->abwesends->contains($abwesend)) {
-            $this->abwesends->removeElement($abwesend);
+        if ($this->abwesenheit->contains($abwesenheit)) {
+            $this->abwesenheit->removeElement($abwesenheit);
             // set the owning side to null (unless already changed)
-            if ($abwesend->getZeitblock() === $this) {
-                $abwesend->setZeitblock(null);
+            if ($abwesenheit->getZeitblock() === $this) {
+                $abwesenheit->setZeitblock(null);
             }
         }
 
         return $this;
     }
 
+    public function getWochentag(): ?int
+    {
+        return $this->wochentag;
+    }
 
+    public function setWochentag(int $wochentag): self
+    {
+        $this->wochentag = $wochentag;
+
+        return $this;
+    }
 }
