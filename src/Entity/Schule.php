@@ -91,9 +91,12 @@ class Schule
      */
     private $zeitblocks;
 
+
+
     public function __construct()
     {
         $this->zeitblocks = new ArrayCollection();
+        $this->actives = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -266,4 +269,6 @@ class Schule
 
         return $this;
     }
+
+
 }

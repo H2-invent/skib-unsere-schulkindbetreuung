@@ -1,0 +1,50 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+<section class="dashboard-counts section-padding">
+    <div class="container-fluid ">
+        <div class="row">
+            <!-- Count item widget-->
+            <div class=" col-12 card">
+                <div class="card-header">
+                  <h1> {% trans %}Schuljahre{% endtrans %}  <a href="{{ path('city_admin_schuljahr_neu',{'id':city.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                         <i class="material-icons">add</i>
+                      </button></a></h1>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>{% trans %}Schuljahresbegin{% endtrans %}</th>
+                            <th>{% trans %}Schuljahresende{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for s in schuljahre %}
+                            <tr>
+                                <td>
+                                    <div class="btn-group">
+                                        <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="material-icons">more_vert</i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                            <a class="dropdown-item" href="{{ path('city_admin_schuljahr_edit',{'id':s.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                            <a class="dropdown-item" href="{{ path('city_admin_schuljahr_delete',{'id':s.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ s.von|date('d.m.Y') }}</td>
+                                <td>{{ s.bis|date('d.m.Y') }}</td>
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

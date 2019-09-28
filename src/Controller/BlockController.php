@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Active;
 use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Zeitblock;
@@ -34,9 +35,9 @@ class BlockController extends AbstractController
         if($schule->getOrganisation() != $this->getUser()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
         }
-        dump($schule);
-       $blocks = $this->getDoctrine()->getRepository(Zeitblock::class)->findAll();
-
-        return $this->render('block/blocks.html.twig',array('schule'=>$schule,'blocks'=>$blocks));
+        $activity = $this->getDoctrine()->getRepository(Active::class)->findBy(array('stadt'=>$schule->getStadt()),array('bis'=>'desc'));
+        $blocks = $this->getDoctrine()->getRepository(Zeitblock::class)->findAll();
+        dump($activity);
+        return $this->render('block/blocks.html.twig',array('schuljahre'=>$activity,'schule'=>$schule,'blocks'=>$blocks));
     }
 }

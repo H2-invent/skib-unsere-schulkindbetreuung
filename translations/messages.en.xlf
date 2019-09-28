@@ -301,6 +301,66 @@
         <source>Keine Organisation angegeben</source>
         <target>No organisation set</target>
       </trans-unit>
+      <trans-unit id="DQIts8Z" resname="Schuljahr anlegen">
+        <source>Schuljahr anlegen</source>
+        <target>__Schuljahr anlegen</target>
+      </trans-unit>
+      <trans-unit id="O6Ye6kL" resname="Schuljahr bearbeiten">
+        <source>Schuljahr bearbeiten</source>
+        <target>__Schuljahr bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="2fDA5GL" resname="Schuljahre">
+        <source>Schuljahre</source>
+        <target>__Schuljahre</target>
+      </trans-unit>
+      <trans-unit id="UDI5XSO" resname="Meine Organisation">
+        <source>Meine Organisation</source>
+        <target>__Meine Organisation</target>
+      </trans-unit>
+      <trans-unit id="osdMBiP" resname="Meine Mitarbeiter">
+        <source>Meine Mitarbeiter</source>
+        <target>__Meine Mitarbeiter</target>
+      </trans-unit>
+      <trans-unit id="eDJe41j" resname="Meine Schulen">
+        <source>Meine Schulen</source>
+        <target>__Meine Schulen</target>
+      </trans-unit>
+      <trans-unit id="8qHMcfp" resname="Sprache">
+        <source>Sprache</source>
+        <target>__Sprache</target>
+      </trans-unit>
+      <trans-unit id="twP8auu" resname="Montag">
+        <source>Montag</source>
+        <target>__Montag</target>
+      </trans-unit>
+      <trans-unit id="wuECyh8" resname="Dienstag">
+        <source>Dienstag</source>
+        <target>__Dienstag</target>
+      </trans-unit>
+      <trans-unit id="dsk60VS" resname="Mittwoch">
+        <source>Mittwoch</source>
+        <target>__Mittwoch</target>
+      </trans-unit>
+      <trans-unit id="sVxNqoC" resname="Donnerstag">
+        <source>Donnerstag</source>
+        <target>__Donnerstag</target>
+      </trans-unit>
+      <trans-unit id="WBXd8f_" resname="Freitag">
+        <source>Freitag</source>
+        <target>__Freitag</target>
+      </trans-unit>
+      <trans-unit id="ZgSUoQM" resname="Zeitblöcke">
+        <source>Zeitblöcke</source>
+        <target>__Zeitblöcke</target>
+      </trans-unit>
+      <trans-unit id="e8Lef9K" resname="Schuljahresbegin">
+        <source>Schuljahresbegin</source>
+        <target>__Schuljahresbegin</target>
+      </trans-unit>
+      <trans-unit id="q9CL8ss" resname="Schuljahresende">
+        <source>Schuljahresende</source>
+        <target>__Schuljahresende</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -55,8 +55,8 @@
                 {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 <h5 class="sidenav-heading">{% trans %}Admin{% endtrans %}</h5>
-                <li><a href="{{ path('admin_stadt') }}"> <i class="icon-home"></i>{% trans %}Städte{% endtrans %}</a></li>
-                <li><a href="{{ path('admin_showAllUser') }}"> <i class="icon-home"></i>{% trans %}Alle User{% endtrans %}</a></li>
+                <li><a href="{{ path('admin_stadt') }}"> <i class="material-icons">home</i>{% trans %}Städte{% endtrans %}</a></li>
+                <li><a href="{{ path('admin_showAllUser') }}"><i class="material-icons">people</i>{% trans %}Alle User{% endtrans %}</a></li>
             {% endif %}
 
 
@@ -64,19 +64,27 @@
                     <h5 class="sidenav-heading">{{ app.user.stadt.name }}</h5>
                 {% endif %}
                 {% if is_granted('ROLE_CITY_EDITOR') and app.user.stadt is not null %}
-                    <li><a href="{{ path('admin_stadt_edit',{'id':app.user.stadt.id}) }}"> <i class="icon-home"></i>{% trans %}Stadt bearbeiten{% endtrans %}</a></li>
+                    <li><a href="{{ path('admin_stadt_edit',{'id':app.user.stadt.id}) }}"> <i class="material-icons">home</i>{% trans %}Stadt bearbeiten{% endtrans %}</a></li>
                 {% endif %}
                 {% if is_granted('ROLE_CITY_SCHOOL') %}
-                    <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"> <i class="icon-home"></i>{% trans %}Schulen{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"> <i class="material-icons">sports_handball</i>{% trans %}Schulen{% endtrans %}</a></li>
                {% endif %}
                 {% if is_granted('ROLE_CITY_ADMIN') %}
-                    <li><a href="{{ path('city_admin_organisation_show',{'id':app.user.stadt.id}) }}"> <i class="icon-home"></i>{% trans %}Organisationen{% endtrans %}</a></li>
-                {% endif %}
-                {% if is_granted('ROLE_ORG_ADMIN') %}
-                    <li><a href="{{ path('city_admin_organisation_detail',{'id':app.user.organisation.id}) }}"> <i class="icon-home"></i>{% trans %}meine Organisation{% endtrans %}</a></li>
-                    <li><a href="{{ path('city_employee_org_show',{'id':app.user.organisation.id}) }}"> <i class="material-icons">people</i> {% trans %}Mitarbeiter{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_admin_organisation_show',{'id':app.user.stadt.id}) }}"> <i class="material-icons">home</i>{% trans %}Organisationen{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_admin_schuljahr_anzeige',{'id':app.user.stadt.id}) }}">  <i class="material-icons">home</i>{% trans %}Schuljahre{% endtrans %}</a></li>
+
 
                 {% endif %}
+                {% if is_granted('ROLE_ORG_ADMIN') %}
+                    <li><a href="{{ path('city_admin_organisation_detail',{'id':app.user.organisation.id}) }}"> <i class="material-icons">home</i> {% trans %}Meine Organisation{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_employee_org_show',{'id':app.user.organisation.id}) }}"> <i class="material-icons">people</i> {% trans %}Meine Mitarbeiter{% endtrans %}</a></li>
+
+                {% endif %}
+                {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
+                    <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"> <i class="material-icons">sports_handball</i> {% trans %}Meine Schulen{% endtrans %}</a></li>
+                {% endif %}
+
+
                 {% if is_granted('ROLE_CITY_ADMIN') %}
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="material-icons">people</i>{% trans %}Mitarbeiter{% endtrans %} </a>
                         <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
@@ -653,6 +661,8 @@
     });
 
 </script>
+{% block jquery %}
 
+{% endblock %}
 </body>
 </html>

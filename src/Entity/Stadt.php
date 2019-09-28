@@ -147,11 +147,17 @@ class Stadt
      */
     private $infoText;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Active", mappedBy="stadt")
+     */
+    private $actives;
+
     public function __construct()
     {
         $this->anmeldefristens = new ArrayCollection();
         $this->organisations = new ArrayCollection();
         $this->schules = new ArrayCollection();
+        $this->actives = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -504,6 +510,37 @@ class Stadt
     public function setInfoText(?string $infoText): self
     {
         $this->infoText = $infoText;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Active[]
+     */
+    public function getActives(): Collection
+    {
+        return $this->actives;
+    }
+
+    public function addActive(Active $active): self
+    {
+        if (!$this->actives->contains($active)) {
+            $this->actives[] = $active;
+            $active->setStadt($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActive(Active $active): self
+    {
+        if ($this->actives->contains($active)) {
+            $this->actives->removeElement($active);
+            // set the owning side to null (unless already changed)
+            if ($active->getStadt() === $this) {
+                $active->setStadt(null);
+            }
+        }
 
         return $this;
     }
