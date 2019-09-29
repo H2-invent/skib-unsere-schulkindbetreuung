@@ -1,0 +1,17 @@
+{% if blocks is defined %}
+    {% for b in blocks %}
+        <div class="card">
+            <div class="card-body text-center">
+                {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
+                <b>{{ b.preis|number_format(2,',') }}€</b>
+            </div>
+            <div class="bmd-card-actions text-center">
+                <a href="{{ path('block_schule_editBlocks',{'id':b.id}) }}" class="loadContent"> <i class="material-icons">edit</i></a>
+                <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+

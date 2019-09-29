@@ -51,7 +51,7 @@ class BlockController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
         $activity = $this->getDoctrine()->getRepository(Active::class)->findOneBy(array('id'=>$request->get('id'),'stadt'=>$schule->getStadt()));
-        $blocks = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy(array('schule'=>$schule,'active'=>$activity));
+        $blocks = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy(array('schule'=>$schule,'active'=>$activity),array('von'=>'asc'));
         dump($blocks);
         $renderBlock = array();
         foreach ($blocks as $data){
@@ -101,7 +101,7 @@ class BlockController extends AbstractController
             }
 
         }
-        return $this->render('block/blockForm.html.twig',array('form'=>$form->createView()));
+        return $this->render('block/blockForm.html.twig',array('block'=>$block,'form'=>$form->createView()));
 
     }
     /**
@@ -161,7 +161,7 @@ class BlockController extends AbstractController
             }
 
         }
-        return $this->render('block/blockForm.html.twig',array('form'=>$form->createView()));
+        return $this->render('block/blockForm.html.twig',array('block'=>$block,'form'=>$form->createView()));
 
     }
 }
