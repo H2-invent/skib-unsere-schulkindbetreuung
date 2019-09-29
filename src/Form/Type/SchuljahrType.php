@@ -7,8 +7,8 @@
  */
 namespace App\Form\Type;
 
-use App\Entity\Stadt;
-use App\Entity\User;
+use App\Entity\Active;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -21,24 +21,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class UserType extends AbstractType
+class SchuljahrType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class,array('label'=>'Username','required'=>true,'translation_domain' => 'form'))
-            ->add('email', EmailType::class,array('label'=>'Email','required'=>true,'translation_domain' => 'form'))
-            ->add('plainPassword', TextType::class,array('required'=>true,'label'=>'Password','translation_domain' => 'form'))
-            ->add('vorname', EmailType::class,array('label'=>'Vorname','required'=>true,'translation_domain' => 'form'))
-            ->add('nachname', EmailType::class,array('label'=>'Name','required'=>true,'translation_domain' => 'form'))
-            ->add('birthday', BirthdayType::class,array('required'=>false,'label'=>'Geburtstag','translation_domain' => 'form'))
+            ->add('von', DateType::class,array('label'=>'Schuljahresbegin','required'=>true,'translation_domain' => 'form'))
+            ->add('bis', DateType::class,array('label'=>'Schuljahresende','required'=>true,'translation_domain' => 'form'))
+            ->add('anmeldeStart', DateType::class,array('label'=>'Beginn der Anmeldung','required'=>true,'translation_domain' => 'form'))
+            ->add('anmeldeEnde', DateType::class,array('label'=>'Ende der Anmeldung','required'=>true,'translation_domain' => 'form'))
             ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
     }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Active::class,
         ]);
     }
 }

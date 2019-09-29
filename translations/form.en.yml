@@ -37,3 +37,7 @@ Logo hochladen: Upload logo
 ROLE_CITY_DASHBOARD: __Darf das Dashboard sehen
 ROLE_CITY_SCHOOL: __Darf Schulen sehen und bearbeiten
 ROLE_CITY_REPORT: __Darf Report zu den ORganisationen sehen
+Schuljahresbegin: __Schuljahresbegin
+Schuljahresende: __Schuljahresende
+Beginn der Anmeldung: __Beginn der Anmeldung
+Ende der Anmeldung: __Ende der Anmeldung

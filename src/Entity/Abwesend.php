@@ -37,9 +37,12 @@ class Abwesend
     private $bis;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\zeitblock", inversedBy="abwesends")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Zeitblock", inversedBy="abwesenheit")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $zeitblock;
+
+
 
     public function __construct()
     {

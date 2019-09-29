@@ -55,8 +55,8 @@
                 {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 <h5 class="sidenav-heading">{% trans %}Admin{% endtrans %}</h5>
-                <li><a href="{{ path('admin_stadt') }}"> <i class="icon-home"></i>{% trans %}Städte{% endtrans %}</a></li>
-                <li><a href="{{ path('admin_showAllUser') }}"> <i class="icon-home"></i>{% trans %}Alle User{% endtrans %}</a></li>
+                <li><a href="{{ path('admin_stadt') }}"> <i class="material-icons">home</i>{% trans %}Städte{% endtrans %}</a></li>
+                <li><a href="{{ path('admin_showAllUser') }}"><i class="material-icons">people</i>{% trans %}Alle User{% endtrans %}</a></li>
             {% endif %}
 
 
@@ -64,19 +64,27 @@
                     <h5 class="sidenav-heading">{{ app.user.stadt.name }}</h5>
                 {% endif %}
                 {% if is_granted('ROLE_CITY_EDITOR') and app.user.stadt is not null %}
-                    <li><a href="{{ path('admin_stadt_edit',{'id':app.user.stadt.id}) }}"> <i class="icon-home"></i>{% trans %}Stadt bearbeiten{% endtrans %}</a></li>
+                    <li><a href="{{ path('admin_stadt_edit',{'id':app.user.stadt.id}) }}"> <i class="material-icons">home</i>{% trans %}Stadt bearbeiten{% endtrans %}</a></li>
                 {% endif %}
                 {% if is_granted('ROLE_CITY_SCHOOL') %}
-                    <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"> <i class="icon-home"></i>{% trans %}Schulen{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"> <i class="material-icons">sports_handball</i>{% trans %}Schulen{% endtrans %}</a></li>
                {% endif %}
                 {% if is_granted('ROLE_CITY_ADMIN') %}
-                    <li><a href="{{ path('city_admin_organisation_show',{'id':app.user.stadt.id}) }}"> <i class="icon-home"></i>{% trans %}Organisationen{% endtrans %}</a></li>
-                {% endif %}
-                {% if is_granted('ROLE_ORG_ADMIN') %}
-                    <li><a href="{{ path('city_admin_organisation_detail',{'id':app.user.organisation.id}) }}"> <i class="icon-home"></i>{% trans %}meine Organisation{% endtrans %}</a></li>
-                    <li><a href="{{ path('city_employee_org_show',{'id':app.user.organisation.id}) }}"> <i class="material-icons">people</i> {% trans %}Mitarbeiter{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_admin_organisation_show',{'id':app.user.stadt.id}) }}"> <i class="material-icons">home</i>{% trans %}Organisationen{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_admin_schuljahr_anzeige',{'id':app.user.stadt.id}) }}">  <i class="material-icons">home</i>{% trans %}Schuljahre{% endtrans %}</a></li>
+
 
                 {% endif %}
+                {% if is_granted('ROLE_ORG_ADMIN') %}
+                    <li><a href="{{ path('city_admin_organisation_detail',{'id':app.user.organisation.id}) }}"> <i class="material-icons">home</i> {% trans %}Meine Organisation{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_employee_org_show',{'id':app.user.organisation.id}) }}"> <i class="material-icons">people</i> {% trans %}Meine Mitarbeiter{% endtrans %}</a></li>
+
+                {% endif %}
+                {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
+                    <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"> <i class="material-icons">sports_handball</i> {% trans %}Meine Schulen{% endtrans %}</a></li>
+                {% endif %}
+
+
                 {% if is_granted('ROLE_CITY_ADMIN') %}
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="material-icons">people</i>{% trans %}Mitarbeiter{% endtrans %} </a>
                         <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
@@ -173,10 +181,12 @@
                             </ul>
                         </li>
                         <!-- Languages dropdown    -->
-                        <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="{{ asset('images/flags/16/GB.png') }}" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
+                        <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><span class="d-none d-sm-inline-block">{% trans %}Sprache{% endtrans %}</span></a>
                             <ul aria-labelledby="languages" class="dropdown-menu">
-                                <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="{{ asset('images/flags/16/DE.png') }}" alt="English" class="mr-2"><span>German</span></a></li>
-                                <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="{{ asset('images/flags/16/FR.png') }}" alt="English" class="mr-2"><span>French                                                         </span></a></li>
+                                <li><a rel="nofollow" href="{{ path("dashboard", {"_locale": "de"}) }}" class="dropdown-item"> <img src="{{ asset('images/flags/16/DE.png') }}" alt="English" class="mr-2"><span>German</span></a></li>
+                                <li><a rel="nofollow" href="{{ path("dashboard", {"_locale": "fr"}) }}" class="dropdown-item"> <img src="{{ asset('images/flags/16/FR.png') }}" alt="English" class="mr-2"><span>French</span></a></li>
+                                <li><a rel="nofollow" href="{{ path("dashboard", {"_locale": "en"}) }}" class="dropdown-item"> <img src="{{ asset('images/flags/16/GB.png') }}" alt="English" class="mr-2"><span>English</span></a></li>
+
                             </ul>
                         </li>
                         <!-- Log out-->
@@ -587,7 +597,16 @@
             </div>
         </div>
     </section>
+
+
     {% endblock %}
+    <div class="modal fade" id="loadContentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
     <footer class="main-footer">
         <div class="container-fluid">
             <div class="row">
@@ -603,6 +622,7 @@
         </div>
     </footer>
 </div>
+
 <!-- JavaScript files-->
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/popper.js/umd/popper.min.js') }}"> </script>
@@ -632,6 +652,17 @@
 {% endif %}
     } );
 </script>
+<script>
+    $('.loadContent').click(function(e){
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $('#loadContentModal').modal('show');
+        $('#loadContentModal .modal-content').load(url);
+    });
 
+</script>
+{% block jquery %}
+
+{% endblock %}
 </body>
 </html>

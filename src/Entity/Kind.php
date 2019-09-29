@@ -59,15 +59,17 @@ class Kind
      */
     private $geburtstag;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Zeitblock", mappedBy="kind")
-     */
-    private $zeitblocks;
+
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Abwesend", mappedBy="kind")
      */
     private $abwesends;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Zeitblock", mappedBy="kind")
+     */
+    private $zeitblocks;
 
     public function __construct()
     {

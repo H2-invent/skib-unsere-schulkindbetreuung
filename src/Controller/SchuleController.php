@@ -53,6 +53,8 @@ class SchuleController extends AbstractController
             ->add('adresszusatz', TextType::class,['required'=>false,'label'=>'Adresszusatz','translation_domain' => 'form'])
             ->add('plz', TextType::class,['label'=>'PLZ','translation_domain' => 'form'])
             ->add('ort', TextType::class,['label'=>'Stadt','translation_domain' => 'form'])
+            ->add('infoText', TextareaType::class,['label'=>'Info Text','translation_domain' => 'form','attr'=>array('rows'=>6)])
+
             ->add('organisation', EntityType::class, [
                 'choice_label' => 'name',
                 'class' => Organisation::class,
@@ -77,10 +79,12 @@ class SchuleController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($school);
                 $em->flush();
-                return $this->redirectToRoute('city_admin_schule_show',array('id'=>$city->getId()));
+                $text = $translator->trans('Erfolgreich angelegt');
+                return $this->redirectToRoute('city_admin_schule_show',array('snack'=>$text,'id'=>$city->getId()));
             }
 
         }
+
         $title = $translator->trans('Schule anlegen');
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
 
@@ -105,6 +109,8 @@ class SchuleController extends AbstractController
             ->add('adresszusatz', TextType::class,['required'=>false,'label'=>'Adresszusatz','translation_domain' => 'form'])
             ->add('plz', TextType::class,['label'=>'PLZ','translation_domain' => 'form'])
             ->add('ort', TextType::class,['label'=>'Stadt','translation_domain' => 'form'])
+            ->add('infoText', TextareaType::class,['label'=>'Info Text','translation_domain' => 'form','attr'=>array('rows'=>6)])
+
             ->add('organisation', EntityType::class, [
                 'choice_label' => 'name',
                 'class' => Organisation::class,
@@ -128,7 +134,8 @@ class SchuleController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($school);
                 $em->flush();
-                return $this->redirectToRoute('city_admin_schule_show',array('id'=>$city->getId()));
+                $text = $translator->trans('Erfolgreich geändert');
+                return $this->redirectToRoute('city_admin_schule_show',array('snack'=>$text,'id'=>$city->getId()));
             }
 
         }

@@ -27,9 +27,23 @@ class Active
     private $bis;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\zeitblock", inversedBy="active", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="actives")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $zeitblock;
+    private $stadt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $anmeldeStart;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $anmeldeEnde;
+
+
+
 
 
 
@@ -73,5 +87,43 @@ class Active
 
         return $this;
     }
+
+    public function getStadt(): ?Stadt
+    {
+        return $this->stadt;
+    }
+
+    public function setStadt(?Stadt $stadt): self
+    {
+        $this->stadt = $stadt;
+
+        return $this;
+    }
+
+    public function getAnmeldeStart(): ?\DateTimeInterface
+    {
+        return $this->anmeldeStart;
+    }
+
+    public function setAnmeldeStart(\DateTimeInterface $anmeldeStart): self
+    {
+        $this->anmeldeStart = $anmeldeStart;
+
+        return $this;
+    }
+
+    public function getAnmeldeEnde(): ?\DateTimeInterface
+    {
+        return $this->anmeldeEnde;
+    }
+
+    public function setAnmeldeEnde(\DateTimeInterface $anmeldeEnde): self
+    {
+        $this->anmeldeEnde = $anmeldeEnde;
+
+        return $this;
+    }
+
+
 
 }

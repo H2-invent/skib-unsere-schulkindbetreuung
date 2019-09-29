@@ -32,10 +32,7 @@ class Schule
      */
     private $organisation;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Zeitblock", mappedBy="schule")
-     */
-    private $zeitblocks;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="schules")
@@ -84,9 +81,22 @@ class Schule
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $infoText;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Zeitblock", mappedBy="schule", orphanRemoval=true)
+     */
+    private $zeitblocks;
+
+
+
     public function __construct()
     {
         $this->zeitblocks = new ArrayCollection();
+        $this->actives = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -247,4 +257,18 @@ class Schule
     {
         return $this->image;
     }
+
+    public function getInfoText(): ?string
+    {
+        return $this->infoText;
+    }
+
+    public function setInfoText(string $infoText): self
+    {
+        $this->infoText = $infoText;
+
+        return $this;
+    }
+
+
 }
