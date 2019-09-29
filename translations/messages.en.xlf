@@ -361,6 +361,38 @@
         <source>Schuljahresende</source>
         <target>__Schuljahresende</target>
       </trans-unit>
+      <trans-unit id="WlWD.jo" resname="Fehler. Bitte versuchen Sie es erneut.">
+        <source>Fehler. Bitte versuchen Sie es erneut.</source>
+        <target>__Fehler. Bitte versuchen Sie es erneut.</target>
+      </trans-unit>
+      <trans-unit id="xdbz0uj" resname="Fehler: Falsche Organisation">
+        <source>Fehler: Falsche Organisation</source>
+        <target>__Fehler: Falsche Organisation</target>
+      </trans-unit>
+      <trans-unit id="fCKq2CM" resname="Samstag">
+        <source>Samstag</source>
+        <target>__Samstag</target>
+      </trans-unit>
+      <trans-unit id="pZhFklA" resname="Sonntag">
+        <source>Sonntag</source>
+        <target>__Sonntag</target>
+      </trans-unit>
+      <trans-unit id="DuqbrrG" resname="Neuen Block anlegen">
+        <source>Neuen Block anlegen</source>
+        <target>__Neuen Block anlegen</target>
+      </trans-unit>
+      <trans-unit id="9rL.OfV" resname="Speichern">
+        <source>Speichern</source>
+        <target>__Speichern</target>
+      </trans-unit>
+      <trans-unit id="uAj26XB" resname="Schließen">
+        <source>Schließen</source>
+        <target>__Schließen</target>
+      </trans-unit>
+      <trans-unit id="3aRcePB" resname="Blöcke geladen.">
+        <source>Blöcke geladen.</source>
+        <target>__Blöcke geladen.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

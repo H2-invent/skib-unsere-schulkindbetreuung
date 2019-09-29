@@ -24,7 +24,7 @@ class SchuljahrController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
         $activity = $this->getDoctrine()->getRepository(Active::class)->findBy(array('stadt'=>$stadt));
-        dump($activity);
+
         return $this->render('schuljahr/schuljahre.html.twig', [
             'city' => $stadt,
             'schuljahre'=>$activity

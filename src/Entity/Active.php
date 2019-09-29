@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,9 +43,17 @@ class Active
      */
     private $anmeldeEnde;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Zeitblock", mappedBy="active")
+     */
+    private $blocks;
 
 
 
+    public function __construct()
+    {
+        $this->blocks = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -124,6 +133,33 @@ class Active
         return $this;
     }
 
+    public function getBlocks(): ArrayCollection
+    {
+        return $this->blocks;
+    }
+
+    public function addBlocks(Zeitblock $block): self
+    {
+        if (!$this->blocks->contains($block)) {
+            $this->blocks[] = $block;
+            $block->setActive($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlock(Zeitblock $block): self
+    {
+        if ($this->blocks->contains($block)) {
+            $this->blocks->removeElement($block);
+            // set the owning side to null (unless already changed)
+            if ($block->getActive() === $this) {
+                $block->setActive(null);
+            }
+        }
+
+        return $this;
+    }
 
 
 }

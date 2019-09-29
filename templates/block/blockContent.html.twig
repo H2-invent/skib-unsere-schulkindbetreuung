@@ -1,0 +1,146 @@
+
+                <div class="row">
+                <div class="col-md-2">
+                  <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
+
+                    <a  href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':0}) }}" class="loadContent"><button type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                            <i class="material-icons">add</i>
+                        </button></a>
+                    {% if blocks[0] is defined %}
+                    {% for b in blocks[0] %}
+                        <div class="card">
+                            <div class="card-body text-center">
+                               {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
+                                    {{ b.preis }}€
+                            </div>
+                            <div class="bmd-card-actions text-center">
+                             <a href="{{ path('block_schule_editBlocks',{'id':b.id}) }}" class="loadContent"> <i class="material-icons">edit</i></a>
+                                <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                    <div class="col-md-2">
+                        <h5 class="card-title">{% trans %}Dienstag{% endtrans %}</h5>
+                        <a style="padding-left: 25%" href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':1}) }}" class="loadContent"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                                <i class="material-icons">add</i>
+                            </button></a>
+                        {% if blocks[1] is defined %}
+                            {% for b in blocks[1] %}
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
+                                        {{ b.preis }}€
+                                    </div>
+                                    <div class="bmd-card-actions text-center">
+                                        <i class="material-icons">edit</i>
+                                        <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-2">
+                        <h5 class="card-title">{% trans %}Mittwoch{% endtrans %}</h5>
+                        <a style="padding-left: 25%" href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':2}) }}" class="loadContent"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                                <i class="material-icons">add</i>
+                            </button></a>
+                        {% if blocks[2] is defined %}
+                            {% for b in blocks[2] %}
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
+                                        {{ b.preis }}€
+                                    </div>
+                                    <div class="bmd-card-actions text-center">
+                                        <i class="material-icons">edit</i>
+                                        <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-2">
+                        <h5 class="card-title">{% trans %}Donnerstag{% endtrans %}</h5>
+                        <a style="padding-left: 25%" href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':3}) }}" class="loadContent"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                                <i class="material-icons">add</i>
+                            </button></a>
+                        {% if blocks[3] is defined %}
+                            {% for b in blocks[3] %}
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
+                                        {{ b.preis }}€
+                                    </div>
+                                    <div class="bmd-card-actions text-center">
+                                        <i class="material-icons">edit</i>
+                                        <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-2">
+                        <h5 class="card-title">{% trans %}Freitag{% endtrans %}</h5>
+                        <a style="padding-left: 25%" href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':4}) }}" class="loadContent"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                                <i class="material-icons">add</i>
+                            </button></a>
+                        {% if blocks[4] is defined %}
+                            {% for b in blocks[4] %}
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
+                                        {{ b.preis }}€
+                                    </div>
+                                    <div class="bmd-card-actions text-center">
+                                        <i class="material-icons">edit</i>
+                                        <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-1">
+                        <h5 class="card-title">{% trans %}Samstag{% endtrans %}</h5>
+                        <a style="padding-left: 25%" href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':5}) }}" class="loadContent"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                                <i class="material-icons">add</i>
+                            </button></a>
+                        {% if blocks[5] is defined %}
+                            {% for b in blocks[5] %}
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
+                                        {{ b.preis }}€
+                                    </div>
+                                    <div class="bmd-card-actions text-center">
+                                        <i class="material-icons">edit</i>
+                                        <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-1">
+                        <h5 class="card-title">{% trans %}Sonntag{% endtrans %}</h5>
+                        <a style="padding-left: 25%" href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':6}) }}" class="loadContent"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                                <i class="material-icons">add</i>
+                            </button></a>
+                        {% if blocks[6] is defined %}
+                            {% for b in blocks[6] %}
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
+                                        {{ b.preis }}€
+                                    </div>
+                                    <div class="bmd-card-actions text-center">
+                                        <i class="material-icons">edit</i>
+                                        <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
