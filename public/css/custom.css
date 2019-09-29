@@ -5,3 +5,6 @@ td{
 .required:after {
     content: "*";
 }
+.dataTables_wrapper{
+    min-height: 500px;
+}

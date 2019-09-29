@@ -3,7 +3,7 @@
                 <div class="col-md-2">
                   <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
 
-                    <a style="padding-left: 25%" href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':0}) }}" class="loadContent"><button type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                    <a  href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':0}) }}" class="loadContent"><button type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
                             <i class="material-icons">add</i>
                         </button></a>
                     {% if blocks[0] is defined %}

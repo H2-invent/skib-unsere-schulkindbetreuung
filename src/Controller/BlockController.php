@@ -39,7 +39,6 @@ class BlockController extends AbstractController
         }
         $activity = $this->getDoctrine()->getRepository(Active::class)->findBy(array('stadt'=>$schule->getStadt()),array('bis'=>'desc'));
         $blocks = $this->getDoctrine()->getRepository(Zeitblock::class)->findAll();
-        dump($activity);
         return $this->render('block/blocks.html.twig',array('schuljahre'=>$activity,'schule'=>$schule,'blocks'=>$blocks));
     }
     /**

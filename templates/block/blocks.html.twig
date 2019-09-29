@@ -33,18 +33,18 @@
 {% endblock %}
 {% block jquery %}
 <script>
-    blockLoadUrl = "{{ path('block_schule_getBlocks',{'shool':schule.id}) }}"+"&id="+"{{ schuljahre[0].id }}";
+   LoadContentUrl = "{{ path('block_schule_getBlocks',{'shool':schule.id}) }}"+"&id="+"{{ schuljahre[0].id }}";
     $('.dropdown-item').click(function () {
         var ele = $(this);
         var text = ele.text();
         var dropdown = ele.closest('.dropdown').find('button');
         dropdown.text(text);
-        blockLoadUrl = "{{ path('block_schule_getBlocks',{'shool':schule.id}) }}"+"&id="+ele.attr('data-id');
-        $('#blockContent').load(blockLoadUrl,function () {
+        LoadContentUrl = "{{ path('block_schule_getBlocks',{'shool':schule.id}) }}"+"&id="+ele.attr('data-id');
+        $('#blockContent').load(LoadContentUrl,function () {
             $.snackbar({content: "{% trans %}Blöcke geladen.{% endtrans %}"});
         })
     });
-    $('#blockContent').load(blockLoadUrl);
+    $('#blockContent').load(LoadContentUrl);
     $(document).on('click','.deleteAjax',function(e){
         e.preventDefault();
         var url = $(this).attr('href');
@@ -52,7 +52,7 @@
             url: url,
             success:function (data) {
                 $.snackbar({content: data.snack});
-                $('#blockContent').load(blockLoadUrl)
+                $('#blockContent').load(LoadContentUrl)
             }
         });
     });

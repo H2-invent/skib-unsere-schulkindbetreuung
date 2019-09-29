@@ -177,6 +177,18 @@
         <source>Ende der Anmeldung</source>
         <target>__Ende der Anmeldung</target>
       </trans-unit>
+      <trans-unit id="oSPT3Eu" resname="Betreuungsbeginn">
+        <source>Betreuungsbeginn</source>
+        <target>__Betreuungsbeginn</target>
+      </trans-unit>
+      <trans-unit id="TUZ7EWb" resname="Betreuungsende">
+        <source>Betreuungsende</source>
+        <target>__Betreuungsende</target>
+      </trans-unit>
+      <trans-unit id="mIMpHmZ" resname="Preis">
+        <source>Preis</source>
+        <target>__Preis</target>
+      </trans-unit>
       <trans-unit id="bRV2_kJ" resname="Username*">
         <source>Username*</source>
         <target>Username*</target>

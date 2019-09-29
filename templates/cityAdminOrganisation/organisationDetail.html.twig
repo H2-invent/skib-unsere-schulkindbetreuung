@@ -24,7 +24,7 @@
                                    {{ organisation.adresszusatz }},
                                    {{ organisation.plz }} {{ organisation.ort }}
                                </li>
-                               <li class="list-group-item"><h2>{% trans %} Schulen{% endtrans %}: </h2> {% for s in organisation.schule %} {% if is_granted('ROLE_ORG_SHOOL') %}<a href="{{ path('city_admin_schule_detail',{'id':s.id}) }}"> {{ s.name }}</a>{% else %}{{ s.name }}{% endif %}{% endfor %}</li>
+                               <li class="list-group-item"><h2>{% trans %} Schulen{% endtrans %}: </h2> {% for s in organisation.schule %} {% if is_granted('ROLE_ORG_SHOOL') %}<a href="{{ path('city_admin_schule_detail',{'id':s.id}) }}"> {{ s.name }}, </a>{% else %}{{ s.name }}{% endif %}{% endfor %}</li>
                                <li class="list-group-item"><h2>{% trans %}Telefon{% endtrans %}: </h2>{{ organisation.telefon }}</li>
                                <li class="list-group-item"><h2>{% trans %}Email{% endtrans %}: </h2>{{ organisation.email }}</li>
                                <li class="list-group-item"><h2>{% trans %}Ansprechpartner{% endtrans %}: </h2>{{ organisation.ansprechpartner }}</li>
