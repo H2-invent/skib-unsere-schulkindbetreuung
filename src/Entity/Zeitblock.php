@@ -40,7 +40,7 @@ class Zeitblock
     private $kind;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Active", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Active")
      */
     private $active;
 
@@ -53,6 +53,11 @@ class Zeitblock
      * @ORM\Column(type="integer")
      */
     private $wochentag;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $preis;
 
     public function __construct()
     {
@@ -178,6 +183,18 @@ class Zeitblock
     public function setWochentag(int $wochentag): self
     {
         $this->wochentag = $wochentag;
+
+        return $this;
+    }
+
+    public function getPreis(): ?float
+    {
+        return $this->preis;
+    }
+
+    public function setPreis(float $preis): self
+    {
+        $this->preis = $preis;
 
         return $this;
     }

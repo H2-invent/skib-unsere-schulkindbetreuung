@@ -23,45 +23,39 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                <div class="col-md-2 offset-md-1">
-                  <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
-                    <div id="montagCol"></div>
-                    <a style="padding-left: 25%" href="#" class="loadContent"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
-                            <i class="material-icons">add</i>
-                        </button></a>
-                </div>
-                    <div class="col-md-2">
-                        <h5 class="card-title">{% trans %}Dienstag{% endtrans %}</h5>
-                        <div id="dienstagCol"></div>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="card-title">{% trans %}Mittwoch{% endtrans %}</h5>
-                        <div id="mittwochCol"></div>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="card-title">{% trans %}Donnerstag{% endtrans %}</h5>
-                        <div id="donnerstagCol"></div>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="card-title">{% trans %}Freitag{% endtrans %}</h5>
-                        <div id="freitagCol"></div>
-                    </div>
+                <div id="blockContent"></div>
 
-
-                </div>
+    </div>
+        </div>
     </div>
 </section>
 
 {% endblock %}
 {% block jquery %}
 <script>
+    blockLoadUrl = "{{ path('block_schule_getBlocks',{'shool':schule.id}) }}"+"&id="+"{{ schuljahre[0].id }}";
     $('.dropdown-item').click(function () {
         var ele = $(this);
         var text = ele.text();
         var dropdown = ele.closest('.dropdown').find('button');
         dropdown.text(text);
-    })
+        blockLoadUrl = "{{ path('block_schule_getBlocks',{'shool':schule.id}) }}"+"&id="+ele.attr('data-id');
+        $('#blockContent').load(blockLoadUrl,function () {
+            $.snackbar({content: "{% trans %}Blöcke geladen.{% endtrans %}"});
+        })
+    });
+    $('#blockContent').load(blockLoadUrl);
+    $(document).on('click','.deleteAjax',function(e){
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $.ajax({
+            url: url,
+            success:function (data) {
+                $.snackbar({content: data.snack});
+                $('#blockContent').load(blockLoadUrl)
+            }
+        });
+    });
 </script>
 
 {% endblock %}

@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h5 class="modal-title">{% trans %}Neuen Block anlegen{% endtrans %}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    {{ form_start(form, {
+        'attr': {
+            'novalidate': 'novalidate',
+            'class':'ajaxForm'
+
+        }
+    }) }}
+    {{ form_errors(form) }}
+
+        {{ form_row(form.von) }}
+
+        {{ form_row(form.bis) }}
+{% if form.preis is defined %}
+       {{ form_row(form.preis) }}
+{% endif %}
+    <button type="submit" class="btn btn-primary">{% trans %}Speichern{% endtrans %}</button>
+    {{ form_end(form) }}
+</div>
+<script>
+  $('.ajaxForm').submit(function(e) {
+      e.preventDefault();
+      var $form = $(e.currentTarget);
+      $.ajax({
+          url: $form.attr('action'),
+          method: 'POST',
+          data: $form.serialize(),
+          success:function (data) {
+              $.snackbar({content: data.snack});
+              $('#loadContentModal').modal('hide');
+              $('#blockContent').load(blockLoadUrl)
+          }
+      });
+  })  
+</script>
+<div class="modal-footer">
+
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %}Schließen{% endtrans %}</button>
+</div>

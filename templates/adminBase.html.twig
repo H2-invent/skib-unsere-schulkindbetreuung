@@ -653,7 +653,7 @@
     } );
 </script>
 <script>
-    $('.loadContent').click(function(e){
+    $(document).on('click','.loadContent',function(e){
         e.preventDefault();
         var url = $(this).attr('href');
         $('#loadContentModal').modal('show');
