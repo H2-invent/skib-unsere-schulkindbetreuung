@@ -161,6 +161,22 @@
         <source>ROLE_CITY_REPORT</source>
         <target>__Darf Report zu den ORganisationen sehen</target>
       </trans-unit>
+      <trans-unit id="e8Lef9K" resname="Schuljahresbegin">
+        <source>Schuljahresbegin</source>
+        <target>__Schuljahresbegin</target>
+      </trans-unit>
+      <trans-unit id="q9CL8ss" resname="Schuljahresende">
+        <source>Schuljahresende</source>
+        <target>__Schuljahresende</target>
+      </trans-unit>
+      <trans-unit id="8HX627T" resname="Beginn der Anmeldung">
+        <source>Beginn der Anmeldung</source>
+        <target>__Beginn der Anmeldung</target>
+      </trans-unit>
+      <trans-unit id="bYRHFuV" resname="Ende der Anmeldung">
+        <source>Ende der Anmeldung</source>
+        <target>__Ende der Anmeldung</target>
+      </trans-unit>
       <trans-unit id="bRV2_kJ" resname="Username*">
         <source>Username*</source>
         <target>Username*</target>

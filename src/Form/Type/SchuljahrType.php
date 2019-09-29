@@ -28,7 +28,7 @@ class SchuljahrType extends AbstractType
         $builder
             ->add('von', DateType::class,array('label'=>'Schuljahresbegin','required'=>true,'translation_domain' => 'form'))
             ->add('bis', DateType::class,array('label'=>'Schuljahresende','required'=>true,'translation_domain' => 'form'))
-            ->add('anmeldeStartart', DateType::class,array('label'=>'Begin der Anmeldung','required'=>true,'translation_domain' => 'form'))
+            ->add('anmeldeStart', DateType::class,array('label'=>'Beginn der Anmeldung','required'=>true,'translation_domain' => 'form'))
             ->add('anmeldeEnde', DateType::class,array('label'=>'Ende der Anmeldung','required'=>true,'translation_domain' => 'form'))
             ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;

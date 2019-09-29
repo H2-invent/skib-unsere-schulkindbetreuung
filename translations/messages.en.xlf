@@ -353,9 +353,9 @@
         <source>Zeitblöcke</source>
         <target>__Zeitblöcke</target>
       </trans-unit>
-      <trans-unit id="e8Lef9K" resname="Schuljahresbegin">
-        <source>Schuljahresbegin</source>
-        <target>__Schuljahresbegin</target>
+      <trans-unit id="R8zmCYu" resname="Schuljahresbeginn">
+        <source>Schuljahresbeginn</source>
+        <target>__Schuljahresbeginn</target>
       </trans-unit>
       <trans-unit id="q9CL8ss" resname="Schuljahresende">
         <source>Schuljahresende</source>
