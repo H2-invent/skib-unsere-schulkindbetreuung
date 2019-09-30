@@ -93,6 +93,21 @@ class Stammdaten
      */
     private $kinds;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $bic;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $kontoinhaber;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $fin;
+
     public function __construct()
     {
         $this->kinds = new ArrayCollection();
@@ -298,6 +313,42 @@ class Stammdaten
                 $kind->setEltern(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBic(): ?string
+    {
+        return $this->bic;
+    }
+
+    public function setBic(string $bic): self
+    {
+        $this->bic = $bic;
+
+        return $this;
+    }
+
+    public function getKontoinhaber(): ?string
+    {
+        return $this->kontoinhaber;
+    }
+
+    public function setKontoinhaber(string $kontoinhaber): self
+    {
+        $this->kontoinhaber = $kontoinhaber;
+
+        return $this;
+    }
+
+    public function getFin(): ?bool
+    {
+        return $this->fin;
+    }
+
+    public function setFin(bool $fin): self
+    {
+        $this->fin = $fin;
 
         return $this;
     }

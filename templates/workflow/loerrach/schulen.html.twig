@@ -1,0 +1,26 @@
+{% extends 'workflow/base.html.twig' %}
+{% block content %}
+    <h5>{% trans %}Bitte Schulen auswählen und Kinder hinzufügen{% endtrans %}</h5>
+    <p>{% trans %}Text2{% endtrans %}</p>
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <!-- Count item widget-->
+                {% for s in schule %}
+                    <div class="card" style="width: 18rem; margin-right: 8px ">
+                        <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}" alt="{{ s.name }}"style="max-height: 300px">
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ s.name }}</h5>
+                            <p class="card-text">{{ s.infoText }}</p>
+
+                            <p class="card-text">{% trans %}Kind hinzufügen  {% endtrans %} <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id}) }}" class="loadContent"><button type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                                    <i class="material-icons">add</i>
+                                </button></a></p>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+    </section>
+{% endblock %}
