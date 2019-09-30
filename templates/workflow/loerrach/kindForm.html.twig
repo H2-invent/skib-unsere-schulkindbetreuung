@@ -14,12 +14,7 @@
     }) }}
     {{ form_errors(form) }}
 
-        {{ form_row(form.von) }}
-
-        {{ form_row(form.bis) }}
-{% if form.preis is defined %}
-       {{ form_row(form.preis) }}
-{% endif %}
+    {{ form_widget(form) }}
     <button type="submit" class="btn btn-primary">{% trans %}Speichern{% endtrans %}</button>
     {{ form_end(form) }}
 </div>

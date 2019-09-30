@@ -136,17 +136,34 @@ class LoerrachWorkflowController  extends AbstractController
                 'choices'  => [
                     'Ganztagsbetreuung' => 1,
                     'Halbtagsbetreuung' => 2,
-                ],['label'=>'Art der Betreuung','translation_domain' => 'form'])
+                ],'label'=>'Art der Betreuung','translation_domain' => 'form'])
             ->add('geburtstag', BirthdayType::class,['label'=>'Geburtstag','translation_domain' => 'form'])
             ->add('allergie', TextType::class,['label'=>'Allergien','translation_domain' => 'form'])
             ->add('medikamente', TextType::class,['label'=>'Medikamente','translation_domain' => 'form'])
-            ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
+            ->setAction($this->generateUrl('loerrach_workflow_schulen_kind_neu', array('schule_id'=>$schule->getId())))
 
             ->getForm();
 
         $form->handleRequest($request);
 
-        return new JsonResponse(array('error'=>false));
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $adresse = $form->getData();
+            $errors = $validator->validate($adresse);
+            if (count($errors) == 0) {
+                $adresse->setFin(false);
+                $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($adresse);
+                $em->flush();
+                $response = $this->redirectToRoute('loerrach_workflow_schulen');
+                $response->headers->setCookie($cookie);
+                return $response;
+            } else {
+                // return $this->redirectToRoute('task_success');
+            }
+        }
+        return $this->render('workflow/loerrach/kindForm.html.twig',array('schule'=>$schule, 'form'=>$form->createView()));
     }
 
 
@@ -154,7 +171,7 @@ class LoerrachWorkflowController  extends AbstractController
     private function getStammdatenFromCookie(Request $request){
         if ($request->cookies->get('UserID')){
             $cookie_ar = explode('.', $request->cookies->get('UserID'));
-            dump($cookie_ar);
+
             $hash = hash("sha256", $cookie_ar[0].$this->getParameter("secret"));
             if ($hash == $cookie_ar[1]){
                 $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid'=>$cookie_ar[0]));
