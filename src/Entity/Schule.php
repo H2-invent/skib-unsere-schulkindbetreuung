@@ -91,12 +91,18 @@ class Schule
      */
     private $zeitblocks;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Kind", mappedBy="schule")
+     */
+    private $kinder;
+
 
 
     public function __construct()
     {
         $this->zeitblocks = new ArrayCollection();
         $this->actives = new ArrayCollection();
+        $this->kinder = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -266,6 +272,37 @@ class Schule
     public function setInfoText(string $infoText): self
     {
         $this->infoText = $infoText;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Kind[]
+     */
+    public function getKinder(): Collection
+    {
+        return $this->kinder;
+    }
+
+    public function addKinder(Kind $kinder): self
+    {
+        if (!$this->kinder->contains($kinder)) {
+            $this->kinder[] = $kinder;
+            $kinder->setSchule($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKinder(Kind $kinder): self
+    {
+        if ($this->kinder->contains($kinder)) {
+            $this->kinder->removeElement($kinder);
+            // set the owning side to null (unless already changed)
+            if ($kinder->getSchule() === $this) {
+                $kinder->setSchule(null);
+            }
+        }
 
         return $this;
     }

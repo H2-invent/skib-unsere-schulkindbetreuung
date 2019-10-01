@@ -93,6 +93,31 @@ class Stammdaten
      */
     private $kinds;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $bic;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $kontoinhaber;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $fin;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $gdpr;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $newsletter;
+
     public function __construct()
     {
         $this->kinds = new ArrayCollection();
@@ -298,6 +323,66 @@ class Stammdaten
                 $kind->setEltern(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBic(): ?string
+    {
+        return $this->bic;
+    }
+
+    public function setBic(string $bic): self
+    {
+        $this->bic = $bic;
+
+        return $this;
+    }
+
+    public function getKontoinhaber(): ?string
+    {
+        return $this->kontoinhaber;
+    }
+
+    public function setKontoinhaber(string $kontoinhaber): self
+    {
+        $this->kontoinhaber = $kontoinhaber;
+
+        return $this;
+    }
+
+    public function getFin(): ?bool
+    {
+        return $this->fin;
+    }
+
+    public function setFin(bool $fin): self
+    {
+        $this->fin = $fin;
+
+        return $this;
+    }
+
+    public function getGdpr(): ?bool
+    {
+        return $this->gdpr;
+    }
+
+    public function setGdpr(bool $gdpr): self
+    {
+        $this->gdpr = $gdpr;
+
+        return $this;
+    }
+
+    public function getNewsletter(): ?bool
+    {
+        return $this->newsletter;
+    }
+
+    public function setNewsletter(bool $newsletter): self
+    {
+        $this->newsletter = $newsletter;
 
         return $this;
     }

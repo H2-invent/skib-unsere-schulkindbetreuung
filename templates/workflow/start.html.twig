@@ -4,6 +4,6 @@
         <h1 class="cover-heading">{{ stadt.name }}</h1>
         <p class="lead">{% trans with {"%name%":stadt.name} %}Melden Sie hier ihre Kinder für die Ganztagsbetreuung der Stadt %name% an{% endtrans %}</p>
         <p class="lead">
-            <a href="{{ path('workflow_adresse',{'stadt':stadt.slug}) }}" class="btn btn-lg btn-secondary">{% trans %}Hier meine Kinder anmelden{% endtrans %}</a>
+            <a href="{{ path('loerrach_workflow_adresse',{'stadt':stadt.slug}) }}" class="btn btn-lg btn-secondary">{% trans %}Hier meine Kinder anmelden{% endtrans %}</a>
         </p>
 {% endblock %}
