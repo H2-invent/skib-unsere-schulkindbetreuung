@@ -20,28 +20,29 @@
                             <h5 class="card-title">{{ s.name }}</h5>
                             <p class="card-text">{{ s.infoText }}</p>
 
-                            <p class="card-text">{% trans %}Kind hinzufügen  {% endtrans %} <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id}) }}" class="loadContent"><button type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
-                                    <i class="material-icons">add</i>
-                                </button></a></p>
-                            <ul class="list-group list-group-flush">
-                                {%  if kinder[s.id] is defined and kinder[s.id] is not null %}
-                                    {% for k in kinder[s.id] %}
-                                        <li class="list-group-item">{{ k.vorname }} {{ k.nachname }}
-                                            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                                                <a href="{{ path('loerrach_workflow_schulen_kind_zeitblock', {'kind_id':k.id}) }}" class="btn btn-secondary loadContent">
-                                                     <i class="material-icons">view_module</i></a>
-                                                <a href="{{ path('loerrach_workflow_kind_delete', {'kind_id':k.id}) }}" class="btn btn-secondary">
-                                                    <i class="material-icons">delete</i></a>
+                            <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id}) }}" class="loadContent btn">{% trans %}Kind hinzufügen  {% endtrans %}</a>
 
-                                            </div>
+                        </div>
+                        {%  if kinder[s.id] is defined and kinder[s.id] is not null %}
+                        {% for k in kinder[s.id] %}
+                            <div class="card-body">
+                                {{ k.vorname }} {{ k.nachname }}
+                                <div class="btn-group">
+                                    <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
 
+                                        <a href="{{ path('loerrach_workflow_schulen_kind_zeitblock', {'kind_id':k.id}) }}" class=" loadContent dropdown-item">{% trans %}Betreuungsblöcke bearbeiten{% endtrans %}</a>
+                                        <a href="{{ path('loerrach_workflow_kind_delete', {'kind_id':k.id}) }}" class="dropdown-item">{% trans %}Löschen{% endtrans %}</a>
 
+                                    </div>
+                                </div>
+                              </div>
 
-
-                                        </li>
                                     {% endfor %}
                                 {% endif %}
-                            </ul>
+
                         </div>
                     </div>
                 {% endfor %}
