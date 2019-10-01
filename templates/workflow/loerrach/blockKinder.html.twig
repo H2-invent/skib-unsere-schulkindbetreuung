@@ -1,0 +1,55 @@
+<div class="modal-header">
+    <h5 class="modal-title">{% trans %}Betreuungsblöcke auswählen{% endtrans %}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+<div class="row">
+    <div class="col-md-2 text-center">
+        <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
+        {% if blocks[0] is defined %}
+            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[0]} %}
+        {% endif %}
+    </div>
+    <div class="col-md-2 text-center">
+        <h5 class="card-title">{% trans %}Dienstag{% endtrans %}</h5>
+        {% if blocks[1] is defined %}
+            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[1]} %}
+        {% endif %}
+    </div>
+    <div class="col-md-2 text-center">
+        <h5 class="card-title">{% trans %}Mittwoch{% endtrans %}</h5>
+        {% if blocks[2] is defined %}
+            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[2]} %}
+        {% endif %}
+    </div>
+    <div class="col-md-2 text-center">
+        <h5 class="card-title">{% trans %}Donnerstag{% endtrans %}</h5>
+        {% if blocks[3] is defined %}
+            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[3]} %}
+        {% endif %}
+    </div>
+    <div class="col-md-2 text-center">
+        <h5 class="card-title">{% trans %}Freitag{% endtrans %}</h5>
+        {% if blocks[4] is defined %}
+            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[4]} %}
+        {% endif %}
+    </div>
+
+    <div class="col-md-1 text-center">
+        <h5 class="card-title">{% trans %}Samstag{% endtrans %}</h5>
+        {% if blocks[5] is defined %}
+            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[5]} %}
+        {% endif %}
+    </div>
+    <div class="col-md-1 text-center">
+        <h5 class="card-title">{% trans %}Sonntag{% endtrans %}</h5>
+        {% if blocks[6] is defined %}
+            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[6]} %}
+        {% endif %}
+    </div>
+</div>
+
+</div>
+

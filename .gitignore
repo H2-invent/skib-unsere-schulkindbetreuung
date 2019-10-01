@@ -20,3 +20,4 @@
 ###< symfony/web-server-bundle ###
 *.min.css
 *.min.js
+*.idea

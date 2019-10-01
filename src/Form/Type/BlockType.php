@@ -12,6 +12,7 @@ use App\Entity\Active;
 use App\Entity\Zeitblock;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -33,6 +34,11 @@ class BlockType extends AbstractType
             ->add('von', TimeType::class,array('label'=>'Betreuungsbeginn','required'=>true,'translation_domain' => 'form'))
             ->add('bis', TimeType::class,array('label'=>'Betreuungsende','required'=>true,'translation_domain' => 'form'))
             ->add('preis', NumberType::class,array('label'=>'Preis','required'=>true,'translation_domain' => 'form'))
+            ->add('ganztag', ChoiceType::class, [
+                'choices'  => [
+                    'Ganztagsbetreuung' => 1,
+                    'Halbtagsbetreuung' => 2,
+                ],'label'=>'Art der Betreuung','translation_domain' => 'form'])
             ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
     }
