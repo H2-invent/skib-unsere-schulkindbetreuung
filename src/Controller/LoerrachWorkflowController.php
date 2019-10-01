@@ -127,7 +127,6 @@ class LoerrachWorkflowController  extends AbstractController
         }
 
         $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule_id'));
-        $block = $schule->getZeitblocks();
 
         $kind = new Kind();
         $kind->setEltern($adresse);
@@ -179,6 +178,34 @@ class LoerrachWorkflowController  extends AbstractController
         }
         return $this->render('workflow/loerrach/kindForm.html.twig',array('schule'=>$schule, 'form'=>$form->createView()));
     }
+
+
+    /**
+     * @Route("/loerrach/schulen/kind/zeitblock",name="loerrach_workflow_schulen_kind_zeitblock",methods={"GET","POST"})
+     */
+    public function kindzeitblockAction(Request $request,ValidatorInterface $validator,TranslatorInterface $translator)
+    {
+        $adresse = new Stammdaten;
+
+        //Include Parents in this route
+        if ($this->getStammdatenFromCookie($request)) {
+            $adresse = $this->getStammdatenFromCookie($request);
+        }
+
+        $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule_id'));
+        $block = $schule->getZeitblocks();
+
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern'=>$adresse, 'id'=>$request->get('kind_id')));
+
+
+
+    }
+
+
+
+
+
+
 
     /**
      * @Route("/loerrach/zusammenfassung",name="loerrach_workflow_zusammenfassung",methods={"GET"})
