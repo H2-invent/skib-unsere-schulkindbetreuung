@@ -59,6 +59,11 @@ class Zeitblock
      */
     private $preis;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ganztag;
+
     public function __construct()
     {
         $this->kind = new ArrayCollection();
@@ -224,6 +229,18 @@ class Zeitblock
     public function setPreis(float $preis): self
     {
         $this->preis = $preis;
+
+        return $this;
+    }
+
+    public function getGanztag(): ?int
+    {
+        return $this->ganztag;
+    }
+
+    public function setGanztag(int $ganztag): self
+    {
+        $this->ganztag = $ganztag;
 
         return $this;
     }

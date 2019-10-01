@@ -71,6 +71,17 @@ class Kind
      */
     private $zeitblocks;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $bemerkung;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Schule", inversedBy="kinder")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $schule;
+
     public function __construct()
     {
         $this->zeitblocks = new ArrayCollection();
@@ -233,6 +244,30 @@ class Kind
                 $abwesend->setKind(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBemerkung(): ?string
+    {
+        return $this->bemerkung;
+    }
+
+    public function setBemerkung(?string $bemerkung): self
+    {
+        $this->bemerkung = $bemerkung;
+
+        return $this;
+    }
+
+    public function getSchule(): ?Schule
+    {
+        return $this->schule;
+    }
+
+    public function setSchule(?Schule $schule): self
+    {
+        $this->schule = $schule;
 
         return $this;
     }
