@@ -2,7 +2,7 @@
 {% block content %}
     <h5>{% trans %}Bitte Schulen auswählen und Kinder hinzufügen{% endtrans %}</h5>
     <p>{% trans %}Text2{% endtrans %}</p>
-    <section class="dashboard-counts section-padding">
+    <section class="dashboard-counts section-padding" id="schulenShow">
         <div class="container-fluid ">
             <div class="row">
                 <!-- Count item widget-->
@@ -17,6 +17,7 @@
                             <p class="card-text">{% trans %}Kind hinzufügen  {% endtrans %} <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id}) }}" class="loadContent"><button type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
                                     <i class="material-icons">add</i>
                                 </button></a></p>
+
                         </div>
                     </div>
                 {% endfor %}

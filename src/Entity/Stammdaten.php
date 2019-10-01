@@ -108,6 +108,16 @@ class Stammdaten
      */
     private $fin;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $gdpr;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $newsletter;
+
     public function __construct()
     {
         $this->kinds = new ArrayCollection();
@@ -349,6 +359,30 @@ class Stammdaten
     public function setFin(bool $fin): self
     {
         $this->fin = $fin;
+
+        return $this;
+    }
+
+    public function getGdpr(): ?bool
+    {
+        return $this->gdpr;
+    }
+
+    public function setGdpr(bool $gdpr): self
+    {
+        $this->gdpr = $gdpr;
+
+        return $this;
+    }
+
+    public function getNewsletter(): ?bool
+    {
+        return $this->newsletter;
+    }
+
+    public function setNewsletter(bool $newsletter): self
+    {
+        $this->newsletter = $newsletter;
 
         return $this;
     }

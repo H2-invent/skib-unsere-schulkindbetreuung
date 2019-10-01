@@ -1,0 +1,57 @@
+{% extends 'workflow/base.html.twig' %}
+{% block content %}
+        <h1 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h1>
+
+    <ul>
+        {% for error in errors %}
+            <li>{{ error.message }}</li>
+        {% endfor %}
+    </ul>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th></th>
+                <th>{% trans %}Zusammenfassung Eltern{% endtrans %}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{% trans %}Name der Eltern{% endtrans %}</td>
+                <td>{{ name }}</td>
+            </tr>
+
+            <tr>
+                <td>{% trans %}Adresse der Eltern{% endtrans %}</td>
+                <td>{{ adresse }}</td>
+            </tr>
+
+            <tr>
+                <td>{% trans %}Geburtstag der Eltern{% endtrans %}</td>
+                <td>{{ einkommen }}</td>
+            </tr>
+            {% for k in kind %}
+
+                <tr>
+                    <td>
+
+
+                    </td>
+                    <td>{{ u.username }}</td>
+                    <td>{{ u.vorname }}</td>
+                    <td>{{ u.nachname }}</td>
+                    <td>{{ u.birthday|date('d.m.Y') }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+{% endblock %}

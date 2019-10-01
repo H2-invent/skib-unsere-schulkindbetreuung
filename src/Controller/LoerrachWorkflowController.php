@@ -16,6 +16,7 @@ use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
 use Beelab\Recaptcha2Bundle\Validator\Constraints\Recaptcha2;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Cookie;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -60,6 +61,8 @@ class LoerrachWorkflowController  extends AbstractController
             ->add('bic', TextType::class,['label'=>'BIC für das Lastschriftmandat','translation_domain' => 'form'])
             ->add('kontoinhaber', TextType::class,['label'=>'Kontoinhaber für das Lastschriftmandat','translation_domain' => 'form'])
             ->add('sepaInfo', CheckboxType::class,['label'=>'SEPA-LAstschrift Mandat wird elektromisch erteilt','translation_domain' => 'form'])
+            ->add('gdpr', CheckboxType::class,['label'=>'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden','translation_domain' => 'form'])
+            ->add('newsletter', CheckboxType::class,['label'=>'Zum Newsletter anmelden','translation_domain' => 'form'])
            // ->add('captcha', RecaptchaType::class, [
                 // "groups" option is not mandatory
 
@@ -113,7 +116,7 @@ class LoerrachWorkflowController  extends AbstractController
     }
 
     /**
-     * @Route("/loerrach/schulen/kind/neu",name="loerrach_workflow_schulen_kind_neu",methods={"GET", "POST"})
+     * @Route("/loerrach/schulen/kind/neu",name="loerrach_workflow_schulen_kind_neu",methods={"GET","POST"})
      */
     public function neukindAction(Request $request,ValidatorInterface $validator,TranslatorInterface $translator){
     $adresse = new Stammdaten;
@@ -128,43 +131,77 @@ class LoerrachWorkflowController  extends AbstractController
 
         $kind = new Kind();
         $kind->setEltern($adresse);
+        $kind->setSchule($schule);
         $form = $this->createFormBuilder($kind)
             ->add('vorname', TextType::class,['label'=>'Vorname','translation_domain' => 'form'])
             ->add('nachname', TextType::class,['label'=>'Name','translation_domain' => 'form'])
-            ->add('klasse', NumberType::class,['label'=>'Klasse','translation_domain' => 'form'])
+            ->add('klasse', ChoiceType::class, [
+            'choices'  => [
+                'Klasse 1' => 1,
+                'Klasse 2' => 2,
+                'Klasse 3' => 3,
+                'Klasse 4' => 4,
+                'Klasse 5' => 5,
+                'Klasse 6' => 6,
+            ],'label'=>'Jahrgangsstufe','translation_domain' => 'form'])
             ->add('art', ChoiceType::class, [
                 'choices'  => [
                     'Ganztagsbetreuung' => 1,
                     'Halbtagsbetreuung' => 2,
                 ],'label'=>'Art der Betreuung','translation_domain' => 'form'])
             ->add('geburtstag', BirthdayType::class,['label'=>'Geburtstag','translation_domain' => 'form'])
-            ->add('allergie', TextType::class,['label'=>'Allergien','translation_domain' => 'form'])
-            ->add('medikamente', TextType::class,['label'=>'Medikamente','translation_domain' => 'form'])
+            ->add('allergie', TextType::class,['required'=>false,'label'=>'Allergien','translation_domain' => 'form'])
+            ->add('medikamente', TextType::class,['required'=>false,'label'=>'Medikamente','translation_domain' => 'form'])
+            ->add('bemerkung', TextareaType::class,['required'=>false,'label'=>'Bemerkung','translation_domain' => 'form','attr'=>['rows'=>6]])
+
             ->setAction($this->generateUrl('loerrach_workflow_schulen_kind_neu', array('schule_id'=>$schule->getId())))
-
             ->getForm();
-
         $form->handleRequest($request);
-
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
-            $adresse = $form->getData();
-            $errors = $validator->validate($adresse);
-            if (count($errors) == 0) {
-                $adresse->setFin(false);
-                $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($adresse);
-                $em->flush();
-                $response = $this->redirectToRoute('loerrach_workflow_schulen');
-                $response->headers->setCookie($cookie);
-                return $response;
-            } else {
-                // return $this->redirectToRoute('task_success');
-            }
+            $kind = $form->getData();
+            $errors = $validator->validate($kind);
+
+      //      try {
+                if (count($errors) == 0) {
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($kind);
+                    $em->flush();
+                    $text = $translator->trans('Erfolgreich gespeichert');
+                    return new JsonResponse(array('error' => 0, 'snack' => $text));
+                }
+           // }catch (\Exception $e){
+             //   $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+            //    return new JsonResponse(array('error' => 1, 'snack' => $text));
+           // }
+
         }
         return $this->render('workflow/loerrach/kindForm.html.twig',array('schule'=>$schule, 'form'=>$form->createView()));
     }
+
+    /**
+     * @Route("/loerrach/zusammenfassung",name="loerrach_workflow_zusammenfassung",methods={"GET"})
+     */
+    public function zusammenfassungAction(Request $request,ValidatorInterface $validator,TranslatorInterface $translator)
+    {
+        $adresse = new Stammdaten;
+
+        //Include Parents in this route
+        if ($this->getStammdatenFromCookie($request)) {
+            $adresse = $this->getStammdatenFromCookie($request);
+        }else{
+            return $this->redirectToRoute('loerrach_workflow_adresse');
+        }
+
+        $kind = $adresse->getKinds();
+
+        return $this->render('workflow/loerrach/zusammenfassung.html.twig',array('kind'=>$kind, 'adresse'=>$adresse));
+    }
+
+
+
+
 
 
     // Include Parental data
