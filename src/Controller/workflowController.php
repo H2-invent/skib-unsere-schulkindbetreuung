@@ -30,8 +30,6 @@ class workflowController  extends AbstractController
     */
     public function welcomeAction(Request $request, Stadt $stadt)
     {
-
-
         return $this->render('workflow/start.html.twig',array('stadt'=>$stadt));
     }
     /**
@@ -72,6 +70,7 @@ class workflowController  extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($adresse);
                 $em->flush();
+
             }else{
                 // return $this->redirectToRoute('task_success');
             }
