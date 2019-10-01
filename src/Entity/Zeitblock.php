@@ -191,7 +191,36 @@ class Zeitblock
 
         return $this;
     }
+    public function getWochentagString(){
 
+       switch ($this->wochentag){
+           case 0:
+               return "Montag";
+               break;
+           case 1:
+               return "Dienstag";
+               break;
+           case 2:
+               return "Mittwoch";
+               break;
+           case 3:
+               return "Donnerstag";
+               break;
+           case 4:
+               return "Freitag";
+               break;
+           case 5:
+               return "Samstag";
+               break;
+           case 6:
+               return "Sonntag";
+               break;
+           default:
+               return "keine Angabe";
+               break;
+
+       }
+    }
     public function getPreis(): ?float
     {
         return $this->preis;

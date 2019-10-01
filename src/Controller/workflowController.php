@@ -30,9 +30,8 @@ class workflowController  extends AbstractController
     */
     public function welcomeAction(Request $request, Stadt $stadt)
     {
-
-
         return $this->render('workflow/start.html.twig',array('stadt'=>$stadt));
     }
+
 
 }

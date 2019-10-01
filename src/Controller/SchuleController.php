@@ -135,7 +135,7 @@ class SchuleController extends AbstractController
                 $em->persist($school);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('city_admin_schule_show',array('snack'=>$text,'id'=>$city->getId()));
+                return $this->redirectToRoute('city_admin_schule_detail',array('snack'=>$text,'id'=>$school->getId()));
             }
 
         }

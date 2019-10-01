@@ -587,6 +587,9 @@
     "symfony/yaml": {
         "version": "v4.3.4"
     },
+    "tecnickcom/tcpdf": {
+        "version": "6.3.2"
+    },
     "twig/twig": {
         "version": "v2.11.3"
     },
@@ -604,6 +607,9 @@
     },
     "webmozart/assert": {
         "version": "1.5.0"
+    },
+    "whiteoctober/tcpdf-bundle": {
+        "version": "1.1.2"
     },
     "zendframework/zend-code": {
         "version": "3.3.2"
