@@ -8,7 +8,7 @@ security:
         ROLE_CITY_ADMIN: [ROLE_CITY_SCHOOL, ROLE_USER,ROLE_ORG_EDITOR,ROLE_CITY_EDITOR]
         ROLE_ORG_CHILD_CHANGE: ROLE_ORG_CHILD_SHOW
         ROLE_ORG_ACCOUNTING: ROLE_ORG_CHILD_SHOW
-        ROLE_ORG_ADMIN: [ROLE_ORG_BLOCK_MANAGEMENT,ROLE_ORG_EDITOR]
+        ROLE_ORG_ADMIN: [ROLE_ORG_EDITOR]
         ROLE_CITY_SCHOOL: ROLE_ORG_SHOOL
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:

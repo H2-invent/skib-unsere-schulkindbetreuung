@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">{% trans %}Neuen Block anlegen{% endtrans %}</h5>
+    <h5 class="modal-title">{% trans with {'%tag%':block.WochentagString|trans} %}Neuen Block anlegen am %tag%{% endtrans %}</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -7,7 +7,7 @@
 <div class="modal-body">
     {{ form_start(form, {
         'attr': {
-            'novalidate': 'novalidate',
+
             'class':'ajaxForm'
 
         }
