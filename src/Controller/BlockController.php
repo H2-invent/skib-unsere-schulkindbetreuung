@@ -78,11 +78,12 @@ class BlockController extends AbstractController
         $block->setWochentag($request->get('weekday'));
         $form = $this->createForm(BlockType::class, $block,[
             'action' => $this->generateUrl('block_schule_newBlocks',array('year'=>$activity->getId(),'shool'=>$shool->getId(),'weekday'=>$block->getWochentag())),
+            'anzahlPreise'=>$shool->getStadt()->getpreiskategorien()
         ]);
-
+          dump('test');
         $form->remove('save');
         $form->handleRequest($request);
-
+        dump($form);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $block = $form->getData();

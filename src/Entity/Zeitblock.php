@@ -64,6 +64,11 @@ class Zeitblock
      */
     private $ganztag;
 
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    private $preise = [];
+
     public function __construct()
     {
         $this->kind = new ArrayCollection();
@@ -241,6 +246,18 @@ class Zeitblock
     public function setGanztag(int $ganztag): self
     {
         $this->ganztag = $ganztag;
+
+        return $this;
+    }
+
+    public function getPreise(): ?array
+    {
+        return $this->preise;
+    }
+
+    public function setPreise(array $preise): self
+    {
+        $this->preise = $preise;
 
         return $this;
     }

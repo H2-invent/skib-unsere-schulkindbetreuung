@@ -31,15 +31,19 @@ class BlockType extends AbstractType
         $builder
 
             ->add('von', TimeType::class,array('label'=>'Betreuungsbeginn','required'=>true,'translation_domain' => 'form'))
-            ->add('bis', TimeType::class,array('label'=>'Betreuungsende','required'=>true,'translation_domain' => 'form'))
-            ->add('preis', NumberType::class,array('label'=>'Preis','required'=>true,'translation_domain' => 'form'))
-            ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
+            ->add('bis', TimeType::class,array('label'=>'Betreuungsende','required'=>true,'translation_domain' => 'form'));
+            for($i = 0; $i<$options['anzahlPreise'];$i++){
+              $builder->add('preis', NumberType::class,array('label'=>'Preis','required'=>true,'translation_domain' => 'form'));
+            }
+            $builder->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
     }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Zeitblock::class,
+             'anzahlPreise' => 1,
         ]);
+        $resolver->setAllowedTypes('anzahlPreise', 'integer');
     }
 }
