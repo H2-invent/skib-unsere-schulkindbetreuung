@@ -10,6 +10,7 @@ namespace App\Form\Type;
 use App\Entity\Stadt;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -33,6 +34,7 @@ class StadtType extends AbstractType
             ->add('telefon', TextType::class,['label'=>'Telefonnummer','translation_domain' => 'form'])
             ->add('ansprechpartner', TextType::class,['label'=>'Ansprechpartner','translation_domain' => 'form'])
             ->add('infoText', TextareaType::class,['label'=>'Info Text','translation_domain' => 'form','attr'=>['rows'=>6]])
+            ->add('preiskategorien', NumberType::class,['required'=>true,'label'=>'Anzahl der Preiskategorien','translation_domain' => 'form'])
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,

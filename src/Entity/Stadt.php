@@ -155,7 +155,10 @@ class Stadt
     /**
      * @ORM\Column(type="integer")
      */
-    private $anzahl_gehaltsklassen;
+
+
+    private $preiskategorien;
+
 
     public function __construct()
     {
@@ -550,14 +553,14 @@ class Stadt
         return $this;
     }
 
-    public function getAnzahlGehaltsklassen(): ?int
+    public function getPreiskategorien(): ?int
     {
-        return $this->anzahl_gehaltsklassen;
+        return $this->preiskategorien;
     }
 
-    public function setAnzahlGehaltsklassen(int $anzahl_gehaltsklassen): self
+    public function setPreiskategorien(int $preiskategorien): self
     {
-        $this->anzahl_gehaltsklassen = $anzahl_gehaltsklassen;
+        $this->preiskategorien = $preiskategorien;
 
         return $this;
     }

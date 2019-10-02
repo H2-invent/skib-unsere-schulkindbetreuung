@@ -3,7 +3,7 @@
         <div href="{{ path('loerrach_workflow_kinder_block_toggle', {'kinder_id':kind.id, 'block_id':b.id}) }}" class="{% if b in kind.zeitblocks %}bg-success{% endif %} card chooseBlock">
             <div class="card-body text-center">
                 {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
-                <b>{{ b.preis|number_format(2,',') }}€</b>
+                <b>{{ b.preise[kind.eltern.einkommen]|number_format(2,',') }}€</b>
             </div>
         </div>
     {% endfor %}

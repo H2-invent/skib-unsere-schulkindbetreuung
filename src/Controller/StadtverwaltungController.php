@@ -78,7 +78,7 @@ class StadtverwaltungController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($city);
                 $em->flush();
-                return $this->redirectToRoute('admin_stadt');
+                return $this->redirectToRoute('admin_stadt_edit',array('id'=>$city->getId(),'snack'=>'Erfolgreich gespeichert'));
             }
 
         }
