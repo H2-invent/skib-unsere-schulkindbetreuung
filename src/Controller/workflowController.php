@@ -30,12 +30,27 @@ class workflowController  extends AbstractController
     */
     public function welcomeAction(Request $request, Stadt $stadt)
     {
-        switch($slug){
-            case loerrach:
-                
+        $url = '';
+        switch($stadt->getSlug()){
+            case 'loerrach':
+           $url = $this->generateUrl('loerrach_workflow_adresse');
+           break;
+            default:
+                break;
+
         }
-        return $this->render('workflow/start.html.twig',array('stadt'=>$stadt));
+        return $this->render('workflow/start.html.twig',array('stadt'=>$stadt,'url'=>$url));
     }
 
+
+    /**
+     * @Route("/{slug}/closed",name="workflow_closed",methods={"GET"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
+     */
+    public function closedAction(Request $request, Stadt $stadt)
+    {
+
+        return $this->render('workflow/closed.html.twig',array('stadt'=>$stadt));
+    }
 
 }

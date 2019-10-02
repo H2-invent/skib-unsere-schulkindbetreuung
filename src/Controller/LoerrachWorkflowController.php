@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 /**
  * Created by PhpStorm.
@@ -7,11 +8,13 @@ namespace App\Controller;
  * Time: 12:21
  */
 
+use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
+use App\Form\Type\LoerrachKind;
 use App\Form\Type\StadtType;
 use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
 use Beelab\Recaptcha2Bundle\Validator\Constraints\Recaptcha2;
@@ -33,112 +36,126 @@ use Symfony\Component\Validator\Constraints\Json;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class LoerrachWorkflowController  extends AbstractController
+class LoerrachWorkflowController extends AbstractController
 {
     /**
      * @Route("/loerrach/adresse",name="loerrach_workflow_adresse",methods={"GET","POST"})
      */
-    public function adresseAction(Request $request,ValidatorInterface $validator)
+    public function adresseAction(Request $request, ValidatorInterface $validator)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug'=>'Loerrach'));
+
+
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'Loerrach'));
+        $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        if ($schuljahr == null){
+            return $this->redirectToRoute('workflow_closed', array('slug'=>$stadt->getSlug()));
+        }
+
         $adresse = new Stammdaten;
-        if($this->getStammdatenFromCookie($request)){
+        if ($this->getStammdatenFromCookie($request)) {
             $adresse = $this->getStammdatenFromCookie($request);
         }
+
 
         $adresse->setUid(md5(uniqid()))
             ->setAngemeldet(false);
         $adresse->setCreatedAt(new \DateTime());
         $form = $this->createFormBuilder($adresse)
-            ->add('name', TextType::class,['label'=>'Name','translation_domain' => 'form'])
-            ->add('vorname', TextType::class,['label'=>'Vorname','translation_domain' => 'form'])
-            ->add('strasse', TextType::class,['label'=>'Straße','translation_domain' => 'form'])
-            ->add('plz', TextType::class,['label'=>'PLZ','translation_domain' => 'form'])
-            ->add('stadt', TextType::class,['label'=>'Stadt','translation_domain' => 'form'])
-            ->add('adresszusatz', TextType::class,['label'=>'Adresszusatz','translation_domain' => 'form'])
+            ->add('name', TextType::class, ['label' => 'Name', 'translation_domain' => 'form'])
+            ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
+            ->add('strasse', TextType::class, ['label' => 'Straße', 'translation_domain' => 'form'])
+            ->add('plz', TextType::class, ['label' => 'PLZ', 'translation_domain' => 'form'])
+            ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form'])
+            ->add('adresszusatz', TextType::class, ['label' => 'Adresszusatz', 'translation_domain' => 'form'])
             ->add('einkommen', ChoiceType::class, [
-                'choices'  => [
+                'choices' => [
                     '0 - 1.000 Euro' => 1,
                     '1.001 - 2.000 Euro' => 2,
                     '2.001 . 3.000 Euro' => 3,
                     '3.001 . 5.000 Euro' => 4,
                     '5.001 . 9.000 Euro' => 5,
                     'mehr als 9.001 Euro' => 6,
-                ],'label'=>'Netto Haushaltseinkommen pro Monat','translation_domain' => 'form'])
-            ->add('kinderImKiga', CheckboxType::class,['label'=>'Kind im Kindergarten','translation_domain' => 'form'])
-            ->add('buk', CheckboxType::class,['label'=>'BUK Empfänger','translation_domain' => 'form'])
-            ->add('beruflicheSituation', TextType::class,['label'=>'Berufliche Situation der Eltern','translation_domain' => 'form'])
-            ->add('notfallkontakt', TextType::class,['label'=>'Notfallkontakt','translation_domain' => 'form'])
-            ->add('iban', TextType::class,['label'=>'IBAN für das Lastschriftmandat','translation_domain' => 'form'])
-            ->add('bic', TextType::class,['label'=>'BIC für das Lastschriftmandat','translation_domain' => 'form'])
-            ->add('kontoinhaber', TextType::class,['label'=>'Kontoinhaber für das Lastschriftmandat','translation_domain' => 'form'])
-            ->add('sepaInfo', CheckboxType::class,['label'=>'SEPA-LAstschrift Mandat wird elektromisch erteilt','translation_domain' => 'form'])
-            ->add('gdpr', CheckboxType::class,['label'=>'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden','translation_domain' => 'form'])
-            ->add('newsletter', CheckboxType::class,['label'=>'Zum Newsletter anmelden','translation_domain' => 'form'])
-           // ->add('captcha', RecaptchaType::class, [
-                // "groups" option is not mandatory
+                ], 'label' => 'Netto Haushaltseinkommen pro Monat', 'translation_domain' => 'form'])
+            ->add('kinderImKiga', CheckboxType::class, ['label' => 'Kind im Kindergarten', 'translation_domain' => 'form'])
+            ->add('buk', CheckboxType::class, ['label' => 'BUK Empfänger', 'translation_domain' => 'form'])
+            ->add('beruflicheSituation', TextType::class, ['label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
+            ->add('notfallkontakt', TextType::class, ['label' => 'Notfallkontakt', 'translation_domain' => 'form'])
+            ->add('iban', TextType::class, ['label' => 'IBAN für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('bic', TextType::class, ['label' => 'BIC für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('kontoinhaber', TextType::class, ['label' => 'Kontoinhaber für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('sepaInfo', CheckboxType::class, ['label' => 'SEPA-LAstschrift Mandat wird elektromisch erteilt', 'translation_domain' => 'form'])
+            ->add('gdpr', CheckboxType::class, ['label' => 'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden', 'translation_domain' => 'form'])
+            ->add('newsletter', CheckboxType::class, ['label' => 'Zum Newsletter anmelden', 'translation_domain' => 'form'])
+            // ->add('captcha', RecaptchaType::class, [
+            // "groups" option is not mandatory
 
             //])
-            ->add('submit', SubmitType::class, ['label' => 'weiter','translation_domain' => 'form'])
-
+            ->add('submit', SubmitType::class, ['attr'=> array('class'=> 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form'])
             ->getForm();
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $adresse = $form->getData();
             $errors = $validator->validate($adresse);
-            if(count($errors)== 0) {
+            if (count($errors) == 0) {
                 $adresse->setFin(false);
-                $cookie = new Cookie ('UserID',$adresse->getUid().".".hash("sha256",$adresse->getUid().$this->getParameter("secret")),time()+60*60*24*365);
+                $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($adresse);
                 $em->flush();
                 $response = $this->redirectToRoute('loerrach_workflow_schulen');
                 $response->headers->setCookie($cookie);
                 return $response;
-            }else{
+            } else {
                 // return $this->redirectToRoute('task_success');
             }
 
         }
 
-        return $this->render('workflow/loerrach/adresse.html.twig',array('stadt'=>$stadt,'form' => $form->createView(),'errors'=>$errors));
+        return $this->render('workflow/loerrach/adresse.html.twig', array('stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors));
     }
 
     /**
      * @Route("/loerrach/schulen",name="loerrach_workflow_schulen",methods={"GET"})
      */
-    public function schulenAction(Request $request,ValidatorInterface $validator){
+    public function schulenAction(Request $request, ValidatorInterface $validator)
+    {
 
         // Load the data from the city into the controller as $stadt
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug'=>'loerrach'));
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
 
         // Load all schools from the city into the controller as $schulen
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt'=>$stadt));
+        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt));
+
+        $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        if ($schuljahr == null){
+            return $this->redirectToRoute('workflow_closed', array('slug'=>$stadt->getSlug()));
+        }
 
         // load parent address data into controller as $adresse
         $adresse = new Stammdaten;
-        if($this->getStammdatenFromCookie($request)){
+        if ($this->getStammdatenFromCookie($request)) {
             $adresse = $this->getStammdatenFromCookie($request);
-        }else{
+        } else {
             return $this->redirectToRoute('loerrach_workflow_adresse');
         }
         $kinder = $adresse->getKinds()->toArray();
         $renderKinder = array();
-        foreach ($kinder as $data){
+        foreach ($kinder as $data) {
             $renderKinder[$data->getSchule()->getId()][] = $data;
         }
-        return $this->render('workflow/loerrach/schulen.html.twig',array('schule'=>$schule, 'stadt'=>$stadt, 'adresse'=>$adresse, 'kinder'=>$renderKinder));
+        return $this->render('workflow/loerrach/schulen.html.twig', array('schule' => $schule, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $renderKinder));
     }
 
     /**
      * @Route("/loerrach/schulen/kind/neu",name="loerrach_workflow_schulen_kind_neu",methods={"GET","POST"})
      */
-    public function neukindAction(Request $request,ValidatorInterface $validator,TranslatorInterface $translator){
-    $adresse = new Stammdaten;
+    public function neukindAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $adresse = new Stammdaten;
 
         //Include Parents in this route
-        if($this->getStammdatenFromCookie($request)){
+        if ($this->getStammdatenFromCookie($request)) {
             $adresse = $this->getStammdatenFromCookie($request);
         }
 
@@ -147,30 +164,8 @@ class LoerrachWorkflowController  extends AbstractController
         $kind = new Kind();
         $kind->setEltern($adresse);
         $kind->setSchule($schule);
-        $form = $this->createFormBuilder($kind)
-            ->add('vorname', TextType::class,['label'=>'Vorname','translation_domain' => 'form'])
-            ->add('nachname', TextType::class,['label'=>'Name','translation_domain' => 'form'])
-            ->add('klasse', ChoiceType::class, [
-            'choices'  => [
-                'Klasse 1' => 1,
-                'Klasse 2' => 2,
-                'Klasse 3' => 3,
-                'Klasse 4' => 4,
-                'Klasse 5' => 5,
-                'Klasse 6' => 6,
-            ],'label'=>'Jahrgangsstufe','translation_domain' => 'form'])
-            ->add('art', ChoiceType::class, [
-                'choices'  => [
-                    'Ganztagsbetreuung' => 1,
-                    'Halbtagsbetreuung' => 2,
-                ],'label'=>'Art der Betreuung','translation_domain' => 'form'])
-            ->add('geburtstag', BirthdayType::class,['label'=>'Geburtstag','translation_domain' => 'form'])
-            ->add('allergie', TextType::class,['required'=>false,'label'=>'Allergien','translation_domain' => 'form'])
-            ->add('medikamente', TextType::class,['required'=>false,'label'=>'Medikamente','translation_domain' => 'form'])
-            ->add('bemerkung', TextareaType::class,['required'=>false,'label'=>'Bemerkung','translation_domain' => 'form','attr'=>['rows'=>6]])
+        $form = $this->createForm(LoerrachKind::class, $kind,array('action'=>$this->generateUrl('loerrach_workflow_schulen_kind_neu',array('schule_id'=>$schule->getId()))));
 
-            ->setAction($this->generateUrl('loerrach_workflow_schulen_kind_neu', array('schule_id'=>$schule->getId())))
-            ->getForm();
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
@@ -184,22 +179,21 @@ class LoerrachWorkflowController  extends AbstractController
                     $em->persist($kind);
                     $em->flush();
                     $text = $translator->trans('Erfolgreich gespeichert');
-                    return new JsonResponse(array('error' => 0, 'snack' => $text, 'next'=>$this->generateUrl('loerrach_workflow_schulen_kind_zeitblock',array('kind_id'=>$kind->getId()))));
+                    return new JsonResponse(array('error' => 0, 'snack' => $text, 'next' => $this->generateUrl('loerrach_workflow_schulen_kind_zeitblock', array('kind_id' => $kind->getId()))));
                 }
-            }catch (\Exception $e){
+            } catch (\Exception $e) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
                 return new JsonResponse(array('error' => 1, 'snack' => $text));
             }
 
         }
-        return $this->render('workflow/loerrach/kindForm.html.twig',array('schule'=>$schule, 'form'=>$form->createView()));
+        return $this->render('workflow/loerrach/kindForm.html.twig', array('schule' => $schule, 'form' => $form->createView()));
     }
 
-
     /**
-     * @Route("/loerrach/schulen/kind/zeitblock",name="loerrach_workflow_schulen_kind_zeitblock",methods={"GET","POST"})
+     * @Route("/loerrach/schulen/kind/edit",name="loerrach_workflow_schulen_kind_edit",methods={"GET","POST"})
      */
-    public function kindzeitblockAction(Request $request,ValidatorInterface $validator,TranslatorInterface $translator)
+    public function editkindAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $adresse = new Stammdaten;
 
@@ -208,25 +202,100 @@ class LoerrachWorkflowController  extends AbstractController
             $adresse = $this->getStammdatenFromCookie($request);
         }
 
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $form = $this->createForm(LoerrachKind::class, $kind,array(
+            'action'=>$this->generateUrl('loerrach_workflow_schulen_kind_edit',array('kind_id'=>$kind->getId()))
+        ));
+        $form->remove('art');
 
 
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern'=>$adresse, 'id'=>$request->get('kind_id')));
-        $schule = $kind->getSchule();
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy(array('ganztag'=>$kind->getArt(),'schule'=>$schule));
+        $form->handleRequest($request);
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $kind = $form->getData();
+            $errors = $validator->validate($kind);
 
-        $renderBlocks= array();
-        foreach ($block as $data){
-           $renderBlocks[$data->getWochentag()][]= $data;
+            try {
+                if (count($errors) == 0) {
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($kind);
+                    $em->flush();
+                    $text = $translator->trans('Erfolgreich geändert');
+                    return new JsonResponse(array('error' => 0, 'snack' => $text));
+                }
+            } catch (\Exception $e) {
+                $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+                return new JsonResponse(array('error' => 1, 'snack' => $text));
+            }
+
+        }
+        return $this->render('workflow/loerrach/kindForm.html.twig', array('form' => $form->createView()));
+    }
+
+    /**
+     * @Route("/loerrach/schulen/kind/delete",name="loerrach_workflow_kind_delete",methods={"GET"})
+     */
+    public function deleteAction(Request $request, ValidatorInterface $validator)
+    {
+        //Include Parents in this route
+        $adresse = new Stammdaten;
+        if ($this->getStammdatenFromCookie($request)) {
+            $adresse = $this->getStammdatenFromCookie($request);
+        }
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($kind);
+        $em->flush();
+        return $this->redirectToRoute('loerrach_workflow_schulen');
+    }
+
+    /**
+     * @Route("/loerrach/schulen/kind/zeitblock",name="loerrach_workflow_schulen_kind_zeitblock",methods={"GET"})
+     */
+    public function kindzeitblockAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+
+        $adresse = new Stammdaten;
+
+        //Include Parents in this route
+        if ($this->getStammdatenFromCookie($request)) {
+            $adresse = $this->getStammdatenFromCookie($request);
         }
 
-        return $this->render('workflow/loerrach/blockKinder.html.twig',array('kind'=>$kind, 'blocks'=>$renderBlocks));
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $schule = $kind->getSchule();
+        $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($schule->getStadt());
+        $req = array(
+            'active'=>$schuljahr,
+            'schule' => $schule,
+            );
+        $block = array();
+        if ($kind->getArt() == 1) {
+            $req['ganztag']= 0;
+            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von'=>'asc'));
+            $req['ganztag'] = $kind->getArt();
+            $block = array_merge($block, $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von'=>'asc')));
+
+        } elseif ($kind->getArt() == 2) {
+            $req['ganztag']= $kind->getArt();
+            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von'=>'asc'));
+
+        }
+
+        $renderBlocks = array();
+        foreach ($block as $data) {
+            $renderBlocks[$data->getWochentag()][] = $data;
+        }
+
+        return $this->render('workflow/loerrach/blockKinder.html.twig', array('kind' => $kind, 'blocks' => $renderBlocks));
     }
 
 
     /**
      * @Route("/loerrach/kinder/block/toggle",name="loerrach_workflow_kinder_block_toggle",methods={"GET"})
      */
-    public function kinderblocktoggleAction(Request $request,ValidatorInterface $validator)
+    public function kinderblocktoggleAction(Request $request, ValidatorInterface $validator)
     {
         try {
             //Include Parents in this route
@@ -248,70 +317,64 @@ class LoerrachWorkflowController  extends AbstractController
             $em->flush();
 
             return new JsonResponse(array('error' => 0));
-        }catch (\Exception $e ){
+        } catch (\Exception $e) {
             return new JsonResponse(array('error' => 1));
         }
-    }
-
-
-    /**
-     * @Route("/loerrach/schulen/kind/delete",name="loerrach_workflow_kind_delete",methods={"GET"})
-     */
-    public function deleteAction(Request $request,ValidatorInterface $validator){
-        //Include Parents in this route
-        $adresse = new Stammdaten;
-        if ($this->getStammdatenFromCookie($request)) {
-            $adresse = $this->getStammdatenFromCookie($request);
-        }
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern'=>$adresse, 'id'=>$request->get('kind_id')));
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($kind);
-        $em->flush();
-        return $this->redirectToRoute('loerrach_workflow_schulen');
     }
 
     /**
      * @Route("/loerrach/zusammenfassung",name="loerrach_workflow_zusammenfassung",methods={"GET"})
      */
-    public function zusammenfassungAction(Request $request,ValidatorInterface $validator,TranslatorInterface $translator)
+    public function zusammenfassungAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $adresse = new Stammdaten;
+        // Load the data from the city into the controller as $stadt
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
 
+        //Check for Anmeldung open
+        $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        if ($schuljahr == null){
+            return $this->redirectToRoute('workflow_closed', array('slug'=>$stadt->getSlug()));
+        }
+
+        $adresse = new Stammdaten;
         //Include Parents in this route
         if ($this->getStammdatenFromCookie($request)) {
             $adresse = $this->getStammdatenFromCookie($request);
-        }else{
+        } else {
             return $this->redirectToRoute('loerrach_workflow_adresse');
         }
 
         $kind = $adresse->getKinds();
 
-        // Load the data from the city into the controller as $stadt
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug'=>'loerrach'));
 
 
-        return $this->render('workflow/loerrach/zusammenfassung.html.twig',array('kind'=>$kind, 'eltern'=>$adresse, 'stadt'=>$stadt));
+        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
     }
 
 
     /**
      * @Route("/loerrach/abschluss",name="loerrach_workflow_abschluss",methods={"GET","POST"})
      */
-    public function abschlussAction(Request $request,ValidatorInterface $validator,TranslatorInterface $translator)
+    public function abschlussAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $adresse = new Stammdaten;
+        // Load the data from the city into the controller as $stadt
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
+
+        //Check for Anmeldung open
+        $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        if ($schuljahr == null){
+            return $this->redirectToRoute('workflow_closed', array('slug'=>$stadt->getSlug()));
+        }
 
         //Include Parents in this route
+        $adresse = new Stammdaten;
         if ($this->getStammdatenFromCookie($request)) {
             $adresse = $this->getStammdatenFromCookie($request);
-        }else{
+        } else {
             return $this->redirectToRoute('loerrach_workflow_adresse');
         }
 
         $kind = $adresse->getKinds();
-
-        // Load the data from the city into the controller as $stadt
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug'=>'loerrach'));
 
         // Daten speichern und fixieren
         $adresse->setFin(true);
@@ -319,22 +382,22 @@ class LoerrachWorkflowController  extends AbstractController
         $em->persist($adresse);
         $em->flush();
 
+        $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
+        $response->headers->removeCookie('UserID');
+        return $response;
 
-        return $this->render('workflow/abschluss.html.twig',array('kind'=>$kind, 'eltern'=>$adresse, 'stadt'=>$stadt));
     }
 
 
-
-
-
     // Include Parental data
-    private function getStammdatenFromCookie(Request $request){
-        if ($request->cookies->get('UserID')){
+    private function getStammdatenFromCookie(Request $request)
+    {
+        if ($request->cookies->get('UserID')) {
             $cookie_ar = explode('.', $request->cookies->get('UserID'));
 
-            $hash = hash("sha256", $cookie_ar[0].$this->getParameter("secret"));
-            if ($hash == $cookie_ar[1]){
-                $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid'=>$cookie_ar[0]));
+            $hash = hash("sha256", $cookie_ar[0] . $this->getParameter("secret"));
+            if ($hash == $cookie_ar[1]) {
+                $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $cookie_ar[0], 'fin' => false));
                 return $adresse;
             }
             return null;

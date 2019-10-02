@@ -32,7 +32,7 @@
                                         <i class="material-icons">more_vert</i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-
+                                        <a href="{{ path('loerrach_workflow_schulen_kind_edit', {'kind_id':k.id}) }}" class=" loadContent dropdown-item">{% trans %}Bearbeiten{% endtrans %}</a>
                                         <a href="{{ path('loerrach_workflow_schulen_kind_zeitblock', {'kind_id':k.id}) }}" class=" loadContent dropdown-item">{% trans %}Betreuungsblöcke bearbeiten{% endtrans %}</a>
                                         <a href="{{ path('loerrach_workflow_kind_delete', {'kind_id':k.id}) }}" class="dropdown-item">{% trans %}Löschen{% endtrans %}</a>
 
@@ -66,6 +66,11 @@
                 success: function (data) {
                     if (data.error == 0) {
                         ele.toggleClass('bg-success');
+                        if (ele.hasClass('bg-success')){
+                            ele.find('.gebucht-text').text('{% trans %}Gebucht{% endtrans %}');
+                        }else {
+                            ele.find('.gebucht-text').text('');
+                        }
                     }else {
                         var options =  {
                             content: "{% trans %}Fehler: Bitte laden Sie die Seite neu.{% endtrans %}", // text of the snackbar

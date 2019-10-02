@@ -7,9 +7,10 @@
  */
 namespace App\Form\Type;
 
-use App\Entity\Active;
 
-use App\Entity\Zeitblock;
+
+use App\Entity\Kind;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
@@ -28,7 +29,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class BlockType extends AbstractType
+class LoerrachKind extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -36,34 +37,33 @@ class BlockType extends AbstractType
 
 
         $builder
-
-            ->add('von', TimeType::class,array('label'=>'Betreuungsbeginn','required'=>true,'translation_domain' => 'form'))
-            ->add('bis', TimeType::class,array('label'=>'Betreuungsende','required'=>true,'translation_domain' => 'form'))
-
-            ->add('preise', CollectionType::class,[
-'entry_type' => NumberType::class,
-'entry_options' => array('label'=>'Preis','required'=>true,'translation_domain' => 'form')
-
-            ])
-
-
-
-            ->add('ganztag', ChoiceType::class, [
+            ->add('vorname', TextType::class,['label'=>'Vorname','translation_domain' => 'form'])
+            ->add('nachname', TextType::class,['label'=>'Name','translation_domain' => 'form'])
+            ->add('klasse', ChoiceType::class, [
+                'choices'  => [
+                    'Klasse 1' => 1,
+                    'Klasse 2' => 2,
+                    'Klasse 3' => 3,
+                    'Klasse 4' => 4,
+                    'Klasse 5' => 5,
+                    'Klasse 6' => 6,
+                ],'label'=>'Jahrgangsstufe','translation_domain' => 'form'])
+            ->add('art', ChoiceType::class, [
                 'choices'  => [
                     'Ganztagsbetreuung' => 1,
                     'Halbtagsbetreuung' => 2,
-                    'Mittagessen' => 0,
                 ],'label'=>'Art der Betreuung','translation_domain' => 'form'])
-            ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
-            ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
-        ;
+            ->add('geburtstag', BirthdayType::class,['label'=>'Geburtstag','translation_domain' => 'form'])
+            ->add('allergie', TextType::class,['required'=>false,'label'=>'Allergien','translation_domain' => 'form'])
+            ->add('medikamente', TextType::class,['required'=>false,'label'=>'Medikamente','translation_domain' => 'form'])
+            ->add('bemerkung', TextareaType::class,['required'=>false,'label'=>'Bemerkung','translation_domain' => 'form','attr'=>['rows'=>6]]);
+
     }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Zeitblock::class,
-             'anzahlPreise' => 1,
+            'data_class' => Kind::class,
         ]);
-        $resolver->setAllowedTypes('anzahlPreise', 'integer');
+
     }
 }

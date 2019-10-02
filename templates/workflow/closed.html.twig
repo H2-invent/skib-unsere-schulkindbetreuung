@@ -1,0 +1,6 @@
+{% extends 'workflow/base.html.twig' %}
+{% block content %}
+    <img class=" card-img" src="{{ vich_uploader_asset(stadt, 'imageFile') }}">
+        <h1 class="cover-heading">{% trans %} Anmeldung zur Schulkindbetreuung geschlossen {% endtrans %}</h1>
+        <p class="lead">{% trans with {"%name%":stadt.name} %}Sie befinden sich außerhalb des Anmeldezeitraums für die Schulkindbetreuung in %name%. {% endtrans %}</p>
+{% endblock %}

@@ -47,4 +47,27 @@ class ActiveRepository extends ServiceEntityRepository
         ;
     }
     */
+    /**
+     * @param $price
+     * @return Product[]
+     */
+    public function findActiveSchuljahrFromCity($stadt)
+    {
+        // automatically knows to select Products
+        // the "p" is an alias you'll use in the rest of the query
+        $today = new \DateTime();
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.stadt = :stadt')
+            ->andWhere('a.anmeldeStart <= :today')
+            ->andWhere('a.anmeldeEnde >= :today')
+            ->setParameter('today', $today)
+            ->setParameter('stadt', $stadt)
+            ->getQuery()
+            ->setMaxResults(1);
+
+        return $qb->getOneOrNullResult();
+
+        // to get just one result:
+        // $product = ;
+    }
 }

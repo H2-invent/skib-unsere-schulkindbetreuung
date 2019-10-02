@@ -29,8 +29,12 @@
           success:function (data) {
               $.snackbar({content: data.snack});
               if (data.error == 0) {
-                  $('#loadContentModal .modal-content').load(data.next);
-                  $('#schulenShow') .load('{{ path('loerrach_workflow_schulen') }} #schulenShow');
+                  if (typeof data.next != "undefined"){
+                      $('#loadContentModal .modal-content').load(data.next);
+                      $('#schulenShow') .load('{{ path('loerrach_workflow_schulen') }} #schulenShow');
+                  }else {
+                      $('#loadContentModal').modal ('hide');
+                  }
               }
           }
       });
