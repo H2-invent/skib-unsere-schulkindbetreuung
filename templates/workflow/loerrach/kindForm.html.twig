@@ -15,7 +15,7 @@
     {{ form_errors(form) }}
 
     {{ form_widget(form) }}
-    <button type="submit" class="btn btn-primary">{% trans %}Speichern{% endtrans %}</button>
+    <button type="submit" class="btn btn-primary">{% trans %}Weiter{% endtrans %}</button>
     {{ form_end(form) }}
 </div>
 <script>
@@ -28,8 +28,10 @@
           data: $form.serialize(),
           success:function (data) {
               $.snackbar({content: data.snack});
-              $('#loadContentModal').modal('hide');
-              $('#sch').load(LoadContentUrl)
+              if (data.error == 0) {
+                  $('#loadContentModal .modal-content').load(data.next);
+                  $('#schulenShow') .load('{{ path('loerrach_workflow_schulen') }} #schulenShow');
+              }
           }
       });
   })  

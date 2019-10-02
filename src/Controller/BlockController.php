@@ -142,7 +142,7 @@ class BlockController extends AbstractController
         ]);
 
         $form->remove('save');
-        $form->remove('preis');
+        $form->remove('preise');
         $form->handleRequest($request);
 
         $errors = array();
