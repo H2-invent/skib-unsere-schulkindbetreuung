@@ -12,6 +12,7 @@ use App\Entity\Active;
 use App\Entity\Zeitblock;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -28,13 +29,19 @@ class BlockType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+
+
         $builder
 
             ->add('von', TimeType::class,array('label'=>'Betreuungsbeginn','required'=>true,'translation_domain' => 'form'))
-            ->add('bis', TimeType::class,array('label'=>'Betreuungsende','required'=>true,'translation_domain' => 'form'));
-            for($i = 0; $i<$options['anzahlPreise'];$i++){
-              $builder->add('preis', NumberType::class,array('label'=>'Preis','required'=>true,'translation_domain' => 'form'));
-            }
+            ->add('bis', TimeType::class,array('label'=>'Betreuungsende','required'=>true,'translation_domain' => 'form'))
+            ->add('preise', CollectionType::class,[
+'entry_type' => NumberType::class,
+'entry_options' => array('label'=>'Preis','required'=>true,'translation_domain' => 'form')
+
+            ]);
+
             $builder->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
     }

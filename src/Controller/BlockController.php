@@ -76,11 +76,12 @@ class BlockController extends AbstractController
         $block->setSchule($shool);
         $block->setActive($activity);
         $block->setWochentag($request->get('weekday'));
+        $block->setPreise(array_fill(0,$shool->getStadt()->getpreiskategorien(), 0));
         $form = $this->createForm(BlockType::class, $block,[
             'action' => $this->generateUrl('block_schule_newBlocks',array('year'=>$activity->getId(),'shool'=>$shool->getId(),'weekday'=>$block->getWochentag())),
             'anzahlPreise'=>$shool->getStadt()->getpreiskategorien()
         ]);
-          dump('test');
+          dump('test  ');
         $form->remove('save');
         $form->handleRequest($request);
         dump($form);
@@ -88,7 +89,7 @@ class BlockController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $block = $form->getData();
             $errors = $validator->validate($block);
-            try {
+            //try {
                 if (count($errors) == 0) {
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($block);
@@ -96,10 +97,10 @@ class BlockController extends AbstractController
                     $text = $translator->trans('Erfolgreich gespeichert');
                     return new JsonResponse(array('error' => 0, 'snack' => $text));
                 }
-            }catch (\Exception $e){
-                $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
-                return new JsonResponse(array('error' => 1, 'snack' => $text));
-            }
+            //}catch (\Exception $e){
+            //    $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+            //    return new JsonResponse(array('error' => 1, 'snack' => $text));
+          //  }
 
         }
         return $this->render('block/blockForm.html.twig',array('block'=>$block,'form'=>$form->createView()));

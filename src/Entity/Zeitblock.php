@@ -54,10 +54,7 @@ class Zeitblock
      */
     private $wochentag;
 
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $preis;
+
 
     /**
      * @ORM\Column(type="integer")
@@ -226,17 +223,7 @@ class Zeitblock
 
        }
     }
-    public function getPreis(): ?float
-    {
-        return $this->preis;
-    }
 
-    public function setPreis(float $preis): self
-    {
-        $this->preis = $preis;
-
-        return $this;
-    }
 
     public function getGanztag(): ?int
     {
