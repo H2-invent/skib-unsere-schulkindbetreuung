@@ -152,6 +152,11 @@ class Stadt
      */
     private $actives;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $preiskategorien;
+
     public function __construct()
     {
         $this->anmeldefristens = new ArrayCollection();
@@ -541,6 +546,18 @@ class Stadt
                 $active->setStadt(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPreiskategorien(): ?int
+    {
+        return $this->preiskategorien;
+    }
+
+    public function setPreiskategorien(int $preiskategorien): self
+    {
+        $this->preiskategorien = $preiskategorien;
 
         return $this;
     }

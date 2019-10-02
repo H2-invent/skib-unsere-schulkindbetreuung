@@ -54,15 +54,17 @@ class Zeitblock
      */
     private $wochentag;
 
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $preis;
+
 
     /**
      * @ORM\Column(type="integer")
      */
     private $ganztag;
+
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    private $preise = [];
 
     public function __construct()
     {
@@ -221,17 +223,7 @@ class Zeitblock
 
        }
     }
-    public function getPreis(): ?float
-    {
-        return $this->preis;
-    }
 
-    public function setPreis(float $preis): self
-    {
-        $this->preis = $preis;
-
-        return $this;
-    }
 
     public function getGanztag(): ?int
     {
@@ -241,6 +233,18 @@ class Zeitblock
     public function setGanztag(int $ganztag): self
     {
         $this->ganztag = $ganztag;
+
+        return $this;
+    }
+
+    public function getPreise(): ?array
+    {
+        return $this->preise;
+    }
+
+    public function setPreise(array $preise): self
+    {
+        $this->preise = $preise;
 
         return $this;
     }

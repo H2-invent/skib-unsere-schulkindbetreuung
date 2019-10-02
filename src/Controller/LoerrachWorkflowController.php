@@ -11,6 +11,7 @@ use App\Entity\Kind;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use App\Entity\Zeitblock;
 use App\Form\Type\StadtType;
 use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
 use Beelab\Recaptcha2Bundle\Validator\Constraints\Recaptcha2;
@@ -28,6 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Constraints\Json;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -111,8 +113,12 @@ class LoerrachWorkflowController  extends AbstractController
         }else{
             return $this->redirectToRoute('loerrach_workflow_adresse');
         }
-
-        return $this->render('workflow/loerrach/schulen.html.twig',array('schule'=>$schule, 'stadt'=>$stadt, 'adresse'=>$adresse));
+        $kinder = $adresse->getKinds()->toArray();
+        $renderKinder = array();
+        foreach ($kinder as $data){
+            $renderKinder[$data->getSchule()->getId()][] = $data;
+        }
+        return $this->render('workflow/loerrach/schulen.html.twig',array('schule'=>$schule, 'stadt'=>$stadt, 'adresse'=>$adresse, 'kinder'=>$renderKinder));
     }
 
     /**
@@ -127,7 +133,6 @@ class LoerrachWorkflowController  extends AbstractController
         }
 
         $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule_id'));
-        $block = $schule->getZeitblocks();
 
         $kind = new Kind();
         $kind->setEltern($adresse);
@@ -162,22 +167,101 @@ class LoerrachWorkflowController  extends AbstractController
             $kind = $form->getData();
             $errors = $validator->validate($kind);
 
-      //      try {
+            try {
                 if (count($errors) == 0) {
 
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($kind);
                     $em->flush();
                     $text = $translator->trans('Erfolgreich gespeichert');
-                    return new JsonResponse(array('error' => 0, 'snack' => $text));
+                    return new JsonResponse(array('error' => 0, 'snack' => $text, 'next'=>$this->generateUrl('loerrach_workflow_schulen_kind_zeitblock',array('kind_id'=>$kind->getId()))));
                 }
-           // }catch (\Exception $e){
-             //   $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
-            //    return new JsonResponse(array('error' => 1, 'snack' => $text));
-           // }
+            }catch (\Exception $e){
+                $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+                return new JsonResponse(array('error' => 1, 'snack' => $text));
+            }
 
         }
         return $this->render('workflow/loerrach/kindForm.html.twig',array('schule'=>$schule, 'form'=>$form->createView()));
+    }
+
+
+    /**
+     * @Route("/loerrach/schulen/kind/zeitblock",name="loerrach_workflow_schulen_kind_zeitblock",methods={"GET","POST"})
+     */
+    public function kindzeitblockAction(Request $request,ValidatorInterface $validator,TranslatorInterface $translator)
+    {
+        $adresse = new Stammdaten;
+
+        //Include Parents in this route
+        if ($this->getStammdatenFromCookie($request)) {
+            $adresse = $this->getStammdatenFromCookie($request);
+        }
+
+
+
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern'=>$adresse, 'id'=>$request->get('kind_id')));
+        $schule = $kind->getSchule();
+        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy(array('ganztag'=>$kind->getArt(),'schule'=>$schule));
+
+        $renderBlocks= array();
+        foreach ($block as $data){
+           $renderBlocks[$data->getWochentag()][]= $data;
+        }
+
+        return $this->render('workflow/loerrach/blockKinder.html.twig',array('kind'=>$kind, 'blocks'=>$renderBlocks));
+    }
+
+
+    /**
+     * @Route("/loerrach/kinder/block/toggle",name="loerrach_workflow_kinder_block_toggle",methods={"GET"})
+     */
+    public function kinderblocktoggleAction(Request $request,ValidatorInterface $validator)
+    {
+        try {
+            //Include Parents in this route
+            $adresse = new Stammdaten;
+            if ($this->getStammdatenFromCookie($request)) {
+                $adresse = $this->getStammdatenFromCookie($request);
+            }
+
+            $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
+            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
+            dump($block);
+            dump($kind);
+            dump($kind->getZeitblocks()->toArray());
+            if (in_array($block, $kind->getZeitblocks()->toArray())) {
+                dump('remove');
+                $kind->removeZeitblock($block);
+            } else {
+                $kind->addZeitblock($block);
+                dump('add');
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($kind);
+            $em->flush();
+
+            return new JsonResponse(array('error' => 0));
+        }catch (\Exception $e ){
+            return new JsonResponse(array('error' => 1));
+        }
+    }
+
+
+    /**
+     * @Route("/loerrach/schulen/kind/delete",name="loerrach_workflow_kind_delete",methods={"GET"})
+     */
+    public function deleteAction(Request $request,ValidatorInterface $validator){
+        //Include Parents in this route
+        $adresse = new Stammdaten;
+        if ($this->getStammdatenFromCookie($request)) {
+            $adresse = $this->getStammdatenFromCookie($request);
+        }
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern'=>$adresse, 'id'=>$request->get('kind_id')));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($kind);
+        $em->flush();
+        return $this->redirectToRoute('loerrach_workflow_schulen');
     }
 
     /**

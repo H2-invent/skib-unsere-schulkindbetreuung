@@ -17,8 +17,12 @@
         {{ form_row(form.von) }}
 
         {{ form_row(form.bis) }}
-{% if form.preis is defined %}
-       {{ form_row(form.preis) }}
+  {{ form_row(form.ganztag) }}
+{% if form.preise is defined %}
+       {{ form_row(form.preise) }}
+
+
+
 {% endif %}
     <button type="submit" class="btn btn-primary">{% trans %}Speichern{% endtrans %}</button>
     {{ form_end(form) }}
@@ -37,7 +41,7 @@
               $('#blockContent').load(LoadContentUrl)
           }
       });
-  })  
+  })
 </script>
 <div class="modal-footer">
 
