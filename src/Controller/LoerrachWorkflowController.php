@@ -295,8 +295,12 @@ class LoerrachWorkflowController extends AbstractController
     /**
      * @Route("/loerrach/kinder/block/toggle",name="loerrach_workflow_kinder_block_toggle",methods={"GET"})
      */
-    public function kinderblocktoggleAction(Request $request, ValidatorInterface $validator)
+    public function kinderblocktoggleAction(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
+        $result = array(
+            'text' => $translator->trans('Betreuungsblock erfolgreich gespeichert'),
+            'error'=>0
+        );
         try {
             //Include Parents in this route
             $adresse = new Stammdaten;
@@ -315,11 +319,23 @@ class LoerrachWorkflowController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($kind);
             $em->flush();
+            $blocks = $kind->getZeitblocks();
+            $blocks2 = array();
+            foreach ($blocks as $data){
+                if($data->getGanztag() != 0){
+                    $blocks2[] = $data;
+                }
+            }
 
-            return new JsonResponse(array('error' => 0));
+            if (sizeof($blocks2) < 2){
+                $result['text'] = $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)');
+            $result['error'] = 2;
+            }
         } catch (\Exception $e) {
-            return new JsonResponse(array('error' => 1));
+            $result['text'] = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+            $result['error'] = 1;
         }
+        return new JsonResponse($result);
     }
 
     /**
