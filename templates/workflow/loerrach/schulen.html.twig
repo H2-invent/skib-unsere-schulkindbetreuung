@@ -61,6 +61,7 @@
 
             var ele = $(this);
             var url = ele.attr('href');
+            ele.find('.loader').html('<div class="spinner"></div>');
             $.ajax({
                 url: url,
                 method: 'GET',
@@ -81,6 +82,7 @@
 
                     }
                     $.snackbar(options);
+                    ele.find('.loader').html('');
                 }
 
             })
