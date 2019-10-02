@@ -53,8 +53,18 @@ class LoerrachWorkflowController  extends AbstractController
             ->add('name', TextType::class,['label'=>'Name','translation_domain' => 'form'])
             ->add('vorname', TextType::class,['label'=>'Vorname','translation_domain' => 'form'])
             ->add('strasse', TextType::class,['label'=>'Straße','translation_domain' => 'form'])
+            ->add('plz', TextType::class,['label'=>'PLZ','translation_domain' => 'form'])
+            ->add('stadt', TextType::class,['label'=>'Stadt','translation_domain' => 'form'])
             ->add('adresszusatz', TextType::class,['label'=>'Adresszusatz','translation_domain' => 'form'])
-            ->add('einkommen', NumberType::class,['label'=>'Netto Haushaltseinkommen','translation_domain' => 'form'])
+            ->add('einkommen', ChoiceType::class, [
+                'choices'  => [
+                    '0 - 1.000 Euro' => 1,
+                    '1.001 - 2.000 Euro' => 2,
+                    '2.001 . 3.000 Euro' => 3,
+                    '3.001 . 5.000 Euro' => 4,
+                    '5.001 . 9.000 Euro' => 5,
+                    'mehr als 9.001 Euro' => 6,
+                ],'label'=>'Netto Haushaltseinkommen pro Monat','translation_domain' => 'form'])
             ->add('kinderImKiga', CheckboxType::class,['label'=>'Kind im Kindergarten','translation_domain' => 'form'])
             ->add('buk', CheckboxType::class,['label'=>'BUK Empfänger','translation_domain' => 'form'])
             ->add('beruflicheSituation', TextType::class,['label'=>'Berufliche Situation der Eltern','translation_domain' => 'form'])
@@ -69,7 +79,7 @@ class LoerrachWorkflowController  extends AbstractController
                 // "groups" option is not mandatory
 
             //])
-            ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
+            ->add('submit', SubmitType::class, ['label' => 'weiter','translation_domain' => 'form'])
 
             ->getForm();
         $form->handleRequest($request);
@@ -227,15 +237,11 @@ class LoerrachWorkflowController  extends AbstractController
 
             $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
             $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
-            dump($block);
-            dump($kind);
-            dump($kind->getZeitblocks()->toArray());
+            //dump($kind->getZeitblocks()->toArray());
             if (in_array($block, $kind->getZeitblocks()->toArray())) {
-                dump('remove');
                 $kind->removeZeitblock($block);
             } else {
                 $kind->addZeitblock($block);
-                dump('add');
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($kind);
@@ -280,9 +286,42 @@ class LoerrachWorkflowController  extends AbstractController
 
         $kind = $adresse->getKinds();
 
-        return $this->render('workflow/loerrach/zusammenfassung.html.twig',array('kind'=>$kind, 'adresse'=>$adresse));
+        // Load the data from the city into the controller as $stadt
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug'=>'loerrach'));
+
+
+        return $this->render('workflow/loerrach/zusammenfassung.html.twig',array('kind'=>$kind, 'eltern'=>$adresse, 'stadt'=>$stadt));
     }
 
+
+    /**
+     * @Route("/loerrach/abschluss",name="loerrach_workflow_abschluss",methods={"GET","POST"})
+     */
+    public function abschlussAction(Request $request,ValidatorInterface $validator,TranslatorInterface $translator)
+    {
+        $adresse = new Stammdaten;
+
+        //Include Parents in this route
+        if ($this->getStammdatenFromCookie($request)) {
+            $adresse = $this->getStammdatenFromCookie($request);
+        }else{
+            return $this->redirectToRoute('loerrach_workflow_adresse');
+        }
+
+        $kind = $adresse->getKinds();
+
+        // Load the data from the city into the controller as $stadt
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug'=>'loerrach'));
+
+        // Daten speichern und fixieren
+        $adresse->setFin(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($adresse);
+        $em->flush();
+
+
+        return $this->render('workflow/abschluss.html.twig',array('kind'=>$kind, 'eltern'=>$adresse, 'stadt'=>$stadt));
+    }
 
 
 

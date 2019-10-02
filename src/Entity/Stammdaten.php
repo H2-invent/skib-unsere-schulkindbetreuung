@@ -118,6 +118,16 @@ class Stammdaten
      */
     private $newsletter;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $plz;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $stadt;
+
     public function __construct()
     {
         $this->kinds = new ArrayCollection();
@@ -383,6 +393,30 @@ class Stammdaten
     public function setNewsletter(bool $newsletter): self
     {
         $this->newsletter = $newsletter;
+
+        return $this;
+    }
+
+    public function getPlz(): ?int
+    {
+        return $this->plz;
+    }
+
+    public function setPlz(int $plz): self
+    {
+        $this->plz = $plz;
+
+        return $this;
+    }
+
+    public function getStadt(): ?string
+    {
+        return $this->stadt;
+    }
+
+    public function setStadt(string $stadt): self
+    {
+        $this->stadt = $stadt;
 
         return $this;
     }

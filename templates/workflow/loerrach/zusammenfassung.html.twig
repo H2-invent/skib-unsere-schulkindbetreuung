@@ -1,57 +1,59 @@
 {% extends 'workflow/base.html.twig' %}
 {% block content %}
-        <h1 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h1>
+        <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
 
-    <ul>
-        {% for error in errors %}
-            <li>{{ error.message }}</li>
-        {% endfor %}
-    </ul>
+    <h3 class="cover-heading">{% trans %}Daten der Eltern{% endtrans %} <a href="{{ path('loerrach_workflow_adresse') }}"> <i class="material-icons">edit</i></a></h3>
 
-    <div class="table-responsive">
+    <div class="table-responsive ">
         <table class="table table-hover">
-            <thead>
-            <tr>
-                <th></th>
-                <th>{% trans %}Zusammenfassung Eltern{% endtrans %}</th>
-                <th></th>
-            </tr>
-            </thead>
             <tbody>
             <tr>
-                <td>{% trans %}Name der Eltern{% endtrans %}</td>
-                <td>{{ name }}</td>
+                <td>{% trans %} Name der Eltern {% endtrans %}</td>
+                <td>{{ eltern.name }}</td>
             </tr>
-
             <tr>
-                <td>{% trans %}Adresse der Eltern{% endtrans %}</td>
-                <td>{{ adresse }}</td>
+                <td>{% trans %} Adresse der Eltern {% endtrans %}</td>
+                <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
             </tr>
-
             <tr>
-                <td>{% trans %}Geburtstag der Eltern{% endtrans %}</td>
-                <td>{{ einkommen }}</td>
+                <td>{% trans %} Netto Familieneinkommen pro Monat {% endtrans %}</td>
+                <td>{{ eltern.einkommen }}</td>
             </tr>
-            {% for k in kind %}
-
-                <tr>
-                    <td>
-
-
-                    </td>
-                    <td>{{ u.username }}</td>
-                    <td>{{ u.vorname }}</td>
-                    <td>{{ u.nachname }}</td>
-                    <td>{{ u.birthday|date('d.m.Y') }}</td>
-
-                </tr>
-            {% endfor %}
             </tbody>
         </table>
+
+
+        <!-- Daten der Kinder in einer for Schleife -->
+        <h3 class="cover-heading">{% trans %}Daten von Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen') }}"> <i class="material-icons">edit</i></a></h3>
+
+        {% for k in kind %}
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <td>{% trans %} Vorname {% endtrans %}</td>
+                    <td>{{ k.vorname }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %} Nachname {% endtrans %}</td>
+                    <td>{{ k.nachname }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %} Geburtstag {% endtrans %}</td>
+                    <td>{{ k.geburtstag|date('d.m.Y') }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %} Gebuchte Blöcke {% endtrans %}</td>
+
+                    <td>
+                        {%  for z in k.zeitblocks %}
+                            {{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}<br/>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {% endfor %}
     </div>
-
-
-
-
-
+    <!-- nicht schön aber funktional abschließen-->
+    <a href="{{ path('loerrach_workflow_abschluss') }}" class="btn btn-outline-primary">{% trans %}Absenden{% endtrans %}</a>
 {% endblock %}

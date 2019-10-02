@@ -30,6 +30,10 @@ class workflowController  extends AbstractController
     */
     public function welcomeAction(Request $request, Stadt $stadt)
     {
+        switch($slug){
+            case loerrach:
+                
+        }
         return $this->render('workflow/start.html.twig',array('stadt'=>$stadt));
     }
 

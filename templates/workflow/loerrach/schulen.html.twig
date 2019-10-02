@@ -6,7 +6,7 @@
 
         }
     </style>
-    <h5>{% trans %}Bitte Schulen auswählen und Kinder hinzufügen{% endtrans %}</h5>
+    <h2 class="cover-heading, text-center">{% trans %}Bitte Schulen auswählen und Kinder hinzufügen{% endtrans %}</h2>
     <p>{% trans %}Text2{% endtrans %}</p>
     <section class="dashboard-counts section-padding" id="schulenShow">
         <div class="container-fluid ">
@@ -20,7 +20,7 @@
                             <h5 class="card-title">{{ s.name }}</h5>
                             <p class="card-text">{{ s.infoText }}</p>
 
-                            <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id}) }}" class="loadContent btn">{% trans %}Kind hinzufügen  {% endtrans %}</a>
+                            <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id}) }}" class="loadContent btn btn-outline-primary">{% trans %}Kind hinzufügen  {% endtrans %}</a>
 
                         </div>
                         {%  if kinder[s.id] is defined and kinder[s.id] is not null %}
@@ -49,7 +49,10 @@
 
             </div>
     </section>
-
+    <div class="text-center">
+        <a href="{{ path('loerrach_workflow_adresse') }}" class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
+        <a href="{{ path('loerrach_workflow_zusammenfassung') }}" class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
+    </div>
 {% endblock %}
 {% block jquery %}
     <script>

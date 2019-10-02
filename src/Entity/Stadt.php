@@ -152,6 +152,11 @@ class Stadt
      */
     private $actives;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $anzahl_gehaltsklassen;
+
     public function __construct()
     {
         $this->anmeldefristens = new ArrayCollection();
@@ -541,6 +546,18 @@ class Stadt
                 $active->setStadt(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAnzahlGehaltsklassen(): ?int
+    {
+        return $this->anzahl_gehaltsklassen;
+    }
+
+    public function setAnzahlGehaltsklassen(int $anzahl_gehaltsklassen): self
+    {
+        $this->anzahl_gehaltsklassen = $anzahl_gehaltsklassen;
 
         return $this;
     }
