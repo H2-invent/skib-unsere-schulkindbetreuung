@@ -200,10 +200,8 @@
 
 </footer>
 
-<div class="modal fade" id="loadContentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="loadContentModal" tabindex="-1" role="dialog" aria-labelledby="loadContentModal"
      aria-hidden="true">
-
-
 
 </div>
 <!-- Start your project here-->
@@ -222,12 +220,15 @@
     $(document).on('click','.loadContent',function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
-        $('#loadContentModal').modal('show');
-        $('#loadContentModal').load(url);
+        $('#loadContentModal').load(url,function () {
+            $('#loadContentModal ').modal('show');
+        });
+
     });
 
 </script>
 {% block jquery %}{% endblock %}
+
 </body>
 
 </html>

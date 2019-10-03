@@ -66,7 +66,7 @@ class LoerrachWorkflowController extends AbstractController
             ->add('strasse', TextType::class, ['label' => 'Straße', 'translation_domain' => 'form'])
             ->add('plz', TextType::class, ['label' => 'PLZ', 'translation_domain' => 'form'])
             ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form'])
-            ->add('adresszusatz', TextType::class, ['label' => 'Adresszusatz', 'translation_domain' => 'form'])
+            ->add('adresszusatz', TextType::class, ['required'=>false,'label' => 'Adresszusatz', 'translation_domain' => 'form'])
             ->add('einkommen', ChoiceType::class, [
                 'choices' => [
                     '0 - 1.000 Euro' => 1,
@@ -76,16 +76,16 @@ class LoerrachWorkflowController extends AbstractController
                     '5.001 . 9.000 Euro' => 5,
                     'mehr als 9.001 Euro' => 6,
                 ], 'label' => 'Netto Haushaltseinkommen pro Monat', 'translation_domain' => 'form'])
-            ->add('kinderImKiga', CheckboxType::class, ['label' => 'Kind im Kindergarten', 'translation_domain' => 'form'])
-            ->add('buk', CheckboxType::class, ['label' => 'BUK Empfänger', 'translation_domain' => 'form'])
-            ->add('beruflicheSituation', TextType::class, ['label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
+            ->add('kinderImKiga', CheckboxType::class, ['required'=>false,'label' => 'Kind im Kindergarten', 'translation_domain' => 'form'])
+            ->add('buk', CheckboxType::class, ['required'=>false,'label' => 'BUK Empfänger', 'translation_domain' => 'form'])
+            ->add('beruflicheSituation', TextType::class, ['required'=>false,'label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
             ->add('notfallkontakt', TextType::class, ['label' => 'Notfallkontakt', 'translation_domain' => 'form'])
             ->add('iban', TextType::class, ['label' => 'IBAN für das Lastschriftmandat', 'translation_domain' => 'form'])
             ->add('bic', TextType::class, ['label' => 'BIC für das Lastschriftmandat', 'translation_domain' => 'form'])
             ->add('kontoinhaber', TextType::class, ['label' => 'Kontoinhaber für das Lastschriftmandat', 'translation_domain' => 'form'])
             ->add('sepaInfo', CheckboxType::class, ['label' => 'SEPA-LAstschrift Mandat wird elektromisch erteilt', 'translation_domain' => 'form'])
             ->add('gdpr', CheckboxType::class, ['label' => 'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden', 'translation_domain' => 'form'])
-            ->add('newsletter', CheckboxType::class, ['label' => 'Zum Newsletter anmelden', 'translation_domain' => 'form'])
+            ->add('newsletter', CheckboxType::class, ['required'=>false,'label' => 'Zum Newsletter anmelden', 'translation_domain' => 'form'])
             // ->add('captcha', RecaptchaType::class, [
             // "groups" option is not mandatory
 

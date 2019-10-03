@@ -37,3 +37,6 @@ body,
 /* Footer color for sake of consistency with Navbar */
 .page-footer {
   background-color: #1C2331; }
+label.required:after {
+  content: "* ";
+}

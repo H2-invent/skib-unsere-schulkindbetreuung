@@ -1,13 +1,25 @@
 {% extends 'workflow/base.html.twig' %}
 {% block content %}
-        <h2 class="cover-heading">{% trans %}Beginnen Sie mit der Eingabe Ihrer Daten{% endtrans %}</h2>
 
-    <ul>
-        {% for error in errors %}
-            <li>{{ error.message }}</li>
-        {% endfor %}
-    </ul>
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h4> {% trans %}Beginnen Sie mit der Eingabe Ihrer Daten{% endtrans %}</h4>
+            </div>
+            <div class="card-body">
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
