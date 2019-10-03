@@ -1,15 +1,16 @@
 {% extends 'workflow/base.html.twig' %}
 {% block content %}
         <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
-
+    <div class="card">
+        <div class="card-header">
     <h3 class="cover-heading">{% trans %}Daten der Eltern{% endtrans %} <a href="{{ path('loerrach_workflow_adresse') }}"> <i class="fa fa-edit"></i></a></h3>
-
-    <div class="table-responsive ">
-        <table class="table table-hover">
+        </div>
+        <div class="card-body">
+        <table class="table">
             <tbody>
             <tr>
                 <td>{% trans %} Name der Eltern {% endtrans %}</td>
-                <td>{{ eltern.name }}</td>
+                <td>{{ eltern.vorname }} {{ eltern.name }}</td>
             </tr>
             <tr>
                 <td>{% trans %} Adresse der Eltern {% endtrans %}</td>
@@ -17,29 +18,68 @@
             </tr>
             <tr>
                 <td>{% trans %} Netto Familieneinkommen pro Monat {% endtrans %}</td>
-                <td>{{ eltern.einkommen }}</td>
+                <td>{{ einkommen[eltern.einkommen] }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} Kinder im Kinderganrten {% endtrans %}</td>
+                <td>{{ eltern.kinderImKiga?"Ja":'Nein'|trans }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} BUT {% endtrans %}</td>
+                <td>{{ eltern.buk?"Ja":'Nein'|trans }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} Berufliche Situation der Eltern {% endtrans %}</td>
+                <td>{{ eltern.beruflicheSituation }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} Notfallkontakt der Eltern {% endtrans %}</td>
+                <td>{{ eltern.notfallkontakt }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} Bankverbindung für Lastschrift {% endtrans %}</td>
+                <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}<br/>{{ eltern.sepaInfo?"Ja ich Erteile der Organisation dein SEPA Lastschrift Mandant":""|trans }} </td>
+            </tr>
+            <tr>
+                <td>{% trans %} Zum Newsletter angemeldet {% endtrans %}</td>
+                <td>{{ eltern.newsletter?"Ja":'Nein'|trans }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} E-Mail Adresse {% endtrans %}</td>
+                <td>{{ eltern.email }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} Sicherheitscode für die Kommunikation mit Trägern {% endtrans %}</td>
+                <td>{{ eltern.secCode }}</td>
             </tr>
             </tbody>
         </table>
-
+        </div>
+    </div>
 
         <!-- Daten der Kinder in einer for Schleife -->
-        <h3 class="cover-heading">{% trans %}Daten von Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen') }}"> <i class="fa fa-edit"></i></a></h3>
-
-        <div id="accordion">
+    <div class="card">
+        <div class="card-header">
+        <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen') }}"> <i class="fa fa-edit"></i></a></h3>
+        </div>
+        <div class="text-left" id="accordion">
             {% for k in kind %}
             <div class="card">
                 <div class="card-header" id="heading{{ loop.index }}">
                     <h5 class="mb-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
-                            {{ k.vorname }} {{ k.nachname }} <br/><small>{% if k.betreungsblocks < 2 %} {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} {% else %}{% trans %}Summe der gebuchter Blöcke: {% endtrans %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %}</small>
-                        </button>
+                        <a data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
+                            {{ k.vorname }} {{ k.nachname }} <br/><small>{% if k.betreungsblocks < 2 %}
+                                    <div class="alert alert-danger" role="alert">
+                                    {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} </div>
+                                {% else %}{% trans %}Summe der gebuchter Blöcke: {% endtrans %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %}</small>
+
+                        </a>
                     </h5>
                 </div>
 
                 <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
                     <div class="card-body">
-                        <table class="table table-hover">
+                        <table class="table">
                             <tbody>
                             <tr>
                                 <td>{% trans %} Vorname {% endtrans %}</td>
@@ -54,12 +94,32 @@
                                 <td>{{ k.geburtstag|date('d.m.Y') }}</td>
                             </tr>
                             <tr>
+                                <td>{% trans %} Allergien {% endtrans %}</td>
+                                <td>{{ k.allergie }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Medikamente {% endtrans %}</td>
+                                <td>{{ k.medikamente }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Bemerkung {% endtrans %}</td>
+                                <td>{{ k.bemerkung }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Schule {% endtrans %}</td>
+                                <td>{{ k.schule.name }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Klasse {% endtrans %}</td>
+                                <td>{{ k.klasse }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Zuständiger Träger in der Schule {% endtrans %}</td>
+                                <td>{{ k.schule.organisation.name }}</td>
+                            </tr>
+                            <tr>
                                 <td>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">
                                             {% trans %} Gebuchte Betreuungsblöcke {% endtrans %}
-                                        </li>
-                                    </ul>
                                 </td>
 
                                 <td>
@@ -72,11 +132,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">
                                             {% trans %} Gebuchte Mittagessen {% endtrans %}
-                                        </li>
-                                    </ul>
                                 </td>
 
                                 <td>
@@ -89,12 +145,14 @@
                             </tr>
                             <tr>
                                 <td>
-                                    {% trans %} Summe {% endtrans %}
+                                    <h5>
+                                        {% trans %} Summe {% endtrans %}
+                                    </h5>
                                 </td>
                                 <td>
-                                    <b>
+                                    <h5>
                                         {% if k.betreungsblocks < 2 %} {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} {% else %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %}
-                                    </b>
+                                    </h5>
                                 </td>
                             </tr>
                             </tbody>
@@ -104,6 +162,7 @@
             </div>
             {% endfor %}
         </div>
+    </div>
         <table class="table">
             <tr>
                 <td>
@@ -120,8 +179,6 @@
                 </td>
             </tr>
         </table>
-    </div>
-
     {% if error == false %}
     <a href="{{ path('loerrach_workflow_abschluss') }}" class="btn btn-outline-primary">{% trans %}Absenden{% endtrans %}</a>
     {% else %}

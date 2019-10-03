@@ -39,6 +39,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LoerrachWorkflowController extends AbstractController
 {
+    private $einkommensgruppen;
+    public function __construct()
+    {
+        $this->einkommensgruppen = array(
+            '0 - 1.000 Euro' => 1,
+            '1.001 - 2.000 Euro' => 2,
+            '2.001 . 3.000 Euro' => 3,
+            '3.001 . 5.000 Euro' => 4,
+            '5.001 . 9.000 Euro' => 5,
+            'mehr als 9.001 Euro' => 6,
+            );
+    }
+
     /**
      * @Route("/loerrach/adresse",name="loerrach_workflow_adresse",methods={"GET","POST"})
      */
@@ -71,14 +84,7 @@ class LoerrachWorkflowController extends AbstractController
             ->add('adresszusatz', TextType::class, ['required'=>false,'label' => 'Adresszusatz', 'translation_domain' => 'form'])
             ->add('email',EmailType::class, ['required'=>true,'label' => 'Email', 'translation_domain' => 'form'])
             ->add('einkommen', ChoiceType::class, [
-                'choices' => [
-                    '0 - 1.000 Euro' => 1,
-                    '1.001 - 2.000 Euro' => 2,
-                    '2.001 . 3.000 Euro' => 3,
-                    '3.001 . 5.000 Euro' => 4,
-                    '5.001 . 9.000 Euro' => 5,
-                    'mehr als 9.001 Euro' => 6,
-                ], 'label' => 'Netto Haushaltseinkommen pro Monat', 'translation_domain' => 'form'])
+                'choices' => $this->einkommensgruppen, 'label' => 'Netto Haushaltseinkommen pro Monat', 'translation_domain' => 'form'])
             ->add('kinderImKiga', CheckboxType::class, ['required'=>false,'label' => 'Kind im Kindergarten', 'translation_domain' => 'form'])
             ->add('buk', CheckboxType::class, ['required'=>false,'label' => 'BUK Empfänger', 'translation_domain' => 'form'])
             ->add('beruflicheSituation', TextType::class, ['required'=>false,'label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
@@ -393,7 +399,7 @@ class LoerrachWorkflowController extends AbstractController
             }
         }
 
-        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis'=>$preis, 'error'=>$error));
+        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('einkommen'=>array_flip($this->einkommensgruppen),'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis'=>$preis, 'error'=>$error));
     }
 
     /**

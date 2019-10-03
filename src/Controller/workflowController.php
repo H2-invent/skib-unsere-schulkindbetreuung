@@ -52,5 +52,4 @@ class workflowController  extends AbstractController
 
         return $this->render('workflow/closed.html.twig',array('stadt'=>$stadt));
     }
-
 }
