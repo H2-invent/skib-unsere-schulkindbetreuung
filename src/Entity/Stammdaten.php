@@ -128,6 +128,16 @@ class Stammdaten
      */
     private $stadt;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $secCode;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $email;
+
     public function __construct()
     {
         $this->kinds = new ArrayCollection();
@@ -417,6 +427,30 @@ class Stammdaten
     public function setStadt(string $stadt): self
     {
         $this->stadt = $stadt;
+
+        return $this;
+    }
+
+    public function getSecCode(): ?string
+    {
+        return $this->secCode;
+    }
+
+    public function setSecCode(string $secCode): self
+    {
+        $this->secCode = $secCode;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }

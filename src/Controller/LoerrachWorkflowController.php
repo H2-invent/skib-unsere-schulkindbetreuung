@@ -20,6 +20,7 @@ use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
 use Beelab\Recaptcha2Bundle\Validator\Constraints\Recaptcha2;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Cookie;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -59,6 +60,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $adresse->setUid(md5(uniqid()))
             ->setAngemeldet(false);
+        $adresse->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
         $adresse->setCreatedAt(new \DateTime());
         $form = $this->createFormBuilder($adresse)
             ->add('name', TextType::class, ['label' => 'Name', 'translation_domain' => 'form'])
@@ -67,6 +69,7 @@ class LoerrachWorkflowController extends AbstractController
             ->add('plz', TextType::class, ['label' => 'PLZ', 'translation_domain' => 'form'])
             ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form'])
             ->add('adresszusatz', TextType::class, ['required'=>false,'label' => 'Adresszusatz', 'translation_domain' => 'form'])
+            ->add('email',EmailType::class, ['required'=>true,'label' => 'Email', 'translation_domain' => 'form'])
             ->add('einkommen', ChoiceType::class, [
                 'choices' => [
                     '0 - 1.000 Euro' => 1,
