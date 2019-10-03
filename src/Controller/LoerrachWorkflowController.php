@@ -16,6 +16,7 @@ use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use App\Form\Type\LoerrachKind;
 use App\Form\Type\StadtType;
+use App\Service\MailerService;
 use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
 use Beelab\Recaptcha2Bundle\Validator\Constraints\Recaptcha2;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -405,7 +406,7 @@ class LoerrachWorkflowController extends AbstractController
     /**
      * @Route("/loerrach/abschluss",name="loerrach_workflow_abschluss",methods={"GET","POST"})
      */
-    public function abschlussAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    public function abschlussAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator,MailerService $mailer)
     {
         // Load the data from the city into the controller as $stadt
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
@@ -428,9 +429,12 @@ class LoerrachWorkflowController extends AbstractController
 
         // Daten speichern und fixieren
         $adresse->setFin(true);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($adresse);
-        $em->flush();
+        //$em = $this->getDoctrine()->getManager();
+        //$em->persist($adresse);
+        //$em->flush();
+
+        $mailer->sendEmail('TEst1', 'test2', 'test2', 'test2', 'info@h2-invent.com', $adresse->getEmail(), 'Test');
+
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
         $response->headers->removeCookie('UserID');
@@ -446,8 +450,8 @@ class LoerrachWorkflowController extends AbstractController
         // Load the data from the city into the controller as $stadt
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
         $result = array(
-            'error'=>0,
-            'text'=>$translator->trans('Preis erfolgreich berechnet.'),
+            'error' => 0,
+            'text' => $translator->trans('Preis erfolgreich berechnet.'),
 
         );
 
@@ -458,17 +462,20 @@ class LoerrachWorkflowController extends AbstractController
         } else {
             return $this->redirectToRoute('loerrach_workflow_adresse');
         }
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('id'=>$request->get('kind_id'),'eltern'=>$adresse));
-        $blocks  = $kind->getZeitblocks();
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(
+            array('id' => $request->get('kind_id'), 'eltern' => $adresse)
+        );
+        $blocks = $kind->getZeitblocks();
         $betreuung = array();
-        $mitagessen =array();
-        foreach ($blocks as $data){
-            if($data->getGanztag() == 0){
+        $mitagessen = array();
+        foreach ($blocks as $data) {
+            if ($data->getGanztag() == 0) {
                 $mitagessen[] = $data;
-            }else{
+            } else {
                 $betreuung[] = $data;
             }
         }
+
 // Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
         if(sizeof($betreuung)<2){
             $result['error']= 1;
@@ -480,4 +487,12 @@ class LoerrachWorkflowController extends AbstractController
 
     }
 
+/**
+ * @Route("/email",name="email",methods={"GET"})
+ */
+public function email(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
+{
+    return $this->render('email/base.html.twig');
+
+}
 }
