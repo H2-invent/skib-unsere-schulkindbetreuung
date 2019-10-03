@@ -1,93 +1,232 @@
-{% set route = app.request.attributes.get('_route') %}
-{% set route_params = app.request.attributes.get('_route_params') %}
-{% set params = route_params|merge(app.request.query.all) %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Material Design Bootstrap</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{{ asset('frontpage/css/mdb.min.css') }}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
+    <style type="text/css">
+        html,
+        body,
+        header,
+        .view {
+            height: 100%;
+        }
 
-    <!-- Material Design for Bootstrap CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
-<!-- Custom styles for this template -->
-    <link href="{{ asset('css/cover.min.css') }}" rel="stylesheet">
-    <title>{{ stadt.name }}</title>
+        @media (max-width: 740px) {
+            html,
+            body,
+            header,
+            .view {
+                height: 1000px;
+            }
+        }
+
+        @media (min-width: 800px) and (max-width: 850px) {
+            html,
+            body,
+            header,
+            .view {
+                height: 650px;
+            }
+        }
+        @media (min-width: 800px) and (max-width: 850px) {
+            .navbar:not(.top-nav-collapse) {
+                background: #1C2331!important;
+            }
+        }
+    </style>
 </head>
 
+<body>
+<!-- Navbar -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+    <div class="container">
 
-<!--<body class="text-center" style="background-image: url('{{ asset('images/background.jpg') }}');background-size: cover;background-attachment: fixed">
--->
-<body style="background-image: url('{{ asset('images/background.jpg') }}');background-size: cover;background-attachment: fixed">
+        <!-- Brand -->
+        <a class="navbar-brand" href="https://mdbootstrap.com/docs/jquery/" target="_blank">
+            <strong>MDB</strong>
+        </a>
 
-<!-- <div class="cover-container d-flex h-100 p-3 mx-auto flex-column"> -->
-<div class="d-flex h-100 p-3 mx-auto flex-column">
-    <header class="masthead mb-auto">
-        <div class="inner">
+        <!-- Collapse -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <nav class="nav nav-masthead justify-content-center">
-                <a class="nav-link active" href="#">Deutsch</a>
-                <a class="nav-link" href="#">English</a>
-                <a class="nav-link" href="#">Français</a>
-            </nav>
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <!-- Left -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://mdbootstrap.com/docs/jquery/" target="_blank">About MDB</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" target="_blank">Free download</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://mdbootstrap.com/education/bootstrap/" target="_blank">Free tutorials</a>
+                </li>
+            </ul>
+
+            <!-- Right -->
+            <ul class="navbar-nav nav-flex-icons">
+                <li class="nav-item">
+                    <a href="https://www.facebook.com/mdbootstrap" class="nav-link" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://twitter.com/MDBootstrap" class="nav-link" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="nav-link border border-light rounded"
+                       target="_blank">
+                        <i class="fab fa-github mr-2"></i>MDB GitHub
+                    </a>
+                </li>
+            </ul>
+
         </div>
-    </header>
-<div class="row">
-    <div class="col-md-8 offset-2">
-        <div class="card-body">
-            {% block content %}
-                <h1 class="cover-heading">Cover your page.</h1>
-                <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-                <p class="lead">
-                    <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-                </p>
-            {% endblock %}
-        </div>
+
     </div>
-</div>
-    <main role="main" class="inner cover card">
+</nav>
+<!-- Navbar -->
 
-    </main>
+<!-- Full Page Intro -->
+<div class="view full-page-intro" style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
 
-    <footer class="mastfoot mt-auto">
-        <div class="inner">
-            <p>SKB 2020 | {{ shivas_app_version }}</p>
+    <!-- Mask & flexbox options-->
+    <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+        <!-- Content -->
+        <div class="container">
+
+            <!--Grid row-->
+            <div class="row wow fadeIn">
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-4 white-text text-center text-md-left">
+
+                    <h1 class="display-4 font-weight-bold">{{ stadt.name }}</h1>
+
+                    <hr class="hr-light">
+
+                    <p>
+                        <strong>{{ stadt.infoText|nl2br }}</strong>
+                    </p>
+
+
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+
+                <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
         </div>
-    </footer>
-</div>
+        <!-- Content -->
 
-<div class="modal fade" id="loadContentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    </div>
+    <!-- Mask & flexbox options-->
+
+</div>
+<!-- Full Page Intro -->
+
+
+<main>
+    <div class="container">
+
+        <!--Section: Main info-->
+        <section class="mt-5 wow fadeIn">
+
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-lg-12">
+                    {% block content %}
+                    {% endblock %}
+
+                </div>
+                <!--Grid column-->
+
+            </div>
+
+        </section>
+    </div>
+</main>
+<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+    <!--Call to action-->
+
+    <!--/.Call to action-->
+
+
+
+    <!-- Social icons -->
+
+    <!-- Social icons -->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+        © {{ 'now'|date('Y') }} | {{ shivas_app_version }}
+
+    </div>
+    <!--/.Copyright-->
+
+</footer>
+
+<div class="modal fade" id="loadContentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
 
+
         </div>
     </div>
 </div>
+<!-- Start your project here-->
 
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('vendor/popper.js/umd/popper.min.js') }}"> </script>
-<script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
-<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
-<script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
-<script src="//www.google.com/recaptcha/api.js?hl={{ app.request.locale }}"></script>
-
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
 <script>
-    $(document).on('click','.loadContent',function(e){
+    $(document).on('click','.loadContent',function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
         $('#loadContentModal').modal('show');
         $('#loadContentModal .modal-content').load(url);
     });
-
 </script>
-{% block jquery %}
-
-{% endblock %}
-
+{% block jquery %}{% endblock %}
 </body>
+
 </html>
