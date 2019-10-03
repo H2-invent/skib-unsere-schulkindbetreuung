@@ -115,6 +115,21 @@ class LoerrachWorkflowController extends AbstractController
         return $this->render('workflow/loerrach/adresse.html.twig', array('stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors));
     }
 
+    private function getStammdatenFromCookie(Request $request)
+    {
+        if ($request->cookies->get('UserID')) {
+            $cookie_ar = explode('.', $request->cookies->get('UserID'));
+
+            $hash = hash("sha256", $cookie_ar[0] . $this->getParameter("secret"));
+            if ($hash == $cookie_ar[1]) {
+                $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $cookie_ar[0], 'fin' => false));
+                return $adresse;
+            }
+            return null;
+        }
+        return null;
+    }
+
     /**
      * @Route("/loerrach/schulen",name="loerrach_workflow_schulen",methods={"GET"})
      */
@@ -291,7 +306,6 @@ class LoerrachWorkflowController extends AbstractController
         return $this->render('workflow/loerrach/blockKinder.html.twig', array('kind' => $kind, 'blocks' => $renderBlocks));
     }
 
-
     /**
      * @Route("/loerrach/kinder/block/toggle",name="loerrach_workflow_kinder_block_toggle",methods={"GET"})
      */
@@ -363,11 +377,21 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $adresse->getKinds();
 
+        $preis = 0;
+        foreach ($kind as $data){
+            $preis +=$data->getPreisforBetreuung();
+        }
 
+        $error = false;
+        foreach ($kind as $data){
+            if ($data->getBetreungsblocks() < 2){
+                $error= true;
+                break;
+            }
+        }
 
-        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
+        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis'=>$preis, 'error'=>$error));
     }
-
 
     /**
      * @Route("/loerrach/abschluss",name="loerrach_workflow_abschluss",methods={"GET","POST"})
@@ -405,22 +429,6 @@ class LoerrachWorkflowController extends AbstractController
 
     }
 
-
-    // Include Parental data
-    private function getStammdatenFromCookie(Request $request)
-    {
-        if ($request->cookies->get('UserID')) {
-            $cookie_ar = explode('.', $request->cookies->get('UserID'));
-
-            $hash = hash("sha256", $cookie_ar[0] . $this->getParameter("secret"));
-            if ($hash == $cookie_ar[1]) {
-                $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $cookie_ar[0], 'fin' => false));
-                return $adresse;
-            }
-            return null;
-        }
-        return null;
-    }
     /**
      * @Route("/loerrach/berechnung/einKind",name="loerrach_workflow_preis_einKind",methods={"GET"})
      */

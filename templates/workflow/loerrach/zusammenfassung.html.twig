@@ -26,34 +26,106 @@
         <!-- Daten der Kinder in einer for Schleife -->
         <h3 class="cover-heading">{% trans %}Daten von Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen') }}"> <i class="material-icons">edit</i></a></h3>
 
-        {% for k in kind %}
-        <table class="table table-hover">
-            <tbody>
-                <tr>
-                    <td>{% trans %} Vorname {% endtrans %}</td>
-                    <td>{{ k.vorname }}</td>
-                </tr>
-                <tr>
-                    <td>{% trans %} Nachname {% endtrans %}</td>
-                    <td>{{ k.nachname }}</td>
-                </tr>
-                <tr>
-                    <td>{% trans %} Geburtstag {% endtrans %}</td>
-                    <td>{{ k.geburtstag|date('d.m.Y') }}</td>
-                </tr>
-                <tr>
-                    <td>{% trans %} Gebuchte Blöcke {% endtrans %}</td>
+        <div id="accordion">
+            {% for k in kind %}
+            <div class="card">
+                <div class="card-header" id="heading{{ loop.index }}">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
+                            {{ k.vorname }} {{ k.nachname }} <br/><small>{% if k.betreungsblocks < 2 %} {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} {% else %}{% trans %}Summe der gebuchter Blöcke: {% endtrans %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %}</small>
+                        </button>
+                    </h5>
+                </div>
 
-                    <td>
-                        {%  for z in k.zeitblocks %}
-                            {{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}<br/>
-                        {% endfor %}
-                    </td>
-                </tr>
-            </tbody>
+                <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr>
+                                <td>{% trans %} Vorname {% endtrans %}</td>
+                                <td>{{ k.vorname }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Nachname {% endtrans %}</td>
+                                <td>{{ k.nachname }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Geburtstag {% endtrans %}</td>
+                                <td>{{ k.geburtstag|date('d.m.Y') }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            {% trans %} Gebuchte Betreuungsblöcke {% endtrans %}
+                                        </li>
+                                    </ul>
+                                </td>
+
+                                <td>
+                                    <ul class="list-group">
+                                        {%  for z in k.BetreungsblocksReal %}
+                                            <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            {% trans %} Gebuchte Mittagessen {% endtrans %}
+                                        </li>
+                                    </ul>
+                                </td>
+
+                                <td>
+                                    <ul class="list-group">
+                                        {%  for z in k.MittagessenblocksReal %}
+                                            <li class="list-group-item">{{ z.WochentagString }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans %} Summe {% endtrans %}
+                                </td>
+                                <td>
+                                    <b>
+                                        {% if k.betreungsblocks < 2 %} {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} {% else %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %}
+                                    </b>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <table class="table">
+            <tr>
+                <td>
+                    <h5>{% trans %} Summe {% endtrans %}</h5>
+                </td>
+                <td>
+                    <h5>
+                        {% if error == false %}
+                        {{ preis|number_format(2,',','.') }} €
+                    {% else %}
+                        {% trans %} Bitte weitere Betreuungsblöcke auswählen {% endtrans %}
+                    {% endif %}
+                    </h5>
+                </td>
+            </tr>
         </table>
-        {% endfor %}
     </div>
     <!-- nicht schön aber funktional abschließen-->
+    {% if error == false %}
     <a href="{{ path('loerrach_workflow_abschluss') }}" class="btn btn-outline-primary">{% trans %}Absenden{% endtrans %}</a>
+    {% else %}
+    <a href="{{ path('loerrach_workflow_schulen') }}" class="btn btn-outline-primary">{% trans %}Weitere Blöcke hinzufügen{% endtrans %}</a>
+    {% endif %}
+
 {% endblock %}

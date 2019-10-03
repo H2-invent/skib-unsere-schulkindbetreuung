@@ -282,6 +282,28 @@ class Kind
         }
         return $summe;
     }
+    public function getBetreungsblocksReal()
+    {
+        $blocks = $this->zeitblocks;
+        $summe = array();
+        foreach ($blocks as $data){
+            if($data->getGanztag()!= 0){
+                $summe[]=$data;
+            }
+        }
+        return $summe;
+    }
+    public function getMittagessenblocksReal()
+    {
+        $blocks = $this->zeitblocks;
+        $summe = array();
+        foreach ($blocks as $data){
+            if($data->getGanztag() == 0){
+                $summe[]=$data;
+            }
+        }
+        return $summe;
+    }
         public function getPreisforBetreuung()
     {   // Load the data from the city into the controller as $stadt
 
