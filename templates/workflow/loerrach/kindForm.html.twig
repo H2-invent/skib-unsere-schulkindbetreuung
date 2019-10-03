@@ -1,3 +1,5 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
 <div class="modal-header">
     <h5 class="modal-title">{% trans %}Kinderdaten eingeben{% endtrans %}</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -30,7 +32,7 @@
               $.snackbar({content: data.snack});
               if (data.error == 0) {
                   if (typeof data.next != "undefined"){
-                      $('#loadContentModal .modal-content').load(data.next);
+                      $('#loadContentModal').load(data.next);
                       $('#schulenShow') .load('{{ path('loerrach_workflow_schulen') }} #schulenShow');
                   }else {
                       $('#loadContentModal').modal ('hide');
@@ -42,5 +44,7 @@
 </script>
 <div class="modal-footer">
 
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %}Schließen{% endtrans %}</button>
+    <button type="button" class="btn btn-secondary " data-dismiss="modal">{% trans %}Schließen{% endtrans %}</button>
+</div>
+</div>
 </div>

@@ -1,11 +1,6 @@
 {% extends 'workflow/base.html.twig' %}
 {% block content %}
-    <style>
-        .modal-dialog {
-            max-width: 90%;
 
-        }
-    </style>
     <h2 class="cover-heading, text-center">{% trans %}Bitte Schulen auswählen und Kinder hinzufügen{% endtrans %}</h2>
     <p>{% trans %}Text2{% endtrans %}</p>
     <section class="dashboard-counts section-padding" id="schulenShow">
@@ -65,7 +60,7 @@
 
             var ele = $(this);
             var url = ele.attr('href');
-            ele.find('.loader').html('<div class="spinner"></div>');
+            ele.find('.loader').html('<span class="spinner-border mr-2" role="status" aria-hidden="true"></span>');
             $.ajax({
                 url: url,
                 method: 'GET',

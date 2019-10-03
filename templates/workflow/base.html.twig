@@ -15,12 +15,14 @@
     <!-- Your custom styles (optional) -->
     <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
+    <link href="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.css" rel="stylesheet">
+
     <style type="text/css">
         html,
         body,
         header,
         .view {
-            height: 100%;
+            height: 90%;
         }
 
         @media (max-width: 740px) {
@@ -200,12 +202,9 @@
 
 <div class="modal fade" id="loadContentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
 
 
-        </div>
-    </div>
+
 </div>
 <!-- Start your project here-->
 
@@ -218,13 +217,15 @@
 <script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
+<script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
 <script>
     $(document).on('click','.loadContent',function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
         $('#loadContentModal').modal('show');
-        $('#loadContentModal .modal-content').load(url);
+        $('#loadContentModal').load(url);
     });
+
 </script>
 {% block jquery %}{% endblock %}
 </body>

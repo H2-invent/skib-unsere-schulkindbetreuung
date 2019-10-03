@@ -2,7 +2,7 @@
 {% block content %}
         <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
 
-    <h3 class="cover-heading">{% trans %}Daten der Eltern{% endtrans %} <a href="{{ path('loerrach_workflow_adresse') }}"> <i class="material-icons">edit</i></a></h3>
+    <h3 class="cover-heading">{% trans %}Daten der Eltern{% endtrans %} <a href="{{ path('loerrach_workflow_adresse') }}"> <i class="fa fa-edit"></i></a></h3>
 
     <div class="table-responsive ">
         <table class="table table-hover">
@@ -24,7 +24,7 @@
 
 
         <!-- Daten der Kinder in einer for Schleife -->
-        <h3 class="cover-heading">{% trans %}Daten von Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen') }}"> <i class="material-icons">edit</i></a></h3>
+        <h3 class="cover-heading">{% trans %}Daten von Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen') }}"> <i class="fa fa-edit"></i></a></h3>
 
         <div id="accordion">
             {% for k in kind %}
@@ -121,7 +121,7 @@
             </tr>
         </table>
     </div>
-    <!-- nicht schön aber funktional abschließen-->
+
     {% if error == false %}
     <a href="{{ path('loerrach_workflow_abschluss') }}" class="btn btn-outline-primary">{% trans %}Absenden{% endtrans %}</a>
     {% else %}
