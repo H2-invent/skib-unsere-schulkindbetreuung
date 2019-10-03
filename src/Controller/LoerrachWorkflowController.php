@@ -44,12 +44,11 @@ class LoerrachWorkflowController extends AbstractController
     public function __construct()
     {
         $this->einkommensgruppen = array(
-            '0 - 1.000 Euro' => 1,
-            '1.001 - 2.000 Euro' => 2,
-            '2.001 . 3.000 Euro' => 3,
-            '3.001 . 5.000 Euro' => 4,
-            '5.001 . 9.000 Euro' => 5,
-            'mehr als 9.001 Euro' => 6,
+            '0 - 1.000 Euro' => 0,
+            '1.001 - 2.000 Euro' => 1,
+            '2.001 . 3.000 Euro' => 2,
+            '3.001 . 5.000 Euro' => 3,
+            'mehr als 5.001 Euro' => 4,
             );
     }
 
@@ -399,7 +398,7 @@ class LoerrachWorkflowController extends AbstractController
                 break;
             }
         }
-
+        dump(array_flip($this->einkommensgruppen));
         return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('einkommen'=>array_flip($this->einkommensgruppen),'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis'=>$preis, 'error'=>$error));
     }
 
