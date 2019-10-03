@@ -66,27 +66,40 @@
                 url: url,
                 method: 'GET',
                 success: function (data) {
-                    var options =  {
-                    content: data.text, // text of the snackbar
-                    timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
-                };
+                    var options = {
+                        content: data.text, // text of the snackbar
+                        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+                    };
                     if (data.error == 0 || data.error == 2) {
                         ele.toggleClass('bg-success');
-                        if (ele.hasClass('bg-success')){
+                        if (ele.hasClass('bg-success')) {
                             ele.find('.gebucht-text').text('{% trans %}Gebucht{% endtrans %}');
-                        }else {
+                        } else {
                             ele.find('.gebucht-text').text('');
                         }
-                    }else {
+                    } else {
 
 
                     }
-                    $.snackbar(options);
-                    ele.find('.loader').html('');
-                }
+                    ele.closest('.modal-body').find('.price').text(data.text);
+                    if (data.error == 0) {
+                        $.ajax({
+                            url: data.preisUrl,
+                            method: 'GET',
+                            success: function (data) {
+                                ele.closest('.modal-body').find('.price').text(data.betrag+'€')
+                            }
 
+                        });
+                    }
+                       // $.snackbar(options);
+                        ele.find('.loader').html('');
+
+
+                }
             })
-        });
+        })
+
     </script>
 
 {% endblock %}

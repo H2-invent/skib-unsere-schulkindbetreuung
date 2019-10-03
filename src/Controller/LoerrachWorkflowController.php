@@ -299,7 +299,7 @@ class LoerrachWorkflowController extends AbstractController
     {
         $result = array(
             'text' => $translator->trans('Betreuungsblock erfolgreich gespeichert'),
-            'error'=>0
+            'error'=>0,
         );
         try {
             //Include Parents in this route
@@ -309,6 +309,7 @@ class LoerrachWorkflowController extends AbstractController
             }
 
             $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
+         $result['preisUrl']= $this->generateUrl('loerrach_workflow_preis_einKind',array('kind_id'=>$kind->getId()));
             $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
             //dump($kind->getZeitblocks()->toArray());
             if (in_array($block, $kind->getZeitblocks()->toArray())) {
@@ -420,4 +421,46 @@ class LoerrachWorkflowController extends AbstractController
         }
         return null;
     }
+    /**
+     * @Route("/loerrach/berechnung/einKind",name="loerrach_workflow_preis_einKind",methods={"GET"})
+     */
+    public function berechnungAction(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
+    {
+        // Load the data from the city into the controller as $stadt
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
+        $result = array(
+            'error'=>0,
+            'text'=>$translator->trans('Preis erfolgreich berechnet.'),
+
+        );
+
+        //Include Parents in this route
+        $adresse = new Stammdaten;
+        if ($this->getStammdatenFromCookie($request)) {
+            $adresse = $this->getStammdatenFromCookie($request);
+        } else {
+            return $this->redirectToRoute('loerrach_workflow_adresse');
+        }
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('id'=>$request->get('kind_id'),'eltern'=>$adresse));
+        $blocks  = $kind->getZeitblocks();
+        $betreuung = array();
+        $mitagessen =array();
+        foreach ($blocks as $data){
+            if($data->getGanztag() == 0){
+                $mitagessen[] = $data;
+            }else{
+                $betreuung[] = $data;
+            }
+        }
+// Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
+        if(sizeof($betreuung)<2){
+            $result['error']= 1;
+            $result['text']= $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)');
+            return new JsonResponse($result);
+        }
+       $result['betrag']= $kind->getPreisforBetreuung();
+        return new JsonResponse($result);
+
+    }
+
 }

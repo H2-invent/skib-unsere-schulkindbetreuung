@@ -271,4 +271,97 @@ class Kind
 
         return $this;
     }
+    public function getBetreungsblocks()
+    {
+        $blocks = $this->zeitblocks;
+        $summe = 0;
+        foreach ($blocks as $data){
+            if($data->getGanztag()!= 0){
+                $summe++;
+            }
+        }
+        return $summe;
+    }
+        public function getPreisforBetreuung()
+    {   // Load the data from the city into the controller as $stadt
+
+        //Include Parents in this route
+        $adresse = $this->getEltern();
+        $kind = $this;
+        $kinder = $adresse->getKinds()->toArray();
+
+
+        usort(
+            $kinder,
+            function ($a, $b) {
+                if ($a->getGeburtstag() == $b->getGeburtstag()) {
+                    return 0;
+                }
+
+                return ($a->getGeburtstag() < $b->getGeburtstag()) ? -1 : 1;
+            }
+        );
+
+
+        $blocks = $kind->getZeitblocks();
+        $betreuung = array();
+
+
+// Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
+        $summe = 0;
+        $loop = 0;
+        $summe += $this->getBetragforKindMittagessen($kind, $adresse);
+
+        foreach ($kinder as $data) {
+
+            if ($kind == $data) {
+
+                switch ($loop) {
+                    case 0:
+                        if ($adresse->getKinderImKiga()) {
+                            $summe += $this->getBetragforKindBetreuung($kind, $adresse) * 0.75;
+                        } else {
+                            $summe += $this->getBetragforKindBetreuung($kind, $adresse);
+                        }
+                        break;
+                    case 1:
+                        $summe += $this->getBetragforKindBetreuung($kind, $adresse) * 0.5;
+                        break;
+                    case 2:
+                        $summe += $this->getBetragforKindBetreuung($kind, $adresse) * 0.25;
+                        break;
+                    default:
+                        $summe += 0;
+                        break;
+
+                }
+
+
+                break;
+
+            }
+            $loop++;
+        }
+        return $summe;
+    }
+
+    private function getBetragforKindBetreuung(Kind $kind,Stammdaten $eltern){
+        $summe = 0;
+        foreach ($kind->getZeitblocks() as $data){
+
+            if($data->getGanztag() != 0){
+                $summe += $data->getPreise()[$eltern->getEinkommen()];
+            }
+        }
+        return $summe;
+    }
+    private function getBetragforKindMittagessen(Kind $kind,Stammdaten $eltern){
+        $summe = 0;
+        foreach ($kind->getZeitblocks() as $data){
+            if($data->getGanztag() == 0 && $eltern->getBuk() == false){
+                $summe += $data->getPreise()[$eltern->getEinkommen()];
+            }
+        }
+        return $summe;
+    }
 }
