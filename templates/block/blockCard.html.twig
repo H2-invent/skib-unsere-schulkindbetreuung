@@ -2,6 +2,9 @@
     {% for b in blocks %}
         <div class="card">
             <div class="card-body text-center">
+                <p>
+                    {{ b.ganztagString }}
+                </p>
                 {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
               <b>{% for p in b.preise %}{{ p|number_format(2,',') }}€{% endfor %}</b>
             </div>

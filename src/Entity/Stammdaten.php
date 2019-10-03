@@ -118,6 +118,26 @@ class Stammdaten
      */
     private $newsletter;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $plz;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $stadt;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $secCode;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $email;
+
     public function __construct()
     {
         $this->kinds = new ArrayCollection();
@@ -383,6 +403,54 @@ class Stammdaten
     public function setNewsletter(bool $newsletter): self
     {
         $this->newsletter = $newsletter;
+
+        return $this;
+    }
+
+    public function getPlz(): ?int
+    {
+        return $this->plz;
+    }
+
+    public function setPlz(int $plz): self
+    {
+        $this->plz = $plz;
+
+        return $this;
+    }
+
+    public function getStadt(): ?string
+    {
+        return $this->stadt;
+    }
+
+    public function setStadt(string $stadt): self
+    {
+        $this->stadt = $stadt;
+
+        return $this;
+    }
+
+    public function getSecCode(): ?string
+    {
+        return $this->secCode;
+    }
+
+    public function setSecCode(string $secCode): self
+    {
+        $this->secCode = $secCode;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }

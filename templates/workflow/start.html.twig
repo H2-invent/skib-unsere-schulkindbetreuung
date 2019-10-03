@@ -1,9 +1,180 @@
-{% extends 'workflow/base.html.twig' %}
-{% block content %}
-    <img class=" card-img" src="{{ vich_uploader_asset(stadt, 'imageFile') }}">
-        <h1 class="cover-heading">{{ stadt.name }}</h1>
-        <p class="lead">{% trans with {"%name%":stadt.name} %}Melden Sie hier ihre Kinder für die Ganztagsbetreuung der Stadt %name% an{% endtrans %}</p>
-        <p class="lead">
-            <a href="{{ path('loerrach_workflow_adresse',{'stadt':stadt.slug}) }}" class="btn btn-lg btn-secondary">{% trans %}Hier meine Kinder anmelden{% endtrans %}</a>
-        </p>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Die Schulkindbetreuung von {{stadt.name}}</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{{ asset('frontpage/css/mdb.min.css') }}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
+    <link href="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.css" rel="stylesheet">
+
+    <style type="text/css">
+        html,
+        body,
+        header,
+        .view {
+            height: 100%;
+        }
+
+        @media (max-width: 740px) {
+            html,
+            body,
+            header,
+            .view {
+                height: 1000px;
+            }
+        }
+
+        @media (min-width: 800px) and (max-width: 850px) {
+            html,
+            body,
+            header,
+            .view {
+                height: 650px;
+            }
+        }
+        @media (min-width: 800px) and (max-width: 850px) {
+            .navbar:not(.top-nav-collapse) {
+                background: #1C2331!important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<!-- Navbar -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+    <div class="container">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="#" target="_blank">
+            <strong>Unsere Schulkindbetreuung</strong>
+        </a>
+
+        <!-- Collapse -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <!-- Left -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Start</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" target="_blank">Free download</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://h2-invent.com" target="_blank">H2 invent</a>
+                </li>
+            </ul>
+
+            <!-- Right -->
+            <ul class="navbar-nav nav-flex-icons">
+                <li class="nav-item">
+                    <a href="#" class="nav-link border border-light rounded"
+                       target="_blank">{{stadt.name}}
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+<!-- Navbar -->
+
+<!-- Full Page Intro -->
+<div class="view full-page-intro" style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+
+    <!-- Mask & flexbox options-->
+    <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+
+        <!-- Button trigger modal-->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCookie1">Cookies</button>
+
+        <!--Modal: modalCookie-->
+        <div class="modal fade top" id="modalCookie1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true" data-backdrop="true">
+            <div class="modal-dialog modal-frame modal-top modal-notify modal-info" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Body-->
+                    <div class="modal-body">
+                        <div class="row d-flex justify-content-center align-items-center">
+
+                            <p class="pt-3 pr-2">We use cookies to improve your website experience</p>
+
+                            <a type="button" class="btn btn-primary">Learn more <i class="fas fa-book ml-1"></i></a>
+                            <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Ok, thanks</a>
+                        </div>
+                    </div>
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+        <!--Modal: modalCookie-->
+
+        <!-- Content -->
+        <div class="container">
+
+            <!--Grid row-->
+            <div class="row wow fadeIn">
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-4 white-text text-center text-md-left">
+
+                    <h1 class="display-4 font-weight-bold">{{ stadt.name }}</h1>
+
+                    <hr class="hr-light">
+                    <p class="lead">{% trans with {"%name%":stadt.name} %}Melden Sie hier ihre Kinder für die Ganztagsbetreuung der Stadt %name% an{% endtrans %}</p>
+
+                    <a href="{{ url }}" class="btn btn-primary btn-lg">{% trans %}Hier meine Kinder anmelden{% endtrans %}
+                    </a>
+
+                </div>
+
+                <div class="col-md-6 mb-4 white-text text-center text-md-left">
+                    <p>
+                        <strong>{{ stadt.infoText|nl2br }}</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer class="page-footer text-center font-small  wow fadeIn" style="position:fixed;left:0px;bottom:0px;width:100%;">
+    <div class="footer-copyright py-3">
+        © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
+    </div>
+</footer>
+
+<script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
+<script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
+</body>
+
+</html>

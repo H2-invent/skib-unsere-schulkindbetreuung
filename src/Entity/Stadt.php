@@ -155,7 +155,10 @@ class Stadt
     /**
      * @ORM\Column(type="integer")
      */
+
+
     private $preiskategorien;
+
 
     public function __construct()
     {

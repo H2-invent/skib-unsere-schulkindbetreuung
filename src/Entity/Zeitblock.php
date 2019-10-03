@@ -248,4 +248,21 @@ class Zeitblock
 
         return $this;
     }
+
+    public function getGanztagString(){
+        switch ($this->ganztag){
+            case 0:
+                return 'Mittagessen';
+                break;
+            case 1:
+                return 'Ganztagsbetreuung';
+                break;
+            case 2:
+                return 'Halbtagsbetreuung';
+                break;
+            default:
+                return "keine Angabe";
+                break;
+        }
+    }
 }

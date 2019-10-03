@@ -52,6 +52,7 @@ class BlockType extends AbstractType
                 'choices'  => [
                     'Ganztagsbetreuung' => 1,
                     'Halbtagsbetreuung' => 2,
+                    'Mittagessen' => 0,
                 ],'label'=>'Art der Betreuung','translation_domain' => 'form'])
             ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
             ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
