@@ -517,7 +517,7 @@ class LoerrachWorkflowController extends AbstractController
     }
     private function getSchuljahr($stadt)
     {
-        if ($this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE')){
+        if ($this->getUser() && $this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE')){
             return $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromCity($stadt);
         }else{
             return $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
