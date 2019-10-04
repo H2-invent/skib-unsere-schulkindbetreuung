@@ -54,7 +54,7 @@
 </div>
     <div class="row">
         <div class="col-lg-12">
-            <p>{% trans %}Summe aller Blöcke (incl. Vergünstigungen):{% endtrans %} <span class="price">{% if kind.Betreungsblocks>=2 %}{{ kind.PreisforBetreuung }}€{% endif %}</span></p>
+            <p>{% trans %}Summe aller Blöcke (incl. Vergünstigungen):{% endtrans %} <span class="price">{% if kind.Betreungsblocks>=2 %}{{ kind.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></p>
         </div>
     </div>
 

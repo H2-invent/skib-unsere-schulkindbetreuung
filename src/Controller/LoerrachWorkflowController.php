@@ -60,7 +60,7 @@ class LoerrachWorkflowController extends AbstractController
 
 
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'Loerrach'));
-        $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        $schuljahr = $this->getSchuljahr($stadt);
         if ($schuljahr == null){
             return $this->redirectToRoute('workflow_closed', array('slug'=>$stadt->getSlug()));
         }
@@ -70,11 +70,16 @@ class LoerrachWorkflowController extends AbstractController
             $adresse = $this->getStammdatenFromCookie($request);
         }
 
+        if($adresse->getUid() == null){
+            $adresse->setUid(md5(uniqid()))
+                ->setAngemeldet(false);
+            $adresse->setCreatedAt(new \DateTime());
+        }
 
-        $adresse->setUid(md5(uniqid()))
-            ->setAngemeldet(false);
-        $adresse->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
-        $adresse->setCreatedAt(new \DateTime());
+
+
+
+
         $form = $this->createFormBuilder($adresse)
             ->add('name', TextType::class, ['label' => 'Name', 'translation_domain' => 'form'])
             ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
@@ -124,20 +129,6 @@ class LoerrachWorkflowController extends AbstractController
         return $this->render('workflow/loerrach/adresse.html.twig', array('stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors));
     }
 
-    private function getStammdatenFromCookie(Request $request)
-    {
-        if ($request->cookies->get('UserID')) {
-            $cookie_ar = explode('.', $request->cookies->get('UserID'));
-
-            $hash = hash("sha256", $cookie_ar[0] . $this->getParameter("secret"));
-            if ($hash == $cookie_ar[1]) {
-                $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $cookie_ar[0], 'fin' => false));
-                return $adresse;
-            }
-            return null;
-        }
-        return null;
-    }
 
     /**
      * @Route("/loerrach/schulen",name="loerrach_workflow_schulen",methods={"GET"})
@@ -151,7 +142,7 @@ class LoerrachWorkflowController extends AbstractController
         // Load all schools from the city into the controller as $schulen
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt));
 
-        $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        $schuljahr = $this->getSchuljahr($stadt);
         if ($schuljahr == null){
             return $this->redirectToRoute('workflow_closed', array('slug'=>$stadt->getSlug()));
         }
@@ -163,7 +154,14 @@ class LoerrachWorkflowController extends AbstractController
         } else {
             return $this->redirectToRoute('loerrach_workflow_adresse');
         }
-        $kinder = $adresse->getKinds()->toArray();
+        $kinder = array();
+        if ($request->cookies->get('KindID')){
+            $cookie_kind = explode('.', $request->cookies->get('KindID'));
+            $kinder = $this->getDoctrine()->getRepository(Kind::class)->findBy(array('id'=>$cookie_kind[0]));
+        }else{
+            $kinder = $adresse->getKinds()->toArray();
+        }
+
         $renderKinder = array();
         foreach ($kinder as $data) {
             $renderKinder[$data->getSchule()->getId()][] = $data;
@@ -289,7 +287,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
         $schule = $kind->getSchule();
-        $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($schule->getStadt());
+        $schuljahr = $this->getSchuljahr($stadt);
         $req = array(
             'active'=>$schuljahr,
             'schule' => $schule,
@@ -371,7 +369,7 @@ class LoerrachWorkflowController extends AbstractController
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
 
         //Check for Anmeldung open
-        $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        $schuljahr = $this->getSchuljahr($stadt);
         if ($schuljahr == null){
             return $this->redirectToRoute('workflow_closed', array('slug'=>$stadt->getSlug()));
         }
@@ -398,7 +396,6 @@ class LoerrachWorkflowController extends AbstractController
                 break;
             }
         }
-        dump(array_flip($this->einkommensgruppen));
         return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('einkommen'=>array_flip($this->einkommensgruppen),'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis'=>$preis, 'error'=>$error));
     }
 
@@ -411,7 +408,7 @@ class LoerrachWorkflowController extends AbstractController
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
 
         //Check for Anmeldung open
-        $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        $schuljahr = $this->getSchuljahr($stadt);
         if ($schuljahr == null){
             return $this->redirectToRoute('workflow_closed', array('slug'=>$stadt->getSlug()));
         }
@@ -427,10 +424,11 @@ class LoerrachWorkflowController extends AbstractController
         $kind = $adresse->getKinds();
 
         // Daten speichern und fixieren
+        $adresse->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
         $adresse->setFin(true);
-        //$em = $this->getDoctrine()->getManager();
-        //$em->persist($adresse);
-        //$em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($adresse);
+        $em->flush();
 
         $mailer->sendEmail('TEst1', 'test2', 'test2', 'test2', 'info@h2-invent.com', $adresse->getEmail(), 'Test');
 
@@ -481,17 +479,45 @@ class LoerrachWorkflowController extends AbstractController
             $result['text']= $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)');
             return new JsonResponse($result);
         }
-       $result['betrag']= $kind->getPreisforBetreuung();
+       $result['betrag']= number_format($kind->getPreisforBetreuung(),2,',','.');
         return new JsonResponse($result);
 
     }
 
-/**
- * @Route("/email",name="email",methods={"GET"})
- */
-public function email(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
-{
-    return $this->render('email/base.html.twig');
+// Nach UId und Fin fragen
+    private function getStammdatenFromCookie(Request $request)
+    {
+        if ($request->cookies->get('UserID')) {
+            $cookie_ar = explode('.', $request->cookies->get('UserID'));
+            $hash = hash("sha256", $cookie_ar[0] . $this->getParameter("secret"));
 
-}
+            $cookie_kind = explode('.', $request->cookies->get('KindID'));
+            $hash_kind = hash("sha256", $cookie_kind[0] . $this->getParameter("secret"));
+
+            $cookie_seccode = explode('.', $request->cookies->get('SecID'));
+            $hash_seccode = hash("sha256", $cookie_seccode[0] . $this->getParameter("secret"));
+
+            $search = array('uid'=>$cookie_ar[0]);
+
+            if ($this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE') && $hash_kind == $cookie_kind[1] && $hash_seccode == $cookie_seccode[1]){
+                $search['secCode'] = $cookie_seccode[0];
+            }else{
+                $search['fin'] = false;
+            }
+            if ($hash == $cookie_ar[1]) {
+                $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy($search);
+                return $adresse;
+            }
+            return null;
+        }
+        return null;
+    }
+    private function getSchuljahr($stadt)
+    {
+        if ($this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE')){
+            return $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromCity($stadt);
+        }else{
+            return $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        }
+    }
 }
