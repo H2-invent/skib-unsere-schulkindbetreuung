@@ -661,6 +661,32 @@
     });
 
 </script>
+<script src="{{ asset('js/jquery.bs.gdpr.cookies.js') }}"></script>
+<script type="text/javascript">
+    var settings = {
+        message: 'This is your cookies message. Lorem ipsum dolor sit amet, consectetur adipiscing elit. <b> Read more  ',
+        moreLinkLabel: 'here.</b>',
+        messageMaxHeightPercent: 30,
+        moreLink: '/privacy/',
+        delay: 1000,
+        allowAdvancedOptions: true,
+        OnAccept : function() {
+            console.log('Yay! User accepted your cookies window!');
+            console.log('User preferences');
+            var preferences = $.fn.bsgdprcookies.GetUserPreferences();
+            console.log(preferences);
+
+        }
+    }
+
+    $(document).ready(function() {
+        $('body').bsgdprcookies(settings);
+
+        $('#cookiesBtn').on('click', function(){
+            $('body').bsgdprcookies(settings, 'reinit');
+        });
+    });
+</script>
 {% block jquery %}
 
 {% endblock %}
