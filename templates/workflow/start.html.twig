@@ -108,32 +108,6 @@
     <!-- Mask & flexbox options-->
     <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
 
-
-        <!-- Button trigger modal-->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCookie1">Cookies</button>
-
-        <!--Modal: modalCookie-->
-        <div class="modal fade top" id="modalCookie1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true" data-backdrop="true">
-            <div class="modal-dialog modal-frame modal-top modal-notify modal-info" role="document">
-                <!--Content-->
-                <div class="modal-content">
-                    <!--Body-->
-                    <div class="modal-body">
-                        <div class="row d-flex justify-content-center align-items-center">
-
-                            <p class="pt-3 pr-2">We use cookies to improve your website experience</p>
-
-                            <a type="button" class="btn btn-primary">Learn more <i class="fas fa-book ml-1"></i></a>
-                            <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Ok, thanks</a>
-                        </div>
-                    </div>
-                </div>
-                <!--/.Content-->
-            </div>
-        </div>
-        <!--Modal: modalCookie-->
-
         <!-- Content -->
         <div class="container">
 
@@ -147,10 +121,13 @@
 
                     <hr class="hr-light">
                     <p class="lead">{% trans with {"%name%":stadt.name} %}Melden Sie hier ihre Kinder für die Ganztagsbetreuung der Stadt %name% an{% endtrans %}</p>
-
-                    <a href="{{ url }}" class="btn btn-primary btn-lg">{% trans %}Hier meine Kinder anmelden{% endtrans %}
+                    <a href="{{ url }}" class="btn btn-primary btn-lg">
+                    {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                    {% trans %}Kind bearbeiten{% endtrans %}
+                    {% else %}
+                    {% trans %}Hier meine Kinder anmelden{% endtrans %}
+                    {% endif %}
                     </a>
-
                 </div>
 
                 <div class="col-md-6 mb-4 white-text text-center text-md-left">
