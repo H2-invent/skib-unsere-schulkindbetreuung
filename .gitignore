@@ -19,4 +19,6 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 *.min.min*
-*.idea
+*.idea/*
+*.idea*
+.idea/

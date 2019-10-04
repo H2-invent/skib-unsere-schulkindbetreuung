@@ -48,7 +48,7 @@ class ChildChangeController extends AbstractController
                 $cookie2 = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")));
                 $cookie_seccode = new Cookie ('SecID', $adresse->getSecCode() . "." . hash("sha256", $adresse->getSecCode() . $this->getParameter("secret")));
 
-                $response = $this->redirectToRoute('loerrach_workflow_zusammenfassung');
+                $response = $this->redirectToRoute('workflow_start',array('slug'=>$kind->getSchule()->getStadt()->getSlug()));
                 $response->headers->setCookie($cookie);
                 $response->headers->setCookie($cookie2);
                 $response->headers->setCookie($cookie_seccode);
