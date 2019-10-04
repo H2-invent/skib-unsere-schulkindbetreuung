@@ -122,7 +122,7 @@
                     <hr class="hr-light">
                     <p class="lead">{% trans with {"%name%":stadt.name} %}Melden Sie hier ihre Kinder für die Ganztagsbetreuung der Stadt %name% an{% endtrans %}</p>
                     <a href="{{ url }}" class="btn btn-primary btn-lg">
-                    {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                    {% if app.request.cookies.has('SecID') %}
                     {% trans %}Kind bearbeiten{% endtrans %}
                     {% else %}
                     {% trans %}Hier meine Kinder anmelden{% endtrans %}

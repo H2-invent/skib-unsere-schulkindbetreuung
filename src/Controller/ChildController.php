@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Active;
 use App\Entity\Organisation;
+use App\Entity\Zeitblock;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,10 +22,15 @@ class ChildController extends AbstractController
         }
         $schulen = $organisation->getSchule()->toArray();
         $schuljahre = $schulen[0]->getStadt()->getActives()->toArray();
-        dump($schuljahre);
         $blocks = array();
+        $search = array();
+        if($request->get('schuljahr')){
+            $search['active'] = $this->getDoctrine()->getRepository(Active::class)->find($request->get('schuljahr'));
+
+        }
         foreach ($schulen as $data){
-           $blocks =  array_merge($blocks, $data->getZeitblocks()->toArray());
+            $search['schule'] = $data;
+           $blocks =  array_merge($blocks, $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($search));
         }
         $kinder = array();
         foreach ($blocks as $data){
@@ -38,6 +45,7 @@ class ChildController extends AbstractController
         return $this->render('child/child.html.twig', [
             'kinder' => $kinderU,
             'organisation' => $organisation,
+            'schuljahre' => $schuljahre,
         ]);
     }
 }
