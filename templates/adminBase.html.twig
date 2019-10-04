@@ -83,7 +83,7 @@
                     <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"> <i class="material-icons">sports_handball</i> {% trans %}Meine Schulen{% endtrans %}</a></li>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
-                    <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"> <i class="material-icons">sports_handball</i> {% trans %}Meine Kinder{% endtrans %}</a></li>
+                    <li><a href="{{ path('child_show',{'id':app.user.organisation.id}) }}"> <i class="material-icons">emoji_people</i> {% trans %}Meine Kinder{% endtrans %}</a></li>
                 {% endif %}
 
 

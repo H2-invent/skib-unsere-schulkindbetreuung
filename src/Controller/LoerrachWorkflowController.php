@@ -430,11 +430,14 @@ class LoerrachWorkflowController extends AbstractController
         $em->persist($adresse);
         $em->flush();
 
+
         $mailer->sendEmail('TEst1', 'test2', 'test2', 'test2', 'info@h2-invent.com', $adresse->getEmail(), 'Test');
 
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
-        $response->headers->removeCookie('UserID');
+        $response->headers->clearCookie('UserID');
+        $response->headers->clearCookie('SecID');
+        $response->headers->clearCookie('KindID');
         return $response;
 
     }
