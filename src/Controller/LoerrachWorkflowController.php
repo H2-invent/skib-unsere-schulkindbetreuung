@@ -70,30 +70,29 @@ class LoerrachWorkflowController extends AbstractController
             $adresse = $this->getStammdatenFromCookie($request);
         }
 
+
+        //Add SecCode into if to create a SecCode the first time to be not "null"
         if($adresse->getUid() == null){
             $adresse->setUid(md5(uniqid()))
                 ->setAngemeldet(false);
-            $adresse->setCreatedAt(new \DateTime());
+            $adresse->setCreatedAt(new \DateTime())
+                ->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
         }
 
-
-
-
-
         $form = $this->createFormBuilder($adresse)
-            ->add('name', TextType::class, ['label' => 'Name', 'translation_domain' => 'form'])
             ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
+            ->add('name', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
             ->add('strasse', TextType::class, ['label' => 'Straße', 'translation_domain' => 'form'])
-            ->add('plz', TextType::class, ['label' => 'PLZ', 'translation_domain' => 'form'])
-            ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form'])
             ->add('adresszusatz', TextType::class, ['required'=>false,'label' => 'Adresszusatz', 'translation_domain' => 'form'])
+            ->add('plz', TextType::class, ['label' => 'PLZ', 'translation_domain' => 'form'])
+            ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form','help'=>'Das ist eine Hilfe für diese Frage im Form'])
             ->add('email',EmailType::class, ['required'=>true,'label' => 'Email', 'translation_domain' => 'form'])
             ->add('einkommen', ChoiceType::class, [
                 'choices' => $this->einkommensgruppen, 'label' => 'Netto Haushaltseinkommen pro Monat', 'translation_domain' => 'form'])
             ->add('kinderImKiga', CheckboxType::class, ['required'=>false,'label' => 'Kind im Kindergarten', 'translation_domain' => 'form'])
-            ->add('buk', CheckboxType::class, ['required'=>false,'label' => 'BUK Empfänger', 'translation_domain' => 'form'])
+            ->add('buk', CheckboxType::class, ['required'=>false,'label' => 'BUT Empfänger', 'translation_domain' => 'form'])
             ->add('beruflicheSituation', TextType::class, ['required'=>false,'label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
-            ->add('notfallkontakt', TextType::class, ['label' => 'Notfallkontakt', 'translation_domain' => 'form'])
+            ->add('notfallkontakt', TextType::class, ['label' => 'Notfalltelefonnummer', 'translation_domain' => 'form'])
             ->add('iban', TextType::class, ['label' => 'IBAN für das Lastschriftmandat', 'translation_domain' => 'form'])
             ->add('bic', TextType::class, ['label' => 'BIC für das Lastschriftmandat', 'translation_domain' => 'form'])
             ->add('kontoinhaber', TextType::class, ['label' => 'Kontoinhaber für das Lastschriftmandat', 'translation_domain' => 'form'])
@@ -287,6 +286,16 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
         $schule = $kind->getSchule();
+        //$stadt = $adresse->getStadt();
+        //$schuljahr = $this->getSchuljahr($stadt);
+
+
+
+
+
+
+        // Load the data from the city into the controller as $stadt
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
         $schuljahr = $this->getSchuljahr($stadt);
         $req = array(
             'active'=>$schuljahr,
@@ -502,7 +511,7 @@ class LoerrachWorkflowController extends AbstractController
 
             $search = array('uid'=>$cookie_ar[0]);
 
-            if ($this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE') && $hash_kind == $cookie_kind[1] && $hash_seccode == $cookie_seccode[1]){
+            if ($this->getUser() && $this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE') && $hash_kind == $cookie_kind[1] && $hash_seccode == $cookie_seccode[1]){
                 $search['secCode'] = $cookie_seccode[0];
             }else{
                 $search['fin'] = false;

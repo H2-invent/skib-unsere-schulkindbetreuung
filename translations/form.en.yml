@@ -1,13 +1,14 @@
 Name: Last name
+Nachname: __Nachname
 Vorname: First name
 Straße: Street
 Adresszusatz: Adress additional
 Netto Haushaltseinkommen pro Monat: Netto family income per Monath
 Speichern: Save
 Kind im Kindergarten: Kids in the Kindergarten
-BUK Empfänger: BUC reciever
+BUT Empfänger: BUT reciever
 Berufliche Situation der Eltern: Profession of the parents
-Notfallkontakt: Emergency contact
+Notfalltelefonnummer: __Notfalltelefonnummer
 IBAN für das Lastschriftmandat: IBAN for SEPA
 SEPA-LAstschrift Mandat wird elektromisch erteilt: SEPA electronic
 Name der Stadt: Name of the city

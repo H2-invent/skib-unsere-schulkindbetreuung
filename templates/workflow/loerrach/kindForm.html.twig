@@ -1,7 +1,7 @@
 <div class="modal-dialog" role="document">
     <div class="modal-content">
 <div class="modal-header">
-    <h5 class="modal-title">{% trans %}Kinderdaten eingeben{% endtrans %}</h5>
+    <h5 class="modal-title">{% trans %}Daten der Kinder eingeben{% endtrans %}</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -17,7 +17,7 @@
     {{ form_errors(form) }}
 
     {{ form_widget(form) }}
-    <button type="submit" class="btn btn-primary">{% trans %}Weiter{% endtrans %}</button>
+    <button type="submit" class="btn btn-primary ">{% trans %}Weiter{% endtrans %}</button>
     {{ form_end(form) }}
 </div>
 <script>
@@ -42,9 +42,6 @@
       });
   })  
 </script>
-<div class="modal-footer">
 
-    <button type="button" class="btn btn-secondary " data-dismiss="modal">{% trans %}Schließen{% endtrans %}</button>
-</div>
 </div>
 </div>
