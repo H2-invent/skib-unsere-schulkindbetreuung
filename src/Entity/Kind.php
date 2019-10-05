@@ -82,6 +82,11 @@ class Kind
      */
     private $schule;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $fin = false;
+
     public function __construct()
     {
         $this->zeitblocks = new ArrayCollection();
@@ -385,5 +390,17 @@ class Kind
             }
         }
         return $summe;
+    }
+
+    public function getFin(): ?bool
+    {
+        return $this->fin;
+    }
+
+    public function setFin(bool $fin): self
+    {
+        $this->fin = $fin;
+
+        return $this;
     }
 }

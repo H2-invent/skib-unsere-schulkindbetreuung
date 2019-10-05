@@ -430,11 +430,19 @@ class LoerrachWorkflowController extends AbstractController
         }
 
         $kind = $adresse->getKinds();
-
+        foreach ($kind as $data){
+            if ($data->getBetreungsblocks() < 2){
+               $this->redirectToRoute('loerrach_workflow_zusammenfassung');
+            }
+        }
         // Daten speichern und fixieren
+        $em = $this->getDoctrine()->getManager();
         $adresse->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
         $adresse->setFin(true);
-        $em = $this->getDoctrine()->getManager();
+        foreach ($kind as $data){
+            $data->setFin(true);
+            $em->persist($data);
+        }
         $em->persist($adresse);
         $em->flush();
 
