@@ -75,8 +75,7 @@ class LoerrachWorkflowController extends AbstractController
         if($adresse->getUid() == null){
             $adresse->setUid(md5(uniqid()))
                 ->setAngemeldet(false);
-            $adresse->setCreatedAt(new \DateTime())
-                ->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
+            $adresse->setCreatedAt(new \DateTime());
         }
 
         $form = $this->createFormBuilder($adresse)

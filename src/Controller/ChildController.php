@@ -41,7 +41,6 @@ class ChildController extends AbstractController
             $kinderU[$data->getId()] = $data;
         }
 
-
         return $this->render('child/child.html.twig', [
             'kinder' => $kinderU,
             'organisation' => $organisation,
