@@ -1,7 +1,7 @@
 {% if blocks is defined %}
     {% for b in blocks %}
         <div class="card">
-            <div class="card-body text-center">
+            <div class="card-body text-center {% if b.deleted == true %}bg-danger{% endif %}">
                 <p>
                     {{ b.ganztagString }}
                 </p>
@@ -9,8 +9,12 @@
               <b>{% for p in b.preise %}{{ p|number_format(2,',') }}€{% endfor %}</b>
             </div>
             <div class="bmd-card-actions text-center">
+                {% if b.deleted == false %}
                 <a href="{{ path('block_schule_editBlocks',{'id':b.id}) }}" class="loadContent"> <i class="material-icons">edit</i></a>
                 <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
+                {% else %}
+                    {% trans %}gelöscht/deaktiviert{% endtrans %}
+                {% endif %}
             </div>
         </div>
     {% endfor %}

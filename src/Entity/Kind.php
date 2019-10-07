@@ -202,6 +202,7 @@ class Kind
         return $this->zeitblocks;
     }
 
+
     public function addZeitblock(Zeitblock $zeitblock): self
     {
         if (!$this->zeitblocks->contains($zeitblock)) {
@@ -362,10 +363,7 @@ class Kind
                         break;
 
                 }
-
-
                 break;
-
             }
             $loop++;
         }
@@ -376,7 +374,7 @@ class Kind
         $summe = 0;
         foreach ($kind->getZeitblocks() as $data){
 
-            if($data->getGanztag() != 0){
+            if($data->getGanztag() != 0 && $data->getDeleted() == false){
                 $summe += $data->getPreise()[$eltern->getEinkommen()];
             }
         }
@@ -385,7 +383,7 @@ class Kind
     private function getBetragforKindMittagessen(Kind $kind,Stammdaten $eltern){
         $summe = 0;
         foreach ($kind->getZeitblocks() as $data){
-            if($data->getGanztag() == 0 && $eltern->getBuk() == false){
+            if($data->getGanztag() == 0 && $eltern->getBuk() == false && $data->getDeleted() == false){
                 $summe += $data->getPreise()[$eltern->getEinkommen()];
             }
         }

@@ -297,6 +297,7 @@ class LoerrachWorkflowController extends AbstractController
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
         $schuljahr = $this->getSchuljahr($stadt);
         $req = array(
+            'deleted'=>false,
             'active'=>$schuljahr,
             'schule' => $schule,
             );
@@ -507,26 +508,36 @@ class LoerrachWorkflowController extends AbstractController
     private function getStammdatenFromCookie(Request $request)
     {
         if ($request->cookies->get('UserID')) {
+
+
             $cookie_ar = explode('.', $request->cookies->get('UserID'));
             $hash = hash("sha256", $cookie_ar[0] . $this->getParameter("secret"));
-
-            $cookie_kind = explode('.', $request->cookies->get('KindID'));
-            $hash_kind = hash("sha256", $cookie_kind[0] . $this->getParameter("secret"));
-
-            $cookie_seccode = explode('.', $request->cookies->get('SecID'));
-            $hash_seccode = hash("sha256", $cookie_seccode[0] . $this->getParameter("secret"));
-
             $search = array('uid'=>$cookie_ar[0]);
+            if ($request->cookies->get('KindID') && $request->cookies->get('SecID')  ) {
 
-            if ($this->getUser() && $this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE') && $hash_kind == $cookie_kind[1] && $hash_seccode == $cookie_seccode[1]){
-                $search['secCode'] = $cookie_seccode[0];
+
+                $cookie_kind = explode('.', $request->cookies->get('KindID'));
+                $hash_kind = hash("sha256", $cookie_kind[0] . $this->getParameter("secret"));
+
+                $cookie_seccode = explode('.', $request->cookies->get('SecID'));
+                $hash_seccode = hash("sha256", $cookie_seccode[0] . $this->getParameter("secret"));
+
+                if (
+                    $this->getUser()
+                    && $this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE')
+                    && $hash_kind == $cookie_kind[1]
+                    && $hash_seccode == $cookie_seccode[1]){
+                    $search['secCode'] = $cookie_seccode[0];
+                }
             }else{
                 $search['fin'] = false;
             }
+
             if ($hash == $cookie_ar[1]) {
                 $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy($search);
                 return $adresse;
             }
+
             return null;
         }
         return null;

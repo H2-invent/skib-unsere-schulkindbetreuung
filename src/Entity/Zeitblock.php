@@ -66,6 +66,11 @@ class Zeitblock
      */
     private $preise = [];
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $deleted;
+
     public function __construct()
     {
         $this->kind = new ArrayCollection();
@@ -264,5 +269,17 @@ class Zeitblock
                 return "keine Angabe";
                 break;
         }
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
+
+        return $this;
     }
 }
