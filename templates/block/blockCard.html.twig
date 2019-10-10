@@ -8,10 +8,23 @@
                 {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
               <b>{% for p in b.preise %}{{ p|number_format(2,',') }}€{% endfor %}</b>
             </div>
+            <p>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapse{{ b.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                {% trans %}Detail{% endtrans %}
+                </a>
+
+            </p>
+            <div class="collapse" id="collapse{{ b.id }}">
+                <div class="card card-body">
+                    {% trans %}Kinder{% endtrans %}: {{ b.kindwithFin|length }}
+                  </div>
+            </div>
             <div class="bmd-card-actions text-center">
                 {% if b.deleted == false %}
                 <a href="{{ path('block_schule_editBlocks',{'id':b.id}) }}" class="loadContent"> <i class="material-icons">edit</i></a>
-                <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
+                    <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
+                    <a href="{{ path('child_show',{'id':b.schule.organisation.id,'block':b.id}) }}"><i class="material-icons">info</i></a>
+
                 {% else %}
                     {% trans %}gelöscht/deaktiviert{% endtrans %}
                 {% endif %}
