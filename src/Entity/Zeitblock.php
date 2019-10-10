@@ -126,6 +126,21 @@ class Zeitblock
         return $this->kind;
     }
 
+    public function getKindwithFin()
+    {
+        $kind= array();
+        foreach($this->kind->toArray() as $data) {
+
+            dump($data);
+            if($data->getFin() == true) {
+                $kind[] = $data;
+            }
+        }
+
+            return $kind;
+    }
+
+
     public function addKind(Kind $kind): self
     {
         if (!$this->kind->contains($kind)) {
