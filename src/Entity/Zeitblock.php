@@ -131,7 +131,6 @@ class Zeitblock
         $kind= array();
         foreach($this->kind->toArray() as $data) {
 
-            dump($data);
             if($data->getFin() == true) {
                 $kind[] = $data;
             }
