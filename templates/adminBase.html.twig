@@ -609,6 +609,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Button trigger modal -->
+
+    <!-- Modal -->
+    <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalPreviewLabel">{% trans %}Bestätigung{% endtrans %}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %}Wollen Sie das Element wirkisch löschen?{% endtrans %}</button>
+                    <button type="button" class="btn btn-primary">{% trans %}Löschen{% endtrans %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+
     <footer class="main-footer">
         <div class="container-fluid">
             <div class="row">

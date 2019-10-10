@@ -118,8 +118,9 @@ class BlockController extends AbstractController
             throw new \Exception('Wrong Organisation');
 
         }
+        $block->setDeleted(true);
         $em = $this->getDoctrine()->getManager();
-        $em->remove($block);
+        $em->persist($block);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
         return new JsonResponse(array('error'=>0,'snack'=>$text));

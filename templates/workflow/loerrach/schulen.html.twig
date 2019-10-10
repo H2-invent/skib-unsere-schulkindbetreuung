@@ -1,8 +1,7 @@
 {% extends 'workflow/base.html.twig' %}
 {% block content %}
 
-    <h2 class="cover-heading, text-center">{% trans %}Bitte Schulen auswählen und Kinder hinzufügen{% endtrans %}</h2>
-    <p>{% trans %}Text2{% endtrans %}</p>
+    <h2 class="cover-heading, text-center">{% trans %}Schulen auswählen und Kinder hinzufügen{% endtrans %}</h2>
     <section class="dashboard-counts section-padding" id="schulenShow">
         <div class="container-fluid ">
             <div class="row">
@@ -26,6 +25,7 @@
                         {% for k in kinder[s.id] %}
                             <div class="card-body">
                                 {{ k.vorname }} {{ k.nachname }}
+                                <b><span class="price">{% if k.Betreungsblocks>=2 %}{{ k.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></b>
                                 <div class="btn-group">
                                     <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 

@@ -38,9 +38,10 @@ class ChildController extends AbstractController
         }
         $kinderU = array();
         foreach ($kinder as $data){
-            $kinderU[$data->getId()] = $data;
+            if ($data->getFin() == true){
+                $kinderU[$data->getId()] = $data;
+            }
         }
-
 
         return $this->render('child/child.html.twig', [
             'kinder' => $kinderU,
