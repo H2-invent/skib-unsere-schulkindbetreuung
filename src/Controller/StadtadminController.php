@@ -47,7 +47,7 @@ class StadtadminController extends AbstractController
     {
 
         $user = $this->manager->findUsers();
-        dump($user);
+
 
         return $this->render('administrator/user.html.twig', [
             'user' => $user,

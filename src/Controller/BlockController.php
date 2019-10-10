@@ -52,12 +52,12 @@ class BlockController extends AbstractController
         }
         $activity = $this->getDoctrine()->getRepository(Active::class)->findOneBy(array('id'=>$request->get('id'),'stadt'=>$schule->getStadt()));
         $blocks = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy(array('schule'=>$schule,'active'=>$activity),array('von'=>'asc'));
-        dump($blocks);
+
         $renderBlock = array();
         foreach ($blocks as $data){
             $renderBlock[$data->getWochentag()][]=$data;
         }
-        dump($renderBlock);
+
         return $this->render('block/blockContent.html.twig',array('blocks'=>$renderBlock,'year'=>$activity,'shool'=>$schule));
 
     }
@@ -81,10 +81,10 @@ class BlockController extends AbstractController
             'action' => $this->generateUrl('block_schule_newBlocks',array('year'=>$activity->getId(),'shool'=>$shool->getId(),'weekday'=>$block->getWochentag())),
             'anzahlPreise'=>$shool->getStadt()->getpreiskategorien()
         ]);
-          dump('test  ');
+
         $form->remove('save');
         $form->handleRequest($request);
-        dump($form);
+  
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $block = $form->getData();
