@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Material Design Bootstrap</title>
+    <title>Unsere Schulkindbetreuung</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Bootstrap core CSS -->
@@ -22,7 +22,7 @@
         body,
         header,
         .view {
-            height: 90%;
+            height: 75%;
         }
 
         @media (max-width: 740px) {
@@ -80,30 +80,22 @@
                     <a class="nav-link" href="#">Start</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" target="_blank">Free download</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="https://h2-invent.com" target="_blank">H2 invent</a>
                 </li>
             </ul>
 
             <!-- Right -->
             <ul class="navbar-nav nav-flex-icons">
-                <li class="nav-item">
-                    <a href="https://www.facebook.com/mdbootstrap" class="nav-link" target="_blank">
-                        <i class="fab fa-facebook-f"></i>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Deutsch
+                        <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="https://twitter.com/MDBootstrap" class="nav-link" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                    </a>
+                    <a class="nav-link" href="#" target="_blank">English</a>
                 </li>
                 <li class="nav-item">
-                    <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="nav-link border border-light rounded"
-                       target="_blank">
-                        <i class="fab fa-github mr-2"></i>MDB GitHub
-                    </a>
+                    <a class="nav-link" href="#" target="_blank">Francais</a>
                 </li>
             </ul>
 
@@ -126,14 +118,12 @@
             <div class="row wow fadeIn">
 
                 <!--Grid column-->
-                <div class="col-md-6 mb-4 white-text text-center text-md-left">
+                <div class="col-md-6 mb-4 white-text text-centerm text-md-left">
 
                     <h1 class="display-4 font-weight-bold">{{ stadt.name }}</h1>
 
-                    <hr class="hr-light">
-
                     <p>
-                        <strong>{{ stadt.infoText|nl2br }}</strong>
+                        <strong id="start">{{ stadt.infoText|nl2br }}</strong>
                     </p>
 
 
