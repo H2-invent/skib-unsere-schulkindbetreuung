@@ -33,14 +33,14 @@
               if (data.error == 0) {
                   if (typeof data.next != "undefined"){
                       $('#loadContentModal').load(data.next);
-                      $('#schulenShow') .load('{{ path('loerrach_workflow_schulen') }} #schulenShow');
+
                   }else {
                       $('#loadContentModal').modal ('hide');
                   }
               }
           }
       });
-  })  
+  })
 </script>
 
 </div>
