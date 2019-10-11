@@ -102,6 +102,9 @@
             })
         })
 
+        $("#loadContentModal").on('hide.bs.modal', function(){
+        $('#schulenShow') .load('{{ path('loerrach_workflow_schulen') }} #schulenShow');
+        });
     </script>
 
 {% endblock %}
