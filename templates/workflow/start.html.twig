@@ -120,18 +120,18 @@
                     <h1 class="display-4 font-weight-bold">{{ stadt.name }}</h1>
 
                     <hr class="hr-light">
-                    <p class="lead">{% trans with {"%name%":stadt.name} %}Melden Sie hier ihre Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
+                    <p class="lead">{% trans with {"%name%":stadt.name} %}Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
                     <a href="{{ url }}" class="btn btn-primary btn-lg">
                     {% if app.request.cookies.has('SecID') %}
                     {% trans %}Kind bearbeiten{% endtrans %}
                     {% else %}
-                    {% trans %}Hier meine Kinder anmelden{% endtrans %}
+                    {% trans %}Hier Kind/Kinder anmelden{% endtrans %}
                     {% endif %}
                     </a>
                 </div>
 
                 <div class="col-md-6 mb-4 white-text text-center text-md-left">
-                    <p>
+                    <p class="lead">
                         <strong>{{ stadt.infoText|nl2br }}</strong>
                     </p>
                 </div>
