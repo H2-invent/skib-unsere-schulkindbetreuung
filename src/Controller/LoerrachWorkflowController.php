@@ -138,7 +138,7 @@ class LoerrachWorkflowController extends AbstractController
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
 
         // Load all schools from the city into the controller as $schulen
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt));
+        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt,'deleted'=>false));
 
         $schuljahr = $this->getSchuljahr($stadt);
         if ($schuljahr == null){
