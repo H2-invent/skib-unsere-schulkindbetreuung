@@ -22,7 +22,7 @@ class BlockController extends AbstractController
     public function showSchulen(Request $request)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation'=>$organisation));
+        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation'=>$organisation,'deleted'=>false));
         if($organisation != $this->getUser()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
         }
@@ -84,7 +84,7 @@ class BlockController extends AbstractController
 
         $form->remove('save');
         $form->handleRequest($request);
-  
+
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $block = $form->getData();
