@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Die Schulkindbetreuung von {{stadt.name}}</title>
+    <title>Unsere Schulkindbetreuung</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Bootstrap core CSS -->
@@ -80,18 +80,15 @@
                     <a class="nav-link" href="#">Start</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" target="_blank">Free download</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://h2-invent.com" target="_blank">H2 invent</a>
+                    <a class="nav-link" href="https://h2-invent.com">H2 invent</a>
                 </li>
             </ul>
 
             <!-- Right -->
             <ul class="navbar-nav nav-flex-icons">
                 <li class="nav-item">
-                    <a href="#" class="nav-link border border-light rounded"
-                       target="_blank">{{stadt.name}}
+                    <a href="{{ path('dashboard') }}" class="nav-link border border-light rounded"
+                       target="_blank">Login
                     </a>
                 </li>
             </ul>
@@ -117,23 +114,11 @@
                 <!--Grid column-->
                 <div class="col-md-6 mb-4 white-text text-center text-md-left">
 
-                    <h1 class="display-4 font-weight-bold">{{ stadt.name }}</h1>
+                    <h1 class="display-4 font-weight-bold">Unsere Schulkindbetreuung</h1>
 
-                    <hr class="hr-light">
-                    <p class="lead">{% trans with {"%name%":stadt.name} %}Melden Sie hier ihre Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
-                    <a href="{{ url }}" class="btn btn-primary btn-lg">
-                    {% if app.request.cookies.has('SecID') %}
-                    {% trans %}Kind bearbeiten{% endtrans %}
-                    {% else %}
-                    {% trans %}Hier meine Kinder anmelden{% endtrans %}
-                    {% endif %}
-                    </a>
-                </div>
+                    </div>
 
                 <div class="col-md-6 mb-4 white-text text-center text-md-left">
-                    <p>
-                        <strong>{{ stadt.infoText|nl2br }}</strong>
-                    </p>
                 </div>
             </div>
         </div>
