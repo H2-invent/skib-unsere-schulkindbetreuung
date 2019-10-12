@@ -1,0 +1,71 @@
+<style>
+    td {
+        border-bottom: 1px solid black;
+        font-weight: bold;
+        margin: 10px;
+    }
+
+    tr {
+        margin: 5px;
+    }
+</style>
+        <h2>{% trans %}Zusammenfassung{% endtrans %}</h2>
+
+
+    <h3>{% trans %}Daten der Eltern{% endtrans %}</h3>
+
+
+        <table cellpadding="5px" >
+            <tbody>
+            <tr>
+                <td>{% trans %} Name der Eltern {% endtrans %}</td>
+                <td>{{ eltern.vorname }} {{ eltern.name }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} Adresse der Eltern {% endtrans %}</td>
+                <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} Netto Familieneinkommen pro Monat {% endtrans %}</td>
+                <td>{{ einkommen[eltern.einkommen] }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} Kinder im Kinderganrten {% endtrans %}</td>
+                <td>{{ eltern.kinderImKiga?"Ja":'Nein'|trans }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} BUT {% endtrans %}</td>
+                <td>{{ eltern.buk?"Ja":'Nein'|trans }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} Berufliche Situation der Eltern {% endtrans %}</td>
+                <td>{{ eltern.beruflicheSituation }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} Notfallkontakt der Eltern {% endtrans %}</td>
+                <td>{{ eltern.notfallkontakt }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} Bankverbindung für Lastschrift {% endtrans %}</td>
+                <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}<br/>{{ eltern.sepaInfo?"Ja ich Erteile der Organisation dein SEPA Lastschrift Mandant":""|trans }} </td>
+            </tr>
+            <tr>
+                <td>{% trans %} Zum Newsletter angemeldet {% endtrans %}</td>
+                <td>{{ eltern.newsletter?"Ja":'Nein'|trans }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} E-Mail Adresse {% endtrans %}</td>
+                <td>{{ eltern.email }}</td>
+            </tr>
+            {% if eltern.secCode is not null %}
+            <tr>
+                <td>{% trans %}Sicherheitscode (Dieser Code wird bei jeder Kommunikation mit dem Träger abgefragt){% endtrans %}</td>
+                <td>{{ eltern.secCode }}</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+
+
+        <!-- Daten der Kinder in einer for Schleife -->
