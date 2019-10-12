@@ -39,9 +39,9 @@ class ChildChangeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump('test');
+
             $input = $form->getData();
-            dump($input);
+
             if ($input['seccode'] == $adresse->getSecCode()){
 
                 $cookie = new Cookie ('KindID', $kind->getId() . "." . hash("sha256", $kind->getId() . $this->getParameter("secret")));
