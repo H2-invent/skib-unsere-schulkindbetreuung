@@ -471,8 +471,7 @@ class LoerrachWorkflowController extends AbstractController
         }
         $mailBetreff = $translator->trans('Anmeldebestätigung der Schulkindbetreuung für ').$adresse->getVorname(). ' '. $adresse->getName();
         $mailContent = $this->renderView('email/anmeldebestatigung.html.twig',array('eltern'=>$adresse,'kinder'=>$kind,'stadt'=>$stadt));
-
-        $mailer->sendEmail( 'info@h2-invent.com', $adresse->getEmail(), 'Test', $mailContent,$attachment);
+        $mailer->sendEmail( 'info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent,$attachment);
 
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
