@@ -563,7 +563,7 @@ class LoerrachWorkflowController extends AbstractController
         $stadt = $elter->getKinds()[0]->getSchule()->getStadt();
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern'=>$elter,'id'=>$request->get(
             'id')));
-        $fileName = 'Test Pdf';
+        $fileName = $kind->getVorname().'_'.$kind->getNachname().'_'.$kind->getSchule()->getName().'.pdf';
 
         return  $this->generetePdf($kind, $elter, $stadt, $tcpdf, $fileName);
 
@@ -709,7 +709,7 @@ class LoerrachWorkflowController extends AbstractController
         );
 
 
-        return  $pdf->Output($fileName.".pdf", 'I'); // This will output the PDF as a Download
+        return  $pdf->Output($fileName.".pdf", 'D'); // This will output the PDF as a Download
     }
 
 }
