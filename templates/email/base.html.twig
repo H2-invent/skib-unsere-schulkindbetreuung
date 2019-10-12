@@ -181,13 +181,15 @@
                                                     <td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
                                                     <td>
                                                         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="24" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+                                            {% block content %}
+                                                <div class="h4" style="color:#2c2c2c; font-family:Arial,sans-serif; font-size:18px; line-height:24px; text-align:left">{% if capital is defined %}{{ capital }}{% endif %}</div>
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
-                                                        <div class="h4" style="color:#2c2c2c; font-family:Arial,sans-serif; font-size:18px; line-height:24px; text-align:left">{% if capital is defined %}{{ capital }}{% endif %}</div>
-                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
+                                                <div class="text2" style="color:#777777; font-family:Arial,sans-serif; font-size:12px; line-height:20px; text-align:left">{% if body1 is defined %}{{ body1 }}{% endif %}</div>
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="14" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
-                                                        <div class="text2" style="color:#777777; font-family:Arial,sans-serif; font-size:12px; line-height:20px; text-align:left">{% if body1 is defined %}{{ body1 }}{% endif %}</div>
-                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="14" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+                                            {% endblock %}
 
 
                                                         <!-- Butoon -->

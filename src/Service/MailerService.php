@@ -21,30 +21,21 @@ class MailerService
         $this->templating = $templating;
     }
 
-    public function sendEmail($capital1, $body1, $capital2, $body2, $from, $to, $betreff)
+    public function sendEmail( $from, $to, $betreff,$content,$attachment = array())
     {
 
 
         $message = (new \Swift_Message($betreff))
             ->setFrom($from)
             ->setTo($to)
+
             ->setBody(
-                $this->templating->render(
-                // templates/hello/email.txt.twig
-                    'email/base.html.twig',
-                    [
-                        'capital1' => $capital1,
-                        'body1'=>$body1,
-                        'capital2'=>$capital2,
-                        'body2'=>$body2
-                    ]
-                ),
+               $content,
                 'text/html'
             );
-
-
-
-
+        foreach ($attachment as $data){
+            $message->attach($data);
+        }
 
         return   $this->mailer->send($message);
     }
