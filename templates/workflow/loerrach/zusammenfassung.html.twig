@@ -67,7 +67,8 @@
                             {{ k.vorname }} {{ k.nachname }} <br/><small>{% if k.betreungsblocks < 2 %}
                                     <div class="alert alert-danger" role="alert">
                                     {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} </div>
-                                {% else %}{% trans %}Summe der gebuchter Blöcke: {% endtrans %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %}</small>
+                            {% else %}{% trans %}Summe der gebuchter Blöcke: {% endtrans %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %}<a href="{{ path('loerrach_workflow_print_pdf',{'id':k.id}) }}"><i class="fa fa-download"></i></a>
+                            </small>
 
                         </a>
                     </h5>

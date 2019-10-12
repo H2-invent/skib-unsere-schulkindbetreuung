@@ -555,7 +555,7 @@ class LoerrachWorkflowController extends AbstractController
         }
     }
     /**
-     * @Route("/loerrach/berechnung/printPdf",name="loerrach_workflow_preis_einKind",methods={"GET"})
+     * @Route("/loerrach/berechnung/printPdf",name="loerrach_workflow_print_pdf",methods={"GET"})
      */
     public function prinPdf(Request $request, ValidatorInterface $validator,TranslatorInterface $translator, TCPDFController $tcpdf)
     {

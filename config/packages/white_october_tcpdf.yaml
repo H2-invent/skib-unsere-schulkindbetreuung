@@ -1,2 +1,2 @@
 white_october_tcpdf:
-    class: 'App\service\pdfFooter'
+    class: 'App\Service\pdfFooter'
