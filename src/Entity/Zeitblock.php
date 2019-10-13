@@ -290,10 +290,37 @@ class Zeitblock
         return $this->deleted;
     }
 
+
     public function setDeleted(bool $deleted): self
     {
         $this->deleted = $deleted;
 
         return $this;
+    }
+    public function getFirstDate() : \DateTimeInterface{
+        $date = clone ($this->getActive()->getVon());
+        switch ($this->wochentag){
+            case 0:
+                return $date->modify('next mon');
+                break;
+            case 1:
+                 return $date->modify('next tue');
+                break;
+            case 2:
+                return $date->modify('next wed');
+                break;
+            case 3:
+                return $date->modify('next thu');
+                break;
+            case 4:
+                return $date->modify('next fri');
+                break;
+            case 5:
+                return $date->modify('next sat');
+                break;
+            case 6:
+                return $date->modify('next sun');
+                break;
+        }
     }
 }

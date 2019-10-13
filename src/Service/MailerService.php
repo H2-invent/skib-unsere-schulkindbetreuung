@@ -35,6 +35,7 @@ class MailerService
             );
         foreach ($attachment as $data){
             $message->attach($data);
+
         }
 
         return   $this->mailer->send($message);

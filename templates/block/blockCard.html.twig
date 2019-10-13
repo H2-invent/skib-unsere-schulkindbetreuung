@@ -3,10 +3,10 @@
         <div class="card">
             <div class="card-body text-center {% if b.deleted == true %}bg-danger{% endif %}">
                 <p>
-                    {{ b.ganztagString }}
+                    {{ b.ganztagString }}{% if b.ganztag == 0 %}<i class="material-icons">restaurant</i> {% endif %}
                 </p>
                 {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
-              <b>{% for p in b.preise %}{{ p|number_format(2,',') }}€{% endfor %}</b>
+
             </div>
             <p>
                 <a class="btn btn-primary" data-toggle="collapse" href="#collapse{{ b.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -16,7 +16,13 @@
             </p>
             <div class="collapse" id="collapse{{ b.id }}">
                 <div class="card card-body">
-                    {% trans %}Kinder{% endtrans %}: {{ b.kindwithFin|length }}
+                    <p>{% trans %}Kinder{% endtrans %}: {{ b.kindwithFin|length }}</p>
+                    <p>{% trans %}Preise{% endtrans %}:</p>
+                    <ul class="list-group">
+                        {% for p in b.preise %}
+                            <li class="list-group-item">{{ p|number_format(2,',') }}€</li>{% endfor %}
+                    </ul>
+
                   </div>
             </div>
             <div class="bmd-card-actions text-center">
