@@ -35,6 +35,7 @@ class LoerrachKind extends AbstractType
     {
 
 
+        $today = intval((new \DateTime())->format('Y'));
 
         $builder
             ->add('vorname', TextType::class,['label'=>'Vorname','translation_domain' => 'form'])
@@ -53,7 +54,7 @@ class LoerrachKind extends AbstractType
                     'Ganztagsbetreuung' => 1,
                     'Halbtagsbetreuung' => 2,
                 ],'label'=>'Art der Betreuung','translation_domain' => 'form'])
-            ->add('geburtstag', BirthdayType::class,['label'=>'Geburtstag','translation_domain' => 'form'])
+            ->add('geburtstag', BirthdayType::class,['years'=>range($today-20,$today,1),'label'=>'Geburtstag','translation_domain' => 'form'])
             ->add('allergie', TextType::class,['required'=>false,'label'=>'Allergien','translation_domain' => 'form'])
             ->add('medikamente', TextType::class,['required'=>false,'label'=>'Medikamente','translation_domain' => 'form'])
             ->add('bemerkung', TextareaType::class,['required'=>false,'label'=>'Bemerkung','translation_domain' => 'form','attr'=>['rows'=>6]]);
