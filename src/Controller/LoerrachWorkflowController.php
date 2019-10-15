@@ -121,7 +121,8 @@ class LoerrachWorkflowController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($adresse);
                 $em->flush();
-                $response = $this->redirectToRoute('loerrach_workflow_schulen');
+                $response= $this->redirectToRoute('workflow_confirm_Email',array('redirect'=>$this->generateUrl('loerrach_workflow_schulen'),'uid'=>$adresse->getUid(),'stadt'=>$stadt->getId()));
+                //$response = $this->redirectToRoute('loerrach_workflow_schulen');
                 $response->headers->setCookie($cookie);
                 return $response;
             } else {
