@@ -15,7 +15,47 @@
                 </ul>
 
                 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-                {{ form_widget(form) }}
+
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+
+                {{ form_label(form.vorname) }}
+                {{ form_widget(form.vorname) }}
+
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+
+                {{ form_label(form.strasse) }}
+                {{ form_widget(form.strasse) }}
+
+                {{ form_label(form.adresszusatz) }}
+                {{ form_widget(form.adresszusatz) }}
+
+                {{ form_label(form.plz) }}
+                {{ form_widget(form.plz) }}
+
+                {{ form_label(form.stadt) }}
+                {{ form_widget(form.stadt) }}
+
+                <div>{{ form_label(form.einkommen) }}
+                    <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Information" data-content="{% trans %}Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, unternahlt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).{% endtrans %}"></i>
+                </div>
+                {{ form_widget(form.einkommen) }}
+
+                {{ form_label(form.beruflicheSituation) }}
+                {{ form_widget(form.beruflicheSituation) }}
+
+                {{ form_label(form.kinderImKiga) }}
+                {{ form_widget(form.kinderImKiga) }}
+                <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Information" data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf den Preis des ältesten Kindes{% endtrans %}"></i>
+
+                <div>{{ form_label(form.buk) }}
+                    <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Information" data-content="{% trans %}Bezieher/innen von ALG II bzw. Grundsicherung können nach dem Bildungs- und Teilhabepaket (BUT) einen Zuschuss erhalten. Dieser muss im Voraus beim Jobcenter/Sozailamt beantragt werden. Der Eigenanteil für diesen Personenkreis beträgt 1,00 € pro Mahlzeit.{% endtrans %}"></i>
+                </div>
+                {{ form_widget(form.buk) }}
+
+                {{ form_rest(form) }}
+                <i class="far fa-question-circle"></i>
                 {{ form_end(form) }}
             </div>
         </div>

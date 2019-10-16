@@ -92,7 +92,7 @@ class LoerrachWorkflowController extends AbstractController
         }
 
         $form = $this->createFormBuilder($adresse)
-            ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
+            ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form','help'=>'Das ist eine Hilfe für diese Frage im Form'])
             ->add('name', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
             ->add('strasse', TextType::class, ['label' => 'Straße', 'translation_domain' => 'form'])
             ->add('adresszusatz', TextType::class, ['required'=>false,'label' => 'Adresszusatz', 'translation_domain' => 'form'])
