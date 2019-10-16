@@ -8,6 +8,7 @@ use App\Entity\Schule;
 use App\Entity\Zeitblock;
 use App\Form\Type\BlockType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -83,6 +84,7 @@ class BlockController extends AbstractController
         ]);
 
         $form->remove('save');
+
         $form->handleRequest($request);
 
         $errors = array();
@@ -144,6 +146,8 @@ class BlockController extends AbstractController
 
         $form->remove('save');
         $form->remove('preise');
+        $form->remove('min');
+        $form->remove('max');
         $form->handleRequest($request);
 
         $errors = array();

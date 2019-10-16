@@ -127,10 +127,16 @@ class Kind
      */
     private $fotos = false;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\zeitblock", inversedBy="kinderBeworben")
+     */
+    private $beworben;
+
     public function __construct()
     {
         $this->zeitblocks = new ArrayCollection();
         $this->abwesends = new ArrayCollection();
+        $this->beworben = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -534,6 +540,32 @@ class Kind
     public function setFotos(bool $fotos): self
     {
         $this->fotos = $fotos;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|zeitblock[]
+     */
+    public function getBeworben(): Collection
+    {
+        return $this->beworben;
+    }
+
+    public function addBeworben(zeitblock $beworben): self
+    {
+        if (!$this->beworben->contains($beworben)) {
+            $this->beworben[] = $beworben;
+        }
+
+        return $this;
+    }
+
+    public function removeBeworben(zeitblock $beworben): self
+    {
+        if ($this->beworben->contains($beworben)) {
+            $this->beworben->removeElement($beworben);
+        }
 
         return $this;
     }
