@@ -148,6 +148,16 @@ class Stammdaten
      */
     private $confirmationCode;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $confirmEmailSend = false;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $resendEmail;
+
     public function __construct()
     {
         $this->kinds = new ArrayCollection();
@@ -485,6 +495,30 @@ class Stammdaten
     public function setConfirmationCode(string $confirmationCode): self
     {
         $this->confirmationCode = $confirmationCode;
+
+        return $this;
+    }
+
+    public function getConfirmEmailSend(): ?bool
+    {
+        return $this->confirmEmailSend;
+    }
+
+    public function setConfirmEmailSend(bool $confirmEmailSend): self
+    {
+        $this->confirmEmailSend = $confirmEmailSend;
+
+        return $this;
+    }
+
+    public function getResendEmail(): ?string
+    {
+        return $this->resendEmail;
+    }
+
+    public function setResendEmail(?string $resendEmail): self
+    {
+        $this->resendEmail = $resendEmail;
 
         return $this;
     }

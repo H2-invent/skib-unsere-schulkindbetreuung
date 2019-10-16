@@ -62,44 +62,72 @@ class workflowController  extends AbstractController
      */
     public function confirmAction(Request $request, MailerService $mailer,TranslatorInterface $translator)
     {
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid'=>$request->get('uid')));
+        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt'));
-        if($stammdaten->getEmailConfirmed()){
-           return $this->redirect($request->get('redirect'));
-        }else{
-            dump('test');
-            if($stammdaten->getConfirmationCode() == null){
+        if ($stammdaten->getEmailConfirmed()) {
+            return $this->redirect($request->get('redirect'));
+        } else {
+
+            if ($stammdaten->getConfirmationCode() == null) {
                 $stammdaten->setConfirmationCode(substr(str_shuffle(MD5(microtime())), 0, 6));
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($stammdaten);
                 $em->flush();
             }
-            $formData = array('confirmationCode'=>'',
-                'redirectUrl'=>$request->get('redirect'));
-              $form = $this->createFormBuilder($formData)
+            $formData = array('confirmationCode' => '',
+                'redirectUrl' => $request->get('redirect'));
+            $form = $this->createFormBuilder($formData)
                 ->add('confirmationCode', TextType::class, ['label' => 'Bestätigungscode', 'translation_domain' => 'form'])
-                ->add('redirectUrl',HiddenType::class)
-                ->add('submit', SubmitType::class, ['attr'=> array('class'=> 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form'])
+                ->add('redirectUrl', HiddenType::class)
+                ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form'])
                 ->getForm();
             $form->handleRequest($request);
-            dump($formData);
+
             if ($form->isSubmitted() && $form->isValid()) {
-                $formData= $form->getData();
-                if($formData['confirmationCode'] == $stammdaten->getConfirmationCode()){
+                $formData = $form->getData();
+                if ($formData['confirmationCode'] == $stammdaten->getConfirmationCode()) {
                     $stammdaten->setEmailConfirmed(true);
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($stammdaten);
                     $em->flush();
                     return $this->redirect($formData['redirectUrl']);
                 }
-               return $this->redirectToRoute('workflow_confirm_Email',array('stadt'=>$stadt->getId(),'uid'=>$stammdaten->getUid(),'redirect'=>$formData['redirectUrl'],'snack'=>$translator->trans('Bestätigungscode fehlerhaft')));
+                return $this->redirectToRoute('workflow_confirm_Email', array('stadt' => $stadt->getId(), 'uid' => $stammdaten->getUid(), 'redirect' => $formData['redirectUrl'], 'snack' => $translator->trans('Bestätigungscode fehlerhaft')));
             }
             $mailBetreff = $translator->trans('Bestätigungscode für die Schulbetreuungsanmeldung ');
-            $mailContent = $this->renderView('email/bestaetigungscode.html.twig',array('eltern'=>$stammdaten));
-            $mailer->sendEmail( 'info@h2-invent.com', $stammdaten->getEmail(), $mailBetreff, $mailContent);
-            $text= $translator->trans('Wir haben Ihnen einen Bestätigungscode an Ihre Emailadresse gesandt. Bitte geben Sie diesen Code aus der Email hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen.');
+            $mailContent = $this->renderView('email/bestaetigungscode.html.twig', array('eltern' => $stammdaten));
+            if ($stammdaten->getConfirmEmailSend() == false) {
+                $mailer->sendEmail('info@h2-invent.com', $stammdaten->getEmail(), $mailBetreff, $mailContent);
+                $stammdaten->setConfirmEmailSend(true);
+                $stammdaten->setResendEmail(md5(uniqid()));
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($stammdaten);
+                $em->flush();
+            }
 
-            return $this->render('workflow/form.html.twig',array('form'=>$form->createView(),'titel'=>$mailBetreff,'text'=>$text,'stadt'=>$stadt));
+            $text = $translator->trans('Wir haben Ihnen einen Bestätigungscode an Ihre Emailadresse gesandt. Bitte geben Sie diesen Code aus der Email hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen.');
+
+            return $this->render('workflow/formConfirmation.html.twig', array('form' => $form->createView(), 'titel' => $mailBetreff, 'text' => $text, 'stadt' => $stadt, 'stammdaten'=>$stammdaten,'redirect'=>$request->get('redirect')));
         }
     }
+        /**
+         * @Route("/resetMail",name="workflow_reset_Email",methods={"GET","POST"})
+         */
+        public function resetAction(Request $request, MailerService $mailer,TranslatorInterface $translator)
+    {
+        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt'));
+      $text = $translator->trans('Die Email konnte nicht erneut vesandt werden');
+       if($request->get('resendEmail') == $stammdaten->getResendEmail()){
+           $stammdaten ->setConfirmEmailSend(false);
+           $em = $this->getDoctrine()->getManager();
+           $em->persist($stammdaten);
+           $em->flush();
+           $text = $translator->trans('Die Email wurde erfolgreich versandt');
+       }
+
+        return $this->redirectToRoute('workflow_confirm_Email', array('stadt' => $stadt->getId(),'snack'=>$text, 'uid' => $stammdaten->getUid(), 'redirect' => $request->get('redirect')));
+    }
+
 }
