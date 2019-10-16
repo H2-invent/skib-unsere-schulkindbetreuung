@@ -139,6 +139,7 @@ class Stammdaten
     private $email;
 
     /**
+
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $alleinerziehend;
@@ -152,6 +153,26 @@ class Stammdaten
      * @ORM\Column(type="text")
      */
     private $notfallName;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $emailConfirmed = false;
+
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     */
+    private $confirmationCode;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $confirmEmailSend = false;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $resendEmail;
+
 
     public function __construct()
     {
@@ -470,6 +491,7 @@ class Stammdaten
         return $this;
     }
 
+
     public function getAlleinerziehend(): ?bool
     {
         return $this->alleinerziehend;
@@ -478,9 +500,18 @@ class Stammdaten
     public function setAlleinerziehend(?bool $alleinerziehend): self
     {
         $this->alleinerziehend = $alleinerziehend;
+    }
+    public function getEmailConfirmed(): ?bool
+    {
+        return $this->emailConfirmed;
+    }
 
+    public function setEmailConfirmed(bool $emailConfirmed): self
+    {
+        $this->emailConfirmed = $emailConfirmed;
         return $this;
     }
+
 
     public function getAbholberechtigter(): ?string
     {
@@ -490,9 +521,21 @@ class Stammdaten
     public function setAbholberechtigter(?string $abholberechtigter): self
     {
         $this->abholberechtigter = $abholberechtigter;
+        return  $this
+    }
+    public function getConfirmationCode(): ?string
+    {
+        return $this->confirmationCode;
+    }
+
+    public function setConfirmationCode(string $confirmationCode): self
+    {
+        $this->confirmationCode = $confirmationCode;
+
 
         return $this;
     }
+
 
     public function getNotfallName(): ?string
     {
@@ -502,6 +545,30 @@ class Stammdaten
     public function setNotfallName(string $notfallName): self
     {
         $this->notfallName = $notfallName;
+        return $this;
+    }
+
+    public function getConfirmEmailSend(): ?bool
+    {
+        return $this->confirmEmailSend;
+    }
+
+    public function setConfirmEmailSend(bool $confirmEmailSend): self
+    {
+        $this->confirmEmailSend = $confirmEmailSend;
+
+        return $this;
+    }
+
+    public function getResendEmail(): ?string
+    {
+        return $this->resendEmail;
+    }
+
+    public function setResendEmail(?string $resendEmail): self
+    {
+        $this->resendEmail = $resendEmail;
+
 
         return $this;
     }
