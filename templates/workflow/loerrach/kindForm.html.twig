@@ -29,7 +29,8 @@
           method: 'POST',
           data: $form.serialize(),
           success:function (data) {
-              $.snackbar({content: data.snack});
+              Snackbar.show({text: data.snack});
+
               if (data.error == 0) {
                   if (typeof data.next != "undefined"){
                       $('#loadContentModal').load(data.next);
