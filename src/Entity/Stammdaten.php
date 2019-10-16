@@ -521,7 +521,7 @@ class Stammdaten
     public function setAbholberechtigter(?string $abholberechtigter): self
     {
         $this->abholberechtigter = $abholberechtigter;
-        return  $this
+        return  $this;
     }
     public function getConfirmationCode(): ?string
     {
