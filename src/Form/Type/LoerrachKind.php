@@ -58,7 +58,7 @@ class LoerrachKind extends AbstractType
             ->add('geburtstag', BirthdayType::class,['years'=>range($today-20,$today,1),'label'=>'Geburtstag','translation_domain' => 'form'])
             ->add('allergie', TextType::class,['required'=>false,'label'=>'Allergien','translation_domain' => 'form'])
             ->add('medikamente', TextType::class,['required'=>false,'label'=>'Medikamente','translation_domain' => 'form'])
-            ->add('gluten', CheckboxType::class,['required'=>false,'label'=>'Guten intolerant','translation_domain' => 'form'])
+            ->add('gluten', CheckboxType::class,['required'=>false,'label'=>'Gluten intolerant','translation_domain' => 'form'])
             ->add('laktose', CheckboxType::class,['required'=>false,'label'=>'Laktose intolerant','translation_domain' => 'form'])
             ->add('schweinefleisch', CheckboxType::class,['required'=>false,'label'=>'Kein Schweinefleich','translation_domain' => 'form'])
             ->add('vegetarisch', CheckboxType::class,['required'=>false,'label'=>'Vegetarisch','translation_domain' => 'form'])
