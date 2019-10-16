@@ -45,14 +45,25 @@
                 {{ form_label(form.beruflicheSituation) }}
                 {{ form_widget(form.beruflicheSituation) }}
 
-                {{ form_label(form.kinderImKiga) }}
-                {{ form_widget(form.kinderImKiga) }}
-                <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Information" data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf den Preis des ältesten Kindes{% endtrans %}"></i>
-
-                <div>{{ form_label(form.buk) }}
-                    <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Information" data-content="{% trans %}Bezieher/innen von ALG II bzw. Grundsicherung können nach dem Bildungs- und Teilhabepaket (BUT) einen Zuschuss erhalten. Dieser muss im Voraus beim Jobcenter/Sozailamt beantragt werden. Der Eigenanteil für diesen Personenkreis beträgt 1,00 € pro Mahlzeit.{% endtrans %}"></i>
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_widget(form.kinderImKiga) }}
+                        {{ form_label(form.kinderImKiga) }}
+                    </div>
+                    <div class="col-sm-1">
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Information" data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf den Preis des ältesten Kindes{% endtrans %}"></i>
+                    </div>
                 </div>
-                {{ form_widget(form.buk) }}
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_widget(form.buk) }}
+                        {{ form_label(form.buk) }}
+                    </div>
+                    <div class="col-sm-1">
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Information" data-content="{% trans %}Bezieher/innen von ALG II bzw. Grundsicherung können nach dem Bildungs- und Teilhabepaket (BUT) einen Zuschuss erhalten. Dieser muss im Voraus beim Jobcenter/Sozailamt beantragt werden. Der Eigenanteil für diesen Personenkreis beträgt 1,00 € pro Mahlzeit.{% endtrans %}"></i>
+
+                    </div>
+                </div>
 
                 {{ form_rest(form) }}
                 <i class="far fa-question-circle"></i>
