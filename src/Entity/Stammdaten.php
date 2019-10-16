@@ -138,6 +138,21 @@ class Stammdaten
      */
     private $email;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $alleinerziehend;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $abholberechtigter;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $notfallName;
+
     public function __construct()
     {
         $this->kinds = new ArrayCollection();
@@ -451,6 +466,42 @@ class Stammdaten
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getAlleinerziehend(): ?bool
+    {
+        return $this->alleinerziehend;
+    }
+
+    public function setAlleinerziehend(?bool $alleinerziehend): self
+    {
+        $this->alleinerziehend = $alleinerziehend;
+
+        return $this;
+    }
+
+    public function getAbholberechtigter(): ?string
+    {
+        return $this->abholberechtigter;
+    }
+
+    public function setAbholberechtigter(?string $abholberechtigter): self
+    {
+        $this->abholberechtigter = $abholberechtigter;
+
+        return $this;
+    }
+
+    public function getNotfallName(): ?string
+    {
+        return $this->notfallName;
+    }
+
+    public function setNotfallName(string $notfallName): self
+    {
+        $this->notfallName = $notfallName;
 
         return $this;
     }

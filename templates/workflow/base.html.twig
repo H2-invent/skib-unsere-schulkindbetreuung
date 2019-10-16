@@ -15,7 +15,7 @@
     <!-- Your custom styles (optional) -->
     <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
-    <link href="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.css" rel="stylesheet">
+    <link href="{{asset('frontpage/css/snackbar.css')}}" rel="stylesheet">
 
     <style type="text/css">
         html,
@@ -205,7 +205,7 @@
 <script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
-<script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
+<script src="{{asset('frontpage/js/snackbar.js')}}"></script>
 <script>
     $(document).on('click','.loadContent',function (e) {
         e.preventDefault();
@@ -242,6 +242,19 @@
             $('body').bsgdprcookies(settings, 'reinit');
         });
     });
+
+    </script>
+<script>
+
+    {% if app.request.query.get("snack") is defined and app.request.query.get("snack") is not null %}
+    var options =  {
+        text: "{{ app.request.query.get("snack") }}", // text of the snackbar
+        duration: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+        pos: 'bottom-center',
+    };
+    Snackbar.show(options);
+    {% endif %}
+
 </script>
 {% block jquery %}{% endblock %}
 
