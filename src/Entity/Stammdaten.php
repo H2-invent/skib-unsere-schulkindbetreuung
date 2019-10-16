@@ -139,6 +139,21 @@ class Stammdaten
     private $email;
 
     /**
+
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $alleinerziehend;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $abholberechtigter;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $notfallName;
+    /**
      * @ORM\Column(type="boolean")
      */
     private $emailConfirmed = false;
@@ -157,6 +172,7 @@ class Stammdaten
      * @ORM\Column(type="text", nullable=true)
      */
     private $resendEmail;
+
 
     public function __construct()
     {
@@ -475,6 +491,16 @@ class Stammdaten
         return $this;
     }
 
+
+    public function getAlleinerziehend(): ?bool
+    {
+        return $this->alleinerziehend;
+    }
+
+    public function setAlleinerziehend(?bool $alleinerziehend): self
+    {
+        $this->alleinerziehend = $alleinerziehend;
+    }
     public function getEmailConfirmed(): ?bool
     {
         return $this->emailConfirmed;
@@ -483,10 +509,20 @@ class Stammdaten
     public function setEmailConfirmed(bool $emailConfirmed): self
     {
         $this->emailConfirmed = $emailConfirmed;
-
         return $this;
     }
 
+
+    public function getAbholberechtigter(): ?string
+    {
+        return $this->abholberechtigter;
+    }
+
+    public function setAbholberechtigter(?string $abholberechtigter): self
+    {
+        $this->abholberechtigter = $abholberechtigter;
+        return  $this;
+    }
     public function getConfirmationCode(): ?string
     {
         return $this->confirmationCode;
@@ -496,6 +532,19 @@ class Stammdaten
     {
         $this->confirmationCode = $confirmationCode;
 
+
+        return $this;
+    }
+
+
+    public function getNotfallName(): ?string
+    {
+        return $this->notfallName;
+    }
+
+    public function setNotfallName(string $notfallName): self
+    {
+        $this->notfallName = $notfallName;
         return $this;
     }
 
@@ -519,6 +568,7 @@ class Stammdaten
     public function setResendEmail(?string $resendEmail): self
     {
         $this->resendEmail = $resendEmail;
+
 
         return $this;
     }

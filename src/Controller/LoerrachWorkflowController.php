@@ -46,6 +46,8 @@ class LoerrachWorkflowController extends AbstractController
 {
     private $einkommensgruppen;
     private  $translator;
+    private $beruflicheSituation;
+
     public function __construct(TranslatorInterface $translator)
     {
         $this->einkommensgruppen = array(
@@ -54,6 +56,11 @@ class LoerrachWorkflowController extends AbstractController
             '2.001 . 3.000 Euro' => 2,
             '3.001 . 5.000 Euro' => 3,
             'mehr als 5.001 Euro' => 4,
+            );
+        $this->beruflicheSituation = array(
+            $translator->trans('Berufstätig')=>1,
+            $translator->trans('Arbeitssuchend')=>2,
+            $translator->trans('Keine Angabe')=>0
             );
         $this->translator = $translator;
     }
@@ -94,15 +101,18 @@ class LoerrachWorkflowController extends AbstractController
             ->add('email',EmailType::class, ['required'=>true,'label' => 'Email', 'translation_domain' => 'form'])
             ->add('einkommen', ChoiceType::class, [
                 'choices' => $this->einkommensgruppen, 'label' => 'Netto Haushaltseinkommen pro Monat', 'translation_domain' => 'form'])
+            ->add('beruflicheSituation', ChoiceType::class, ['choices'=>$this->beruflicheSituation,'required'=>true,'label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
             ->add('kinderImKiga', CheckboxType::class, ['required'=>false,'label' => 'Kind im Kindergarten', 'translation_domain' => 'form'])
             ->add('buk', CheckboxType::class, ['required'=>false,'label' => 'BUT Empfänger', 'translation_domain' => 'form'])
-            ->add('beruflicheSituation', TextType::class, ['required'=>false,'label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
-            ->add('notfallkontakt', TextType::class, ['label' => 'Notfalltelefonnummer', 'translation_domain' => 'form'])
-            ->add('iban', TextType::class, ['label' => 'IBAN für das Lastschriftmandat', 'translation_domain' => 'form'])
-            ->add('bic', TextType::class, ['label' => 'BIC für das Lastschriftmandat', 'translation_domain' => 'form'])
-            ->add('kontoinhaber', TextType::class, ['label' => 'Kontoinhaber für das Lastschriftmandat', 'translation_domain' => 'form'])
-            ->add('sepaInfo', CheckboxType::class, ['label' => 'SEPA-LAstschrift Mandat wird elektromisch erteilt', 'translation_domain' => 'form'])
-            ->add('gdpr', CheckboxType::class, ['label' => 'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden', 'translation_domain' => 'form'])
+            ->add('alleinerziehend', CheckboxType::class, ['required'=>false,'label' => 'Alleinerziehend', 'translation_domain' => 'form'])
+            ->add('notfallName', TextType::class, ['required'=>true,'label' => 'Name und Beziehung des Notfallkontakt', 'translation_domain' => 'form'])
+            ->add('notfallkontakt', TextType::class, ['required'=>true,'label' => 'Notfalltelefonnummer', 'translation_domain' => 'form'])
+            ->add('iban', TextType::class, ['required'=>true,'label' => 'IBAN für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('bic', TextType::class, ['required'=>true,'label' => 'BIC für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('kontoinhaber', TextType::class, ['required'=>true,'label' => 'Kontoinhaber für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('abholberechtigter', TextareaType::class,['required'=>false,'label'=>'Abholberechtiger','translation_domain' => 'form','attr'=>['rows'=>6]])
+            ->add('sepaInfo', CheckboxType::class, ['required'=>true,'label' => 'SEPA-LAstschrift Mandat wird elektromisch erteilt', 'translation_domain' => 'form'])
+            ->add('gdpr', CheckboxType::class, ['required'=>true,'label' => 'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden', 'translation_domain' => 'form'])
             ->add('newsletter', CheckboxType::class, ['required'=>false,'label' => 'Zum Newsletter anmelden', 'translation_domain' => 'form'])
             // ->add('captcha', RecaptchaType::class, [
             // "groups" option is not mandatory
