@@ -14,6 +14,7 @@ use App\Entity\Kind;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -57,8 +58,15 @@ class LoerrachKind extends AbstractType
             ->add('geburtstag', BirthdayType::class,['years'=>range($today-20,$today,1),'label'=>'Geburtstag','translation_domain' => 'form'])
             ->add('allergie', TextType::class,['required'=>false,'label'=>'Allergien','translation_domain' => 'form'])
             ->add('medikamente', TextType::class,['required'=>false,'label'=>'Medikamente','translation_domain' => 'form'])
+            ->add('gluten', CheckboxType::class,['required'=>false,'label'=>'Guten intolerant','translation_domain' => 'form'])
+            ->add('laktose', CheckboxType::class,['required'=>false,'label'=>'Laktose intolerant','translation_domain' => 'form'])
+            ->add('schweinefleisch', CheckboxType::class,['required'=>false,'label'=>'Kein Schweinefleich','translation_domain' => 'form'])
+            ->add('vegetarisch', CheckboxType::class,['required'=>false,'label'=>'Vegetarisch','translation_domain' => 'form'])
+            ->add('alleineHause', CheckboxType::class,['required'=>false,'label'=>'Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause','translation_domain' => 'form'])
+            ->add('ausfluege', CheckboxType::class,['required'=>false,'label'=>'Mein Kind darf an Ausflügen teilnehmen','translation_domain' => 'form'])
+            ->add('sonnencreme', CheckboxType::class,['required'=>false,'label'=>'Mein Kind darf im Sommer mit handelsüblicher Sonnencreame eingecremt werden','translation_domain' => 'form'])
+            ->add('fotos', CheckboxType::class,['required'=>false,'label'=>'Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öfentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.','translation_domain' => 'form'])
             ->add('bemerkung', TextareaType::class,['required'=>false,'label'=>'Bemerkung','translation_domain' => 'form','attr'=>['rows'=>6]]);
-
     }
     public function configureOptions(OptionsResolver $resolver)
     {
