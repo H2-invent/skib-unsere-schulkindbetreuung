@@ -1,0 +1,17 @@
+{% extends 'workflow/base.html.twig' %}
+{% block content %}
+        <h1 class="cover-heading">{{ titel }}</h1>
+<p>{{ text }}</p>
+    <ul>
+        {% if errors is defined %}
+        {% for error in errors %}
+            <li>{{ error.message }}</li>
+        {% endfor %}
+        {% endif %}
+    </ul>
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <a href="{{ path('workflow_reset_Email',{'uid':stammdaten.uid,'stadt':stadt.id,'redirect':redirect,'resendEmail':stammdaten.resendEmail}) }}">{{ 'Email erneut senden'|trans }}</a>
+{% endblock %}
