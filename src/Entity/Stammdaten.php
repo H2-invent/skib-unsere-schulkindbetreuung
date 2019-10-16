@@ -500,6 +500,7 @@ class Stammdaten
     public function setAlleinerziehend(?bool $alleinerziehend): self
     {
         $this->alleinerziehend = $alleinerziehend;
+        return $this;
     }
     public function getEmailConfirmed(): ?bool
     {
@@ -531,8 +532,6 @@ class Stammdaten
     public function setConfirmationCode(string $confirmationCode): self
     {
         $this->confirmationCode = $confirmationCode;
-
-
         return $this;
     }
 
@@ -568,8 +567,6 @@ class Stammdaten
     public function setResendEmail(?string $resendEmail): self
     {
         $this->resendEmail = $resendEmail;
-
-
         return $this;
     }
 }
