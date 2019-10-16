@@ -87,6 +87,46 @@ class Kind
      */
     private $fin = false;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $gluten = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $laktose = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $schweinefleisch = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $vegetarisch = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $ausfluege = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $alleineHause = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $sonnencreme = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $fotos = false;
+
     public function __construct()
     {
         $this->zeitblocks = new ArrayCollection();
@@ -398,6 +438,102 @@ class Kind
     public function setFin(bool $fin): self
     {
         $this->fin = $fin;
+
+        return $this;
+    }
+
+    public function getGluten(): ?bool
+    {
+        return $this->gluten;
+    }
+
+    public function setGluten(bool $gluten): self
+    {
+        $this->gluten = $gluten;
+
+        return $this;
+    }
+
+    public function getLaktose(): ?bool
+    {
+        return $this->laktose;
+    }
+
+    public function setLaktose(bool $laktose): self
+    {
+        $this->laktose = $laktose;
+
+        return $this;
+    }
+
+    public function getSchweinefleisch(): ?bool
+    {
+        return $this->schweinefleisch;
+    }
+
+    public function setSchweinefleisch(bool $schweinefleisch): self
+    {
+        $this->schweinefleisch = $schweinefleisch;
+
+        return $this;
+    }
+
+    public function getVegetarisch(): ?bool
+    {
+        return $this->vegetarisch;
+    }
+
+    public function setVegetarisch(bool $vegetarisch): self
+    {
+        $this->vegetarisch = $vegetarisch;
+
+        return $this;
+    }
+
+    public function getAusfluege(): ?bool
+    {
+        return $this->ausfluege;
+    }
+
+    public function setAusfluege(bool $ausfluege): self
+    {
+        $this->ausfluege = $ausfluege;
+
+        return $this;
+    }
+
+    public function getAlleineHause(): ?bool
+    {
+        return $this->alleineHause;
+    }
+
+    public function setAlleineHause(bool $alleineHause): self
+    {
+        $this->alleineHause = $alleineHause;
+
+        return $this;
+    }
+
+    public function getSonnencreme(): ?bool
+    {
+        return $this->sonnencreme;
+    }
+
+    public function setSonnencreme(bool $sonnencreme): self
+    {
+        $this->sonnencreme = $sonnencreme;
+
+        return $this;
+    }
+
+    public function getFotos(): ?bool
+    {
+        return $this->fotos;
+    }
+
+    public function setFotos(bool $fotos): self
+    {
+        $this->fotos = $fotos;
 
         return $this;
     }
