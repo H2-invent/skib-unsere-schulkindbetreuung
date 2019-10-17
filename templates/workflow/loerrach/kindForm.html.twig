@@ -8,12 +8,6 @@
 </div>
 <div class="modal-body">
 
-    <ul>
-        {% for error in errors %}
-            <li>{{ error.message }}</li>
-        {% endfor %}
-    </ul>
-
     {{ form_start(form, {
         'attr': {
             'novalidate': 'novalidate',
