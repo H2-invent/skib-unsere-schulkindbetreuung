@@ -229,7 +229,8 @@ class EmployeeOrganisationController extends AbstractController
             'ROLE_ORG_CHILD_SHOW' => 'ROLE_ORG_CHILD_SHOW',
             'ROLE_ORG_ACCOUNTING'=>'ROLE_ORG_ACCOUNTING',
             'ROLE_ORG_BLOCK_MANAGEMENT'=>'ROLE_ORG_BLOCK_MANAGEMENT',
-            'ROLE_ORG_SHOOL'=>'ROLE_ORG_SHOOL'
+            'ROLE_ORG_SHOOL'=>'ROLE_ORG_SHOOL',
+            'ROLE_ORG_ACCEPT_CHILD'=>'ROLE_ORG_ACCEPT_CHILD'
 
         );
 

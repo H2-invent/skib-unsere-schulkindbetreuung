@@ -71,10 +71,26 @@ class Zeitblock
      */
     private $deleted = false;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $min;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $max;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Kind", mappedBy="beworben")
+     */
+    private $kinderBeworben;
+
     public function __construct()
     {
         $this->kind = new ArrayCollection();
         $this->abwesenheit = new ArrayCollection();
+        $this->kinderBeworben = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -322,5 +338,57 @@ class Zeitblock
                 return $date->modify('next sun');
                 break;
         }
+    }
+
+    public function getMin(): ?int
+    {
+        return $this->min;
+    }
+
+    public function setMin(?int $min): self
+    {
+        $this->min = $min;
+
+        return $this;
+    }
+
+    public function getMax(): ?int
+    {
+        return $this->max;
+    }
+
+    public function setMax(?int $max): self
+    {
+        $this->max = $max;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Kind[]
+     */
+    public function getKinderBeworben(): Collection
+    {
+        return $this->kinderBeworben;
+    }
+
+    public function addKinderBeworben(Kind $kinderBeworben): self
+    {
+        if (!$this->kinderBeworben->contains($kinderBeworben)) {
+            $this->kinderBeworben[] = $kinderBeworben;
+            $kinderBeworben->addBeworben($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKinderBeworben(Kind $kinderBeworben): self
+    {
+        if ($this->kinderBeworben->contains($kinderBeworben)) {
+            $this->kinderBeworben->removeElement($kinderBeworben);
+            $kinderBeworben->removeBeworben($this);
+        }
+
+        return $this;
     }
 }

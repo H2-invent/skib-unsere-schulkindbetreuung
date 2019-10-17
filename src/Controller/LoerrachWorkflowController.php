@@ -92,25 +92,25 @@ class LoerrachWorkflowController extends AbstractController
         }
 
         $form = $this->createFormBuilder($adresse)
-            ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
+            ->add('email',EmailType::class, ['label' => 'Email', 'translation_domain' => 'form'])
+            ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form','help'=>'Das ist eine Hilfe für diese Frage im Form'])
             ->add('name', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
             ->add('strasse', TextType::class, ['label' => 'Straße', 'translation_domain' => 'form'])
             ->add('adresszusatz', TextType::class, ['required'=>false,'label' => 'Adresszusatz', 'translation_domain' => 'form'])
             ->add('plz', TextType::class, ['label' => 'PLZ', 'translation_domain' => 'form'])
             ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form','help'=>'Das ist eine Hilfe für diese Frage im Form'])
-            ->add('email',EmailType::class, ['required'=>true,'label' => 'Email', 'translation_domain' => 'form'])
             ->add('einkommen', ChoiceType::class, [
-                'choices' => $this->einkommensgruppen, 'label' => 'Netto Haushaltseinkommen pro Monat', 'translation_domain' => 'form'])
+                'choices' => $this->einkommensgruppen, 'label' => 'Brutto Familieneinkommen pro Monat', 'translation_domain' => 'form'])
             ->add('beruflicheSituation', ChoiceType::class, ['choices'=>$this->beruflicheSituation,'required'=>true,'label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
-            ->add('kinderImKiga', CheckboxType::class, ['required'=>false,'label' => 'Kind im Kindergarten', 'translation_domain' => 'form'])
-            ->add('buk', CheckboxType::class, ['required'=>false,'label' => 'BUT Empfänger', 'translation_domain' => 'form'])
-            ->add('alleinerziehend', CheckboxType::class, ['required'=>false,'label' => 'Alleinerziehend', 'translation_domain' => 'form'])
+            ->add('kinderImKiga', CheckboxType::class, ['required'=>false,'label' => 'Ich habe mindestens ein weiteres Kind in einer kostenpflichtiger öffentlichen Kindergarteneinrichtung', 'translation_domain' => 'form'])
+            ->add('buk', CheckboxType::class, ['required'=>false,'label' => 'Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger', 'translation_domain' => 'form'])
+            ->add('alleinerziehend', CheckboxType::class, ['required'=>false,'label' => 'Ich bin Alleinerziehend', 'translation_domain' => 'form'])
             ->add('notfallName', TextType::class, ['required'=>true,'label' => 'Name und Beziehung des Notfallkontakt', 'translation_domain' => 'form'])
             ->add('notfallkontakt', TextType::class, ['required'=>true,'label' => 'Notfalltelefonnummer', 'translation_domain' => 'form'])
             ->add('iban', TextType::class, ['required'=>true,'label' => 'IBAN für das Lastschriftmandat', 'translation_domain' => 'form'])
             ->add('bic', TextType::class, ['required'=>true,'label' => 'BIC für das Lastschriftmandat', 'translation_domain' => 'form'])
             ->add('kontoinhaber', TextType::class, ['required'=>true,'label' => 'Kontoinhaber für das Lastschriftmandat', 'translation_domain' => 'form'])
-            ->add('abholberechtigter', TextareaType::class,['required'=>false,'label'=>'Abholberechtiger','translation_domain' => 'form','attr'=>['rows'=>6]])
+            ->add('abholberechtigter', TextareaType::class,['required'=>false,'label'=>'Weitere abholberechtigte Personen','translation_domain' => 'form','attr'=>['rows'=>6]])
             ->add('sepaInfo', CheckboxType::class, ['required'=>true,'label' => 'SEPA-LAstschrift Mandat wird elektromisch erteilt', 'translation_domain' => 'form'])
             ->add('gdpr', CheckboxType::class, ['required'=>true,'label' => 'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden', 'translation_domain' => 'form'])
             ->add('newsletter', CheckboxType::class, ['required'=>false,'label' => 'Zum Newsletter anmelden', 'translation_domain' => 'form'])
@@ -347,6 +347,8 @@ class LoerrachWorkflowController extends AbstractController
         $result = array(
             'text' => $translator->trans('Betreuungsblock erfolgreich gespeichert'),
             'error'=>0,
+            'kontingent'=> false,
+            'cardText' => $translator->trans('Gebucht')
         );
         try {
             //Include Parents in this route
@@ -356,27 +358,34 @@ class LoerrachWorkflowController extends AbstractController
             }
 
             $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
-         $result['preisUrl']= $this->generateUrl('loerrach_workflow_preis_einKind',array('kind_id'=>$kind->getId()));
+            $result['preisUrl']= $this->generateUrl('loerrach_workflow_preis_einKind',array('kind_id'=>$kind->getId()));
             $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
-
-            if (in_array($block, $kind->getZeitblocks()->toArray())) {
-                $kind->removeZeitblock($block);
-            } else {
-                $kind->addZeitblock($block);
+            if($block->getMin() || $block->getMax()){
+                $result['kontingent']= true;
+                $result['cardText'] = $translator->trans('Angemeldet');
             }
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($kind);
-            $em->flush();
-            $blocks = $kind->getZeitblocks();
-            $blocks2 = array();
-            foreach ($blocks as $data){
-                if($data->getGanztag() != 0){
-                    $blocks2[] = $data;
+            if($block->getMin() || $block->getMax()){
+                if (in_array($block, $kind->getBeworben()->toArray())) {
+                    $kind->removeBeworben($block);
+                } else {
+                    $kind->addBeworben($block);
+                }
+            }else{
+                if (in_array($block, $kind->getZeitblocks()->toArray())) {
+                    $kind->removeZeitblock($block);
+                } else {
+                    $kind->addZeitblock($block);
                 }
             }
 
-            if (sizeof($blocks2) < 2){
-                $result['text'] = $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)');
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($kind);
+            $em->flush();
+
+            $blocks2 =$kind->getTageWithBlocks();
+
+            if ($blocks2 < 2){
+                $result['text'] = $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Tage müssen ausgewählt werden)');
             $result['error'] = 2;
             }
         } catch (\Exception $e) {
@@ -417,7 +426,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $error = false;
         foreach ($kind as $data){
-            if ($data->getBetreungsblocks() < 2){
+            if ($data->getTageWithBlocks() < 2){
                 $error= true;
                 break;
             }
@@ -449,7 +458,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $adresse->getKinds();
         foreach ($kind as $data){
-            if ($data->getBetreungsblocks() < 2){
+            if ($data->getTageWithBlocks() < 2){
                $this->redirectToRoute('loerrach_workflow_zusammenfassung');
             }
         }
@@ -462,7 +471,7 @@ class LoerrachWorkflowController extends AbstractController
             $em->persist($data);
         }
       $em->persist($adresse);
-        $em->flush();
+     //   $em->flush();
         $attachment = array();
         $ical = array();
 
@@ -507,17 +516,17 @@ class LoerrachWorkflowController extends AbstractController
                     ->setBody($icsService->to_string());
 
                 $icsService = new IcsService();
+            $mailBetreff = $translator->trans('Anmeldebestätigung der Schulkindbetreuung für ').$data->getVorname(). ' '. $data->getNachname();
+            $mailContent = $this->renderView('email/anmeldebestatigung.html.twig',array('eltern'=>$adresse,'kind'=>$data,'stadt'=>$stadt));
+            $mailer->sendEmail( 'info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent,$attachment);
 
         }
-        $mailBetreff = $translator->trans('Anmeldebestätigung der Schulkindbetreuung für ').$adresse->getVorname(). ' '. $adresse->getName();
-        $mailContent = $this->renderView('email/anmeldebestatigung.html.twig',array('eltern'=>$adresse,'kinder'=>$kind,'stadt'=>$stadt));
-        $mailer->sendEmail( 'info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent,$attachment);
 
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
-        $response->headers->clearCookie('UserID');
-        $response->headers->clearCookie('SecID');
-        $response->headers->clearCookie('KindID');
+     //   $response->headers->clearCookie('UserID');
+      //  $response->headers->clearCookie('SecID');
+     //   $response->headers->clearCookie('KindID');
         return $response;
 
     }
@@ -590,19 +599,12 @@ class LoerrachWorkflowController extends AbstractController
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(
             array('id' => $request->get('kind_id'), 'eltern' => $adresse)
         );
-        $blocks = $kind->getZeitblocks();
-        $betreuung = array();
-        $mitagessen = array();
-        foreach ($blocks as $data) {
-            if ($data->getGanztag() == 0) {
-                $mitagessen[] = $data;
-            } else {
-                $betreuung[] = $data;
-            }
-        }
 
-// Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
-        if(sizeof($betreuung)<2){
+
+
+        // Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
+
+        if($kind->getTageWithBlocks()<2){
             $result['error']= 1;
             $result['text']= $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)');
             return new JsonResponse($result);

@@ -3,10 +3,10 @@ Nachname: __Nachname
 Vorname: First name
 Straße: Street
 Adresszusatz: Adress additional
-Netto Haushaltseinkommen pro Monat: Netto family income per Monath
+NBrutto Familieneinkommen pro Monat: __Brutto Familieneinkommen pro Monat
 Speichern: Save
-Kind im Kindergarten: Kids in the Kindergarten
-BUT Empfänger: BUT reciever
+Ich habe mindestens ein weiteres Kind in einer kostenpflichtiger öffentlichen Kindergarteneinrichtung: __Ich habe mindestens ein weiteres Kind in einer kostenpflichtiger öffentlichen Kindergarteneinrichtung
+Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger: __Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger
 Berufliche Situation der Eltern: Profession of the parents
 Notfalltelefonnummer: __Notfalltelefonnummer
 IBAN für das Lastschriftmandat: IBAN for SEPA
@@ -51,8 +51,8 @@ Art der Betreuung: __Art der Betreuung
 Jahrgangsstufe: __Jahrgangsstufe
 Ganztagsbetreuung: __Ganztagsbetreuung
 Halbtagsbetreuung: __Halbtagsbetreuung
-Medikamente: __Medikamente
-Allergien: __Allergien
+Mein Kind benötig folgende Medikamente: __Kind benötig folgende Medikamente
+Mein Kind hat folgende Allergien: __Kind hat folgende Allergien
 Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden: __Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden
 Zum Newsletter anmelden: __Zum Newsletter anmelden
 Klasse 1: __Klasse 1
@@ -66,14 +66,14 @@ weiter: next
 Anzahl der Preiskategorien: __Anzahl der Preiskategorien
 Sicherheitscode der Eltern: __Sicherheitscode der Eltern
 Name und Beziehung des Notfallkontakt: __Name und Beziehung des Notfallkontakt
-Alleinerziehend: __Alleinerziehend
-Abholberechtiger: __Abholberechtiger
+Ich bin Alleinerziehend: __Ich bin Alleinerziehend
+Weitere abholberechtigte Personen: __Weitere abholberechtigte Personen
 Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause: __Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause
 Mein Kind darf an Ausflügen teilnehmen: __Mein Kind darf an Ausflügen teilnehmen
 Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden: __Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden
 Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.: __Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.
-Vegetarisch: __Vegetarisch
-Kein Schweinefleich: __Kein Schweinefleich
-Gluten intolerant: __Gluten intolerant
-Laktose intolerant: __Laktose intolerant
+Mein Kind ernährt sich vegetarisch: __Mein Kind ernährt sich vegetarisch
+Mein Kind ist kein Schweinefleich: __Mein Kind ist kein Schweinefleich
+Mein Kind ist Gluten intolerant: __Mein Kind ist Gluten intolerant
+Mein Kind ist Laktose intolerant: __Mein Kind ist Laktose intolerant
 

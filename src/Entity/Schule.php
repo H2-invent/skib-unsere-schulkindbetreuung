@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SchuleRepository")
@@ -22,6 +23,7 @@ class Schule
     private $id;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $name;
@@ -40,6 +42,7 @@ class Schule
     private $stadt;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $adresse;
@@ -50,11 +53,13 @@ class Schule
     private $adresszusatz;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $plz;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $ort;
@@ -82,6 +87,7 @@ class Schule
     private $updatedAt;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $infoText;
@@ -115,7 +121,7 @@ class Schule
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -182,7 +188,7 @@ class Schule
         return $this->adresse;
     }
 
-    public function setAdresse(string $adresse): self
+    public function setAdresse(?string $adresse): self
     {
         $this->adresse = $adresse;
 
@@ -206,7 +212,7 @@ class Schule
         return $this->plz;
     }
 
-    public function setPlz(string $plz): self
+    public function setPlz(?string $plz): self
     {
         $this->plz = $plz;
 
@@ -218,7 +224,7 @@ class Schule
         return $this->ort;
     }
 
-    public function setOrt(string $ort): self
+    public function setOrt(?string $ort): self
     {
         $this->ort = $ort;
 
@@ -269,7 +275,7 @@ class Schule
         return $this->infoText;
     }
 
-    public function setInfoText(string $infoText): self
+    public function setInfoText(?string $infoText): self
     {
         $this->infoText = $infoText;
 

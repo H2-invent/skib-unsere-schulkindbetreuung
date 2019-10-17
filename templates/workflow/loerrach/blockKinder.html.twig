@@ -3,7 +3,7 @@
     <div class="modal-content">
 
 <div class="modal-header">
-    <h5 class="modal-title">{% trans %}Betreuungsblöcke auswählen{% endtrans %}</h5>
+    <h5 class="modal-title">{% trans %}Betreuungsblöcke anklicken zum auswählen{% endtrans %}</h5>
 
 </div>
 <div class="modal-body">
@@ -54,7 +54,9 @@
 </div>
     <div class="row">
         <div class="col-lg-12">
-            <p>{% trans %}Summe aller Blöcke (incl. Vergünstigungen):{% endtrans %} <span class="price">{% if kind.Betreungsblocks>=2 %}{{ kind.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></p>
+            <p>{% trans %}Monatlicher Preis für die Betreuung (incl. Vergünstigungen){% endtrans %}: <span class="price">{% if kind.tageWithBlocks>=2 %}{{ kind.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></p>
+            <p>{% trans %}Mahlzeiten in einer Woche{% endtrans %}: <span class="priceMahlzeit">{% if kind.Betreungsblocks>=2 %}{{ kind.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></p>
+
         </div>
     </div>
 
@@ -67,4 +69,10 @@
         </div>
 
     </div>
+    <script>
+        // popovers Initialization
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
 </div>
