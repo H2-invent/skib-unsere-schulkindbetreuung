@@ -476,50 +476,54 @@ class LoerrachWorkflowController extends AbstractController
         $ical = array();
 
         foreach ($kind as $data) {
-            $fileName = $data->getVorname().'_'.$data->getNachname().'_'.$data->getSchule()->getName().'.pdf';
+            if (sizeof($data->getBeworben()->toArray()) == 0) {//Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
+                $fileName = $data->getVorname() . '_' . $data->getNachname() . '_' . $data->getSchule()->getName() . '.pdf';
 
-            $pdf = $print->printAnmeldebestätigung(
-                $data,
-                $adresse,
-                $stadt,
-                $tcpdf,
-                $fileName,
-                $this->einkommensgruppen,
-                'S'
-            );
-              $attachment[] = (new \Swift_Attachment())
-                ->setFilename($fileName.'.pdf')
-                ->setContentType('application/pdf')
-                ->setBody($pdf);
+                $pdf = $print->printAnmeldebestätigung(
+                    $data,
+                    $adresse,
+                    $stadt,
+                    $tcpdf,
+                    $fileName,
+                    $this->einkommensgruppen,
+                    'S'
+                );
+                $attachment[] = (new \Swift_Attachment())
+                    ->setFilename($fileName . '.pdf')
+                    ->setContentType('application/pdf')
+                    ->setBody($pdf);
 
 
                 foreach ($data->getZeitblocks() as $data2) {
-                  $startDate = $data2->getFirstDate()->format('Ymd');
+                    $startDate = $data2->getFirstDate()->format('Ymd');
                     $icsService->add(
                         array(
                             'location' => $data2->getSchule()->getOrganisation()->getName(),
-                            'description' => $data2->getGanztag()== 0?$this->translator->trans('Mittagessen'):$this->translator->trans(
+                            'description' => $data2->getGanztag() == 0 ? $this->translator->trans('Mittagessen') : $this->translator->trans(
                                 'Betreuung'),
-                            'dtstart' =>$startDate.'T'.$data2->getVon()->format('His') ,
-                            'dtend' => $startDate.'T'.$data2->getBis()->format('His'),
-                            'summary' =>  $data2->getGanztag()== 0?$this->translator->trans('Mittagessen'):$this->translator->trans(
+                            'dtstart' => $startDate . 'T' . $data2->getVon()->format('His'),
+                            'dtend' => $startDate . 'T' . $data2->getBis()->format('His'),
+                            'summary' => $data2->getGanztag() == 0 ? $this->translator->trans('Mittagessen') : $this->translator->trans(
                                 'Betreuung'),
                             'url' => '',
-                            'rrule'=>'FREQ=WEEKLY;UNTIL='.$data2->getActive()->getBis()->format('Ymd').'T000000'
+                            'rrule' => 'FREQ=WEEKLY;UNTIL=' . $data2->getActive()->getBis()->format('Ymd') . 'T000000'
                         )
                     );
                 }
 
                 $attachment[] = (new \Swift_Attachment())
-                    ->setFilename($data->getVorname().' '. $data->getNachname().'.ics')
+                    ->setFilename($data->getVorname() . ' ' . $data->getNachname() . '.ics')
                     ->setContentType('text/calendar')
                     ->setBody($icsService->to_string());
 
                 $icsService = new IcsService();
-            $mailBetreff = $translator->trans('Anmeldebestätigung der Schulkindbetreuung für ').$data->getVorname(). ' '. $data->getNachname();
-            $mailContent = $this->renderView('email/anmeldebestatigung.html.twig',array('eltern'=>$adresse,'kind'=>$data,'stadt'=>$stadt));
-            $mailer->sendEmail( 'info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent,$attachment);
+                $mailBetreff = $translator->trans('Anmeldebestätigung der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname();
+                $mailContent = $this->renderView('email/anmeldebestatigung.html.twig', array('eltern' => $adresse, 'kind' => $data, 'stadt' => $stadt));
+                $mailer->sendEmail('info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
 
+            }else{// es gibt noch beworbene Zeitblöcke
+
+            }
         }
 
 

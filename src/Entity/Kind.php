@@ -341,7 +341,7 @@ class Kind
 
         $blocks = $this->zeitblocks->toArray();
         $blocks = array_merge($blocks, $this->beworben->toArray());
-        dump($blocks);
+        
         foreach ($blocks as $data){
             if($data->getGanztag() != 0){
                 $blocks2[$data->getWochentag()][] = $data;
@@ -446,7 +446,7 @@ class Kind
         $summe = 0;
         $blocks = $kind->getZeitblocks()->toArray();
         $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
-        dump($blocks);
+
         foreach ($blocks as $data){
 
             if($data->getGanztag() != 0 && $data->getDeleted() == false){
