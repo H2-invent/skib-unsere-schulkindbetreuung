@@ -5,7 +5,10 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 use Symfony\Component\Validator\Constraints as Assert;
+
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\KindRepository")
@@ -133,10 +136,16 @@ class Kind
      */
     private $fotos = false;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\zeitblock", inversedBy="kinderBeworben")
+     */
+    private $beworben;
+
     public function __construct()
     {
         $this->zeitblocks = new ArrayCollection();
         $this->abwesends = new ArrayCollection();
+        $this->beworben = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -334,9 +343,34 @@ class Kind
         }
         return $summe;
     }
+    public function getTageWithBlocks(){
+
+        $blocks2 = array();
+
+        $blocks = $this->zeitblocks->toArray();
+        $blocks = array_merge($blocks, $this->beworben->toArray());
+        dump($blocks);
+        foreach ($blocks as $data){
+            if($data->getGanztag() != 0){
+                $blocks2[$data->getWochentag()][] = $data;
+            }
+        }
+        return sizeof($blocks2);
+    }
     public function getBetreungsblocksReal()
+{
+    $blocks = $this->zeitblocks;
+    $summe = array();
+    foreach ($blocks as $data){
+        if($data->getGanztag()!= 0){
+            $summe[]=$data;
+        }
+    }
+    return $summe;
+}
+    public function getBetreungsblocksRealKontingent()
     {
-        $blocks = $this->zeitblocks;
+        $blocks = $this->beworben;
         $summe = array();
         foreach ($blocks as $data){
             if($data->getGanztag()!= 0){
@@ -377,14 +411,16 @@ class Kind
         );
 
 
-        $blocks = $kind->getZeitblocks();
-        $betreuung = array();
+        $blocks = $kind->getZeitblocks()->toArray();
+        $blocks = array_merge($blocks, $this->beworben->toArray());
+
+
 
 
 // Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
         $summe = 0;
         $loop = 0;
-        $summe += $this->getBetragforKindMittagessen($kind, $adresse);
+        //$summe += $this->getBetragforKindMittagessen($kind, $adresse);
 
         foreach ($kinder as $data) {
 
@@ -401,9 +437,7 @@ class Kind
                     case 1:
                         $summe += $this->getBetragforKindBetreuung($kind, $adresse) * 0.5;
                         break;
-                    case 2:
-                        $summe += $this->getBetragforKindBetreuung($kind, $adresse) * 0.25;
-                        break;
+
                     default:
                         $summe += 0;
                         break;
@@ -418,7 +452,10 @@ class Kind
 
     private function getBetragforKindBetreuung(Kind $kind,Stammdaten $eltern){
         $summe = 0;
-        foreach ($kind->getZeitblocks() as $data){
+        $blocks = $kind->getZeitblocks()->toArray();
+        $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
+        dump($blocks);
+        foreach ($blocks as $data){
 
             if($data->getGanztag() != 0 && $data->getDeleted() == false){
                 $summe += $data->getPreise()[$eltern->getEinkommen()];
@@ -540,6 +577,32 @@ class Kind
     public function setFotos(bool $fotos): self
     {
         $this->fotos = $fotos;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|zeitblock[]
+     */
+    public function getBeworben(): Collection
+    {
+        return $this->beworben;
+    }
+
+    public function addBeworben(zeitblock $beworben): self
+    {
+        if (!$this->beworben->contains($beworben)) {
+            $this->beworben[] = $beworben;
+        }
+
+        return $this;
+    }
+
+    public function removeBeworben(zeitblock $beworben): self
+    {
+        if ($this->beworben->contains($beworben)) {
+            $this->beworben->removeElement($beworben);
+        }
 
         return $this;
     }

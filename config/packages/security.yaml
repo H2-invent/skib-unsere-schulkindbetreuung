@@ -54,3 +54,4 @@ security:
         - { path: /org_accounting, role: ROLE_ORG_ACCOUNTING }
         - { path: /org_block/, role: ROLE_ORG_BLOCK_MANAGEMENT }
         - { path: /org_shool/, role: ROLE_ORG_SHOOL }
+        - { path: /org_accept/, role: ROLE_ORG_ACCEPT_CHILD }

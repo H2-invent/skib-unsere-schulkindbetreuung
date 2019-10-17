@@ -4,8 +4,14 @@
             <div class="card-body text-center {% if b.deleted == true %}bg-danger{% endif %}">
                 <p>
                     {{ b.ganztagString }}{% if b.ganztag == 0 %}<i class="material-icons">restaurant</i> {% endif %}
+
                 </p>
-                {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
+                {% if b.min is not null or b.max is not null %}
+                <small>
+                    {{'Kontingent'|trans }}
+                </small>
+                {% endif %}
+                <p>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</p>
 
             </div>
             <p>
@@ -17,6 +23,12 @@
             <div class="collapse" id="collapse{{ b.id }}">
                 <div class="card card-body">
                     <p>{% trans %}Kinder{% endtrans %}: {{ b.kindwithFin|length }}</p>
+                    {% if b.min is not null and b.max is not null %}
+                    <p>{% trans %}Min{% endtrans %}: {{ b.min }}</p>
+                        <p>{% trans %}Max{% endtrans %}: {{ b.max }}</p>
+                        <b>{% trans %}Angemeldete Kinder{% endtrans %}:</b>
+                        {{ b.kinderBeworben|length }}
+                    {% endif %}
                     <p>{% trans %}Preise{% endtrans %}:</p>
                     <ul class="list-group">
                         {% for p in b.preise %}
@@ -27,10 +39,17 @@
             </div>
             <div class="bmd-card-actions text-center">
                 {% if b.deleted == false %}
-                <a href="{{ path('block_schule_editBlocks',{'id':b.id}) }}" class="loadContent"> <i class="material-icons">edit</i></a>
-                    <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
+                    {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
                     <a href="{{ path('child_show',{'id':b.schule.organisation.id,'block':b.id}) }}"><i class="material-icons">info</i></a>
+                {% endif %}
+                    {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
+                     <a href="{{ path('block_schule_editBlocks',{'id':b.id}) }}" class="loadContent"> <i class="material-icons">edit</i></a>
+                     <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
+                    {% endif %}
 
+                    {% if is_granted('ROLE_ORG_ACCEPT_CHILD') and b.min is not null or b.max is not null %}
+                        <a href="#"><i class="material-icons">check</i> </a>
+                    {% endif %}
                 {% else %}
                     {% trans %}gelöscht/deaktiviert{% endtrans %}
                 {% endif %}

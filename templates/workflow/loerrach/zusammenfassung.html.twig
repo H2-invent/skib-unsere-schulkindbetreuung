@@ -76,7 +76,7 @@
                 <div class="card-header" id="heading{{ loop.index }}">
                     <h5 class="mb-0">
                         <a data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
-                            {{ k.vorname }} {{ k.nachname }} <br/><small>{% if k.betreungsblocks < 2 %}
+                            {{ k.vorname }} {{ k.nachname }} <br/><small>{% if k.tageWithBlocks < 2 %}
                                     <div class="alert alert-danger" role="alert">
                                     {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} </div>
                             {% else %}{% trans %}Summe pro Monat für gebuchte Betreuungsblöcke: {% endtrans %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %} <a href="{{ path('loerrach_workflow_print_pdf',{'id':k.id}) }}"><i class="fa fa-download"></i></a>
@@ -156,6 +156,7 @@
                                 <td>{% trans %} Zuständiger Träger in der Schule {% endtrans %}</td>
                                 <td>{{ k.schule.organisation.name }}</td>
                             </tr>
+                           {% if k.betreungsblocksReal|length > 0 %}
                             <tr>
                                 <td>{% trans %} Bemerkung {% endtrans %}</td>
                                 <td>{{ k.bemerkung }}</td>
@@ -174,6 +175,22 @@
                                     </ul>
                                 </td>
                             </tr>
+                            {% endif %}
+                            {% if k.betreungsblocksRealKontingent|length > 0 %}
+                            <tr>
+                                <td>
+                                    {% trans %} Angemeldete Betreuungsblöcke {% endtrans %}
+                                </td>
+
+                                <td>
+                                    <ul class="list-group">
+                                        {%  for z in k.betreungsblocksRealKontingent %}
+                                            <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
+                            {% endif %}
                             <tr>
                                 <td>
                                             {% trans %} Gebuchte Mittagessen {% endtrans %}
@@ -195,7 +212,7 @@
                                 </td>
                                 <td>
                                     <h5>
-                                        {% if k.betreungsblocks < 2 %} {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} {% else %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %}
+                                        {% if k.tageWithBlocks < 2 %} {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} {% else %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %}
                                     </h5>
                                 </td>
                             </tr>

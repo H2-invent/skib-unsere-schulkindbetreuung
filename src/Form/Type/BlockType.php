@@ -39,6 +39,8 @@ class BlockType extends AbstractType
 
             ->add('von', TimeType::class,array('label'=>'Betreuungsbeginn','required'=>true,'translation_domain' => 'form'))
             ->add('bis', TimeType::class,array('label'=>'Betreuungsende','required'=>true,'translation_domain' => 'form'))
+            ->add('min', NumberType::class,array('label'=>'Mindestanzahl an Kindern (Leerlassen wenn keine Begrenzung)','required'=>false,'translation_domain' => 'form'))
+            ->add('max', NumberType::class,array('label'=>'Maximalanzahl an Kindern (Leerlassen wenn keine Begrenzung)','required'=>false,'translation_domain' => 'form'))
 
             ->add('preise', CollectionType::class,[
 'entry_type' => NumberType::class,

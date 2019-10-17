@@ -347,6 +347,8 @@ class LoerrachWorkflowController extends AbstractController
         $result = array(
             'text' => $translator->trans('Betreuungsblock erfolgreich gespeichert'),
             'error'=>0,
+            'kontingent'=> false,
+            'cardText' => $translator->trans('Gebucht')
         );
         try {
             //Include Parents in this route
@@ -356,27 +358,34 @@ class LoerrachWorkflowController extends AbstractController
             }
 
             $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
-         $result['preisUrl']= $this->generateUrl('loerrach_workflow_preis_einKind',array('kind_id'=>$kind->getId()));
+            $result['preisUrl']= $this->generateUrl('loerrach_workflow_preis_einKind',array('kind_id'=>$kind->getId()));
             $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
-
-            if (in_array($block, $kind->getZeitblocks()->toArray())) {
-                $kind->removeZeitblock($block);
-            } else {
-                $kind->addZeitblock($block);
+            if($block->getMin() || $block->getMax()){
+                $result['kontingent']= true;
+                $result['cardText'] = $translator->trans('Angemeldet');
             }
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($kind);
-            $em->flush();
-            $blocks = $kind->getZeitblocks();
-            $blocks2 = array();
-            foreach ($blocks as $data){
-                if($data->getGanztag() != 0){
-                    $blocks2[] = $data;
+            if($block->getMin() || $block->getMax()){
+                if (in_array($block, $kind->getBeworben()->toArray())) {
+                    $kind->removeBeworben($block);
+                } else {
+                    $kind->addBeworben($block);
+                }
+            }else{
+                if (in_array($block, $kind->getZeitblocks()->toArray())) {
+                    $kind->removeZeitblock($block);
+                } else {
+                    $kind->addZeitblock($block);
                 }
             }
 
-            if (sizeof($blocks2) < 2){
-                $result['text'] = $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)');
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($kind);
+            $em->flush();
+
+            $blocks2 =$kind->getTageWithBlocks();
+
+            if ($blocks2 < 2){
+                $result['text'] = $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Tage müssen ausgewählt werden)');
             $result['error'] = 2;
             }
         } catch (\Exception $e) {
@@ -417,7 +426,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $error = false;
         foreach ($kind as $data){
-            if ($data->getBetreungsblocks() < 2){
+            if ($data->getTageWithBlocks() < 2){
                 $error= true;
                 break;
             }
@@ -449,7 +458,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $adresse->getKinds();
         foreach ($kind as $data){
-            if ($data->getBetreungsblocks() < 2){
+            if ($data->getTageWithBlocks() < 2){
                $this->redirectToRoute('loerrach_workflow_zusammenfassung');
             }
         }
@@ -462,7 +471,7 @@ class LoerrachWorkflowController extends AbstractController
             $em->persist($data);
         }
       $em->persist($adresse);
-        $em->flush();
+     //   $em->flush();
         $attachment = array();
         $ical = array();
 
@@ -507,17 +516,17 @@ class LoerrachWorkflowController extends AbstractController
                     ->setBody($icsService->to_string());
 
                 $icsService = new IcsService();
+            $mailBetreff = $translator->trans('Anmeldebestätigung der Schulkindbetreuung für ').$data->getVorname(). ' '. $data->getNachname();
+            $mailContent = $this->renderView('email/anmeldebestatigung.html.twig',array('eltern'=>$adresse,'kind'=>$data,'stadt'=>$stadt));
+            $mailer->sendEmail( 'info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent,$attachment);
 
         }
-        $mailBetreff = $translator->trans('Anmeldebestätigung der Schulkindbetreuung für ').$adresse->getVorname(). ' '. $adresse->getName();
-        $mailContent = $this->renderView('email/anmeldebestatigung.html.twig',array('eltern'=>$adresse,'kinder'=>$kind,'stadt'=>$stadt));
-        $mailer->sendEmail( 'info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent,$attachment);
 
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
-        $response->headers->clearCookie('UserID');
-        $response->headers->clearCookie('SecID');
-        $response->headers->clearCookie('KindID');
+     //   $response->headers->clearCookie('UserID');
+      //  $response->headers->clearCookie('SecID');
+     //   $response->headers->clearCookie('KindID');
         return $response;
 
     }
@@ -590,19 +599,12 @@ class LoerrachWorkflowController extends AbstractController
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(
             array('id' => $request->get('kind_id'), 'eltern' => $adresse)
         );
-        $blocks = $kind->getZeitblocks();
-        $betreuung = array();
-        $mitagessen = array();
-        foreach ($blocks as $data) {
-            if ($data->getGanztag() == 0) {
-                $mitagessen[] = $data;
-            } else {
-                $betreuung[] = $data;
-            }
-        }
 
-// Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
-        if(sizeof($betreuung)<2){
+
+
+        // Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
+
+        if($kind->getTageWithBlocks()<2){
             $result['error']= 1;
             $result['text']= $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)');
             return new JsonResponse($result);
