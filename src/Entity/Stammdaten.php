@@ -26,7 +26,7 @@ class Stammdaten
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text",nullable=true)
      */
     private $vorname;
 
@@ -213,7 +213,7 @@ class Stammdaten
         return $this->vorname;
     }
 
-    public function setVorname(string $vorname): self
+    public function setVorname(?string $vorname): self
     {
         $this->vorname = $vorname;
 
