@@ -1,7 +1,11 @@
 {% extends 'workflow/base.html.twig' %}
 {% block content %}
 
-    <h2 class="cover-heading, text-center">{% trans %}Schulen auswählen und Kinder hinzufügen{% endtrans %}</h2>
+<div class="card">
+    <div class="card-header">
+        <h4> {% trans %}Kind/Kinder hinzufügen{% endtrans %}</h4>
+    </div>
+    <div class="card-body">
     <section class="dashboard-counts section-padding" id="schulenShow">
         <div class="container-fluid ">
 
@@ -48,14 +52,14 @@
                 {% endfor %}
                 </div>
 
-
-
             </div>
     </section>
     <div class="text-center">
         <a href="{{ path('loerrach_workflow_adresse') }}" class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
         <a href="{{ path('loerrach_workflow_zusammenfassung') }}" class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
     </div>
+    </div>
+</div>
 {% endblock %}
 {% block jquery %}
     <script>

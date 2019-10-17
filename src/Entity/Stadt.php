@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StadtRepository")
  * @Vich\Uploadable
@@ -21,11 +22,13 @@ class Stadt
     private $id;
 
     /**
+     * * @Assert\NotBlank()
      * @ORM\Column(type="string", length=32, unique=true,)
      */
     private $slug;
 
     /**
+     * * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $Name;
@@ -35,7 +38,7 @@ class Stadt
      */
     private $anmeldefristens;
 
-    /**
+    /*
      * @ORM\OneToMany(targetEntity="App\Entity\Organisation", mappedBy="stadt")
      */
     private $organisations;
@@ -73,6 +76,7 @@ class Stadt
     private $deleted = false;
 
     /**
+     *  @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $email;
@@ -98,11 +102,13 @@ class Stadt
     private $smtpPassword;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $telefon;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $adresse;
@@ -113,16 +119,19 @@ class Stadt
     private $adresszusatz;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $plz;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $ort;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $ansprechpartner;
@@ -143,6 +152,7 @@ class Stadt
     private $akzentfarbeFehler;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text", nullable=true)
      */
     private $infoText;
@@ -153,10 +163,9 @@ class Stadt
     private $actives;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="integer")
      */
-
-
     private $preiskategorien;
 
 
@@ -178,7 +187,7 @@ class Stadt
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
+    public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
 
@@ -190,7 +199,7 @@ class Stadt
         return $this->Name;
     }
 
-    public function setName(string $Name): self
+    public function setName(?string $Name): self
     {
         $this->Name = $Name;
 
@@ -347,7 +356,7 @@ class Stadt
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -407,7 +416,7 @@ class Stadt
         return $this->telefon;
     }
 
-    public function setTelefon(string $telefon): self
+    public function setTelefon(?string $telefon): self
     {
         $this->telefon = $telefon;
 
@@ -419,7 +428,7 @@ class Stadt
         return $this->adresse;
     }
 
-    public function setAdresse(string $adresse): self
+    public function setAdresse(?string $adresse): self
     {
         $this->adresse = $adresse;
 
@@ -431,7 +440,7 @@ class Stadt
         return $this->adresszusatz;
     }
 
-    public function setAdresszusatz(string $adresszusatz): self
+    public function setAdresszusatz(?string $adresszusatz): self
     {
         $this->adresszusatz = $adresszusatz;
 
@@ -443,7 +452,7 @@ class Stadt
         return $this->plz;
     }
 
-    public function setPlz(string $plz): self
+    public function setPlz(?string $plz): self
     {
         $this->plz = $plz;
 
@@ -455,7 +464,7 @@ class Stadt
         return $this->ort;
     }
 
-    public function setOrt(string $ort): self
+    public function setOrt(?string $ort): self
     {
         $this->ort = $ort;
 
@@ -467,7 +476,7 @@ class Stadt
         return $this->ansprechpartner;
     }
 
-    public function setAnsprechpartner(string $ansprechpartner): self
+    public function setAnsprechpartner(?string $ansprechpartner): self
     {
         $this->ansprechpartner = $ansprechpartner;
 
@@ -558,7 +567,7 @@ class Stadt
         return $this->preiskategorien;
     }
 
-    public function setPreiskategorien(int $preiskategorien): self
+    public function setPreiskategorien(?int $preiskategorien): self
     {
         $this->preiskategorien = $preiskategorien;
 

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StammdatenRepository")
@@ -19,17 +20,20 @@ class Stammdaten
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text", nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text",nullable=true)
      */
     private $vorname;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text",nullable=true)
      */
     private $strasse;
 
@@ -74,16 +78,20 @@ class Stammdaten
     private $beruflicheSituation;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text",nullable=true)
      */
     private $notfallkontakt;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="boolean",nullable=true)
      */
     private $sepaInfo;
 
     /**
+     * @Assert\Iban()
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $iban;
@@ -94,12 +102,15 @@ class Stammdaten
     private $kinds;
 
     /**
+     * @Assert\Bic()
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $bic;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text",nullable=true)
      */
     private $kontoinhaber;
 
@@ -109,7 +120,8 @@ class Stammdaten
     private $fin;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="boolean",nullable=true)
      */
     private $gdpr;
 
@@ -119,12 +131,14 @@ class Stammdaten
     private $newsletter;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="integer",nullable=true)
      */
     private $plz;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text",nullable=true)
      */
     private $stadt;
 
@@ -134,12 +148,13 @@ class Stammdaten
     private $secCode;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\Email()
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text",nullable=true)
      */
     private $email;
 
     /**
-
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $alleinerziehend;
@@ -150,7 +165,8 @@ class Stammdaten
     private $abholberechtigter;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text", nullable=true)
      */
     private $notfallName;
     /**
@@ -189,7 +205,7 @@ class Stammdaten
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -201,7 +217,7 @@ class Stammdaten
         return $this->vorname;
     }
 
-    public function setVorname(string $vorname): self
+    public function setVorname(?string $vorname): self
     {
         $this->vorname = $vorname;
 
@@ -213,7 +229,7 @@ class Stammdaten
         return $this->strasse;
     }
 
-    public function setStrasse(string $strasse): self
+    public function setStrasse(?string $strasse): self
     {
         $this->strasse = $strasse;
 
@@ -225,7 +241,7 @@ class Stammdaten
         return $this->adresszusatz;
     }
 
-    public function setAdresszusatz(string $adresszusatz): self
+    public function setAdresszusatz(?string $adresszusatz): self
     {
         $this->adresszusatz = $adresszusatz;
 
@@ -321,7 +337,7 @@ class Stammdaten
         return $this->notfallkontakt;
     }
 
-    public function setNotfallkontakt(string $notfallkontakt): self
+    public function setNotfallkontakt(?string $notfallkontakt): self
     {
         $this->notfallkontakt = $notfallkontakt;
 
@@ -333,7 +349,7 @@ class Stammdaten
         return $this->sepaInfo;
     }
 
-    public function setSepaInfo(bool $sepaInfo): self
+    public function setSepaInfo(?bool $sepaInfo): self
     {
         $this->sepaInfo = $sepaInfo;
 
@@ -345,7 +361,7 @@ class Stammdaten
         return $this->iban;
     }
 
-    public function setIban(string $iban): self
+    public function setIban(?string $iban): self
     {
         $this->iban = $iban;
 
@@ -388,7 +404,7 @@ class Stammdaten
         return $this->bic;
     }
 
-    public function setBic(string $bic): self
+    public function setBic(?string $bic): self
     {
         $this->bic = $bic;
 
@@ -400,7 +416,7 @@ class Stammdaten
         return $this->kontoinhaber;
     }
 
-    public function setKontoinhaber(string $kontoinhaber): self
+    public function setKontoinhaber(?string $kontoinhaber): self
     {
         $this->kontoinhaber = $kontoinhaber;
 
@@ -424,7 +440,7 @@ class Stammdaten
         return $this->gdpr;
     }
 
-    public function setGdpr(bool $gdpr): self
+    public function setGdpr(?bool $gdpr): self
     {
         $this->gdpr = $gdpr;
 
@@ -436,7 +452,7 @@ class Stammdaten
         return $this->newsletter;
     }
 
-    public function setNewsletter(bool $newsletter): self
+    public function setNewsletter(?bool $newsletter): self
     {
         $this->newsletter = $newsletter;
 
@@ -448,7 +464,7 @@ class Stammdaten
         return $this->plz;
     }
 
-    public function setPlz(int $plz): self
+    public function setPlz(?int $plz): self
     {
         $this->plz = $plz;
 
@@ -460,7 +476,7 @@ class Stammdaten
         return $this->stadt;
     }
 
-    public function setStadt(string $stadt): self
+    public function setStadt(?string $stadt): self
     {
         $this->stadt = $stadt;
 
@@ -484,7 +500,7 @@ class Stammdaten
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -541,7 +557,7 @@ class Stammdaten
         return $this->notfallName;
     }
 
-    public function setNotfallName(string $notfallName): self
+    public function setNotfallName(?string $notfallName): self
     {
         $this->notfallName = $notfallName;
         return $this;
