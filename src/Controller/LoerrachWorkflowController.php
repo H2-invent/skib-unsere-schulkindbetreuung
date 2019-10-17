@@ -462,7 +462,7 @@ class LoerrachWorkflowController extends AbstractController
             $em->persist($data);
         }
       $em->persist($adresse);
-        $em->flush();
+     //   $em->flush();
         $attachment = array();
         $ical = array();
 
@@ -507,17 +507,17 @@ class LoerrachWorkflowController extends AbstractController
                     ->setBody($icsService->to_string());
 
                 $icsService = new IcsService();
+            $mailBetreff = $translator->trans('Anmeldebestätigung der Schulkindbetreuung für ').$data->getVorname(). ' '. $data->getNachname();
+            $mailContent = $this->renderView('email/anmeldebestatigung.html.twig',array('eltern'=>$adresse,'kind'=>$data,'stadt'=>$stadt));
+            $mailer->sendEmail( 'info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent,$attachment);
 
         }
-        $mailBetreff = $translator->trans('Anmeldebestätigung der Schulkindbetreuung für ').$adresse->getVorname(). ' '. $adresse->getName();
-        $mailContent = $this->renderView('email/anmeldebestatigung.html.twig',array('eltern'=>$adresse,'kinder'=>$kind,'stadt'=>$stadt));
-        $mailer->sendEmail( 'info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent,$attachment);
 
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
-        $response->headers->clearCookie('UserID');
-        $response->headers->clearCookie('SecID');
-        $response->headers->clearCookie('KindID');
+     //   $response->headers->clearCookie('UserID');
+     //   $response->headers->clearCookie('SecID');
+     //   $response->headers->clearCookie('KindID');
         return $response;
 
     }
