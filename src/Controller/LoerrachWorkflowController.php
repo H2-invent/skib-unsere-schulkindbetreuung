@@ -110,7 +110,7 @@ class LoerrachWorkflowController extends AbstractController
             ->add('iban', TextType::class, ['required'=>true,'label' => 'IBAN für das Lastschriftmandat', 'translation_domain' => 'form'])
             ->add('bic', TextType::class, ['required'=>true,'label' => 'BIC für das Lastschriftmandat', 'translation_domain' => 'form'])
             ->add('kontoinhaber', TextType::class, ['required'=>true,'label' => 'Kontoinhaber für das Lastschriftmandat', 'translation_domain' => 'form'])
-            ->add('abholberechtigter', TextareaType::class,['required'=>false,'label'=>'Abholberechtiger','translation_domain' => 'form','attr'=>['rows'=>6]])
+            ->add('abholberechtigter', TextareaType::class,['required'=>false,'label'=>'Weitere abholberechtigte Personen','translation_domain' => 'form','attr'=>['rows'=>6]])
             ->add('sepaInfo', CheckboxType::class, ['required'=>true,'label' => 'SEPA-LAstschrift Mandat wird elektromisch erteilt', 'translation_domain' => 'form'])
             ->add('gdpr', CheckboxType::class, ['required'=>true,'label' => 'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden', 'translation_domain' => 'form'])
             ->add('newsletter', CheckboxType::class, ['required'=>false,'label' => 'Zum Newsletter anmelden', 'translation_domain' => 'form'])
