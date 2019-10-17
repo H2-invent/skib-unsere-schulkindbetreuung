@@ -471,6 +471,7 @@ class LoerrachWorkflowController extends AbstractController
             $em->persist($data);
         }
       $em->persist($adresse);
+        //todo hier muss der flush wieder rein
      //   $em->flush();
         $attachment = array();
         $ical = array();
@@ -486,6 +487,7 @@ class LoerrachWorkflowController extends AbstractController
                     $tcpdf,
                     $fileName,
                     $this->einkommensgruppen,
+                    $data->getZeitblocks()[0]->getSchule()->getOrganisation(),
                     'S'
                 );
                 $attachment[] = (new \Swift_Attachment())
@@ -528,7 +530,8 @@ class LoerrachWorkflowController extends AbstractController
 
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
-     //   $response->headers->clearCookie('UserID');
+     //todo hier muss der Kommentar raus
+        //   $response->headers->clearCookie('UserID');
       //  $response->headers->clearCookie('SecID');
      //   $response->headers->clearCookie('KindID');
         return $response;
@@ -625,11 +628,13 @@ class LoerrachWorkflowController extends AbstractController
     {
         $elter = $this->getStammdatenFromCookie($request);
         $stadt = $elter->getKinds()[0]->getSchule()->getStadt();
+
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern'=>$elter,'id'=>$request->get(
             'id')));
+        $organisation = $kind->getAllBlocks()[0]->getSchule()->getOrganisation();
         $fileName = $kind->getVorname().'_'.$kind->getNachname().'_'.$kind->getSchule()->getName().'.pdf';
 
-        return  $print ->printAnmeldebestätigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->einkommensgruppen,'D');
+        return  $print ->printAnmeldebestätigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->einkommensgruppen,$organisation,'D');
 
 
     }

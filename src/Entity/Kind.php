@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -605,5 +606,9 @@ class Kind
         }
 
         return $this;
+    }
+    public function getAllBlocks()
+    {
+        return array_merge($this->zeitblocks->toArray(), $this->beworben->toArray());
     }
 }

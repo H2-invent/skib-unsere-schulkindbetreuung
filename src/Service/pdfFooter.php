@@ -48,14 +48,14 @@ class pdfFooter extends \TCPDF
 
         }elseif ($this->organisation){
             $this->Line(20,$this->getY(),200,$this->getY());
-            $this->MultiCell($this->getRemainingWidth(), 8,  $this->company->getName() .' | '.$this->company->getAdress().' '.$this->company->getAdress2().' | '.$this->company->getPlz() .' '.$this->company->getCity() , 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
+            $this->MultiCell($this->getRemainingWidth(), 8,  $this->organisation->getName() .' | '.$this->organisation->getAdresse().' '.$this->organisation->getAdresszusatz().' | '.$this->organisation->getPlz() .' '.$this->organisation->getOrt() , 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
             $this->Ln(4);
-            $this->MultiCell($this->getRemainingWidth(), 8,  'Tel.: '.$this->company->getPhone() . ($this->company->getTelefax()?( ' | Fax:'.$this->company->getTelefax()):'').' | eMail: '.$this->company->getEmail().' | '.$this->company->getWebpage() , 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
+            $this->MultiCell($this->getRemainingWidth(), 8,  'Tel.: '.$this->organisation->getTelefon().' | '.$this->organisation->getEmail().' | eMail: '.$this->organisation->getAnsprechpartner(), 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
             $this->Ln(4);
-            $this->MultiCell($this->getRemainingWidth(), 8,  ($this->company->getKleinunternehmer()== false?('Geschäftsführer '.$this->company->getVorname() .' '. $this->company->getNachname().' | '):'').'  Firmensitz: '.$this->company->getCity().($this->company->getHandelsregistereintrag()?( ' | '.$this->company->getHandelsregistereintrag() .' | '.$this->company->getHandelsregisterStandort()):''), 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
+            $this->MultiCell($this->getRemainingWidth(), 8,  '############Freitext##########', 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
             $this->Ln(4);
             $this->SetFont('helvetica', '', 10);
-            $this->MultiCell($this->getRemainingWidth(), 10,   $this->company->getBank() .' | '. 'IBAN: '.$this->company->getKontonummer().' | BIC:'.$this->company->getBic(), 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
+            $this->MultiCell($this->getRemainingWidth(), 10,   '############Freitext##########', 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
 
         }
 

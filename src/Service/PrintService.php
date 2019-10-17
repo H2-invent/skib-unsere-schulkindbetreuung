@@ -10,6 +10,7 @@ namespace App\Service;
 
 
 use App\Entity\Kind;
+use App\Entity\Organisation;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use Symfony\Component\Templating\EngineInterface;
@@ -28,11 +29,12 @@ class PrintService
         $this->translator = $translator;
     }
 
-    public function printAnmeldebestätigung(Kind $kind, Stammdaten $elter,Stadt $stadt, TCPDFController $tcpdf, $fileName, $einkommmensgruppen, $type = 'D' )
+    public function printAnmeldebestätigung(Kind $kind, Stammdaten $elter,Stadt $stadt, TCPDFController $tcpdf, $fileName, $einkommmensgruppen,Organisation $organisation, $type = 'D' )
     {
         $pdf = $tcpdf->create();
-        $pdf->setStadt($stadt);
+        $pdf->setOrganisation($organisation);
         //$pdf-> = $this->container->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        //todo hier musss der Test raus
         $pdf->SetAuthor('Test');
         $pdf->SetTitle('test');
         $pdf->SetSubject('test');
@@ -117,6 +119,7 @@ class PrintService
         // hier beginnt die Seite mit den Kindern
         $pdf->AddPage('L', 'A4');
         $blocks = $kind->getZeitblocks()->toArray();
+        $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
         $render = array();
         foreach ($blocks as $data){
             $render[$data->getWochentag()][] = $data;
@@ -131,6 +134,7 @@ class PrintService
                 if(isset($render[$i])){
                     $block = $render[$i][0];
                     $table .='<p>'.($block->getGanztag() == 0? $this->translator->trans('Mittagessen'):'').'</p>';
+                    $table .='<p>'.(($block->getMin() || $block->getMax())? $this->translator->trans('Warten auf Bestätigung'):'').'</p>';
                     $table .=$block->getVon()->format('H:i');
                     $table .= ' - '.$block->getVon()->format('H:i');
 
