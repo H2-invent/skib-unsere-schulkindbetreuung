@@ -25,11 +25,13 @@ class Stammdaten
     private $name;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $vorname;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $strasse;
@@ -75,11 +77,13 @@ class Stammdaten
     private $beruflicheSituation;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $notfallkontakt;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="boolean")
      */
     private $sepaInfo;
@@ -102,6 +106,7 @@ class Stammdaten
     private $bic;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $kontoinhaber;
@@ -112,6 +117,7 @@ class Stammdaten
     private $fin;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="boolean")
      */
     private $gdpr;
@@ -122,11 +128,13 @@ class Stammdaten
     private $newsletter;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="integer")
      */
     private $plz;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $stadt;
@@ -143,7 +151,6 @@ class Stammdaten
     private $email;
 
     /**
-
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $alleinerziehend;
@@ -158,6 +165,7 @@ class Stammdaten
      */
     private $notfallName;
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="boolean")
      */
     private $emailConfirmed = false;
