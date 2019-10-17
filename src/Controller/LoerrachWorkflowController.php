@@ -371,12 +371,12 @@ class LoerrachWorkflowController extends AbstractController
             $blocks2 = array();
             foreach ($blocks as $data){
                 if($data->getGanztag() != 0){
-                    $blocks2[] = $data;
+                    $blocks2[$data->getWochentag()][] = $data;
                 }
             }
 
             if (sizeof($blocks2) < 2){
-                $result['text'] = $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)');
+                $result['text'] = $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Tage müssen ausgewählt werden)');
             $result['error'] = 2;
             }
         } catch (\Exception $e) {
@@ -417,7 +417,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $error = false;
         foreach ($kind as $data){
-            if ($data->getBetreungsblocks() < 2){
+            if ($data->getTageWithBlocks() < 2){
                 $error= true;
                 break;
             }
@@ -449,7 +449,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $adresse->getKinds();
         foreach ($kind as $data){
-            if ($data->getBetreungsblocks() < 2){
+            if ($data->getTageWithBlocks() < 2){
                $this->redirectToRoute('loerrach_workflow_zusammenfassung');
             }
         }
@@ -516,7 +516,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
      //   $response->headers->clearCookie('UserID');
-     //   $response->headers->clearCookie('SecID');
+      //  $response->headers->clearCookie('SecID');
      //   $response->headers->clearCookie('KindID');
         return $response;
 

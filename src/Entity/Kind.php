@@ -334,6 +334,16 @@ class Kind
         }
         return $summe;
     }
+    public function getTageWithBlocks(){
+
+        $blocks2 = array();
+        foreach ($this->getZeitblocks() as $data){
+            if($data->getGanztag() != 0){
+                $blocks2[$data->getWochentag()][] = $data;
+            }
+        }
+        return sizeof($blocks2);
+    }
     public function getBetreungsblocksReal()
     {
         $blocks = $this->zeitblocks;
