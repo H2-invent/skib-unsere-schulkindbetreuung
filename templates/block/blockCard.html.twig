@@ -13,7 +13,7 @@
                 {% endif %}
                 <p>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</p>
 
-            </div>
+
             <p>
                 <a class="btn btn-primary" data-toggle="collapse" href="#collapse{{ b.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
                 {% trans %}Detail{% endtrans %}
@@ -36,6 +36,7 @@
                     </ul>
 
                   </div>
+            </div>
             </div>
             <div class="bmd-card-actions text-center">
                 {% if b.deleted == false %}
