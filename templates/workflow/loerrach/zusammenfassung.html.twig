@@ -3,7 +3,7 @@
         <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
     <div class="card">
         <div class="card-header">
-    <h3 class="cover-heading">{% trans %}Daten der Eltern{% endtrans %} <a href="{{ path('loerrach_workflow_adresse') }}"> <i class="fa fa-edit"></i></a></h3>
+    <h3 class="cover-heading">{% trans %}Daten der erziehungsberechtigten Person{% endtrans %} <a href="{{ path('loerrach_workflow_adresse') }}"> <i class="fa fa-edit"></i></a></h3>
         </div>
         <div class="card-body">
         <table class="table">
@@ -11,6 +11,10 @@
             <tr>
                 <td>{% trans %} Name der Eltern {% endtrans %}</td>
                 <td>{{ eltern.vorname }} {{ eltern.name }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} E-Mail Adresse {% endtrans %}</td>
+                <td>{{ eltern.email }}</td>
             </tr>
             <tr>
                 <td>{% trans %} Adresse der Eltern {% endtrans %}</td>
@@ -21,20 +25,32 @@
                 <td>{{ einkommen[eltern.einkommen] }}</td>
             </tr>
             <tr>
-                <td>{% trans %} Kinder im Kinderganrten {% endtrans %}</td>
+                <td>{% trans %} Ich habe mindestens ein weiteres Kind in einer kostenpflichtiger öffentlichen Kindergartneeinrichtung {% endtrans %}</td>
                 <td>{{ eltern.kinderImKiga?"Ja":'Nein'|trans }}</td>
             </tr>
             <tr>
-                <td>{% trans %} BUT {% endtrans %}</td>
+                <td>{% trans %} Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger {% endtrans %}</td>
                 <td>{{ eltern.buk?"Ja":'Nein'|trans }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} Ich bin Alleinerziehend {% endtrans %}</td>
+                <td>{{ eltern.alleinerziehend?"Ja":'Nein'|trans }}</td>
             </tr>
             <tr>
                 <td>{% trans %} Berufliche Situation der Eltern {% endtrans %}</td>
                 <td>{{ eltern.beruflicheSituation }}</td>
             </tr>
             <tr>
+                <td>{% trans %} Name und Beziehung des Notfallkontakt {% endtrans %}</td>
+                <td>{{ eltern.notfallName }}</td>
+            </tr>
+            <tr>
                 <td>{% trans %} Notfallkontakt der Eltern {% endtrans %}</td>
                 <td>{{ eltern.notfallkontakt }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %} Weitere abholberechtigte Personen {% endtrans %}</td>
+                <td>{{ eltern.abholberechtigter }}</td>
             </tr>
             <tr>
                 <td>{% trans %} Bankverbindung für Lastschrift {% endtrans %}</td>
@@ -43,10 +59,6 @@
             <tr>
                 <td>{% trans %} Zum Newsletter angemeldet {% endtrans %}</td>
                 <td>{{ eltern.newsletter?"Ja":'Nein'|trans }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} E-Mail Adresse {% endtrans %}</td>
-                <td>{{ eltern.email }}</td>
             </tr>
             </tbody>
         </table>
@@ -67,7 +79,7 @@
                             {{ k.vorname }} {{ k.nachname }} <br/><small>{% if k.tageWithBlocks < 2 %}
                                     <div class="alert alert-danger" role="alert">
                                     {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} </div>
-                            {% else %}{% trans %}Summe der gebuchter Blöcke: {% endtrans %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %} <a href="{{ path('loerrach_workflow_print_pdf',{'id':k.id}) }}"><i class="fa fa-download"></i></a>
+                            {% else %}{% trans %}Summe pro Monat für gebuchte Betreuungsblöcke: {% endtrans %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %} <a href="{{ path('loerrach_workflow_print_pdf',{'id':k.id}) }}"><i class="fa fa-download"></i></a>
                             </small>
 
                         </a>
@@ -91,18 +103,6 @@
                                 <td>{{ k.geburtstag|date('d.m.Y') }}</td>
                             </tr>
                             <tr>
-                                <td>{% trans %} Allergien {% endtrans %}</td>
-                                <td>{{ k.allergie }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Medikamente {% endtrans %}</td>
-                                <td>{{ k.medikamente }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Bemerkung {% endtrans %}</td>
-                                <td>{{ k.bemerkung }}</td>
-                            </tr>
-                            <tr>
                                 <td>{% trans %} Schule {% endtrans %}</td>
                                 <td>{{ k.schule.name }}</td>
                             </tr>
@@ -111,10 +111,57 @@
                                 <td>{{ k.klasse }}</td>
                             </tr>
                             <tr>
+                                <td>{% trans %} Allergien {% endtrans %}</td>
+                                <td>{{ k.allergie }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Medikamente {% endtrans %}</td>
+                                <td>{{ k.medikamente }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>{% trans %} Mein Kind ist Gluten intolerant {% endtrans %}</td>
+                                <td>{{ k.gluten?"Ja":'Nein'|trans }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Mein Kind ist Laktose intolerant {% endtrans %}</td>
+                                <td>{{ k.laktose?"Ja":'Nein'|trans }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Mein Kind isst kein Schweinefleisch {% endtrans %}</td>
+                                <td>{{ k.schweinefleisch?"Ja":'Nein'|trans }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Vegetrarisch {% endtrans %}</td>
+                                <td>{{ k.vegetarisch?"Ja":'Nein'|trans }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause {% endtrans %}</td>
+                                <td>{{ k.alleineHause?"Ja":'Nein'|trans }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Mein Kind darf an Ausflügen teilnehmen {% endtrans %}</td>
+                                <td>{{ k.ausfluege?"Ja":'Nein'|trans }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden {% endtrans %}</td>
+                                <td>{{ k.sonnencreme?"Ja":'Nein'|trans }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %} Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden {% endtrans %}</td>
+                                <td>{{ k.fotos?"Ja":'Nein'|trans }}</td>
+                            </tr>
+
+                            <tr>
                                 <td>{% trans %} Zuständiger Träger in der Schule {% endtrans %}</td>
                                 <td>{{ k.schule.organisation.name }}</td>
                             </tr>
                            {% if k.betreungsblocksReal|length > 0 %}
+                            <tr>
+                                <td>{% trans %} Bemerkung {% endtrans %}</td>
+                                <td>{{ k.bemerkung }}</td>
+                            </tr>
+
                             <tr>
                                 <td>
                                             {% trans %} Gebuchte Betreuungsblöcke {% endtrans %}

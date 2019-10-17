@@ -60,7 +60,7 @@ class LoerrachKind extends AbstractType
             ->add('medikamente', TextType::class,['required'=>false,'label'=>'Mein Kind benötig folgende Medikamente','translation_domain' => 'form'])
             ->add('gluten', CheckboxType::class,['required'=>false,'label'=>'Mein Kind ist Gluten intolerant','translation_domain' => 'form'])
             ->add('laktose', CheckboxType::class,['required'=>false,'label'=>'Mein Kind ist Laktose intolerant','translation_domain' => 'form'])
-            ->add('schweinefleisch', CheckboxType::class,['required'=>false,'label'=>'Mein Kind ist kein Schweinefleich','translation_domain' => 'form'])
+            ->add('schweinefleisch', CheckboxType::class,['required'=>false,'label'=>'Mein Kind isst kein Schweinefleich','translation_domain' => 'form'])
             ->add('vegetarisch', CheckboxType::class,['required'=>false,'label'=>'Mein Kind ernährt sich vegetarisch','translation_domain' => 'form'])
             ->add('alleineHause', CheckboxType::class,['required'=>false,'label'=>'Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause','translation_domain' => 'form'])
             ->add('ausfluege', CheckboxType::class,['required'=>false,'label'=>'Mein Kind darf an Ausflügen teilnehmen','translation_domain' => 'form'])
