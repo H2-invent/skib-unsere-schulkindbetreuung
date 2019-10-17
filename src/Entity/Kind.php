@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\KindRepository")
@@ -35,26 +36,31 @@ class Kind
     private $medikamente;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text", nullable=true)
      */
     private $vorname;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text", nullable=true)
      */
     private $nachname;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $klasse;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $art;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="datetime")
      */
     private $geburtstag;
@@ -179,7 +185,7 @@ class Kind
         return $this->vorname;
     }
 
-    public function setVorname(string $vorname): self
+    public function setVorname(?string $vorname): self
     {
         $this->vorname = $vorname;
 
@@ -191,7 +197,7 @@ class Kind
         return $this->nachname;
     }
 
-    public function setNachname(string $nachname): self
+    public function setNachname(?string $nachname): self
     {
         $this->nachname = $nachname;
 
@@ -203,7 +209,7 @@ class Kind
         return $this->klasse;
     }
 
-    public function setKlasse(int $klasse): self
+    public function setKlasse(?int $klasse): self
     {
         $this->klasse = $klasse;
 
@@ -215,7 +221,7 @@ class Kind
         return $this->art;
     }
 
-    public function setArt(int $art): self
+    public function setArt(?int $art): self
     {
         $this->art = $art;
 

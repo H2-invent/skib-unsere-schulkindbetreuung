@@ -1,12 +1,19 @@
 <div class="modal-dialog" role="document">
     <div class="modal-content">
 <div class="modal-header">
-    <h5 class="modal-title">{% trans %}Daten der Kinder eingeben{% endtrans %}</h5>
+    <h5 class="modal-title">{% trans %}Daten des Kindes eingeben{% endtrans %}</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body">
+
+    <ul>
+        {% for error in errors %}
+            <li>{{ error.message }}</li>
+        {% endfor %}
+    </ul>
+
     {{ form_start(form, {
         'attr': {
             'novalidate': 'novalidate',
@@ -14,7 +21,7 @@
 
         }
     }) }}
-    {{ form_errors(form) }}
+
 
     {{ form_widget(form) }}
     <button type="submit" class="btn btn-outline-primary ">{% trans %}Weiter{% endtrans %}</button>
