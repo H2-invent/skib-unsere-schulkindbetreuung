@@ -16,9 +16,18 @@
 
                 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-                {{ form_label(form.email) }}
-                {{ form_widget(form.email) }}
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email) }}
+                    </div>
+                    <div class="col-sm-1">
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Ausfüllhilfe" data-content="{% trans %}Die E-Mail Adresse ist wichtig, da alle Dokumente, Bestätigungen und Rechnungen automatisch an diese E-Mail geschickt werden.{% endtrans %}"></i>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-sm-11">
                 {{ form_label(form.vorname) }}
                 {{ form_widget(form.vorname) }}
 
@@ -36,14 +45,27 @@
 
                 {{ form_label(form.stadt) }}
                 {{ form_widget(form.stadt) }}
-
-                <div>{{ form_label(form.einkommen) }}
-                    <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Information" data-content="{% trans %}Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, unternahlt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).{% endtrans %}"></i>
+                    </div>
                 </div>
-                {{ form_widget(form.einkommen) }}
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_label(form.einkommen) }}
+                        {{ form_widget(form.einkommen) }}
+                    </div>
+                    <div class="col-sm-1">
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Ausfüllhilfe" data-content="{% trans %}Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, unternahlt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).{% endtrans %}"></i>
+                    </div>
+                </div>
 
-                {{ form_label(form.beruflicheSituation) }}
-                {{ form_widget(form.beruflicheSituation) }}
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_label(form.beruflicheSituation) }}
+                        {{ form_widget(form.beruflicheSituation) }}
+                    </div>
+                    <div class="col-sm-1">
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Ausfüllhilfe" data-content="{% trans %}Vorrangig aufgenommen werden Kinder von Alleinerziehenden und berufstätigen Eltern. Ein Rechtsanspruch auf Aufnahme besteht nicht.{% endtrans %}"></i>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-sm-11">
@@ -51,7 +73,7 @@
                         {{ form_label(form.kinderImKiga) }}
                     </div>
                     <div class="col-sm-1">
-                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Information" data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf den Preis des ältesten Kindes{% endtrans %}"></i>
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Ausfüllhilfe" data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf den Preis des ältesten Kindes{% endtrans %}"></i>
                     </div>
                 </div>
                 <div class="row">
@@ -60,16 +82,74 @@
                         {{ form_label(form.buk) }}
                     </div>
                     <div class="col-sm-1">
-                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Information" data-content="{% trans %}Bezieher/innen von ALG II bzw. Grundsicherung können nach dem Bildungs- und Teilhabepaket (BUT) einen Zuschuss erhalten. Dieser muss im Voraus beim Jobcenter/Sozailamt beantragt werden. Der Eigenanteil für diesen Personenkreis beträgt 1,00 € pro Mahlzeit.{% endtrans %}"></i>
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Ausfüllhilfe" data-content="{% trans %}Bezieher/innen von ALG II bzw. Grundsicherung können nach dem Bildungs- und Teilhabepaket (BUT) einen Zuschuss erhalten. Dieser muss im Voraus beim Jobcenter/Sozailamt beantragt werden. Der Eigenanteil für diesen Personenkreis beträgt 1,00 € pro Mahlzeit.{% endtrans %}"></i>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_widget(form.alleinerziehend) }}
+                        {{ form_label(form.alleinerziehend) }}
+                    </div>
+                    <div class="col-sm-1">
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="Ausfüllhilfe" data-content="{% trans %}Vorrangig aufgenommen werden Kinder von Alleinerziehenden und berufstätigen Eltern. Ein Rechtsanspruch auf Aufnahme besteht nicht.{% endtrans %}"></i>
 
                     </div>
                 </div>
 
-                {{ form_rest(form) }}
-                <i class="far fa-question-circle"></i>
-                {{ form_end(form) }}
             </div>
         </div>
+        <div class="card">
+            <div class="card-header">
+                <h4> {% trans %}Daten für den SEPA Lastschrifteinzug{% endtrans %}</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_label(form.iban) }}
+                        {{ form_widget(form.iban) }}
+
+                        {{ form_label(form.bic) }}
+                        {{ form_widget(form.bic) }}
+
+                        {{ form_label(form.kontoinhaber) }}
+                        {{ form_widget(form.kontoinhaber) }}
+
+                        {{ form_label(form.sepaInfo) }}
+                        {{ form_widget(form.sepaInfo) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h4> {% trans %}Daten für Notfälle und weitere Informationen{% endtrans %}</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_label(form.notfallName) }}
+                        {{ form_widget(form.notfallName) }}
+
+                        {{ form_label(form.notfallkontakt) }}
+                        {{ form_widget(form.notfallkontakt) }}
+
+                        {{ form_label(form.abholberechtigter) }}
+                        {{ form_widget(form.abholberechtigter) }}
+
+                        {{ form_label(form.gdpr) }}
+                        {{ form_widget(form.gdpr) }}
+
+                        {{ form_label(form.newsletter) }}
+                        {{ form_widget(form.newsletter) }}
+
+                        {{ form_rest(form) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 

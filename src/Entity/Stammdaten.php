@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StammdatenRepository")
@@ -84,6 +85,7 @@ class Stammdaten
     private $sepaInfo;
 
     /**
+     * @Assert\Iban()
      * @ORM\Column(type="text")
      */
     private $iban;
@@ -94,6 +96,7 @@ class Stammdaten
     private $kinds;
 
     /**
+     * @Assert\Bic()
      * @ORM\Column(type="text")
      */
     private $bic;
@@ -134,6 +137,7 @@ class Stammdaten
     private $secCode;
 
     /**
+     * @Assert\Email()
      * @ORM\Column(type="text")
      */
     private $email;

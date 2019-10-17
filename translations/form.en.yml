@@ -3,10 +3,10 @@ Nachname: __Nachname
 Vorname: First name
 Straße: Street
 Adresszusatz: Adress additional
-Netto Haushaltseinkommen pro Monat: Netto family income per Monath
+NBrutto Familieneinkommen pro Monat: __Brutto Familieneinkommen pro Monat
 Speichern: Save
-Kind im Kindergarten: Kids in the Kindergarten
-BUT Empfänger: BUT reciever
+Weiteres Kind in einer kostenpflichtiger öffentlichen Kindergarteneinrichtung: __Weiteres Kind in einer kostenpflichtiger öffentlichen Kindergarteneinrichtung
+Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger: __Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger
 Berufliche Situation der Eltern: Profession of the parents
 Notfalltelefonnummer: __Notfalltelefonnummer
 IBAN für das Lastschriftmandat: IBAN for SEPA
@@ -66,7 +66,7 @@ weiter: next
 Anzahl der Preiskategorien: __Anzahl der Preiskategorien
 Sicherheitscode der Eltern: __Sicherheitscode der Eltern
 Name und Beziehung des Notfallkontakt: __Name und Beziehung des Notfallkontakt
-Alleinerziehend: __Alleinerziehend
+Ich bin Alleinerziehend: __Ich bin Alleinerziehend
 Abholberechtiger: __Abholberechtiger
 Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause: __Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause
 Mein Kind darf an Ausflügen teilnehmen: __Mein Kind darf an Ausflügen teilnehmen
