@@ -381,15 +381,10 @@ class LoerrachWorkflowController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($kind);
             $em->flush();
-            $blocks = $kind->getZeitblocks();
-            $blocks2 = array();
-            foreach ($blocks as $data){
-                if($data->getGanztag() != 0){
-                    $blocks2[$data->getWochentag()][] = $data;
-                }
-            }
 
-            if (sizeof($blocks2) < 2){
+            $blocks2 =$kind->getTageWithBlocks();
+
+            if ($blocks2 < 2){
                 $result['text'] = $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Tage müssen ausgewählt werden)');
             $result['error'] = 2;
             }
@@ -604,19 +599,12 @@ class LoerrachWorkflowController extends AbstractController
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(
             array('id' => $request->get('kind_id'), 'eltern' => $adresse)
         );
-        $blocks = $kind->getZeitblocks();
-        $betreuung = array();
-        $mitagessen = array();
-        foreach ($blocks as $data) {
-            if ($data->getGanztag() == 0) {
-                $mitagessen[] = $data;
-            } else {
-                $betreuung[] = $data;
-            }
-        }
 
-// Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
-        if(sizeof($betreuung)<2){
+
+
+        // Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
+
+        if($kind->getTageWithBlocks()<2){
             $result['error']= 1;
             $result['text']= $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)');
             return new JsonResponse($result);
