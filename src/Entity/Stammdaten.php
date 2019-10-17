@@ -91,6 +91,7 @@ class Stammdaten
 
     /**
      * @Assert\Iban()
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $iban;
@@ -102,6 +103,7 @@ class Stammdaten
 
     /**
      * @Assert\Bic()
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $bic;

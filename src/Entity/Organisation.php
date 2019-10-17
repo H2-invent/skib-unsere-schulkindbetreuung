@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OrganisationRepository")
  * @Vich\Uploadable
@@ -21,6 +22,7 @@ class Organisation
     private $id;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $name;
@@ -41,6 +43,7 @@ class Organisation
     private $deleted = false;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $adresse;
@@ -51,51 +54,64 @@ class Organisation
     private $adresszusatz;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $plz;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $ort;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $ansprechpartner;
 
     /**
+     * @Assert\Iban()
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $iban;
 
     /**
+     * @Assert\Bic()
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $bic;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $bankName;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $glauaubigerId;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $infoText;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $telefon;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Email()
      * @ORM\Column(type="text")
      */
     private $email;
@@ -152,7 +168,7 @@ class Organisation
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -219,7 +235,7 @@ class Organisation
         return $this->adresse;
     }
 
-    public function setAdresse(string $adresse): self
+    public function setAdresse(?string $adresse): self
     {
         $this->adresse = $adresse;
 
@@ -231,7 +247,7 @@ class Organisation
         return $this->adresszusatz;
     }
 
-    public function setAdresszusatz(string $adresszusatz): self
+    public function setAdresszusatz(?string $adresszusatz): self
     {
         $this->adresszusatz = $adresszusatz;
 
@@ -243,7 +259,7 @@ class Organisation
         return $this->plz;
     }
 
-    public function setPlz(string $plz): self
+    public function setPlz(?string $plz): self
     {
         $this->plz = $plz;
 
@@ -255,7 +271,7 @@ class Organisation
         return $this->ort;
     }
 
-    public function setOrt(string $ort): self
+    public function setOrt(?string $ort): self
     {
         $this->ort = $ort;
 
@@ -267,7 +283,7 @@ class Organisation
         return $this->ansprechpartner;
     }
 
-    public function setAnsprechpartner(string $ansprechpartner): self
+    public function setAnsprechpartner(?string $ansprechpartner): self
     {
         $this->ansprechpartner = $ansprechpartner;
 
@@ -279,7 +295,7 @@ class Organisation
         return $this->iban;
     }
 
-    public function setIban(string $iban): self
+    public function setIban(?string $iban): self
     {
         $this->iban = $iban;
 
@@ -291,7 +307,7 @@ class Organisation
         return $this->bic;
     }
 
-    public function setBic(string $bic): self
+    public function setBic(?string $bic): self
     {
         $this->bic = $bic;
 
@@ -303,7 +319,7 @@ class Organisation
         return $this->bankName;
     }
 
-    public function setBankName(string $bankName): self
+    public function setBankName(?string $bankName): self
     {
         $this->bankName = $bankName;
 
@@ -315,7 +331,7 @@ class Organisation
         return $this->glauaubigerId;
     }
 
-    public function setGlauaubigerId(string $glauaubigerId): self
+    public function setGlauaubigerId(?string $glauaubigerId): self
     {
         $this->glauaubigerId = $glauaubigerId;
 
@@ -327,7 +343,7 @@ class Organisation
         return $this->infoText;
     }
 
-    public function setInfoText(string $infoText): self
+    public function setInfoText(?string $infoText): self
     {
         $this->infoText = $infoText;
 
@@ -339,7 +355,7 @@ class Organisation
         return $this->telefon;
     }
 
-    public function setTelefon(string $telefon): self
+    public function setTelefon(?string $telefon): self
     {
         $this->telefon = $telefon;
 
@@ -351,7 +367,7 @@ class Organisation
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -363,7 +379,7 @@ class Organisation
         return $this->smptServer;
     }
 
-    public function setSmptServer(string $smptServer): self
+    public function setSmptServer(?string $smptServer): self
     {
         $this->smptServer = $smptServer;
 
