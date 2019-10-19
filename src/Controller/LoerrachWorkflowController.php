@@ -488,7 +488,7 @@ class LoerrachWorkflowController extends AbstractController
                     $fileName,
                     $this->einkommensgruppen,
                     $data->getZeitblocks()[0]->getSchule()->getOrganisation(),
-                    'S'
+                    'D'
                 );
                 $attachment[] = (new \Swift_Attachment())
                     ->setFilename($fileName . '.pdf')
@@ -635,10 +635,12 @@ class LoerrachWorkflowController extends AbstractController
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern'=>$elter,'id'=>$request->get(
             'id')));
         $organisation = $kind->getAllBlocks()[0]->getSchule()->getOrganisation();
+        dump($organisation->getName());
         $fileName = $kind->getVorname().'_'.$kind->getNachname().'_'.$kind->getSchule()->getName().'.pdf';
+        //todo I is to show the pdf in the browser D is to download;
 
-        return  $print ->printAnmeldebestätigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->einkommensgruppen,$organisation,'D');
-
+     $print ->printAnmeldebestätigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->einkommensgruppen,$organisation,'I');
+        return 0;
 
     }
 
