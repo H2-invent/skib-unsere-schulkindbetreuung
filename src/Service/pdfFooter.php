@@ -22,7 +22,7 @@ class pdfFooter extends \TCPDF
     }
     public function setOrganisation(Organisation $organisation){
      $this->organisation = $organisation;
-     dump($this->organisation);
+
     }
 
     public function Footer() {
