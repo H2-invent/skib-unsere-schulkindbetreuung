@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -349,7 +350,7 @@ class Kind
 
         $blocks = $this->zeitblocks->toArray();
         $blocks = array_merge($blocks, $this->beworben->toArray());
-        dump($blocks);
+        
         foreach ($blocks as $data){
             if($data->getGanztag() != 0){
                 $blocks2[$data->getWochentag()][] = $data;
@@ -454,7 +455,7 @@ class Kind
         $summe = 0;
         $blocks = $kind->getZeitblocks()->toArray();
         $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
-        dump($blocks);
+
         foreach ($blocks as $data){
 
             if($data->getGanztag() != 0 && $data->getDeleted() == false){
@@ -605,5 +606,9 @@ class Kind
         }
 
         return $this;
+    }
+    public function getAllBlocks()
+    {
+        return array_merge($this->zeitblocks->toArray(), $this->beworben->toArray());
     }
 }

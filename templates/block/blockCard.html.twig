@@ -13,7 +13,7 @@
                 {% endif %}
                 <p>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</p>
 
-            </div>
+
             <p>
                 <a class="btn btn-primary" data-toggle="collapse" href="#collapse{{ b.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
                 {% trans %}Detail{% endtrans %}
@@ -27,7 +27,7 @@
                     <p>{% trans %}Min{% endtrans %}: {{ b.min }}</p>
                         <p>{% trans %}Max{% endtrans %}: {{ b.max }}</p>
                         <b>{% trans %}Angemeldete Kinder{% endtrans %}:</b>
-                        {{ b.kinderBeworben|length }}
+                        {{ b.BeworbenwithFin|length }}
                     {% endif %}
                     <p>{% trans %}Preise{% endtrans %}:</p>
                     <ul class="list-group">
@@ -36,6 +36,7 @@
                     </ul>
 
                   </div>
+            </div>
             </div>
             <div class="bmd-card-actions text-center">
                 {% if b.deleted == false %}
@@ -47,8 +48,9 @@
                      <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i class="material-icons">delete</i></a>
                     {% endif %}
 
-                    {% if is_granted('ROLE_ORG_ACCEPT_CHILD') and b.min is not null or b.max is not null %}
-                        <a href="#"><i class="material-icons">check</i> </a>
+                    {% if is_granted('ROLE_ORG_ACCEPT_CHILD') and (b.min is not null or b.max is not null) and b.BeworbenwithFin|length>0 %}
+                        <a href="{{ path('kontingent_accept_all_kids',{'block_id':b.id}) }}" class="deleteAjax"><i class="material-icons">check</i> </a>
+                        <a href="{{ path('kontingent_show_kids',{'block_id':b.id}) }}"><i class="material-icons">person_add</i> </a>
                     {% endif %}
                 {% else %}
                     {% trans %}gelöscht/deaktiviert{% endtrans %}
