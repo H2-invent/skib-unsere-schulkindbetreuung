@@ -155,7 +155,18 @@ class Zeitblock
             return $kind;
     }
 
+    public function getBeworbenwithFin()
+    {
+        $kind= array();
+        foreach($this->kinderBeworben->toArray() as $data) {
 
+            if($data->getFin() == true) {
+                $kind[] = $data;
+            }
+        }
+
+        return $kind;
+    }
     public function addKind(Kind $kind): self
     {
         if (!$this->kind->contains($kind)) {
