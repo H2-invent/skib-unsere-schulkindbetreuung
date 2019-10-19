@@ -471,8 +471,8 @@ class LoerrachWorkflowController extends AbstractController
             $em->persist($data);
         }
       $em->persist($adresse);
-        //todo hier muss der flush wieder rein
-     //   $em->flush();
+
+   $em->flush();
         $attachment = array();
         $ical = array();
 
@@ -533,10 +533,10 @@ class LoerrachWorkflowController extends AbstractController
 
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
-     //todo hier muss der Kommentar raus
-        //   $response->headers->clearCookie('UserID');
-      //  $response->headers->clearCookie('SecID');
-     //   $response->headers->clearCookie('KindID');
+
+         $response->headers->clearCookie('UserID');
+     $response->headers->clearCookie('SecID');
+      $response->headers->clearCookie('KindID');
         return $response;
 
     }
