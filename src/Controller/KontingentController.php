@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Kind;
 use App\Entity\Zeitblock;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -83,7 +85,7 @@ class KontingentController extends AbstractController
     /**
      * @Route("/org_accept/remove/kid", name="kontingent_remove_kid",methods={"GET"})
      */
-    public function removeKid(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function removeKid(Request $request,ValidatorInterface $validator, TranslatorInterface $translator,LoggerInterface $logger)
     {
         $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
         if($this->getUser()->getOrganisation()!= $block->getSchule()->getOrganisation()){
@@ -92,14 +94,19 @@ class KontingentController extends AbstractController
         $kind= $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
         try {
             if (in_array($block, $kind->getBeworben()->toArray())) {
+
+                $logger->info('Remove Beworbenes Kind from Block:'.json_encode($kind));
+
                 $kind->removeBeworben($block);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($kind);
-                $em->flush();
+            //    $em->flush();
                 return new JsonResponse(array('snack' => $translator->trans('Erfolgreich gespeichert')));
 
             }
         }catch (\Exception $e){
+            $logger = $this->get('logger');
+            $logger->err('Kind could not be removed from block: '.json_encode($kind));
             return new JsonResponse(array('snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
         }
     }
