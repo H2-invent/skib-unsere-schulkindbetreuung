@@ -13,6 +13,8 @@ use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
@@ -22,17 +24,20 @@ class PrintService
     private $mailer;
     private $templating;
     private  $translator;
-    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating,TranslatorInterface $translator)
+    protected $parameterBag;
+    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating,TranslatorInterface $translator,ParameterBagInterface $parameterBag)
     {
         $this->mailer =  $mailer;
         $this->templating = $templating;
         $this->translator = $translator;
+        $this->parameterBag = $parameterBag;
     }
 
     public function printAnmeldebestätigung(Kind $kind, Stammdaten $elter,Stadt $stadt, TCPDFController $tcpdf, $fileName, $einkommmensgruppen,Organisation $organisation, $type = 'D' )
     {
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
+
         //$pdf-> = $this->container->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         //todo hier musss der Test raus
         $pdf->SetAuthor('Test');
@@ -47,8 +52,8 @@ class PrintService
 
         //$pdf->SetMargins(20,20,40, true);
         $pdf->AddPage();
-        $adressComp = '<p><small>'.$stadt->getName().' | '.$stadt->getAdresse().$stadt->getAdresszusatz(
-            ).' | '.$stadt->getPlz().(' ').$stadt->getOrt().'</small><br><br>';
+        $adressComp = '<p><small>'.$organisation->getName().' | '.$organisation->getAdresse().$organisation->getAdresszusatz(
+            ).' | '.$organisation->getPlz().(' ').$organisation->getOrt().'</small><br><br>';
 
         $adressComp = $adressComp.$elter->getVorname().' '.$elter->getName();
         $adressComp .= '<br>'.$elter->getStrasse();
@@ -71,13 +76,24 @@ class PrintService
             $autopadding = true
         );
         $pdf->setJPEGQuality(75);
+        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
-        if ($stadt->getImage()) {
-            $logo = $this->templating->render('pdf/img.html.twig', array('stadt' => $stadt));
 
-            $pdf->Image($logo, $x = 110, $y = 20, $w = 50);
+        $logo = '';
+        if ($organisation->getImage()) {
+            $logo = $this->templating->render('pdf/img.html.twig', array('stadt' => $organisation));
+
+          ;
+
         }
-        $kontaktDaten = '<table cellspacing="3px">'.
+        $logo = $this->parameterBag->get('kernel.project_dir').'/public'.$logo;
+        $im = file_get_contents($logo);
+        $imdata = base64_encode($im);
+        $imgdata = base64_decode($imdata);
+        dump($imdata);
+        $pdf->Image('@'.$imgdata,140,20,50);
+
+          $kontaktDaten = '<table cellspacing="3px">'.
 
             '<tr>'.'<td align="right">'.$this->translator->trans('Sicherheitscode').': </td><td  align="left" >'.$elter->getSecCode().'</td></tr>'.
             '<tr>'.'<td align="right">'.$this->translator->trans('Anmeldedatum').': </td><td  align="left" >'.$elter->getCreatedAt()->format('d.m.Y').'</td></tr>'.
@@ -173,7 +189,7 @@ class PrintService
         );
 
 
-        return  $pdf->Output($fileName.".pdf", $type); // This will output the PDF as a Download
+  return  $pdf->Output($fileName.".pdf", $type); // This will output the PDF as a Download
     }
 
 

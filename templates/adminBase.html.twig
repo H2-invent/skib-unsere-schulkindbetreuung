@@ -40,7 +40,7 @@
         <!-- Sidebar Header    -->
         <div class="sidenav-header d-flex align-items-center justify-content-center">
             <!-- User Info-->
-            <div class="sidenav-header-inner text-center"><img src="img/avatar-7.jpg" alt="person" class="img-fluid rounded-circle">
+            <div class="sidenav-header-inner text-center">
                 <h2 class="h5">{{ app.user.username }}</h2><span>{{ app.user.vorname }} {{ app.user.nachname }}</span>
             </div>
             <!-- Small Brand information, appears on minimized sidebar-->
@@ -80,9 +80,9 @@
                     <li><a href="{{ path('city_employee_org_show',{'id':app.user.organisation.id}) }}"> <i class="material-icons">people</i> {% trans %}Meine Mitarbeiter{% endtrans %}</a></li>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
-                    <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"> <i class="material-icons">sports_handball</i> {% trans %}Meine Schulen{% endtrans %}</a></li>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
+                        <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"> <i class="material-icons">sports_handball</i> {% trans %}Meine Schulen{% endtrans %}</a></li>
                     <li><a href="{{ path('child_show',{'id':app.user.organisation.id}) }}"> <i class="material-icons">emoji_people</i> {% trans %}Meine Kinder{% endtrans %}</a></li>
                 {% endif %}
 
@@ -97,6 +97,7 @@
 
                 <h5 class="sidenav-heading">{% trans %}Einstellungen{% endtrans %}</h5>
                 <li><a href="{{ path('fos_user_change_password') }}"> <i class="icon-home"></i>{% trans %}Passwort ändern{% endtrans %}</a></li>
+               {% if is_granted('ROLE_ADMIN') %}
                 <h5 class="sidenav-heading">Main</h5>
                 <li><a href="index.html"> <i class="icon-home"></i>Home                             </a></li>
                 <li><a href="forms.html"> <i class="icon-form"></i>Forms                             </a></li>
@@ -124,6 +125,7 @@
                 <li> <a href=""> <i class="icon-picture"> </i>Demo</a></li>
             </ul>
         </div>
+        {% endif %}
     </div>
 </nav>
 <div class="page">
@@ -132,8 +134,8 @@
         <nav class="navbar">
             <div class="container-fluid">
                 <div class="navbar-holder d-flex align-items-center justify-content-between">
-                    <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a><a href="index.html" class="navbar-brand">
-                            <div class="brand-text d-none d-md-inline-block"><span>Bootstrap </span><strong class="text-primary">Dashboard</strong></div></a></div>
+                    <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a><a href="{{path('dashboard')}}" class="navbar-brand">
+                            <div class="brand-text d-none d-md-inline-block"><span>Kinderbetreuung </span><strong class="text-primary"> SKB</strong></div></a></div>
                     <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                         <!-- Notifications dropdown-->
                         <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell"></i><span class="badge badge-warning">12</span></a>
@@ -162,26 +164,7 @@
                             </ul>
                         </li>
                         <!-- Messages dropdown-->
-                        <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope"></i><span class="badge badge-info">10</span></a>
-                            <ul aria-labelledby="notifications" class="dropdown-menu">
-                                <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
-                                        <div class="msg-profile"> <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
-                                        <div class="msg-body">
-                                            <h3 class="h5">Jason Doe</h3><span>sent you a direct message</span><small>3 days ago at 7:58 pm - 10.06.2014</small>
-                                        </div></a></li>
-                                <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
-                                        <div class="msg-profile"> <img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
-                                        <div class="msg-body">
-                                            <h3 class="h5">Frank Williams</h3><span>sent you a direct message</span><small>3 days ago at 7:58 pm - 10.06.2014</small>
-                                        </div></a></li>
-                                <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
-                                        <div class="msg-profile"> <img src="img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
-                                        <div class="msg-body">
-                                            <h3 class="h5">Ashley Wood</h3><span>sent you a direct message</span><small>3 days ago at 7:58 pm - 10.06.2014</small>
-                                        </div></a></li>
-                                <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong> <i class="fa fa-envelope"></i>Read all messages    </strong></a></li>
-                            </ul>
-                        </li>
+
                         <!-- Languages dropdown    -->
                         <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><span class="d-none d-sm-inline-block">{% trans %}Sprache{% endtrans %}</span></a>
                             <ul aria-labelledby="languages" class="dropdown-menu">
@@ -667,7 +650,12 @@
 <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
 <script>
     $(document).ready( function () {
-        $('table').DataTable();
+        {% block table %}
+        $('table').DataTable({
+
+            }
+        );
+        {% endblock %}
         {% if app.request.query.get("snack") is defined and app.request.query.get("snack") is not null %}
         var options =  {
             content: "{{ app.request.query.get("snack") }}", // text of the snackbar

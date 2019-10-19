@@ -38,6 +38,7 @@
                         <th>{% trans %}Eltern{% endtrans %}</th>
                         <th>{% trans %}Notfallkontakt{% endtrans %}</th>
                         <th>{% trans %}Schule{% endtrans %}</th>
+                        <th>{% trans %}Klasse{% endtrans %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -58,7 +59,7 @@
                         <td>{{ k.eltern.vorname }} {{ k.eltern.name }}</td>
                         <td>{{ k.eltern.notfallkontakt }}</td>
                         <td>{{ k.schule.name }}</td>
-
+                        <td>{{ k.klasse }}. {{ 'Klasse'|trans }}</td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -70,5 +71,14 @@
         </div>
     </div>
 </section>
+
+{% endblock %}
+{% block table %}
+
+        $('table').DataTable({
+                "order": [[ 6, "asc" ]]
+            }
+        );
+
 
 {% endblock %}

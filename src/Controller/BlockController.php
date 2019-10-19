@@ -18,7 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class BlockController extends AbstractController
 {
     /**
-     * @Route("/org_block/schule/show", name="block_schulen_schow",methods={"GET"})
+     * @Route("/org_child/show/schule/show", name="block_schulen_schow",methods={"GET"})
      */
     public function showSchulen(Request $request)
     {
@@ -30,7 +30,7 @@ class BlockController extends AbstractController
         return $this->render('block/schulen.html.twig',array('schule'=>$schule));
     }
     /**
-     * @Route("/org_block/schule/block/show", name="block_schule_schow",methods={"GET"})
+     * @Route("/org_child/show/schule/block/show", name="block_schule_schow",methods={"GET"})
      */
     public function showBlocks(Request $request)
     {
@@ -43,7 +43,7 @@ class BlockController extends AbstractController
         return $this->render('block/blocks.html.twig',array('schuljahre'=>$activity,'schule'=>$schule,'blocks'=>$blocks));
     }
     /**
-     * @Route("/org_block/schule/block/getBlocks", name="block_schule_getBlocks",methods={"GET"})
+     * @Route("/org_child/show/schule/block/getBlocks", name="block_schule_getBlocks",methods={"GET"})
      */
     public function getBlocks(Request $request)
     {
