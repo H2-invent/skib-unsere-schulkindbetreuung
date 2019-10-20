@@ -133,6 +133,7 @@ class ChildController extends AbstractController
                 ->setParameter('klasse',$request->get('klasse'));
             $text .= $translator->trans('in der Klasse: %klasse%',array('%klasse%'=>$request->get('klasse')));
         }
+        $qb->andWhere('k.fin = 1');
         $query = $qb->getQuery();
         $blocks = $result = $query->getResult();
         $kinderU = $blocks;
