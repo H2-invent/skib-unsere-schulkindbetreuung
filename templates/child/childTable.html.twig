@@ -1,0 +1,51 @@
+<div class="card-header">
+    <h1>{{ text }}</h1>
+</div>
+<div class="table-responsive">
+
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>{% trans %}Vorname{% endtrans %}</th>
+                        <th>{% trans %}Nachname{% endtrans %}</th>
+                        <th>{% trans %}Eltern{% endtrans %}</th>
+                        <th>{% trans %}Notfallkontakt{% endtrans %}</th>
+                        <th>{% trans %}Schule{% endtrans %}</th>
+                        <th>{% trans %}Klasse{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for k in kinder %}
+                    <tr>
+                        <td> <div class="btn-group">
+                                <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                    <a class="dropdown-item"  href="{{ path('child_detail',{'kind_id':k.id}) }}">Detail</a>
+                                    {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                                    <a class="dropdown-item" href="{{ path('child_change_seccode',{'kind_id':k.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                    {% endif %}
+                                </div>
+                            </div></td>
+                        <td>{{ k.vorname }}</td>
+                        <td>{{ k.nachname }}</td>
+                        <td>{{ k.eltern.vorname }} {{ k.eltern.name }}</td>
+                        <td>{{ k.eltern.notfallkontakt }}</td>
+                        <td>{{ k.schule.name }}</td>
+                        <td>{{ k.klasse }}. {{ 'Klasse'|trans }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+</div>
+
+                <script>
+                    $('.table').DataTable().destroy();
+                    $('.table').DataTable({
+                            "order": [[ 6, "asc" ]]
+                        }
+                    );
+                </script>

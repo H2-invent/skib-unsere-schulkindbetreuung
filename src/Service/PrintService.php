@@ -270,4 +270,64 @@ class PrintService
 
         return  $pdf->Output($fileName.".pdf", $type); // This will output the PDF as a Download
     }
+    public function printChildList($kinder, Organisation $organisation,$text,$fileName, TCPDFController $tcpdf,$type = 'I' )
+    {
+        $pdf = $tcpdf->create();
+        $pdf->setOrganisation($organisation);
+
+        //$pdf-> = $this->container->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        //todo hier musss der Test raus
+        $pdf->SetAuthor('Test');
+        $pdf->SetTitle('test');
+        $pdf->SetSubject('test');
+        $pdf->setFontSubsetting(true);
+        $pdf->SetFont('helvetica', '', 10, '', true);
+        $pdf->SetMargins(20, 15, 20, true);
+        $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
+        $pdf->setHeaderData('', 0, '', '', array(0, 0, 0), array(255, 255, 255));
+        $pdf->setFooterData(1, 1);
+
+        //$pdf->SetMargins(20,20,40, true);
+        $pdf->AddPage();
+
+        $pdf->setJPEGQuality(75);
+        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+
+        $logo = '';
+        if ($organisation->getImage()) {
+            $logo = $this->templating->render('pdf/img.html.twig', array('stadt' => $organisation));
+            $logo = $this->parameterBag->get('kernel.project_dir').'/public'.$logo;
+            $im = file_get_contents($logo);
+            $imdata = base64_encode($im);
+            $imgdata = base64_decode($imdata);
+            $pdf->Image('@'.$imgdata,140,10,50);
+        }
+
+
+
+
+        $kindData = $this->templating->render('pdf/kinderliste.html.twig',array('text'=>$text,'kinder'=>$kinder));
+        $pdf->writeHTMLCell(
+            $w = 0,
+            $h = 0,
+            $x = 20,
+            $y = 50,
+            $kindData,
+            $border = 0,
+            $ln = 1,
+            $fill = 0,
+            $reseth = true,
+            $align = '',
+            $autopadding = true
+        );
+
+
+
+
+
+
+        return  $pdf->Output($fileName.".pdf", $type); // This will output the PDF as a Download
+    }
+
 }
