@@ -7,64 +7,58 @@
             <!-- Count item widget-->
             <div class=" col-12 card">
                 <div class="card-header">
-                  <h1> {{ text }} {% if is_granted('ROLE_ORG_CHILD_CHANGE') %} <a href="{{ path('workflow_start',{'slug':organisation.stadt.slug}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                  <h1> {% if is_granted('ROLE_ORG_CHILD_CHANGE') %} <a href="{{ path('workflow_start',{'slug':organisation.stadt.slug}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
                          <i class="material-icons">add</i>
                       </button></a>{% endif %}
                   </h1>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
+                        <div class="btn-group" role="group" aria-label="Basic example">
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {% trans %}Alle Schuljahre{% endtrans %}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="schuljahrSelector dropdown-item"  href="{{ path('child_show',{'id':organisation.id}) }}"> {% trans %}Alle Schuljahre{% endtrans %}</a>
+                                <a class="schuljahrSelector dropdown-item" data-type="schuljahr" data-value="null"  href="#"> {% trans %}Alle Schuljahre{% endtrans %}</a>
 
                                 {% for s in schuljahre %}
-                                    <a class="schuljahrSelector dropdown-item" data-id="{{ s.id }}" href="{{ path('child_show',{'id':organisation.id,'schuljahr':s.id}) }}">{{ s.von|date('d.m.Y') }} - {{ s.bis|date('d.m.Y') }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="schuljahr" data-value="{{s.id}}" data-id="#">{{ s.von|date('d.m.Y') }} - {{ s.bis|date('d.m.Y') }}</a>
                                 {% endfor %}
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {% trans %}Alle Schulen{% endtrans %}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="schuljahrSelector dropdown-item"  data-type="schule"  data-value="null"  href="#"> {% trans %}Alle Schulen{% endtrans %}</a>
+
+                                {% for s in organisation.schule %}
+                                    <a class="schuljahrSelector dropdown-item" data-type="schule" data-value="{{ s.id }}" data-id="{{ s.id }}" href="#">{{ s.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {% trans %}Alle Wochentage{% endtrans %}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value=null href="#"> {% trans %}Alle Wochentage{% endtrans %}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="0"  href="#">{{ 'Montag'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="1" href="#">{{ 'Dienstag'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="2" href="#">{{ 'Mittwoch'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="3" href="#">{{ 'Donnerstag'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="4" href="#">{{ 'Freitag'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="5" href="#">{{ 'Samstag'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="6" href="#">{{ 'Sonntag'|trans }}</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-<div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th>{% trans %}Vorname{% endtrans %}</th>
-                        <th>{% trans %}Nachname{% endtrans %}</th>
-                        <th>{% trans %}Eltern{% endtrans %}</th>
-                        <th>{% trans %}Notfallkontakt{% endtrans %}</th>
-                        <th>{% trans %}Schule{% endtrans %}</th>
-                        <th>{% trans %}Klasse{% endtrans %}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for k in kinder %}
-                    <tr>
-                        <td> <div class="btn-group">
-                                <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">more_vert</i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-                                    <a class="dropdown-item"  href="{{ path('child_detail',{'kind_id':k.id}) }}">Detail</a>
-                                    {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
-                                    <a class="dropdown-item" href="{{ path('child_change_seccode',{'kind_id':k.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
-                                    {% endif %}
-                                </div>
-                            </div></td>
-                        <td>{{ k.vorname }}</td>
-                        <td>{{ k.nachname }}</td>
-                        <td>{{ k.eltern.vorname }} {{ k.eltern.name }}</td>
-                        <td>{{ k.eltern.notfallkontakt }}</td>
-                        <td>{{ k.schule.name }}</td>
-                        <td>{{ k.klasse }}. {{ 'Klasse'|trans }}</td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+<div id="childTable">
+
 </div>
 
 
@@ -74,12 +68,54 @@
 </section>
 
 {% endblock %}
-{% block table %}
 
-        $('table').DataTable({
-                "order": [[ 6, "asc" ]]
-            }
-        );
+{% block jquery %}
+<script>
+    var search =
+        {
+            schule: null,
+            wochentag: null,
+            schuljahr: null,
+            {% if app.request.query.get("block") is defined and app.request.query.get("block") is not null %}
+            block: {{ app.request.query.get("block") }},
+    {% else %}
+            block:null,
+    {% endif %}
 
+            organisation: {{ organisation.id }}
+        };
+
+    $('.dropdown-item').click(function () {
+        var ele = $(this);
+        var text = ele.text();
+        var dropdown = ele.closest('.dropdown').find('button');
+        dropdown.text(text);
+        var type = ele.attr('data-type');
+        var value = ele.attr('data-value') == 'null'? null:ele.attr('data-value');
+        search.block = null;
+
+        switch (type) {
+            case 'schule':
+                search.schule = value;
+                break;
+            case 'wochentag':
+                search.wochentag = value;
+                break;
+            case 'schuljahr':
+                search.schuljahr = value;
+                break;
+            default:
+                break;
+
+        }
+
+
+
+        $('#childTable').load('{{ path('child_child_Table') }}',search);
+    });
+    $('#childTable').load('{{ path('child_child_Table') }}',search);
+
+
+</script>
 
 {% endblock %}
