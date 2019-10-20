@@ -90,7 +90,12 @@ class ChildController extends AbstractController
         }
         $repo = $this->getDoctrine()->getRepository(Zeitblock::class);
         $em = $this->getDoctrine()->getManager();
-        $qb = $repo->createQueryBuilder('b');
+
+        $qb = $this->getDoctrine()->getRepository(Kind::class)->createQueryBuilder('k')
+            ->innerJoin('k.zeitblocks','b');
+
+
+        //$qb = $repo->createQueryBuilder('b');
         $text = $translator->trans('Kinder betreut von der Organisation %organisation%',array('%organisation%'=>$organisation->getName()));
         $blocks = array();
        if($request->get('schule')){
@@ -123,8 +128,16 @@ class ChildController extends AbstractController
                 ->setParameter('block',$request->get('block'));
             $text .= $translator->trans('im Zeitblock');
         }
+        if($request->get('klasse')){
+            $qb->andWhere('k.klasse = :klasse')
+                ->setParameter('klasse',$request->get('klasse'));
+            $text .= $translator->trans('in der Klasse: %klasse%',array('%klasse%'=>$request->get('klasse')));
+        }
         $query = $qb->getQuery();
         $blocks = $result = $query->getResult();
+        $kinderU = $blocks;
+        dump($blocks);
+        /*return 0;
         $kinder = array();
         foreach ($blocks as $data){
             $kinder =  array_merge($kinder, $data->getKind()->toArray());
@@ -134,7 +147,7 @@ class ChildController extends AbstractController
             if ($data->getFin() == true){
                 $kinderU[$data->getId()] = $data;
             }
-        }
+        }*/
         if($request->get('print')){
             //todo test im Filename raus
             return $printService->printChildList($kinderU,$organisation,$text,'Test',$TCPDFController,'D');
