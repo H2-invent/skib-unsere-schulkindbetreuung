@@ -6,10 +6,12 @@ use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Zeitblock;
+use App\Service\PrintService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 class ChildController extends AbstractController
 {
@@ -79,5 +81,18 @@ class ChildController extends AbstractController
              throw new \Exception('Wrong Organisation');
          }
          return $this->render('child/childDetail.html.twig',array('k'=>$kind,'eltern'=>$kind->getEltern()));
+    }
+    /**
+     * @Route("/org_child/print/detail", name="child_detail_print")
+     */
+    public function printChild(Request $request, TranslatorInterface $translator, PrintService $printService, TCPDFController $TCPDFController)
+    {
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
+
+        if ($kind->getSchule()->getOrganisation()!= $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        $fileName = $kind->getVorname().'_'.$kind->getNachname();
+        return $printService->printChildDetail($kind,$kind->getEltern(),$TCPDFController,$fileName,$kind->getSchule()->getOrganisation(),'D');
     }
 }

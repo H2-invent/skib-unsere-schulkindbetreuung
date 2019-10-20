@@ -5,10 +5,12 @@
     <div class="row">
     <!-- Count item widget-->
     <div class=" col-12 card">
-        <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
+        <div class="card-header">
+        <h1>{% trans %}Zusammenfassung{% endtrans %} <a href="{{ path('child_detail_print',{'kind_id':k.id}) }}"><i class="material-icons">print</i></a></h1>
+        </div>
     <div class="card">
         <div class="card-header">
-    <h3 class="cover-heading">{% trans %}Daten der erziehungsberechtigten Person{% endtrans %} <a href="{{ path('loerrach_workflow_adresse') }}"> <i class="fa fa-edit"></i></a></h3>
+            <h2 class="cover-heading">{% trans %}Daten der erziehungsberechtigten Person{% endtrans %}</h2>
         </div>
         <div class="card-body">
         <table class="table">
@@ -54,21 +56,21 @@
         <!-- Daten der Kinder in einer for Schleife -->
     <div class="card">
         <div class="card-header">
-        <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen') }}"> <i class="fa fa-edit"></i></a></h3>
+        <h2 class="cover-heading">{% trans %}Daten des Kinds{% endtrans %} </h2>
         </div>
         <div class="text-left" id="accordion">
 
             <div class="card">
                 <div class="card-header" id="heading0">
                     <h5 class="mb-0">
-                        <a data-toggle="collapse" data-target="#collapse0" aria-expanded="false" aria-controls="collapse0">
-                            {{ k.vorname }} {{ k.nachname }} <br/><small>
 
-                        </a>
+                            {{ k.vorname }} {{ k.nachname }}
+
+
                     </h5>
                 </div>
 
-                <div id="collapse0" class="collapse" aria-labelledby="heading0" data-parent="#accordion">
+                <div id="collapse0"  aria-labelledby="heading0" data-parent="#accordion">
                     <div class="card-body">
                         <table class="table">
                             <tbody>
@@ -134,10 +136,6 @@
                                 <td>{{ k.fotos?"Ja":'Nein'|trans }}</td>
                             </tr>
 
-                            <tr>
-                                <td>{% trans %} Zuständiger Träger in der Schule {% endtrans %}</td>
-                                <td>{{ k.schule.organisation.name }}</td>
-                            </tr>
                            {% if k.betreungsblocksReal|length > 0 %}
                             <tr>
                                 <td>{% trans %} Bemerkung {% endtrans %}</td>
@@ -186,18 +184,7 @@
                                     </ul>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <h5>
-                                        {% trans %} Summe {% endtrans %}
-                                    </h5>
-                                </td>
-                                <td>
-                                    <h5>
-                                        {% if k.tageWithBlocks < 2 %} {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} {% else %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %}
-                                    </h5>
-                                </td>
-                            </tr>
+
                             </tbody>
                         </table>
                     </div>
