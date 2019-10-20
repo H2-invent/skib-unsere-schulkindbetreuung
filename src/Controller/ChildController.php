@@ -136,21 +136,12 @@ class ChildController extends AbstractController
         $query = $qb->getQuery();
         $blocks = $result = $query->getResult();
         $kinderU = $blocks;
-  
-        /*return 0;
-        $kinder = array();
-        foreach ($blocks as $data){
-            $kinder =  array_merge($kinder, $data->getKind()->toArray());
-        }
-        $kinderU = array();
-        foreach ($kinder as $data){
-            if ($data->getFin() == true){
-                $kinderU[$data->getId()] = $data;
-            }
-        }*/
+
+
         if($request->get('print')){
             //todo test im Filename raus
-            return $printService->printChildList($kinderU,$organisation,$text,'Test',$TCPDFController,'D');
+            $fileName = (new \DateTime())->format('d.m.Y_H.i');
+            return $printService->printChildList($kinderU,$organisation,$text,$fileName,$TCPDFController,'D');
 
         } else{
             return $this->render('child/childTable.html.twig', [
