@@ -94,15 +94,16 @@ class ChildController extends AbstractController
         $text = $translator->trans('Kinder betreut von der Organisation %organisation%',array('%organisation%'=>$organisation->getName()));
         $blocks = array();
        if($request->get('schule')){
+
        $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule'));
         $qb->andWhere('b.schule = :schule')
            ->setParameter('schule',$schule);
            $text .= $translator->trans(' an der Schule %schule%',array('%schule%' => $schule->getName()));
        }else{
-
+            $count = 0;
            foreach ($organisation->getSchule() as $data){
-                   $qb->orWhere('b.schule = :schule')
-                   ->setParameter('schule',$data);
+                   $qb->orWhere('b.schule = :schule'.$count)
+                   ->setParameter('schule'.$count++,$data);
            }
 
        }
@@ -135,6 +136,7 @@ class ChildController extends AbstractController
             }
         }
         if($request->get('print')){
+            //todo test im Filename raus
             return $printService->printChildList($kinderU,$organisation,$text,'Test',$TCPDFController,'D');
 
         } else{
