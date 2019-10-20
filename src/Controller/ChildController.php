@@ -132,9 +132,16 @@ class ChildController extends AbstractController
                 $kinderU[$data->getId()] = $data;
             }
         }
-        return $this->render('child/childTable.html.twig', [
-            'kinder' => $kinderU,
-            'text'=>$text
-        ]);
+        if($request->get('print')){
+            return $printService->printChildList($kinderU,$organisation,$text,'Test',$TCPDFController,'D');
+
+        } else{
+            return $this->render('child/childTable.html.twig', [
+                'kinder' => $kinderU,
+                'text'=>$text
+            ]);
+        }
+
+
     }
 }

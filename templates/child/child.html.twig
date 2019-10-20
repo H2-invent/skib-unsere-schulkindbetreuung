@@ -54,7 +54,9 @@
                                     <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="6" href="#">{{ 'Sonntag'|trans }}</a>
                                 </div>
                             </div>
-                        </div>
+                            <button class="print btn btn-secondary" type="button">
+                                <i class="material-icons">print</i>
+                            </button>           </div>
                     </div>
                 </div>
 <div id="childTable">
@@ -82,7 +84,7 @@
             block:null,
     {% endif %}
 
-            organisation: {{ organisation.id }}
+            organisation: {{ organisation.id }},
         };
 
     $('.dropdown-item').click(function () {
@@ -108,10 +110,15 @@
                 break;
 
         }
-
-
-
         $('#childTable').load('{{ path('child_child_Table') }}',search);
+    });
+    $('.print').click(function () {
+        search.print= true;
+        console.log(search);
+        window.location='{{ path('child_child_Table') }}?'+$.param(search);
+
+        delete search.print;
+        console.log(search);
     });
     $('#childTable').load('{{ path('child_child_Table') }}',search);
 
