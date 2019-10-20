@@ -136,7 +136,7 @@ class ChildController extends AbstractController
         $query = $qb->getQuery();
         $blocks = $result = $query->getResult();
         $kinderU = $blocks;
-        dump($blocks);
+  
         /*return 0;
         $kinder = array();
         foreach ($blocks as $data){
