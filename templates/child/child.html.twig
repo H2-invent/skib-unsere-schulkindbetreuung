@@ -54,6 +54,21 @@
                                     <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="6" href="#">{{ 'Sonntag'|trans }}</a>
                                 </div>
                             </div>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {% trans %}Alle Jahrgangsstufen{% endtrans %}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value=null href="#"> {% trans %}Alle Jahrgangsstufen{% endtrans %}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="1"  href="#">1. {{ 'Klasse'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="2" href="#">2. {{ 'Klasse'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="3" href="#">3. {{ 'Klasse'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="4" href="#">4. {{ 'Klasse'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="5" href="#">5. {{ 'Klasse'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="6" href="#">6. {{ 'Klasse'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="7" href="#">7. {{ 'Klasse'|trans }}</a>
+                                </div>
+                            </div>
                             <button class="print btn btn-secondary" type="button">
                                 <i class="material-icons">print</i>
                             </button>           </div>
@@ -78,6 +93,7 @@
             schule: null,
             wochentag: null,
             schuljahr: null,
+            klasse: null,
             {% if app.request.query.get("block") is defined and app.request.query.get("block") is not null %}
             block: {{ app.request.query.get("block") }},
     {% else %}
@@ -105,6 +121,9 @@
                 break;
             case 'schuljahr':
                 search.schuljahr = value;
+                break;
+            case 'klasse':
+                search.klasse = value;
                 break;
             default:
                 break;

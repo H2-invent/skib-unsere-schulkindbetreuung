@@ -90,7 +90,12 @@ class ChildController extends AbstractController
         }
         $repo = $this->getDoctrine()->getRepository(Zeitblock::class);
         $em = $this->getDoctrine()->getManager();
-        $qb = $repo->createQueryBuilder('b');
+
+        $qb = $this->getDoctrine()->getRepository(Kind::class)->createQueryBuilder('k')
+            ->innerJoin('k.zeitblocks','b');
+
+
+        //$qb = $repo->createQueryBuilder('b');
         $text = $translator->trans('Kinder betreut von der Organisation %organisation%',array('%organisation%'=>$organisation->getName()));
         $blocks = array();
        if($request->get('schule')){
@@ -123,21 +128,20 @@ class ChildController extends AbstractController
                 ->setParameter('block',$request->get('block'));
             $text .= $translator->trans('im Zeitblock');
         }
+        if($request->get('klasse')){
+            $qb->andWhere('k.klasse = :klasse')
+                ->setParameter('klasse',$request->get('klasse'));
+            $text .= $translator->trans('in der Klasse: %klasse%',array('%klasse%'=>$request->get('klasse')));
+        }
         $query = $qb->getQuery();
         $blocks = $result = $query->getResult();
-        $kinder = array();
-        foreach ($blocks as $data){
-            $kinder =  array_merge($kinder, $data->getKind()->toArray());
-        }
-        $kinderU = array();
-        foreach ($kinder as $data){
-            if ($data->getFin() == true){
-                $kinderU[$data->getId()] = $data;
-            }
-        }
+        $kinderU = $blocks;
+
+
         if($request->get('print')){
             //todo test im Filename raus
-            return $printService->printChildList($kinderU,$organisation,$text,'Test',$TCPDFController,'D');
+            $fileName = (new \DateTime())->format('d.m.Y_H.i');
+            return $printService->printChildList($kinderU,$organisation,$text,$fileName,$TCPDFController,'D');
 
         } else{
             return $this->render('child/childTable.html.twig', [
