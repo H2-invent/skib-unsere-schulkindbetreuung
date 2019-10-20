@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
+use function Doctrine\ORM\QueryBuilder;
 
 class ChildController extends AbstractController
 {
@@ -98,11 +99,12 @@ class ChildController extends AbstractController
            ->setParameter('schule',$schule);
            $text .= $translator->trans(' an der Schule %schule%',array('%schule%' => $schule->getName()));
        }else{
+         
            foreach ($organisation->getSchule() as $data){
-               $qb->andWhere('b.schule = :schule')
+                   $qb->orWhere('b.schule = :schule','b.schule ')
                    ->setParameter('schule',$data);
            }
-
+           $qb->andWhere(
        }
         if($request->get('schuljahr')){
                 $jahr = $this->getDoctrine()->getRepository(Active::class)->find($request->get('schuljahr'));
