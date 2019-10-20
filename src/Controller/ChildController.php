@@ -101,10 +101,10 @@ class ChildController extends AbstractController
        }else{
 
            foreach ($organisation->getSchule() as $data){
-                   $qb->orWhere('b.schule = :schule','b.schule ')
+                   $qb->orWhere('b.schule = :schule')
                    ->setParameter('schule',$data);
            }
-     
+
        }
         if($request->get('schuljahr')){
                 $jahr = $this->getDoctrine()->getRepository(Active::class)->find($request->get('schuljahr'));
