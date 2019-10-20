@@ -524,7 +524,7 @@ class LoerrachWorkflowController extends AbstractController
                 $mailer->sendEmail('info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
 
             }else{// es gibt noch beworbene Zeitblöcke
-                $mailBetreff = $translator->trans('Anmeldebestätigung der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname();
+                $mailBetreff = $translator->trans('Anmeldeinformation der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname();
                 $mailContent = $this->renderView('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $data, 'stadt' => $stadt));
                 $mailer->sendEmail('info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
 
@@ -639,7 +639,7 @@ class LoerrachWorkflowController extends AbstractController
         $fileName = $kind->getVorname().'_'.$kind->getNachname().'_'.$kind->getSchule()->getName().'.pdf';
         //todo I is to show the pdf in the browser D is to download;
 
-     return $print ->printAnmeldebestätigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->einkommensgruppen,$organisation,'I');
+     return $print ->printAnmeldebestätigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->einkommensgruppen,$organisation,'D');
 
 
     }
