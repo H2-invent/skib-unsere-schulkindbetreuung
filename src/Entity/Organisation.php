@@ -186,6 +186,13 @@ class Organisation
      */
     public function getSchule(): Collection
     {
+        $schuleRet = array();
+        foreach ($this->schule as $data) {
+          if($data->getDeleted() == false){
+            $schuleRet[] = $data;
+          }
+        }
+        $this->schule= (new ArrayCollection($schuleRet));
         return $this->schule;
     }
 
