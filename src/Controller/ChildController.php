@@ -126,12 +126,12 @@ class ChildController extends AbstractController
         if($request->get('block')){
             $qb->andWhere('b.id = :block')
                 ->setParameter('block',$request->get('block'));
-            $text .= $translator->trans('im Zeitblock');
+            $text .= $translator->trans(' im ausgewählten Zeitblock');
         }
         if($request->get('klasse')){
             $qb->andWhere('k.klasse = :klasse')
                 ->setParameter('klasse',$request->get('klasse'));
-            $text .= $translator->trans('in der Klasse: %klasse%',array('%klasse%'=>$request->get('klasse')));
+            $text .= $translator->trans(' in der Klasse: %klasse%',array('%klasse%'=>$request->get('klasse')));
         }
         $qb->andWhere('k.fin = 1');
         $query = $qb->getQuery();

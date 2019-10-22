@@ -189,10 +189,16 @@ class Stammdaten
      */
     private $resendEmail;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Files", mappedBy="rechnung")
+     */
+    private $rechnungen;
+
 
     public function __construct()
     {
         $this->kinds = new ArrayCollection();
+        $this->rechnungen = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -583,6 +589,37 @@ class Stammdaten
     public function setResendEmail(?string $resendEmail): self
     {
         $this->resendEmail = $resendEmail;
+        return $this;
+    }
+
+    /**
+     * @return Collection|Files[]
+     */
+    public function getRechnungen(): Collection
+    {
+        return $this->rechnungen;
+    }
+
+    public function addRechnungen(Files $rechnungen): self
+    {
+        if (!$this->rechnungen->contains($rechnungen)) {
+            $this->rechnungen[] = $rechnungen;
+            $rechnungen->setRechnung($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRechnungen(Files $rechnungen): self
+    {
+        if ($this->rechnungen->contains($rechnungen)) {
+            $this->rechnungen->removeElement($rechnungen);
+            // set the owning side to null (unless already changed)
+            if ($rechnungen->getRechnung() === $this) {
+                $rechnungen->setRechnung(null);
+            }
+        }
+
         return $this;
     }
 }
