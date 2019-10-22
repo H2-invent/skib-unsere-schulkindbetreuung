@@ -158,10 +158,16 @@ class Organisation
      */
     private $sepaXml;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sepa", mappedBy="organisation")
+     */
+    private $sepas;
+
     public function __construct()
     {
         $this->schule = new ArrayCollection();
         $this->sepaXml = new ArrayCollection();
+        $this->sepas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -487,6 +493,37 @@ class Organisation
             // set the owning side to null (unless already changed)
             if ($sepaXml->getSepa() === $this) {
                 $sepaXml->setSepa(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sepa[]
+     */
+    public function getSepas(): Collection
+    {
+        return $this->sepas;
+    }
+
+    public function addSepa(Sepa $sepa): self
+    {
+        if (!$this->sepas->contains($sepa)) {
+            $this->sepas[] = $sepa;
+            $sepa->setOrganisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSepa(Sepa $sepa): self
+    {
+        if ($this->sepas->contains($sepa)) {
+            $this->sepas->removeElement($sepa);
+            // set the owning side to null (unless already changed)
+            if ($sepa->getOrganisation() === $this) {
+                $sepa->setOrganisation(null);
             }
         }
 

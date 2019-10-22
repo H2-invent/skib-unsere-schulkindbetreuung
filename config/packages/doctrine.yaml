@@ -1,11 +1,11 @@
 doctrine:
     dbal:
         # configure these for your database server
-        dbname:               skb
-        host:                 localhost
-        port:                 null
-        user:                 skb
-        password:             password
+        dbname:               '%env(resolve:DATABASE_DBNAME)%'
+        host:                 '%env(resolve:DATABASE_HOST)%'
+        port:                 '%env(resolve:DATABASE_PORT)%'
+        user:                 '%env(resolve:DATABASE_USERNAME)%'
+        password:             '%env(resolve:DATABASE_PASSWORD)%'
         driver: 'pdo_mysql'
         server_version: '5.6'
         charset: utf8mb4

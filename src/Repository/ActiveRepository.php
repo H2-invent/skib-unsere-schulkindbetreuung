@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Active;
+use App\Entity\Stadt;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -70,7 +71,26 @@ class ActiveRepository extends ServiceEntityRepository
         // to get just one result:
         // $product = ;
     }
+    public function findSchuleBetweentwoDates(\DateTime $von, \DateTime $bis,Stadt $stadt)
+    {
+        // automatically knows to select Products
+        // the "p" is an alias you'll use in the rest of the query
 
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.stadt = :stadt')
+            ->andWhere('a.von <= :von')
+            ->andWhere('a.bis >= :bis')
+            ->setParameter('von', $von)
+            ->setParameter('bis',$bis)
+            ->setParameter('stadt', $stadt)
+            ->getQuery()
+            ->setMaxResults(1);
+
+        return $qb->getOneOrNullResult();
+
+        // to get just one result:
+        // $product = ;
+    }
     /**
      * @param $price
      * @return Product[]

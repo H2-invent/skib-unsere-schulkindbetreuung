@@ -70,7 +70,7 @@ class Stammdaten
     /**
      * @ORM\Column(type="boolean")
      */
-    private $buk;
+    private $buk = false;
 
     /**
      * @ORM\Column(type="text", nullable=true)

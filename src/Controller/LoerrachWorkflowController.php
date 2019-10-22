@@ -103,7 +103,7 @@ class LoerrachWorkflowController extends AbstractController
                 'choices' => $this->einkommensgruppen, 'label' => 'Brutto Familieneinkommen pro Monat', 'translation_domain' => 'form'])
             ->add('beruflicheSituation', ChoiceType::class, ['choices'=>$this->beruflicheSituation,'required'=>true,'label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
             ->add('kinderImKiga', CheckboxType::class, ['required'=>false,'label' => 'Ich habe mindestens ein weiteres Kind in einer kostenpflichtiger öffentlichen Kindergarteneinrichtung', 'translation_domain' => 'form'])
-            ->add('buk', CheckboxType::class, ['required'=>false,'label' => 'Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger', 'translation_domain' => 'form'])
+            //->add('buk', CheckboxType::class, ['required'=>false,'label' => 'Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger', 'translation_domain' => 'form'])
             ->add('alleinerziehend', CheckboxType::class, ['required'=>false,'label' => 'Ich bin Alleinerziehend', 'translation_domain' => 'form'])
             ->add('notfallName', TextType::class, ['required'=>true,'label' => 'Name und Beziehung des Notfallkontakt', 'translation_domain' => 'form'])
             ->add('notfallkontakt', TextType::class, ['required'=>true,'label' => 'Notfalltelefonnummer', 'translation_domain' => 'form'])
