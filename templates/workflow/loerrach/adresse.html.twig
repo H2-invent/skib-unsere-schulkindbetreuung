@@ -1,4 +1,17 @@
 {% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-6 mb-4 white-text text-centerm text-md-left">
+
+
+        <h1 class="display-4 font-weight-bold">{{ stadt.name }}</h1>
+
+        <p>
+            <strong id="start">{{ stadt.infoText|nl2br }}</strong>
+        </p>
+
+
+    </div>
+{% endblock %}
 {% block content %}
 
 <div class="row">
