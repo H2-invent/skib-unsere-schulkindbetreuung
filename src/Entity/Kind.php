@@ -142,6 +142,21 @@ class Kind
      */
     private $beworben;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $saved = false;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $history = 0;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $tracing;
+
     public function __construct()
     {
         $this->zeitblocks = new ArrayCollection();
@@ -465,7 +480,7 @@ class Kind
         $summe = 0;
         $blocks = $kind->getZeitblocks()->toArray();
         $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
-
+        dump($kind);
         foreach ($blocks as $data){
 
             if($data->getGanztag() != 0 && $data->getDeleted() == false){
@@ -620,5 +635,41 @@ class Kind
     public function getAllBlocks()
     {
         return array_merge($this->zeitblocks->toArray(), $this->beworben->toArray());
+    }
+
+    public function getSaved(): ?bool
+    {
+        return $this->saved;
+    }
+
+    public function setSaved(bool $saved): self
+    {
+        $this->saved = $saved;
+
+        return $this;
+    }
+
+    public function getHistory(): ?int
+    {
+        return $this->history;
+    }
+
+    public function setHistory(int $history): self
+    {
+        $this->history = $history;
+
+        return $this;
+    }
+
+    public function getTracing(): ?string
+    {
+        return $this->tracing;
+    }
+
+    public function setTracing(?string $tracing): self
+    {
+        $this->tracing = $tracing;
+
+        return $this;
     }
 }
