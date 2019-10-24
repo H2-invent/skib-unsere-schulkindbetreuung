@@ -255,9 +255,22 @@ class Kind
      */
     public function getZeitblocks(): Collection
     {
+
         return $this->zeitblocks;
     }
-
+    /**
+     * @return Collection|Zeitblock[]
+     */
+    public function getRealZeitblocks(): Collection
+    {
+        $block = array();
+        foreach ($this->zeitblocks->toArray() as $data){
+            if (!$data->getDeleted()){
+                $block[] = $data;
+            }
+        }
+        return new ArrayCollection($block);
+    }
 
     public function addZeitblock(Zeitblock $zeitblock): self
     {
@@ -412,11 +425,8 @@ class Kind
         );
 
 
-        $blocks = $kind->getZeitblocks()->toArray();
+        $blocks = $kind->getRealZeitblocks()->toArray();
         $blocks = array_merge($blocks, $this->beworben->toArray());
-
-
-
 
 // Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
         $summe = 0;

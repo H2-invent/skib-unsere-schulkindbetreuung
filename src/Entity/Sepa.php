@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -60,6 +62,22 @@ class Sepa
      * @ORM\Column(type="blob")
      */
     private $pdf;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Rechnung", mappedBy="sepa")
+     */
+    private $rechnungen;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
+     */
+    private $einzugsDatum;
+
+    public function __construct()
+    {
+        $this->rechnungen = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -158,6 +176,49 @@ class Sepa
     public function setPdf($pdf): self
     {
         $this->pdf = $pdf;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rechnung[]
+     */
+    public function getRechnungen(): Collection
+    {
+        return $this->rechnungen;
+    }
+
+    public function addRechnungen(Rechnung $rechnungen): self
+    {
+        if (!$this->rechnungen->contains($rechnungen)) {
+            $this->rechnungen[] = $rechnungen;
+            $rechnungen->setSepa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRechnungen(Rechnung $rechnungen): self
+    {
+        if ($this->rechnungen->contains($rechnungen)) {
+            $this->rechnungen->removeElement($rechnungen);
+            // set the owning side to null (unless already changed)
+            if ($rechnungen->getSepa() === $this) {
+                $rechnungen->setSepa(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEinzugsDatum(): ?\DateTimeInterface
+    {
+        return $this->einzugsDatum;
+    }
+
+    public function setEinzugsDatum(\DateTimeInterface $einzugsDatum): self
+    {
+        $this->einzugsDatum = $einzugsDatum;
 
         return $this;
     }

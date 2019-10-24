@@ -190,15 +190,18 @@ class Stammdaten
     private $resendEmail;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Files", mappedBy="rechnung")
+     * @ORM\OneToMany(targetEntity="App\Entity\Rechnung", mappedBy="stammdaten")
      */
-    private $rechnungen;
+    private $rechnungs;
+
+
 
 
     public function __construct()
     {
         $this->kinds = new ArrayCollection();
         $this->rechnungen = new ArrayCollection();
+        $this->rechnungs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -593,33 +596,35 @@ class Stammdaten
     }
 
     /**
-     * @return Collection|Files[]
+     * @return Collection|Rechnung[]
      */
-    public function getRechnungen(): Collection
+    public function getRechnungs(): Collection
     {
-        return $this->rechnungen;
+        return $this->rechnungs;
     }
 
-    public function addRechnungen(Files $rechnungen): self
+    public function addRechnung(Rechnung $rechnung): self
     {
-        if (!$this->rechnungen->contains($rechnungen)) {
-            $this->rechnungen[] = $rechnungen;
-            $rechnungen->setRechnung($this);
+        if (!$this->rechnungs->contains($rechnung)) {
+            $this->rechnungs[] = $rechnung;
+            $rechnung->setStammdaten($this);
         }
 
         return $this;
     }
 
-    public function removeRechnungen(Files $rechnungen): self
+    public function removeRechnung(Rechnung $rechnung): self
     {
-        if ($this->rechnungen->contains($rechnungen)) {
-            $this->rechnungen->removeElement($rechnungen);
+        if ($this->rechnungs->contains($rechnung)) {
+            $this->rechnungs->removeElement($rechnung);
             // set the owning side to null (unless already changed)
-            if ($rechnungen->getRechnung() === $this) {
-                $rechnungen->setRechnung(null);
+            if ($rechnung->getStammdaten() === $this) {
+                $rechnung->setStammdaten(null);
             }
         }
 
         return $this;
     }
+
+
 }
