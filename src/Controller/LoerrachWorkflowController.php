@@ -51,11 +51,11 @@ class LoerrachWorkflowController extends AbstractController
     public function __construct(TranslatorInterface $translator)
     {
         $this->einkommensgruppen = array(
-            '0 - 1.000 Euro' => 0,
-            '1.001 - 2.000 Euro' => 1,
-            '2.001 . 3.000 Euro' => 2,
-            '3.001 . 5.000 Euro' => 3,
-            'mehr als 5.001 Euro' => 4,
+            '0 - 1.499 Euro' => 0,
+            '1.500 - 2.499 Euro' => 1,
+            '2.500 . 3.499 Euro' => 2,
+            '3.500 . 5.999 Euro' => 3,
+            'über 6.000 Euro' => 4,
             );
         $this->beruflicheSituation = array(
             $translator->trans('Berufstätig')=>1,
