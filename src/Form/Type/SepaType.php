@@ -36,7 +36,6 @@ class SepaType extends AbstractType
         $einzugsdatum = $einzugsdatum->modify('next monday');
         $builder
             ->add('von', DateType::class,array('data'=>$firstDay,'label'=>'Beginn des Abrechnungszeitraums','required'=>true,'translation_domain' => 'form'))
-            ->add('bis', DateType::class,array('data'=>$lastDay,'label'=>'Ende des Abrechnungszeitraums','required'=>true,'translation_domain' => 'form'))
             ->add('einzugsDatum', DateType::class,array('data'=>$einzugsdatum,'label'=>'Tag des Lastschrifteinzugs','required'=>true,'translation_domain' => 'form'))
             ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;

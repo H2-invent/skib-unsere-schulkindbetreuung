@@ -472,6 +472,7 @@ class LoerrachWorkflowController extends AbstractController
         if($adresse->getHistory()>0){// es gibt bereits eine alte Historie, diese bsitzt schon ein Fin
             $adresseOld = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('tracing'=>$adresse->getTracing(),'fin'=>true));
             $adresseOld->setFin(false);
+            $adresseOld->setEndedAt((clone $adresse->getCreatedAt())->modify('last day of this month'));
             $em->persist($adresseOld);
         }
         $adresse->setCreatedAt(new \DateTime());
@@ -507,7 +508,6 @@ class LoerrachWorkflowController extends AbstractController
             foreach ($data->getBeworben() as $zb){
                 $kindNew->addBeworben($zb);
             }
-            $data->setNext($kindNew);
             $em->persist($kindNew);
             dump($kindNew);
             $em->flush();
@@ -578,9 +578,9 @@ class LoerrachWorkflowController extends AbstractController
 
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
-        //$response->headers->clearCookie('UserID');
-       // $response->headers->clearCookie('SecID');
-        //$response->headers->clearCookie('KindID');
+        $response->headers->clearCookie('UserID');
+        $response->headers->clearCookie('SecID');
+        $response->headers->clearCookie('KindID');
         return $response;
 
     }
