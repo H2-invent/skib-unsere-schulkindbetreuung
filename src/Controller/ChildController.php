@@ -105,10 +105,10 @@ class ChildController extends AbstractController
            ->setParameter('schule',$schule);
            $text .= $translator->trans(' an der Schule %schule%',array('%schule%' => $schule->getName()));
        }else{
-            $count = 0;
-           foreach ($organisation->getSchule() as $data){
-                   $qb->orWhere('b.schule = :schule'.$count)
-                   ->setParameter('schule'.$count++,$data);
+
+           foreach ($organisation->getSchule() as $key=>$data){
+                   $qb->orWhere('b.schule = :schule'.$key)
+                   ->setParameter('schule'.$key,$data);
            }
 
        }
@@ -126,12 +126,12 @@ class ChildController extends AbstractController
         if($request->get('block')){
             $qb->andWhere('b.id = :block')
                 ->setParameter('block',$request->get('block'));
-            $text .= $translator->trans('im Zeitblock');
+            $text .= $translator->trans(' im ausgewählten Zeitblock');
         }
         if($request->get('klasse')){
             $qb->andWhere('k.klasse = :klasse')
                 ->setParameter('klasse',$request->get('klasse'));
-            $text .= $translator->trans('in der Klasse: %klasse%',array('%klasse%'=>$request->get('klasse')));
+            $text .= $translator->trans(' in der Klasse: %klasse%',array('%klasse%'=>$request->get('klasse')));
         }
         $qb->andWhere('k.fin = 1');
         $query = $qb->getQuery();

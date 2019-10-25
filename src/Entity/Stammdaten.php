@@ -70,7 +70,7 @@ class Stammdaten
     /**
      * @ORM\Column(type="boolean")
      */
-    private $buk;
+    private $buk = false;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -189,10 +189,34 @@ class Stammdaten
      */
     private $resendEmail;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Rechnung", mappedBy="stammdaten")
+     */
+    private $rechnungs;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $saved = false;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $history = 0;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $tracing;
+
+
+
 
     public function __construct()
     {
         $this->kinds = new ArrayCollection();
+        $this->rechnungen = new ArrayCollection();
+        $this->rechnungs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -488,7 +512,7 @@ class Stammdaten
         return $this->secCode;
     }
 
-    public function setSecCode(string $secCode): self
+    public function setSecCode(?string $secCode): self
     {
         $this->secCode = $secCode;
 
@@ -585,4 +609,73 @@ class Stammdaten
         $this->resendEmail = $resendEmail;
         return $this;
     }
+
+    /**
+     * @return Collection|Rechnung[]
+     */
+    public function getRechnungs(): Collection
+    {
+        return $this->rechnungs;
+    }
+
+    public function addRechnung(Rechnung $rechnung): self
+    {
+        if (!$this->rechnungs->contains($rechnung)) {
+            $this->rechnungs[] = $rechnung;
+            $rechnung->setStammdaten($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRechnung(Rechnung $rechnung): self
+    {
+        if ($this->rechnungs->contains($rechnung)) {
+            $this->rechnungs->removeElement($rechnung);
+            // set the owning side to null (unless already changed)
+            if ($rechnung->getStammdaten() === $this) {
+                $rechnung->setStammdaten(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSaved(): ?bool
+    {
+        return $this->saved;
+    }
+
+    public function setSaved(bool $saved): self
+    {
+        $this->saved = $saved;
+
+        return $this;
+    }
+
+    public function getHistory(): ?int
+    {
+        return $this->history;
+    }
+
+    public function setHistory(int $history): self
+    {
+        $this->history = $history;
+
+        return $this;
+    }
+
+    public function getTracing(): ?string
+    {
+        return $this->tracing;
+    }
+
+    public function setTracing(?string $tracing): self
+    {
+        $this->tracing = $tracing;
+
+        return $this;
+    }
+
+
 }

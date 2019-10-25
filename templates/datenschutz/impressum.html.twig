@@ -1,0 +1,111 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-6 mb-4 white-text text-centerm text-md-left">
+
+        <h1 class="display-4 font-weight-bold">{% trans %}Unsere Schulkindbetreuung{% endtrans %}</h1>
+
+        <p>
+            <strong id="start">{% trans %}Hier finden Sie alle wichtigen Informationen{% endtrans %}</strong>
+        </p>
+
+
+    </div>
+<!--Grid
+{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h4> {% trans %}Impressum{% endtrans %}</h4>
+            </div>
+            <div class="card-body">
+                    <h2>{% trans %}Anschrift{% endtrans %}</h2>
+                <p>
+                <table>
+                    <tr>
+                        <td>
+                            <h5>
+                                {% trans %}
+                                    H2 invent GmbH
+                                {% endtrans %}
+                            </h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                                {% trans %}
+                                    Gewerbestraße 9 (HALLE9)
+                                {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                                D-79539 Lörrach
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                </table>
+                </p>
+                    <h2>{% trans %}Kontakt{% endtrans %}</h2>
+                    <p>
+                        <table>
+                    <tr>
+                        <td>
+                            {% trans %}
+                            Vertretungsberechtige Geschäftsführer: Andreas Holzmann
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                            Telefon: 07621-7925862
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                                EMail: info@h2-invent.com
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                                Registergericht: Amtsgericht Freiburg im Breisgau
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                                Registernummer: HRB 720434
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                                Umsatzsteuer-Identifikationsnummer gem. § 27a UStG: DE326041099
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                                Inhaltlich Verantwortlicher gem. § 55 II RStV: Andreas Holzmann (Anschrift s.o.)
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                        </table>
+                    </p>
+            </div>
+
+    </div>
+</div>
+
+{% endblock %}

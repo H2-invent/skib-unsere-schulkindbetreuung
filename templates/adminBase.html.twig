@@ -85,7 +85,10 @@
                         <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"> <i class="material-icons">sports_handball</i> {% trans %}Meine Schulen{% endtrans %}</a></li>
                     <li><a href="{{ path('child_show',{'id':app.user.organisation.id}) }}"> <i class="material-icons">emoji_people</i> {% trans %}Meine Kinder{% endtrans %}</a></li>
                 {% endif %}
+                {% if is_granted('ROLE_ORG_ACCOUNTING') %}
+                    <li><a href="{{ path('accounting_overview',{'id':app.user.organisation.id}) }}"> <i class="material-icons">money</i> {% trans %}Buchhaltung{% endtrans %}</a></li>
 
+                {% endif %}
 
                 {% if is_granted('ROLE_CITY_ADMIN') %}
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="material-icons">people</i>{% trans %}Mitarbeiter{% endtrans %} </a>

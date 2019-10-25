@@ -51,11 +51,11 @@ class LoerrachWorkflowController extends AbstractController
     public function __construct(TranslatorInterface $translator)
     {
         $this->einkommensgruppen = array(
-            '0 - 1.000 Euro' => 0,
-            '1.001 - 2.000 Euro' => 1,
-            '2.001 . 3.000 Euro' => 2,
-            '3.001 . 5.000 Euro' => 3,
-            'mehr als 5.001 Euro' => 4,
+            '0 - 1.499 Euro' => 0,
+            '1.500 - 2.499 Euro' => 1,
+            '2.500 . 3.499 Euro' => 2,
+            '3.500 . 5.999 Euro' => 3,
+            'über 6.000 Euro' => 4,
             );
         $this->beruflicheSituation = array(
             $translator->trans('Berufstätig')=>1,
@@ -103,7 +103,7 @@ class LoerrachWorkflowController extends AbstractController
                 'choices' => $this->einkommensgruppen, 'label' => 'Brutto Familieneinkommen pro Monat', 'translation_domain' => 'form'])
             ->add('beruflicheSituation', ChoiceType::class, ['choices'=>$this->beruflicheSituation,'required'=>true,'label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
             ->add('kinderImKiga', CheckboxType::class, ['required'=>false,'label' => 'Ich habe mindestens ein weiteres Kind in einer kostenpflichtiger öffentlichen Kindergarteneinrichtung', 'translation_domain' => 'form'])
-            ->add('buk', CheckboxType::class, ['required'=>false,'label' => 'Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger', 'translation_domain' => 'form'])
+            //->add('buk', CheckboxType::class, ['required'=>false,'label' => 'Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger', 'translation_domain' => 'form'])
             ->add('alleinerziehend', CheckboxType::class, ['required'=>false,'label' => 'Ich bin Alleinerziehend', 'translation_domain' => 'form'])
             ->add('notfallName', TextType::class, ['required'=>true,'label' => 'Name und Beziehung des Notfallkontakt', 'translation_domain' => 'form'])
             ->add('notfallkontakt', TextType::class, ['required'=>true,'label' => 'Notfalltelefonnummer', 'translation_domain' => 'form'])
@@ -465,16 +465,59 @@ class LoerrachWorkflowController extends AbstractController
         // Daten speichern und fixieren
         $em = $this->getDoctrine()->getManager();
         $adresse->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
+
+        if(!$adresse->getTracing()) {
+            $adresse->setTracing(md5(uniqid('stammdaten', true)));
+        }
+        if($adresse->getHistory()>0){// es gibt bereits eine alte Historie, diese bsitzt schon ein Fin
+            $adresseOld = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('tracing'=>$adresse->getTracing(),'fin'=>true));
+            $adresseOld->setFin(false);
+            $em->persist($adresseOld);
+        }
+        $adresse->setCreatedAt(new \DateTime());
+        $adressCopy = clone $adresse;
+        $adressCopy->setSaved(false);
+        $adressCopy->setHistory($adressCopy->getHistory() + 1);
+        $adressCopy->setSecCode(null);
         $adresse->setFin(true);
+        $adresse->setSaved(true);
+        $em->persist($adressCopy);
         foreach ($kind as $data){
+
+            if(!$data->getTracing()){
+                $data->setTracing(md5(uniqid('kind', true)));
+            }
+            if($data->getHistory() > 0){
+                $kindOld = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('fin'=>true,'tracing'=>$data->getTracing()));
+                $kindOld->setFin(false);
+                $em->persist($kindOld);
+            }
+            $kindNew = clone $data;
+            $kindNew->setHistory($kindNew->getHistory() + 1);
+            $data->setSaved(true);
             $data->setFin(true);
             $em->persist($data);
+            $kindNew->setEltern($adressCopy);
+            $em->persist($kindNew);
+            $em->flush();
+            foreach ($data->getZeitblocks() as $zb){
+                $zb->addKind($kindNew);
+            }
+            $em->persist($kindNew);
+            foreach ($data->getBeworben() as $zb){
+                $kindNew->addBeworben($zb);
+            }
+            $em->persist($kindNew);
+            dump($kindNew);
+            $em->flush();
         }
-      $em->persist($adresse);
+        $em->persist($adresse);
+        $em->persist($adressCopy);
+        $em->flush();
 
-   $em->flush();
+
         $attachment = array();
-        $ical = array();
+
 
         foreach ($kind as $data) {
             if (sizeof($data->getBeworben()->toArray()) == 0) {//Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
@@ -488,7 +531,7 @@ class LoerrachWorkflowController extends AbstractController
                     $fileName,
                     $this->einkommensgruppen,
                     $data->getZeitblocks()[0]->getSchule()->getOrganisation(),
-                    'D'
+                    'S'
                 );
                 $attachment[] = (new \Swift_Attachment())
                     ->setFilename($fileName . '.pdf')
@@ -533,10 +576,9 @@ class LoerrachWorkflowController extends AbstractController
 
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
-
-         $response->headers->clearCookie('UserID');
-     $response->headers->clearCookie('SecID');
-      $response->headers->clearCookie('KindID');
+        //$response->headers->clearCookie('UserID');
+       // $response->headers->clearCookie('SecID');
+        //$response->headers->clearCookie('KindID');
         return $response;
 
     }
@@ -670,7 +712,7 @@ class LoerrachWorkflowController extends AbstractController
                     $search['secCode'] = $cookie_seccode[0];
                 }
             }else{
-                $search['fin'] = false;
+                $search['saved'] = false;
             }
 
             if ($hash == $cookie_ar[1]) {

@@ -86,11 +86,17 @@ class Zeitblock
      */
     private $kinderBeworben;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Rechnung", mappedBy="zeitblocks")
+     */
+    private $rechnungen;
+
     public function __construct()
     {
         $this->kind = new ArrayCollection();
         $this->abwesenheit = new ArrayCollection();
         $this->kinderBeworben = new ArrayCollection();
+        $this->rechnungen = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -398,6 +404,34 @@ class Zeitblock
         if ($this->kinderBeworben->contains($kinderBeworben)) {
             $this->kinderBeworben->removeElement($kinderBeworben);
             $kinderBeworben->removeBeworben($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rechnung[]
+     */
+    public function getRechnungen(): Collection
+    {
+        return $this->rechnungen;
+    }
+
+    public function addRechnungen(Rechnung $rechnungen): self
+    {
+        if (!$this->rechnungen->contains($rechnungen)) {
+            $this->rechnungen[] = $rechnungen;
+            $rechnungen->addZeitblock($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRechnungen(Rechnung $rechnungen): self
+    {
+        if ($this->rechnungen->contains($rechnungen)) {
+            $this->rechnungen->removeElement($rechnungen);
+            $rechnungen->removeZeitblock($this);
         }
 
         return $this;

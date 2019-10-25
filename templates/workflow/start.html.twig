@@ -126,7 +126,7 @@
                     <h1 class="display-4 font-weight-bold">{{ stadt.name }}</h1>
 
                     <hr class="hr-light">
-                    <p class="lead">{% trans with {"%name%":stadt.name} %}Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
+                    <p class="lead">{% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
                     <a href="{{ url }}" class="btn btn-primary btn-lg">
                     {% if app.request.cookies.has('SecID') %}
                     {% trans %}Kind bearbeiten{% endtrans %}
