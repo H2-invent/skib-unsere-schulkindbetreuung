@@ -157,6 +157,8 @@ class Kind
      */
     private $tracing;
 
+
+
     public function __construct()
     {
         $this->zeitblocks = new ArrayCollection();
@@ -672,4 +674,7 @@ class Kind
 
         return $this;
     }
+
+
+
 }
