@@ -472,6 +472,7 @@ class LoerrachWorkflowController extends AbstractController
         if($adresse->getHistory()>0){// es gibt bereits eine alte Historie, diese bsitzt schon ein Fin
             $adresseOld = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('tracing'=>$adresse->getTracing(),'fin'=>true));
             $adresseOld->setFin(false);
+            $adresseOld->setEndedAt((clone $adresse->getCreatedAt())->modify('last day of this month'));
             $em->persist($adresseOld);
         }
         $adresse->setCreatedAt(new \DateTime());
@@ -511,6 +512,7 @@ class LoerrachWorkflowController extends AbstractController
             dump($kindNew);
             $em->flush();
         }
+
         $em->persist($adresse);
         $em->persist($adressCopy);
         $em->flush();
@@ -576,9 +578,9 @@ class LoerrachWorkflowController extends AbstractController
 
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
-        //$response->headers->clearCookie('UserID');
-       // $response->headers->clearCookie('SecID');
-        //$response->headers->clearCookie('KindID');
+        $response->headers->clearCookie('UserID');
+        $response->headers->clearCookie('SecID');
+        $response->headers->clearCookie('KindID');
         return $response;
 
     }
@@ -694,7 +696,7 @@ class LoerrachWorkflowController extends AbstractController
 
             $cookie_ar = explode('.', $request->cookies->get('UserID'));
             $hash = hash("sha256", $cookie_ar[0] . $this->getParameter("secret"));
-            $search = array('uid'=>$cookie_ar[0]);
+            $search = array('uid'=>$cookie_ar[0],'saved'=>false);
             if ($request->cookies->get('KindID') && $request->cookies->get('SecID')  ) {
 
 
@@ -708,11 +710,11 @@ class LoerrachWorkflowController extends AbstractController
                     $this->getUser()
                     && $this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE')
                     && $hash_kind == $cookie_kind[1]
-                    && $hash_seccode == $cookie_seccode[1]){
-                    $search['secCode'] = $cookie_seccode[0];
+                    && $hash_seccode == $cookie_seccode[1]
+                    && $hash == $cookie_ar[1]){
                 }
             }else{
-                $search['saved'] = false;
+                $search['tracing']= 0;
             }
 
             if ($hash == $cookie_ar[1]) {

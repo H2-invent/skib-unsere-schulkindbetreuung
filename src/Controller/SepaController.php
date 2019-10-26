@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function Doctrine\ORM\QueryBuilder;
 
 class SepaController extends AbstractController
 {
@@ -35,11 +36,13 @@ class SepaController extends AbstractController
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
-            $sepa = $form->getData();
+
             $errors = $validator->validate($sepa);
             if(count($errors)== 0) {
+                $sepa = $form->getData();
+                $sepa->setBis((clone $sepa->getVon())->modify('last day of this month'));
                 $result = $this->calcSepa($sepa,$translator,$SEPASimpleService);
-                return $this->redirectToRoute('accounting_overview',array('id'=>$organisation->getId(),'snack'=>$result));
+       //         return $this->redirectToRoute('accounting_overview',array('id'=>$organisation->getId(),'snack'=>$result));
             }
 
         }
@@ -63,54 +66,77 @@ class SepaController extends AbstractController
        }
 
        $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('s');
-
-       $qb->innerJoin('s.kinds','k')
-           ->innerJoin('k.zeitblocks','zeitblocks')
+/*     Createdat1            Createdat2  Ended_at1             Created_at3    Ended_at2   Ended_at3=null
+ * =====|=====================|===========|============|==========|`=============|=============>>>>>>>>
+ *                                             Suche an welchem Created At kleiner als t0 und Ended at >t0 OR Ended_at == 0
+ *                                                  Objekt mit Created_at2 wird ausgewählt
+ */
+       $qb->innerJoin('s.kinds','k') // suche alles stammdaten
+           ->innerJoin('k.zeitblocks','zeitblocks')// welche
            ->innerJoin('zeitblocks.schule', 'schule' )
-           ->andWhere('schule.organisation = :organisation')
-           ->andWhere('zeitblocks.active = :active')
+           ->andWhere('schule.organisation = :organisation')// wo die schule meine organisation ist
+           ->andWhere('zeitblocks.active = :active')// suche alle Blöcke, wo im aktuellen SChuljahr sind
+           ->andWhere('s.saved = 1')// alle Eltern sie das flag gesaved haben
+           ->andWhere('s.created_at <= :von')// created ist vor dem jetzigen Zeitpunkt
+           ->andWhere(
+               $qb->expr()->orX(
+                   $qb->expr()->isNull('s.endedAt'),// ended ist noch offen
+                   $qb->expr()->gte('s.endedAt',':von')// ended ist ende diesen monats
+               )
+           )
            ->setParameter('active', $active)
-           ->setParameter('organisation', $sepa->getOrganisation());
+           ->setParameter('organisation', $sepa->getOrganisation())
+            ->setParameter('von', $sepa->getVon());
        $eltern = $qb->getQuery()->getResult();
 
         $rechnungen = array();
         $sepaSumme= 0.0;
         $organisation = $sepa->getOrganisation();
-       foreach ($eltern as $data){
-           $type = 'FRST';
-           $ElternRechnungen = $data->getRechnungs();
+        $em = $this->getDoctrine()->getManager();
+       foreach ($eltern as $data){// für alle gefunden eltern in diesem Monat
+           $type = 'FRST'; // setzte SEPA auf First Sepa
 
-           foreach ($ElternRechnungen as $data3){
+           foreach ($data->getRechnungs() as $data3){//Wenn es eine Rechnung gibt, ewlche an einem SEPA hängt,
                if($data3->getSepa()){
-                   $type = 'RCUR';
+                   $type = 'RCUR';// dann setzte SEPA Typ auf folgenden LAstschrift SEPA
                    break;
                }
            }
 
            $summe = 0.0;
-           foreach ($data->getKinds() as $data2){
+           $kinderDerEltern = array();
+           foreach ($data->getKinds() as $data3){// nur kinder aus dieser ORganisation werden berechnet
+               if($data3->getSchule()->getOrganisation()== $organisation){
+                   $kinderDerEltern[] = $data3;
+               }
+           }
+           $rechnung = new Rechnung();
+           foreach ($kinderDerEltern as $data2){// berechne die summe aller kinder
               if($data2->getFin()){
                 $summe += $data2->getPreisforBetreuung();
               }
+              foreach ($data2->getZeitblocks() as $zb){// füge alle ZEitblöcke an die rechnung an
+                  $rechnung->addZeitblock($zb);
+              }
            }
-           $rechnung = new Rechnung();
            $rechnung->setSumme($summe);
            $rechnung->setPdf('');
            $rechnung->setCreatedAt(new \DateTime());
            $rechnung->setStammdaten($data);
-            $em = $this->getDoctrine()->getManager();
+            dump($kinderDerEltern);
+            dump($rechnung);
             $em->persist($rechnung);
-            $em->flush();
-           $rechnung->setRechnungsnummer('RE'.(new \DateTime())->format('Ymd').$rechnung->getId());
+          //  $em->flush();
+            $rechnung->setRechnungsnummer('RE'.(new \DateTime())->format('Ymd').$rechnung->getId());
 
             $em->persist($rechnung);
-            $em->flush();
+          //  $em->flush();
 
            if($summe != 0){
                $rechnungen[] = $rechnung;
                $sepaSumme +=$summe;
                $sepa->addRechnungen($rechnung);
-//todo check ob alle angaben richtig sind
+            //todo check ob alle angaben richtig sind
                $SEPASimpleService->Add($sepa->getEinzugsDatum()->format('Y-m-d'), $rechnung->getSumme(), $rechnung->getStammdaten()->getKontoinhaber(), $rechnung->getStammdaten()->getIban(), $rechnung->getStammdaten()->getBic(),
                    NULL, NULL, $rechnung->getRechnungsnummer(), $rechnung->getRechnungsnummer(), $type, 'skb-'.$rechnung->getStammdaten()->getConfirmationCode(), $rechnung->getStammdaten()->getCreatedAt()->format('Y-m-d'));
 
@@ -127,7 +153,7 @@ class SepaController extends AbstractController
         $sepa->setPdf('');
         $sepa->setSumme($sepaSumme);
         $em->persist($sepa);
-        $em->flush();
+      //  $em->flush();
 
         return $translator->trans('Das SEPA-Lastschrift wurde erfolgreich angelegt');
 

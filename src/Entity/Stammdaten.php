@@ -209,6 +209,11 @@ class Stammdaten
      */
     private $tracing;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $endedAt;
+
 
 
 
@@ -673,6 +678,18 @@ class Stammdaten
     public function setTracing(?string $tracing): self
     {
         $this->tracing = $tracing;
+
+        return $this;
+    }
+
+    public function getEndedAt(): ?\DateTimeInterface
+    {
+        return $this->endedAt;
+    }
+
+    public function setEndedAt(?\DateTimeInterface $endedAt): self
+    {
+        $this->endedAt = $endedAt;
 
         return $this;
     }

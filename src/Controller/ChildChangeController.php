@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Kind;
 use App\Entity\Stammdaten;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -44,6 +45,8 @@ class ChildChangeController extends AbstractController
 
             if ($input['seccode'] == $adresse->getSecCode()){
 
+                $kind= $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('tracing'=>$kind->getTracing(),'saved'=>false));
+                $adresse = $kind->getEltern();
                 $cookie = new Cookie ('KindID', $kind->getId() . "." . hash("sha256", $kind->getId() . $this->getParameter("secret")));
                 $cookie2 = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")));
                 $cookie_seccode = new Cookie ('SecID', $adresse->getSecCode() . "." . hash("sha256", $adresse->getSecCode() . $this->getParameter("secret")));

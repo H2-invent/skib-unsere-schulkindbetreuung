@@ -5,15 +5,18 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StadtRepository")
  * @Vich\Uploadable
  */
 class Stadt
 {
+    use Translatable;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -151,11 +154,7 @@ class Stadt
      */
     private $akzentfarbeFehler;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $infoText;
+
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Active", mappedBy="stadt")
@@ -168,7 +167,7 @@ class Stadt
      */
     private $preiskategorien;
 
-
+   
     public function __construct()
     {
         $this->anmeldefristens = new ArrayCollection();
@@ -519,17 +518,7 @@ class Stadt
         return $this;
     }
 
-    public function getInfoText(): ?string
-    {
-        return $this->infoText;
-    }
 
-    public function setInfoText(?string $infoText): self
-    {
-        $this->infoText = $infoText;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Active[]
