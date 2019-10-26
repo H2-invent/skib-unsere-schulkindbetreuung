@@ -1,0 +1,80 @@
+<style>
+    th {
+        border-bottom: 1px solid black;
+        font-weight: bold;
+    }
+
+    tr {
+        margin: 5px;
+    }
+</style>
+<table>
+    <thead>
+    <tr>
+        <th>Pos.</th>
+        <th>Name des Kindes</th>
+        <th >Schule</th>
+        <th >Betreuungszeiten</th>
+        <th align="right">Monatlicher Preis/ €</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set counter = 1 %}
+
+    {% for k in rechnung.kinder %}
+
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td>{{ k.vorname }} {{ k.nachname }}</td>
+                    <td>{{ k.schule.name }}</td>
+                    <td></td>
+                    <td align="right"></td>
+                </tr>
+        {% for z in k.zeitblocks %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ z.WochentagString|trans }}:<br>{{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}</td>
+            <td align="right"></td>
+        </tr>
+{% endfor %}
+        {% set counter = counter+1 %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td align="right">{{ k.PreisforBetreuung|number_format(2,',','.') }}€</td>
+            </tr>
+    {% endfor %}
+
+
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="6"></td>
+    </tr>
+    <tr>
+        <td colspan="6"></td>
+    </tr>
+
+
+    <tr>
+        <td colspan="3"></td>
+        <td ><h4>Gesamtsumme: </h4></td>
+        <td align="right"><h4>{{ rechnung.summe|number_format(2,',','.') }}€</h4></td>
+    </tr>
+
+
+    </tfoot>
+</table>
+<p>{% trans %}Leistungsdatum{% endtrans %}: {{ rechnung.von|date('d.m.Y') }} - {{ rechnung.bis|date('d.m.Y') }}</p>
+{% if rechnung.sepa is not null %}
+<p>{% trans with {'%mandat%':'skb-'~rechnung.stammdaten.confirmationCode,'%betrag%':rechnung.summe,'%glaubigerid%':organisation.glauaubigerId,'%organisation%':organisation.name,'%einzugsdatum%':rechnung.sepa.einzugsdatum|date('d.m.Y'),'%iban%':rechnung.stammdaten.iban,'%bic%':rechnung.stammdaten.bic} %}
+        Wie mit Ihnen vereinbart ziehen wir unsere Forderungen in Höhe von %betrag% mit dem SEPA-Lastschrift Nr. %mandat% zu der Gläubiger-Identitfikationsnummer %glaubigerid%
+        von Ihrem Konto: IBAN %iban%, BIC %bic%, zum Fälligkeitsdatum %einzugsdatum% ein. Wir bitten Sie, für Kontodeckung zu sorgen.
+        Der Rechnungsbetrag wird von der Organisation %organisation% am %einzugsdatum% mit der Gläubiger-Id: %glaubigerid% eingezogen.
+
+    {% endtrans %}</p>
+{% endif %}
