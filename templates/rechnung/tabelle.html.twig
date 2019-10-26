@@ -45,7 +45,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td align="right">{{ k.PreisforBetreuung|number_format(2,',','.') }}€</td>
+                <th align="right">{{ k.PreisforBetreuung|number_format(2,',','.') }}€</th>
             </tr>
     {% endfor %}
 
@@ -71,10 +71,9 @@
 </table>
 <p>{% trans %}Leistungsdatum{% endtrans %}: {{ rechnung.von|date('d.m.Y') }} - {{ rechnung.bis|date('d.m.Y') }}</p>
 {% if rechnung.sepa is not null %}
-<p>{% trans with {'%mandat%':'skb-'~rechnung.stammdaten.confirmationCode,'%betrag%':rechnung.summe,'%glaubigerid%':organisation.glauaubigerId,'%organisation%':organisation.name,'%einzugsdatum%':rechnung.sepa.einzugsdatum|date('d.m.Y'),'%iban%':rechnung.stammdaten.iban,'%bic%':rechnung.stammdaten.bic} %}
-        Wie mit Ihnen vereinbart ziehen wir unsere Forderungen in Höhe von %betrag% mit dem SEPA-Lastschrift Nr. %mandat% zu der Gläubiger-Identitfikationsnummer %glaubigerid%
+<p>{% trans with {'%mandat%':'skb-'~rechnung.stammdaten.confirmationCode,'%betrag%':rechnung.summe|number_format(2,',','.'),'%glaubigerid%':organisation.glauaubigerId,'%organisation%':organisation.name,'%einzugsdatum%':rechnung.sepa.einzugsdatum|date('d.m.Y'),'%iban%':rechnung.stammdaten.iban,'%bic%':rechnung.stammdaten.bic} %}
+        Wie mit Ihnen vereinbart ziehen wir unsere Forderungen in Höhe von %betrag%€ mit dem SEPA-Lastschrift Nr. %mandat% zu der Gläubiger-Identitfikationsnummer %glaubigerid%
         von Ihrem Konto: IBAN %iban%, BIC %bic%, zum Fälligkeitsdatum %einzugsdatum% ein. Wir bitten Sie, für Kontodeckung zu sorgen.
-        Der Rechnungsbetrag wird von der Organisation %organisation% am %einzugsdatum% mit der Gläubiger-Id: %glaubigerid% eingezogen.
 
     {% endtrans %}</p>
 {% endif %}

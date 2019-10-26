@@ -55,8 +55,13 @@ class SepaController extends AbstractController
 
     private function calcSepa(Sepa $sepa,TranslatorInterface $translator,SEPASimpleService $SEPASimpleService,PrintRechnungService $printRechnungService){
         $active = $this->getDoctrine()->getRepository(Active::class)->findSchuleBetweentwoDates($sepa->getVon(),$sepa->getBis(),$sepa->getOrganisation()->getStadt());
+        $today = new \DateTime();
         if($sepa->getBis()<$sepa->getVon()){
             return $translator->trans('Fehler: Bis-Datum liegt vor dem Von-Datum');
+        }
+
+        if($sepa->getBis() > $today){
+            return $translator->trans('Fehler: Es sind nur Abrechnungen für Vergangene Monate zulässig');
         }
         if(!$active){
             return $translator->trans('Fehler: Kein Schuljahr in diesem Zeitraum gefunden');
@@ -148,7 +153,7 @@ class SepaController extends AbstractController
                    NULL, NULL, $rechnung->getRechnungsnummer(), $rechnung->getRechnungsnummer(), $type, 'skb-'.$rechnung->getStammdaten()->getConfirmationCode(), $rechnung->getStammdaten()->getCreatedAt()->format('Y-m-d'));
 
            }
-           dump($rechnung);
+
            $pdf = $printRechnungService->printRechnung('test',$organisation,$rechnung,'S');
 
        }
@@ -157,16 +162,12 @@ class SepaController extends AbstractController
             $organisation->getName(), $organisation->getName(), $organisation->getIban(), $organisation->getBic(),
             $organisation->getGlauaubigerId())
        );
-
         $sepa->setAnzahl(sizeof($rechnungen));
         $sepa->setCreatedAt(new \DateTime());
         $sepa->setPdf('');
         $sepa->setSumme($sepaSumme);
         $em->persist($sepa);
         $em->flush();
-
         return $translator->trans('Das SEPA-Lastschrift wurde erfolgreich angelegt');
-
-
     }
 }
