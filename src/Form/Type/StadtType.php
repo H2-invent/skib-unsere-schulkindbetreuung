@@ -33,8 +33,7 @@ class StadtType extends AbstractType
             ->add('ort', TextType::class,['label'=>'Stadt','translation_domain' => 'form'])
             ->add('telefon', TextType::class,['label'=>'Telefonnummer','translation_domain' => 'form'])
             ->add('ansprechpartner', TextType::class,['label'=>'Ansprechpartner','translation_domain' => 'form'])
-            ->add('infoText', TextareaType::class,['label'=>'Info Text','translation_domain' => 'form','attr'=>['rows'=>6]])
-            ->add('preiskategorien', NumberType::class,['required'=>true,'label'=>'Anzahl der Preiskategorien','translation_domain' => 'form'])
+             ->add('preiskategorien', NumberType::class,['required'=>true,'label'=>'Anzahl der Preiskategorien','translation_domain' => 'form'])
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,

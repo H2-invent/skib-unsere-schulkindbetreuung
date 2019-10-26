@@ -75,8 +75,15 @@ class StadtverwaltungController extends AbstractController
             $city = $form->getData();
             $errors = $validator->validate($city);
             if(count($errors)== 0) {
+                //Hier sie translationTexte
+                $city->translate('de')->setInfoText('Test_de');
+                $city->translate('en')->setInfoText('Test_en');
+                $city->translate('fr')->setInfoText('Test_fr');
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($city);
+
+                //wichtig vor dem Flush
+                $city->mergeNewTranslations();
                 $em->flush();
                 return $this->redirectToRoute('admin_stadt_edit',array('id'=>$city->getId(),'snack'=>'Erfolgreich gespeichert'));
             }
