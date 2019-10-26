@@ -157,6 +157,11 @@ class Kind
      */
     private $tracing;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Rechnung", mappedBy="kinder")
+     */
+    private $rechnungen;
+
 
 
     public function __construct()
@@ -164,6 +169,7 @@ class Kind
         $this->zeitblocks = new ArrayCollection();
         $this->abwesends = new ArrayCollection();
         $this->beworben = new ArrayCollection();
+        $this->rechnungen = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -671,6 +677,34 @@ class Kind
     public function setTracing(?string $tracing): self
     {
         $this->tracing = $tracing;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rechnung[]
+     */
+    public function getRechnungen(): Collection
+    {
+        return $this->rechnungen;
+    }
+
+    public function addRechnungen(Rechnung $rechnungen): self
+    {
+        if (!$this->rechnungen->contains($rechnungen)) {
+            $this->rechnungen[] = $rechnungen;
+            $rechnungen->addKinder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRechnungen(Rechnung $rechnungen): self
+    {
+        if ($this->rechnungen->contains($rechnungen)) {
+            $this->rechnungen->removeElement($rechnungen);
+            $rechnungen->removeKinder($this);
+        }
 
         return $this;
     }
