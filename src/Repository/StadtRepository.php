@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Stadt;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Stadt|null find($id, $lockMode = null, $lockVersion = null)

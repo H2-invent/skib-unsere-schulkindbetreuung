@@ -28,12 +28,12 @@ class Organisation
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\schule", mappedBy="organisation")
+     * @ORM\OneToMany(targetEntity="App\Entity\Schule", mappedBy="organisation")
      */
     private $schule;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\stadt", inversedBy="organisations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="organisations")
      */
     private $stadt;
 

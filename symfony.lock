@@ -135,6 +135,9 @@
     "jms/metadata": {
         "version": "2.0.0"
     },
+    "knplabs/doctrine-behaviors": {
+        "version": "1.6.0"
+    },
     "league/flysystem": {
         "version": "1.0.46"
     },

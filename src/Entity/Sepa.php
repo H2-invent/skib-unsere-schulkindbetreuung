@@ -54,7 +54,6 @@ class Sepa
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\NotBlank()
      */
     private $bis;
 
