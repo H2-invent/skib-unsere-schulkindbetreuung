@@ -120,12 +120,13 @@
             <!--Grid row-->
             <div class="row wow fadeIn">
 
+                <div class="col-md-12 mb-6 white-text text-center text-md-left">
+                    <h1 class="display-4 font-weight-bold">{{ stadt.name }}</h1>
+                    <hr class="hr-light">
+                </div>
+
                 <!--Grid column-->
                 <div class="col-md-6 mb-4 white-text text-center text-md-left">
-
-                    <h1 class="display-4 font-weight-bold">{{ stadt.name }}</h1>
-
-                    <hr class="hr-light">
                     <p class="lead">{% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
                     <a href="{{ url }}" class="btn btn-primary btn-lg">
                     {% if app.request.cookies.has('SecID') %}
@@ -138,7 +139,7 @@
 
                 <div class="col-md-6 mb-4 white-text text-center text-md-left">
                     <p class="lead">
-                        <strong>{{ stadt.infoText|nl2br }}</strong>
+                        {{ cityInfoText|nl2br }}
                     </p>
                 </div>
             </div>
