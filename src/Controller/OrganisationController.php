@@ -44,6 +44,8 @@ class OrganisationController extends AbstractController
             throw new \Exception('Wrong City');
         }
         $organisation = new Organisation();
+
+
         $form = $this->createForm(OrganisationType::class, $organisation);
         $form->handleRequest($request);
         $errors = array();
@@ -75,6 +77,7 @@ class OrganisationController extends AbstractController
         if($organisation->getStadt() != $this->getUser()->getStadt() && $this->getUser()->getOrganisation()!= $organisation){
             throw new \Exception('Wrong City');
         }
+
 
         $form = $this->createForm(OrganisationType::class, $organisation);
         $form->handleRequest($request);
@@ -126,4 +129,5 @@ class OrganisationController extends AbstractController
         return $this->render('cityAdminOrganisation/organisationDetail.html.twig',array('stadt'=>$city,'organisation'=>$organisation));
 
     }
+
 }

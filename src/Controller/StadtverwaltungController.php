@@ -42,6 +42,7 @@ class StadtverwaltungController extends AbstractController
     public function newStadt(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
         $city = new Stadt();
+
         $form = $this->createForm(StadtType::class, $city);
 
         $form->handleRequest($request);
