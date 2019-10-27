@@ -36,7 +36,7 @@ class SepaDetailController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
 
-        return $printRechnungService->printRechnung('Test',$rechnung->getKinder()->toArray()[0]->getSchule()->getOrganisation(),$rechnung,'I');
+        return $printRechnungService->printRechnung('Test',$rechnung->getKinder()->toArray()[0]->getSchule()->getOrganisation(),$rechnung,'D');
     }
     /**
      * @Route("/org_accounting/print/sepaXML", name="accounting_sepa_printXML")
