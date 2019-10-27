@@ -163,7 +163,6 @@ class SepaController extends AbstractController
            }
             $filename = $translator->trans('Rechnung').' '.$rechnung->getRechnungsnummer();
            $pdf = $printRechnungService->printRechnung($filename,$organisation,$rechnung,'S');
-           dump($pdf);
            $attachment = array();
            $attachment[] = (new \Swift_Attachment())
                ->setFilename($filename . '.pdf')
