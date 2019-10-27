@@ -736,7 +736,7 @@ class LoerrachWorkflowController extends AbstractController
     }
 
     /**
-     * @Route("/loerrach/adresse/bypass",name="loerrach_workflow_bypass",methods={"GET","POST"})
+     * @Route("/admin/adresse/bypass",name="loerrach_workflow_bypass",methods={"GET","POST"})
      */
     public function BypassAction(Request $request, ValidatorInterface $validator)
     {
