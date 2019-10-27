@@ -89,9 +89,10 @@
                                     {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} </div>
                             {% else %}{% trans %}Summe pro Monat für gebuchte Betreuungsblöcke: {% endtrans %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %} <a href="{{ path('loerrach_workflow_print_pdf',{'id':k.id}) }}"><i class="fa fa-download"></i></a>
                             </small>
-
+                            
                         </a>
                     </h5>
+                    <a target="_blank" href={{ path('workflow_datenschutz', {'org_id':k.schule.organisation.id}) }}>{% trans %}Datenschutzhinweis der{% endtrans %} {{ k.schule.organisation.name }}</a>
                 </div>
 
                 <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
@@ -248,6 +249,11 @@
                 </td>
             </tr>
         </table>
+    <input type="checkbox" name="Datenschutz" value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}<br>
+    <a target="_blank" href={{ path('workflow_agb', {'stadt_id':stadt.id}) }}>{% trans %}Allgemeine Geschäftsbeingungen der Stadt {% endtrans %} {{ stadt.name }}</a>
+    <div>
+        <input type="checkbox" name="AGB" value="AGB"> {% trans %}Ich habe die Allgemeinen Geschäftsbedingungen der Schulkindbetreuung der Stadt gelesen und akzeptiere diese{% endtrans %}<br>
+    </div>
     {% if error == false %}
     <a href="{{ path('loerrach_workflow_abschluss') }}" class="btn btn-outline-primary">{% trans %}Absenden{% endtrans %}</a>
     {% else %}

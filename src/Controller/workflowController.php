@@ -7,6 +7,7 @@ namespace App\Controller;
  * Time: 12:21
  */
 
+use App\Entity\Organisation;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Form\Type\StadtType;
@@ -131,4 +132,27 @@ class workflowController  extends AbstractController
         return $this->redirectToRoute('workflow_confirm_Email', array('stadt' => $stadt->getId(),'snack'=>$text, 'uid' => $stammdaten->getUid(), 'redirect' => $request->get('redirect')));
     }
 
+    /**
+     * @Route("/zusammenfassung/datenschutz",name="workflow_datenschutz",methods={"GET"})
+     */
+    public function datenschutzAction(Request $request,TranslatorInterface $translator)
+    {
+        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
+        $org = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $org_datenschutz = $org->translate()->getDatenschutz();
+
+        return $this->render('workflow/datenschutz.html.twig', array('datenschutz'=>$org_datenschutz,'org'=>$org,'stammdaten'=>$stammdaten,'redirect'=>$request->get('redirect')));
+    }
+
+    /**
+     * @Route("/zusammenfassung/agb",name="workflow_agb",methods={"GET"})
+     */
+    public function agbAction(Request $request,TranslatorInterface $translator)
+    {
+        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt_id'));
+        $stadtAGB = $stadt->translate()->getAgb();
+
+        return $this->render('workflow/agb.html.twig', array('stadtAGB'=>$stadtAGB,'stadt'=>$stadt,'stammdaten'=>$stammdaten,'redirect'=>$request->get('redirect')));
+    }
 }
