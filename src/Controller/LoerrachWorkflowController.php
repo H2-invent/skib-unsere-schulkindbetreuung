@@ -306,11 +306,6 @@ class LoerrachWorkflowController extends AbstractController
         //$stadt = $adresse->getStadt();
         //$schuljahr = $this->getSchuljahr($stadt);
 
-
-
-
-
-
         // Load the data from the city into the controller as $stadt
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
         $schuljahr = $this->getSchuljahr($stadt);
@@ -546,7 +541,7 @@ class LoerrachWorkflowController extends AbstractController
                 $attachment[] = (new \Swift_Attachment())
                     ->setFilename($translator->trans('AGB ').' '.$stadt->getName(). '.pdf')
                     ->setContentType('application/pdf')
-                    ->setBody($printAGBService->printAGB($stadt,$stadt->translate()->getAgb(),'S'));
+                    ->setBody($printAGBService->printAGB($stadt->translate()->getAgb(),'S',$stadt,null));
 
                 foreach ($data->getZeitblocks() as $data2) {
                     $startDate = $data2->getFirstDate()->format('Ymd');
@@ -591,52 +586,7 @@ class LoerrachWorkflowController extends AbstractController
         return $response;
 
     }
-    /**
-     * @Route("/loerrach/ics",name="loerrach_workflow_ics",methods={"GET","POST"})
-     */
-    public function ics(Request $request, ValidatorInterface $validator, TranslatorInterface $translator,MailerService $mailer, TCPDFController $tcpdf, PrintService $print,IcsService $icsService)
-    {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
 
-        //Check for Anmeldung open
-        $schuljahr = $this->getSchuljahr($stadt);
-        if ($schuljahr == null){
-            return $this->redirectToRoute('workflow_closed', array('slug'=>$stadt->getSlug()));
-        }
-
-        //Include Parents in this route
-        $adresse = new Stammdaten;
-        if ($this->getStammdatenFromCookie($request)) {
-            $adresse = $this->getStammdatenFromCookie($request);
-        } else {
-            return $this->redirectToRoute('loerrach_workflow_adresse');
-        }
-
-        $kind = $adresse->getKinds();
-
-        foreach ($kind as $data) {
-
-            foreach ($data->getZeitblocks() as $data2) {
-                $icsService->add(
-                    array(
-                        'location' => 'Organisation',
-                        'description' => 'Betreuung',
-                        'dtstart' =>$data2->getActive()->getVon()->format('Ymd').'T'.$data2->getVon()->format('His') ,
-                        'dtend' => $data2->getActive()->getVon()->format('Ymd').'T'.$data2->getBis()->format('His'),
-                        'summary' => 'Betreung',
-                        'url' => '',
-                        'rrule'=>'FREQ=WEEKLY;UNTIL='.$data2->getActive()->getBis()->format('Ymd').'T000000'
-                        )
-                );
-            }
-
-            $ical[] = array('name'=>$data->getVorname().' '. $data->getNachname(),'ics'=>$icsService->to_string());
-            $icsService = new IcsService();
-        }
-
-
-
-    }
     /**
      * @Route("/loerrach/berechnung/einKind",name="loerrach_workflow_preis_einKind",methods={"GET"})
      */
