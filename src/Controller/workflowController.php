@@ -8,6 +8,7 @@ namespace App\Controller;
  */
 
 use App\Entity\Organisation;
+use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Form\Type\StadtType;
@@ -46,7 +47,10 @@ class workflowController  extends AbstractController
 
         }
         $cityInfoText = $stadt->translate()->getInfoText();
-        return $this->render('workflow/start.html.twig',array( 'cityInfoText'=>$cityInfoText,'stadt'=>$stadt,'url'=>$url));
+        // Load all schools from the city into the controller as $schulen
+        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt,'deleted'=>false));
+
+        return $this->render('workflow/start.html.twig',array('schule'=>$schule, 'cityInfoText'=>$cityInfoText,'stadt'=>$stadt,'url'=>$url));
     }
 
 
