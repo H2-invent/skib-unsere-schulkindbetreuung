@@ -24,7 +24,7 @@ class StadtType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        dump($options['data']);
+
         $stadt = $options['data'];
         if($stadt->getTranslations()->isEmpty()){
             $stadt->translate('de')->setInfoText('');

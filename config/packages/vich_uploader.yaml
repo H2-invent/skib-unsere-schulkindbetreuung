@@ -4,6 +4,9 @@ vich_uploader:
         profil_picture:
             uri_prefix:         '%app.path.product_images%'
             upload_destination: '%kernel.project_dir%/public%app.path.product_images%'
+        data_upload:
+            uri_prefix:         '%app.path.uploads%'
+            upload_destination: '%kernel.project_dir%/data%app.path.uploads%'
 
     #mappings:
     #    products:

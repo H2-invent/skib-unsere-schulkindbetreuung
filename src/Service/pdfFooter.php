@@ -42,10 +42,6 @@ class pdfFooter extends \TCPDF
             $this->Ln(4);
             $this->MultiCell($this->getRemainingWidth(), 8,  'Tel.: '.$this->stadt->getTelefon() .' | eMail: '.$this->stadt->getEmail() , 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
             $this->Ln(4);
-            $this->MultiCell($this->getRemainingWidth(), 8,  '#########Freitext#########', 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
-            $this->Ln(4);
-            $this->SetFont('helvetica', '', 10);
-            $this->MultiCell($this->getRemainingWidth(), 10,   '##############Freitaxt#########', 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
 
         }elseif ($this->organisation){
             $this->Line(20,$this->getY(),$this->getRemainingWidth()+15,$this->getY());
@@ -57,7 +53,6 @@ class pdfFooter extends \TCPDF
             $this->Ln(4);
             $this->SetFont('helvetica', '', 10);
             $this->MultiCell($this->getRemainingWidth(), 10,   'IBAN: '.$this->organisation->getIban() .' | BIC: '.$this->organisation->getBic(). '| Bank: '.$this->organisation->getBankName(), 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
-
         }
 
 

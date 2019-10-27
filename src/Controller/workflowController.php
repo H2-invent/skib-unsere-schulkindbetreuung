@@ -13,6 +13,7 @@ use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Form\Type\StadtType;
 use App\Service\MailerService;
+use App\Service\PrintAGBService;
 use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
 use Beelab\Recaptcha2Bundle\Validator\Constraints\Recaptcha2;
 use phpDocumentor\Reflection\Types\This;
@@ -158,5 +159,23 @@ class workflowController  extends AbstractController
         $stadtAGB = $stadt->translate()->getAgb();
 
         return $this->render('workflow/agb.html.twig', array('stadtAGB'=>$stadtAGB,'stadt'=>$stadt,'stammdaten'=>$stammdaten,'redirect'=>$request->get('redirect')));
+    }
+    /**
+     * @Route("/agb/pdf",name="workflow_agb_pdf",methods={"GET"})
+     */
+    public function pdf(Request $request,TranslatorInterface $translator, PrintAGBService $printAGBService)
+    {
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        return $printAGBService->printAGB($stadt->translate()->getAgb(),'D',$stadt,null);
+
+    }
+    /**
+     * @Route("/datenschutz/pdf",name="workflow_datenschutz_pdf",methods={"GET"})
+     */
+    public function datenschutzpdf(Request $request,TranslatorInterface $translator, PrintAGBService $printAGBService)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        return $printAGBService->printAGB($organisation->translate()->getDatenschutz(),'D',null,$organisation);
+
     }
 }

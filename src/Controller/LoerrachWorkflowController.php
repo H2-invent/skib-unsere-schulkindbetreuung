@@ -18,6 +18,7 @@ use App\Form\Type\LoerrachKind;
 use App\Form\Type\StadtType;
 use App\Service\IcsService;
 use App\Service\MailerService;
+use App\Service\PrintAGBService;
 use App\Service\PrintService;
 use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
 use Beelab\Recaptcha2Bundle\Validator\Constraints\Recaptcha2;
@@ -439,7 +440,7 @@ class LoerrachWorkflowController extends AbstractController
     /**
      * @Route("/loerrach/abschluss",name="loerrach_workflow_abschluss",methods={"GET","POST"})
      */
-    public function abschlussAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator,MailerService $mailer, TCPDFController $tcpdf, PrintService $print,IcsService $icsService)
+    public function abschlussAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator,MailerService $mailer, TCPDFController $tcpdf, PrintService $print,IcsService $icsService,PrintAGBService $printAGBService)
     {
         // Load the data from the city into the controller as $stadt
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
@@ -520,10 +521,10 @@ class LoerrachWorkflowController extends AbstractController
         $em->flush();
 
 
-        $attachment = array();
 
 
         foreach ($kind as $data) {
+            $attachment = array();
             if (sizeof($data->getBeworben()->toArray()) == 0) {//Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
                 $fileName = $data->getVorname() . '_' . $data->getNachname() . '_' . $data->getSchule()->getName() . '.pdf';
 
@@ -542,6 +543,10 @@ class LoerrachWorkflowController extends AbstractController
                     ->setContentType('application/pdf')
                     ->setBody($pdf);
 
+                $attachment[] = (new \Swift_Attachment())
+                    ->setFilename($translator->trans('AGB ').' '.$stadt->getName(). '.pdf')
+                    ->setContentType('application/pdf')
+                    ->setBody($printAGBService->printAGB($stadt,$stadt->translate()->getAgb(),'S'));
 
                 foreach ($data->getZeitblocks() as $data2) {
                     $startDate = $data2->getFirstDate()->format('Ymd');
