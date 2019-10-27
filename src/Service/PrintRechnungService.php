@@ -44,12 +44,12 @@ class PrintRechnungService
         $pdf = $this->pdf;
         $pdf = $this->pdf->create();
         $pdf->setOrganisation($organisation);
-
+        $fileName = $organisation->getName() .'_'.$rechnung->getRechnungsnummer();
         //$pdf-> = $this->container->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         //todo hier musss der Test raus
-        $pdf->SetAuthor('Test');
-        $pdf->SetTitle('test');
-        $pdf->SetSubject('test');
+        $pdf->SetAuthor($fileName);
+        $pdf->SetTitle($fileName);
+        $pdf->SetSubject($fileName);
         $pdf->setFontSubsetting(true);
         $pdf->SetFont('helvetica', '', 10, '', true);
         $pdf->SetMargins(20, 15, 20, true);
@@ -124,13 +124,13 @@ class PrintRechnungService
             $autopadding = true
         );
 
-        $rechnung = $this->templating->render('rechnung/tabelle.html.twig',array('rechnung'=>$rechnung,'organisation'=>$organisation));
+        $table = $this->templating->render('rechnung/tabelle.html.twig',array('rechnung'=>$rechnung,'organisation'=>$organisation));
         $pdf->writeHTMLCell(
             $w = 0,
             $h = 0,
             $x = 20,
             $y = 100,
-            $rechnung,
+            $table,
             $border = 0,
             $ln = 1,
             $fill = 0,

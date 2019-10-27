@@ -566,12 +566,12 @@ class LoerrachWorkflowController extends AbstractController
                 $icsService = new IcsService();
                 $mailBetreff = $translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname();
                 $mailContent = $this->renderView('email/anmeldebestatigung.html.twig', array('eltern' => $adresse, 'kind' => $data, 'stadt' => $stadt));
-                $mailer->sendEmail('info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
+                $mailer->sendEmail($data->getSchule()->getOrganisation()->getName(),$data->getSchule()->getOrganisation()->getEmail(), $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
 
             }else{// es gibt noch beworbene Zeitblöcke
                 $mailBetreff = $translator->trans('Anmeldeinformation der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname();
                 $mailContent = $this->renderView('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $data, 'stadt' => $stadt));
-                $mailer->sendEmail('info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
+                $mailer->sendEmail($data->getSchule()->getOrganisation()->getName(),$data->getSchule()->getOrganisation()->getEmail(), $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
 
             }
         }

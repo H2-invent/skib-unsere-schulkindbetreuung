@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "beelab/recaptcha2-bundle": "^2.1",
+        "cron/cron-bundle": "^2.2",
         "friendsofsymfony/user-bundle": "~2.0",
         "jms/i18n-routing-bundle": "^3.0",
         "knplabs/doctrine-behaviors": "^1.6",
