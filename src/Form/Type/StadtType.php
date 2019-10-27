@@ -7,6 +7,7 @@
  */
 namespace App\Form\Type;
 
+
 use App\Entity\Stadt;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -23,6 +24,23 @@ class StadtType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        dump($options['data']);
+        $stadt = $options['data'];
+        if($stadt->getTranslations()->isEmpty()){
+            $stadt->translate('de')->setInfoText('');
+            $stadt->translate('en')->setInfoText('');
+            $stadt->translate('fr')->setInfoText('');
+            $stadt->translate('de')->setAgb('');
+            $stadt->translate('en')->setAgb('');
+            $stadt->translate('fr')->setAgb('');
+
+            foreach ($stadt->getNewTranslations() as $newTranslation) {
+                if (!$stadt->getTranslations()->contains($newTranslation) && !$stadt->getNewTranslations()->isEmpty()) {
+                    $stadt->addTranslation($newTranslation);
+                    $stadt->getNewTranslations()->removeElement($newTranslation);
+                }
+            }
+        }
         $builder
             ->add('name', TextType::class,['label'=>'Name der Stadt','translation_domain' => 'form'])
             ->add('slug', TextType::class,['label'=>'Slug der Stadt','translation_domain' => 'form'])
@@ -48,12 +66,12 @@ class StadtType extends AbstractType
             ->add('hauptfarbe', TextType::class,['required'=>false,'label'=>'Hauptfarbe(HTML Code)','translation_domain' => 'form'])
             ->add('akzentfarbe', TextType::class,['required'=>false,'label'=>'Akzentfarbe (HTML Code)','translation_domain' => 'form'])
             ->add('akzentfarbeFehler', TextType::class,['required'=>false,'label'=>'Akzentfarbe Fehler (HTML Code)','translation_domain' => 'form'])
-            ->add('infoTextDe', TextareaType::class, ['required'=>false,'label'=>'Info Text Deutsch','translation_domain' => 'form', 'property_path' => 'translations[de].infoText', ])
-            ->add('infoTextEn', TextareaType::class, ['required'=>false,'label'=>'Info Text Englisch','translation_domain' => 'form','property_path' => 'translations[en].infoText', ])
-            ->add('infoTextFr', TextareaType::class, ['required'=>false,'label'=>'Info Text Französisch','translation_domain' => 'form','property_path' => 'translations[fr].infoText', ])
-            ->add('infoAGBDe', TextareaType::class, ['required'=>false,'label'=>'AGB Deutsch','translation_domain' => 'form', 'property_path' => 'translations[de].agb', ])
-            ->add('infoAGBEn', TextareaType::class, ['required'=>false,'label'=>'AGB Englisch','translation_domain' => 'form','property_path' => 'translations[en].agb', ])
-            ->add('infoAGBFr', TextareaType::class, ['required'=>false,'label'=>'AGB Französisch','translation_domain' => 'form','property_path' => 'translations[fr].agb', ])
+            ->add('infoTextDe', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Info Text Deutsch','translation_domain' => 'form', 'property_path' => 'translations[de].infoText', ])
+            ->add('infoTextEn', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Info Text Englisch','translation_domain' => 'form','property_path' => 'translations[en].infoText', ])
+            ->add('infoTextFr', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Info Text Französisch','translation_domain' => 'form','property_path' => 'translations[fr].infoText', ])
+            ->add('infoAGBDe', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Deutsch','translation_domain' => 'form', 'property_path' => 'translations[de].agb', ])
+            ->add('infoAGBEn', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Englisch','translation_domain' => 'form','property_path' => 'translations[en].agb', ])
+            ->add('infoAGBFr', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Französisch','translation_domain' => 'form','property_path' => 'translations[fr].agb', ])
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
 
         ;

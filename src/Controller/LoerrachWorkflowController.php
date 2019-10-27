@@ -402,6 +402,8 @@ class LoerrachWorkflowController extends AbstractController
     {
         // Load the data from the city into the controller as $stadt
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
+        $stadtAgb = $stadt->translate()->getAgb();
+
 
         //Check for Anmeldung open
         $schuljahr = $this->getSchuljahr($stadt);
@@ -418,7 +420,6 @@ class LoerrachWorkflowController extends AbstractController
         }
 
         $kind = $adresse->getKinds();
-
         $preis = 0;
         foreach ($kind as $data){
             $preis +=$data->getPreisforBetreuung();
@@ -431,7 +432,8 @@ class LoerrachWorkflowController extends AbstractController
                 break;
             }
         }
-        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('einkommen'=>array_flip($this->einkommensgruppen),'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis'=>$preis, 'error'=>$error));
+
+        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('einkommen'=>array_flip($this->einkommensgruppen),'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis'=>$preis, 'error'=>$error,'stadtAGB'=>$stadtAgb));
     }
 
     /**
@@ -509,7 +511,7 @@ class LoerrachWorkflowController extends AbstractController
                 $kindNew->addBeworben($zb);
             }
             $em->persist($kindNew);
-            dump($kindNew);
+
             $em->flush();
         }
 
@@ -706,13 +708,7 @@ class LoerrachWorkflowController extends AbstractController
                 $cookie_seccode = explode('.', $request->cookies->get('SecID'));
                 $hash_seccode = hash("sha256", $cookie_seccode[0] . $this->getParameter("secret"));
 
-                if (
-                    $this->getUser()
-                    && $this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE')
-                    && $hash_kind == $cookie_kind[1]
-                    && $hash_seccode == $cookie_seccode[1]
-                    && $hash == $cookie_ar[1]){
-                }
+
             }else{
                 $search['tracing']= 0;
             }

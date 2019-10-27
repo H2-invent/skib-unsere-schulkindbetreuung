@@ -1,0 +1,15 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-centerm text-md-left">
+
+        <h1 class="display-4 font-weight-bold">{% trans %}Datenschutzhinweis der Organisation{% endtrans %} {{ org.name }}</h1>
+
+    </div>
+{% endblock %}
+{% block content %}
+    <div>
+        <p>
+            {{ datenschutz }}
+        </p>
+    </div>
+{% endblock %}

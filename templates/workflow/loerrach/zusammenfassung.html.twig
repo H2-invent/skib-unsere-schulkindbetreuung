@@ -89,9 +89,10 @@
                                     {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} </div>
                             {% else %}{% trans %}Summe pro Monat für gebuchte Betreuungsblöcke: {% endtrans %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %} <a href="{{ path('loerrach_workflow_print_pdf',{'id':k.id}) }}"><i class="fa fa-download"></i></a>
                             </small>
-
+                            
                         </a>
                     </h5>
+                    <a target="_blank" href={{ path('workflow_datenschutz', {'org_id':k.schule.organisation.id}) }}>{% trans %}Datenschutzhinweis der{% endtrans %} {{ k.schule.organisation.name }}</a>
                 </div>
 
                 <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
@@ -248,10 +249,39 @@
                 </td>
             </tr>
         </table>
+    <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz" value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}<br>
+    <div>
+        <input id="checkboxAgb" type="checkbox" class="checkboxSelect" name="AGB" value="AGB"> <a target="_blank" href={{ path('workflow_agb', {'stadt_id':stadt.id}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die Allgemeine Geschäftsbeingungen der Stadt  %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese{% endtrans %}</a><br>
+    </div>
     {% if error == false %}
-    <a href="{{ path('loerrach_workflow_abschluss') }}" class="btn btn-outline-primary">{% trans %}Absenden{% endtrans %}</a>
+    <button  class="btn btn-outline-primary sendButton" disabled >{% trans %}Absenden{% endtrans %}</button>
     {% else %}
     <a href="{{ path('loerrach_workflow_schulen') }}" class="btn btn-outline-primary">{% trans %}Weitere Blöcke hinzufügen{% endtrans %}</a>
     {% endif %}
+
+{% endblock %}
+{% block jquery %}
+    <script>
+        var url= "{{ path('loerrach_workflow_abschluss') }}";
+            $('.checkboxSelect').on('change', function() {
+                var cbS = $('.checkboxSelect');
+                var all = true;
+                cbS.each(function (index) {
+                    if(!this.checked){
+                        all = false;
+                    }
+                });
+                if (all == true) {
+                    $('.sendButton').wrap('<a href="{{ path('loerrach_workflow_abschluss') }}">');
+                     $('.sendButton').prop('disabled', false);
+
+                }else {
+                    if($('.sendButton').parent().is("a")){
+                        $('.sendButton').unwrap();
+                    }
+                    $('.sendButton').prop('disabled', true);
+                }
+            });
+    </script>
 
 {% endblock %}

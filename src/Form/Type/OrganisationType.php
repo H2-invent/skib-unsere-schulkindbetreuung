@@ -23,6 +23,21 @@ class OrganisationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+
+        $org = $options['data'];
+        if($org->getTranslations()->isEmpty()){
+            $org->translate('de')->setDatenschutz('');
+            $org->translate('en')->setDatenschutz('');
+            $org->translate('fr')->setDatenschutz('');
+
+            foreach ($org->getNewTranslations() as $newTranslation) {
+                if (!$org->getTranslations()->contains($newTranslation) && !$org->getNewTranslations()->isEmpty()) {
+                    $org->addTranslation($newTranslation);
+                    $org->getNewTranslations()->removeElement($newTranslation);
+                }
+            }
+        }
         $builder
             ->add('name', TextType::class,['label'=>'Name der Organisation','translation_domain' => 'form'])
             ->add('adresse', TextType::class,['label'=>'Straße','translation_domain' => 'form'])
@@ -48,6 +63,9 @@ class OrganisationType extends AbstractType
             ->add('smtpPort', TextType::class,['required'=>false,'label'=>'SMTP Port','translation_domain' => 'form'])
             ->add('smtpUser', TextType::class,['required'=>false,'label'=>'SMTP Username','translation_domain' => 'form'])
             ->add('smtpPassword', TextType::class,['required'=>false,'label'=>'SMTP Passwort','translation_domain' => 'form'])
+            ->add('datenschutzDE', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Datenschutzhinweis Deutsch','translation_domain' => 'form', 'property_path' => 'translations[de].datenschutz', ])
+            ->add('datenschutzEN', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Datenschutzhinweis Englisch','translation_domain' => 'form','property_path' => 'translations[en].datenschutz', ])
+            ->add('datenschutzFR', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Datenschutzhinweis Französisch','translation_domain' => 'form','property_path' => 'translations[fr].datenschutz', ])
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
     }
