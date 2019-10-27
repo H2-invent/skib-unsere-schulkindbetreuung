@@ -3,13 +3,17 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model\Translatable\Translation;
+//use Knp\DoctrineBehaviors\Model\Translatable\Translation;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * @ORM\Entity
  */
 class StadtTranslation
 {
+    use ORMBehaviors\Translatable\Translation;
+
+
     /**
      * @ORM\Column(type="text", nullable=true)
      */
@@ -20,7 +24,7 @@ class StadtTranslation
      */
     private $agb;
 
-    use Translation;
+
 
     public function getInfoText(): ?string
     {

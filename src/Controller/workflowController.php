@@ -44,7 +44,9 @@ class workflowController  extends AbstractController
                 break;
 
         }
-        return $this->render('workflow/start.html.twig',array('stadt'=>$stadt,'url'=>$url));
+        $cityInfoText = $stadt->translate()->getInfoText();
+        dump($cityInfoText);
+        return $this->render('workflow/start.html.twig',array( 'cityInfoText'=>$cityInfoText,'stadt'=>$stadt,'url'=>$url));
     }
 
 
