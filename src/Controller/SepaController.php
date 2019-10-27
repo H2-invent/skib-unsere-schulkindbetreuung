@@ -9,6 +9,8 @@ use App\Entity\Sepa;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Form\Type\SepaType;
+use App\Service\MailerService;
+use App\Service\PrintRechnungService;
 use App\Service\SEPASimpleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -24,7 +26,7 @@ class SepaController extends AbstractController
     /**
      * @Route("/org_accounting/overview", name="accounting_overview",methods={"GET","POST"})
      */
-    public function index( Request $request, SEPASimpleService $SEPASimpleService,ValidatorInterface $validator,TranslatorInterface $translator)
+    public function index( Request $request, SEPASimpleService $SEPASimpleService,ValidatorInterface $validator,TranslatorInterface $translator,PrintRechnungService $printRechnungService,MailerService $mailerService)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
@@ -41,8 +43,8 @@ class SepaController extends AbstractController
             if(count($errors)== 0) {
                 $sepa = $form->getData();
                 $sepa->setBis((clone $sepa->getVon())->modify('last day of this month'));
-                $result = $this->calcSepa($sepa,$translator,$SEPASimpleService);
-       //         return $this->redirectToRoute('accounting_overview',array('id'=>$organisation->getId(),'snack'=>$result));
+                $result = $this->calcSepa($sepa,$translator,$SEPASimpleService,$printRechnungService,$mailerService);
+             return $this->redirectToRoute('accounting_overview',array('id'=>$organisation->getId(),'snack'=>$result));
             }
 
         }
@@ -52,10 +54,15 @@ class SepaController extends AbstractController
         return $this->render('sepa/show.html.twig',array('form'=>$form->createView(),'sepa'=>$sepaData));
     }
 
-    private function calcSepa(Sepa $sepa,TranslatorInterface $translator,SEPASimpleService $SEPASimpleService){
+    private function calcSepa(Sepa $sepa,TranslatorInterface $translator,SEPASimpleService $SEPASimpleService,PrintRechnungService $printRechnungService,MailerService $mailerService){
         $active = $this->getDoctrine()->getRepository(Active::class)->findSchuleBetweentwoDates($sepa->getVon(),$sepa->getBis(),$sepa->getOrganisation()->getStadt());
+        $today = new \DateTime();
         if($sepa->getBis()<$sepa->getVon()){
             return $translator->trans('Fehler: Bis-Datum liegt vor dem Von-Datum');
+        }
+
+        if($sepa->getBis() > $today){
+            return $translator->trans('Fehler: Es sind nur Abrechnungen für Vergangene Monate zulässig');
         }
         if(!$active){
             return $translator->trans('Fehler: Kein Schuljahr in diesem Zeitraum gefunden');
@@ -111,52 +118,65 @@ class SepaController extends AbstractController
                }
            }
            $rechnung = new Rechnung();
+
            foreach ($kinderDerEltern as $data2){// berechne die summe aller kinder
-              if($data2->getFin()){
+
                 $summe += $data2->getPreisforBetreuung();
-              }
+
+
               foreach ($data2->getZeitblocks() as $zb){// füge alle ZEitblöcke an die rechnung an
                   $rechnung->addZeitblock($zb);
               }
+              $rechnung->addKinder($data2);
            }
+
+           $rechnung->setVon($sepa->getVon());
+           $rechnung->setBis($sepa->getBis());
            $rechnung->setSumme($summe);
+
            $rechnung->setPdf('');
            $rechnung->setCreatedAt(new \DateTime());
            $rechnung->setStammdaten($data);
-            dump($kinderDerEltern);
-            dump($rechnung);
+
             $em->persist($rechnung);
-          //  $em->flush();
+            $em->flush();
             $rechnung->setRechnungsnummer('RE'.(new \DateTime())->format('Ymd').$rechnung->getId());
-
             $em->persist($rechnung);
-          //  $em->flush();
+            $em->flush();
 
-           if($summe != 0){
+           if($summe > 0){
+
                $rechnungen[] = $rechnung;
                $sepaSumme +=$summe;
-               $sepa->addRechnungen($rechnung);
+               $rechnung->setSepa($sepa);
             //todo check ob alle angaben richtig sind
                $SEPASimpleService->Add($sepa->getEinzugsDatum()->format('Y-m-d'), $rechnung->getSumme(), $rechnung->getStammdaten()->getKontoinhaber(), $rechnung->getStammdaten()->getIban(), $rechnung->getStammdaten()->getBic(),
                    NULL, NULL, $rechnung->getRechnungsnummer(), $rechnung->getRechnungsnummer(), $type, 'skb-'.$rechnung->getStammdaten()->getConfirmationCode(), $rechnung->getStammdaten()->getCreatedAt()->format('Y-m-d'));
 
            }
+            $filename = $translator->trans('Rechnung').' '.$rechnung->getRechnungsnummer();
+           $pdf = $printRechnungService->printRechnung($filename,$organisation,$rechnung,'S');
+           $attachment[] = (new \Swift_Attachment())
+               ->setFilename($filename . '.pdf')
+               ->setContentType('application/pdf')
+               ->setBody($pdf);
+
+           $mailContent = $this->render('email/rechnungEmail.html.twig',array('rechnung'=>$rechnung,'organisation'=>$organisation));
+           $betreff = $translator->trans('Rechnung ').' ' .$rechnung->getRechnungsnummer();
+            $mailerService->sendEmail($organisation->getName(),$organisation->getEmail(),$data->getEmail(),$betreff,$mailContent,$attachment);
+
        }
        $sepa->setSepaXML(
            $SEPASimpleService ->GetXML('CORE', 'Einzug.'.$sepa->getEinzugsDatum()->format('d.m.Y'), 'Best.v.'.$sepa->getEinzugsDatum()->format('d.m.Y'),
             $organisation->getName(), $organisation->getName(), $organisation->getIban(), $organisation->getBic(),
             $organisation->getGlauaubigerId())
        );
-
         $sepa->setAnzahl(sizeof($rechnungen));
         $sepa->setCreatedAt(new \DateTime());
         $sepa->setPdf('');
         $sepa->setSumme($sepaSumme);
         $em->persist($sepa);
-      //  $em->flush();
-
+        $em->flush();
         return $translator->trans('Das SEPA-Lastschrift wurde erfolgreich angelegt');
-
-
     }
 }

@@ -21,14 +21,14 @@ class MailerService
         $this->templating = $templating;
     }
 
-    public function sendEmail( $from, $to, $betreff,$content,$attachment = array())
+    public function sendEmail($sender, $from, $to, $betreff,$content,$attachment = array())
     {
 
-
+            $fromSender = array($from=>$sender);
         $message = (new \Swift_Message($betreff))
-            ->setFrom($from)
-            ->setTo($to)
+            ->setFrom($fromSender)
 
+            ->setTo($to)
             ->setBody(
                $content,
                 'text/html'

@@ -100,7 +100,7 @@ class workflowController  extends AbstractController
             $mailBetreff = $translator->trans('Bestätigungscode für die Schulbetreuungsanmeldung ');
             $mailContent = $this->renderView('email/bestaetigungscode.html.twig', array('eltern' => $stammdaten));
             if ($stammdaten->getConfirmEmailSend() == false) {
-                $mailer->sendEmail('info@h2-invent.com', $stammdaten->getEmail(), $mailBetreff, $mailContent);
+                $mailer->sendEmail('H2-Invent','info@h2-invent.com', $stammdaten->getEmail(), $mailBetreff, $mailContent);
                 $stammdaten->setConfirmEmailSend(true);
                 $stammdaten->setResendEmail(md5(uniqid()));
                 $em = $this->getDoctrine()->getManager();

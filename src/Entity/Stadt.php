@@ -167,7 +167,7 @@ class Stadt
      */
     private $preiskategorien;
 
-   
+
     public function __construct()
     {
         $this->anmeldefristens = new ArrayCollection();

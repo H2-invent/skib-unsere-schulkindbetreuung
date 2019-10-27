@@ -55,9 +55,25 @@ class Rechnung
      */
     private $rechnungsnummer;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Kind", inversedBy="rechnungen")
+     */
+    private $kinder;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $von;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $bis;
+
     public function __construct()
     {
         $this->zeitblocks = new ArrayCollection();
+        $this->kinder = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -159,6 +175,56 @@ class Rechnung
     public function setRechnungsnummer(string $rechnungsnummer): self
     {
         $this->rechnungsnummer = $rechnungsnummer;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Kind[]
+     */
+    public function getKinder(): Collection
+    {
+        return $this->kinder;
+    }
+
+    public function addKinder(Kind $kinder): self
+    {
+        if (!$this->kinder->contains($kinder)) {
+            $this->kinder[] = $kinder;
+        }
+
+        return $this;
+    }
+
+    public function removeKinder(Kind $kinder): self
+    {
+        if ($this->kinder->contains($kinder)) {
+            $this->kinder->removeElement($kinder);
+        }
+
+        return $this;
+    }
+
+    public function getVon(): ?\DateTimeInterface
+    {
+        return $this->von;
+    }
+
+    public function setVon(\DateTimeInterface $von): self
+    {
+        $this->von = $von;
+
+        return $this;
+    }
+
+    public function getBis(): ?\DateTimeInterface
+    {
+        return $this->bis;
+    }
+
+    public function setBis(\DateTimeInterface $bis): self
+    {
+        $this->bis = $bis;
 
         return $this;
     }

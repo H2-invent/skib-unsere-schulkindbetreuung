@@ -566,12 +566,12 @@ class LoerrachWorkflowController extends AbstractController
                 $icsService = new IcsService();
                 $mailBetreff = $translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname();
                 $mailContent = $this->renderView('email/anmeldebestatigung.html.twig', array('eltern' => $adresse, 'kind' => $data, 'stadt' => $stadt));
-                $mailer->sendEmail('info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
+                $mailer->sendEmail($data->getSchule()->getOrganisation()->getName(),$data->getSchule()->getOrganisation()->getEmail(), $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
 
             }else{// es gibt noch beworbene Zeitblöcke
                 $mailBetreff = $translator->trans('Anmeldeinformation der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname();
                 $mailContent = $this->renderView('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $data, 'stadt' => $stadt));
-                $mailer->sendEmail('info@h2-invent.com', $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
+                $mailer->sendEmail($data->getSchule()->getOrganisation()->getName(),$data->getSchule()->getOrganisation()->getEmail(), $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
 
             }
         }
@@ -735,6 +735,20 @@ class LoerrachWorkflowController extends AbstractController
         }
     }
 
-
+    /**
+     * @Route("/admin/adresse/bypass",name="loerrach_workflow_bypass",methods={"GET","POST"})
+     */
+    public function BypassAction(Request $request, ValidatorInterface $validator)
+    {
+        $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->find($request->get('id'));
+        $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($adresse);
+        $em->flush();
+        $response= $this->redirectToRoute('loerrach_workflow_adresse');
+        //$response = $this->redirectToRoute('loerrach_workflow_schulen');
+        $response->headers->setCookie($cookie);
+        return $response;
+    }
 
 }

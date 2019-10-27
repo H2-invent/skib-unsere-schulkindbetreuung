@@ -87,11 +87,11 @@
                                                         <i class="material-icons">more_vert</i>
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-                                                        <a class="dropdown-item"  href="#">Detail</a>
-                                                            <a class="dropdown-item" href="#">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                        <a class="dropdown-item"  href="{{ path('accounting_sepa_detail',{'id':s.id}) }}">Detail</a>
+                                                            <a class="dropdown-item" href="{{ path('accounting_sepa_printXML',{'id':s.id}) }}">{% trans %}Download SEPA-XML{% endtrans %}</a>
                                                     </div>
                                                 </div></td>
-                                            <td>{{ s.summe }}</td>
+                                            <td>{{ s.summe|number_format(2,',','.') }}</td>
                                             <td>{{ s.anzahl }}</td>
                                             <td>{{ s.von|date('d.m.Y') }}</td>
                                             <td>{{ s.bis|date('d.m.Y') }}</td>
