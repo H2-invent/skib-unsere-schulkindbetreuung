@@ -24,12 +24,12 @@ Name der Organisation: Name of the organisation
 BIC: BIC
 Name der Bank: Name of the Bank
 Gläubiger ID: __Gläubiger ID
-Info Text Deutsch: Info text Deutsch
-Info Text Englisch: Info text Englisch
-Info Text Französisch: Info text Französisch
-AGB Deutsch: AGB Deutsch
-AGB Englisch: AGB Englisch
-AGB Französisch: AGB Französisch
+Info Text Deutsch: __Info text Deutsch
+Info Text Englisch: __Info text Englisch
+Info Text Französisch: __Info text Französisch
+AGB Deutsch: __AGB Deutsch
+AGB Englisch: __AGB Englisch
+AGB Französisch: __AGB Französisch
 Telefonnummer: Phone
 SMTP Server: SMTP Server
 SMTP Port: SMTP Port
@@ -83,3 +83,6 @@ Mein Kind ist Gluten intolerant: __Mein Kind ist Gluten intolerant
 Mein Kind ist Laktose intolerant: __Mein Kind ist Laktose intolerant
 Tag des Lastschrifteinzugs: __Tag des Lastschrifteinzugs
 Beginn des Abrechnungszeitraums: __Beginn des Abrechnungszeitraums
+Datenschutzhinweis Deutsch: __Datenschutzhinweis Deutsch
+Datenschutzhinweis Englisch: __Datenschutzhinweis Englisch
+Datenschutzhinweis Französisch: __Datenschutzhinweis Französisch
