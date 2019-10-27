@@ -1,6 +1,6 @@
 swiftmailer:
     spool: { type: 'memory' }
-    delivery_addresses: ['emanuel-holzmann@web.de']
+    delivery_addresses: ['emanuel.holzmann@h2-invent.com']
     disable_delivery: false
     host: '%env(MAILER_HOST)%'
     password: '%env(MAILER_PASSWORD)%'
