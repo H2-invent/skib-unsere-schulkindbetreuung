@@ -89,16 +89,11 @@ class PrintRechnungService
         $logo = '';
         if ($organisation->getImage()) {
             $logo = $this->templating->render('pdf/img.html.twig', array('stadt' => $organisation));
-
-          ;
-
         }
         $logo = $this->parameterBag->get('kernel.project_dir').'/public'.$logo;
         $im = file_get_contents($logo);
         $imdata = base64_encode($im);
         $imgdata = base64_decode($imdata);
-   
-        $pdf->Image('@'.$imgdata,140,20,50);
 
           $kontaktDaten = '<table cellspacing="3px">'.
 

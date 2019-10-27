@@ -488,7 +488,7 @@ class Kind
         $summe = 0;
         $blocks = $kind->getZeitblocks()->toArray();
         $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
-        dump($kind);
+
         foreach ($blocks as $data){
 
             if($data->getGanztag() != 0 && $data->getDeleted() == false){

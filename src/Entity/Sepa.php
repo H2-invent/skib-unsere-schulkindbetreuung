@@ -63,7 +63,7 @@ class Sepa
     private $pdf;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Rechnung", mappedBy="sepa")
+     * @ORM\OneToMany(targetEntity="App\Entity\Rechnung", mappedBy="sepa",cascade={"persist"})
      */
     private $rechnungen;
 
