@@ -66,6 +66,17 @@ class Stadt
      * @var File
      */
     private $imageFile;
+    /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     * @var string
+     */
+    private $agb;
+
+    /**
+     * @Vich\UploadableField(mapping="data_upload", fileNameProperty="agb")
+     * @var File
+     */
+    private $agbFile;
 
     /**
      * @ORM\Column(type="datetime",nullable=true)
@@ -349,7 +360,33 @@ class Stadt
     {
         return $this->image;
     }
+    public function setAgbFile(File $agb = null)
+    {
+        $this->agbFile = $agb;
 
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($agb) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getAgbFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setAgb($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getAgb()
+    {
+        return $this->image;
+    }
     public function getEmail(): ?string
     {
         return $this->email;
