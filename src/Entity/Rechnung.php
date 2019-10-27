@@ -45,7 +45,7 @@ class Rechnung
     private $stammdaten;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Sepa", inversedBy="rechnungen")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Sepa", inversedBy="rechnungen",cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $sepa;

@@ -28,6 +28,7 @@ class SepaController extends AbstractController
      */
     public function index( Request $request, SEPASimpleService $SEPASimpleService,ValidatorInterface $validator,TranslatorInterface $translator,PrintRechnungService $printRechnungService,MailerService $mailerService)
     {
+        set_time_limit(600);
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
@@ -100,6 +101,12 @@ class SepaController extends AbstractController
         $sepaSumme= 0.0;
         $organisation = $sepa->getOrganisation();
         $em = $this->getDoctrine()->getManager();
+        $sepa->setCreatedAt(new \DateTime());
+        $sepa->setSumme(0);
+        $sepa->setAnzahl(0);
+        $sepa->setSepaXML('');
+        $sepa->setPdf('');
+        $em->persist($sepa);
        foreach ($eltern as $data){// für alle gefunden eltern in diesem Monat
            $type = 'FRST'; // setzte SEPA auf First Sepa
 
@@ -156,6 +163,7 @@ class SepaController extends AbstractController
            }
             $filename = $translator->trans('Rechnung').' '.$rechnung->getRechnungsnummer();
            $pdf = $printRechnungService->printRechnung($filename,$organisation,$rechnung,'S');
+           $attachment = array();
            $attachment[] = (new \Swift_Attachment())
                ->setFilename($filename . '.pdf')
                ->setContentType('application/pdf')
