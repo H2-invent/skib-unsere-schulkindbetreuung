@@ -109,7 +109,8 @@
 <!-- Navbar -->
 
 <!-- Full Page Intro -->
-<div class="view full-page-intro" style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+<div class="view full-page-intro"
+     style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
 
     <!-- Mask & flexbox options-->
     <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
@@ -129,11 +130,11 @@
                 <div class="col-md-6 mb-4 white-text text-center text-md-left">
                     <p class="lead">{% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
                     <a href="{{ url }}" class="btn btn-primary btn-lg">
-                    {% if app.request.cookies.has('SecID') %}
-                    {% trans %}Kind bearbeiten{% endtrans %}
-                    {% else %}
-                    {% trans %}Hier Kind/Kinder anmelden{% endtrans %}
-                    {% endif %}
+                        {% if app.request.cookies.has('SecID') %}
+                            {% trans %}Kind bearbeiten{% endtrans %}
+                        {% else %}
+                            {% trans %}Hier Kind/Kinder anmelden{% endtrans %}
+                        {% endif %}
                     </a>
                 </div>
 
@@ -147,47 +148,75 @@
     </div>
 </div>
 
-<div class="container">
+<main>
+    <div class="container">
 
+        <!--Section: Main info-->
+        <section class="mt-5 wow fadeIn">
 
-<div class="card">
-    <div class="card-header">
-        <h4> {% trans %}Die Schulkindbetreuung in folgende Schulen könne hier gebucht werden{% endtrans %}</h4>
-    </div>
-    <div class="card-body">
-        <section class="dashboard-counts section-padding" id="schulenShow">
-            <div class="container-fluid ">
+            <!--Grid row-->
+            <div class="row">
 
-                <div class="card-deck">
-                    <!-- Count item widget-->
-                    {% for s in schule %}
+                <!--Grid column-->
+                <div class="col-lg-12">
+                    <h4>{% trans %}Herzlich Willkommen bei der neuen Schulkindbetreuung{% endtrans %}</h4>
+                    <p>
+                        Sie haben hier die Möglichkeit Ihr Kind/ Ihre Kinder online zur Schulkindbetreuung an den Schulen anmelden. Aktuell stehen Ihnen für folgende Schulen die Schulkindbetreuung zur Verfügung.
+                    </p>
+                    <h4> {% trans %}Folgende Schulen können hier online gebucht werden.{% endtrans %}</h4>
+                    <section class="dashboard-counts section-padding" id="schulenShow">
+                        <div class="container-fluid ">
 
-                        <div class="card mb-4 " >
-                            <div class="view overlay">
-                                <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}" alt="{{ s.name }}"style="max-height: 300px">
+                            <div class="card-deck">
+                                <!-- Count item widget-->
+                                {% for s in schule %}
 
+                                    <div class="card mb-4 ">
+                                        <div class="view overlay">
+                                            <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                 alt="{{ s.name }}" style="max-height: 300px">
+
+                                        </div>
+
+                                        <div class="card-body ">
+                                            <h5 class="card-title">{{ s.name }}</h5>
+                                            <p class="card-text">{{ s.infoText }}</p>
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
                             </div>
 
-                            <div class="card-body ">
-                                <h5 class="card-title">{{ s.name }}</h5>
-                                <p class="card-text">{{ s.infoText }}</p>
-                            </div>
                         </div>
+                    </section>
 
-                    {% endfor %}
                 </div>
-
             </div>
         </section>
     </div>
-</div>
+</main>
 
-</div>
+<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+    <!-- Legal -->
+    <ul class="navbar-nav nav-flex-icons">
+        <li class="nav-item">
+            <a class="nav-link" href={{ path('impressum') }} >{% trans %}Impressum{% endtrans %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href={{ path('datenschutz') }} >{% trans %}Datenschutzhinweis{% endtrans %}</a>
+        </li>
+    </ul>
+    <!-- Legal -->
 
-<footer class="page-footer text-center font-small  wow fadeIn" style="position:fixed;left:0px;bottom:0px;width:100%;">
+    <!--Copyright-->
     <div class="footer-copyright py-3">
         © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
+
     </div>
+    <!--/.Copyright-->
+
 </footer>
 
 <script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
