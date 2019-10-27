@@ -735,6 +735,20 @@ class LoerrachWorkflowController extends AbstractController
         }
     }
 
-
+    /**
+     * @Route("/admin/adresse/bypass",name="loerrach_workflow_bypass",methods={"GET","POST"})
+     */
+    public function BypassAction(Request $request, ValidatorInterface $validator)
+    {
+        $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->find($request->get('id'));
+        $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($adresse);
+        $em->flush();
+        $response= $this->redirectToRoute('loerrach_workflow_adresse');
+        //$response = $this->redirectToRoute('loerrach_workflow_schulen');
+        $response->headers->setCookie($cookie);
+        return $response;
+    }
 
 }
