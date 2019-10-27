@@ -82,9 +82,6 @@ class PrintService
         $logo = '';
         if ($organisation->getImage()) {
             $logo = $this->templating->render('pdf/img.html.twig', array('stadt' => $organisation));
-
-          ;
-
         }
         $logo = $this->parameterBag->get('kernel.project_dir').'/public'.$logo;
         $im = file_get_contents($logo);
