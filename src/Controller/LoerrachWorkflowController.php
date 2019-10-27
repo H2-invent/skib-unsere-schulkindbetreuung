@@ -509,7 +509,7 @@ class LoerrachWorkflowController extends AbstractController
                 $kindNew->addBeworben($zb);
             }
             $em->persist($kindNew);
-            dump($kindNew);
+
             $em->flush();
         }
 
@@ -706,13 +706,7 @@ class LoerrachWorkflowController extends AbstractController
                 $cookie_seccode = explode('.', $request->cookies->get('SecID'));
                 $hash_seccode = hash("sha256", $cookie_seccode[0] . $this->getParameter("secret"));
 
-                if (
-                    $this->getUser()
-                    && $this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE')
-                    && $hash_kind == $cookie_kind[1]
-                    && $hash_seccode == $cookie_seccode[1]
-                    && $hash == $cookie_ar[1]){
-                }
+
             }else{
                 $search['tracing']= 0;
             }
