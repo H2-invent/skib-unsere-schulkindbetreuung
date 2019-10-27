@@ -249,15 +249,39 @@
                 </td>
             </tr>
         </table>
-    <input type="checkbox" name="Datenschutz" value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}<br>
-    <a target="_blank" href={{ path('workflow_agb', {'stadt_id':stadt.id}) }}>{% trans %}Allgemeine Geschäftsbeingungen der Stadt {% endtrans %} {{ stadt.name }}</a>
+    <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz" value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}<br>
     <div>
-        <input type="checkbox" name="AGB" value="AGB"> {% trans %}Ich habe die Allgemeinen Geschäftsbedingungen der Schulkindbetreuung der Stadt gelesen und akzeptiere diese{% endtrans %}<br>
+        <input id="checkboxAgb" type="checkbox" class="checkboxSelect" name="AGB" value="AGB"> <a target="_blank" href={{ path('workflow_agb', {'stadt_id':stadt.id}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die Allgemeine Geschäftsbeingungen der Stadt  %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese{% endtrans %}</a><br>
     </div>
     {% if error == false %}
-    <a href="{{ path('loerrach_workflow_abschluss') }}" class="btn btn-outline-primary">{% trans %}Absenden{% endtrans %}</a>
+    <button  class="btn btn-outline-primary sendButton" disabled >{% trans %}Absenden{% endtrans %}</button>
     {% else %}
     <a href="{{ path('loerrach_workflow_schulen') }}" class="btn btn-outline-primary">{% trans %}Weitere Blöcke hinzufügen{% endtrans %}</a>
     {% endif %}
+
+{% endblock %}
+{% block jquery %}
+    <script>
+        var url= "{{ path('loerrach_workflow_abschluss') }}";
+            $('.checkboxSelect').on('change', function() {
+                var cbS = $('.checkboxSelect');
+                var all = true;
+                cbS.each(function (index) {
+                    if(!this.checked){
+                        all = false;
+                    }
+                });
+                if (all == true) {
+                    $('.sendButton').wrap('<a href="{{ path('loerrach_workflow_abschluss') }}">');
+                     $('.sendButton').prop('disabled', false);
+
+                }else {
+                    if($('.sendButton').parent().is("a")){
+                        $('.sendButton').unwrap();
+                    }
+                    $('.sendButton').prop('disabled', true);
+                }
+            });
+    </script>
 
 {% endblock %}
