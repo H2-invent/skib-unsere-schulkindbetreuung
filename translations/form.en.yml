@@ -24,7 +24,12 @@ Name der Organisation: Name of the organisation
 BIC: BIC
 Name der Bank: Name of the Bank
 Gläubiger ID: __Gläubiger ID
-Info Text: Info text
+Info Text Deutsch: Info text Deutsch
+Info Text Englisch: Info text Englisch
+Info Text Französisch: Info text Französisch
+AGB Deutsch: AGB Deutsch
+AGB Englisch: AGB Englisch
+AGB Französisch: AGB Französisch
 Telefonnummer: Phone
 SMTP Server: SMTP Server
 SMTP Port: SMTP Port
