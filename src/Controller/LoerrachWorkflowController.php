@@ -46,7 +46,7 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 class LoerrachWorkflowController extends AbstractController
 {
     private $einkommensgruppen;
-    private  $translator;
+    private $translator;
     private $beruflicheSituation;
 
     public function __construct(TranslatorInterface $translator)
@@ -57,12 +57,12 @@ class LoerrachWorkflowController extends AbstractController
             '2.500 . 3.499 Euro' => 2,
             '3.500 . 5.999 Euro' => 3,
             'über 6.000 Euro' => 4,
-            );
+        );
         $this->beruflicheSituation = array(
-            $translator->trans('Berufstätig')=>1,
-            $translator->trans('Arbeitssuchend')=>2,
-            $translator->trans('Keine Angabe')=>0
-            );
+            $translator->trans('Berufstätig') => 1,
+            $translator->trans('Arbeitssuchend') => 2,
+            $translator->trans('Keine Angabe') => 0
+        );
         $this->translator = $translator;
     }
 
@@ -75,8 +75,8 @@ class LoerrachWorkflowController extends AbstractController
 
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'Loerrach'));
         $schuljahr = $this->getSchuljahr($stadt);
-        if ($schuljahr == null){
-            return $this->redirectToRoute('workflow_closed', array('slug'=>$stadt->getSlug()));
+        if ($schuljahr == null) {
+            return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
 
         $adresse = new Stammdaten;
@@ -86,40 +86,40 @@ class LoerrachWorkflowController extends AbstractController
 
 
         //Add SecCode into if to create a SecCode the first time to be not "null"
-        if($adresse->getUid() == null){
+        if ($adresse->getUid() == null) {
             $adresse->setUid(md5(uniqid()))
                 ->setAngemeldet(false);
             $adresse->setCreatedAt(new \DateTime());
         }
 
         $form = $this->createFormBuilder($adresse)
-            ->add('email',EmailType::class, ['label' => 'Email', 'translation_domain' => 'form'])
-            ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form','help'=>'Das ist eine Hilfe für diese Frage im Form'])
+            ->add('email', EmailType::class, ['label' => 'Email', 'translation_domain' => 'form'])
+            ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form', 'help' => 'Das ist eine Hilfe für diese Frage im Form'])
             ->add('name', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
             ->add('strasse', TextType::class, ['label' => 'Straße', 'translation_domain' => 'form'])
-            ->add('adresszusatz', TextType::class, ['required'=>false,'label' => 'Adresszusatz', 'translation_domain' => 'form'])
+            ->add('adresszusatz', TextType::class, ['required' => false, 'label' => 'Adresszusatz', 'translation_domain' => 'form'])
             ->add('plz', TextType::class, ['label' => 'PLZ', 'translation_domain' => 'form'])
-            ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form','help'=>'Das ist eine Hilfe für diese Frage im Form'])
+            ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form', 'help' => 'Das ist eine Hilfe für diese Frage im Form'])
             ->add('einkommen', ChoiceType::class, [
                 'choices' => $this->einkommensgruppen, 'label' => 'Brutto Familieneinkommen pro Monat', 'translation_domain' => 'form'])
-            ->add('beruflicheSituation', ChoiceType::class, ['choices'=>$this->beruflicheSituation,'required'=>true,'label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
-            ->add('kinderImKiga', CheckboxType::class, ['required'=>false,'label' => 'Ich habe mindestens ein weiteres Kind in einer kostenpflichtiger öffentlichen Kindergarteneinrichtung', 'translation_domain' => 'form'])
+            ->add('beruflicheSituation', ChoiceType::class, ['choices' => $this->beruflicheSituation, 'required' => true, 'label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
+            ->add('kinderImKiga', CheckboxType::class, ['required' => false, 'label' => 'Ich habe mindestens ein weiteres Kind in einer kostenpflichtiger öffentlichen Kindergarteneinrichtung', 'translation_domain' => 'form'])
             //->add('buk', CheckboxType::class, ['required'=>false,'label' => 'Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger', 'translation_domain' => 'form'])
-            ->add('alleinerziehend', CheckboxType::class, ['required'=>false,'label' => 'Ich bin Alleinerziehend', 'translation_domain' => 'form'])
-            ->add('notfallName', TextType::class, ['required'=>true,'label' => 'Name und Beziehung des Notfallkontakt', 'translation_domain' => 'form'])
-            ->add('notfallkontakt', TextType::class, ['required'=>true,'label' => 'Notfalltelefonnummer', 'translation_domain' => 'form'])
-            ->add('iban', TextType::class, ['required'=>true,'label' => 'IBAN für das Lastschriftmandat', 'translation_domain' => 'form'])
-            ->add('bic', TextType::class, ['required'=>true,'label' => 'BIC für das Lastschriftmandat', 'translation_domain' => 'form'])
-            ->add('kontoinhaber', TextType::class, ['required'=>true,'label' => 'Kontoinhaber für das Lastschriftmandat', 'translation_domain' => 'form'])
-            ->add('abholberechtigter', TextareaType::class,['required'=>false,'label'=>'Weitere abholberechtigte Personen','translation_domain' => 'form','attr'=>['rows'=>6]])
-            ->add('sepaInfo', CheckboxType::class, ['required'=>true,'label' => 'SEPA-LAstschrift Mandat wird elektromisch erteilt', 'translation_domain' => 'form'])
-            ->add('gdpr', CheckboxType::class, ['required'=>true,'label' => 'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden', 'translation_domain' => 'form'])
-            ->add('newsletter', CheckboxType::class, ['required'=>false,'label' => 'Zum Newsletter anmelden', 'translation_domain' => 'form'])
+            ->add('alleinerziehend', CheckboxType::class, ['required' => false, 'label' => 'Ich bin Alleinerziehend', 'translation_domain' => 'form'])
+            ->add('notfallName', TextType::class, ['required' => true, 'label' => 'Name und Beziehung des Notfallkontakt', 'translation_domain' => 'form'])
+            ->add('notfallkontakt', TextType::class, ['required' => true, 'label' => 'Notfalltelefonnummer', 'translation_domain' => 'form'])
+            ->add('iban', TextType::class, ['required' => true, 'label' => 'IBAN für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('bic', TextType::class, ['required' => true, 'label' => 'BIC für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('kontoinhaber', TextType::class, ['required' => true, 'label' => 'Kontoinhaber für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('abholberechtigter', TextareaType::class, ['required' => false, 'label' => 'Weitere abholberechtigte Personen', 'translation_domain' => 'form', 'attr' => ['rows' => 6]])
+            ->add('sepaInfo', CheckboxType::class, ['required' => true, 'label' => 'SEPA-LAstschrift Mandat wird elektromisch erteilt', 'translation_domain' => 'form'])
+            ->add('gdpr', CheckboxType::class, ['required' => true, 'label' => 'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden', 'translation_domain' => 'form'])
+            ->add('newsletter', CheckboxType::class, ['required' => false, 'label' => 'Zum Newsletter anmelden', 'translation_domain' => 'form'])
             // ->add('captcha', RecaptchaType::class, [
             // "groups" option is not mandatory
 
             //])
-            ->add('submit', SubmitType::class, ['attr'=> array('class'=> 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form'])
+            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form'])
             ->getForm();
         $form->handleRequest($request);
         $errors = array();
@@ -132,7 +132,7 @@ class LoerrachWorkflowController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($adresse);
                 $em->flush();
-                $response= $this->redirectToRoute('workflow_confirm_Email',array('redirect'=>$this->generateUrl('loerrach_workflow_schulen'),'uid'=>$adresse->getUid(),'stadt'=>$stadt->getId()));
+                $response = $this->redirectToRoute('workflow_confirm_Email', array('redirect' => $this->generateUrl('loerrach_workflow_schulen'), 'uid' => $adresse->getUid(), 'stadt' => $stadt->getId()));
                 //$response = $this->redirectToRoute('loerrach_workflow_schulen');
                 $response->headers->setCookie($cookie);
                 return $response;
@@ -156,11 +156,11 @@ class LoerrachWorkflowController extends AbstractController
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
 
         // Load all schools from the city into the controller as $schulen
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt,'deleted'=>false));
+        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
 
         $schuljahr = $this->getSchuljahr($stadt);
-        if ($schuljahr == null){
-            return $this->redirectToRoute('workflow_closed', array('slug'=>$stadt->getSlug()));
+        if ($schuljahr == null) {
+            return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
 
         // load parent address data into controller as $adresse
@@ -171,10 +171,10 @@ class LoerrachWorkflowController extends AbstractController
             return $this->redirectToRoute('loerrach_workflow_adresse');
         }
         $kinder = array();
-        if ($request->cookies->get('KindID')){
+        if ($request->cookies->get('KindID')) {
             $cookie_kind = explode('.', $request->cookies->get('KindID'));
-            $kinder = $this->getDoctrine()->getRepository(Kind::class)->findBy(array('id'=>$cookie_kind[0]));
-        }else{
+            $kinder = $this->getDoctrine()->getRepository(Kind::class)->findBy(array('id' => $cookie_kind[0]));
+        } else {
             $kinder = $adresse->getKinds()->toArray();
         }
 
@@ -202,7 +202,7 @@ class LoerrachWorkflowController extends AbstractController
         $kind = new Kind();
         $kind->setEltern($adresse);
         $kind->setSchule($schule);
-        $form = $this->createForm(LoerrachKind::class, $kind,array('action'=>$this->generateUrl('loerrach_workflow_schulen_kind_neu',array('schule_id'=>$schule->getId()))));
+        $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('schule_id' => $schule->getId()))));
 
         $form->handleRequest($request);
         $errors = array();
@@ -241,8 +241,8 @@ class LoerrachWorkflowController extends AbstractController
         }
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-        $form = $this->createForm(LoerrachKind::class, $kind,array(
-            'action'=>$this->generateUrl('loerrach_workflow_schulen_kind_edit',array('kind_id'=>$kind->getId()))
+        $form = $this->createForm(LoerrachKind::class, $kind, array(
+            'action' => $this->generateUrl('loerrach_workflow_schulen_kind_edit', array('kind_id' => $kind->getId()))
         ));
         $form->remove('art');
 
@@ -310,20 +310,20 @@ class LoerrachWorkflowController extends AbstractController
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
         $schuljahr = $this->getSchuljahr($stadt);
         $req = array(
-            'deleted'=>false,
-            'active'=>$schuljahr,
+            'deleted' => false,
+            'active' => $schuljahr,
             'schule' => $schule,
-            );
+        );
         $block = array();
         if ($kind->getArt() == 1) {
-            $req['ganztag']= 0;
-            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von'=>'asc'));
+            $req['ganztag'] = 0;
+            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
             $req['ganztag'] = $kind->getArt();
-            $block = array_merge($block, $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von'=>'asc')));
+            $block = array_merge($block, $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc')));
 
         } elseif ($kind->getArt() == 2) {
-            $req['ganztag']= $kind->getArt();
-            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von'=>'asc'));
+            $req['ganztag'] = $kind->getArt();
+            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
 
         }
 
@@ -338,12 +338,12 @@ class LoerrachWorkflowController extends AbstractController
     /**
      * @Route("/loerrach/kinder/block/toggle",name="loerrach_workflow_kinder_block_toggle",methods={"GET"})
      */
-    public function kinderblocktoggleAction(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
+    public function kinderblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $result = array(
             'text' => $translator->trans('Betreuungsblock erfolgreich gespeichert'),
-            'error'=>0,
-            'kontingent'=> false,
+            'error' => 0,
+            'kontingent' => false,
             'cardText' => $translator->trans('Gebucht')
         );
         try {
@@ -354,19 +354,19 @@ class LoerrachWorkflowController extends AbstractController
             }
 
             $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
-            $result['preisUrl']= $this->generateUrl('loerrach_workflow_preis_einKind',array('kind_id'=>$kind->getId()));
+            $result['preisUrl'] = $this->generateUrl('loerrach_workflow_preis_einKind', array('kind_id' => $kind->getId()));
             $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
-            if($block->getMin() || $block->getMax()){
-                $result['kontingent']= true;
+            if ($block->getMin() || $block->getMax()) {
+                $result['kontingent'] = true;
                 $result['cardText'] = $translator->trans('Angemeldet');
             }
-            if($block->getMin() || $block->getMax()){
+            if ($block->getMin() || $block->getMax()) {
                 if (in_array($block, $kind->getBeworben()->toArray())) {
                     $kind->removeBeworben($block);
                 } else {
                     $kind->addBeworben($block);
                 }
-            }else{
+            } else {
                 if (in_array($block, $kind->getZeitblocks()->toArray())) {
                     $kind->removeZeitblock($block);
                 } else {
@@ -378,11 +378,11 @@ class LoerrachWorkflowController extends AbstractController
             $em->persist($kind);
             $em->flush();
 
-            $blocks2 =$kind->getTageWithBlocks();
+            $blocks2 = $kind->getTageWithBlocks();
 
-            if ($blocks2 < 2){
+            if ($blocks2 < 2) {
                 $result['text'] = $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Tage müssen ausgewählt werden)');
-            $result['error'] = 2;
+                $result['error'] = 2;
             }
         } catch (\Exception $e) {
             $result['text'] = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
@@ -403,8 +403,8 @@ class LoerrachWorkflowController extends AbstractController
 
         //Check for Anmeldung open
         $schuljahr = $this->getSchuljahr($stadt);
-        if ($schuljahr == null){
-            return $this->redirectToRoute('workflow_closed', array('slug'=>$stadt->getSlug()));
+        if ($schuljahr == null) {
+            return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
 
         $adresse = new Stammdaten;
@@ -417,33 +417,33 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $adresse->getKinds();
         $preis = 0;
-        foreach ($kind as $data){
-            $preis +=$data->getPreisforBetreuung();
+        foreach ($kind as $data) {
+            $preis += $data->getPreisforBetreuung();
         }
 
         $error = false;
-        foreach ($kind as $data){
-            if ($data->getTageWithBlocks() < 2){
-                $error= true;
+        foreach ($kind as $data) {
+            if ($data->getTageWithBlocks() < 2) {
+                $error = true;
                 break;
             }
         }
 
-        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('einkommen'=>array_flip($this->einkommensgruppen),'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis'=>$preis, 'error'=>$error,'stadtAGB'=>$stadtAgb));
+        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('einkommen' => array_flip($this->einkommensgruppen), 'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis' => $preis, 'error' => $error, 'stadtAGB' => $stadtAgb));
     }
 
     /**
      * @Route("/loerrach/abschluss",name="loerrach_workflow_abschluss",methods={"GET","POST"})
      */
-    public function abschlussAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator,MailerService $mailer, TCPDFController $tcpdf, PrintService $print,IcsService $icsService,PrintAGBService $printAGBService)
+    public function abschlussAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, MailerService $mailer, TCPDFController $tcpdf, PrintService $print, IcsService $icsService, PrintAGBService $printAGBService)
     {
         // Load the data from the city into the controller as $stadt
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
 
         //Check for Anmeldung open
         $schuljahr = $this->getSchuljahr($stadt);
-        if ($schuljahr == null){
-            return $this->redirectToRoute('workflow_closed', array('slug'=>$stadt->getSlug()));
+        if ($schuljahr == null) {
+            return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
 
         //Include Parents in this route
@@ -455,20 +455,20 @@ class LoerrachWorkflowController extends AbstractController
         }
 
         $kind = $adresse->getKinds();
-        foreach ($kind as $data){
-            if ($data->getTageWithBlocks() < 2){
-               $this->redirectToRoute('loerrach_workflow_zusammenfassung');
+        foreach ($kind as $data) {
+            if ($data->getTageWithBlocks() < 2) {
+                $this->redirectToRoute('loerrach_workflow_zusammenfassung');
             }
         }
         // Daten speichern und fixieren
         $em = $this->getDoctrine()->getManager();
         $adresse->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
 
-        if(!$adresse->getTracing()) {
+        if (!$adresse->getTracing()) {
             $adresse->setTracing(md5(uniqid('stammdaten', true)));
         }
-        if($adresse->getHistory()>0){// es gibt bereits eine alte Historie, diese bsitzt schon ein Fin
-            $adresseOld = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('tracing'=>$adresse->getTracing(),'fin'=>true));
+        if ($adresse->getHistory() > 0) {// es gibt bereits eine alte Historie, diese bsitzt schon ein Fin
+            $adresseOld = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('tracing' => $adresse->getTracing(), 'fin' => true));
             $adresseOld->setFin(false);
             $adresseOld->setEndedAt((clone $adresse->getCreatedAt())->modify('last day of this month'));
             $em->persist($adresseOld);
@@ -481,13 +481,13 @@ class LoerrachWorkflowController extends AbstractController
         $adresse->setFin(true);
         $adresse->setSaved(true);
         $em->persist($adressCopy);
-        foreach ($kind as $data){
+        foreach ($kind as $data) {
 
-            if(!$data->getTracing()){
+            if (!$data->getTracing()) {
                 $data->setTracing(md5(uniqid('kind', true)));
             }
-            if($data->getHistory() > 0){
-                $kindOld = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('fin'=>true,'tracing'=>$data->getTracing()));
+            if ($data->getHistory() > 0) {
+                $kindOld = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('fin' => true, 'tracing' => $data->getTracing()));
                 $kindOld->setFin(false);
                 $em->persist($kindOld);
             }
@@ -499,11 +499,11 @@ class LoerrachWorkflowController extends AbstractController
             $kindNew->setEltern($adressCopy);
             $em->persist($kindNew);
             $em->flush();
-            foreach ($data->getZeitblocks() as $zb){
+            foreach ($data->getZeitblocks() as $zb) {
                 $zb->addKind($kindNew);
             }
             $em->persist($kindNew);
-            foreach ($data->getBeworben() as $zb){
+            foreach ($data->getBeworben() as $zb) {
                 $kindNew->addBeworben($zb);
             }
             $em->persist($kindNew);
@@ -514,8 +514,6 @@ class LoerrachWorkflowController extends AbstractController
         $em->persist($adresse);
         $em->persist($adressCopy);
         $em->flush();
-
-
 
 
         foreach ($kind as $data) {
@@ -533,15 +531,9 @@ class LoerrachWorkflowController extends AbstractController
                     $data->getZeitblocks()[0]->getSchule()->getOrganisation(),
                     'S'
                 );
-                $attachment[] = (new \Swift_Attachment())
-                    ->setFilename($fileName . '.pdf')
-                    ->setContentType('application/pdf')
-                    ->setBody($pdf);
+                $attachment[] = array('type' => 'application/pdf', 'filename' => $fileName . '.pdf', 'body' => $pdf);
+                $attachment[] = array('type' => 'application/pdf', 'filename' => $translator->trans('AGB ') . ' ' . $stadt->getName() . '.pdf', 'body' => $printAGBService->printAGB($stadt->translate()->getAgb(), 'S', $stadt, null));
 
-                $attachment[] = (new \Swift_Attachment())
-                    ->setFilename($translator->trans('AGB ').' '.$stadt->getName(). '.pdf')
-                    ->setContentType('application/pdf')
-                    ->setBody($printAGBService->printAGB($stadt->translate()->getAgb(),'S',$stadt,null));
 
                 foreach ($data->getZeitblocks() as $data2) {
                     $startDate = $data2->getFirstDate()->format('Ymd');
@@ -559,21 +551,17 @@ class LoerrachWorkflowController extends AbstractController
                         )
                     );
                 }
-
-                $attachment[] = (new \Swift_Attachment())
-                    ->setFilename($data->getVorname() . ' ' . $data->getNachname() . '.ics')
-                    ->setContentType('text/calendar')
-                    ->setBody($icsService->to_string());
+                $attachment[] = array('type' => 'text/calendar', 'filename' => $data->getVorname() . ' ' . $data->getNachname() . '.ics', 'body' => $icsService->to_string());
 
                 $icsService = new IcsService();
                 $mailBetreff = $translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname();
                 $mailContent = $this->renderView('email/anmeldebestatigung.html.twig', array('eltern' => $adresse, 'kind' => $data, 'stadt' => $stadt));
-                $mailer->sendEmail($data->getSchule()->getOrganisation()->getName(),$data->getSchule()->getOrganisation()->getEmail(), $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
+                $mailer->sendEmail($data->getSchule()->getOrganisation()->getName(), $data->getSchule()->getOrganisation()->getEmail(), $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
 
-            }else{// es gibt noch beworbene Zeitblöcke
+            } else {// es gibt noch beworbene Zeitblöcke
                 $mailBetreff = $translator->trans('Anmeldeinformation der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname();
                 $mailContent = $this->renderView('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $data, 'stadt' => $stadt));
-                $mailer->sendEmail($data->getSchule()->getOrganisation()->getName(),$data->getSchule()->getOrganisation()->getEmail(), $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
+                $mailer->sendEmail($data->getSchule()->getOrganisation()->getName(), $data->getSchule()->getOrganisation()->getEmail(), $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
 
             }
         }
@@ -590,7 +578,7 @@ class LoerrachWorkflowController extends AbstractController
     /**
      * @Route("/loerrach/berechnung/einKind",name="loerrach_workflow_preis_einKind",methods={"GET"})
      */
-    public function berechnungAction(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
+    public function berechnungAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         // Load the data from the city into the controller as $stadt
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
@@ -612,15 +600,14 @@ class LoerrachWorkflowController extends AbstractController
         );
 
 
-
         // Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
 
-        if($kind->getTageWithBlocks()<2){
-            $result['error']= 1;
-            $result['text']= $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)');
+        if ($kind->getTageWithBlocks() < 2) {
+            $result['error'] = 1;
+            $result['text'] = $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)');
             return new JsonResponse($result);
         }
-       $result['betrag']= number_format($kind->getPreisforBetreuung(),2,',','.');
+        $result['betrag'] = number_format($kind->getPreisforBetreuung(), 2, ',', '.');
         return new JsonResponse($result);
 
     }
@@ -628,19 +615,19 @@ class LoerrachWorkflowController extends AbstractController
     /**
      * @Route("/loerrach/berechnung/printPdf",name="loerrach_workflow_print_pdf",methods={"GET"})
      */
-    public function prinPdf(Request $request, ValidatorInterface $validator,TranslatorInterface $translator, TCPDFController $tcpdf, PrintService $print)
+    public function prinPdf(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, TCPDFController $tcpdf, PrintService $print)
     {
         $elter = $this->getStammdatenFromCookie($request);
         $stadt = $elter->getKinds()[0]->getSchule()->getStadt();
 
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern'=>$elter,'id'=>$request->get(
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $elter, 'id' => $request->get(
             'id')));
         $organisation = $kind->getAllBlocks()[0]->getSchule()->getOrganisation();
 
-        $fileName = $kind->getVorname().'_'.$kind->getNachname().'_'.$kind->getSchule()->getName().'.pdf';
+        $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName() . '.pdf';
         //todo I is to show the pdf in the browser D is to download;
 
-     return $print ->printAnmeldebestätigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->einkommensgruppen,$organisation,'D');
+        return $print->printAnmeldebestätigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->einkommensgruppen, $organisation, 'D');
 
 
     }
@@ -653,8 +640,8 @@ class LoerrachWorkflowController extends AbstractController
 
             $cookie_ar = explode('.', $request->cookies->get('UserID'));
             $hash = hash("sha256", $cookie_ar[0] . $this->getParameter("secret"));
-            $search = array('uid'=>$cookie_ar[0],'saved'=>false);
-            if ($request->cookies->get('KindID') && $request->cookies->get('SecID')  ) {
+            $search = array('uid' => $cookie_ar[0], 'saved' => false);
+            if ($request->cookies->get('KindID') && $request->cookies->get('SecID')) {
 
 
                 $cookie_kind = explode('.', $request->cookies->get('KindID'));
@@ -664,8 +651,8 @@ class LoerrachWorkflowController extends AbstractController
                 $hash_seccode = hash("sha256", $cookie_seccode[0] . $this->getParameter("secret"));
 
 
-            }else{
-                $search['tracing']= 0;
+            } else {
+                $search['tracing'] = 0;
             }
 
             if ($hash == $cookie_ar[1]) {
@@ -677,11 +664,12 @@ class LoerrachWorkflowController extends AbstractController
         }
         return null;
     }
+
     private function getSchuljahr($stadt)
     {
-        if ($this->getUser() && $this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE')){
+        if ($this->getUser() && $this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE')) {
             return $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromCity($stadt);
-        }else{
+        } else {
             return $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
         }
     }
@@ -696,7 +684,7 @@ class LoerrachWorkflowController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($adresse);
         $em->flush();
-        $response= $this->redirectToRoute('loerrach_workflow_adresse');
+        $response = $this->redirectToRoute('loerrach_workflow_adresse');
         //$response = $this->redirectToRoute('loerrach_workflow_schulen');
         $response->headers->setCookie($cookie);
         return $response;
