@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function Doctrine\ORM\QueryBuilder;
 
 class WidgetController extends AbstractController
 {
@@ -37,11 +38,16 @@ class WidgetController extends AbstractController
             ->innerJoin('k.zeitblocks','b')
             ->andWhere('b.wochentag = :wochentag')
              ->andWhere('b.active = :jahr');
+            $schulen = $qb->expr()->orX();
              foreach ($organisation->getSchule() as $key=>$data){
-                 $qb->orWhere('b.schule = :schule'.$key)
-                     ->setParameter('schule'.$key,$data);
+
+                    $schulen->add('b.schule = :schule'.$key);
+                         $qb->setParameter('schule'.$key,$data);
              };
+             $qb->andWhere($schulen);
              $qb->andWhere('k.fin = true');
+
+
             $qb->setParameter('jahr',$active)
                 ->setParameter('wochentag',$today);
         $query = $qb->getQuery();
@@ -73,10 +79,13 @@ class WidgetController extends AbstractController
             ->innerJoin('k.zeitblocks','b')
 
             ->andWhere('b.active = :jahr');
+        $schulen = $qb->expr()->orX();
         foreach ($organisation->getSchule() as $key=>$data){
-            $qb->orWhere('b.schule = :schule'.$key)
-                ->setParameter('schule'.$key,$data);
+
+            $schulen->add('b.schule = :schule'.$key);
+            $qb->setParameter('schule'.$key,$data);
         };
+        $qb->andWhere($schulen);
         $qb->andWhere('k.fin = true');
         $qb->setParameter('jahr',$active);
 
