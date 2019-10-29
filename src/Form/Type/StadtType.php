@@ -59,6 +59,7 @@ class StadtType extends AbstractType
                 'label'=>'Logo hochladen',
                 'translation_domain' => 'form'
             ])
+            ->add('logoUrl', TextType::class,['required'=>false,'label'=>'URL für Logo','translation_domain' => 'form'])
             ->add('smtpServer', TextType::class,['required'=>false,'label'=>'SMTP Server','translation_domain' => 'form'])
             ->add('smtpPort', TextType::class,['required'=>false,'label'=>'SMTP Port','translation_domain' => 'form'])
             ->add('smtpUsername', TextType::class,['required'=>false,'label'=>'SMTP Username','translation_domain' => 'form'])

@@ -1,11 +1,14 @@
 {% extends 'workflow/base.html.twig' %}
 {% block header %}
-    <div class="col-md-6 mb-4 white-text text-centerm text-md-left">
-
-
-        <h1 class="display-4 font-weight-bold">{{ stadt.name }}</h1>
-
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        {% if stadt.logoUrl is empty %}
+            <h1 class="display-4 font-weight-bold hauptfarbe">{{ stadt.name }}</h1>
+        {% else %}
+            <img src="{{ stadt.logoUrl}}" alt="{{ stadt.name }}"style="max-height: 150px">
+        {% endif %}
+        <hr class="hr-light ">
     </div>
+
 {% endblock %}
 {% block content %}
         <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>

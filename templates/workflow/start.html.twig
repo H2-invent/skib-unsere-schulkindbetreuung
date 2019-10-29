@@ -47,6 +47,19 @@
                 background: #1C2331!important;
             }
         }
+
+        .btn-primary{
+            background-color: {{ stadt.hauptfarbe }}!important;
+            border-color: {{ stadt.hauptfarbe }}!important;
+            color: #fff;
+        }
+        .btn-outline-primary {
+            border: 2px solid {{ stadt.hauptfarbe }}!important;
+            color: {{ stadt.hauptfarbe }}!important;
+        }
+        .hauptfarbe{
+            color: {{ stadt.hauptfarbe }}!important;
+        }
     </style>
 </head>
 
@@ -80,9 +93,6 @@
                     <a class="nav-link" href="#">Start</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" target="_blank">Free download</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="https://h2-invent.com" target="_blank">H2 invent</a>
                 </li>
             </ul>
@@ -109,9 +119,13 @@
 <!-- Navbar -->
 
 <!-- Full Page Intro -->
+{% if stadt.image is empty %}
 <div class="view full-page-intro"
      style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
-
+{% else %}
+<div class="view full-page-intro"
+     style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
+{% endif %}
     <!-- Mask & flexbox options-->
     <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
 
@@ -122,8 +136,12 @@
             <div class="row wow fadeIn">
 
                 <div class="col-md-12 mb-6 white-text text-center text-md-left">
-                    <h1 class="display-4 font-weight-bold">{{ stadt.name }}</h1>
-                    <hr class="hr-light">
+                    {% if stadt.logoUrl is empty %}
+                    <h1 class="display-4 font-weight-bold hauptfarbe">{{ stadt.name }}</h1>
+                    {% else %}
+                        <img src="{{ stadt.logoUrl}}" alt="{{ stadt.name }}"style="max-width: 50%">
+                    {% endif %}
+                    <hr class="hr-light ">
                 </div>
 
                 <!--Grid column-->
