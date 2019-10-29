@@ -150,7 +150,7 @@
                 <!--Grid column-->
                 <div class="col-md-6 mb-4 white-text text-center text-md-left">
                     <p class="lead">{% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
-                    <a href="{{ url }}" class="btn btn-primary btn-lg">
+                    <a href="{{ url }}" class="btn btn-primary btn-lg" id="start">
                         {% if app.request.cookies.has('SecID') %}
                             {% trans %}Kind bearbeiten{% endtrans %}
                         {% else %}
@@ -165,6 +165,10 @@
                     </p>
                 </div>
             </div>
+            <div class="col-md-12 mb-4 white-text text-center align-content-center">
+                <a href="#start"><i class="fas fa-long-arrow-alt-down"></i></a>
+            </div>
+
         </div>
     </div>
 </div>
