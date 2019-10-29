@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Die Schulkindbetreuung von {{stadt.name}}</title>
+    <title>Die Schulkindbetreuung von {{ stadt.name }}</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Bootstrap core CSS -->
@@ -42,28 +42,73 @@
                 height: 650px;
             }
         }
+
         @media (min-width: 800px) and (max-width: 850px) {
             .navbar:not(.top-nav-collapse) {
-                background: #1C2331!important;
+                background: #1C2331 !important;
             }
         }
 
-        .btn-primary{
-            background-color: {{ stadt.hauptfarbe }}!important;
-            border-color: {{ stadt.hauptfarbe }}!important;
+        .btn-primary {
+            background-color: {{ stadt.hauptfarbe }} !important;
+            border-color: {{ stadt.hauptfarbe }} !important;
             color: #fff;
         }
+
         .btn-outline-primary {
-            border: 2px solid {{ stadt.hauptfarbe }}!important;
-            color: {{ stadt.hauptfarbe }}!important;
+            border: 2px solid {{ stadt.hauptfarbe }} !important;
+            color: {{ stadt.hauptfarbe }} !important;
         }
-        .hauptfarbe{
-            color: {{ stadt.hauptfarbe }}!important;
+
+        .hauptfarbe {
+            color: {{ stadt.hauptfarbe }} !important;
         }
 
         .rgba-black-light, .rgba-black-light::after {
             background-color: rgba(0, 0, 0, 0.52);
             margin-top: 10px;
+        }
+
+        #scroll a {
+            padding-top: 10px;
+        }
+        #scroll a span {
+            margin-top: -30px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            margin-left: -2px;
+            border-left: 1px solid #fff;
+            border-bottom: 1px solid #fff;
+            -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            -webkit-animation: sdb04 2s infinite;
+            animation: sdb04 2s infinite;
+            box-sizing: border-box;
+        }
+        @-webkit-keyframes sdb04 {
+            0% {
+                -webkit-transform: rotate(-45deg) translate(0, 0);
+            }
+            20% {
+                -webkit-transform: rotate(-45deg) translate(-10px, 10px);
+            }
+            40% {
+                -webkit-transform: rotate(-45deg) translate(0, 0);
+            }
+        }
+        @keyframes sdb04 {
+            0% {
+                transform: rotate(-45deg) translate(0, 0);
+            }
+            20% {
+                transform: rotate(-45deg) translate(-10px, 10px);
+            }
+            40% {
+                transform: rotate(-45deg) translate(0, 0);
+            }
         }
     </style>
 </head>
@@ -77,11 +122,12 @@
         {% if stadt.logoUrl is empty %}
             <h1 class="display-4 font-weight-bold hauptfarbe">{{ stadt.name }}</h1>
         {% else %}
-            <img class="navbar-brand" src="{{ stadt.logoUrl}}" alt="{{ stadt.name }}" style="max-height: 80px">
+            <img class="navbar-brand" src="{{ stadt.logoUrl }}" alt="{{ stadt.name }}" style="max-height: 80px">
         {% endif %}
 
         <!-- Collapse -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -129,123 +175,141 @@
 {% if stadt.image is empty %}
 <div class="view full-page-intro"
      style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
-{% else %}
-<div class="view full-page-intro"
-     style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
-{% endif %}
-    <!-- Mask & flexbox options-->
-    <div class="mask d-flex justify-content-center align-items-end">
+    {% else %}
+    <div class="view full-page-intro"
+         style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
+        {% endif %}
+        <!-- Mask & flexbox options-->
+        <div class="mask d-flex justify-content-center align-items-end">
 
-        <!-- Content -->
-        <div class="container rgba-black-light">
+            <!-- Content -->
+            <div class="container rgba-black-light">
 
-            <!--Grid row-->
-            <div class="row wow fadeIn">
+                <!--Grid row-->
+                <div class="row wow fadeIn">
 
-                <div class="col-md-12 mb-6 white-text text-center text-md-left">
-                    <h1 class="display-4 font-weight-bold hauptfarbe">{% trans %} Unsere Schulkindbetreuung {% endtrans %}</h1>
-                    <hr class="hr-light ">
+                    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+                        <h1 class="display-4 font-weight-bold hauptfarbe">{% trans %} Unsere Schulkindbetreuung {% endtrans %}</h1>
+                        <hr class="hr-light ">
+                    </div>
+
+                    <!--Grid column-->
+                    <div class="col-md-6 mb-4 white-text text-center text-md-left">
+                        <p class="lead">{% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
+                        <a href="{{ url }}" class="btn btn-primary btn-lg" id="start">
+                            {% if app.request.cookies.has('SecID') %}
+                                {% trans %}Kind bearbeiten{% endtrans %}
+                            {% else %}
+                                {% trans %}Hier Kind/Kinder anmelden{% endtrans %}
+                            {% endif %}
+                        </a>
+                    </div>
+
+                    <div class="col-md-6 mb-4 white-text text-center text-md-left">
+                        <p class="lead">
+                            {{ cityInfoText|nl2br }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-4 white-text text-center align-content-center">
+                    <section id="scroll">
+
+                        <a href="#start"><span></span></a>
+                    </section>
                 </div>
 
-                <!--Grid column-->
-                <div class="col-md-6 mb-4 white-text text-center text-md-left">
-                    <p class="lead">{% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
-                    <a href="{{ url }}" class="btn btn-primary btn-lg">
-                        {% if app.request.cookies.has('SecID') %}
-                            {% trans %}Kind bearbeiten{% endtrans %}
-                        {% else %}
-                            {% trans %}Hier Kind/Kinder anmelden{% endtrans %}
-                        {% endif %}
-                    </a>
-                </div>
-
-                <div class="col-md-6 mb-4 white-text text-center text-md-left">
-                    <p class="lead">
-                        {{ cityInfoText|nl2br }}
-                    </p>
-                </div>
             </div>
         </div>
     </div>
 </div>
+    <main>
+        <div class="container">
 
-<main>
-    <div class="container">
+            <!--Section: Main info-->
+            <section class="mt-5 wow fadeIn">
 
-        <!--Section: Main info-->
-        <section class="mt-5 wow fadeIn">
+                <!--Grid row-->
+                <div class="row">
 
-            <!--Grid row-->
-            <div class="row">
+                    <!--Grid column-->
+                    <div class="col-lg-12">
+                        <h4>{% trans %}Herzlich Willkommen bei der neuen Schulkindbetreuung{% endtrans %}</h4>
+                        <p>
+                            Sie haben hier die Möglichkeit Ihr Kind/ Ihre Kinder online zur Schulkindbetreuung an den
+                            Schulen anmelden. Aktuell stehen Ihnen für folgende Schulen die Schulkindbetreuung zur
+                            Verfügung.
+                        </p>
+                        <h4> {% trans %}Folgende Schulen können hier online gebucht werden.{% endtrans %}</h4>
+                        <section class="dashboard-counts section-padding" id="schulenShow">
+                            <div class="container-fluid ">
 
-                <!--Grid column-->
-                <div class="col-lg-12">
-                    <h4>{% trans %}Herzlich Willkommen bei der neuen Schulkindbetreuung{% endtrans %}</h4>
-                    <p>
-                        Sie haben hier die Möglichkeit Ihr Kind/ Ihre Kinder online zur Schulkindbetreuung an den Schulen anmelden. Aktuell stehen Ihnen für folgende Schulen die Schulkindbetreuung zur Verfügung.
-                    </p>
-                    <h4> {% trans %}Folgende Schulen können hier online gebucht werden.{% endtrans %}</h4>
-                    <section class="dashboard-counts section-padding" id="schulenShow">
-                        <div class="container-fluid ">
+                                <div class="card-deck">
+                                    <!-- Count item widget-->
+                                    {% for s in schule %}
 
-                            <div class="card-deck">
-                                <!-- Count item widget-->
-                                {% for s in schule %}
+                                        <div class="card mb-4 ">
+                                            <div class="view overlay">
+                                                <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                     alt="{{ s.name }}" style="max-height: 300px">
 
-                                    <div class="card mb-4 ">
-                                        <div class="view overlay">
-                                            <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}"
-                                                 alt="{{ s.name }}" style="max-height: 300px">
+                                            </div>
+
+                                            <div class="card-body ">
+                                                <h5 class="card-title">{{ s.name }}</h5>
+                                                <p class="card-text">{{ s.infoText }}</p>
+
+                                            </div>
 
                                         </div>
 
-                                        <div class="card-body ">
-                                            <h5 class="card-title">{{ s.name }}</h5>
-                                            <p class="card-text">{{ s.infoText }}</p>
+                                    {% endfor %}
+                                </div>
 
-                                        </div>
-
-                                    </div>
-
-                                {% endfor %}
                             </div>
+                        </section>
 
-                        </div>
-                    </section>
-
+                    </div>
                 </div>
-            </div>
-        </section>
-    </div>
-</main>
+            </section>
+        </div>
+    </main>
 
-<footer class="page-footer text-center font-small mt-4 wow fadeIn">
-    <!-- Legal -->
-    <ul class="navbar-nav nav-flex-icons">
-        <li class="nav-item">
-            <a class="nav-link" href={{ path('impressum') }} >{% trans %}Impressum{% endtrans %}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href={{ path('datenschutz') }} >{% trans %}Datenschutzhinweis{% endtrans %}</a>
-        </li>
-    </ul>
-    <!-- Legal -->
+    <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+        <!-- Legal -->
+        <ul class="navbar-nav nav-flex-icons">
+            <li class="nav-item">
+                <a class="nav-link" href={{ path('impressum') }}>{% trans %}Impressum{% endtrans %}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href={{ path('datenschutz') }}>{% trans %}Datenschutzhinweis{% endtrans %}</a>
+            </li>
+        </ul>
+        <!-- Legal -->
 
-    <!--Copyright-->
-    <div class="footer-copyright py-3">
-        © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
+        <!--Copyright-->
+        <div class="footer-copyright py-3">
+            © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
 
-    </div>
-    <!--/.Copyright-->
 
-</footer>
+        </div>
+        <!--/.Copyright-->
 
-<script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
-<script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
-</div>
+    </footer>
+
+    <script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
+    <script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
+<script>
+    $(function () {
+        $("a[href*=\\#]").on('click', function (e) {
+            e.preventDefault();
+            $('html, body').animate({scrollTop: $($(this).attr('href')).offset().top}, 500, 'linear');
+        });
+    });
+</script>
+
 </body>
 
 </html>
