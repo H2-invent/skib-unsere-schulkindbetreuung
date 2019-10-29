@@ -46,7 +46,7 @@ class WidgetController extends AbstractController
                 ->setParameter('wochentag',$today);
         $query = $qb->getQuery();
         $kinder = $result = $query->getResult();
-        dump($kinder);
+
 
         return new JsonResponse(array('title'=>$translator->trans('Anwesende Kinder heute'),'anzahl'=>sizeof($kinder),'symbol'=>'emoji_people'));
     }
@@ -82,7 +82,7 @@ class WidgetController extends AbstractController
 
         $query = $qb->getQuery();
         $kinder = $result = $query->getResult();
-        dump($kinder);
+
 
         return new JsonResponse(array('title'=>$translator->trans('Kinder dieses Schuljahr'),'anzahl'=>sizeof($kinder),'symbol'=>'emoji_people'));
     }
