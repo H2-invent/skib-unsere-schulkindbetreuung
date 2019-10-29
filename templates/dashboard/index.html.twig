@@ -1,20 +1,52 @@
-{% extends 'base.html.twig' %}
+{% extends 'adminBase.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid">
+            <div class="row" id="widgetRow">
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Emanuel/skb/skb/src/Controller/DashboardController.php'|file_link(0) }}">src/Controller/DashboardController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Emanuel/skb/skb/templates/dashboard/index.html.twig'|file_link(0) }}">templates/dashboard/index.html.twig</a></code></li>
-    </ul>
-</div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block jquery %}
+    <!-- Count item widget-->
+    <script>
+        var URLs = [
+            {% if app.user.organisation is not null %}
+            '{{ path('widget_kids_today',{'id':app.user.organisation.id}) }}',
+            '{{ path('widget_kids_schuljahr',{'id':app.user.organisation.id}) }}'
+            {% endif %}
+        ];
+        $.each(URLs, function (index, value) {
+            console.log(value);
+
+            $.getJSON(value, function (data) {
+
+           var box = '<div class="col-xl-2 col-md-4 col-6">'
+                    +'<div class="wrapper count-title d-flex">'
+                    +'<div class="icon"><i class="material-icons"> '+data.symbol+'</i></div>'
+                +'<div class="name"><strong class="text-uppercase">'+data.title+'</strong>'
+                +'<div class="count-number">'+data.anzahl+'</div>'
+                 +'</div>'
+            +'   </div>'
+            +'   </div>';
+
+                $("#widgetRow").append(box);
+            });
+        });
+    </script>
+    <div class="col-xl-2 col-md-4 col-6">
+        <div class="wrapper count-title d-flex">
+            <div class="icon"><i class="icon-user"></i></div>
+            <div class="name"><strong class="text-uppercase">New Clients</strong><span>Last 7 days</span>
+                <div class="count-number">25</div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
