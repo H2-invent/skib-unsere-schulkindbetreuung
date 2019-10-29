@@ -12,8 +12,10 @@ class LandingController extends AbstractController
     /**
      * @Route("/", name="welcome_landing")
      */
-    public function welcomeAction(Request $request, Stadt $stadt)
+    public function welcomeAction(Request $request)
     {
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findBy(array('deleted'=>false));
+     
         return $this->render('landing/start.html.twig',array('stadt'=>$stadt));
     }
 }

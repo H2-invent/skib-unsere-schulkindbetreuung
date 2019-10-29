@@ -9,15 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractController
 {
-    /**
-     * @Route("/", name="index")
-     */
-    public function index(Request $request)
-    {
-        $stadt = array();
 
-        return $this->render('landing/start.html.twig');
-    }
     /**
      * @Route("/login/dashboard", name="dashboard")
      */

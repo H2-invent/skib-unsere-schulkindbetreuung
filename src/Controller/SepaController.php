@@ -45,7 +45,7 @@ class SepaController extends AbstractController
                 $sepa = $form->getData();
                 $sepa->setBis((clone $sepa->getVon())->modify('last day of this month'));
                 $result = $this->calcSepa($sepa,$translator,$SEPASimpleService,$printRechnungService,$mailerService);
-             return $this->redirectToRoute('accounting_overview',array('id'=>$organisation->getId(),'snack'=>$result));
+                return $this->redirectToRoute('accounting_overview',array('id'=>$organisation->getId(),'snack'=>$result));
             }
 
         }
@@ -164,12 +164,13 @@ class SepaController extends AbstractController
             $filename = $translator->trans('Rechnung').' '.$rechnung->getRechnungsnummer();
            $pdf = $printRechnungService->printRechnung($filename,$organisation,$rechnung,'S');
            $attachment = array();
-           $attachment[] = (new \Swift_Attachment())
+           $attachment[] = array('type'=>'application/pdf','filename'=>$filename . '.pdf','body'=>$pdf);
+          /* $attachment[] = (new \Swift_Attachment())
                ->setFilename($filename . '.pdf')
                ->setContentType('application/pdf')
                ->setBody($pdf);
-
-           $mailContent = $this->render('email/rechnungEmail.html.twig',array('rechnung'=>$rechnung,'organisation'=>$organisation));
+            */
+           $mailContent = $this->renderView('email/rechnungEmail.html.twig',array('rechnung'=>$rechnung,'organisation'=>$organisation));
            $betreff = $translator->trans('Rechnung ').' ' .$rechnung->getRechnungsnummer();
             $mailerService->sendEmail($organisation->getName(),$organisation->getEmail(),$data->getEmail(),$betreff,$mailContent,$attachment);
 

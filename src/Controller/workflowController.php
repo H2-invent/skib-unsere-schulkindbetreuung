@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 /**
  * Created by PhpStorm.
@@ -30,28 +31,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class workflowController  extends AbstractController
+class workflowController extends AbstractController
 {
     /**
-    * @Route("/{slug}/start",name="workflow_start",methods={"GET"})
+     * @Route("/{slug}/start",name="workflow_start",methods={"GET"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-    */
+     */
     public function welcomeAction(Request $request, Stadt $stadt)
     {
         $url = '';
-        switch($stadt->getSlug()){
+        switch ($stadt->getSlug()) {
             case 'loerrach':
-           $url = $this->generateUrl('loerrach_workflow_adresse');
-           break;
+                $url = $this->generateUrl('loerrach_workflow_adresse');
+                break;
             default:
                 break;
 
         }
         $cityInfoText = $stadt->translate()->getInfoText();
         // Load all schools from the city into the controller as $schulen
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt,'deleted'=>false));
+        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
 
-        return $this->render('workflow/start.html.twig',array('schule'=>$schule, 'cityInfoText'=>$cityInfoText,'stadt'=>$stadt,'url'=>$url));
+        return $this->render('workflow/start.html.twig', array('schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'url' => $url));
     }
 
 
@@ -62,12 +63,13 @@ class workflowController  extends AbstractController
     public function closedAction(Request $request, Stadt $stadt)
     {
 
-        return $this->render('workflow/closed.html.twig',array('stadt'=>$stadt));
+        return $this->render('workflow/closed.html.twig', array('stadt' => $stadt));
     }
+
     /**
      * @Route("/confirmEmail",name="workflow_confirm_Email",methods={"GET","POST"})
      */
-    public function confirmAction(Request $request, MailerService $mailer,TranslatorInterface $translator)
+    public function confirmAction(Request $request, MailerService $mailer, TranslatorInterface $translator)
     {
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt'));
@@ -105,7 +107,7 @@ class workflowController  extends AbstractController
             $mailBetreff = $translator->trans('Bestätigungscode für die Schulbetreuungsanmeldung ');
             $mailContent = $this->renderView('email/bestaetigungscode.html.twig', array('eltern' => $stammdaten));
             if ($stammdaten->getConfirmEmailSend() == false) {
-                $mailer->sendEmail('H2-Invent','info@h2-invent.com', $stammdaten->getEmail(), $mailBetreff, $mailContent);
+                $mailer->sendEmail('H2-Invent', 'info@h2-invent.com', $stammdaten->getEmail(), $mailBetreff, $mailContent);
                 $stammdaten->setConfirmEmailSend(true);
                 $stammdaten->setResendEmail(md5(uniqid()));
                 $em = $this->getDoctrine()->getManager();
@@ -115,67 +117,70 @@ class workflowController  extends AbstractController
 
             $text = $translator->trans('Wir haben Ihnen einen Bestätigungscode an Ihre Emailadresse gesandt. Bitte geben Sie diesen Code aus der Email hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen.');
 
-            return $this->render('workflow/formConfirmation.html.twig', array('form' => $form->createView(), 'titel' => $mailBetreff, 'text' => $text, 'stadt' => $stadt, 'stammdaten'=>$stammdaten,'redirect'=>$request->get('redirect')));
+            return $this->render('workflow/formConfirmation.html.twig', array('form' => $form->createView(), 'titel' => $mailBetreff, 'text' => $text, 'stadt' => $stadt, 'stammdaten' => $stammdaten, 'redirect' => $request->get('redirect')));
         }
     }
-        /**
-         * @Route("/resetMail",name="workflow_reset_Email",methods={"GET","POST"})
-         */
-        public function resetAction(Request $request, MailerService $mailer,TranslatorInterface $translator)
+
+    /**
+     * @Route("/resetMail",name="workflow_reset_Email",methods={"GET","POST"})
+     */
+    public function resetAction(Request $request, MailerService $mailer, TranslatorInterface $translator)
     {
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt'));
-      $text = $translator->trans('Die Email konnte nicht erneut vesandt werden');
-       if($request->get('resendEmail') == $stammdaten->getResendEmail()){
-           $stammdaten ->setConfirmEmailSend(false);
-           $em = $this->getDoctrine()->getManager();
-           $em->persist($stammdaten);
-           $em->flush();
-           $text = $translator->trans('Die Email wurde erfolgreich versandt');
-       }
+        $text = $translator->trans('Die Email konnte nicht erneut vesandt werden');
+        if ($request->get('resendEmail') == $stammdaten->getResendEmail()) {
+            $stammdaten->setConfirmEmailSend(false);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($stammdaten);
+            $em->flush();
+            $text = $translator->trans('Die Email wurde erfolgreich versandt');
+        }
 
-        return $this->redirectToRoute('workflow_confirm_Email', array('stadt' => $stadt->getId(),'snack'=>$text, 'uid' => $stammdaten->getUid(), 'redirect' => $request->get('redirect')));
+        return $this->redirectToRoute('workflow_confirm_Email', array('stadt' => $stadt->getId(), 'snack' => $text, 'uid' => $stammdaten->getUid(), 'redirect' => $request->get('redirect')));
     }
 
     /**
      * @Route("/zusammenfassung/datenschutz",name="workflow_datenschutz",methods={"GET"})
      */
-    public function datenschutzAction(Request $request,TranslatorInterface $translator)
+    public function datenschutzAction(Request $request, TranslatorInterface $translator)
     {
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
         $org = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
         $org_datenschutz = $org->translate()->getDatenschutz();
 
-        return $this->render('workflow/datenschutz.html.twig', array('datenschutz'=>$org_datenschutz,'org'=>$org,'stammdaten'=>$stammdaten,'redirect'=>$request->get('redirect')));
+        return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $org, 'stammdaten' => $stammdaten, 'redirect' => $request->get('redirect')));
     }
 
     /**
      * @Route("/zusammenfassung/agb",name="workflow_agb",methods={"GET"})
      */
-    public function agbAction(Request $request,TranslatorInterface $translator)
+    public function agbAction(Request $request, TranslatorInterface $translator)
     {
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt_id'));
         $stadtAGB = $stadt->translate()->getAgb();
 
-        return $this->render('workflow/agb.html.twig', array('stadtAGB'=>$stadtAGB,'stadt'=>$stadt,'stammdaten'=>$stammdaten,'redirect'=>$request->get('redirect')));
+        return $this->render('workflow/agb.html.twig', array('stadtAGB' => $stadtAGB, 'stadt' => $stadt, 'stammdaten' => $stammdaten, 'redirect' => $request->get('redirect')));
     }
+
     /**
      * @Route("/agb/pdf",name="workflow_agb_pdf",methods={"GET"})
      */
-    public function pdf(Request $request,TranslatorInterface $translator, PrintAGBService $printAGBService)
+    public function pdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService)
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
-        return $printAGBService->printAGB($stadt->translate()->getAgb(),'D',$stadt,null);
+        return $printAGBService->printAGB($stadt->translate()->getAgb(), 'D', $stadt, null);
 
     }
+
     /**
      * @Route("/datenschutz/pdf",name="workflow_datenschutz_pdf",methods={"GET"})
      */
-    public function datenschutzpdf(Request $request,TranslatorInterface $translator, PrintAGBService $printAGBService)
+    public function datenschutzpdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
-        return $printAGBService->printAGB($organisation->translate()->getDatenschutz(),'D',null,$organisation);
+        return $printAGBService->printAGB($organisation->translate()->getDatenschutz(), 'D', null, $organisation);
 
     }
 }

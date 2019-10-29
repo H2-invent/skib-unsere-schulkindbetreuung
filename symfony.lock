@@ -145,20 +145,7 @@
         "version": "1.6.0"
     },
     "league/flysystem": {
-        "version": "1.0.46"
-    },
-    "league/flysystem-bundle": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "8ad3ded1f39fedce098e43259741f42092a1010e"
-        },
-        "files": [
-            "./config/packages/flysystem.yaml",
-            "./var/storage/.gitignore"
-        ]
+        "version": "1.0.57"
     },
     "monolog/monolog": {
         "version": "1.24.0"
@@ -365,6 +352,27 @@
     },
     "symfony/intl": {
         "version": "v4.3.4"
+    },
+    "symfony/mailer": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "6e5921f710bec05533f664e0b9a3d838545edd82"
+        },
+        "files": [
+            "./config/packages/mailer.yaml"
+        ]
+    },
+    "symfony/mailgun-mailer": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "a2bc739b34862b926b8a58263fd3901297eec3b5"
+        }
     },
     "symfony/maker-bundle": {
         "version": "1.0",

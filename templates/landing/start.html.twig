@@ -7,13 +7,14 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Unsere Schulkindbetreuung</title>
     <!-- Font Awesome -->
+    <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="{{ asset('frontpage/css/mdb.min.css') }}" rel="stylesheet">
     <!-- Your custom styles (optional) -->
-    <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
+
     <link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
     <link href="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.css" rel="stylesheet">
 
@@ -42,9 +43,10 @@
                 height: 650px;
             }
         }
+
         @media (min-width: 800px) and (max-width: 850px) {
             .navbar:not(.top-nav-collapse) {
-                background: #1C2331!important;
+                background: #1C2331 !important;
             }
         }
     </style>
@@ -61,7 +63,8 @@
         </a>
 
         <!-- Collapse -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -99,7 +102,8 @@
 <!-- Navbar -->
 
 <!-- Full Page Intro -->
-<div class="view full-page-intro" style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+<div class="view full-page-intro"
+     style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
 
     <!-- Mask & flexbox options-->
     <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
@@ -111,13 +115,34 @@
             <div class="row wow fadeIn">
 
                 <!--Grid column-->
-                <div class="col-md-6 mb-4 white-text text-center text-md-left">
+                <div class="col-md-6 mb-4 text-center text-md-left" style="word-break: break-word">
 
-                    <h1 class="display-4 font-weight-bold">Unsere Schulkindbetreuung</h1>
+                    <h1 class="display-4 white-text font-weight-bold">Unsere Schulkindbetreuung</h1>
 
+                </div>
+
+                <div class="col-md-6 mb-4 text-center text-md-left">
+                    <div class="row">
+                        {% for s in stadt %}
+                            <div class="col-md-6">
+                                <div class="card align-items-center">
+
+                                    <img class="card-img-top " src="{{ vich_uploader_asset(s,'imageFile') }}">
+
+                                    <div class="card-body">
+
+                                        <h4 class="card-title">{{s.name}}</h4>
+                                        <!-- Text -->
+                                        <p class="card-text">{{ s.translate.infoText|nl2br }}</p>
+                                        <!-- Button -->
+                                        <a href="{{ path('workflow_start',{'slug':s.slug}) }}" class="btn btn-primary">{{ 'Ich lebe in '~s.name|trans }}</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-
-                <div class="col-md-6 mb-4 white-text text-center text-md-left">
                 </div>
             </div>
         </div>
