@@ -33,7 +33,7 @@ class MailerService
     public function sendEmail($sender, $from, $to, $betreff,$content,$attachment = array())
     {
 
-/*
+
         $senderObj = new NamedAddress($from, $sender);
         $email = (new Email())
             ->from($senderObj)
@@ -45,8 +45,8 @@ class MailerService
         };
         dump($email);
         $this->mailgun->send($email);
-*/
 
+/*
   $fromSender = array($from=>$sender);
         $message = (new \Swift_Message($betreff))
             ->setFrom($fromSender)
@@ -65,6 +65,6 @@ class MailerService
         }
 
         return   $this->mailer->send($message);
-
+*/
     }
 }
