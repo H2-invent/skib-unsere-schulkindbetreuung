@@ -574,7 +574,6 @@ class LoerrachWorkflowController extends AbstractController
         return $response;
 
     }
-
     /**
      * @Route("/loerrach/berechnung/einKind",name="loerrach_workflow_preis_einKind",methods={"GET"})
      */

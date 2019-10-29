@@ -47,6 +47,28 @@
                 background: #1C2331!important;
             }
         }
+        .btn-primary{
+            background-color: {{ stadt.hauptfarbe }}!important;
+            border-color: {{ stadt.hauptfarbe }}!important;
+            color: #fff;
+        }
+        .btn-outline-primary {
+            border: 2px solid {{ stadt.hauptfarbe }}!important;
+            color: #0b2e13!important;
+        }
+        .hauptfarbe,
+        .display-4{
+            color: {{ stadt.hauptfarbe }}!important;
+        }
+        .popover-header {
+            background-color: {{ stadt.hauptfarbe }}!important;
+        }
+        .popover {
+            border: 1px solid {{ stadt.hauptfarbe }}!important;
+        }
+        .card-header {
+            background-color: {{stadt.akzentfarbe}}!important;
+        }
     </style>
 </head>
 
@@ -56,9 +78,11 @@
     <div class="container">
 
         <!-- Brand -->
-        <a class="navbar-brand" href="#" target="_blank">
-            <strong>Unsere Schulkindbetreuung</strong>
-        </a>
+        {% if stadt.logoUrl is empty %}
+            <h1 class="display-4 font-weight-bold hauptfarbe">{{ stadt.name }}</h1>
+        {% else %}
+            <img class="navbar-brand" src="{{ stadt.logoUrl}}" alt="{{ stadt.name }}" style="max-height: 80px">
+        {% endif %}
 
         <!-- Collapse -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -106,7 +130,13 @@
 <!-- Navbar -->
 
 <!-- Full Page Intro -->
-<div class="view full-page-intro" style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+{% if stadt.image is empty %}
+<div class="view full-page-intro"
+     style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+    {% else %}
+    <div class="view full-page-intro"
+         style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
+        {% endif %}
 
     <!-- Mask & flexbox options-->
     <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
