@@ -168,6 +168,11 @@ class Stadt
      */
     private $preiskategorien;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $logoUrl;
+
 
     public function __construct()
     {
@@ -560,6 +565,18 @@ class Stadt
     public function setPreiskategorien(?int $preiskategorien): self
     {
         $this->preiskategorien = $preiskategorien;
+
+        return $this;
+    }
+
+    public function getLogoUrl(): ?string
+    {
+        return $this->logoUrl;
+    }
+
+    public function setLogoUrl(?string $logoUrl): self
+    {
+        $this->logoUrl = $logoUrl;
 
         return $this;
     }
