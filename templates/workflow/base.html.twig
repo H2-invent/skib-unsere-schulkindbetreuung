@@ -78,9 +78,11 @@
     <div class="container">
 
         <!-- Brand -->
-        <a class="navbar-brand" href="#" target="_blank">
-            <strong>Unsere Schulkindbetreuung</strong>
-        </a>
+        {% if stadt.logoUrl is empty %}
+            <h1 class="display-4 font-weight-bold hauptfarbe">{{ stadt.name }}</h1>
+        {% else %}
+            <img class="navbar-brand" src="{{ stadt.logoUrl}}" alt="{{ stadt.name }}" style="max-height: 80px">
+        {% endif %}
 
         <!-- Collapse -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

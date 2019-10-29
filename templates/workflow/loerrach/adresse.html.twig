@@ -1,11 +1,7 @@
 {% extends 'workflow/base.html.twig' %}
 {% block header %}
     <div class="col-md-12 mb-6 white-text text-center text-md-left">
-        {% if stadt.logoUrl is empty %}
-            <h1 class="display-4 font-weight-bold hauptfarbe">{{ stadt.name }}</h1>
-        {% else %}
-            <img src="{{ stadt.logoUrl}}" alt="{{ stadt.name }}"style="max-height: 150px">
-        {% endif %}
+            <h1 class="display-4 font-weight-bold hauptfarbe">{% trans %}Unsere online Anmeldung{% endtrans %}</h1>
         <hr class="hr-light ">
     </div>
 

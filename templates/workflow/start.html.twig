@@ -60,6 +60,11 @@
         .hauptfarbe{
             color: {{ stadt.hauptfarbe }}!important;
         }
+
+        .rgba-black-light, .rgba-black-light::after {
+            background-color: rgba(0, 0, 0, 0.52);
+            margin-top: 10px;
+        }
     </style>
 </head>
 
@@ -69,9 +74,11 @@
     <div class="container">
 
         <!-- Brand -->
-        <a class="navbar-brand" href="#" target="_blank">
-            <strong>Unsere Schulkindbetreuung</strong>
-        </a>
+        {% if stadt.logoUrl is empty %}
+            <h1 class="display-4 font-weight-bold hauptfarbe">{{ stadt.name }}</h1>
+        {% else %}
+            <img class="navbar-brand" src="{{ stadt.logoUrl}}" alt="{{ stadt.name }}" style="max-height: 80px">
+        {% endif %}
 
         <!-- Collapse -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -127,20 +134,16 @@
      style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
 {% endif %}
     <!-- Mask & flexbox options-->
-    <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+    <div class="mask d-flex justify-content-center align-items-end">
 
         <!-- Content -->
-        <div class="container">
+        <div class="container rgba-black-light">
 
             <!--Grid row-->
             <div class="row wow fadeIn">
 
                 <div class="col-md-12 mb-6 white-text text-center text-md-left">
-                    {% if stadt.logoUrl is empty %}
-                    <h1 class="display-4 font-weight-bold hauptfarbe">{{ stadt.name }}</h1>
-                    {% else %}
-                        <img src="{{ stadt.logoUrl}}" alt="{{ stadt.name }}"style="max-width: 50%">
-                    {% endif %}
+                    <h1 class="display-4 font-weight-bold hauptfarbe">{% trans %} Unsere Schulkindbetreuung {% endtrans %}</h1>
                     <hr class="hr-light ">
                 </div>
 
