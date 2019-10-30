@@ -14,16 +14,3 @@ echo --------------------------------------------------------------------------
 echo -----------------Clear Cache----------------------------------------------
 echo --------------------------------------------------------------------------
 php bin/console cache:clear
-php bin/console cache:warmup
-echo --------------------------------------------------------------------------
-echo ----------------Setting Permissin------------------------------------------
-echo --------------------------------------------------------------------------
-chown -R www-data:www-data var/cache
-chmod -R 775 var/cache
-echo --------------------------------------------------------------------------
-echo ----------------Create Upload Folder and Set permissions------------------
-echo --------------------------------------------------------------------------
-mkdir public/uploads
-mkdir public/uploads/images
-chown -R www-data:www-data public/uploads/images
-chmod -R 775 public/uploads/images
