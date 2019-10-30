@@ -651,7 +651,7 @@ class LoerrachWorkflowController extends AbstractController
 
 
             } else {
-                $search['tracing'] = 0;
+                $search['history'] = 0;
             }
 
             if ($hash == $cookie_ar[1]) {
