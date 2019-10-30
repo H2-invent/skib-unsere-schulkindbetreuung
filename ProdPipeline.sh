@@ -6,7 +6,7 @@ git stash
 git fetch --tags
 
 # Get latest tag name
-latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+latestTag=$(git tag | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$" | sort -t. -k 1,1n -k 2,2n -k 3,3n | tail -1)
 echo Neueste Version: $latestTag
 # Checkout latest tag
 git checkout $latestTag
