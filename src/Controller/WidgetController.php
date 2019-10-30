@@ -149,12 +149,12 @@ class WidgetController extends AbstractController
 
         $query = $qb->getQuery();
         $blocks = $result = $query->getResult();
-        dump($blocks);
+
         $blocksRender = array();
         foreach ($blocks as $data){
             $blocksRender[$data->getWochentag()][]= $data;
         }
-        dump($blocksRender);
+     
         return $this->render('widget/blockContent.html.twig',array('blocks'=>$blocksRender));
 
     }
