@@ -1,0 +1,23 @@
+{% if blocks is defined %}
+    {% for b in blocks %}
+        <div class="card">
+            <div class="card-body text-center {% if b.deleted == true %}bg-danger{% endif %}">
+                <p>
+                    {{ b.schule.name }}
+                </p>
+
+                <p>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</p>
+
+                    <p>{% trans %}Kinder{% endtrans %}: {{ b.kindwithFin|length }}</p>
+            </div>
+
+            <div class="bmd-card-actions text-center">
+                {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
+                    <a href="{{ path('child_show',{'id':b.schule.organisation.id,'block':b.id}) }}"><i class="material-icons">info</i></a>
+                {% endif %}
+
+
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
