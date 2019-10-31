@@ -27,9 +27,9 @@ Gläubiger ID: __Gläubiger ID
 Info Text Deutsch: __Info text Deutsch
 Info Text Englisch: __Info text Englisch
 Info Text Französisch: __Info text Französisch
-AGB Deutsch: __AGB Deutsch
-AGB Englisch: __AGB Englisch
-AGB Französisch: __AGB Französisch
+AGB Deutsch (Markdown): __AGB Deutsch (Markdown)
+AGB Englisch (Markdown): __AGB Englisch (Markdown)
+AGB Französisch (Markdown): __AGB Französisch (Markdown)
 Telefonnummer: Phone
 SMTP Server: SMTP Server
 SMTP Port: SMTP Port
@@ -83,8 +83,8 @@ Mein Kind ist Gluten intolerant: __Mein Kind ist Gluten intolerant
 Mein Kind ist Laktose intolerant: __Mein Kind ist Laktose intolerant
 Tag des Lastschrifteinzugs: __Tag des Lastschrifteinzugs
 Beginn des Abrechnungszeitraums: __Beginn des Abrechnungszeitraums
-Datenschutzhinweis Deutsch: __Datenschutzhinweis Deutsch
-Datenschutzhinweis Englisch: __Datenschutzhinweis Englisch
-Datenschutzhinweis Französisch: __Datenschutzhinweis Französisch
+Datenschutzhinweis Deutsch (Markdown): __Datenschutzhinweis Deutsch (Markdown)
+Datenschutzhinweis Englisch (Markdown): __Datenschutzhinweis Englisch (Markdown)
+Datenschutzhinweis Französisch (Markdown): __Datenschutzhinweis Französisch (Markdown)
 AGB hochladen. Diese wird an die Bestätigungsemail angehängt: __AGB hochladen. Diese wird an die Bestätigungsemail angehängt
 URL für Logo: __URL für Logo

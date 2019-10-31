@@ -67,12 +67,12 @@ class StadtType extends AbstractType
             ->add('hauptfarbe', TextType::class,['required'=>false,'label'=>'Hauptfarbe(HTML Code)','translation_domain' => 'form'])
             ->add('akzentfarbe', TextType::class,['required'=>false,'label'=>'Akzentfarbe (HTML Code)','translation_domain' => 'form'])
             ->add('akzentfarbeFehler', TextType::class,['required'=>false,'label'=>'Akzentfarbe Fehler (HTML Code)','translation_domain' => 'form'])
-            ->add('infoTextDe', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Info Text Deutsch','translation_domain' => 'form', 'property_path' => 'translations[de].infoText', ])
+            ->add('infoTextDe', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Info Text Deutsch ','translation_domain' => 'form', 'property_path' => 'translations[de].infoText', ])
             ->add('infoTextEn', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Info Text Englisch','translation_domain' => 'form','property_path' => 'translations[en].infoText', ])
             ->add('infoTextFr', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Info Text Französisch','translation_domain' => 'form','property_path' => 'translations[fr].infoText', ])
-            ->add('infoAGBDe', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Deutsch','translation_domain' => 'form', 'property_path' => 'translations[de].agb', ])
-            ->add('infoAGBEn', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Englisch','translation_domain' => 'form','property_path' => 'translations[en].agb', ])
-            ->add('infoAGBFr', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Französisch','translation_domain' => 'form','property_path' => 'translations[fr].agb', ])
+            ->add('infoAGBDe', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].agb', ])
+            ->add('infoAGBEn', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].agb', ])
+            ->add('infoAGBFr', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].agb', ])
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
 
         ;

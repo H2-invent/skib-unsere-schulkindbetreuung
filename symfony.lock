@@ -144,6 +144,9 @@
     "knplabs/doctrine-behaviors": {
         "version": "1.6.0"
     },
+    "league/commonmark": {
+        "version": "1.0.0"
+    },
     "league/flysystem": {
         "version": "1.0.57"
     },
@@ -606,6 +609,12 @@
     },
     "tecnickcom/tcpdf": {
         "version": "6.3.2"
+    },
+    "twig/extra-bundle": {
+        "version": "v2.12.1"
+    },
+    "twig/markdown-extra": {
+        "version": "v2.12.1"
     },
     "twig/twig": {
         "version": "v2.11.3"
