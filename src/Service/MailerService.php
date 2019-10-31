@@ -43,7 +43,7 @@ class MailerService
         foreach ($attachment as $data){
             $email->attach($data['body'],$data['filename'],$data['type']);
         };
-        dump($email);
+       
         $this->mailgun->send($email);
 
 /*
