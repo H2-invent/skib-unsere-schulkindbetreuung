@@ -6,6 +6,6 @@
     </div>
 {% endblock %}
 {% block content %}
-        <h1 class="cover-heading">{% trans %} Anmeldung zur Schulkindbetreuung geschlossen {% endtrans %}</h1>
+        <h1 class="cover-heading">{% trans with {"%name%":stadt.name} %} Anmeldung zur Schulkindbetreuung in %name% geschlossen {% endtrans %}</h1>
         <p class="lead">{% trans with {"%name%":stadt.name} %}Sie befinden sich außerhalb des Anmeldezeitraums für die Schulkindbetreuung in %name%. {% endtrans %}</p>
 {% endblock %}

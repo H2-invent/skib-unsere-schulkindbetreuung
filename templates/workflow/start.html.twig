@@ -97,58 +97,47 @@
 
 <body>
 <!-- Navbar -->
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+<nav class="navbar fixed-top navbar-expand-md navbar-custom navbar-dark scrolling-navbar">
     <div class="container">
-
         <!-- Brand -->
         {% if stadt.logoUrl is empty %}
-            <h1 class="display-4 font-weight-bold hauptfarbe">{{ stadt.name }}</h1>
+            <h1 class="hauptfarbe">{{ stadt.name }}</h1>
         {% else %}
-            <img class="navbar-brand" src="{{ stadt.logoUrl }}" alt="{{ stadt.name }}" style="max-height: 80px">
+            <img src="{{ stadt.logoUrl }}" alt="{{ stadt.name }}" style="max-height: 40px">
         {% endif %}
 
-        <!-- Collapse -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCustom">
+            <i class="fa fa-bars fa-lg py-1 text-white"></i>
         </button>
 
-        <!-- Links -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-            <!-- Left -->
-            <ul class="navbar-nav mr-auto">
+        <div class="navbar-collapse collapse" id="navbarCustom">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
+                    <a class="nav-link" href="/">{% trans %}Home{% endtrans %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="start">{% trans %}Zur Anmeldung{% endtrans %}</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {% trans %}Sprachen{% endtrans %}
                     </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Deutsch</a>
+                        <a class="dropdown-item" href="#">English</a>
+                        <a class="dropdown-item" href="#">Francais</a>
+                    </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Start</a>
+                    <a class="nav-link" href="{{ path('dashboard') }}">{% trans %}Login{% endtrans %}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://h2-invent.com" target="_blank">H2 invent</a>
-                </li>
-            </ul>
-
-            <!-- Right -->
-            <ul class="navbar-nav nav-flex-icons">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Deutsch
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" target="_blank">English</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" target="_blank">Francais</a>
+                    <a class="nav-link" href="https://h2-invent.com">H2 invent</a>
                 </li>
             </ul>
 
         </div>
-
     </div>
 </nav>
 <!-- Navbar -->

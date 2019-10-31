@@ -38,8 +38,6 @@
                                 {% if kinder[s.id] is defined and kinder[s.id] is not null %}
                                     {% for k in kinder[s.id] %}
                                         <div class="card-body">
-                                            {{ k.vorname }} {{ k.nachname }}
-                                            <b><span class="price">{% if k.tageWithBlocks>=2 %}{{ k.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></b>
                                             <div class="btn-group">
                                                 <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
                                                         data-toggle="dropdown" aria-haspopup="true"
@@ -56,6 +54,8 @@
 
                                                 </div>
                                             </div>
+                                            {{ k.vorname }} {{ k.nachname }}
+                                            <b><span class="price">{% if k.tageWithBlocks>=2 %}{{ k.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></b>
                                         </div>
 
                                     {% endfor %}
