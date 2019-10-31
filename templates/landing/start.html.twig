@@ -133,7 +133,7 @@
 
                                         <h4 class="card-title">{{s.name}}</h4>
                                         <!-- Text -->
-                                        <p class="card-text">{{ s.translate.infoText|nl2br }}</p>
+                                        <p class="card-text">{{ s.translate.infoText|nl2br|length > 50 ? s.translate.infoText|nl2br|slice(0,50)~'...':s.translate.infoText }}</p>
                                         <!-- Button -->
                                         <a href="{{ path('workflow_start',{'slug':s.slug}) }}" class="btn btn-primary">{{ 'Ich lebe in '~s.name|trans }}</a>
 
