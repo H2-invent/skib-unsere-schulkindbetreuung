@@ -25,24 +25,6 @@
             height: 100%;
         }
 
-        @media (max-width: 740px) {
-            html,
-            body,
-            header,
-            .view {
-                height: 1000px;
-            }
-        }
-
-        @media (min-width: 800px) and (max-width: 850px) {
-            html,
-            body,
-            header,
-            .view {
-                height: 650px;
-            }
-        }
-
         @media (min-width: 800px) and (max-width: 850px) {
             .navbar:not(.top-nav-collapse) {
                 background: #1C2331 !important;
@@ -188,7 +170,7 @@
                 <!--Grid row-->
                 <div class="row wow fadeIn">
 
-                    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+                    <div class="col-md-12 mb-6 white-text text-center">
                         <h1 class="display-4 font-weight-bold hauptfarbe">{% trans %} Unsere Schulkindbetreuung {% endtrans %}</h1>
                         <hr class="hr-light ">
                     </div>
@@ -196,18 +178,18 @@
                     <!--Grid column-->
                     <div class="col-md-6 mb-4 white-text text-center text-md-left">
                         <p class="lead">{% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
-                        <a href="{{ url }}" class="btn btn-primary btn-lg" id="start">
-                            {% if app.request.cookies.has('SecID') %}
-                                {% trans %}Kind bearbeiten{% endtrans %}
-                            {% else %}
-                                {% trans %}Hier Kind/Kinder anmelden{% endtrans %}
-                            {% endif %}
-                        </a>
+
                     </div>
 
-                    <div class="col-md-6 mb-4 white-text text-center text-md-left">
-                        <p class="lead">
-                            {{ cityInfoText|nl2br }}
+                    <div class="col-md-6 mb-4 white-text text-center">
+                        <p class="lead align-content-center">
+                            <a href="{{ url }}" class="btn btn-primary btn-lg" id="start">
+                                {% if app.request.cookies.has('SecID') %}
+                                    {% trans %}Kind bearbeiten{% endtrans %}
+                                {% else %}
+                                    {% trans %}Hier Kind/Kinder anmelden{% endtrans %}
+                                {% endif %}
+                            </a>
                         </p>
                     </div>
                 </div>
@@ -235,9 +217,7 @@
                     <div class="col-lg-12">
                         <h4>{% trans %}Herzlich Willkommen bei der neuen Schulkindbetreuung{% endtrans %}</h4>
                         <p>
-                            Sie haben hier die Möglichkeit Ihr Kind/ Ihre Kinder online zur Schulkindbetreuung an den
-                            Schulen anmelden. Aktuell stehen Ihnen für folgende Schulen die Schulkindbetreuung zur
-                            Verfügung.
+                            {{ cityInfoText|nl2br }}
                         </p>
                         <h4> {% trans %}Folgende Schulen können hier online gebucht werden.{% endtrans %}</h4>
                         <section class="dashboard-counts section-padding" id="schulenShow">
@@ -246,12 +226,13 @@
                                 <div class="card-deck">
                                     <!-- Count item widget-->
                                     {% for s in schule %}
-
                                         <div class="card mb-4 ">
                                             <div class="view overlay">
-                                                <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}"
-                                                     alt="{{ s.name }}" style="max-height: 300px">
 
+                                                <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}" alt="{{ s.name }}" style="max-height: 300px">
+                                                <a href="adresse">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
                                             </div>
 
                                             <div class="card-body ">
@@ -261,7 +242,6 @@
                                             </div>
 
                                         </div>
-
                                     {% endfor %}
                                 </div>
 
