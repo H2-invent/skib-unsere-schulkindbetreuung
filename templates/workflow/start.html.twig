@@ -246,12 +246,14 @@
                                 <div class="card-deck">
                                     <!-- Count item widget-->
                                     {% for s in schule %}
-
                                         <div class="card mb-4 ">
                                             <div class="view overlay">
+
                                                 <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}"
                                                      alt="{{ s.name }}" style="max-height: 300px">
-
+                                                <a href="adresse">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
                                             </div>
 
                                             <div class="card-body ">
@@ -261,7 +263,6 @@
                                             </div>
 
                                         </div>
-
                                     {% endfor %}
                                 </div>
 
