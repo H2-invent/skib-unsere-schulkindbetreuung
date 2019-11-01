@@ -251,7 +251,7 @@ class EmployeeOrganisationController extends AbstractController
 
             $roles = $formI->getData();
 
-            foreach ($user->getRoles() as $item) {
+            foreach ($availRole as $item) {
                 $user->removeRole($item);
             }
             $user->addRole('ROLE_USER');

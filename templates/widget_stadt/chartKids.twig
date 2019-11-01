@@ -1,0 +1,31 @@
+<canvas id="myChart"></canvas>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var data = [
+        {% for k in kinder %}
+        {
+            x: new Date('{{ k.active.von|date('Y-m-d')  }}'),
+            y: {{ k.kinder }}
+        },
+        {
+            x:new Date('2013-02-12'),
+            y:10
+        }
+        {% endfor %}
+    ];
+    console.log(data);
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        unit: 'year'
+                    }
+                }]
+            }
+        }
+    });
+</script>

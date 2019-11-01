@@ -8,11 +8,30 @@
 
 
             </div>
-            <div class="row card" id="stundenplanRow">
+            <section class="dashboard-header section-padding">
+                <div class="container-fluid">
+                    <div class="row d-flex align-items-md-stretch">
 
 
+                        <!-- Line Chart -->
+                        <div class="col-lg-12 col-md-12 flex-lg-last flex-md-first align-self-baseline">
+                            <div class="card sales-report">
+                                <h2 class="display h4">Sales marketing report</h2>
+                                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor amet officiis</p>
+                                <div class="line-chart" id="chartJs">
 
-            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row card" id="stundenplanRow">
+                </div>
+            </section>
+
+
 
         </div>
     </section>
@@ -29,11 +48,22 @@
                 {% for s in app.user.organisation.schule  %}
             '{{ path('widget_kids_schule',{'org_id':app.user.organisation.id,'schule_id':s.id}) |raw    }}',
                 {% endfor %}
-            '{{ path('widget_overdue_sepa',{'org_id':app.user.organisation.id}) }}'
+            '{{ path('widget_overdue_sepa',{'org_id':app.user.organisation.id}) }}',
+            {% endif %}
+            {% if app.user.stadt is not null %}
+            {% for s in app.user.stadt.schules  %}
+            '{{ path('widget_kids_schule_stadt',{'stadt_id':app.user.stadt.id,'schule_id':s.id}) |raw    }}',
+            {% endfor %}
+            '{{ path('widget_kids_schuljahr_stadt',{'stadt_id':app.user.stadt.id}) |raw    }}',
             {% endif %}
         ];
         {% if app.user.organisation is not null %}
         $('#stundenplanRow').load('{{ path('widget_kids_stundenplan',{'org_id':app.user.organisation.id}) }}',function () {
+
+        });
+        {% endif %}
+        {% if app.user.stadt is not null %}
+        $('#chartJs').load('{{ path('widget_stadt_over_years',{'stadt_id':app.user.stadt.id}) }}',function () {
 
         });
         {% endif %}
@@ -55,6 +85,5 @@
             });
         });
     </script>
-
 
 {% endblock %}

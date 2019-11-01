@@ -26,7 +26,7 @@
                     </thead>
                     <tbody>
                     {% for u in user %}
-                        {% if not u.hasRole('ROLE_CITY_ADMIN') %}
+
                     <tr>
                         <td> <div class="btn-group">
                                 <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -48,7 +48,7 @@
                         <td>{{ u.enabled?"Activ":"Deaktiviert"|trans }}</td>
 
                     </tr>
-                    {% endif %}
+
                     {% endfor %}
                     </tbody>
                 </table>
