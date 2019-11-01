@@ -1,0 +1,20 @@
+<footer class="page-footer text-center font-small mt-4 wow fadeIn {% if flex is defined and flex is null %}fixed-bottom{% endif %}" >
+
+    <!-- Legal -->
+    <ul class="navbar-nav nav-flex-icons">
+        <li class="nav-item">
+            <a class="nav-link" href={{ path('impressum') }}>{% trans %}Impressum{% endtrans %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href={{ path('datenschutz') }}>{% trans %}Datenschutzhinweis{% endtrans %}</a>
+        </li>
+    </ul>
+    <!-- Legal -->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+        © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
+    </div>
+    <!--/.Copyright-->
+
+</footer>

@@ -18,87 +18,14 @@
     <link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
     <link href="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.css" rel="stylesheet">
 
-    <style type="text/css">
-        html,
-        body,
-        header,
-        .view {
-            height: 100%;
-        }
 
-        @media (max-width: 740px) {
-            html,
-            body,
-            header,
-            .view {
-                height: 1000px;
-            }
-        }
+{% include 'workflow/inlineCSS.html.twig' with {'height':'100%','stadt':null} %}
 
-        @media (min-width: 800px) and (max-width: 850px) {
-            html,
-            body,
-            header,
-            .view {
-                height: 650px;
-            }
-        }
-
-        @media (min-width: 800px) and (max-width: 850px) {
-            .navbar:not(.top-nav-collapse) {
-                background: #1C2331 !important;
-            }
-        }
-    </style>
 </head>
 
 <body>
 <!-- Navbar -->
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
-    <div class="container">
-
-        <!-- Brand -->
-        <a class="navbar-brand" href="#" target="_blank">
-            <strong>Unsere Schulkindbetreuung</strong>
-        </a>
-
-        <!-- Collapse -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Links -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-            <!-- Left -->
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Start</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" target="_blank" href="https://h2-invent.com">H2 invent</a>
-                </li>
-            </ul>
-
-            <!-- Right -->
-            <ul class="navbar-nav nav-flex-icons">
-                <li class="nav-item">
-                    <a href="{{ path('dashboard') }}" class="nav-link border border-light rounded">Login
-                    </a>
-                </li>
-            </ul>
-
-        </div>
-
-    </div>
-</nav>
+{% include 'workflow/navbar.html.twig' with {'stadt':null} %}
 <!-- Navbar -->
 
 <!-- Full Page Intro -->
@@ -131,11 +58,12 @@
 
                                     <div class="card-body">
 
-                                        <h4 class="card-title">{{s.name}}</h4>
+                                        <h4 class="card-title">{{ s.name }}</h4>
                                         <!-- Text -->
                                         <p class="card-text">{{ s.translate.infoText|nl2br|length > 50 ? s.translate.infoText|nl2br|slice(0,50)~'...':s.translate.infoText }}</p>
                                         <!-- Button -->
-                                        <a href="{{ path('workflow_start',{'slug':s.slug}) }}" class="btn btn-primary">{{ 'Ich lebe in '~s.name|trans }}</a>
+                                        <a href="{{ path('workflow_start',{'slug':s.slug}) }}"
+                                           class="btn btn-primary">{{ 'Ich lebe in '~s.name|trans }}</a>
 
                                     </div>
 
@@ -150,11 +78,7 @@
 </div>
 
 
-<footer class="page-footer text-center font-small  wow fadeIn" style="position:fixed;left:0px;bottom:0px;width:100%;">
-    <div class="footer-copyright py-3">
-        © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
-    </div>
-</footer>
+{% include 'workflow/footer.html.twig' with {'flex':null} %}
 
 <script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
