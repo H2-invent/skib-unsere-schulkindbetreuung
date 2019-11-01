@@ -177,7 +177,7 @@ class WidgetController extends AbstractController
             ->setParameter('org',$organisation);
         $query = $qb->getQuery();
         $sepa = $result = $query->getResult();
-       
+
         if(sizeof($sepa)==0){
             return new JsonResponse(array('title'=>$translator->trans('Sepa-Lastschrift fällig'),'small'=>'','anzahl'=>1,'symbol'=>'money'));
         }else{

@@ -20,20 +20,24 @@
 
 {% include 'workflow/inlineCSS.html.twig' with {'height':'300px'} %}
 
+
 </head>
 
 <body>
-<!-- Navbar -->
+
 {% include 'workflow/navbar.html.twig' %}
+
 <!-- Navbar -->
 
 <!-- Full Page Intro -->
 {% if stadt is defined and stadt is not null and stadt.image is not empty %}
+
 <div class="view d-none d-sm-block"
      style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
     {% else %}
     <div class="view d-none d-sm-block"
          style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+
         {% endif %}
 
         <!-- Mask & flexbox options-->

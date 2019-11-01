@@ -12,7 +12,7 @@
     <div>
         <a href="{{ path('workflow_datenschutz_pdf',{'id':org.id}) }}"><i class="fa fa-download"></i> </a>
         <p>
-            {{ datenschutz|raw|nl2br }}
+            {{ datenschutz|markdown_to_html}}
         </p>
     </div>
 {% endblock %}

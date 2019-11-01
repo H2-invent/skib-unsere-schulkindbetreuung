@@ -32,6 +32,7 @@
 
 {% endblock %}
 {% block jquery %}
+
 <script>
    LoadContentUrl = "{{ path('block_schule_getBlocks',{'shool':schule.id}) }}"+"&id="+"{{ schuljahre[0].id }}";
     $('.dropdown-item').click(function () {
