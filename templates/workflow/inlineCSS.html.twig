@@ -13,7 +13,6 @@
     }
 
     {% if stadt is defined and stadt is not null %}
-
     .btn-primary {
         background-color: {{ stadt.hauptfarbe }} !important;
         border-color: {{ stadt.hauptfarbe }} !important;
@@ -25,8 +24,7 @@
         color: #0b2e13 !important;
     }
 
-    .hauptfarbe,
-    .display-4 {
+    .hauptfarbe {
         color: {{ stadt.hauptfarbe }} !important;
     }
 
