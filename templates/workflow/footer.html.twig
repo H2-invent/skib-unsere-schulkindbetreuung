@@ -1,12 +1,6 @@
 <!-- Footer -->
-<footer class="page-footer font-small special-color-dark pt-2 navbar-expand-lg" {% if fix is not defined %}style="margin-top: 30px {% endif %}">
+<footer class="page-footer font-small pt-2" {% if fix is not defined %}style="margin-top: 30px {% endif %}">
 
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerCollaps">
-        <i class="fa fa-bars fa-lg py-1 text-white"></i>
-    </button>
-
-    <div class="navbar-collapse collapse" id="footerCollaps">
         <div class="container">
             <div class="container-fluid text-center text-md-left">
 
@@ -15,7 +9,7 @@
                     <div class="col-md-6 mt-md-0 mt-3 d-none d-lg-block">
 
                         <h5 class="text-uppercase">{% trans %}Unsere Schulkindbetreuung{% endtrans %}</h5>
-                        <p>Unsere Schulkindbetreuung befindet sich aktuell in der Enwticklung.<br/>Bitte keine echten
+                        <p>Unsere Schulkindbetreuung befindet sich aktuell in der Entwicklung.<br/>Bitte keine echten
                             Daten eingeben.</p>
 
                     </div>
@@ -67,7 +61,6 @@
 
             </div>
         </div>
-    </div>
     <div class="footer-copyright text-center py-2">
         © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
     </div>
