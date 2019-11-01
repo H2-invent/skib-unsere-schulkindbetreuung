@@ -18,51 +18,7 @@
     <link href="{{ asset('frontpage/css/snackbar.css') }}" rel="stylesheet">
 
 
-    <style type="text/css">
-        html,
-        body,
-        header,
-        .view {
-            height: 300px;
-        }
-
-        @media (min-width: 800px) and (max-width: 850px) {
-            .navbar:not(.top-nav-collapse) {
-                background: #1C2331 !important;
-            }
-        }
-
-        {% if stadt is defined and stadt is not null %}
-        .btn-primary {
-            background-color: {{ stadt.hauptfarbe }} !important;
-            border-color: {{ stadt.hauptfarbe }} !important;
-            color: #fff;
-        }
-
-        .btn-outline-primary {
-            border: 2px solid {{ stadt.hauptfarbe }} !important;
-            color: #0b2e13 !important;
-        }
-
-        .hauptfarbe,
-        .display-4 {
-            color: {{ stadt.hauptfarbe }} !important;
-        }
-
-        .popover-header {
-            background-color: {{ stadt.hauptfarbe }} !important;
-        }
-
-        .popover {
-            border: 1px solid {{ stadt.hauptfarbe }} !important;
-        }
-
-        .card-header {
-            background-color: {{stadt.akzentfarbe}} !important;
-        }
-
-        {% endif %}
-    </style>
+{% include 'workflow/inlineCSS.html.twig' with {'height':'300px'} %}
 
 </head>
 
@@ -73,45 +29,30 @@
 
 <!-- Full Page Intro -->
 {% if stadt is defined and stadt is not null and stadt.image is not empty %}
+<div class="view d-none d-sm-block"
+     style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
+    {% else %}
     <div class="view d-none d-sm-block"
-        style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
-{% else %}
-        <div class="view d-none d-sm-block"
-             style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
-{% endif %}
+         style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+        {% endif %}
 
         <!-- Mask & flexbox options-->
         <div class="mask rgba-black-light d-flex align-items-end">
-
             <!-- Content -->
             <div class="container">
-
                 <!--Grid row-->
                 <div class="row wow fadeIn">
 
                     {% block header %}
-                        <!--Grid column-->
                         <div class="col-md-6 mb-4 white-text text-centerm text-md-left">
-
-
                             <h1 class="display-4 font-weight-bold"></h1>
-
                             <p>
                                 <strong id="start"></strong>
                             </p>
-
-
                         </div>
                     {% endblock %}
-                    <!--Grid column-->
-
-                    <!--Grid column-->
-
-                    <!--Grid column-->
-
                 </div>
                 <!--Grid row-->
-
             </div>
             <!-- Content -->
 
@@ -119,58 +60,31 @@
         <!-- Mask & flexbox options-->
 
     </div>
-
+</div>
     <!-- Full Page Intro -->
-
-
     <main>
         <div class="container">
-
             <!--Section: Main info-->
             <section class="mt-5 wow fadeIn">
-
                 <!--Grid row-->
                 <div class="row">
-
                     <!--Grid column-->
                     <div class="col-lg-12">
                         {% block content %}
                         {% endblock %}
-
                     </div>
                     <!--Grid column-->
-
                 </div>
-
             </section>
         </div>
     </main>
-    <footer class="page-footer text-center font-small mt-4 wow fadeIn">
-        <!-- Legal -->
-        <ul class="navbar-nav nav-flex-icons">
-            <li class="nav-item">
-                <a class="nav-link" href={{ path('impressum') }}>{% trans %}Impressum{% endtrans %}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href={{ path('datenschutz') }}>{% trans %}Datenschutzhinweis{% endtrans %}</a>
-            </li>
-        </ul>
-        <!-- Legal -->
 
-        <!--Copyright-->
-        <div class="footer-copyright py-3">
-            © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
-
-        </div>
-        <!--/.Copyright-->
-
-    </footer>
+    {% include 'workflow/footer.html.twig' %}
 
     <div class="modal fade" id="loadContentModal" tabindex="-1" role="dialog" aria-labelledby="loadContentModal"
          aria-hidden="true">
 
     </div>
-    <!-- Start your project here-->
 
     <!-- SCRIPTS -->
     <!-- JQuery -->
@@ -243,7 +157,6 @@
     </script>
 
     {% block jquery %}{% endblock %}
-
 </body>
 
 </html>

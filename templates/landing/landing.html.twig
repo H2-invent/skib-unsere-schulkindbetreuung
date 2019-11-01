@@ -18,38 +18,9 @@
     <link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
     <link href="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.css" rel="stylesheet">
 
-    <style type="text/css">
-        html,
-        body,
-        header,
-        .view {
-            height: 100%;
-        }
 
-        @media (max-width: 740px) {
-            html,
-            body,
-            header,
-            .view {
-                height: 1000px;
-            }
-        }
+{% include 'workflow/inlineCSS.html.twig' with {'height':'100%','stadt':null} %}
 
-        @media (min-width: 800px) and (max-width: 850px) {
-            html,
-            body,
-            header,
-            .view {
-                height: 650px;
-            }
-        }
-
-        @media (min-width: 800px) and (max-width: 850px) {
-            .navbar:not(.top-nav-collapse) {
-                background: #1C2331 !important;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -107,11 +78,7 @@
 </div>
 
 
-<footer class="page-footer text-center font-small  wow fadeIn" style="position:fixed;left:0px;bottom:0px;width:100%;">
-    <div class="footer-copyright py-3">
-        © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
-    </div>
-</footer>
+{% include 'workflow/footer.html.twig' with {'flex':null} %}
 
 <script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>

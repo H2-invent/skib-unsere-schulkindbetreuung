@@ -27,7 +27,7 @@ class Anmeldefristen
     private $bis;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\stadt", inversedBy="anmeldefristens")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="anmeldefristens")
      * @ORM\JoinColumn(nullable=false)
      */
     private $stadt;
