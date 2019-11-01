@@ -10,6 +10,7 @@
         "friendsofsymfony/user-bundle": "~2.0",
         "jms/i18n-routing-bundle": "^3.0",
         "knplabs/doctrine-behaviors": "^1.6",
+        "league/commonmark": "^1.0",
         "oneup/flysystem-bundle": "^3.1",
         "sensio/framework-extra-bundle": "^5.4",
         "shivas/versioning-bundle": "^3.2",
@@ -35,6 +36,8 @@
         "symfony/validator": "4.3.*",
         "symfony/web-link": "4.3.*",
         "symfony/yaml": "4.3.*",
+        "twig/extra-bundle": "^2.12",
+        "twig/markdown-extra": "^2.12",
         "vich/uploader-bundle": "^1.10",
         "whiteoctober/tcpdf-bundle": "^1.1"
     },

@@ -47,6 +47,7 @@
                 background: #1C2331!important;
             }
         }
+        {% if stadt is defined and stadt is not null %}
         .btn-primary{
             background-color: {{ stadt.hauptfarbe }}!important;
             border-color: {{ stadt.hauptfarbe }}!important;
@@ -69,6 +70,7 @@
         .card-header {
             background-color: {{stadt.akzentfarbe}}!important;
         }
+        {%endif%}
     </style>
 </head>
 
@@ -78,12 +80,13 @@
     <div class="container">
 
         <!-- Brand -->
+            {% if stadt is defined and stadt is not null %}
         {% if stadt.logoUrl is empty %}
             <h1 class="display-4 font-weight-bold hauptfarbe">{{ stadt.name }}</h1>
         {% else %}
             <img class="navbar-brand" src="{{ stadt.logoUrl}}" alt="{{ stadt.name }}" style="max-height: 80px">
         {% endif %}
-
+{%endif%}
         <!-- Collapse -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -130,12 +133,13 @@
 <!-- Navbar -->
 
 <!-- Full Page Intro -->
-{% if stadt.image is empty %}
+{% if stadt is defined and stadt is not null and stadt.image is not empty %}
 <div class="view full-page-intro"
-     style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+     style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
+
     {% else %}
-    <div class="view full-page-intro"
-         style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
+      <div class="view full-page-intro"
+           style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
         {% endif %}
 
     <!-- Mask & flexbox options-->

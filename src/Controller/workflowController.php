@@ -145,11 +145,11 @@ class workflowController extends AbstractController
      */
     public function datenschutzAction(Request $request, TranslatorInterface $translator)
     {
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
+
         $org = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
         $org_datenschutz = $org->translate()->getDatenschutz();
 
-        return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $org, 'stammdaten' => $stammdaten, 'redirect' => $request->get('redirect')));
+        return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $org,'stadt' => $org->getStadt(),  'redirect' => $request->get('redirect')));
     }
 
     /**
@@ -157,11 +157,11 @@ class workflowController extends AbstractController
      */
     public function agbAction(Request $request, TranslatorInterface $translator)
     {
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
+
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt_id'));
         $stadtAGB = $stadt->translate()->getAgb();
 
-        return $this->render('workflow/agb.html.twig', array('stadtAGB' => $stadtAGB, 'stadt' => $stadt, 'stammdaten' => $stammdaten, 'redirect' => $request->get('redirect')));
+        return $this->render('workflow/agb.html.twig', array('stadtAGB' => $stadtAGB, 'stadt' => $stadt,'redirect' => $request->get('redirect')));
     }
 
     /**
