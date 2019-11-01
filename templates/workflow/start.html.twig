@@ -26,27 +26,22 @@
 {% include 'workflow/navbar.html.twig' %}
 <!-- Navbar -->
 
-<!-- Full Page Intro -->
-
 <div class="view full-page-intro "
-     {% if stadt.image is empty %}style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
-    {% else %}style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
-    {% endif %}
-    <!-- Mask & flexbox options-->
+     {% if stadt.image is empty %}style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;"
+    {% else %}style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;"
+    {% endif %}>
+
     <div class="mask d-flex justify-content-center align-items-end rgba-black-light">
 
-        <!-- Content -->
         <div class="container ">
 
-            <!--Grid row-->
             <div class="row wow fadeIn">
 
                 <div class="col-md-12 mb-6 white-text text-center">
-                    <h1 class="font-weight-bold hauptfarbe">{% trans %} Anmeldung zur Kindbetreuung {% endtrans %}</h1>
+                    <h1 class="font-weight-bold hauptfarbe">{% trans %} Anmeldung zur Kinderbetreuung {% endtrans %}</h1>
                     <hr class="hr-light ">
                 </div>
 
-                <!--Grid column-->
                 <div class="col-md-6 mb-4 white-text text-center text-md-left d-none d-sm-block">
                     <p class="lead">{% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
 
@@ -54,7 +49,7 @@
 
                 <div class="col-md-6 mb-4 white-text text-center">
                     <p class="lead align-content-center">
-                        <a href="{{ url }}" class="btn btn-primary btn-lg" id="start">
+                        <a href="{{ url }}" class="btn btn-primary btn-lg" >
                             {% if app.request.cookies.has('SecID') %}
                                 {% trans %}Kind bearbeiten{% endtrans %}
                             {% else %}
@@ -74,15 +69,12 @@
     </div>
 </div>
     <main>
-        <div class="container">
+        <div class="container anchor" id="start">
 
-            <!--Section: Main info-->
             <section class="mt-5 wow fadeIn">
 
-                <!--Grid row-->
                 <div class="row">
 
-                    <!--Grid column-->
                     <div class="col-lg-12">
                         <h4>{% trans %}Herzlich Willkommen bei der neuen Schulkindbetreuung{% endtrans %}</h4>
                         <p>

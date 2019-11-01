@@ -19,7 +19,7 @@
     <link href="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.css" rel="stylesheet">
 
 
-{% include 'workflow/inlineCSS.html.twig' with {'height':'100%','stadt':null} %}
+    {% include 'workflow/inlineCSS.html.twig' with {'height':'100%','stadt':null} %}
 
 </head>
 
@@ -42,9 +42,9 @@
             <div class="row wow fadeIn">
 
                 <!--Grid column-->
-                <div class="col-md-6 mb-4 text-center text-md-left" style="word-break: break-word">
+                <div class="col-md-12 mb-4 white-text text-center" style="word-break: break-word">
 
-                    <h1 class="display-4 white-text font-weight-bold">Unsere Kinderbetreuung</h1>
+                    <h1 class="display-4 font-weight-bold">Unsere<br/>Schulkind Betreuung</h1>
 
                 </div>
 
@@ -53,12 +53,19 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-12 mb-4 white-text text-center align-content-center">
+                <section id="scroll">
+
+                    <a href="#stadtliste"><span></span></a>
+                </section>
+            </div>
         </div>
     </div>
+
 </div>
 
 <main>
-    <div class="container">
+    <div class="container anchor" id="stadtliste">
 
         <!--Section: Main info-->
         <section class="mt-5 wow fadeIn">
@@ -107,8 +114,6 @@
 </main>
 
 
-
-
 {% include 'workflow/footer.html.twig' %}
 
 <script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
@@ -116,6 +121,14 @@
 <script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
 <script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
+<script>
+    $(function () {
+        $("a[href*=\\#]").on('click', function (e) {
+            e.preventDefault();
+            $('html, body').animate({scrollTop: $($(this).attr('href')).offset().top}, 500, 'linear');
+        });
+    });
+</script>
 </body>
 
 </html>
