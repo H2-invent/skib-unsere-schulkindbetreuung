@@ -1,19 +1,11 @@
 {% extends 'workflow/base.html.twig' %}
 {% block header %}
-    <div class="col-md-6 mb-4 white-text text-centerm text-md-left">
-
-
-        <h1 class="display-4 font-weight-bold">{{ stadt.name }}</h1>
-
-        <p>
-            <strong id="start">{{ stadt.infoText|nl2br }}</strong>
-        </p>
-
-
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="display-4 font-weight-bold hauptfarbe">{% trans %}Unsere online Anmeldung{% endtrans %}</h1>
+        <hr class="hr-light ">
     </div>
 {% endblock %}
 {% block content %}
-    <img class=" card-img" src="{{ vich_uploader_asset(stadt, 'imageFile') }}">
-        <h1 class="cover-heading">{% trans %} Anmeldung zur Schulkindbetreuung geschlossen {% endtrans %}</h1>
+        <h1 class="cover-heading">{% trans with {"%name%":stadt.name} %} Anmeldung zur Schulkindbetreuung in %name% geschlossen {% endtrans %}</h1>
         <p class="lead">{% trans with {"%name%":stadt.name} %}Sie befinden sich außerhalb des Anmeldezeitraums für die Schulkindbetreuung in %name%. {% endtrans %}</p>
 {% endblock %}

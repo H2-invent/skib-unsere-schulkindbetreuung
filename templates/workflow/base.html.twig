@@ -15,296 +15,152 @@
     <!-- Your custom styles (optional) -->
     <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
-    <link href="{{asset('frontpage/css/snackbar.css')}}" rel="stylesheet">
+    <link href="{{ asset('frontpage/css/snackbar.css') }}" rel="stylesheet">
 
-    <style type="text/css">
-        html,
-        body,
-        header,
-        .view {
-            height: 75%;
-        }
 
-        @media (max-width: 740px) {
-            html,
-            body,
-            header,
-            .view {
-                height: 1000px;
-            }
-        }
+{% include 'workflow/inlineCSS.html.twig' with {'height':'300px'} %}
 
-        @media (min-width: 800px) and (max-width: 850px) {
-            html,
-            body,
-            header,
-            .view {
-                height: 650px;
-            }
-        }
-        @media (min-width: 800px) and (max-width: 850px) {
-            .navbar:not(.top-nav-collapse) {
-                background: #1C2331!important;
-            }
-        }
-        {% if stadt is defined and stadt is not null %}
-        .btn-primary{
-            background-color: {{ stadt.hauptfarbe }}!important;
-            border-color: {{ stadt.hauptfarbe }}!important;
-            color: #fff;
-        }
-        .btn-outline-primary {
-            border: 2px solid {{ stadt.hauptfarbe }}!important;
-            color: #0b2e13!important;
-        }
-        .hauptfarbe,
-        .display-4{
-            color: {{ stadt.hauptfarbe }}!important;
-        }
-        .popover-header {
-            background-color: {{ stadt.hauptfarbe }}!important;
-        }
-        .popover {
-            border: 1px solid {{ stadt.hauptfarbe }}!important;
-        }
-        .card-header {
-            background-color: {{stadt.akzentfarbe}}!important;
-        }
-        {%endif%}
-    </style>
+
 </head>
 
 <body>
-<!-- Navbar -->
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
-    <div class="container">
 
-        <!-- Brand -->
-            {% if stadt is defined and stadt is not null %}
-        {% if stadt.logoUrl is empty %}
-            <h1 class="display-4 font-weight-bold hauptfarbe">{{ stadt.name }}</h1>
-        {% else %}
-            <img class="navbar-brand" src="{{ stadt.logoUrl}}" alt="{{ stadt.name }}" style="max-height: 80px">
-        {% endif %}
-{%endif%}
-        <!-- Collapse -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+{% include 'workflow/navbar.html.twig' %}
 
-        <!-- Links -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-            <!-- Left -->
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Start</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://h2-invent.com" target="_blank">H2 invent</a>
-                </li>
-            </ul>
-
-            <!-- Right -->
-            <ul class="navbar-nav nav-flex-icons">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Deutsch
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" target="_blank">English</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" target="_blank">Francais</a>
-                </li>
-            </ul>
-
-        </div>
-
-    </div>
-</nav>
 <!-- Navbar -->
 
 <!-- Full Page Intro -->
 {% if stadt is defined and stadt is not null and stadt.image is not empty %}
-<div class="view full-page-intro"
-     style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
 
+<div class="view d-none d-sm-block"
+     style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
     {% else %}
-      <div class="view full-page-intro"
-           style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+    <div class="view d-none d-sm-block"
+         style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+
         {% endif %}
 
-    <!-- Mask & flexbox options-->
-    <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+        <!-- Mask & flexbox options-->
+        <div class="mask rgba-black-light d-flex align-items-end">
+            <!-- Content -->
+            <div class="container">
+                <!--Grid row-->
+                <div class="row wow fadeIn">
 
-        <!-- Content -->
-        <div class="container">
-
-            <!--Grid row-->
-            <div class="row wow fadeIn">
-
-{% block header %}
-                <!--Grid column-->
-    <div class="col-md-6 mb-4 white-text text-centerm text-md-left">
-
-
-        <h1 class="display-4 font-weight-bold"></h1>
-
-        <p>
-            <strong id="start"></strong>
-        </p>
-
-
-    </div>
-                {% endblock %}
-                <!--Grid column-->
-
-                <!--Grid column-->
-
-                <!--Grid column-->
-
+                    {% block header %}
+                        <div class="col-md-6 mb-4 white-text text-centerm text-md-left">
+                            <h1 class="display-4 font-weight-bold"></h1>
+                            <p>
+                                <strong id="start"></strong>
+                            </p>
+                        </div>
+                    {% endblock %}
+                </div>
+                <!--Grid row-->
             </div>
-            <!--Grid row-->
+            <!-- Content -->
 
         </div>
-        <!-- Content -->
+        <!-- Mask & flexbox options-->
 
     </div>
-    <!-- Mask & flexbox options-->
-
 </div>
-<!-- Full Page Intro -->
-
-
-<main>
-    <div class="container">
-
-        <!--Section: Main info-->
-        <section class="mt-5 wow fadeIn">
-
-            <!--Grid row-->
-            <div class="row">
-
-                <!--Grid column-->
-                <div class="col-lg-12">
-                    {% block content %}
-                    {% endblock %}
-
+    <!-- Full Page Intro -->
+    <main>
+        <div class="container">
+            <!--Section: Main info-->
+            <section class="mt-5 wow fadeIn">
+                <!--Grid row-->
+                <div class="row">
+                    <!--Grid column-->
+                    <div class="col-lg-12">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                    <!--Grid column-->
                 </div>
-                <!--Grid column-->
+            </section>
+        </div>
+    </main>
 
-            </div>
+    {% include 'workflow/footer.html.twig' %}
 
-        </section>
-    </div>
-</main>
-<footer class="page-footer text-center font-small mt-4 wow fadeIn">
-    <!-- Legal -->
-    <ul class="navbar-nav nav-flex-icons">
-        <li class="nav-item">
-            <a class="nav-link" href={{ path('impressum') }} >{% trans %}Impressum{% endtrans %}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href={{ path('datenschutz') }} >{% trans %}Datenschutzhinweis{% endtrans %}</a>
-        </li>
-    </ul>
-    <!-- Legal -->
-
-    <!--Copyright-->
-    <div class="footer-copyright py-3">
-        © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
+    <div class="modal fade" id="loadContentModal" tabindex="-1" role="dialog" aria-labelledby="loadContentModal"
+         aria-hidden="true">
 
     </div>
-    <!--/.Copyright-->
 
-</footer>
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
+    <script src="{{ asset('frontpage/js/snackbar.js') }}"></script>
+    <script>
+        $(document).on('click', '.loadContent', function (e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+            $('#loadContentModal').load(url, function () {
+                $('#loadContentModal ').modal('show');
+            });
 
-<div class="modal fade" id="loadContentModal" tabindex="-1" role="dialog" aria-labelledby="loadContentModal"
-     aria-hidden="true">
-
-</div>
-<!-- Start your project here-->
-
-<!-- SCRIPTS -->
-<!-- JQuery -->
-<script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
-<script src="{{asset('frontpage/js/snackbar.js')}}"></script>
-<script>
-    $(document).on('click','.loadContent',function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        $('#loadContentModal').load(url,function () {
-            $('#loadContentModal ').modal('show');
         });
 
-    });
+    </script>
+    <script>
+        // popovers Initialization
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
+    <script src="{{ asset('js/jquery.bs.gdpr.cookies.js') }}"></script>
+    <script type="text/javascript">
+        var settings = {
+            message: 'This is your cookies message. Lorem ipsum dolor sit amet, consectetur adipiscing elit. <b> Read more  ',
+            moreLinkLabel: 'here.</b>',
+            messageMaxHeightPercent: 30,
+            moreLink: '/privacy/',
+            delay: 1000,
+            allowAdvancedOptions: true,
+            OnAccept: function () {
+                console.log('Yay! User accepted your cookies window!');
+                console.log('User preferences');
+                var preferences = $.fn.bsgdprcookies.GetUserPreferences();
+                console.log(preferences);
 
-</script>
-<script>
-    // popovers Initialization
-    $(function () {
-        $('[data-toggle="popover"]').popover()
-    })
-</script>
-<script src="{{ asset('js/jquery.bs.gdpr.cookies.js') }}"></script>
-<script type="text/javascript">
-    var settings = {
-        message: 'This is your cookies message. Lorem ipsum dolor sit amet, consectetur adipiscing elit. <b> Read more  ',
-        moreLinkLabel: 'here.</b>',
-        messageMaxHeightPercent: 30,
-        moreLink: '/privacy/',
-        delay: 1000,
-        allowAdvancedOptions: true,
-        OnAccept : function() {
-            console.log('Yay! User accepted your cookies window!');
-            console.log('User preferences');
-            var preferences = $.fn.bsgdprcookies.GetUserPreferences();
-            console.log(preferences);
-
+            }
         }
-    }
 
-    $(document).ready(function() {
-        $('body').bsgdprcookies(settings);
+        $(document).ready(function () {
+            $('body').bsgdprcookies(settings);
 
-        $('#cookiesBtn').on('click', function(){
-            $('body').bsgdprcookies(settings, 'reinit');
+            $('#cookiesBtn').on('click', function () {
+                $('body').bsgdprcookies(settings, 'reinit');
+            });
         });
-    });
 
 
     </script>
-<script>
+    <script>
 
-    {% if app.request.query.get("snack") is defined and app.request.query.get("snack") is not null %}
-    var options =  {
+        {% if app.request.query.get("snack") is defined and app.request.query.get("snack") is not null %}
+        var options = {
 
-        text: "{{ app.request.query.get("snack") }}", // text of the snackbar
-        duration: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
-        pos: 'bottom-center',
-    };
-    Snackbar.show(options);
-    {% endif %}
+            text: "{{ app.request.query.get("snack") }}", // text of the snackbar
+            duration: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+            pos: 'bottom-center',
+        };
+        Snackbar.show(options);
+        {% endif %}
 
 
-</script>
+    </script>
 
-{% block jquery %}{% endblock %}
-
+    {% block jquery %}{% endblock %}
 </body>
 
 </html>
