@@ -34,7 +34,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class workflowController extends AbstractController
 {
     /**
-     * @Route("/{slug}/start",name="workflow_start",methods={"GET"})
+     * @Route("/{slug}",name="workflow_start",methods={"GET"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public function welcomeAction(Request $request, Stadt $stadt)

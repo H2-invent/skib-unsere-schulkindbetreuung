@@ -54,44 +54,7 @@
 
 <body>
 <!-- Navbar -->
-<nav class="navbar fixed-top navbar-expand-md navbar-custom navbar-dark scrolling-navbar">
-    <div class="container">
-        <!-- Brand -->
-        <a class="navbar-brand" href="#" target="_blank">
-            <strong>Unsere Schulkindbetreuung</strong>
-        </a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCustom">
-            <i class="fa fa-bars fa-lg py-1 text-white"></i>
-        </button>
-
-        <div class="navbar-collapse collapse" id="navbarCustom">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">{% trans %}Home{% endtrans %}</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        {% trans %}Sprachen{% endtrans %}
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item active" href="#">Deutsch</a>
-                        <a class="dropdown-item" href="#">English</a>
-                        <a class="dropdown-item" href="#">Francais</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('dashboard') }}">{% trans %}Login{% endtrans %}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://h2-invent.com">H2 invent</a>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-</nav>
+{% include 'workflow/navbar.html.twig' with {'stadt':null} %}
 <!-- Navbar -->
 
 <!-- Full Page Intro -->

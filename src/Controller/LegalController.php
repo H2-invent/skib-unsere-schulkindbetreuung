@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DatenschutzController extends AbstractController
+class LegalController extends AbstractController
 {
     /**
      * @Route("/datenschutz", name="datenschutz")
@@ -13,7 +13,7 @@ class DatenschutzController extends AbstractController
     public function datenschutzAction()
     {
 
-        return $this->render('datenschutz/datenschutz.html.twig');
+        return $this->render('legal/datenschutz.html.twig');
     }
 
     /**
@@ -22,6 +22,6 @@ class DatenschutzController extends AbstractController
     public function impressumAction()
     {
 
-        return $this->render('datenschutz/impressum.html.twig');
+        return $this->render('legal/impressum.html.twig');
     }
 }
