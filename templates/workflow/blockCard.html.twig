@@ -15,7 +15,7 @@
                 {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>
                 <b>Grundpreis: {{ b.preise[kind.eltern.einkommen]|number_format(2,',') }}€</b><br>
                 <b class="gebucht-text">{% if b in kind.zeitblocks %}{{ 'Gebucht'|trans }}{% endif %}{% if b in kind.beworben %}{{ 'Angemeldet'|trans }}{% endif %}</b>
-
+                <a href="#" class="btn">{{'Hier buchen'|trans}}</a>
             </div>
         </div>
     {% endfor %}
