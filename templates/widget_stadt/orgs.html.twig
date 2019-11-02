@@ -1,0 +1,72 @@
+<div class="card">
+
+    <h1 class="card-header">{% trans %}Kinder in den Betreuungsblöcken{% endtrans %}</h1>
+    <div class="card-body">
+
+        <div id="accordionStadt">
+
+            {% for o in result %}
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapsOrg{{ o.org.id }}"
+                                    aria-expanded="true" aria-controls="collapsOrg{{ o.org.id }}">
+                                {{ o.org.name }}
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapsOrg{{ o.org.id }}" class="collapse " aria-labelledby="headingOne"
+                         data-parent="#accordionStadt">
+                        <div class="card-body">
+
+                            <div id="accordionOrg{{ o.org.id }}">
+                                {% for s in o.schule %}
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link" data-toggle="collapse"
+                                                        data-target="#collapsSchule{{ s.schule.id }}"
+                                                        aria-expanded="true"
+                                                        aria-controls="collapsSchule{{ s.schule.id }}">
+                                                    {{ s.schule.name }}
+                                                </button>
+                                            </h5>
+                                        </div>
+
+                                        <div id="collapsSchule{{ s.schule.id }}" class="collapse "
+                                             aria-labelledby="headingOne"
+                                             data-parent="#accordionOrg{{ o.org.id }}">
+                                            <div class="card-body">
+                                                {% for z in s.blocks %}
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <ul class="list-group">
+                                                                <li class="list-group-item">
+                                                                    {{'Uhrzeit'|trans}}: {{ z.von|date('H:i') }}-{{ z.bis|date('H:i') }}
+                                                                </li>
+                                                                <li class="list-group-item">
+                                                                    {{ 'Kinder'|trans }}: {{ z.kind|length}}
+                                                                </li>
+
+                                                            </ul>
+
+                                                        </div>
+
+                                                    </div>
+
+
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>

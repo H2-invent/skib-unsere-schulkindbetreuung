@@ -5,27 +5,16 @@
         <div class="container-fluid">
             <div class="row" id="widgetRow">
 
-
-
             </div>
-            <section class="dashboard-header section-padding">
-                <div class="container-fluid">
-                    <div class="row d-flex align-items-md-stretch">
+            <div class="row " >
+                <div class="col-lg-6"id="chartRow">
 
-
-                        <!-- Line Chart -->
-                        <div class="col-lg-12 col-md-12 flex-lg-last flex-md-first align-self-baseline">
-                            <div class="card sales-report">
-                                <h2 class="display h4">Sales marketing report</h2>
-                                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor amet officiis</p>
-                                <div class="line-chart" id="chartJs">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </section>
+                <div class="col-lg-6" id="orgRow">
+
+                </div>
+            </div>
+
             <section>
                 <div class="row card" id="stundenplanRow">
                 </div>
@@ -63,7 +52,10 @@
         });
         {% endif %}
         {% if app.user.stadt is not null %}
-        $('#chartJs').load('{{ path('widget_stadt_over_years',{'stadt_id':app.user.stadt.id}) }}',function () {
+        $('#chartRow').load('{{ path('widget_stadt_over_years',{'stadt_id':app.user.stadt.id}) }}',function () {
+
+        });
+        $('#orgRow').load('{{ path('widget_stadt_kids_in_blocks',{'stadt_id':app.user.stadt.id}) }}',function () {
 
         });
         {% endif %}

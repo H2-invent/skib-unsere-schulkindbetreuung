@@ -41,7 +41,7 @@ class Stadt
      */
     private $anmeldefristens;
 
-    /*
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Organisation", mappedBy="stadt")
      */
     private $organisations;
@@ -245,7 +245,7 @@ class Stadt
     /**
      * @return Collection|Organisation[]
      */
-    public function getOrganisations(): Collection
+    public function getOrganisations(): ?Collection
     {
         return $this->organisations;
     }
