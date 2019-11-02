@@ -34,7 +34,6 @@ class EmployeeController extends AbstractController
             throw new \Exception('Wrong City');
         }
         $user = $this->getDoctrine()->getRepository(User::class)->findBy(array('stadt' => $city,'organisation'=>null));
-dump($user);
         return $this->render(
             'employee/user.html.twig',
             [
