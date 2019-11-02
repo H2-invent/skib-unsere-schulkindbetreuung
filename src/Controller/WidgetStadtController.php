@@ -148,7 +148,13 @@ class WidgetStadtController extends AbstractController
 
                 $zb = array();
             foreach ($data->getSchule() as $data2){
-                $zb[] = array('schule'=>$data2,'blocks'=>$this->getDoctrine()->getRepository(Zeitblock::class)->findBy(array('deleted'=>false,'schule'=>$data2,'active'=>$active)));
+                $blocks = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy(array('deleted'=>false,'schule'=>$data2,'active'=>$active));
+                $b = array();
+                foreach ($blocks as $data3){
+                    $b[$data3->getWochentagString()][]=$data3;
+                }
+                $zb[] = array('schule'=>$data2,'blocks'=>$b);
+
             }
             $result[] = array('org'=>$data,'schule'=>$zb);
         }
