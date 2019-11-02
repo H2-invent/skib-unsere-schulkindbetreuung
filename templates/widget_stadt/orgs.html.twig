@@ -22,51 +22,57 @@
 
                             <div id="accordionOrg{{ o.org.id }}">
                                 {% for s in o.schule %}
-                                    <div class="card">
-                                        <div class="card-header" id="headingOne">
-                                            <h5 class="mb-0">
-                                                <button class="btn btn-link" data-toggle="collapse"
-                                                        data-target="#collapsSchule{{ s.schule.id }}"
-                                                        aria-expanded="true"
-                                                        aria-controls="collapsSchule{{ s.schule.id }}">
-                                                    {{ s.schule.name }}
-                                                </button>
-                                            </h5>
-                                        </div>
-
-                                        <div id="collapsSchule{{ s.schule.id }}" class="collapse "
-                                             aria-labelledby="headingOne"
-                                             data-parent="#accordionOrg{{ o.org.id }}">
-                                            <div class="card-body">
-                                                {% for z in s.blocks %}
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <ul class="list-group">
-                                                                <li class="list-group-item">
-                                                                    {{'Uhrzeit'|trans}}: {{ z.von|date('H:i') }}-{{ z.bis|date('H:i') }}
-                                                                </li>
-                                                                <li class="list-group-item">
-                                                                    {{ 'Kinder'|trans }}: {{ z.kind|length}}
-                                                                </li>
-
-                                                            </ul>
-
-                                                        </div>
-
-                                                    </div>
-
-
-                                                {% endfor %}
-                                            </div>
-                                        </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link" data-toggle="collapse"
+                                                    data-target="#collapsSchule{{ s.schule.id }}"
+                                                    aria-expanded="true"
+                                                    aria-controls="collapsSchule{{ s.schule.id }}">
+                                                {{ s.schule.name }}
+                                            </button>
+                                        </h5>
                                     </div>
-                                {% endfor %}
+
+                                    <div id="collapsSchule{{ s.schule.id }}" class="collapse "
+                                         aria-labelledby="headingOne"
+                                         data-parent="#accordionOrg{{ o.org.id }}">
+                                        <div class="card-body">
+                                            {% for key,zb in s.blocks %}
+                                                <div class="card">
+                                                    <h3 class="card-header">{{ key }}</h3>
+                                                    <div class="card-body">
+                                                        <ul class="list-group">
+                                                        {% for z in zb %}
+
+                                                                <li class="list-group-item">
+                                                                    {{ 'Uhrzeit'|trans }}: {{ z.von|date('H:i') }}
+                                                                    -{{ z.bis|date('H:i') }}
+                                                                </li>
+                                                                <li class="list-group-item" style=" border-bottom: solid 1px lightgrey">
+                                                                    {{ 'Kinder'|trans }}: {{ z.kind|length }}
+                                                                </li>
+                                                        {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+
+                                            {% endfor %}
+                                        </div>
+
+                                    </div>
+                                </div>
+                                    {% endfor %}
+
                             </div>
                         </div>
+
                     </div>
                 </div>
+
+
             {% endfor %}
         </div>
-
     </div>
 </div>
