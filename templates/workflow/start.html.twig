@@ -42,12 +42,12 @@
                     <hr class="hr-light ">
                 </div>
 
-                <div class="col-md-6 mb-4 white-text text-center text-md-left d-none d-sm-block">
-                    <p class="lead">{% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
+                <div class="col-md-12 mb-4 white-text text-center ">
+                    <p class="lead d-none d-sm-block">{% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
 
                 </div>
 
-                <div class="col-md-6 mb-4 white-text text-center">
+                <div class="col-md-12 mb-4 white-text text-center">
                     <p class="lead align-content-center">
                         <a href="{{ url }}" class="btn btn-primary btn-lg" >
                             {% if app.request.cookies.has('SecID') %}
