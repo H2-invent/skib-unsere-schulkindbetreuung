@@ -104,7 +104,7 @@ class workflowController extends AbstractController
                 }
                 return $this->redirectToRoute('workflow_confirm_Email', array('stadt' => $stadt->getId(), 'uid' => $stammdaten->getUid(), 'redirect' => $formData['redirectUrl'], 'snack' => $translator->trans('Bestätigungscode fehlerhaft')));
             }
-            $mailBetreff = $translator->trans('Bestätigungscode für die Schulbetreuungsanmeldung ');
+            $mailBetreff = $translator->trans('Bestätigung der Email Adresse');
             $mailContent = $this->renderView('email/bestaetigungscode.html.twig', array('eltern' => $stammdaten));
             if ($stammdaten->getConfirmEmailSend() == false) {
                 $mailer->sendEmail('H2-Invent', 'info@h2-invent.com', $stammdaten->getEmail(), $mailBetreff, $mailContent);

@@ -1,7 +1,7 @@
 {% extends 'workflow/base.html.twig' %}
 {% block header %}
     <div class="col-md-12 mb-6 white-text text-center text-md-left">
-        <h1 class="display-4 font-weight-bold hauptfarbe">{% trans %}Unsere online Anmeldung{% endtrans %}</h1>
+        <h1 class="font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
         <hr class="hr-light ">
     </div>
 
@@ -21,7 +21,7 @@
                         {% for s in schule %}
 
                             <div class="card mb-4 ">
-                                <div class="view overlay">
+                                <div class="overlay">
                                     <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}"
                                          alt="{{ s.name }}" style="max-height: 300px">
 

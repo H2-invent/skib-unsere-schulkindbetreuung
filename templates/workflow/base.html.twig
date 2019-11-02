@@ -18,7 +18,7 @@
     <link href="{{ asset('frontpage/css/snackbar.css') }}" rel="stylesheet">
 
 
-{% include 'workflow/inlineCSS.html.twig' with {'height':'300px'} %}
+{% include 'workflow/inlineCSS.html.twig' with {'height':'14rem'} %}
 
 
 </head>
@@ -30,16 +30,10 @@
 <!-- Navbar -->
 
 <!-- Full Page Intro -->
-{% if stadt is defined and stadt is not null and stadt.image is not empty %}
 
-<div class="view d-none d-sm-block"
-     style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
-    {% else %}
-    <div class="view d-none d-sm-block"
-         style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
 
-        {% endif %}
-
+{% if stadt is defined and stadt is not null and stadt.image is not empty %}<div class="view" style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
+    {% else %}<div class="view" style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">{% endif %}
         <!-- Mask & flexbox options-->
         <div class="mask rgba-black-light d-flex align-items-end">
             <!-- Content -->
@@ -59,11 +53,9 @@
                 <!--Grid row-->
             </div>
             <!-- Content -->
-
         </div>
         <!-- Mask & flexbox options-->
-
-    </div>
+</div>
 </div>
     <!-- Full Page Intro -->
     <main>
