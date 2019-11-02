@@ -124,6 +124,7 @@ class WidgetController extends AbstractController
         return new JsonResponse(array('title'=>$schule->getName(),'small'=>$translator->trans('Kinder angemeldet'),'anzahl'=>sizeof($kinder),'symbol'=>'sports_handball'));
 
     }
+
     /**
      * @Route("/org_child/show/widget/stundenplan", name="widget_kids_stundenplan")
      */
