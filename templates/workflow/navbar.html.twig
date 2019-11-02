@@ -32,9 +32,9 @@
                         {% trans %}Sprachen{% endtrans %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Deutsch</a>
-                        <a class="dropdown-item" href="#">English</a>
-                        <a class="dropdown-item" href="#">Francais</a>
+                        <a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params') | merge({'_locale':'de'})) }}"><img src="{{ asset('images/flags/16/DE.png') }}" alt="Deutsch" class="mr-2"><span>Deutsch</span></a>
+                        <a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params') | merge({'_locale':'en'})) }}"><img src="{{ asset('images/flags/16/GB.png') }}" alt="English" class="mr-2"><span>English</span></a>
+                        <a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params') | merge({'_locale':'fr'})) }}"><img src="{{ asset('images/flags/16/FR.png') }}" alt="Francais" class="mr-2"><span>Francais</span></a>
                     </div>
                 </li>
                 <li class="nav-item">
