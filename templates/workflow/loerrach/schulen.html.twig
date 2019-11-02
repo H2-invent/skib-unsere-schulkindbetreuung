@@ -80,7 +80,7 @@
 {% block jquery %}
     <script>
         $(document).on('click','.chooseBlock',function (e) {
-
+            e.preventDefault();
             var ele = $(this);
             var url = ele.attr('href');
             ele.find('.loader').removeClass('d-none');
