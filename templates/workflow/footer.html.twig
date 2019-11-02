@@ -1,20 +1,68 @@
-<footer class="page-footer text-center font-small mt-4 wow fadeIn {% if flex is defined and flex is null %}fixed-bottom{% endif %}" >
+<!-- Footer -->
+<footer class="page-footer font-small pt-2" {% if fix is not defined %}style="margin-top: 30px {% endif %}">
 
-    <!-- Legal -->
-    <ul class="navbar-nav nav-flex-icons">
-        <li class="nav-item">
-            <a class="nav-link" href={{ path('impressum') }}>{% trans %}Impressum{% endtrans %}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href={{ path('datenschutz') }}>{% trans %}Datenschutzhinweis{% endtrans %}</a>
-        </li>
-    </ul>
-    <!-- Legal -->
+        <div class="container">
+            <div class="container-fluid text-center text-md-left">
 
-    <!--Copyright-->
-    <div class="footer-copyright py-3">
+                <div class="row">
+
+                    <div class="col-md-6 mt-md-0 mt-3 d-none d-lg-block">
+
+                        <h5 class="text-uppercase">{% trans %}Unsere Schulkindbetreuung{% endtrans %}</h5>
+                        <p>Unsere Schulkindbetreuung befindet sich aktuell in der Entwicklung.<br/>Bitte keine echten
+                            Daten eingeben.</p>
+
+                    </div>
+
+                    <hr class="clearfix w-100 d-md-none d-none pb-3">
+
+                    <div class="col-lg-2 col-md-4 mb-md-0 mb-2">
+
+                        <h5 class="text-uppercase">{% trans %}Hinweise{% endtrans %}</h5>
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href={{ path('impressum') }}>{% trans %}Impressum{% endtrans %}</a>
+                            </li>
+                            <li>
+                                <a href={{ path('datenschutz') }}>{% trans %}Datenschutzhinweis{% endtrans %}</a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 mb-md-0 mb-2 d-none d-md-block">
+
+                        <h5 class="text-uppercase">H2 invent</h5>
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <p>Gewerbestraße 9<br/>
+                                    79539 Lörrach
+                                </p>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 mb-md-0 mb-2 d-none d-md-block">
+
+                        <h5 class="text-uppercase">Kontakt</h5>
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="mailto:info@h2-invent.com">info@h2-invent.com</a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    <div class="footer-copyright text-center py-2">
         © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
     </div>
-    <!--/.Copyright-->
-
 </footer>
+<!-- Footer -->

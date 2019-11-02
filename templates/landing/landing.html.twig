@@ -19,7 +19,7 @@
     <link href="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.css" rel="stylesheet">
 
 
-{% include 'workflow/inlineCSS.html.twig' with {'height':'100%','stadt':null} %}
+    {% include 'workflow/inlineCSS.html.twig' with {'height':'100%','stadt':null} %}
 
 </head>
 
@@ -42,49 +42,93 @@
             <div class="row wow fadeIn">
 
                 <!--Grid column-->
-                <div class="col-md-6 mb-4 text-center text-md-left" style="word-break: break-word">
+                <div class="col-md-12 mb-4 white-text text-center" style="word-break: break-word">
 
-                    <h1 class="display-4 white-text font-weight-bold">Unsere Schulkindbetreuung</h1>
+                    <h1 class="display-4 font-weight-bold">Unsere<br/>Schulkind Betreuung</h1>
 
                 </div>
 
                 <div class="col-md-6 mb-4 text-center text-md-left">
                     <div class="row">
-                        {% for s in stadt %}
-                            <div class="col-md-6">
-                                <div class="card align-items-center">
-
-                                    <img class="card-img-top " src="{{ vich_uploader_asset(s,'imageFile') }}">
-
-                                    <div class="card-body">
-
-                                        <h4 class="card-title">{{ s.name }}</h4>
-                                        <!-- Text -->
-                                        <p class="card-text">{{ s.translate.infoText|nl2br|length > 50 ? s.translate.infoText|nl2br|slice(0,50)~'...':s.translate.infoText }}</p>
-                                        <!-- Button -->
-                                        <a href="{{ path('workflow_start',{'slug':s.slug}) }}"
-                                           class="btn btn-primary">{{ 'Ich lebe in '~s.name|trans }}</a>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        {% endfor %}
                     </div>
                 </div>
             </div>
+            <div class="col-md-12 mb-4 white-text text-center align-content-center">
+                <section id="scroll">
+
+                    <a href="#stadtliste"><span></span></a>
+                </section>
+            </div>
         </div>
     </div>
+
 </div>
 
+<main>
+    <div class="container anchor" id="stadtliste">
 
-{% include 'workflow/footer.html.twig' with {'flex':null} %}
+        <!--Section: Main info-->
+        <section class="mt-5 wow fadeIn">
+
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-lg-12">
+
+                    <h4> {% trans %}Die Schulkindbetreuung steht ihnen in folgenden Städten zur Verfügung{% endtrans %}</h4>
+                    <section class="dashboard-counts section-padding" id="schulenShow">
+                        <div class="container-fluid ">
+
+                            <div class="card-deck">
+                                <!-- Count item widget-->
+                                {% for s in stadt %}
+                                    <div class="col-md-4">
+                                        <div class="card align-items-center">
+
+                                            <img class="card-img-top " src="{{ vich_uploader_asset(s,'imageFile') }}">
+
+                                            <div class="card-body">
+
+                                                <h4 class="card-title">{{ s.name }}</h4>
+                                                <!-- Text -->
+                                                <p class="card-text">{{ s.translate.infoText|nl2br|length > 50 ? s.translate.infoText|nl2br|slice(0,50)~'...':s.translate.infoText }}</p>
+                                                <!-- Button -->
+                                                <a href="{{ path('workflow_start',{'slug':s.slug}) }}"
+                                                   class="btn btn-primary">{{ 'Ich lebe in '~s.name|trans }}</a>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+
+{% include 'workflow/footer.html.twig' %}
 
 <script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
 <script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
+<script>
+    $(function () {
+        $("a[href*=\\#]").on('click', function (e) {
+            e.preventDefault();
+            $('html, body').animate({scrollTop: $($(this).attr('href')).offset().top}, 500, 'linear');
+        });
+    });
+</script>
 </body>
 
 </html>
