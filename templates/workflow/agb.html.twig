@@ -11,10 +11,7 @@
     <div>
         <a href="{{ path('workflow_agb_pdf',{'id':stadt.id}) }}"><i class="fa fa-download"></i> </a>
         <p>
-
-  {{ stadtAGB|markdown_to_html }}
-
-
+            {{ stadtAGB|markdown_to_html }}
         </p>
     </div>
 {% endblock %}

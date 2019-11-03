@@ -115,20 +115,31 @@
                 <div class="row">
 
                     <div class="col-lg-12">
-                        <h4> {% trans %}Weitere Informationen{% endtrans %}</h4>
+                        <h4> {% trans %}Weitere Informationenen für die erziehungsberechtigten Personen von der Stadt und den Trägern{% endtrans %}</h4>
                         <section class="dashboard-counts section-padding">
                             <div class="container-fluid ">
 
-                                <div class="card-deck">
-                                    <a href="{{ path('workflow_agb',{'stadt_id':stadt.id}) }}">{% trans %}Allgemeine Vertragsbedingungen der Stadt{% endtrans %}{{ stadt.name }}</a>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h4>
+                                            Allgemeine Vertragsbedingungen
+                                        </h4>
+                                        <a href="{{ path('workflow_agb',{'stadt_id':stadt.id}) }}" target="_blank">{% trans %}Allgemeine Vertragsbedingungen der Stadt{% endtrans %} {{ stadt.name }}</a><br/>
+                                    </div>
                                 </div>
 
-                                {% for o in stadt.organisations %}
-                                    <a href="{{ path('workflow_datenschutz',{'org_id':o.id}) }}">{% trans %}Datenschutzhinweise der Organisation{% endtrans %} {{ o.name }}</a><br/>
-                                {% endfor %}
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <h4>
+                                                Datenschutzhinweise
+                                            </h4>
+                                            {% for o in stadt.organisations %}
+                                            <a href="{{ path('workflow_datenschutz',{'org_id':o.id}) }}" target="_blank">{% trans %}Datenschutzhinweis{% endtrans %} {{ o.name }}</a><br/>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
                             </div>
                         </section>
-
                     </div>
                 </div>
             </section>

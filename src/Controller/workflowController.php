@@ -34,7 +34,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class workflowController extends AbstractController
 {
     /**
-     * @Route("/{slug}/start",name="workflow_start",methods={"GET"})
+     * @Route("/{slug}/home",name="workflow_start",methods={"GET"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public function welcomeAction(Request $request, Stadt $stadt)
@@ -51,9 +51,8 @@ class workflowController extends AbstractController
         $cityInfoText = $stadt->translate()->getInfoText();
         // Load all schools from the city into the controller as $schulen
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
-        $org = $this->getDoctrine()->getRepository(Organisation::class)->findBy(array('stadt'=> $stadt));
-dump($org);
-        return $this->render('workflow/start.html.twig', array('schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'url' => $url, 'org'=>$org));
+
+        return $this->render('workflow/start.html.twig', array('schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'url' => $url));
     }
 
 
@@ -142,7 +141,7 @@ dump($org);
     }
 
     /**
-     * @Route("/org_datenschutz",name="workflow_datenschutz",methods={"GET"})
+     * @Route("/datenschutz",name="workflow_datenschutz",methods={"GET"})
      */
     public function datenschutzAction(Request $request, TranslatorInterface $translator)
     {
@@ -151,6 +150,16 @@ dump($org);
         $org_datenschutz = $org->translate()->getDatenschutz();
 
         return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $org,'stadt' => $org->getStadt(),  'redirect' => $request->get('redirect')));
+    }
+
+    /**
+     * @Route("/datenschutz/pdf",name="workflow_datenschutz_pdf",methods={"GET"})
+     */
+    public function datenschutzpdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        return $printAGBService->printAGB($organisation->translate()->getDatenschutz(), 'D', null, $organisation);
+
     }
 
     /**
@@ -172,16 +181,6 @@ dump($org);
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         return $printAGBService->printAGB($stadt->translate()->getAgb(), 'D', $stadt, null);
-
-    }
-
-    /**
-     * @Route("/datenschutz/pdf",name="workflow_datenschutz_pdf",methods={"GET"})
-     */
-    public function datenschutzpdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService)
-    {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
-        return $printAGBService->printAGB($organisation->translate()->getDatenschutz(), 'D', null, $organisation);
 
     }
 }
