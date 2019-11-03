@@ -81,7 +81,7 @@
                             {{ cityInfoText|nl2br }}
                         </p>
                         <h4> {% trans %}Folgende Schulen können hier online gebucht werden.{% endtrans %}</h4>
-                        <section class="dashboard-counts section-padding" id="schulenShow">
+                        <section class="dashboard-counts section-padding">
                             <div class="container-fluid ">
 
                                 <div class="card-deck">
@@ -106,6 +106,26 @@
                                     {% endfor %}
                                 </div>
 
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <h4> {% trans %}Weitere Informationen{% endtrans %}</h4>
+                        <section class="dashboard-counts section-padding">
+                            <div class="container-fluid ">
+
+                                <div class="card-deck">
+                                    <a href="{{ path('workflow_agb',{'stadt_id':stadt.id}) }}">{% trans %}Allgemeine Vertragsbedingungen der Stadt{% endtrans %}{{ stadt.name }}</a>
+                                </div>
+
+                                {% for o in stadt.organisations %}
+                                    <a href="{{ path('workflow_datenschutz',{'org_id':o.id}) }}">{% trans %}Datenschutzhinweise der Organisation{% endtrans %} {{ o.name }}</a><br/>
+                                {% endfor %}
                             </div>
                         </section>
 

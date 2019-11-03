@@ -51,8 +51,9 @@ class workflowController extends AbstractController
         $cityInfoText = $stadt->translate()->getInfoText();
         // Load all schools from the city into the controller as $schulen
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
-
-        return $this->render('workflow/start.html.twig', array('schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'url' => $url));
+        $org = $this->getDoctrine()->getRepository(Organisation::class)->findBy(array('stadt'=> $stadt));
+dump($org);
+        return $this->render('workflow/start.html.twig', array('schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'url' => $url, 'org'=>$org));
     }
 
 
@@ -141,7 +142,7 @@ class workflowController extends AbstractController
     }
 
     /**
-     * @Route("/zusammenfassung/datenschutz",name="workflow_datenschutz",methods={"GET"})
+     * @Route("/org_datenschutz",name="workflow_datenschutz",methods={"GET"})
      */
     public function datenschutzAction(Request $request, TranslatorInterface $translator)
     {
@@ -153,7 +154,7 @@ class workflowController extends AbstractController
     }
 
     /**
-     * @Route("/zusammenfassung/agb",name="workflow_agb",methods={"GET"})
+     * @Route("/agb",name="workflow_agb",methods={"GET"})
      */
     public function agbAction(Request $request, TranslatorInterface $translator)
     {
