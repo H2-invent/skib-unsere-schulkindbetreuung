@@ -23,4 +23,13 @@ class LegalController extends AbstractController
 
         return $this->render('legal/impressum.html.twig');
     }
+
+    /**
+     * @Route("/nutzungsbedingungen", name="nutzungsbedingungen")
+     */
+    public function nutzungsbedingungenAction()
+    {
+
+        return $this->render('legal/nutzungsbedingungen.html.twig');
+    }
 }
