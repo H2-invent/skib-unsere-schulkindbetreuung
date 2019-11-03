@@ -1,57 +1,25 @@
 <!-- Footer -->
 <footer class="page-footer font-small pt-2" {% if fix is not defined %}style="margin-top: 30px {% endif %}">
 
-        <div class="container">
-            <div class="container-fluid text-center text-md-left">
+        <div class="container align-content-center">
+            <div class="container-fluid text-center text-md-left ">
 
                 <div class="row">
 
-                    <div class="col-md-6 mt-md-0 mt-3 d-none d-lg-block">
+                    <hr class="clearfix w-100 d-md-none d-none">
 
-                        <h5 class="text-uppercase">{% trans %}Unsere Schulkindbetreuung{% endtrans %}</h5>
-                        <p>Unsere Schulkindbetreuung befindet sich aktuell in der Entwicklung.<br/>Bitte keine echten
-                            Daten eingeben.</p>
-
-                    </div>
-
-                    <hr class="clearfix w-100 d-md-none d-none pb-3">
-
-                    <div class="col-lg-2 col-md-4 mb-md-0 mb-2">
-
-                        <h5 class="text-uppercase">{% trans %}Hinweise{% endtrans %}</h5>
-
+                    <div class="col-lg-2 col-md-4 mb-md-0">
                         <ul class="list-unstyled">
                             <li>
                                 <a href={{ path('impressum') }}>{% trans %}Impressum{% endtrans %}</a>
                             </li>
-                            <li>
-                                <a href={{ path('datenschutz') }}>{% trans %}Datenschutzhinweis{% endtrans %}</a>
-                            </li>
                         </ul>
-
                     </div>
 
-                    <div class="col-lg-2 col-md-4 mb-md-0 mb-2 d-none d-md-block">
-
-                        <h5 class="text-uppercase">H2 invent</h5>
-
+                    <div class="col-lg-2 col-md-4 mb-md-0">
                         <ul class="list-unstyled">
                             <li>
-                                <p>Gewerbestraße 9<br/>
-                                    79539 Lörrach
-                                </p>
-                            </li>
-                        </ul>
-
-                    </div>
-
-                    <div class="col-lg-2 col-md-4 mb-md-0 mb-2 d-none d-md-block">
-
-                        <h5 class="text-uppercase">Kontakt</h5>
-
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="mailto:info@h2-invent.com">info@h2-invent.com</a>
+                                <a href={{ path('datenschutz') }}>{% trans %}Datenschutz{% endtrans %}</a>
                             </li>
                         </ul>
 

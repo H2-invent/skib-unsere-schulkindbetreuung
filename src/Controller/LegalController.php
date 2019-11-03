@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Organisation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -10,10 +11,9 @@ class LegalController extends AbstractController
     /**
      * @Route("/privacy", name="datenschutz")
      */
-    public function datenschutzAction()
+    public function privacyAction()
     {
-
-        return $this->render('legal/datenschutz.html.twig');
+            return $this->render('legal/datenschutz.html.twig');
     }
 
     /**
