@@ -25,7 +25,7 @@ class Stadt
     private $id;
 
     /**
-     * * @Assert\NotBlank()
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=32, unique=true,)
      */
     private $slug;
