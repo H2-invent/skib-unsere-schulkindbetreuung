@@ -10,10 +10,9 @@ class LegalController extends AbstractController
     /**
      * @Route("/privacy", name="datenschutz")
      */
-    public function datenschutzAction()
+    public function privacyAction()
     {
-
-        return $this->render('legal/datenschutz.html.twig');
+            return $this->render('legal/datenschutz.html.twig');
     }
 
     /**
