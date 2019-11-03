@@ -165,6 +165,18 @@ class Organisation
      */
     private $sepas;
 
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text")
+     */
+    private $steuernummer;
+
+    /**
+     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     */
+    private $umstid;
+
     public function __construct()
     {
         $this->schule = new ArrayCollection();
@@ -528,6 +540,30 @@ class Organisation
                 $sepa->setOrganisation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSteuernummer(): ?string
+    {
+        return $this->steuernummer;
+    }
+
+    public function setSteuernummer(string $steuernummer): self
+    {
+        $this->steuernummer = $steuernummer;
+
+        return $this;
+    }
+
+    public function getUmstid(): ?string
+    {
+        return $this->umstid;
+    }
+
+    public function setUmstid(string $umstid): self
+    {
+        $this->umstid = $umstid;
 
         return $this;
     }
