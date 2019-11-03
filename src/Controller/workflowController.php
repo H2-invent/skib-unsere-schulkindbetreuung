@@ -34,7 +34,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class workflowController extends AbstractController
 {
     /**
-     * @Route("/{slug}/start",name="workflow_start",methods={"GET"})
+     * @Route("/{slug}/home",name="workflow_start",methods={"GET"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public function welcomeAction(Request $request, Stadt $stadt)
@@ -141,7 +141,7 @@ class workflowController extends AbstractController
     }
 
     /**
-     * @Route("/zusammenfassung/datenschutz",name="workflow_datenschutz",methods={"GET"})
+     * @Route("/datenschutz",name="workflow_datenschutz",methods={"GET"})
      */
     public function datenschutzAction(Request $request, TranslatorInterface $translator)
     {
@@ -153,7 +153,17 @@ class workflowController extends AbstractController
     }
 
     /**
-     * @Route("/zusammenfassung/agb",name="workflow_agb",methods={"GET"})
+     * @Route("/datenschutz/pdf",name="workflow_datenschutz_pdf",methods={"GET"})
+     */
+    public function datenschutzpdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        return $printAGBService->printAGB($organisation->translate()->getDatenschutz(), 'D', null, $organisation);
+
+    }
+
+    /**
+     * @Route("/agb",name="workflow_agb",methods={"GET"})
      */
     public function agbAction(Request $request, TranslatorInterface $translator)
     {
@@ -171,16 +181,6 @@ class workflowController extends AbstractController
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         return $printAGBService->printAGB($stadt->translate()->getAgb(), 'D', $stadt, null);
-
-    }
-
-    /**
-     * @Route("/datenschutz/pdf",name="workflow_datenschutz_pdf",methods={"GET"})
-     */
-    public function datenschutzpdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService)
-    {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
-        return $printAGBService->printAGB($organisation->translate()->getDatenschutz(), 'D', null, $organisation);
 
     }
 }

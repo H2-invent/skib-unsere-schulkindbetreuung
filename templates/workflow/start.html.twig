@@ -81,7 +81,7 @@
                             {{ cityInfoText|nl2br }}
                         </p>
                         <h4> {% trans %}Folgende Schulen können hier online gebucht werden.{% endtrans %}</h4>
-                        <section class="dashboard-counts section-padding" id="schulenShow">
+                        <section class="dashboard-counts section-padding">
                             <div class="container-fluid ">
 
                                 <div class="card-deck">
@@ -109,6 +109,37 @@
                             </div>
                         </section>
 
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <h4> {% trans %}Weitere Informationenen für die erziehungsberechtigten Personen von der Stadt und den Trägern{% endtrans %}</h4>
+                        <section class="dashboard-counts section-padding">
+                            <div class="container-fluid ">
+
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h4>
+                                            Allgemeine Vertragsbedingungen
+                                        </h4>
+                                        <a href="{{ path('workflow_agb',{'stadt_id':stadt.id}) }}" target="_blank">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der Stadt %stadt%{% endtrans %}</a><br/>
+                                    </div>
+                                </div>
+
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <h4>
+                                                Datenschutzhinweise
+                                            </h4>
+                                            {% for o in stadt.organisations %}
+                                            <a href="{{ path('workflow_datenschutz',{'org_id':o.id}) }}" target="_blank">{% trans with {'%organisation%':o.name} %}Datenschutzhinweis der Organisation %organisation%{% endtrans %}</a><br/>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </section>
