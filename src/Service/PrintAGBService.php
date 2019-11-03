@@ -41,18 +41,16 @@ class PrintAGBService
     {
 
 
-        $pdf = $this->pdf;
-        $pdf = $this->pdf->create();
+        $pdf = $this->pdf->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf->setFontSubsetting(true);
 
-
+        $pdf->SetFont('freeserif', '', 10);
         $fileName = '';
         //$pdf-> = $this->container->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         //todo hier musss der Test raus
         $pdf->SetAuthor($fileName);
         $pdf->SetTitle($fileName);
         $pdf->SetSubject($fileName);
-        $pdf->setFontSubsetting(true);
-        $pdf->SetFont('helvetica', '', 10, '', true);
         $pdf->SetMargins(20, 15, 20, true);
         $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
         $pdf->setHeaderData('', 0, '', '', array(0, 0, 0), array(255, 255, 255));
@@ -94,7 +92,7 @@ class PrintAGBService
 
 
 
-        $table = $this->templating->render('pdf/agb.html.twig',array('text'=>$text));
+        $table = utf8_encode($this->templating->render('pdf/agb.html.twig',array('text'=>$text)));
         $pdf->writeHTMLCell(
             $w = 0,
             $h = 0,
