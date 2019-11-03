@@ -25,13 +25,13 @@ class Stadt
     private $id;
 
     /**
-     * * @Assert\NotBlank()
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=32, unique=true,)
      */
     private $slug;
 
     /**
-     * * @Assert\NotBlank()
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $Name;
@@ -55,6 +55,7 @@ class Stadt
      * @ORM\Column(type="datetime")
      */
     private $created_at;
+
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      * @var string
@@ -66,7 +67,6 @@ class Stadt
      * @var File
      */
     private $imageFile;
-
 
     /**
      * @ORM\Column(type="datetime",nullable=true)

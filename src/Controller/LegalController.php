@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LegalController extends AbstractController
 {
     /**
-     * @Route("/datenschutz", name="datenschutz")
+     * @Route("/privacy", name="datenschutz")
      */
     public function datenschutzAction()
     {
