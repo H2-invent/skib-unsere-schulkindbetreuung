@@ -34,7 +34,6 @@ class EmployeeController extends AbstractController
             throw new \Exception('Wrong City');
         }
         $user = $this->getDoctrine()->getRepository(User::class)->findBy(array('stadt' => $city,'organisation'=>null));
-
         return $this->render(
             'employee/user.html.twig',
             [
@@ -292,10 +291,9 @@ class EmployeeController extends AbstractController
 
             $roles = $formI->getData();
 
-            foreach ($user->getRoles() as $item) {
-                $user->removeRole($item);
+            foreach ($availRole as $data) {
+                $user->removeRole($data);
             }
-            $user->addRole('ROLE_USER');
 
             foreach ($roles as $key => $item) {
                 if ($item == true) {
