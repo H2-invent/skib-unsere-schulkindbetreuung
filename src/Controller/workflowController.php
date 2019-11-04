@@ -141,45 +141,47 @@ class workflowController extends AbstractController
     }
 
     /**
-     * @Route("/datenschutz",name="workflow_datenschutz",methods={"GET"})
+     * @Route("/{slug}/{org_id}/datenschutz",name="workflow_datenschutz",methods={"GET"})
      */
     public function datenschutzAction(Request $request, TranslatorInterface $translator)
     {
 
-        $org = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $org_datenschutz = $org->translate()->getDatenschutz();
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $org_datenschutz = $organisation->translate()->getDatenschutz();
 
-        return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $org,'stadt' => $org->getStadt(),  'redirect' => $request->get('redirect')));
+        return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $organisation,'stadt' => $organisation->getStadt(),  'redirect' => $request->get('redirect')));
     }
 
     /**
-     * @Route("/datenschutz/pdf",name="workflow_datenschutz_pdf",methods={"GET"})
+     * @Route("/{slug}/{org_id}/datenschutz/pdf",name="workflow_datenschutz_pdf",methods={"GET"})
      */
     public function datenschutzpdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
         return $printAGBService->printAGB($organisation->translate()->getDatenschutz(), 'D', null, $organisation);
 
     }
 
     /**
-     * @Route("/agb",name="workflow_agb",methods={"GET"})
+     * @Route("/{slug}/agb",name="workflow_agb",methods={"GET"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function agbAction(Request $request, TranslatorInterface $translator)
+    public function agbAction(Request $request, TranslatorInterface $translator, Stadt $stadt)
     {
 
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt_id'));
+        //$stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt_id'));
         $stadtAGB = $stadt->translate()->getAgb();
 
         return $this->render('workflow/agb.html.twig', array('stadtAGB' => $stadtAGB, 'stadt' => $stadt,'redirect' => $request->get('redirect')));
     }
 
     /**
-     * @Route("/agb/pdf",name="workflow_agb_pdf",methods={"GET"})
+     * @Route("/{slug}/agb/pdf",name="workflow_agb_pdf",methods={"GET"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function pdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService)
+    public function pdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService, Stadt $stadt)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        //$stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         return $printAGBService->printAGB($stadt->translate()->getAgb(), 'D', $stadt, null);
 
     }

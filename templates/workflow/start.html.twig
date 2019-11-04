@@ -128,7 +128,7 @@
                                         <h4>
                                             Allgemeine Vertragsbedingungen
                                         </h4>
-                                        <a href="{{ path('workflow_agb',{'stadt_id':stadt.id}) }}" target="_blank">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der Stadt %stadt%{% endtrans %}</a><br/>
+                                        <a href="{{ path('workflow_agb',{'slug':stadt.slug}) }}" target="_blank">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der Stadt %stadt%{% endtrans %}</a><br/>
                                     </div>
                                 </div>
 
@@ -138,7 +138,7 @@
                                             Datenschutzhinweise
                                         </h4>
                                         {% for o in stadt.organisations %}
-                                            <a href="{{ path('workflow_datenschutz',{'org_id':o.id}) }}" target="_blank">{% trans with {'%organisation%':o.name} %}Datenschutzhinweis der Organisation %organisation%{% endtrans %}</a><br/>
+                                            <a href="{{ path('workflow_datenschutz',{'org_id':o.id,'slug':stadt.slug}) }}" target="_blank">{% trans with {'%organisation%':o.name} %}Datenschutzhinweis der Organisation %organisation%{% endtrans %}</a><br/>
                                         {% endfor %}
                                     </div>
                                 </div>
