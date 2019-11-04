@@ -8,7 +8,7 @@
 {% endblock %}
 {% block content %}
         <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
-    <div class="card">
+    <div class="card mb-3">
         <div class="card-header">
     <h3 class="cover-heading">{% trans %}Daten der erziehungsberechtigten Person{% endtrans %} <a href="{{ path('loerrach_workflow_adresse') }}"> <i class="fa fa-edit"></i></a></h3>
         </div>
@@ -74,12 +74,12 @@
 
         <!-- Daten der Kinder in einer for Schleife -->
     <div class="card">
-        <div class="card-header">
+        <div class="card-header mb-2">
         <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen') }}"> <i class="fa fa-edit"></i></a></h3>
         </div>
-        <div class="text-left" id="accordion">
+        <div class="text-left card-body" id="accordion">
             {% for k in kind %}
-            <div class="card">
+            <div class="card mb-2">
                 <div class="card-header" id="heading{{ loop.index }}">
                     <h5 class="mb-0">
                         <a data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
