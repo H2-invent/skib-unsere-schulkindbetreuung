@@ -91,7 +91,7 @@
                             
                         </a>
                     </h5>
-                    <a target="_blank" href={{ path('workflow_datenschutz', {'org_id':k.schule.organisation.id}) }}>{% trans %}Datenschutzhinweis der{% endtrans %} {{ k.schule.organisation.name }}</a>
+                    <a target="_blank" href={{ path('workflow_datenschutz', {'org_id':k.schule.organisation.id, 'slug':stadt.slug}) }}>{% trans %}Datenschutzhinweis der{% endtrans %} {{ k.schule.organisation.name }}</a>
                 </div>
 
                 <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
@@ -250,7 +250,7 @@
         </table>
     <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz" value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}<br>
     <div>
-        <input id="checkboxAgb" type="checkbox" class="checkboxSelect" name="AGB" value="AGB"> <a target="_blank" href={{ path('workflow_agb', {'stadt_id':stadt.id}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die Allgemeine Geschäftsbeingungen der Stadt  %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese{% endtrans %}</a><br>
+        <input id="checkboxAgb" type="checkbox" class="checkboxSelect" name="AGB" value="AGB"> <a target="_blank" href={{ path('workflow_agb', {'slug':stadt.slug}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die Allgemeine Geschäftsbeingungen der Stadt  %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese{% endtrans %}</a><br>
     </div>
     {% if error == false %}
     <button  class="btn btn-outline-primary sendButton" disabled >{% trans %}Absenden{% endtrans %}</button>

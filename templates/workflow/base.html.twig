@@ -8,7 +8,7 @@
     {% if stadt is defined and stadt is not null %}
     <meta name="theme-color" content="{{ stadt.hauptfarbe }}">
     {% endif %}
-    <title>Unsere Schulkindbetreuung</title>
+    <title>{% trans %}Unsere Schulkindbetreuung{% endtrans %}</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Bootstrap core CSS -->
@@ -115,10 +115,10 @@
     <script src="{{ asset('js/jquery.bs.gdpr.cookies.js') }}"></script>
     <script type="text/javascript">
         var settings = {
-            message: 'This is your cookies message. Lorem ipsum dolor sit amet, consectetur adipiscing elit. <b> Read more  ',
-            moreLinkLabel: 'here.</b>',
+            message: 'Cookies erleichtern die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden. Weitere Informationen zum Datenschutz erhalten Sie über den folgenden Link: <b> Mehr erfahren  ',
+            moreLinkLabel: 'hier</b>',
             messageMaxHeightPercent: 30,
-            moreLink: '/privacy/',
+            moreLink: '/datenschutz/',
             delay: 1000,
             allowAdvancedOptions: true,
             OnAccept: function () {
