@@ -10,7 +10,7 @@
 {% endblock %}
 {% block content %}
     <div>
-        <a href="{{ path('workflow_datenschutz_pdf',{'id':org.id}) }}"><i class="fa fa-download"></i> </a>
+        <a href="{{ path('workflow_datenschutz_pdf',{'org_id':org.id,'slug':stadt.slug}) }}"><i class="fa fa-download"></i> </a>
         <p>
             {{ datenschutz|markdown_to_html}}
         </p>

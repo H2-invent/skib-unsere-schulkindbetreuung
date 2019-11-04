@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LegalController extends AbstractController
 {
     /**
-     * @Route("/privacy", name="datenschutz")
+     * @Route("/datenschutz", name="datenschutz")
      */
     public function privacyAction()
     {
@@ -22,5 +22,14 @@ class LegalController extends AbstractController
     {
 
         return $this->render('legal/impressum.html.twig');
+    }
+
+    /**
+     * @Route("/nutzungsbedingungen", name="nutzungsbedingungen")
+     */
+    public function nutzungsbedingungenAction()
+    {
+
+        return $this->render('legal/nutzungsbedingungen.html.twig');
     }
 }

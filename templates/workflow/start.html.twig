@@ -76,20 +76,27 @@
                 <div class="row">
 
                     <div class="col-lg-12">
-                        <h4>{% trans %}Herzlich Willkommen bei der neuen Schulkindbetreuung{% endtrans %}</h4>
-                        <p>
-                            {{ cityInfoText|nl2br }}
-                        </p>
-                        <h4> {% trans %}Folgende Schulen können hier online gebucht werden.{% endtrans %}</h4>
-                        <section class="dashboard-counts section-padding">
-                            <div class="container-fluid ">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3>{% trans %}Herzlich Willkommen bei der neuen Schulkindbetreuung{% endtrans %}</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>
+                                    {{ cityInfoText|nl2br }}
+                                </p>
+                            </div>
+                        </div>
 
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3> {% trans %}Folgende Schulen können hier online gebucht werden.{% endtrans %}</h3>
+                            </div>
+                            <div class="card-body">
                                 <div class="card-deck">
                                     <!-- Count item widget-->
                                     {% for s in schule %}
-                                        <div class="card mb-4 ">
+                                        <div class="card hoverable ">
                                             <div class="view overlay">
-
                                                 <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}" alt="{{ s.name }}" style="max-height: 300px">
                                                 <a href="adresse">
                                                     <div class="mask rgba-white-slight"></div>
@@ -99,47 +106,44 @@
                                             <div class="card-body ">
                                                 <h5 class="card-title">{{ s.name }}</h5>
                                                 <p class="card-text">{{ s.infoText }}</p>
-
                                             </div>
-
                                         </div>
                                     {% endfor %}
                                 </div>
-
                             </div>
-                        </section>
-
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
 
                     <div class="col-lg-12">
-                        <h4> {% trans %}Weitere Informationenen für die erziehungsberechtigten Personen von der Stadt und den Trägern{% endtrans %}</h4>
-                        <section class="dashboard-counts section-padding">
-                            <div class="container-fluid ">
-
-                                <div class="card mb-4">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3> {% trans %}Weitere Informationen von ihrer Stadt und den Trägern{% endtrans %}</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="card mb-2">
                                     <div class="card-body">
                                         <h4>
                                             Allgemeine Vertragsbedingungen
                                         </h4>
-                                        <a href="{{ path('workflow_agb',{'stadt_id':stadt.id}) }}" target="_blank">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der Stadt %stadt%{% endtrans %}</a><br/>
+                                        <a href="{{ path('workflow_agb',{'slug':stadt.slug}) }}" target="_blank">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der Stadt %stadt%{% endtrans %}</a><br/>
                                     </div>
                                 </div>
 
-                                    <div class="card mb-4">
-                                        <div class="card-body">
-                                            <h4>
-                                                Datenschutzhinweise
-                                            </h4>
-                                            {% for o in stadt.organisations %}
-                                            <a href="{{ path('workflow_datenschutz',{'org_id':o.id}) }}" target="_blank">{% trans with {'%organisation%':o.name} %}Datenschutzhinweis der Organisation %organisation%{% endtrans %}</a><br/>
-                                            {% endfor %}
-                                        </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4>
+                                            Datenschutzhinweise
+                                        </h4>
+                                        {% for o in stadt.organisations %}
+                                            <a href="{{ path('workflow_datenschutz',{'org_id':o.id,'slug':stadt.slug}) }}" target="_blank">{% trans with {'%organisation%':o.name} %}Datenschutzhinweis der Organisation %organisation%{% endtrans %}</a><br/>
+                                        {% endfor %}
                                     </div>
+                                </div>
                             </div>
-                        </section>
+                        </div>
                     </div>
                 </div>
             </section>
