@@ -64,14 +64,16 @@
 
             $.getJSON(value, function (data) {
 
-           var box = '<div class="col-xl-2 col-md-4 col-6">'
+           var box = '<div class="col-xl-2 col-md-4 col-6 card">'
+                   +'<div class="card-body">'
                     +'<div class="wrapper count-title d-flex">'
                     +'<div class="icon"><i class="material-icons"> '+data.symbol+'</i></div>'
                 +'<div class="name"><strong class="text-uppercase">'+data.title+'</strong><span>'+data.small+'</span>'
                 +'<div class="count-number">'+data.anzahl+'</div>'
                  +'</div>'
             +'   </div>'
-            +'   </div>';
+            +'   </div>'
+           +'</div>';
 
                 $("#widgetRow").append(box);
             });
