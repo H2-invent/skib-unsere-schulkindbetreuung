@@ -131,7 +131,7 @@
         {% endif %}
     </div>
 </nav>
-<div class="page">
+<div class="page" style="background-image: url({% if app.user.stadt is defined and app.user.stadt is not null %}{{ vich_uploader_asset(app.user.stadt,'imageFile') }}{% else %}{{ asset('images/background.jpg') }}{% endif %}); background-repeat: no-repeat; background-size: cover; background-attachment: fixed">
     <!-- navbar-->
     <header class="header">
         <nav class="navbar">
