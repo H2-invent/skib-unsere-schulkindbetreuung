@@ -173,6 +173,11 @@ class Stadt
      */
     private $logoUrl;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $stadtHomepage;
+
 
     public function __construct()
     {
@@ -577,6 +582,18 @@ class Stadt
     public function setLogoUrl(?string $logoUrl): self
     {
         $this->logoUrl = $logoUrl;
+
+        return $this;
+    }
+
+    public function getStadtHomepage(): ?string
+    {
+        return $this->stadtHomepage;
+    }
+
+    public function setStadtHomepage(?string $stadtHomepage): self
+    {
+        $this->stadtHomepage = $stadtHomepage;
 
         return $this;
     }
