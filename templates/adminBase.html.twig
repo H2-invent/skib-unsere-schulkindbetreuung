@@ -31,7 +31,21 @@
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+    <style>
+        .background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image: url({% if app.user.stadt is defined and app.user.stadt is not null %}{{ vich_uploader_asset(app.user.stadt,'imageFile') }}{% else %}{{ asset('images/background.jpg') }}{% endif %});
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center top;
+        }
+    </style>
 
+        <script type="text/javascript" src="https://clickheat.h2-invent.com/js/clickheat.js"></script><noscript><p><a href="http://www.dugwood.com/clickheat/index.html">ClickHeat</a></p></noscript><script type="text/javascript"><!--
+        clickHeatSite = 'skb';clickHeatGroup = encodeURIComponent(window.location.pathname+window.location.search);clickHeatServer = 'https://clickheat.h2-invent.com/click.php';initClickHeat(); //-->
+    </script>
 </head>
 <body>
 <!-- Side Navbar -->
@@ -87,7 +101,6 @@
                 {% endif %}
                 {% if is_granted('ROLE_ORG_ACCOUNTING') %}
                     <li><a href="{{ path('accounting_overview',{'id':app.user.organisation.id}) }}"> <i class="material-icons">money</i> {% trans %}Buchhaltung{% endtrans %}</a></li>
-
                 {% endif %}
 
                 {% if is_granted('ROLE_CITY_ADMIN') %}
@@ -97,7 +110,10 @@
                          </ul>
                     </li>
                 {% endif %}
+                {% if is_granted('ROLE_CITY_REPORT') %}
+                    <li><a href="{{ path('stadt_bericht_index',{'stadt_id':app.user.stadt.id}) }}"> <i class="material-icons">money</i> {% trans %}Berichte{% endtrans %}</a></li>
 
+                {% endif %}
                 <h5 class="sidenav-heading">{% trans %}Einstellungen{% endtrans %}</h5>
                 <li><a href="{{ path('fos_user_change_password') }}"> <i class="icon-home"></i>{% trans %}Passwort ändern{% endtrans %}</a></li>
                {% if is_granted('ROLE_ADMIN') %}
@@ -131,7 +147,10 @@
         {% endif %}
     </div>
 </nav>
-<div class="page" style="background-image: url({% if app.user.stadt is defined and app.user.stadt is not null %}{{ vich_uploader_asset(app.user.stadt,'imageFile') }}{% else %}{{ asset('images/background.jpg') }}{% endif %}); background-repeat: no-repeat; background-size: cover; background-attachment: fixed">
+<div class="page">
+    <div class="background">
+
+    </div>
     <!-- navbar-->
     <header class="header">
         <nav class="navbar">
