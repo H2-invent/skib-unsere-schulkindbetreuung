@@ -42,6 +42,10 @@
             background-position: center top;
         }
     </style>
+
+        <script type="text/javascript" src="https://clickheat.h2-invent.com/js/clickheat.js"></script><noscript><p><a href="http://www.dugwood.com/clickheat/index.html">ClickHeat</a></p></noscript><script type="text/javascript"><!--
+        clickHeatSite = 'skb';clickHeatGroup = encodeURIComponent(window.location.pathname+window.location.search);clickHeatServer = 'https://clickheat.h2-invent.com/click.php';initClickHeat(); //-->
+    </script>
 </head>
 <body>
 <!-- Side Navbar -->
@@ -107,7 +111,7 @@
                     </li>
                 {% endif %}
                 {% if is_granted('ROLE_CITY_REPORT') %}
-                    <li><a href="{{ path('stadt_bericht_index',{'id':app.user.stadt.id}) }}"> <i class="material-icons">money</i> {% trans %}Berichte{% endtrans %}</a></li>
+                    <li><a href="{{ path('stadt_bericht_index',{'stadt_id':app.user.stadt.id}) }}"> <i class="material-icons">money</i> {% trans %}Berichte{% endtrans %}</a></li>
 
                 {% endif %}
                 <h5 class="sidenav-heading">{% trans %}Einstellungen{% endtrans %}</h5>
