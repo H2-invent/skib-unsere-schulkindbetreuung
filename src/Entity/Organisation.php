@@ -177,6 +177,11 @@ class Organisation
      */
     private $umstid;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $orgHomepage;
+
     public function __construct()
     {
         $this->schule = new ArrayCollection();
@@ -564,6 +569,18 @@ class Organisation
     public function setUmstid(string $umstid): self
     {
         $this->umstid = $umstid;
+
+        return $this;
+    }
+
+    public function getOrgHomepage(): ?string
+    {
+        return $this->orgHomepage;
+    }
+
+    public function setOrgHomepage(?string $orgHomepage): self
+    {
+        $this->orgHomepage = $orgHomepage;
 
         return $this;
     }

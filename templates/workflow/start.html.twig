@@ -120,14 +120,17 @@
                     <div class="col-lg-12">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h3> {% trans %}Weitere Informationen von ihrer Stadt und den Trägern{% endtrans %}</h3>
+                                <h3> {% trans %}Weitere Informationen{% endtrans %}</h3>
                             </div>
                             <div class="card-body">
                                 <div class="card mb-2">
                                     <div class="card-body">
                                         <h4>
-                                            Allgemeine Vertragsbedingungen
+                                            Stadt
                                         </h4>
+                                        {% if stadt.stadtHomepage is not null %}
+                                        <a href="{{ stadt.stadtHomepage }}" target="_blank">{% trans %}Homepage{% endtrans %}</a><br/>
+                                        {% endif %}
                                         <a href="{{ path('workflow_agb',{'slug':stadt.slug}) }}" target="_blank">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der Stadt %stadt%{% endtrans %}</a><br/>
                                     </div>
                                 </div>
@@ -135,11 +138,20 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h4>
-                                            Datenschutzhinweise
+                                            Trägern
                                         </h4>
+                                        <div class="row">
                                         {% for o in stadt.organisations %}
-                                            <a href="{{ path('workflow_datenschutz',{'org_id':o.id,'slug':stadt.slug}) }}" target="_blank">{% trans with {'%organisation%':o.name} %}Datenschutzhinweis der Organisation %organisation%{% endtrans %}</a><br/>
-                                        {% endfor %}
+                                        <div class="card card-body col-md-3 mr-1">
+                                            <b>{{ o.name }}</b>
+                                            {% if o.orgHomepage is not null %}
+                                            <a href="{{ o.orgHomepage }}" target="_blank">{% trans %}Homepage{% endtrans %}</a><br/>
+                                            {% endif %}
+                                            <a href="mailto:{{ o.email }}" target="_blank">{% trans %}Kontakt{% endtrans %}</a><br/>
+                                            <a href="{{ path('workflow_datenschutz',{'org_id':o.id,'slug':stadt.slug}) }}" target="_blank">{% trans %}Datenschutzhinweis{% endtrans %}</a><br/>
+                                        </div>
+                                            {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
