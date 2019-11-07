@@ -303,8 +303,6 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
         $schule = $kind->getSchule();
-        //$stadt = $adresse->getStadt();
-        //$schuljahr = $this->getSchuljahr($stadt);
 
         // Load the data from the city into the controller as $stadt
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
@@ -389,6 +387,29 @@ class LoerrachWorkflowController extends AbstractController
             $result['error'] = 1;
         }
         return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/{slug}/mittagessen", name="loerrach_workflow_mittagessen")
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
+     */
+    public function mittagessenAction(Request $request, Stadt $stadt)
+    {
+        $adresse = new Stammdaten;
+
+        //Include Parents in this route
+        if ($this->getStammdatenFromCookie($request)) {
+            $adresse = $this->getStammdatenFromCookie($request);
+        }
+
+        $renderSchulen = array();
+        foreach ($adresse->getKinds() as $data) {
+            //$renderSchulen[$data->getSchule()][] = $data;
+            $renderSchulen[$data->getSchule()->getId()] = $data;
+        }
+        //$uniqueRenderSchulen[] = array_unique($renderSchulen);
+        dump($renderSchulen);
+        return $this->render('workflow/loerrach/mittagessen.html.twig', array('stadt' => $stadt, 'schule'=>$renderSchulen));
     }
 
     /**

@@ -1,0 +1,44 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
+        <hr class="hr-light ">
+    </div>
+
+{% endblock %}
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">
+            <h4> {% trans %}Mittagessen buchen{% endtrans %}</h4>
+        </div>
+        <div class="card-body">
+            <h4>
+                {% trans %}Folgende Caterer stehen in den Schulen zur Verfügung.{% endtrans %}
+            </h4>
+
+            <div class="row card-body">
+                {% for s in schule %}
+                    {% if s.schule.catererName is not null %}
+                    <div class="card card-body md-3 mr-1">
+                        <h5>{{ s.schule.name }}</h5>
+                        <b>{% trans %}Caterer:{% endtrans %} {{ s.schule.catererName }}</b>
+                            <a href="{{ s.schule.catererUrl }}" target="_blank">{% trans %}Homepage Caterer{% endtrans %}</a><br/>
+                        <a href="mailto:{{ s.schule.catererEmail }}" target="_blank">{% trans %}Email Adresse Caterer{% endtrans %}</a><br/>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="alert alert-warning">
+                {% trans %}Vergessen Sie nicht das Mittagessen für Ihr Kind/Ihre Kinder zu bestellen{% endtrans %}
+            </div>
+                <div class="text-center">
+                    <a href="{{ path('loerrach_workflow_schulen') }}"
+                       class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
+                    <a href="{{ path('loerrach_workflow_zusammenfassung') }}"
+                       class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
+                </div>
+
+        </div>
+    </div>
+{% endblock %}

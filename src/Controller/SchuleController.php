@@ -53,6 +53,9 @@ class SchuleController extends AbstractController
             ->add('adresszusatz', TextType::class,['required'=>false,'label'=>'Adresszusatz','translation_domain' => 'form'])
             ->add('plz', TextType::class,['label'=>'PLZ','translation_domain' => 'form'])
             ->add('ort', TextType::class,['label'=>'Stadt','translation_domain' => 'form'])
+            ->add('catererName', TextType::class,['required'=>false,'label'=>'Caterer','translation_domain' => 'form'])
+            ->add('catererEmail', TextType::class,['required'=>false,'label'=>'Caterer Email','translation_domain' => 'form'])
+            ->add('catererUrl', TextType::class,['required'=>false,'label'=>'Caterer URL','translation_domain' => 'form'])
             ->add('infoText', TextareaType::class,['label'=>'Info Text','translation_domain' => 'form','attr'=>array('rows'=>6)])
 
             ->add('organisation', EntityType::class, [
@@ -109,6 +112,9 @@ class SchuleController extends AbstractController
             ->add('adresszusatz', TextType::class,['required'=>false,'label'=>'Adresszusatz','translation_domain' => 'form'])
             ->add('plz', TextType::class,['label'=>'PLZ','translation_domain' => 'form'])
             ->add('ort', TextType::class,['label'=>'Stadt','translation_domain' => 'form'])
+            ->add('catererName', TextType::class,['required'=>false,'label'=>'Caterer','translation_domain' => 'form'])
+            ->add('catererEmail', TextType::class,['required'=>false,'label'=>'Caterer Email','translation_domain' => 'form'])
+            ->add('catererUrl', TextType::class,['required'=>false,'label'=>'Caterer URL','translation_domain' => 'form'])
             ->add('infoText', TextareaType::class,['label'=>'Info Text','translation_domain' => 'form','attr'=>array('rows'=>6)])
 
             ->add('organisation', EntityType::class, [
