@@ -404,11 +404,8 @@ class LoerrachWorkflowController extends AbstractController
 
         $renderSchulen = array();
         foreach ($adresse->getKinds() as $data) {
-            //$renderSchulen[$data->getSchule()][] = $data;
             $renderSchulen[$data->getSchule()->getId()] = $data;
         }
-        //$uniqueRenderSchulen[] = array_unique($renderSchulen);
-        dump($renderSchulen);
         return $this->render('workflow/loerrach/mittagessen.html.twig', array('stadt' => $stadt, 'schule'=>$renderSchulen));
     }
 
