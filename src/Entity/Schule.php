@@ -102,6 +102,23 @@ class Schule
      */
     private $kinder;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Assert\Url()
+     */
+    private $catererUrl;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $catererName;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Assert\Email()
+     */
+    private $catererEmail;
+
 
 
     public function __construct()
@@ -309,6 +326,42 @@ class Schule
                 $kinder->setSchule(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCatererUrl(): ?string
+    {
+        return $this->catererUrl;
+    }
+
+    public function setCatererUrl(?string $catererUrl): self
+    {
+        $this->catererUrl = $catererUrl;
+
+        return $this;
+    }
+
+    public function getCatererName(): ?string
+    {
+        return $this->catererName;
+    }
+
+    public function setCatererName(?string $catererName): self
+    {
+        $this->catererName = $catererName;
+
+        return $this;
+    }
+
+    public function getCatererEmail(): ?string
+    {
+        return $this->catererEmail;
+    }
+
+    public function setCatererEmail(?string $catererEmail): self
+    {
+        $this->catererEmail = $catererEmail;
 
         return $this;
     }
