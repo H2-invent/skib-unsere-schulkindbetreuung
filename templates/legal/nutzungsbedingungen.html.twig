@@ -1,138 +1,51 @@
 {% extends 'workflow/base.html.twig' %}
 
 
-{% block header %}
-    <div class="col-md-6 mb-4 white-text text-centerm text-md-left">
 
-        <h1 class="font-weight-bold">{% trans %}Unsere Kinderbetreuung{% endtrans %}</h1>
-        <hr class="hr-light ">
-
-    </div>
-
-{% endblock %}
 {% block content %}
 
-<div class="row">
+    <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <h3> {% trans %}Nutzungsbedingungen{% endtrans %}</h3>
             </div>
             <div class="card-body">
-                    <h4>{% trans %}Allgemein{% endtrans %}</h4>
-                <p>
-                    {% trans %}
-                        <b>§ 1 Geltungsbereich</b><br/>
+                {% apply markdown_to_html %}
+                    ### 1 Geltungsbereich
+                    1. Die nachfolgenden Bedingungen gelten für die Nutzung der Schulkindbetreuungsplattform - im folgenden "Unsere Webseite" genannt. Für die Nutzung unserer Webseite ist wichtig, dass Sie als Nutzer/Nutzerin die nachfolgenden Regeln bzw. Bedingungen akzeptieren.
+                    1. Die Registrierung und Benutzung unserer Webseite ist kostenlos.
+                    1. Mit der Registrierung sind Sie mit den Nutzungsbedingungen unserer Webseite einverstanden. Durch Ihr Einverständnis garantieren Sie uns, dass Sie keine Anmeldungen erstellen werden, die gegen die Nutzungsbedingung verstoßen.
+                    1. Durch das Benutzen von unserer Webseite kommt kein Vertrag zwischen den Nutzern/Nutzerinnen und uns zustande.
 
-                <p>
-                <ul style="list-style-type:circle;">
-                    <li>
-                        Die nachfolgenden Bedingungen gelten für die Nutzung der Anmeldeplattform für die Schulkindbetreuung - im folgenden Unsere Webseite genannt - Forums. Für die Nutzung des Forums ist wichtig, dass Sie als Nutzer/Nutzerin die
-                nachfolgenden Forenregeln bzw. –bedingungen akzeptieren. Die Registrierung und Benutzung unseres Forums
-                ist kostenlos.
-                </li>
-                <li>
-                    Mit der Registrierung sind Sie mit den Nutzungsbedingungen unserer Webseite einverstanden. Durch Ihr
-                    Einverständnis garantieren Sie uns, dass Sie keine Beiträge erstellen werden, die gegen die
-                    Nutzungsbedingung verstoßen.
-                </li>
-                <li>
-                    Durch das Benutzen von unserer Webseite kommt kein Vertrag zwischen den Nutzern/Nutzerinnen und uns
-                    zustande.
-                </li>
-                </ul>
-                </p>
+                    ### 2 Pflichten als Nutzers
+                    1. Einer Ihrer Pflichten als Nutzer/Nutzerin ist es, dass Sie keine Anmeldungen erstellen, die gegen diese Forenregeln, gegen die guten Sitten oder sonst gegen geltendes deutsches Recht verstoßen.
 
+                    ### 3 Haftungsbeschränkung
+                    1. Diese Website ist Gegenstand der nachfolgenden Nutzungsbedingungen, die im Verhältnis zwischen Nutzer und Dienstanbieter mit dem Aufruf dieser Website verbindlich vereinbart sind. Soweit spezielle Bestimmungen für einzelne Nutzungen dieser Website von den nachfolgenden Nutzungsbedingungen abweichen, wird in der Website an entsprechender Stelle ausdrücklich darauf hingewiesen. Es gelten dann im jeweiligen Einzelfall ergänzend die besonderen Nutzungsbedingungen. Diese Website beinhaltet Daten und Informationen aller Art, die marken- und/oder urheberrechtlich zugunsten des Dienstanbieters und/oder Dritter geschützt sind. Es ist daher nicht gestattet, die Website im Ganzen oder einzelne Teile davon herunterzuladen, zu vervielfältigen und zu verbreiten. Gestattet ist die technisch bedingte Vervielfältigung zum Zwecke des Browsing, soweit diese Handlung keinen wirtschaftlichen Zwecken dient, sowie die dauerhafte Vervielfältigung für den eigenen nichtkommerziellen Gebrauch.
+                    1. Wir übernehmen die Haftung für die Inhalte dieser Website gemäß den gesetzlichen Bestimmungen. Für die Inhalte der einzeln dargestellten Betreuungsangebote und - anbieter, einschließlich Bildern und Daten in den Profilen, sind die jeweiligen Betreuungsanbieter selbst verantwortlich. Eine Gewähr für die Richtigkeit und Vollständigkeit der auf der Website befindlichen Informationen wird nicht übernommen.
+                    1. Verweise und Links auf Websites Dritter bedeuten nicht, dass sich der Dienstanbieter die hinter dem Verweis oder Link liegenden Inhalte zu eigen macht. Die Inhalte begründen keine Verantwortung des Dienstanbieters für die dort bereit gehaltenen Daten und Informationen. Der Dienstanbieter hat keinen Einfluss auf die hinter dem Link liegenden Inhalte. Für rechtswidrige, fehlerhafte und unvollständige Inhalte und für Schäden, die aufgrund der Nutzung von einem hinter dem Link liegenden Inhalt verursacht worden sind, haftet der Dienstanbieter daher nicht.
+                    1. Es ist wird nicht für einen ständigen unterbrechungsfreien Abruf der Webseite garantiert. Einer Haftung diesbezüglich wird hiermit ausdrücklich widersprochen.
+                    Auch bei großer Sorgfalt können Ausfallzeiten leider nicht ausgeschlossen werden.
+                    1. Die Nutzung des Internets erfolgt auf eigene Gefahr des Nutzers. Der Dienstanbieter haftet vor allem nicht für den technisch bedingten Ausfall des Internets bzw. des Zugangs zum Internet.
 
-                        <b>§ 2 Pflichten als Forum-Nutzer/Forum-Nutzerinnen</b>
-                <ul style="list-style-type: none">
-                    <li>
-                        Einer Ihrer Pflichten als Nutzer/Nutzerin ist es, dass Sie keine Beiträge veröffentlichen, die gegen diese Forenregeln, gegen die guten Sitten oder sonst gegen geltendes deutsches Recht verstoßen.
+                    ### 4 Urheberrecht
+                    1. Es ist gestattet, einen Link auf diese Website zu setzen, soweit er allein der Querreferenz dient. Der Dienstanbieter behält sich das Recht vor, die Gestattung zu widerrufen. Das Framen dieser Website ist nicht gestattet.
+                    1. Sämtliche Texte, Bilder und andere auf unserer Webseite veröffentlichten Informationen und Daten unterliegen - sofern nicht anders gekennzeichnet - dem Copyright unserer Seite. Jede Form von Wiedergabe und/oder Modifikation darf nur mit der schriftlichen Genehmigung durch uns erfolgen. Andersfalls behalten wir uns das Recht vor gerichtlich gegen diese Rechtsverletzung vorzugehen. Alle Kosten, die durch eine Rechtsverletzung seitens eines Benutzers verursacht werden, werden diesem in Rechnung gestellt.
 
-                    </li>
-                </ul>
-                        Folgende Punkte sind Ihnen nicht genehmigt:
-<ul>
-    <li>
-        Inhalte zu veröffentlichen, die unwahr sind und deren Veröffentlichung einen Straftatbestand oder eine Ordnungswidrigkeit erfüllt,
-    </li>
-    <li>
-        Versendung von Spam über das Forum an andere Forum-Nutzer/Form-Nutzerin,
-    </li>
-    <li>
-        Verwendung von gesetzlich durch Urheber- und Markenrecht geschützte Inhalte ohne rechtmäßige Berechtigung (z.B. Pressemitteilungen etc.),
-    </li>
-    <li>
-        Handlungen, die wettbewerbswidrig sind,
-    </li>
-    <li>
-        mehrfache Einstellung von Themen ins Forum (sogenannte Doppelpostings),
-    </li>
-    <li>
-        eigene Werbung, folglich Schleichwerbung, zu betreiben und
-    </li>
-    <li>
-        Inhalte zu veröffentlichen, die beleidigend, rassistisch, diskriminierend oder pornographische Elemente aufweisen gegenüber anderen Nutzern/Nutzerinnen und der Allgemeinheit.
-    </li>
-</ul>
-                        Ihre Pflicht als Forum-Nutzer/ Forum-Nutzerin ist es, auf § 2 Abs. 1 Nr. 1-7 dieser Nutzungsbedingung, vor  der Veröffentlichung Ihres Beitrages im Forum zu beachten und zu überprüfen, ob Sie sich an diese Punkte gehalten haben.
+                    ### 5 Änderungsvorbehalt
+                    Wir haben jederzeit das Recht die Nutzungsbedingungen zu ändern. Die Änderung wird dann per Info-Eintrag auf der Webseite veröffentlicht.
 
-                        (2)   Sollten Sie gegen § 2 Abs. 1 Nr. 1-7 dieser Nutzungsbedingung verstoßen, behalten wir uns das Recht vor, gegen Sie folgende Schritte vorzunehmen:
+                    ### 6 Gerichtsstand
+                    Gerichtsstand ist, wenn der Vertragspartner Kaufmann, juristische Person des öffentlichen Rechts oder öffentlich-rechtliches Sondervermögen ist, am Sitz des Dienstanbieters. Es gilt deutsches Recht unter Ausschluss des UN-Kaufrechts.
 
-                        1. Ihre eingestellten Beiträge zu löschen und diese abzuändern,
-
-                        2. Verbot weiterhin im Forum Beiträge zu verfassen und
-
-                        3. Sperrung des Zugangs als Nutzer/Nutzerin.
-
-                        (3)  Haben Sie als Forum-Nutzer/Forum-Nutzerin nicht die Forenregeln beachtet und sind hierdurch mögliche Rechtsverstöße entstanden, die durch Ihre eingestellten Inhalte in unserem Forum entstanden sind (Pflichtverletzung), verpflichten Sie sich als Nutzer/Nutzerin, uns von jeglichen Ansprüchen, auch den Schadenersatzansprüchen, freizustellen und diesen die Kosten zu ersetzen.
-
-                        Zudem ist der Nutzer/die Nutzerin verpflichtet uns, bei Schadenersatzansprüchen hinsichtlich der Abwehr des durch ihn entstandenen Rechtsverstoßes (Pflichtverletzung s.o.), zu unterstützen und die Kosten einer angemessenen Rechtsverteidigung für uns zu tragen.
-
-                        (4)   Durch Ihr Einverständnis garantieren Sie uns, dass Sie keine Beträge erstellen werden, die gegen die Nutzungsbedingung verstoßen. Entsprechendes gilt auch für das Setzen von externen Links und die Signaturen.
-
-                        <b>§ 3 Übertragung von Nutzungsrechten</b><br/>
-
-                        Sie, als Forum-Nutzer/Forum-Nutzerin  haben die alleinige Verantwortung des Urheberrechts i.S.d. Urhebergesetzes bei Veröffentlichung von Beiträgen und Themen im Forum zu beachten. Als Nutzer/Nutzerin räumen Sie lediglich uns mit Veröffentlichung Ihres Beitrages auf deren Homepage das Recht ein, den Beitrag dauerhaft zum Abruf bereitzustellen. Ferner hat unser Team das Recht, Ihre Themen und Beiträge zu löschen, zu bearbeiten und innerhalb seiner Homepage zu verschieben, um diese mit anderen Inhalten zu verknüpfen oder zu schließen.
-
-                        <b>§ 4 Haftungsbeschränkung</b><br/>
-
-                        (1) Wir übernimmen keinerlei Gewähr für die im Forum veröffentlichten und eingestellten Beiträge, Themen, externen Links und die daraus resultierenden Inhalte, insbesondere nicht für deren Richtigkeit, Vollständigkeit und Aktualität. Wir sind auch nicht verpflichtet, permanent die übermittelten und gespeicherten Beiträge der Nutzer/Nutzerinnen zu überwachen oder nach den Umständen zu erforschen, ob sie auf einen rechtswidrigen Inhalt hinweisen. Wir haften grundsätzlich nur im Falle einer vorsätzlichen oder grob fahrlässigen Pflichtverletzung.
-
-                        (2) Wir weisen ausdrücklich darauf hin, dass die juristischen Beiträge und Diskussionen im Forum vollkommen unverbindlich sind. Die Nutzung der Beiträge und deren Verwertung erfolgt auf Ihre eigene Gefahr.
-
-                        (3)   Bei Werbeschaltungen übernimmen wir keine Haftung für den Inhalt und die Richtigkeit. Für den Inhalt der Werbeanzeigen ist der jeweilige Autor einzig und allein verantwortlich; gleiches gilt für den Inhalt der beworbenen Webseite. Bei Darstellung der Werbeanzeige auf unserer Webseite , sind wir nicht gleichzeitig mit dem rechtswidrigen Inhalt einverstanden. Daher liegt die Haftung ausschließlich bei dem Werbekunden.
-
-                        (4)   Es ist wird nicht für einen ständigen unterbrechungsfreien Abruf der Webseite garantiert. Einer Haftung diesbezüglich wird hiermit ausdrücklich widersprochen. Auch bei großer Sorgfalt können Ausfallzeiten leider nicht ausgeschlossen werden.
-
-
-
-                        <b>§ 5 Urheberrecht</b><br/>
-
-                        Sämtliche Texte, Bilder und andere auf unserer Webseite veröffentlichten Informationen und Daten unterliegen - sofern nicht anders gekennzeichnet - dem Copyright unserer Seite. Jede Form von Wiedergabe und/oder Modifikation darf nur mit der schriftlichen Genehmigung durch uns erfolgen. Andersfalls behalten wir uns das Recht vor gerichtlich gegen diese Rechtsverletzung vorzugehen. Alle Kosten, die durch eine Rechtsverletzung seitens eines Benutzers verursacht werden, werden diesem in Rechnung gestellt.
-
-
-
-                        <b>§ 6 Änderungsvorbehalt</b><br/>
-
-                        Wir haben jederzeit das Recht die Nutzungsbedingungen zu ändern. Die Änderung wird dann per Forum-Eintrag auf der Webseite veröffentlicht.
-
-
-
-                        <b>§ 7 Kündigung und Laufzeit der Mitgliedschaft bei unserer Webseite</b><br/>
-
-                        Die Laufzeit der Mitgliedschaft beginnt mit der Registrierung und mit dem Einverständnis unseren Nutzungsbedingungen und besteht auf eine unbestimmte Zeit. Die Mitgliedschaft kann jederzeit ohne Angabe von Kündigen fristlos gekündigt werden.
-
-
-
-                        <b>§ 8 Salvatorische Klausel</b><br/>
-
-                        Diese Forum-Nutzungsbedingung ist als Teil unserer Webseite zu betrachten, von dem aus auf diese Seite verwiesen wird. Sind einzelne Formulierungen dieser Forum-Nutzungsbedingung nicht mehr ganz oder nicht mehr vollständig konform mit der geltenden Rechtslage, so ist davon auszugehen, dass die übrigen Regelungen der Forum-Nutzungsbedingungen bestehen bleiben.
-                    {% endtrans %}
-                </p>
+                    ### 7 Salvatorische Klausel
+                    Diese Nutzungsbedingung ist als Teil unserer Webseite zu betrachten, von dem aus auf diese Seite verwiesen wird. Sind einzelne Formulierungen dieser Forum-Nutzungsbedingung nicht mehr ganz oder nicht mehr vollständig konform mit der geltenden Rechtslage, so ist davon auszugehen, dass die übrigen Regelungen der Nutzungsbedingungen bestehen bleiben.
+                {% endapply %}
             </div>
 
+        </div>
     </div>
-</div>
+    </div>
 
 {% endblock %}
