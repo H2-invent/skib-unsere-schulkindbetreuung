@@ -104,6 +104,7 @@ class Schule
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Url()
      */
     private $catererUrl;
 
@@ -114,6 +115,7 @@ class Schule
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Email()
      */
     private $catererEmail;
 
