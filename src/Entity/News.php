@@ -36,6 +36,11 @@ class News
      */
     private $date;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $activ;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +90,18 @@ class News
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getActiv(): ?bool
+    {
+        return $this->activ;
+    }
+
+    public function setActiv(bool $activ): self
+    {
+        $this->activ = $activ;
 
         return $this;
     }

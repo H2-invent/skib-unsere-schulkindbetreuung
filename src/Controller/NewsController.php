@@ -103,21 +103,59 @@ class NewsController extends AbstractController
 
     }
     /**
-     * @Route("city_admin/stadtschuljahr/delete", name="city_admin_news_delete")
+     * @Route("city_admin/news/delete", name="city_admin_news_delete")
      */
     public function delete(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $activity =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
         if ($activity->getStadt() != $this->getUser()->getStadt()) {
-            throw new \Exception('Wrong Organisation');
+            throw new \Exception('Wrong City');
         }
         $em = $this->getDoctrine()->getManager();
         $em->remove($activity);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
         return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$activity->getStadt()->getId(),'snack'=>$text));
+    }
 
+    /**
+     * @Route("city_admin/news/deactivate", name="city_admin_news_deactivate")
+     */
+    public function deactivateAction(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+
+        if ($news->getStadt() != $this->getUser()->getStadt()) {
+            throw new \Exception('Wrong City');
+        }
+        $news->setActiv(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($news);
+        $em->flush();
+        $text = $translator->trans('Erfolgreich deaktiviert');
+        return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$news->getStadt()->getId(),'snack'=>$text));
+    }
+
+    /**
+     * @Route("city_admin/news/activate", name="city_admin_news_activate")
+     */
+    public function activateAction(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+
+        if ($news->getStadt() != $this->getUser()->getStadt()) {
+            throw new \Exception('Wrong City');
+        }
+        $today = new \DateTime();
+        $news->setActiv(true);
+        $news->setDate($today);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($news);
+        $em->flush();
+        $text = $translator->trans('Erfolgreich aktiviert');
+        return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$news->getStadt()->getId(),'snack'=>$text));
     }
 
     /**

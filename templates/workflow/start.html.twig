@@ -94,17 +94,15 @@
                                     {% trans %}News{% endtrans %}
                                 </h4>
                                 {% if stadt.news is not null %}
-                                    {% for n in stadt.news %}
-                                        {% if loop.index<3 %}
-                                            <a class="loadContent"
-                                               href="{{ path('news_show_all', {'id': n.id, 'slug': stadt.slug}) }}">
-                                                <b>{{ n.title }}</b>
-                                            </a>
-                                            <br/>
-                                            <p>
-                                                {{ n.message|nl2br|length > 70 ? n.message|nl2br|slice(0,70)~'...':n.message }}
-                                            </p>
-                                        {% endif %}
+                                    {% for n in stadt.news if n.activ %}
+                                        <a class="loadContent"
+                                           href="{{ path('news_show_all', {'id': n.id, 'slug': stadt.slug}) }}">
+                                            <b>{{ n.title }}</b>
+                                        </a>
+                                        <br/>
+                                        <p>
+                                            {{ n.message|nl2br|length > 70 ? n.message|nl2br|slice(0,70)~'...':n.message }}
+                                        </p>
                                     {% endfor %}
                                 {% endif %}
                             </div>
@@ -155,7 +153,9 @@
                                     </h4>
                                     {% if stadt.stadtHomepage is not null %}
                                         <a href="{{ stadt.stadtHomepage }}"
-                                           target="_blank"><i class="fas fa-external-link"></i> {% trans %}Homepage{% endtrans %}</a><br/>
+                                           target="_blank"><i
+                                                    class="fas fa-external-link"></i> {% trans %}Homepage{% endtrans %}
+                                        </a><br/>
                                     {% endif %}
                                     <a href="{{ path('workflow_agb',{'slug':stadt.slug}) }}"
                                        target="_blank">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der Stadt %stadt%{% endtrans %}</a><br/>
@@ -169,7 +169,7 @@
                                     </h4>
                                     <div class="row">
                                         {% for o in stadt.organisations %}
-                                            <div class="col-md-3 mr-1 mb-1" style="border-right: solid lightgrey 1px" >
+                                            <div class="col-md-3 mr-1 mb-1" style="border-right: solid lightgrey 1px">
                                                 <b>{{ o.name }}</b><br>
                                                 {% trans %}Ansprechpartner:{% endtrans %} {{ o.ansprechpartner }}<br/>
                                                 <a href="mailto:{{ o.email }}"
