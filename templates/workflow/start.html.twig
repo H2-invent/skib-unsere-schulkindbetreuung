@@ -95,14 +95,14 @@
                                 </h4>
                                 {% if stadt.news is not null %}
                                     {% for n in stadt.news %}
-                                        {% if loop.index<2 %}
+                                        {% if loop.index<3 %}
                                             <a class="loadContent"
                                                href="{{ path('news_show_all', {'id': n.id, 'slug': stadt.slug}) }}">
                                                 <b>{{ n.title }}</b>
                                             </a>
                                             <br/>
                                             <p>
-                                                {{ n.message|nl2br|length > 50 ? n.message|nl2br|slice(0,180)~'...':n.message|nl2br }}
+                                                {{ n.message|nl2br|length > 70 ? n.message|nl2br|slice(0,70)~'...':n.message|nl2br }}
                                             </p>
                                         {% endif %}
                                     {% endfor %}
@@ -169,8 +169,8 @@
                                     </h4>
                                     <div class="row">
                                         {% for o in stadt.organisations %}
-                                            <div class="card card-body col-md-3 mr-1">
-                                                <b>{{ o.name }}</b>
+                                            <div class="col-md-3 mr-1" style="border-right: solid lightgrey 1px" >
+                                                <b>{{ o.name }}</b><br>
                                                 {% if o.orgHomepage is not null %}
                                                     <a href="{{ o.orgHomepage }}"
                                                        target="_blank">{% trans %}Homepage{% endtrans %}</a><br/>
