@@ -81,7 +81,7 @@
                             <h3>{% trans %}Herzlich Willkommen bei der neuen Schulkindbetreuung{% endtrans %}</h3>
                         </div>
                         <div class="row card-body">
-                            <div class="col-md-8">
+                            <div class="col-md-8" style="border-right: solid lightgrey 1px">
                                 <h4>
                                     Info
                                 </h4>
@@ -102,7 +102,7 @@
                                             </a>
                                             <br/>
                                             <p>
-                                                {{ n.message|nl2br|length > 70 ? n.message|nl2br|slice(0,70)~'...':n.message|nl2br }}
+                                                {{ n.message|nl2br|length > 70 ? n.message|nl2br|slice(0,70)~'...':n.message }}
                                             </p>
                                         {% endif %}
                                     {% endfor %}
@@ -155,7 +155,7 @@
                                     </h4>
                                     {% if stadt.stadtHomepage is not null %}
                                         <a href="{{ stadt.stadtHomepage }}"
-                                           target="_blank">{% trans %}Homepage{% endtrans %}</a><br/>
+                                           target="_blank"><i class="fas fa-external-link"></i> {% trans %}Homepage{% endtrans %}</a><br/>
                                     {% endif %}
                                     <a href="{{ path('workflow_agb',{'slug':stadt.slug}) }}"
                                        target="_blank">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der Stadt %stadt%{% endtrans %}</a><br/>
@@ -169,14 +169,15 @@
                                     </h4>
                                     <div class="row">
                                         {% for o in stadt.organisations %}
-                                            <div class="col-md-3 mr-1" style="border-right: solid lightgrey 1px" >
+                                            <div class="col-md-3 mr-1 mb-1" style="border-right: solid lightgrey 1px" >
                                                 <b>{{ o.name }}</b><br>
+                                                {% trans %}Ansprechpartner:{% endtrans %} {{ o.ansprechpartner }}<br/>
+                                                <a href="mailto:{{ o.email }}"
+                                                   target="_blank">{% trans %}Kontakt{% endtrans %}</a><br/>
                                                 {% if o.orgHomepage is not null %}
                                                     <a href="{{ o.orgHomepage }}"
                                                        target="_blank">{% trans %}Homepage{% endtrans %}</a><br/>
                                                 {% endif %}
-                                                <a href="mailto:{{ o.email }}"
-                                                   target="_blank">{% trans %}Kontakt{% endtrans %}</a><br/>
                                                 <a href="{{ path('workflow_datenschutz',{'org_id':o.id,'slug':stadt.slug}) }}"
                                                    target="_blank">{% trans %}Datenschutzhinweis{% endtrans %}</a><br/>
                                             </div>

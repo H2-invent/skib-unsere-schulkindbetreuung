@@ -47,16 +47,18 @@ class NewsController extends AbstractController
         }
         $activity = new News();
         $activity->setStadt($stadt);
+        $today = new \DateTime();
+        $activity->setDate($today);
         $form = $this->createForm(NewsType::class, $activity);
         $form->handleRequest($request);
 
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
-            $city = $form->getData();
-            $errors = $validator->validate($city);
+            $news = $form->getData();
+            $errors = $validator->validate($news);
             if(count($errors)== 0) {
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($city);
+                $em->persist($news);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
                 return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$stadt->getId(),'snack'=>$text));
@@ -78,18 +80,18 @@ class NewsController extends AbstractController
             throw new \Exception('Wrong City');
         }
 
+        $today = new \DateTime();
+        $activity->setDate($today);
         $form = $this->createForm(NewsType::class, $activity);
         $form->handleRequest($request);
 
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
-            $city = $form->getData();
-            $errors = $validator->validate($city);
+            $news = $form->getData();
+            $errors = $validator->validate($news);
             if(count($errors)== 0) {
-                $today = new \DateTime();
-
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($city);
+                $em->persist($news);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
                 return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$activity->getStadt()->getId(),'snack'=>$text));

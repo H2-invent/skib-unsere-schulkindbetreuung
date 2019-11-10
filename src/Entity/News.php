@@ -31,6 +31,11 @@ class News
      */
     private $stadt;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +73,18 @@ class News
     public function setStadt(?Stadt $stadt): self
     {
         $this->stadt = $stadt;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }
