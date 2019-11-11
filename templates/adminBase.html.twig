@@ -86,6 +86,7 @@
                 {% if is_granted('ROLE_CITY_ADMIN') %}
                     <li><a href="{{ path('city_admin_organisation_show',{'id':app.user.stadt.id}) }}"> <i class="material-icons">home</i>{% trans %}Organisationen{% endtrans %}</a></li>
                     <li><a href="{{ path('city_admin_schuljahr_anzeige',{'id':app.user.stadt.id}) }}">  <i class="material-icons">home</i>{% trans %}Schuljahre{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_admin_news_anzeige',{'id':app.user.stadt.id}) }}">  <i class="material-icons">home</i>{% trans %}Neuigkeiten{% endtrans %}</a></li>
 
 
                 {% endif %}

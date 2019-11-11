@@ -1,0 +1,67 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <!-- Count item widget-->
+                <div class=" col-12 card">
+                    <div class="card-header">
+                        <h1> {% trans %}Neuigkeiten{% endtrans %} <a
+                                    href="{{ path('city_admin_news_neu',{'id':city.id}) }}">
+                                <button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                                    <i class="material-icons">add</i>
+                                </button>
+                            </a></h1>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>{% trans %}Sichtbar{% endtrans %}</th>
+                                <th>{% trans %}Titel{% endtrans %}</th>
+                                <th>{% trans %}News Nachricht{% endtrans %}</th>
+                                <th>{% trans %}Datum{% endtrans %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for n in news %}
+                                <tr>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="material-icons">more_vert</i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                                <a class="dropdown-item"
+                                                   href="{{ path('city_admin_news_edit',{'id':n.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                {% if n.activ == true %}
+                                                <a class="dropdown-item"
+                                                   href="{{ path('city_admin_news_deactivate',{'id':n.id}) }}">{% trans %}Deaktivieren{% endtrans %}</a>
+                                                {% else %}
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('city_admin_news_activate',{'id':n.id}) }}">{% trans %}Aktivieren{% endtrans %}</a>
+                                                    {% endif %}
+                                                <a class="dropdown-item"
+                                                   href="{{ path('city_admin_news_delete',{'id':n.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ n.activ?"Ja":'Nein'|trans }}</td>
+                                    <td>{{ n.title }}</td>
+                                    <td>{{ n.message }}</td>
+                                    <td>{{ n.date|date("d.m.Y G:i") }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

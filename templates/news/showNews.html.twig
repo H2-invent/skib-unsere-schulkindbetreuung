@@ -1,0 +1,24 @@
+<div class="modal-dialog card" role="document">
+    <img class="card-img d-none d-md-block" src="{{ asset('images/news.jpg') }}">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h5 class="modal-title">{{ news.title }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>
+                {{ news.message|nl2br }}
+            </p>
+            <div class="modal-footer">
+                {% trans %}Datum{% endtrans %}: {{ news.date|date("d.m.Y G:i") }}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
