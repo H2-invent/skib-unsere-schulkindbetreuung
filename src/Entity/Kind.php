@@ -709,6 +709,13 @@ class Kind
         return $this;
     }
 
+    public function getArtString(){
+        $type = array(
+        1=>'Ganztagsbetreuung',
+        2=>'Halbtagsbetreuung',
+        );
+        return $type[$this->art];
+    }
 
 
 }

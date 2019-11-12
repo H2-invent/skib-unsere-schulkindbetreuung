@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ActiveRepository")
@@ -85,17 +86,6 @@ class Active
         return $this;
     }
 
-    public function getZeitblock(): ?zeitblock
-    {
-        return $this->zeitblock;
-    }
-
-    public function setZeitblock(?zeitblock $zeitblock): self
-    {
-        $this->zeitblock = $zeitblock;
-
-        return $this;
-    }
 
     public function getStadt(): ?Stadt
     {
@@ -133,7 +123,7 @@ class Active
         return $this;
     }
 
-    public function getBlocks(): ArrayCollection
+    public function getBlocks(): PersistentCollection
     {
         return $this->blocks;
     }
