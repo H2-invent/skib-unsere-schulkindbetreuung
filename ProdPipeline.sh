@@ -33,4 +33,8 @@ echo --------------------------------------------------------------------------
 mkdir public/uploads
 mkdir public/uploads/images
 chown -R www-data:www-data public/uploads/images
-chmod -R 775 public/uploads/images
+chmod -R 775 public/uploads/image
+echo --------------------------------------------------------------------------
+echo -----------------------Restart Apache-------------------------------------
+echo --------------------------------------------------------------------------
+service apache2 restart
