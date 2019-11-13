@@ -6,7 +6,11 @@
             <div class="row">
                 <!-- Count item widget-->
                 <div class=" col-12 card">
-                    <h1 class="card-header">{% trans %}Berichte{% endtrans %}</h1>
+                    {% if active is not null %}
+                        <h1 class="card-header">{% trans with {'%active%':active.von|date('d.m.Y')~'-'~active.bis|date('d.m.Y')} %}Berichte von %active%{% endtrans %}</h1>
+                    {% else %}
+                        <h1 class="card-header">{% trans %}Berichte{% endtrans %}</h1>
+                    {% endif %}
                     <div class="card-body">
                         <h1 class="card-header">{% trans %}Export{% endtrans %}</h1>
                         <div class="row">
@@ -20,17 +24,27 @@
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a class="schuljahrSelector dropdown-item" data-type="schuljahr"
-                                               data-value="null" href="#"> {% trans %}Alle Schuljahre{% endtrans %}</a>
+                                               data-value="null"
+                                               href="{{ path('stadt_bericht_index',{'stadt_id':stadt.id}) }}"> {% trans %}Alle Schuljahre{% endtrans %}</a>
 
                                             {% for s in schuljahre %}
                                                 <a class="schuljahrSelector dropdown-item" data-type="schuljahr"
-                                                   data-value="{{ s.id }}" data-id="#">{{ s.von|date('d.m.Y') }}
+                                                   data-value="{{ s.id }}"
+                                                   href="{{ path('stadt_bericht_index',{'stadt_id':stadt.id,'schuljahr':s.id}) }}">{{ s.von|date('d.m.Y') }}
                                                     - {{ s.bis|date('d.m.Y') }}</a>
                                             {% endfor %}
                                         </div>
                                     </div>
                                 </div>
-                                <a href="{{ path('stadt_bericht_export',{'stadt_id':stadt.id}) }}" id="excelDownload" class="btn btn-primary">{% trans %}Download als Excel{% endtrans %}</a>
+                                {% if active is null %}
+                                    <a href="{{ path('stadt_bericht_export',{'stadt_id':stadt.id}) }}"
+                                       id="excelDownload"
+                                       class="btn btn-primary">{% trans %}Download als Excel{% endtrans %}</a>
+                                {% else %}
+                                    <a href="{{ path('stadt_bericht_export',{'stadt_id':stadt.id,'schuljahr':active.id}) }}"
+                                       id="excelDownload"
+                                       class="btn btn-primary">{% trans %}Download als Excel{% endtrans %}</a>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -64,4 +78,13 @@
             </div>
         </div>
     </section>
+{% endblock %}
+{% block jquery %}
+    <script>
+        $('.schuljahrSelector').click(function (e) {
+            //   e.preventDefault();
+            //   var url = $(this).attr('data-url');
+            //  $('#excelDownload').attr('href', url);
+        })
+    </script>
 {% endblock %}

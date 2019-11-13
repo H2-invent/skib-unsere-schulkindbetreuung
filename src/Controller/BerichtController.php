@@ -39,7 +39,7 @@ class BerichtController extends AbstractController
             $qb->orWhere('b.schule = :schule' . $key)
                 ->setParameter('schule' . $key, $data);
         }
-
+        $jahr = null;
         if ($request->get('schuljahr')) {
             $jahr = $this->getDoctrine()->getRepository(Active::class)->find($request->get('schuljahr'));
             $qb->andWhere('b.active = :jahr')
@@ -50,7 +50,7 @@ class BerichtController extends AbstractController
         $query = $qb->getQuery();
         $kinder = $result = $query->getResult();
         $schuljahre = $this->getDoctrine()->getRepository(Active::class)->findBy(array('stadt' => $stadt));
-        return $this->render('bericht/index.html.twig', array('kinder' => $kinder, 'schuljahre' => $schuljahre, 'stadt' => $stadt));
+        return $this->render('bericht/index.html.twig', array('kinder' => $kinder, 'schuljahre' => $schuljahre, 'active'=>$jahr,'stadt' => $stadt));
     }
 
     /**
@@ -179,7 +179,10 @@ class BerichtController extends AbstractController
             $elternSheet->setCellValue($alphas[$count++] . $counter, sizeof($data->getKinds()));
             $counter++;
         }
-
+        $sheetIndex = $spreadsheeet->getIndex(
+            $spreadsheeet->getSheetByName('Worksheet')
+        );
+        $spreadsheeet->removeSheetByIndex($sheetIndex);
         // Create a Temporary file in the system
         $fileName = 'Bericht.xlsx';
         $temp_file = tempnam(sys_get_temp_dir(), $fileName);
