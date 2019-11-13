@@ -119,6 +119,7 @@ class BerichtController extends AbstractController
         $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Anzahl Kinder'));
         $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Schule'));
         $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Organisation'));
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Deaktiviert'));
         $counter = 2;
         foreach ($blocks as $data) {
             $count = 0;
@@ -136,6 +137,7 @@ class BerichtController extends AbstractController
             $blocksheet->setCellValue($alphas[$count++] . $counter, sizeof($data->getKindwithFin()));
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getOrganisation()->getName());
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getName());
+            $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getDeleted());
             $counter++;
         }
         $kindSheet = $spreadsheeet->createSheet();
