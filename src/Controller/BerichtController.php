@@ -105,20 +105,24 @@ class BerichtController extends AbstractController
         // hier wird das block sheet erstellt
         $blocksheet = $spreadsheeet->createSheet();
         $blocksheet->setTitle($translator->trans('Betreuungsblöcke'));
-        $blocksheet->setCellValue('A1', 'ID');
-        $blocksheet->setCellValue('B1', $translator->trans('Von'));
-        $blocksheet->setCellValue('C1', $translator->trans('Bis'));
-        $blocksheet->setCellValue('D1', $translator->trans('Wochentag'));
-        $blocksheet->setCellValue('E1', $translator->trans('Wochentag Numerisch'));
-        $blocksheet->setCellValue('F1', $translator->trans('Typ'));
-        $blocksheet->setCellValue('G1', $translator->trans('Typ Numerisch'));
-        $blocksheet->setCellValue('H1', $translator->trans('Preise'));
-        $blocksheet->setCellValue('I1', $translator->trans('Schuljahr von'));
-        $blocksheet->setCellValue('J1', $translator->trans('Schuljahr Bis'));
-        $blocksheet->setCellValue('K1', $translator->trans('Anzahl Kinder'));
+        $count = 0;
+        $blocksheet->setCellValue($alphas[$count++] . '1', 'ID');
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Von'));
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Bis'));
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Wochentag'));
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Wochentag Numerisch'));
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Typ'));
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Typ Numerisch'));
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Preise'));
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Schuljahr von'));
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Schuljahr Bis'));
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Anzahl Kinder'));
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Schule'));
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Organisation'));
         $counter = 2;
         foreach ($blocks as $data) {
             $count = 0;
+            //$data = new Zeitblock();
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getId());
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getVon()->format('H:i'));
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getBis()->format('H:i'));
@@ -130,7 +134,8 @@ class BerichtController extends AbstractController
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getActive()->getVon()->format('d.m.Y'));
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getActive()->getBis()->format('d.m.Y'));
             $blocksheet->setCellValue($alphas[$count++] . $counter, sizeof($data->getKindwithFin()));
-
+            $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getOrganisation()->getName());
+            $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getName());
             $counter++;
         }
         $kindSheet = $spreadsheeet->createSheet();
