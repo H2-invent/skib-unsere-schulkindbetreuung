@@ -51,24 +51,25 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>Klasse</th>
-                                    <th>Block</th>
-                                    <th>Wochentag</th>
-                                    <th>Organisation</th>
-                                    <th>Schule</th>
+
+                                    <th>{% trans %}Block{% endtrans %}</th>
+                                    <th>{% trans %}Wochentag{% endtrans %}</th>
+                                    <th>{% trans %}Typ{% endtrans %}</th>
+                                    <th>{% trans %}Organisation{% endtrans %}</th>
+                                    <th>{% trans %}Schule{% endtrans %}</th>
+                                    <th>{% trans %}Anzahl der Kinder{% endtrans %}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for k in kinder %}
-                                    {% for b in k.zeitblocks %}
+                                {% for b in blocks %}
                                         <tr>
-                                            <td>{{ k.klasse }}</td>
                                             <td>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</td>
                                             <td>{{ b.wochentagString|trans }}</td>
-                                            <td>{{ k.schule.organisation.name }}</td>
-                                            <td>{{ k.schule.name }}</td>
+                                            <td>{{ b.ganztagString() }}</td>
+                                            <td>{{ b.schule.organisation.name }}</td>
+                                            <td>{{ b.schule.name }}</td>
+                                            <td>{{ b.KindwithFin|length }}</td>
                                         </tr>
-                                    {% endfor %}
                                 {% endfor %}
                                 </tbody>
                             </table>
