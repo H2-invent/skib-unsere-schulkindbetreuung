@@ -29,11 +29,8 @@ class BerichtController extends AbstractController
             throw new \Exception('Wrong City');
         }
 
-        $qb = $this->getDoctrine()->getRepository(Kind::class)->createQueryBuilder('k')
-            ->innerJoin('k.zeitblocks', 'b');
+        $qb = $this->getDoctrine()->getRepository(Zeitblock::class)->createQueryBuilder('b');
 
-        //$qb = $repo->createQueryBuilder('b');
-        $blocks = array();
 
         foreach ($stadt->getSchules() as $key => $data) {
             $qb->orWhere('b.schule = :schule' . $key)
@@ -46,11 +43,10 @@ class BerichtController extends AbstractController
                 ->setParameter('jahr', $jahr);
         }
 
-        $qb->andWhere('k.fin = 1');
         $query = $qb->getQuery();
-        $kinder = $result = $query->getResult();
+        $blocks = $result = $query->getResult();
         $schuljahre = $this->getDoctrine()->getRepository(Active::class)->findBy(array('stadt' => $stadt));
-        return $this->render('bericht/index.html.twig', array('kinder' => $kinder, 'schuljahre' => $schuljahre, 'active'=>$jahr,'stadt' => $stadt));
+        return $this->render('bericht/index.html.twig', array('blocks' =>$blocks , 'schuljahre' => $schuljahre, 'active'=>$jahr,'stadt' => $stadt));
     }
 
     /**
