@@ -1,25 +1,24 @@
 {% extends 'email/base.html.twig' %}
-        {% block content %}
-                                                <div class="h4" style="color:#2c2c2c; font-family:Arial,sans-serif; font-size:18px; line-height:24px; text-align:left">{% trans %}Rechnung für die Schulbetreuung{% endtrans %}</div>
-                                                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+{% block header %}
+    {% trans %}Rechnung für die Schulbetreuung{% endtrans %}
+{% endblock %}
+
+{% block content %}
+
+    {% trans with {'%org%':organisation.name} %}Hiermit senden wir Ihnen ihre Rechnung für die Schulkindbetreuung an der Organisation %org% zu.{% endtrans %}
+
+    {% if rechnung.summe > 0 %}
+        {% trans with {'%betrag%':rechnung.summe|number_format(2,',','.'),'%einzugsdatum%':rechnung.sepa.einzugsDatum|date('d.m.Y')} %}Der berechnet Betrag in Höhe von<br><b>%betrag%€</b> <br> wird am <br><b>%einzugsdatum%</b><br> eingezogen.{% endtrans %}
+    {% else %}
+        {% trans with {'%betrag%':rechnung.summe|number_format(2,',','.')} %}Der berechnet Betrag in Höhe von %betrag%€ dient zu Ihrer Information.  {% endtrans %}
+
+    {% endif %}
+    <p>{% trans %}Im Anhang finden Sie die genaue Kostenaufschlüsselung und weitere Informationen zu Ihrem SEPA-Lastschriftmandat.{% endtrans %}</p>
+    <p>{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}</p>
+    <b>{{ organisation.name }}</b>
+
+{% endblock %}
 
 
-                                                <div class="text2" style="color:#777777; font-family:Arial,sans-serif; font-size:12px; line-height:20px; text-align:left">{% trans with {'%org%':organisation.name} %}Hiermit senden wir Ihnen ihre Rechnung für die Schulkindbetreuung an der Organisation %org% zu.{% endtrans %}<br><br>
-                                                {% if rechnung.sepa is not null %}
-                                                {% trans with {'%betrag%':rechnung.summe|number_format(2,',','.'),'%einzugsdatum%':rechnung.sepa.einzugsDatum|date('d.m.Y')} %}Der berechnet Betrag in Höhe von %betrag%€ wird am %einzugsdatum% eingezogen.{% endtrans %}
-                                                    {% else %}
-                                                        {% trans with {'%betrag%':rechnung.summe|number_format(2,',','.')} %}Der berechnet Betrag in Höhe von %betrag%€ dient zu Ihrer Information.  {% endtrans %}
-
-                                                {% endif %}<br><br>
-                                                    <p>{% trans %}Im Anhang finden Sie die genaue Kostenaufschlüsselung und weitere Informationen zu Ihrem SEPA-Lastschriftmandat.{% endtrans %}</p>
-                                                    <br>
-                                                    <br>
-                                                    <p>{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}</p>
-                                                    <b>{{ organisation.name }}</b>
-                                                </div>
-
-                                                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="14" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-                                            {% endblock %}
 
 

@@ -1,24 +1,32 @@
+
 {% extends 'email/base.html.twig' %}
-        {% block content %}
-                                                <div class="h4" style="color:#2c2c2c; font-family:Arial,sans-serif; font-size:18px; line-height:24px; text-align:left">{% trans %}Anmeldebestätigung für die Schulbetreuung{% endtrans %}</div>
-                                                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+{% block header %}
+    {% trans %}Anmeldebestätigung für die Schulbetreuung{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <p class="text-center">{% trans %}Sie haben Ihr Kind für die Schulkindbetreuung angemeldet:{% endtrans %}<br>
+
+        <b>{{ kind.vorname }} {{ kind.nachname }}</b> </p>
+    <p class="text-center">{% trans %}Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.
+            Dieser ist nur einmalig gültig und wird Ihnen mit der Bestätigung neu zugeandt.
+            Dieser Mechanismus verhindert einen Missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte. {% endtrans %}</p>
+    <h3 class="text-center">
+        {{ 'Sicherheitscode'|trans }}: {{ eltern.secCode }}
+    </h3>
+    <p class="text-center">{% trans %}Dies ist eine vorläufige Inforamtion über die Anmeldung Ihres Kindes.
+            Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.{% endtrans %}
+    </p>
+    <br>
+    <br>
+    <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}<br>
+        <b>{{ kind.zeitblocks[0].schule.organisation.name }}</b></p>
 
 
-                                                <div class="text2" style="color:#777777; font-family:Arial,sans-serif; font-size:12px; line-height:20px; text-align:left">{% trans %}Sie haben Ihr Kind für die Schulkindbetreuung angemeldet:{% endtrans %}
-                                                    <b>{{ kind.vorname }} {{ kind.nachname }}</b>
-                                                {% trans %}Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben. Dieser ist nur einmalig gültig und wird Ihnen mit der Bestätigung neu zugeandt. Dieser Mechanismus verhindert einen Missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte. {% endtrans %}
-                                                <h3>
-                                                    {{ 'Sicherheitscode'|trans }}: {{ eltern.secCode }}
-                                                </h3>
-                                                    <p>{% trans %}Dies ist eine vorläufige Inforamtion über die Anmeldung Ihres Kindes. Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.{% endtrans %}</p>
-                                                    <br>
-                                                    <br>
-                                                    <p>{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}</p>
-                                                    <b>{{ kind.beworben[0].schule.organisation.name }}</b>
-                                                </div>
+{% endblock %}
 
-                                                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="14" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
-                                            {% endblock %}
+
+
 
 
