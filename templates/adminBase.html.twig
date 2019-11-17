@@ -668,7 +668,17 @@
     $(document).ready( function () {
         {% block table %}
         $('table').DataTable({
-
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: 'Save current page',
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    }
+                }
+            ]
             }
         );
         {% endblock %}
