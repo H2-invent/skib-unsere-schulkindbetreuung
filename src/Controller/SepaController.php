@@ -150,16 +150,13 @@ class SepaController extends AbstractController
             $rechnung->setRechnungsnummer('RE'.(new \DateTime())->format('Ymd').$rechnung->getId());
             $em->persist($rechnung);
             $em->flush();
-
+           $rechnung->setSepa($sepa);
            if($summe > 0){
-
                $rechnungen[] = $rechnung;
                $sepaSumme +=$summe;
-               $rechnung->setSepa($sepa);
             //todo check ob alle angaben richtig sind
                $SEPASimpleService->Add($sepa->getEinzugsDatum()->format('Y-m-d'), $rechnung->getSumme(), $rechnung->getStammdaten()->getKontoinhaber(), $rechnung->getStammdaten()->getIban(), $rechnung->getStammdaten()->getBic(),
                    NULL, NULL, $rechnung->getRechnungsnummer(), $rechnung->getRechnungsnummer(), $type, 'skb-'.$rechnung->getStammdaten()->getConfirmationCode(), $rechnung->getStammdaten()->getCreatedAt()->format('Y-m-d'));
-
            }
             $filename = $translator->trans('Rechnung').' '.$rechnung->getRechnungsnummer();
            $pdf = $printRechnungService->printRechnung($filename,$organisation,$rechnung,'S');

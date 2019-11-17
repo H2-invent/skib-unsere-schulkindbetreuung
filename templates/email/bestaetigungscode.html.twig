@@ -1,14 +1,12 @@
 {% extends 'email/base.html.twig' %}
-        {% block content %}
-                                                <div class="h4" style="color:#2c2c2c; font-family:Arial,sans-serif; font-size:18px; line-height:24px; text-align:left">{% trans %}Bestätigungscode {% endtrans %}</div>
-                                                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+{% block header %}
+    {% trans %}Bestätigungscode für die Anmeldung zur Schulkindbetreuung {% endtrans %}
+{% endblock %}
 
-
-                                                <div class="text2" style="color:#777777; font-family:Arial,sans-serif; font-size:12px; line-height:20px; text-align:left">{% trans %}Sie haben sich gerade für die Schulkindbetreuung angemeldet. Bitte bestätigen Sie Ihre Email Durch die Eingabe des Bestätigungscodes.{% endtrans %}
-                                                               <h3>
-                                                    {{ 'Bestätigungscode'|trans }}: {{ eltern.confirmationCode }}
-                                                </h3>
-
-                                            {% endblock %}
-
-
+{% block content %}
+    <h4 class="text-center">{% trans %}Sie haben sich gerade für die Schulkindbetreuung angemeldet. <br>Bitte bestätigen Sie Ihre Email Durch die Eingabe des Bestätigungscodes in ihrem Browser.{% endtrans %}
+    </h4>
+    <p class="text-center">
+        {{ 'Bestätigungscode'|trans }}: {{ eltern.confirmationCode }}
+    </p>
+{% endblock %}
