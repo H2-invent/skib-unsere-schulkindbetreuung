@@ -141,8 +141,8 @@ class BerichtController extends AbstractController
         $kindSheet->setCellValue('A1', 'ID');
         $kindSheet->setCellValue('B1', $translator->trans('Alter'));
         $kindSheet->setCellValue('C1', $translator->trans('Klasse'));
-        $kindSheet->setCellValue('D1', $translator->trans('Typ'));
-        $kindSheet->setCellValue('E1', $translator->trans('Typ Numerisch'));
+        $kindSheet->setCellValue('D1', $translator->trans('Typ Numerisch'));
+        $kindSheet->setCellValue('E1', $translator->trans('Typ'));
         $kindSheet->setCellValue('F1', $translator->trans('Schule'));
         $kindSheet->setCellValue('G1', $translator->trans('Eltern'));
         $counter = 2;
