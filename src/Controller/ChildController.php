@@ -62,11 +62,12 @@ class ChildController extends AbstractController
     public function childDetail(Request $request, TranslatorInterface $translator)
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
-
+        $history= $this->getDoctrine()->getRepository(Kind::class)->findBy(array('tracing'=>$kind->getTracing()));
          if ($kind->getSchule()->getOrganisation()!= $this->getUser()->getOrganisation()) {
              throw new \Exception('Wrong Organisation');
          }
-         return $this->render('child/childDetail.html.twig',array('k'=>$kind,'eltern'=>$kind->getEltern()));
+
+         return $this->render('child/childDetail.html.twig',array('k'=>$kind,'eltern'=>$kind->getEltern(),'history'=>$history));
     }
     /**
      * @Route("/org_child/print/detail", name="child_detail_print")
