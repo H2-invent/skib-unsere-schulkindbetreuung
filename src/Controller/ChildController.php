@@ -62,7 +62,7 @@ class ChildController extends AbstractController
     public function childDetail(Request $request, TranslatorInterface $translator)
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
-        $history= $this->getDoctrine()->getRepository(Kind::class)->findBy(array('tracing'=>$kind->getTracing()));
+        $history= $this->getDoctrine()->getRepository(Kind::class)->findBy(array('tracing'=>$kind->getTracing(),'saved'=>true));
          if ($kind->getSchule()->getOrganisation()!= $this->getUser()->getOrganisation()) {
              throw new \Exception('Wrong Organisation');
          }
