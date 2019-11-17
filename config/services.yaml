@@ -31,9 +31,3 @@ services:
     # please note that last definitions always *replace* previous ones
     WhiteOctober\TCPDFBundle\Controller\TCPDFController: '@white_october.tcpdf'
 
-    mailer.dev.set_recipients:
-        class: Symfony\Component\Mailer\EventListener\EnvelopeListener
-        tags: ['kernel.event_subscriber']
-        arguments:
-            $sender: null
-            $recipients: ['emanuel.holzmann@h2-invent.com','emanuel-holzmann@web.de']
