@@ -116,10 +116,10 @@ class LoerrachWorkflowController extends AbstractController
             ->add('sepaInfo', CheckboxType::class, ['required' => true, 'label' => 'SEPA-LAstschrift Mandat wird elektromisch erteilt', 'translation_domain' => 'form'])
             ->add('gdpr', CheckboxType::class, ['required' => true, 'label' => 'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden', 'translation_domain' => 'form'])
             ->add('newsletter', CheckboxType::class, ['required' => false, 'label' => 'Zum Newsletter anmelden', 'translation_domain' => 'form'])
-            // ->add('captcha', RecaptchaType::class, [
-            // "groups" option is not mandatory
+             ->add('captcha', RecaptchaType::class, [
 
-            //])
+
+            ])
             ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form'])
             ->getForm();
         $form->handleRequest($request);
