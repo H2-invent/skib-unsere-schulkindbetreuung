@@ -40,6 +40,8 @@ class ChildExcelService
         $count = 0;
         $kindSheet = $this->spreadsheet->createSheet();
         $kindSheet->setTitle($this->translator->trans('Kinder'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Vorname'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Nachname'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Alter'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Klasse'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Typ Numerisch'));
@@ -63,6 +65,8 @@ class ChildExcelService
         foreach ($kinder as $data) {
             $count = 0;
             //$data =new Kind();
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getVorname());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getNachname());
             $kindSheet->setCellValue($alphas[$count++] . $counter, ($data->getGeburtstag()->diff($data->getEltern()->getCreatedAt()))->y);
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getKlasse());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getArt());
