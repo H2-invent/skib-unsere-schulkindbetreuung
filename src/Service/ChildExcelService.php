@@ -53,18 +53,19 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Notfallkontakt'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Abholung durch'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Medikamente'));
-        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Allergie'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Allergien'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Bemerkung'));
-        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Gluten'));
-        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Schweinefleisch'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Glutenintollerant'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kein Schweinefleisch'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Laktoseintollerant'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Darf mit Sonnencreme eingecremt werden'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Darf an Ausflügen teilnehmen'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Darf alleine nach Hause'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Fotos dürfen veröffentlicht werden'));
         $counter = 2;
         foreach ($kinder as $data) {
             $count = 0;
-            //$data =new Kind();
+           // $data =new Kind();
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getVorname());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getNachname());
             $kindSheet->setCellValue($alphas[$count++] . $counter, ($data->getGeburtstag()->diff($data->getEltern()->getCreatedAt()))->y);
@@ -83,6 +84,7 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getGluten());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getSchweinefleisch());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getLaktose());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getSonnencreme());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getAusfluege());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getAlleineHause());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getFotos());
