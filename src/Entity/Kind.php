@@ -431,56 +431,8 @@ class Kind
     {   // Load the data from the city into the controller as $stadt
 
         //Include Parents in this route
-        $adresse = $this->getEltern();
-        $kind = $this;
-        $kinder = $adresse->getKinds()->toArray();
-
-
-        usort(
-            $kinder,
-            function ($a, $b) {
-                if ($a->getGeburtstag() == $b->getGeburtstag()) {
-                    return 0;
-                }
-
-                return ($a->getGeburtstag() < $b->getGeburtstag()) ? -1 : 1;
-            }
-        );
-
-
-        $blocks = $kind->getRealZeitblocks()->toArray();
-        $blocks = array_merge($blocks, $this->beworben->toArray());
-
-// Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
         $summe = 0;
-        $loop = 0;
-        //$summe += $this->getBetragforKindMittagessen($kind, $adresse);
-
-        foreach ($kinder as $data) {
-
-            if ($kind == $data) {
-
-                switch ($loop) {
-                    case 0:
-                        if ($adresse->getKinderImKiga()) {
-                            $summe += $this->getBetragforKindBetreuung($kind, $adresse) * 0.75;
-                        } else {
-                            $summe += $this->getBetragforKindBetreuung($kind, $adresse);
-                        }
-                        break;
-                    case 1:
-                        $summe += $this->getBetragforKindBetreuung($kind, $adresse) * 0.5;
-                        break;
-
-                    default:
-                        $summe += 0;
-                        break;
-
-                }
-                break;
-            }
-            $loop++;
-        }
+        eval($this->schule->getStadt()->getBerechnungsFormel());
         return $summe;
     }
 
@@ -488,9 +440,7 @@ class Kind
         $summe = 0;
         $blocks = $kind->getZeitblocks()->toArray();
         $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
-
         foreach ($blocks as $data){
-
             if($data->getGanztag() != 0 && $data->getDeleted() == false){
                 $summe += $data->getPreise()[$eltern->getEinkommen()];
             }
@@ -500,7 +450,7 @@ class Kind
     private function getBetragforKindMittagessen(Kind $kind,Stammdaten $eltern){
         $summe = 0;
         foreach ($kind->getZeitblocks() as $data){
-            if($data->getGanztag() == 0 && $eltern->getBuk() == false && $data->getDeleted() == false){
+            if($data->getGanztag() == 0 && $data->getDeleted() == false){
                 $summe += $data->getPreise()[$eltern->getEinkommen()];
             }
         }
