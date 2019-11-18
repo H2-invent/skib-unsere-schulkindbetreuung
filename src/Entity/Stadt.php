@@ -183,6 +183,31 @@ class Stadt
      */
     private $news;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $berechnungsFormel='
+        $adresse = $this->getEltern();
+        $summe = 0;
+        $kind = $this;
+        $kinder = $adresse->getKinds()->toArray();
+        usort(
+            $kinder,
+            function ($a, $b) {
+                if ($a->getGeburtstag() == $b->getGeburtstag()) {
+                    return 0;
+                }
+
+                return ($a->getGeburtstag() < $b->getGeburtstag()) ? -1 : 1;
+            }
+        );
+
+        $blocks = $kind->getRealZeitblocks()->toArray();  
+        $blocks = array_merge($blocks, $this->beworben->toArray());
+        
+        $summe += $this->getBetragforKindBetreuung($kind, $adresse);
+       ';
+
 
     public function __construct()
     {
@@ -631,6 +656,18 @@ class Stadt
                 $news->setStadt(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBerechnungsFormel(): ?string
+    {
+        return $this->berechnungsFormel;
+    }
+
+    public function setBerechnungsFormel(?string $berechnungsFormel): self
+    {
+        $this->berechnungsFormel = $berechnungsFormel;
 
         return $this;
     }
