@@ -28,7 +28,7 @@ class SEPASimpleService
     private function GetPmtInf($aDatum, $aCtgyPurp, $aSeqTp)
     {
         foreach ($this->FPmtInf as $myPmtInf) {
-            if ($myPmtInf->FDatum == $aDatum and $myPmtInf->FCtgyPurp == $aCtgyPurp and $myPmtInf->FSeqTp == $aSeqTp)
+            if ($myPmtInf->FDatum == $aDatum && $myPmtInf->FCtgyPurp == $aCtgyPurp and $myPmtInf->FSeqTp == $aSeqTp)
                 return $myPmtInf;
         }
         $myPmtInf = new \App\Service\SEPAService($aCtgyPurp, $aDatum, $aSeqTp);
