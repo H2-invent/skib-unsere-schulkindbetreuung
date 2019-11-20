@@ -1,62 +1,64 @@
 {% extends 'adminBase.html.twig' %}
 
 {% block content %}
-<section class="dashboard-counts section-padding">
-    <div class="container-fluid ">
-        <div class="row">
-            <!-- Count item widget-->
-            <div class=" col-12 card">
-                <div class="card-header">
-                    <h1> {{ schule.name }}</h1>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ schuljahre[0].von|date('d.m.Y') }} - {{ schuljahre[0].bis|date('d.m.Y') }}
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                {% for s in schuljahre %}
-                                    <a class="schuljahrSelector dropdown-item" data-id="{{ s.id }}" href="#">{{ s.von|date('d.m.Y') }} - {{ s.bis|date('d.m.Y') }}</a>
-                                {% endfor %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <!-- Count item widget-->
+                <div class=" col-12 card">
+                    <div class="card-header">
+                        <h1> {{ schule.name }}</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ schuljahre[0].von|date('d.m.Y') }} - {{ schuljahre[0].bis|date('d.m.Y') }}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    {% for s in schuljahre %}
+                                        <a class="schuljahrSelector dropdown-item" data-id="{{ s.id }}"
+                                           href="#">{{ s.von|date('d.m.Y') }} - {{ s.bis|date('d.m.Y') }}</a>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div id="blockContent"></div>
+                    <div id="blockContent"></div>
 
-    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 {% endblock %}
 {% block jquery %}
 
-<script>
-   LoadContentUrl = "{{ path('block_schule_getBlocks',{'shool':schule.id}) }}"+"&id="+"{{ schuljahre[0].id }}";
-    $('.dropdown-item').click(function () {
-        var ele = $(this);
-        var text = ele.text();
-        var dropdown = ele.closest('.dropdown').find('button');
-        dropdown.text(text);
-        LoadContentUrl = "{{ path('block_schule_getBlocks',{'shool':schule.id}) }}"+"&id="+ele.attr('data-id');
-        $('#blockContent').load(LoadContentUrl,function () {
-            $.snackbar({content: "{% trans %}Blöcke geladen.{% endtrans %}"});
-        })
-    });
-    $('#blockContent').load(LoadContentUrl);
-    $(document).on('click','.deleteAjax',function(e){
-        e.preventDefault();
-        var url = $(this).attr('href');
-        $.ajax({
-            url: url,
-            success:function (data) {
-                $.snackbar({content: data.snack});
-                $('#blockContent').load(LoadContentUrl)
-            }
+    <script>
+        LoadContentUrl = "{{ path('block_schule_getBlocks',{'shool':schule.id}) }}" + "&id=" + "{{ schuljahre[0].id }}";
+        $('.dropdown-item').click(function () {
+            var ele = $(this);
+            var text = ele.text();
+            var dropdown = ele.closest('.dropdown').find('button');
+            dropdown.text(text);
+            LoadContentUrl = "{{ path('block_schule_getBlocks',{'shool':schule.id}) }}" + "&id=" + ele.attr('data-id');
+            $('#blockContent').load(LoadContentUrl, function () {
+                $.snackbar({content: "{% trans %}Blöcke geladen.{% endtrans %}"});
+            })
         });
-    });
-</script>
+        $('#blockContent').load(LoadContentUrl);
+        $(document).on('click', '.deleteAjax', function (e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+            $.ajax({
+                url: url,
+                success: function (data) {
+                    $.snackbar({content: data.snack});
+                    $('#blockContent').load(LoadContentUrl)
+                }
+            });
+        });
+    </script>
 
 {% endblock %}

@@ -62,14 +62,14 @@
                                 </thead>
                                 <tbody>
                                 {% for b in blocks %}
-                                        <tr>
-                                            <td>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</td>
-                                            <td>{{ b.wochentagString|trans }}</td>
-                                            <td>{{ b.ganztagString() }}</td>
-                                            <td>{{ b.schule.organisation.name }}</td>
-                                            <td>{{ b.schule.name }}</td>
-                                            <td>{{ b.KindwithFin|length }}</td>
-                                        </tr>
+                                    <tr>
+                                        <td>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</td>
+                                        <td>{{ b.wochentagString|trans }}</td>
+                                        <td>{{ b.ganztagString() }}</td>
+                                        <td>{{ b.schule.organisation.name }}</td>
+                                        <td>{{ b.schule.name }}</td>
+                                        <td>{{ b.KindwithFin|length }}</td>
+                                    </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>

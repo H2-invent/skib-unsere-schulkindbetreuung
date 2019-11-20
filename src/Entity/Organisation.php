@@ -538,7 +538,7 @@ class Organisation
     {
         return $this->image;
     }
-    
+
 
     /**
      * @return Collection|Sepa[]
