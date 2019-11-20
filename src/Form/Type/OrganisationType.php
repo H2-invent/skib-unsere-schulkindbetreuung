@@ -10,6 +10,7 @@ namespace App\Form\Type;
 use App\Entity\Organisation;
 use App\Entity\Stadt;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -62,13 +63,10 @@ class OrganisationType extends AbstractType
                 'label'=>'Logo hochladen',
                 'translation_domain' => 'form'
             ])
-            ->add('smptServer', TextType::class,['required'=>false,'label'=>'SMTP Server','translation_domain' => 'form'])
-            ->add('smtpPort', TextType::class,['required'=>false,'label'=>'SMTP Port','translation_domain' => 'form'])
-            ->add('smtpUser', TextType::class,['required'=>false,'label'=>'SMTP Username','translation_domain' => 'form'])
-            ->add('smtpPassword', TextType::class,['required'=>false,'label'=>'SMTP Passwort','translation_domain' => 'form'])
             ->add('datenschutzDE', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Datenschutzhinweis Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].datenschutz', ])
             ->add('datenschutzEN', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Datenschutzhinweis Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].datenschutz', ])
             ->add('datenschutzFR', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Datenschutzhinweis Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].datenschutz', ])
+            ->add('ferienprogramm', CheckboxType::class,['required'=>false,'label'=>'Wir bieten eine Ferienbetreuung über dieses Portal an','translation_domain' => 'form'])
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
     }
