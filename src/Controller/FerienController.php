@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Ferienblock;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Stadt;
@@ -147,13 +148,13 @@ class FerienController extends AbstractController
             $errors = $validator->validate($kind);
 
             try {
-                if (count($errors) == 0) {
+                if (count($errors) === 0) {
 
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($kind);
                     $em->flush();
                     $text = $translator->trans('Erfolgreich gespeichert');
-                    return new JsonResponse(array('error' => 0, 'snack' => $text, 'next' => $this->generateUrl('ferien_kind_program', array('slug' => $stadt->getSlug(),'kind_id' => $kind->getId()))));
+                    return new JsonResponse(array('error' => 0, 'snack' => $text, 'next' => $this->generateUrl('ferien_kind_programm', array('slug' => $stadt->getSlug(),'kind_id' => $kind->getId()))));
                 }
             } catch (\Exception $e) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
@@ -166,7 +167,7 @@ class FerienController extends AbstractController
 
 
     /**
-     * @Route("/{slug}/ferien/kind/program",name="ferien_kind_program",methods={"GET"})
+     * @Route("/{slug}/ferien/kind/programm",name="ferien_kind_programm",methods={"GET"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public function zeitblockAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt)
@@ -180,32 +181,17 @@ class FerienController extends AbstractController
         }
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-        $schule = $kind->getSchule();
+        $organisation = $stadt->getOrganisations();
 
-        $schuljahr = $this->getSchuljahr($stadt);
-        $req = array(
-            'deleted' => false,
-            'active' => $schuljahr,
-            'schule' => $schule,
-        );
         $block = array();
-        if ($kind->getArt() == 1) {
-            $req['ganztag'] = 0;
-            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
-            $req['ganztag'] = $kind->getArt();
-            $block = array_merge($block, $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc')));
-
-        } elseif ($kind->getArt() == 2) {
-            $req['ganztag'] = $kind->getArt();
-            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
-
-        }
+        $block = $this->getDoctrine()->getRepository(Ferienblock::class)->findBy(array('organisation'=>$organisation), array('startDate'=>'asc'));
 
         $renderBlocks = array();
         foreach ($block as $data) {
-            $renderBlocks[$data->getWochentag()][] = $data;
+            $renderBlocks[$data->getStartDate()] = $data;
         }
 
+        dump($renderBlocks);
         return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'blocks' => $renderBlocks));
     }
 
