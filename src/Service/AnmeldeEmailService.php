@@ -42,7 +42,7 @@ class AnmeldeEmailService
         $this->abgService = $printAGBService;
     }
 
-    function sendEmail(Kind $kind,Stammdaten $adresse,Stadt $stadt,$einkommensgruppen){
+    private  function sendEmail(Kind $kind,Stammdaten $adresse,Stadt $stadt,$einkommensgruppen){
         $attachment = array();
         if (sizeof($kind->getBeworben()->toArray()) == 0) {//Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
             $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName() . '.pdf';
