@@ -164,25 +164,25 @@ class Kind
     private $rechnungen;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinder")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Ferienblock", inversedBy="kinder")
 	 * @ORM\JoinTable(name="kind_ferienprogramm_beworben")
      */
     private $ferienProgrammBeworben;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinderGebucht")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Ferienblock", inversedBy="kinderGebucht")
 	 * @ORM\JoinTable(name="kind_ferienprogramm_gebucht")
      */
     private $ferienProgrammGebucht;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinderBezahlt")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Ferienblock", inversedBy="kinderBezahlt")
 	  * @ORM\JoinTable(name="kind_ferienprogramm_bezahlt")
      */
     private $ferienProgrammBezahlt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinderStorniert")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Ferienblock", inversedBy="kinderStorniert")
 	  * @ORM\JoinTable(name="kind_ferienprogramm_storniert")
      */
     private $ferienProgrammStorniert;
