@@ -159,8 +159,32 @@ class Kind
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Rechnung", mappedBy="kinder")
+	 * @ORM\JoinTable(name="kind_ferienprogramm_beworben")
      */
     private $rechnungen;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinder")
+     */
+    private $ferienProgrammBeworben;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinderGebucht")
+	 * @ORM\JoinTable(name="kind_ferienprogramm_gebucht")
+     */
+    private $ferienProgrammGebucht;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinderBezahlt")
+	  * @ORM\JoinTable(name="kind_ferienprogramm_bezahlt")
+     */
+    private $kinderBezahlt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinderStorniert")
+	  * @ORM\JoinTable(name="kind_ferienprogramm_storniert")
+     */
+    private $ferienBlockStorniert;
 
 
 
@@ -170,6 +194,10 @@ class Kind
         $this->abwesends = new ArrayCollection();
         $this->beworben = new ArrayCollection();
         $this->rechnungen = new ArrayCollection();
+        $this->ferienProgrammBeworben = new ArrayCollection();
+        $this->ferienProgrammGebucht = new ArrayCollection();
+        $this->kinderBezahlt = new ArrayCollection();
+        $this->ferienBlockStorniert = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -665,6 +693,110 @@ class Kind
         2=>'Halbtagsbetreuung',
         );
         return $type[$this->art];
+    }
+
+    /**
+     * @return Collection|ferienblock[]
+     */
+    public function getFerienProgrammBeworben(): Collection
+    {
+        return $this->ferienProgrammBeworben;
+    }
+
+    public function addFerienProgrammBeworben(ferienblock $ferienProgrammBeworben): self
+    {
+        if (!$this->ferienProgrammBeworben->contains($ferienProgrammBeworben)) {
+            $this->ferienProgrammBeworben[] = $ferienProgrammBeworben;
+        }
+
+        return $this;
+    }
+
+    public function removeFerienProgrammBeworben(ferienblock $ferienProgrammBeworben): self
+    {
+        if ($this->ferienProgrammBeworben->contains($ferienProgrammBeworben)) {
+            $this->ferienProgrammBeworben->removeElement($ferienProgrammBeworben);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ferienblock[]
+     */
+    public function getFerienProgrammGebucht(): Collection
+    {
+        return $this->ferienProgrammGebucht;
+    }
+
+    public function addFerienProgrammGebucht(ferienblock $ferienProgrammGebucht): self
+    {
+        if (!$this->ferienProgrammGebucht->contains($ferienProgrammGebucht)) {
+            $this->ferienProgrammGebucht[] = $ferienProgrammGebucht;
+        }
+
+        return $this;
+    }
+
+    public function removeFerienProgrammGebucht(ferienblock $ferienProgrammGebucht): self
+    {
+        if ($this->ferienProgrammGebucht->contains($ferienProgrammGebucht)) {
+            $this->ferienProgrammGebucht->removeElement($ferienProgrammGebucht);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ferienblock[]
+     */
+    public function getKinderBezahlt(): Collection
+    {
+        return $this->kinderBezahlt;
+    }
+
+    public function addKinderBezahlt(ferienblock $kinderBezahlt): self
+    {
+        if (!$this->kinderBezahlt->contains($kinderBezahlt)) {
+            $this->kinderBezahlt[] = $kinderBezahlt;
+        }
+
+        return $this;
+    }
+
+    public function removeKinderBezahlt(ferienblock $kinderBezahlt): self
+    {
+        if ($this->kinderBezahlt->contains($kinderBezahlt)) {
+            $this->kinderBezahlt->removeElement($kinderBezahlt);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ferienblock[]
+     */
+    public function getFerienBlockStorniert(): Collection
+    {
+        return $this->ferienBlockStorniert;
+    }
+
+    public function addFerienBlockStorniert(ferienblock $ferienBlockStorniert): self
+    {
+        if (!$this->ferienBlockStorniert->contains($ferienBlockStorniert)) {
+            $this->ferienBlockStorniert[] = $ferienBlockStorniert;
+        }
+
+        return $this;
+    }
+
+    public function removeFerienBlockStorniert(ferienblock $ferienBlockStorniert): self
+    {
+        if ($this->ferienBlockStorniert->contains($ferienBlockStorniert)) {
+            $this->ferienBlockStorniert->removeElement($ferienBlockStorniert);
+        }
+
+        return $this;
     }
 
 

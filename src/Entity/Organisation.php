@@ -182,6 +182,56 @@ class Organisation
      */
     private $orgHomepage;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $ferienprogramm;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $paypalId;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $paypalSecret;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $paypalSignature;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $stripeID;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $stripeSecret;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $stornoGebuehr;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $ansprechpartnerFerien;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $ansprechpartnerFerienPhone;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $ansprechpartnerFerienEmail;
+
     public function __construct()
     {
         $this->schule = new ArrayCollection();
@@ -581,6 +631,126 @@ class Organisation
     public function setOrgHomepage(?string $orgHomepage): self
     {
         $this->orgHomepage = $orgHomepage;
+
+        return $this;
+    }
+
+    public function getFerienprogramm(): ?bool
+    {
+        return $this->ferienprogramm;
+    }
+
+    public function setFerienprogramm(bool $ferienprogramm): self
+    {
+        $this->ferienprogramm = $ferienprogramm;
+
+        return $this;
+    }
+
+    public function getPaypalId(): ?string
+    {
+        return $this->paypalId;
+    }
+
+    public function setPaypalId(?string $paypalId): self
+    {
+        $this->paypalId = $paypalId;
+
+        return $this;
+    }
+
+    public function getPaypalSecret(): ?string
+    {
+        return $this->paypalSecret;
+    }
+
+    public function setPaypalSecret(?string $paypalSecret): self
+    {
+        $this->paypalSecret = $paypalSecret;
+
+        return $this;
+    }
+
+    public function getPaypalSignature(): ?string
+    {
+        return $this->paypalSignature;
+    }
+
+    public function setPaypalSignature(?string $paypalSignature): self
+    {
+        $this->paypalSignature = $paypalSignature;
+
+        return $this;
+    }
+
+    public function getStripeID(): ?string
+    {
+        return $this->stripeID;
+    }
+
+    public function setStripeID(?string $stripeID): self
+    {
+        $this->stripeID = $stripeID;
+
+        return $this;
+    }
+
+    public function getStripeSecret(): ?string
+    {
+        return $this->stripeSecret;
+    }
+
+    public function setStripeSecret(?string $stripeSecret): self
+    {
+        $this->stripeSecret = $stripeSecret;
+
+        return $this;
+    }
+
+    public function getStornoGebuehr(): ?int
+    {
+        return $this->stornoGebuehr;
+    }
+
+    public function setStornoGebuehr(?int $stornoGebuehr): self
+    {
+        $this->stornoGebuehr = $stornoGebuehr;
+
+        return $this;
+    }
+
+    public function getAnsprechpartnerFerien(): ?string
+    {
+        return $this->ansprechpartnerFerien;
+    }
+
+    public function setAnsprechpartnerFerien(?string $ansprechpartnerFerien): self
+    {
+        $this->ansprechpartnerFerien = $ansprechpartnerFerien;
+
+        return $this;
+    }
+
+    public function getAnsprechpartnerFerienPhone(): ?string
+    {
+        return $this->ansprechpartnerFerienPhone;
+    }
+
+    public function setAnsprechpartnerFerienPhone(?string $ansprechpartnerFerienPhone): self
+    {
+        $this->ansprechpartnerFerienPhone = $ansprechpartnerFerienPhone;
+
+        return $this;
+    }
+
+    public function getAnsprechpartnerFerienEmail(): ?string
+    {
+        return $this->ansprechpartnerFerienEmail;
+    }
+
+    public function setAnsprechpartnerFerienEmail(?string $ansprechpartnerFerienEmail): self
+    {
+        $this->ansprechpartnerFerienEmail = $ansprechpartnerFerienEmail;
 
         return $this;
     }

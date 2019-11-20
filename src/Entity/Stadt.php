@@ -208,6 +208,26 @@ class Stadt
         $summe += $this->getBetragforKindBetreuung($kind, $adresse);
        ';
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $ferienprogramm;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $schulkindBetreung;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $anzahlPreiseFerienbetreuung;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $BezeichnungPreiseFerienbetreuung = [];
+
 
     public function __construct()
     {
@@ -668,6 +688,54 @@ class Stadt
     public function setBerechnungsFormel(?string $berechnungsFormel): self
     {
         $this->berechnungsFormel = $berechnungsFormel;
+
+        return $this;
+    }
+
+    public function getFerienprogramm(): ?bool
+    {
+        return $this->ferienprogramm;
+    }
+
+    public function setFerienprogramm(bool $ferienprogramm): self
+    {
+        $this->ferienprogramm = $ferienprogramm;
+
+        return $this;
+    }
+
+    public function getSchulkindBetreung(): ?bool
+    {
+        return $this->schulkindBetreung;
+    }
+
+    public function setSchulkindBetreung(bool $schulkindBetreung): self
+    {
+        $this->schulkindBetreung = $schulkindBetreung;
+
+        return $this;
+    }
+
+    public function getAnzahlPreiseFerienbetreuung(): ?int
+    {
+        return $this->anzahlPreiseFerienbetreuung;
+    }
+
+    public function setAnzahlPreiseFerienbetreuung(?int $anzahlPreiseFerienbetreuung): self
+    {
+        $this->anzahlPreiseFerienbetreuung = $anzahlPreiseFerienbetreuung;
+
+        return $this;
+    }
+
+    public function getBezeichnungPreiseFerienbetreuung(): ?array
+    {
+        return $this->BezeichnungPreiseFerienbetreuung;
+    }
+
+    public function setBezeichnungPreiseFerienbetreuung(?array $BezeichnungPreiseFerienbetreuung): self
+    {
+        $this->BezeichnungPreiseFerienbetreuung = $BezeichnungPreiseFerienbetreuung;
 
         return $this;
     }
