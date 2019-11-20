@@ -1,6 +1,6 @@
 {
     "description": "Project to manage the Shoolkids in a City",
-    "name": "SKB-Schulkindbetreuung",
+    "name": "skb-schulkindbetreuung",
     "type": "project",
     "license": "proprietary",
     "require": {

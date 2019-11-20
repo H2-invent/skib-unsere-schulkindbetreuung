@@ -192,7 +192,7 @@ class FerienController extends AbstractController
 
 
     /**
-     * @Route("/loerrach/kinder/block/toggle",name="ferien_kinder_block_toggle",methods={"GET"})
+     * @Route("/loerrach/kinder/block/toggle",name="ferien_kinder_block_toggle",methods={"PATCH"})
      */
     public function kinderblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {

@@ -270,7 +270,7 @@ class LoerrachWorkflowController extends AbstractController
     }
 
     /**
-     * @Route("/loerrach/schulen/kind/delete",name="loerrach_workflow_kind_delete",methods={"GET"})
+     * @Route("/loerrach/schulen/kind/delete",name="loerrach_workflow_kind_delete",methods={"DELETE"})
      */
     public function deleteAction(Request $request, ValidatorInterface $validator)
     {
@@ -332,7 +332,7 @@ class LoerrachWorkflowController extends AbstractController
     }
 
     /**
-     * @Route("/loerrach/kinder/block/toggle",name="loerrach_workflow_kinder_block_toggle",methods={"GET"})
+     * @Route("/loerrach/kinder/block/toggle",name="loerrach_workflow_kinder_block_toggle",methods={"PATCH"})
      */
     public function kinderblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {

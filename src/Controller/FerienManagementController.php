@@ -21,7 +21,7 @@ class FerienManagementController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
         $blocks = $this->getDoctrine()->getRepository(Ferienblock::class)->findBy(array('organisation'=>$organisation),array('startDate'=>'asc'));
-       dump($blocks);
+
         return $this->render('ferien_management/index.html.twig',array('blocks'=>$blocks));
     }
 }
