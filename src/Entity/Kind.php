@@ -179,13 +179,13 @@ class Kind
      * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinderBezahlt")
 	  * @ORM\JoinTable(name="kind_ferienprogramm_bezahlt")
      */
-    private $kinderBezahlt;
+    private $ferienProgrammBezahlt;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinderStorniert")
 	  * @ORM\JoinTable(name="kind_ferienprogramm_storniert")
      */
-    private $ferienBlockStorniert;
+    private $ferienProgrammStorniert;
 
 
 
@@ -197,8 +197,8 @@ class Kind
         $this->rechnungen = new ArrayCollection();
         $this->ferienProgrammBeworben = new ArrayCollection();
         $this->ferienProgrammGebucht = new ArrayCollection();
-        $this->kinderBezahlt = new ArrayCollection();
-        $this->ferienBlockStorniert = new ArrayCollection();
+        $this->ferienProgrammBezahlt = new ArrayCollection();
+        $this->ferienProgrammStorniert = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -751,24 +751,24 @@ class Kind
     /**
      * @return Collection|ferienblock[]
      */
-    public function getKinderBezahlt(): Collection
+    public function getFerienProgrammBezahlt(): Collection
     {
-        return $this->kinderBezahlt;
+        return $this->FerienProgrammBezahlt;
     }
 
-    public function addKinderBezahlt(ferienblock $kinderBezahlt): self
+    public function addFerienProgrammBezahlt(ferienblock $kinderBezahlt): self
     {
-        if (!$this->kinderBezahlt->contains($kinderBezahlt)) {
-            $this->kinderBezahlt[] = $kinderBezahlt;
+        if (!$this->ferienProgrammBezahlt->contains($kinderBezahlt)) {
+            $this->ferienProgrammBezahlt[] = $kinderBezahlt;
         }
 
         return $this;
     }
 
-    public function removeKinderBezahlt(ferienblock $kinderBezahlt): self
+    public function removeFerienProgrammBezahlt(ferienblock $kinderBezahlt): self
     {
-        if ($this->kinderBezahlt->contains($kinderBezahlt)) {
-            $this->kinderBezahlt->removeElement($kinderBezahlt);
+        if ($this->ferienProgrammBezahlt->contains($kinderBezahlt)) {
+            $this->ferienProgrammBezahlt->removeElement($kinderBezahlt);
         }
 
         return $this;
@@ -777,24 +777,24 @@ class Kind
     /**
      * @return Collection|ferienblock[]
      */
-    public function getFerienBlockStorniert(): Collection
+    public function getFerienProgrammStorniert(): Collection
     {
-        return $this->ferienBlockStorniert;
+        return $this->ferienProgrammStorniert;
     }
 
-    public function addFerienBlockStorniert(ferienblock $ferienBlockStorniert): self
+    public function addFerienProgrammStorniert(ferienblock $ferienBlockStorniert): self
     {
-        if (!$this->ferienBlockStorniert->contains($ferienBlockStorniert)) {
-            $this->ferienBlockStorniert[] = $ferienBlockStorniert;
+        if (!$this->ferienProgrammStorniert->contains($ferienBlockStorniert)) {
+            $this->ferienProgrammStorniert[] = $ferienBlockStorniert;
         }
 
         return $this;
     }
 
-    public function removeFerienBlockStorniert(ferienblock $ferienBlockStorniert): self
+    public function removeFerienProgrammStorniert(ferienblock $ferienBlockStorniert): self
     {
-        if ($this->ferienBlockStorniert->contains($ferienBlockStorniert)) {
-            $this->ferienBlockStorniert->removeElement($ferienBlockStorniert);
+        if ($this->ferienProgrammStorniert->contains($ferienBlockStorniert)) {
+            $this->ferienProgrammStorniert->removeElement($ferienBlockStorniert);
         }
 
         return $this;
