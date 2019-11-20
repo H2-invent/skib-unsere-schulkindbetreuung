@@ -183,16 +183,11 @@ class FerienController extends AbstractController
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
         $organisation = $stadt->getOrganisations();
 
+
         $block = array();
-        $block = $this->getDoctrine()->getRepository(Ferienblock::class)->findBy(array('organisation'=>$organisation), array('startDate'=>'asc'));
+        $block = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt);
 
-        $renderBlocks = array();
-        foreach ($block as $data) {
-            $renderBlocks[$data->getStartDate()] = $data;
-        }
-
-        dump($renderBlocks);
-        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'blocks' => $renderBlocks));
+        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'blocks' => $block));
     }
 
 

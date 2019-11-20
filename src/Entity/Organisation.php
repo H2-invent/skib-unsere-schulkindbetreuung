@@ -232,11 +232,17 @@ class Organisation
      */
     private $ansprechpartnerFerienEmail;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Ferienblock", mappedBy="organisation")
+     */
+    private $ferienblocks;
+
     public function __construct()
     {
         $this->schule = new ArrayCollection();
         $this->sepaXml = new ArrayCollection();
         $this->sepas = new ArrayCollection();
+        $this->ferienblocks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -751,6 +757,37 @@ class Organisation
     public function setAnsprechpartnerFerienEmail(?string $ansprechpartnerFerienEmail): self
     {
         $this->ansprechpartnerFerienEmail = $ansprechpartnerFerienEmail;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ferienblock[]
+     */
+    public function getFerienblocks(): Collection
+    {
+        return $this->ferienblocks;
+    }
+
+    public function addFerienblock(Ferienblock $ferienblock): self
+    {
+        if (!$this->ferienblocks->contains($ferienblock)) {
+            $this->ferienblocks[] = $ferienblock;
+            $ferienblock->setOrganisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFerienblock(Ferienblock $ferienblock): self
+    {
+        if ($this->ferienblocks->contains($ferienblock)) {
+            $this->ferienblocks->removeElement($ferienblock);
+            // set the owning side to null (unless already changed)
+            if ($ferienblock->getOrganisation() === $this) {
+                $ferienblock->setOrganisation(null);
+            }
+        }
 
         return $this;
     }

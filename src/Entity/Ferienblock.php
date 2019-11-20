@@ -98,6 +98,18 @@ class Ferienblock
      */
     private $kinderStorniert;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="ferienblocks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $stadt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="ferienblocks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $organisation;
+
     public function __construct()
     {
         $this->kinder = new ArrayCollection();
@@ -363,6 +375,30 @@ class Ferienblock
             $this->kinderStorniert->removeElement($kinderStorniert);
             $kinderStorniert->removeFerienBlockStorniert($this);
         }
+
+        return $this;
+    }
+
+    public function getStadt(): ?Stadt
+    {
+        return $this->stadt;
+    }
+
+    public function setStadt(?Stadt $stadt): self
+    {
+        $this->stadt = $stadt;
+
+        return $this;
+    }
+
+    public function getOrganisation(): ?Organisation
+    {
+        return $this->organisation;
+    }
+
+    public function setOrganisation(?Organisation $organisation): self
+    {
+        $this->organisation = $organisation;
 
         return $this;
     }

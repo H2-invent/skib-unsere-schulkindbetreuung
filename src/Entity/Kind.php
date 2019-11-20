@@ -88,7 +88,7 @@ class Kind
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Schule", inversedBy="kinder")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $schule;
 

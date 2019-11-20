@@ -228,6 +228,11 @@ class Stadt
      */
     private $BezeichnungPreiseFerienbetreuung = [];
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Ferienblock", mappedBy="stadt")
+     */
+    private $ferienblocks;
+
 
     public function __construct()
     {
@@ -236,6 +241,7 @@ class Stadt
         $this->schules = new ArrayCollection();
         $this->actives = new ArrayCollection();
         $this->news = new ArrayCollection();
+        $this->ferienblocks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -736,6 +742,37 @@ class Stadt
     public function setBezeichnungPreiseFerienbetreuung(?array $BezeichnungPreiseFerienbetreuung): self
     {
         $this->BezeichnungPreiseFerienbetreuung = $BezeichnungPreiseFerienbetreuung;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ferienblock[]
+     */
+    public function getFerienblocks(): Collection
+    {
+        return $this->ferienblocks;
+    }
+
+    public function addFerienblock(Ferienblock $ferienblock): self
+    {
+        if (!$this->ferienblocks->contains($ferienblock)) {
+            $this->ferienblocks[] = $ferienblock;
+            $ferienblock->setStadt($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFerienblock(Ferienblock $ferienblock): self
+    {
+        if ($this->ferienblocks->contains($ferienblock)) {
+            $this->ferienblocks->removeElement($ferienblock);
+            // set the owning side to null (unless already changed)
+            if ($ferienblock->getStadt() === $this) {
+                $ferienblock->setStadt(null);
+            }
+        }
 
         return $this;
     }

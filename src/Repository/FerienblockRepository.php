@@ -47,4 +47,31 @@ class FerienblockRepository extends ServiceEntityRepository
         ;
     }
     */
+    /**
+     * @param $price
+     * @return Product[]
+     */
+    public function findFerienblocksFromToday($stadt)
+    {
+        // automatically knows to select Products
+        // the "p" is an alias you'll use in the rest of the query
+        $today = new \DateTime();
+        $qb = $this->createQueryBuilder('f')
+            ->andWhere('f.startDate > :today')
+            ->andWhere('f.stadt <= :stadt')
+            ->addOrderBy('f.startDate','asc')
+            ->setParameter('today', $today)
+            ->setParameter('stadt', $stadt)
+            ->getQuery();
+            //->setMaxResults(1);
+
+        $ferien= $qb->getResult();
+        $res = array();
+        foreach ($ferien as $data){
+            $res[$data->getStartDate()->format('d.m.Y')][] = $data;
+        }
+        return $res;
+        // to get just one result:
+        // $product = ;
+    }
 }
