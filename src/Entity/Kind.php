@@ -159,12 +159,13 @@ class Kind
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Rechnung", mappedBy="kinder")
-	 * @ORM\JoinTable(name="kind_ferienprogramm_beworben")
+	 
      */
     private $rechnungen;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinder")
+	 * @ORM\JoinTable(name="kind_ferienprogramm_beworben")
      */
     private $ferienProgrammBeworben;
 
