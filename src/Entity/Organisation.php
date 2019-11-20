@@ -155,10 +155,6 @@ class Organisation
      */
     private $updatedAt;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Files", mappedBy="sepa")
-     */
-    private $sepaXml;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Sepa", mappedBy="organisation")
