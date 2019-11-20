@@ -10,6 +10,7 @@ namespace App\Form\Type;
 
 use App\Entity\Stadt;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -61,10 +62,6 @@ class StadtType extends AbstractType
                 'translation_domain' => 'form'
             ])
             ->add('logoUrl', TextType::class,['required'=>false,'label'=>'URL für Logo','translation_domain' => 'form'])
-            ->add('smtpServer', TextType::class,['required'=>false,'label'=>'SMTP Server','translation_domain' => 'form'])
-            ->add('smtpPort', TextType::class,['required'=>false,'label'=>'SMTP Port','translation_domain' => 'form'])
-            ->add('smtpUsername', TextType::class,['required'=>false,'label'=>'SMTP Username','translation_domain' => 'form'])
-            ->add('smtpPassword', TextType::class,['required'=>false,'label'=>'SMTP Passwort','translation_domain' => 'form'])
             ->add('hauptfarbe', TextType::class,['required'=>false,'label'=>'Hauptfarbe(HTML Code)','translation_domain' => 'form'])
             ->add('akzentfarbe', TextType::class,['required'=>false,'label'=>'Akzentfarbe (HTML Code)','translation_domain' => 'form'])
             ->add('akzentfarbeFehler', TextType::class,['required'=>false,'label'=>'Akzentfarbe Fehler (HTML Code)','translation_domain' => 'form'])
@@ -74,6 +71,8 @@ class StadtType extends AbstractType
             ->add('infoAGBDe', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].agb', ])
             ->add('infoAGBEn', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].agb', ])
             ->add('infoAGBFr', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].agb', ])
+            ->add('ferienprogramm', CheckboxType::class,['required'=>false,'label'=>'Wir bieten eine Ferienbetreuung über dieses Portal an','translation_domain' => 'form'])
+
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
 
         ;

@@ -1,0 +1,116 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
+        <hr class="hr-light ">
+    </div>
+
+{% endblock %}
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">
+            <h4> {% trans %}Kind/Kinder hinzufügen{% endtrans %}</h4>
+        </div>
+        <div class="card-body">
+            <a href="{{ path('ferien_kind_neu', {'slug':stadt.slug}) }}"
+               class="loadContent btn btn-outline-primary">{% trans %}Kind hinzufügen  {% endtrans %}</a>
+
+            <section class="dashboard-counts section-padding" id="schulenShow">
+                <div class="container-fluid ">
+
+                    <div class="card-deck">
+                        <!-- Count item widget-->
+
+                                {% if kinder is defined and kinder is not null %}
+                                    {% for k in kinder %}
+                                        <div class="card-body">
+                                            <div class="btn-group">
+                                                <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                                    <a href="#"
+                                                       class=" loadContent dropdown-item">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                    <a href="#"
+                                                       class=" loadContent dropdown-item">{% trans %}Betreuungsblöcke bearbeiten{% endtrans %}</a>
+                                                    <a href="#"
+                                                       class="dropdown-item">{% trans %}Löschen{% endtrans %}</a>
+
+                                                </div>
+                                            </div>
+                                            {{ k.vorname }} {{ k.nachname }}
+                                            <b><span class="price">{% if k.tageWithBlocks>=2 %}{{ k.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></b>
+                                        </div>
+
+                                    {% endfor %}
+                                {% endif %}
+                    </div>
+
+                </div>
+            </section>
+            <div class="text-center">
+                <a href="{{ path('loerrach_workflow_adresse') }}"
+                   class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
+                <a href="{{ path('loerrach_workflow_mittagessen', {'slug':stadt.slug})}}"
+                   class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block jquery %}
+    <script>
+        $(document).on('click','.chooseBlock',function (e) {
+            e.preventDefault();
+            var ele = $(this);
+            var url = ele.attr('href');
+            ele.find('.loader').removeClass('d-none');
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function (data) {
+
+                    if (data.error == 0 || data.error == 2) {
+                        var klasse = 'bg-warning';
+
+                        if(data.kontingent == false){
+                            klasse='bg-success';
+                        }
+                        ele.toggleClass(klasse);
+                        if (ele.hasClass(klasse)) {
+
+                            ele.find('.gebucht-text').text(data.cardText);
+                        } else {
+                            ele.find('.gebucht-text').text('');
+                        }
+                    } else {
+
+
+                    }
+                    ele.closest('.modal-body').find('.price').text(data.text);
+                    if (data.error == 0) {
+                        $.ajax({
+                            url: data.preisUrl,
+                            method: 'GET',
+                            success: function (data) {
+                                ele.closest('.modal-body').find('.price').text(data.betrag+'€')
+                            }
+
+                        });
+                    }
+                       // $.snackbar(options);
+                    ele.find('.loader').addClass('d-none');
+
+
+                }
+            })
+        })
+
+        $("#loadContentModal").on('hide.bs.modal', function(){
+        $('#schulenShow') .load('{{ path('ferien_auswahl', {'slug':stadt.slug}) }} #schulenShow');
+        });
+    </script>
+
+{% endblock %}

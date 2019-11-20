@@ -208,6 +208,31 @@ class Stadt
         $summe += $this->getBetragforKindBetreuung($kind, $adresse);
        ';
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $ferienprogramm;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $schulkindBetreung;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $anzahlPreiseFerienbetreuung;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $BezeichnungPreiseFerienbetreuung = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Ferienblock", mappedBy="stadt")
+     */
+    private $ferienblocks;
+
 
     public function __construct()
     {
@@ -216,6 +241,7 @@ class Stadt
         $this->schules = new ArrayCollection();
         $this->actives = new ArrayCollection();
         $this->news = new ArrayCollection();
+        $this->ferienblocks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -668,6 +694,85 @@ class Stadt
     public function setBerechnungsFormel(?string $berechnungsFormel): self
     {
         $this->berechnungsFormel = $berechnungsFormel;
+
+        return $this;
+    }
+
+    public function getFerienprogramm(): ?bool
+    {
+        return $this->ferienprogramm;
+    }
+
+    public function setFerienprogramm(bool $ferienprogramm): self
+    {
+        $this->ferienprogramm = $ferienprogramm;
+
+        return $this;
+    }
+
+    public function getSchulkindBetreung(): ?bool
+    {
+        return $this->schulkindBetreung;
+    }
+
+    public function setSchulkindBetreung(bool $schulkindBetreung): self
+    {
+        $this->schulkindBetreung = $schulkindBetreung;
+
+        return $this;
+    }
+
+    public function getAnzahlPreiseFerienbetreuung(): ?int
+    {
+        return $this->anzahlPreiseFerienbetreuung;
+    }
+
+    public function setAnzahlPreiseFerienbetreuung(?int $anzahlPreiseFerienbetreuung): self
+    {
+        $this->anzahlPreiseFerienbetreuung = $anzahlPreiseFerienbetreuung;
+
+        return $this;
+    }
+
+    public function getBezeichnungPreiseFerienbetreuung(): ?array
+    {
+        return $this->BezeichnungPreiseFerienbetreuung;
+    }
+
+    public function setBezeichnungPreiseFerienbetreuung(?array $BezeichnungPreiseFerienbetreuung): self
+    {
+        $this->BezeichnungPreiseFerienbetreuung = $BezeichnungPreiseFerienbetreuung;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ferienblock[]
+     */
+    public function getFerienblocks(): Collection
+    {
+        return $this->ferienblocks;
+    }
+
+    public function addFerienblock(Ferienblock $ferienblock): self
+    {
+        if (!$this->ferienblocks->contains($ferienblock)) {
+            $this->ferienblocks[] = $ferienblock;
+            $ferienblock->setStadt($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFerienblock(Ferienblock $ferienblock): self
+    {
+        if ($this->ferienblocks->contains($ferienblock)) {
+            $this->ferienblocks->removeElement($ferienblock);
+            // set the owning side to null (unless already changed)
+            if ($ferienblock->getStadt() === $this) {
+                $ferienblock->setStadt(null);
+            }
+        }
 
         return $this;
     }
