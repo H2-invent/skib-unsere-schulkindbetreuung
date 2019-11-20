@@ -27,7 +27,7 @@ class NewsController extends AbstractController
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         if($stadt != $this->getUser()->getStadt()){
-            throw new \Exception('Wrong Organisation');
+            throw new \Exception('Wrong City');
         }
         $activity = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt'=>$stadt));
 
@@ -43,7 +43,7 @@ class NewsController extends AbstractController
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         if ($stadt != $this->getUser()->getStadt()) {
-            throw new \Exception('Wrong Organisation');
+            throw new \Exception('Wrong City');
         }
         $activity = new News();
         $activity->setStadt($stadt);

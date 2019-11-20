@@ -70,8 +70,12 @@
                                 </div>
                             </div>
                             <button class="print btn btn-secondary" type="button">
-                                <i class="material-icons">print</i>
-                            </button>           </div>
+                               PDF
+                            </button>
+                            <button class="spreadsheet btn btn-secondary" type="button">
+                                EXCEL
+                            </button>
+                        </div>
                     </div>
                 </div>
 <div id="childTable">
@@ -137,6 +141,14 @@
         window.location='{{ path('child_child_Table') }}?'+$.param(search);
 
         delete search.print;
+        console.log(search);
+    });
+    $('.spreadsheet').click(function () {
+        search.spread= true;
+        console.log(search);
+        window.location='{{ path('child_child_Table') }}?'+$.param(search);
+
+        delete search.spread;
         console.log(search);
     });
     $('#childTable').load('{{ path('child_child_Table') }}',search);

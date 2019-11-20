@@ -131,7 +131,7 @@ class PrintService
 
         // hier beginnt die Seite mit den Kindern
         $pdf->AddPage('L', 'A4');
-        $blocks = $kind->getZeitblocks()->toArray();
+        $blocks = $kind->getRealZeitblocks()->toArray();
         $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
         $render = array();
         foreach ($blocks as $data){

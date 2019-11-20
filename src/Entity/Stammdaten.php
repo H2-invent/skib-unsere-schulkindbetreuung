@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Stammdaten
 {
+    private $beruflicheSituationString;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -215,13 +216,12 @@ class Stammdaten
     private $endedAt;
 
 
-
-
     public function __construct()
     {
         $this->kinds = new ArrayCollection();
         $this->rechnungen = new ArrayCollection();
         $this->rechnungs = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -360,7 +360,14 @@ class Stammdaten
 
         return $this;
     }
-
+    public function getBeruflicheSituationString(){
+        $beruflicheSituationString = array(
+            0=>'Keine Angabe',
+            1=>'Berufstätig',
+            2=>'Arbeitssuchend',
+        );
+        return $beruflicheSituationString[$this->beruflicheSituation];
+    }
     public function getNotfallkontakt(): ?string
     {
         return $this->notfallkontakt;
@@ -547,6 +554,7 @@ class Stammdaten
         $this->alleinerziehend = $alleinerziehend;
         return $this;
     }
+
     public function getEmailConfirmed(): ?bool
     {
         return $this->emailConfirmed;
@@ -567,8 +575,9 @@ class Stammdaten
     public function setAbholberechtigter(?string $abholberechtigter): self
     {
         $this->abholberechtigter = $abholberechtigter;
-        return  $this;
+        return $this;
     }
+
     public function getConfirmationCode(): ?string
     {
         return $this->confirmationCode;

@@ -7,9 +7,11 @@ use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Zeitblock;
+use App\Service\ChildExcelService;
 use App\Service\PrintService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
@@ -60,11 +62,12 @@ class ChildController extends AbstractController
     public function childDetail(Request $request, TranslatorInterface $translator)
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
-
+        $history= $this->getDoctrine()->getRepository(Kind::class)->findBy(array('tracing'=>$kind->getTracing(),'saved'=>true));
          if ($kind->getSchule()->getOrganisation()!= $this->getUser()->getOrganisation()) {
              throw new \Exception('Wrong Organisation');
          }
-         return $this->render('child/childDetail.html.twig',array('k'=>$kind,'eltern'=>$kind->getEltern()));
+
+         return $this->render('child/childDetail.html.twig',array('k'=>$kind,'eltern'=>$kind->getEltern(),'history'=>$history));
     }
     /**
      * @Route("/org_child/print/detail", name="child_detail_print")
@@ -82,7 +85,7 @@ class ChildController extends AbstractController
     /**
      * @Route("/org_child/search/child/table", name="child_child_Table",methods={"GET","POST"})
      */
-    public function buildChildTable(Request $request, TranslatorInterface $translator, PrintService $printService, TCPDFController $TCPDFController)
+    public function buildChildTable(Request $request, TranslatorInterface $translator, PrintService $printService, TCPDFController $TCPDFController, ChildExcelService $childExcelService)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('organisation'));
         if ($organisation != $this->getUser()->getOrganisation()) {
@@ -144,6 +147,8 @@ class ChildController extends AbstractController
             $fileName = (new \DateTime())->format('d.m.Y_H.i');
             return $printService->printChildList($kinderU,$organisation,$text,$fileName,$TCPDFController,'D');
 
+        }elseif ($request->get('spread')){
+            return $this->file($childExcelService->generateExcel($kinderU), 'Kinder.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
         } else{
             return $this->render('child/childTable.html.twig', [
                 'kinder' => $kinderU,

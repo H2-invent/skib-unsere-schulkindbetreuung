@@ -7,6 +7,7 @@ use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Zeitblock;
 use App\Form\Type\BlockType;
+use App\Service\AnmeldeEmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,6 +18,18 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 class BlockController extends AbstractController
 {
+    private $einkommensgruppen;
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->einkommensgruppen = array(
+            '0 - 1.499 Euro' => 0,
+            '1.500 - 2.499 Euro' => 1,
+            '2.500 . 3.499 Euro' => 2,
+            '3.500 . 5.999 Euro' => 3,
+            'über 6.000 Euro' => 4,
+        );
+
+    }
     /**
      * @Route("/org_child/show/schule/show", name="block_schulen_schow",methods={"GET"})
      */
@@ -111,7 +124,7 @@ class BlockController extends AbstractController
     /**
      * @Route("/org_block/schule/block/deleteBlock", name="block_schule_deleteBlocks",methods={"GET"})
      */
-    public function deleteBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function deleteBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator,AnmeldeEmailService $anmeldeEmailService)
     {
        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('id'));
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
@@ -124,6 +137,11 @@ class BlockController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($block);
         $em->flush();
+        $kinder = $block->getKindwithFin();
+        foreach ($kinder as $data){
+            $anmeldeEmailService->sendEmail($data,$data->getEltern(),$block->getSchule()->getStadt(),$this->einkommensgruppen);
+        }
+
         $text = $translator->trans('Erfolgreich gelöscht');
         return new JsonResponse(array('error'=>0,'snack'=>$text));
     }
@@ -169,6 +187,9 @@ class BlockController extends AbstractController
 
         }
         return $this->render('block/blockForm.html.twig',array('block'=>$block,'form'=>$form->createView()));
+
+    }
+    private function sendEmailToParent(Zeitblock $zeitblock){
 
     }
 }

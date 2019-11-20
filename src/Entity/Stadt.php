@@ -183,6 +183,51 @@ class Stadt
      */
     private $news;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $berechnungsFormel='
+        $adresse = $this->getEltern();
+        $summe = 0;
+        $kind = $this;
+        $kinder = $adresse->getKinds()->toArray();
+        usort(
+            $kinder,
+            function ($a, $b) {
+                if ($a->getGeburtstag() == $b->getGeburtstag()) {
+                    return 0;
+                }
+
+                return ($a->getGeburtstag() < $b->getGeburtstag()) ? -1 : 1;
+            }
+        );
+
+        $blocks = $kind->getRealZeitblocks()->toArray();  
+        $blocks = array_merge($blocks, $this->beworben->toArray());
+        
+        $summe += $this->getBetragforKindBetreuung($kind, $adresse);
+       ';
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $ferienprogramm;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $schulkindBetreung;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $anzahlPreiseFerienbetreuung;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $BezeichnungPreiseFerienbetreuung = [];
+
 
     public function __construct()
     {
@@ -631,6 +676,66 @@ class Stadt
                 $news->setStadt(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBerechnungsFormel(): ?string
+    {
+        return $this->berechnungsFormel;
+    }
+
+    public function setBerechnungsFormel(?string $berechnungsFormel): self
+    {
+        $this->berechnungsFormel = $berechnungsFormel;
+
+        return $this;
+    }
+
+    public function getFerienprogramm(): ?bool
+    {
+        return $this->ferienprogramm;
+    }
+
+    public function setFerienprogramm(bool $ferienprogramm): self
+    {
+        $this->ferienprogramm = $ferienprogramm;
+
+        return $this;
+    }
+
+    public function getSchulkindBetreung(): ?bool
+    {
+        return $this->schulkindBetreung;
+    }
+
+    public function setSchulkindBetreung(bool $schulkindBetreung): self
+    {
+        $this->schulkindBetreung = $schulkindBetreung;
+
+        return $this;
+    }
+
+    public function getAnzahlPreiseFerienbetreuung(): ?int
+    {
+        return $this->anzahlPreiseFerienbetreuung;
+    }
+
+    public function setAnzahlPreiseFerienbetreuung(?int $anzahlPreiseFerienbetreuung): self
+    {
+        $this->anzahlPreiseFerienbetreuung = $anzahlPreiseFerienbetreuung;
+
+        return $this;
+    }
+
+    public function getBezeichnungPreiseFerienbetreuung(): ?array
+    {
+        return $this->BezeichnungPreiseFerienbetreuung;
+    }
+
+    public function setBezeichnungPreiseFerienbetreuung(?array $BezeichnungPreiseFerienbetreuung): self
+    {
+        $this->BezeichnungPreiseFerienbetreuung = $BezeichnungPreiseFerienbetreuung;
 
         return $this;
     }

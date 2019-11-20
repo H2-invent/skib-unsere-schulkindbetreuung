@@ -16,6 +16,10 @@
         <table class="table">
             <tbody>
             <tr>
+                <td>{% trans %} Letzte Speicherung {% endtrans %}</td>
+                <td>{{ eltern.createdAt|date('d.m.Y') }}</td>
+            </tr>
+            <tr>
                 <td>{% trans %} Name der Eltern {% endtrans %}</td>
                 <td>{{ eltern.vorname }} {{ eltern.name }}</td>
             </tr>
@@ -184,7 +188,16 @@
                                     </ul>
                                 </td>
                             </tr>
-
+                            <tr>
+                                <td>{% trans %} Historie{% endtrans %}</td>
+                                <td>
+                                    <ul class="list-group">
+                                        {%  for k in history %}
+                                            <a href="{{ path('child_detail',{'kind_id':k.id}) }}"> <li class="list-group-item">{{ k.eltern.createdAt|date('d.m.Y H:i') }}</li></a>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>

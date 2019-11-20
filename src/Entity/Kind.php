@@ -159,8 +159,33 @@ class Kind
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Rechnung", mappedBy="kinder")
+	 
      */
     private $rechnungen;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinder")
+	 * @ORM\JoinTable(name="kind_ferienprogramm_beworben")
+     */
+    private $ferienProgrammBeworben;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinderGebucht")
+	 * @ORM\JoinTable(name="kind_ferienprogramm_gebucht")
+     */
+    private $ferienProgrammGebucht;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinderBezahlt")
+	  * @ORM\JoinTable(name="kind_ferienprogramm_bezahlt")
+     */
+    private $ferienProgrammBezahlt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ferienblock", inversedBy="kinderStorniert")
+	  * @ORM\JoinTable(name="kind_ferienprogramm_storniert")
+     */
+    private $ferienProgrammStorniert;
 
 
 
@@ -170,6 +195,10 @@ class Kind
         $this->abwesends = new ArrayCollection();
         $this->beworben = new ArrayCollection();
         $this->rechnungen = new ArrayCollection();
+        $this->ferienProgrammBeworben = new ArrayCollection();
+        $this->ferienProgrammGebucht = new ArrayCollection();
+        $this->ferienProgrammBezahlt = new ArrayCollection();
+        $this->ferienProgrammStorniert = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -431,56 +460,8 @@ class Kind
     {   // Load the data from the city into the controller as $stadt
 
         //Include Parents in this route
-        $adresse = $this->getEltern();
-        $kind = $this;
-        $kinder = $adresse->getKinds()->toArray();
-
-
-        usort(
-            $kinder,
-            function ($a, $b) {
-                if ($a->getGeburtstag() == $b->getGeburtstag()) {
-                    return 0;
-                }
-
-                return ($a->getGeburtstag() < $b->getGeburtstag()) ? -1 : 1;
-            }
-        );
-
-
-        $blocks = $kind->getRealZeitblocks()->toArray();
-        $blocks = array_merge($blocks, $this->beworben->toArray());
-
-// Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
         $summe = 0;
-        $loop = 0;
-        //$summe += $this->getBetragforKindMittagessen($kind, $adresse);
-
-        foreach ($kinder as $data) {
-
-            if ($kind == $data) {
-
-                switch ($loop) {
-                    case 0:
-                        if ($adresse->getKinderImKiga()) {
-                            $summe += $this->getBetragforKindBetreuung($kind, $adresse) * 0.75;
-                        } else {
-                            $summe += $this->getBetragforKindBetreuung($kind, $adresse);
-                        }
-                        break;
-                    case 1:
-                        $summe += $this->getBetragforKindBetreuung($kind, $adresse) * 0.5;
-                        break;
-
-                    default:
-                        $summe += 0;
-                        break;
-
-                }
-                break;
-            }
-            $loop++;
-        }
+        eval($this->schule->getStadt()->getBerechnungsFormel());
         return $summe;
     }
 
@@ -488,9 +469,7 @@ class Kind
         $summe = 0;
         $blocks = $kind->getZeitblocks()->toArray();
         $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
-
         foreach ($blocks as $data){
-
             if($data->getGanztag() != 0 && $data->getDeleted() == false){
                 $summe += $data->getPreise()[$eltern->getEinkommen()];
             }
@@ -500,7 +479,7 @@ class Kind
     private function getBetragforKindMittagessen(Kind $kind,Stammdaten $eltern){
         $summe = 0;
         foreach ($kind->getZeitblocks() as $data){
-            if($data->getGanztag() == 0 && $eltern->getBuk() == false && $data->getDeleted() == false){
+            if($data->getGanztag() == 0 && $data->getDeleted() == false){
                 $summe += $data->getPreise()[$eltern->getEinkommen()];
             }
         }
@@ -709,6 +688,117 @@ class Kind
         return $this;
     }
 
+    public function getArtString(){
+        $type = array(
+        1=>'Ganztagsbetreuung',
+        2=>'Halbtagsbetreuung',
+        );
+        return $type[$this->art];
+    }
+
+    /**
+     * @return Collection|ferienblock[]
+     */
+    public function getFerienProgrammBeworben(): Collection
+    {
+        return $this->ferienProgrammBeworben;
+    }
+
+    public function addFerienProgrammBeworben(ferienblock $ferienProgrammBeworben): self
+    {
+        if (!$this->ferienProgrammBeworben->contains($ferienProgrammBeworben)) {
+            $this->ferienProgrammBeworben[] = $ferienProgrammBeworben;
+        }
+
+        return $this;
+    }
+
+    public function removeFerienProgrammBeworben(ferienblock $ferienProgrammBeworben): self
+    {
+        if ($this->ferienProgrammBeworben->contains($ferienProgrammBeworben)) {
+            $this->ferienProgrammBeworben->removeElement($ferienProgrammBeworben);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ferienblock[]
+     */
+    public function getFerienProgrammGebucht(): Collection
+    {
+        return $this->ferienProgrammGebucht;
+    }
+
+    public function addFerienProgrammGebucht(ferienblock $ferienProgrammGebucht): self
+    {
+        if (!$this->ferienProgrammGebucht->contains($ferienProgrammGebucht)) {
+            $this->ferienProgrammGebucht[] = $ferienProgrammGebucht;
+        }
+
+        return $this;
+    }
+
+    public function removeFerienProgrammGebucht(ferienblock $ferienProgrammGebucht): self
+    {
+        if ($this->ferienProgrammGebucht->contains($ferienProgrammGebucht)) {
+            $this->ferienProgrammGebucht->removeElement($ferienProgrammGebucht);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ferienblock[]
+     */
+    public function getFerienProgrammBezahlt(): Collection
+    {
+        return $this->FerienProgrammBezahlt;
+    }
+
+    public function addFerienProgrammBezahlt(ferienblock $kinderBezahlt): self
+    {
+        if (!$this->ferienProgrammBezahlt->contains($kinderBezahlt)) {
+            $this->ferienProgrammBezahlt[] = $kinderBezahlt;
+        }
+
+        return $this;
+    }
+
+    public function removeFerienProgrammBezahlt(ferienblock $kinderBezahlt): self
+    {
+        if ($this->ferienProgrammBezahlt->contains($kinderBezahlt)) {
+            $this->ferienProgrammBezahlt->removeElement($kinderBezahlt);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ferienblock[]
+     */
+    public function getFerienProgrammStorniert(): Collection
+    {
+        return $this->ferienProgrammStorniert;
+    }
+
+    public function addFerienProgrammStorniert(ferienblock $ferienBlockStorniert): self
+    {
+        if (!$this->ferienProgrammStorniert->contains($ferienBlockStorniert)) {
+            $this->ferienProgrammStorniert[] = $ferienBlockStorniert;
+        }
+
+        return $this;
+    }
+
+    public function removeFerienProgrammStorniert(ferienblock $ferienBlockStorniert): self
+    {
+        if ($this->ferienProgrammStorniert->contains($ferienBlockStorniert)) {
+            $this->ferienProgrammStorniert->removeElement($ferienBlockStorniert);
+        }
+
+        return $this;
+    }
 
 
 }

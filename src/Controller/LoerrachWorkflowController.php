@@ -16,6 +16,7 @@ use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use App\Form\Type\LoerrachKind;
 use App\Form\Type\StadtType;
+use App\Service\AnmeldeEmailService;
 use App\Service\IcsService;
 use App\Service\MailerService;
 use App\Service\PrintAGBService;
@@ -115,15 +116,12 @@ class LoerrachWorkflowController extends AbstractController
             ->add('sepaInfo', CheckboxType::class, ['required' => true, 'label' => 'SEPA-LAstschrift Mandat wird elektromisch erteilt', 'translation_domain' => 'form'])
             ->add('gdpr', CheckboxType::class, ['required' => true, 'label' => 'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden', 'translation_domain' => 'form'])
             ->add('newsletter', CheckboxType::class, ['required' => false, 'label' => 'Zum Newsletter anmelden', 'translation_domain' => 'form'])
-            // ->add('captcha', RecaptchaType::class, [
-            // "groups" option is not mandatory
-
-            //])
+             ->add('captcha', RecaptchaType::class, ['required'=>true])
             ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form'])
             ->getForm();
         $form->handleRequest($request);
         $errors = array();
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $request->get('g-recaptcha-response', '') != null) {
             $adresse = $form->getData();
             $errors = $validator->validate($adresse);
             if (count($errors) == 0) {
@@ -406,7 +404,7 @@ class LoerrachWorkflowController extends AbstractController
         foreach ($adresse->getKinds() as $data) {
             $renderSchulen[$data->getSchule()->getId()] = $data;
         }
-        return $this->render('workflow/loerrach/mittagessen.html.twig', array('stadt' => $stadt, 'schule'=>$renderSchulen));
+        return $this->render('workflow/loerrach/mittagessen.html.twig', array('stadt' => $stadt, 'schule' => $renderSchulen));
     }
 
     /**
@@ -453,7 +451,15 @@ class LoerrachWorkflowController extends AbstractController
     /**
      * @Route("/loerrach/abschluss",name="loerrach_workflow_abschluss",methods={"GET","POST"})
      */
-    public function abschlussAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, MailerService $mailer, TCPDFController $tcpdf, PrintService $print, IcsService $icsService, PrintAGBService $printAGBService)
+    public function abschlussAction(Request $request,
+                                    ValidatorInterface $validator,
+                                    TranslatorInterface $translator,
+                                    MailerService $mailer,
+                                    TCPDFController $tcpdf,
+                                    PrintService $print,
+                                    IcsService $icsService,
+                                    PrintAGBService $printAGBService,
+                                    AnmeldeEmailService $anmeldeEmailService)
     {
         // Load the data from the city into the controller as $stadt
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
@@ -464,7 +470,7 @@ class LoerrachWorkflowController extends AbstractController
             return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
 
-        //Include Parents in this route
+//Include Parents in this route
         $adresse = new Stammdaten;
         if ($this->getStammdatenFromCookie($request)) {
             $adresse = $this->getStammdatenFromCookie($request);
@@ -478,6 +484,7 @@ class LoerrachWorkflowController extends AbstractController
                 $this->redirectToRoute('loerrach_workflow_zusammenfassung');
             }
         }
+
         // Daten speichern und fixieren
         $em = $this->getDoctrine()->getManager();
         $adresse->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
@@ -491,6 +498,7 @@ class LoerrachWorkflowController extends AbstractController
             $adresseOld->setEndedAt((clone $adresse->getCreatedAt())->modify('last day of this month'));
             $em->persist($adresseOld);
         }
+
         $adresse->setCreatedAt(new \DateTime());
         $adressCopy = clone $adresse;
         $adressCopy->setSaved(false);
@@ -500,7 +508,6 @@ class LoerrachWorkflowController extends AbstractController
         $adresse->setSaved(true);
         $em->persist($adressCopy);
         foreach ($kind as $data) {
-
             if (!$data->getTracing()) {
                 $data->setTracing(md5(uniqid('kind', true)));
             }
@@ -528,62 +535,13 @@ class LoerrachWorkflowController extends AbstractController
 
             $em->flush();
         }
-
         $em->persist($adresse);
         $em->persist($adressCopy);
         $em->flush();
-
-
+        //Emails an die Eltern senden
         foreach ($kind as $data) {
-            $attachment = array();
-            if (sizeof($data->getBeworben()->toArray()) == 0) {//Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
-                $fileName = $data->getVorname() . '_' . $data->getNachname() . '_' . $data->getSchule()->getName() . '.pdf';
-
-                $pdf = $print->printAnmeldebestätigung(
-                    $data,
-                    $adresse,
-                    $stadt,
-                    $tcpdf,
-                    $fileName,
-                    $this->einkommensgruppen,
-                    $data->getZeitblocks()[0]->getSchule()->getOrganisation(),
-                    'S'
-                );
-                $attachment[] = array('type' => 'application/pdf', 'filename' => $fileName . '.pdf', 'body' => $pdf);
-                $attachment[] = array('type' => 'application/pdf', 'filename' => $translator->trans('AGB ') . ' ' . $stadt->getName() . '.pdf', 'body' => $printAGBService->printAGB($stadt->translate()->getAgb(), 'S', $stadt, null));
-
-
-                foreach ($data->getZeitblocks() as $data2) {
-                    $startDate = $data2->getFirstDate()->format('Ymd');
-                    $icsService->add(
-                        array(
-                            'location' => $data2->getSchule()->getOrganisation()->getName(),
-                            'description' => $data2->getGanztag() == 0 ? $this->translator->trans('Mittagessen') : $this->translator->trans(
-                                'Betreuung'),
-                            'dtstart' => $startDate . 'T' . $data2->getVon()->format('His'),
-                            'dtend' => $startDate . 'T' . $data2->getBis()->format('His'),
-                            'summary' => $data2->getGanztag() == 0 ? $this->translator->trans('Mittagessen') : $this->translator->trans(
-                                'Betreuung'),
-                            'url' => '',
-                            'rrule' => 'FREQ=WEEKLY;UNTIL=' . $data2->getActive()->getBis()->format('Ymd') . 'T000000'
-                        )
-                    );
-                }
-                $attachment[] = array('type' => 'text/calendar', 'filename' => $data->getVorname() . ' ' . $data->getNachname() . '.ics', 'body' => $icsService->to_string());
-
-                $icsService = new IcsService();
-                $mailBetreff = $translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname();
-                $mailContent = $this->renderView('email/anmeldebestatigung.html.twig', array('eltern' => $adresse, 'kind' => $data, 'stadt' => $stadt));
-                $mailer->sendEmail($data->getSchule()->getOrganisation()->getName(), $data->getSchule()->getOrganisation()->getEmail(), $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
-
-            } else {// es gibt noch beworbene Zeitblöcke
-                $mailBetreff = $translator->trans('Anmeldeinformation der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname();
-                $mailContent = $this->renderView('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $data, 'stadt' => $stadt));
-                $mailer->sendEmail($data->getSchule()->getOrganisation()->getName(), $data->getSchule()->getOrganisation()->getEmail(), $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
-
-            }
+            $anmeldeEmailService->sendEmail($data,$adresse,$stadt,$this->einkommensgruppen);
         }
-
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
         $response->headers->clearCookie('UserID');
@@ -592,10 +550,12 @@ class LoerrachWorkflowController extends AbstractController
         return $response;
 
     }
+
     /**
      * @Route("/loerrach/berechnung/einKind",name="loerrach_workflow_preis_einKind",methods={"GET"})
      */
-    public function berechnungAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    public
+    function berechnungAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         // Load the data from the city into the controller as $stadt
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
@@ -632,7 +592,8 @@ class LoerrachWorkflowController extends AbstractController
     /**
      * @Route("/loerrach/berechnung/printPdf",name="loerrach_workflow_print_pdf",methods={"GET"})
      */
-    public function prinPdf(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, TCPDFController $tcpdf, PrintService $print)
+    public
+    function prinPdf(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, TCPDFController $tcpdf, PrintService $print)
     {
         $elter = $this->getStammdatenFromCookie($request);
         $stadt = $elter->getKinds()[0]->getSchule()->getStadt();
@@ -650,7 +611,8 @@ class LoerrachWorkflowController extends AbstractController
     }
 
 // Nach UId und Fin fragen
-    private function getStammdatenFromCookie(Request $request)
+    private
+    function getStammdatenFromCookie(Request $request)
     {
         if ($request->cookies->get('UserID')) {
 
@@ -682,7 +644,8 @@ class LoerrachWorkflowController extends AbstractController
         return null;
     }
 
-    private function getSchuljahr($stadt)
+    private
+    function getSchuljahr($stadt)
     {
         if ($this->getUser() && $this->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE')) {
             return $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromCity($stadt);
@@ -694,7 +657,8 @@ class LoerrachWorkflowController extends AbstractController
     /**
      * @Route("/admin/adresse/bypass",name="loerrach_workflow_bypass",methods={"GET","POST"})
      */
-    public function BypassAction(Request $request, ValidatorInterface $validator)
+    public
+    function BypassAction(Request $request, ValidatorInterface $validator)
     {
         $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->find($request->get('id'));
         $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
