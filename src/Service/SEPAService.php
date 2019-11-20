@@ -133,7 +133,7 @@ class SEPAService
                     $result.="            <AmdmntInfDtls>\n";
                     if (!empty($myBuchung['OLDMANDATREF']))
                         $result.='              <OrgnlMndtId>'.$myBuchung['OLDMANDATREF']."</OrgnlMndtId>\n";
-                    if (!empty($myBuchung['OLDNAME']) or !empty($myBuchung['OLDCREDITORID'])) {
+                    if (!empty($myBuchung['OLDNAME']) || !empty($myBuchung['OLDCREDITORID'])) {
                         $result.="              <OrgnlCdtrSchmeId>\n";
                         if (!empty($myBuchung['OLDNAME']))
                             $result.='                <Nm>'.$myBuchung['OLDNAME']."</Nm>\n";
