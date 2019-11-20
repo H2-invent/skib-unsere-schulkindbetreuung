@@ -10,6 +10,13 @@ use App\Entity\Zeitblock;
 use App\Form\Type\LoerrachKind;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +26,73 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class FerienController extends AbstractController
 {
     /**
-     * @Route("/{slug}/ferien", name="ferien")
+     * @Route("/{slug}/ferien/adresse",name="ferien_adresse",methods={"GET","POST"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
+     */
+    public function adresseAction(Request $request, ValidatorInterface $validator, Stadt $stadt)
+    {
+        $adresse = new Stammdaten;
+        if ($this->getStammdatenFromCookie($request)) {
+            $adresse = $this->getStammdatenFromCookie($request);
+        }
+
+        //Add SecCode into if to create a SecCode the first time to be not "null"
+        if ($adresse->getUid() == null) {
+            $adresse->setUid(md5(uniqid()))
+                ->setAngemeldet(false);
+            $adresse->setCreatedAt(new \DateTime());
+        }
+
+        $form = $this->createFormBuilder($adresse)
+            ->add('email', EmailType::class, ['label' => 'Email', 'translation_domain' => 'form'])
+            ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form', 'help' => 'Das ist eine Hilfe für diese Frage im Form'])
+            ->add('name', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
+            ->add('strasse', TextType::class, ['label' => 'Straße', 'translation_domain' => 'form'])
+            ->add('adresszusatz', TextType::class, ['required' => false, 'label' => 'Adresszusatz', 'translation_domain' => 'form'])
+            ->add('plz', TextType::class, ['label' => 'PLZ', 'translation_domain' => 'form'])
+            ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form', 'help' => 'Das ist eine Hilfe für diese Frage im Form'])
+            ->add('notfallName', TextType::class, ['required' => true, 'label' => 'Name und Beziehung des Notfallkontakt', 'translation_domain' => 'form'])
+            ->add('notfallkontakt', TextType::class, ['required' => true, 'label' => 'Notfalltelefonnummer', 'translation_domain' => 'form'])
+            ->add('iban', TextType::class, ['required' => true, 'label' => 'IBAN für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('bic', TextType::class, ['required' => true, 'label' => 'BIC für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('kontoinhaber', TextType::class, ['required' => true, 'label' => 'Kontoinhaber für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('abholberechtigter', TextareaType::class, ['required' => false, 'label' => 'Weitere abholberechtigte Personen', 'translation_domain' => 'form', 'attr' => ['rows' => 6]])
+            ->add('sepaInfo', CheckboxType::class, ['required' => true, 'label' => 'SEPA-LAstschrift Mandat wird elektromisch erteilt', 'translation_domain' => 'form'])
+            ->add('gdpr', CheckboxType::class, ['required' => true, 'label' => 'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden', 'translation_domain' => 'form'])
+            ->add('newsletter', CheckboxType::class, ['required' => false, 'label' => 'Zum Newsletter anmelden', 'translation_domain' => 'form'])
+            // ->add('captcha', RecaptchaType::class, [
+            // "groups" option is not mandatory
+
+            //])
+            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form'])
+            ->getForm();
+        $form->handleRequest($request);
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $adresse = $form->getData();
+            $errors = $validator->validate($adresse);
+            if (count($errors) == 0) {
+                $adresse->setFin(false);
+                $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($adresse);
+                $em->flush();
+                $response = $this->redirectToRoute('workflow_confirm_Email', array('redirect' => $this->generateUrl('ferien_auswahl', array('slug'=>$stadt->getSlug())), 'uid' => $adresse->getUid(), 'stadt' => $stadt->getId()));
+                //$response = $this->redirectToRoute('loerrach_workflow_schulen');
+                $response->headers->setCookie($cookie);
+                return $response;
+            } else {
+                // return $this->redirectToRoute('task_success');
+            }
+
+        }
+
+        return $this->render('ferien/adresse.html.twig', array('stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors));
+    }
+
+
+    /**
+     * @Route("/{slug}/ferien/auswahl", name="ferien_auswahl")
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public function ferienAction(Request $request, Stadt $stadt)
@@ -80,7 +153,7 @@ class FerienController extends AbstractController
                     $em->persist($kind);
                     $em->flush();
                     $text = $translator->trans('Erfolgreich gespeichert');
-                    return new JsonResponse(array('error' => 0, 'snack' => $text, 'next' => $this->generateUrl('ferien_kind_zeitblock', array('slug' => $stadt->getSlug()))));
+                    return new JsonResponse(array('error' => 0, 'snack' => $text, 'next' => $this->generateUrl('ferien_kind_program', array('slug' => $stadt->getSlug(),'kind_id' => $kind->getId()))));
                 }
             } catch (\Exception $e) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
@@ -88,11 +161,12 @@ class FerienController extends AbstractController
             }
 
         }
-        return $this->render('workflow/loerrach/kindForm.html.twig', array('stadt' => $stadt, 'form' => $form->createView()));
+        return $this->render('ferien/kindForm.html.twig', array('stadt' => $stadt, 'form' => $form->createView()));
     }
 
+
     /**
-     * @Route("/{slug}/ferien/kind/zeitblock",name="ferien_kind_zeitblock",methods={"GET"})
+     * @Route("/{slug}/ferien/kind/program",name="ferien_kind_program",methods={"GET"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public function zeitblockAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt)
@@ -134,6 +208,7 @@ class FerienController extends AbstractController
 
         return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'blocks' => $renderBlocks));
     }
+
 
     /**
      * @Route("/loerrach/kinder/block/toggle",name="ferien_kinder_block_toggle",methods={"GET"})
@@ -191,6 +266,7 @@ class FerienController extends AbstractController
         return new JsonResponse($result);
     }
 
+
     // Nach UId und Fin fragen
     private function getStammdatenFromCookie(Request $request)
     {
@@ -223,4 +299,6 @@ class FerienController extends AbstractController
         }
         return null;
     }
+
+
 }
