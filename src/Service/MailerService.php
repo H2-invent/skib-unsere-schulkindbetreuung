@@ -20,7 +20,7 @@ use Symfony\Component\Mime\NamedAddress;
 class MailerService
 {
 
-  
+
     private $mailgun;
     public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, MailerInterface $mailerInterface)
     {
