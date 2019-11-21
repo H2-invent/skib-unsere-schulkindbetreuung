@@ -10,11 +10,7 @@ namespace App\Form\Type;
 use App\Entity\Active;
 
 use App\Entity\Ferienblock;
-use App\Entity\News;
-use Doctrine\DBAL\Types\BooleanType;
-use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -54,18 +50,16 @@ class FerienBlockType extends AbstractType
             ->add('infoTextEN', TextareaType::class, ['attr'=>['rows'=>6],'label'=>'Info Text Englisch','translation_domain' => 'form','property_path' => 'translations[en].infoText',])
             ->add('infoTextFR', TextareaType::class, ['attr'=>['rows'=>6],'label'=>'Info Text Französisch','translation_domain' => 'form','property_path' => 'translations[fr].infoText',])
             ->add('ort', TextareaType::class, ['label' => 'ort','translation_domain' => 'form'])
-
-            ->add('minAlter', IntegerType::class,array('label'=>'Mindest Alter','required'=>true,'translation_domain' => 'form'))
-            ->add('maxAlter', IntegerType::class,array('label'=>'Maximum Alter','required'=>true,'translation_domain' => 'form'))
+            ->add('minAlter', IntegerType::class,array('required'=>false,'label'=>'Mindest Alter','translation_domain' => 'form'))
+            ->add('maxAlter', IntegerType::class,array('required'=>false,'label'=>'Maximum Alter','translation_domain' => 'form'))
             ->add('startDate', DateType::class,array('label'=>'Start Datum','translation_domain' => 'form'))
             ->add('endDate', DateType::class, ['label' => 'End Datum','translation_domain' => 'form'])
             ->add('startTime', TimeType::class, ['label' => 'Anfangs Uhrzeit','translation_domain' => 'form'])
             ->add('endTime', TimeType::class, ['label' => 'End Uhrzeit','translation_domain' => 'form'])
             ->add('startVerkauf', DateTimeType::class,array('label'=>'Start Vorverkauf','translation_domain' => 'form'))
             ->add('endVerkauf', DateTimeType::class,array('label'=>'End Vorverkauf','translation_domain' => 'form'))
-            ->add('minAnzahl', IntegerType::class,array('label'=>'Minimum Anzahl','translation_domain' => 'form'))
-            ->add('maxAnzahl', IntegerType::class,array('label'=>'Maximum Anzahl','translation_domain' => 'form'))
-
+            ->add('minAnzahl', IntegerType::class,array('required'=>false,'label'=>'Minimum Anzahl','translation_domain' => 'form'))
+            ->add('maxAnzahl', IntegerType::class,array('required'=>false,'label'=>'Maximum Anzahl','translation_domain' => 'form'))
             ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
     }
