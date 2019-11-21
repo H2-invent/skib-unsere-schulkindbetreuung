@@ -14,7 +14,7 @@
 
 
     <h3>{{ kind.vorname }} {{ kind.nachname }} | {% trans %}Geburtstag:{% endtrans %} {{ kind.geburtstag|date('d.m.Y') }} | {% trans %}Klasse{% endtrans %}: {{ kind.klasse }}
-    <p>{{ 'Allergie'|trans }}: {{ kind.allergie }} | {{ 'Medikamente'|trans }}: {{ kind.medikamente }} | {{ 'Bemerkung' }}: {{ kind.bemerkung }}</p><h3>
+    <p>{{ 'Allergie'|trans }}: {{ kind.allergie }} | {{ 'Medikamente'|trans }}: {{ kind.medikamente }} | {{ 'Bemerkung' }}: {{ kind.bemerkung }}</p></h3>
 
 
         <table cellpadding="3px">
@@ -33,7 +33,3 @@
            {{ table|raw }}
             </tbody>
         </table>
-
-
-
-        <!-- Daten der Kinder in einer for Schleife -->

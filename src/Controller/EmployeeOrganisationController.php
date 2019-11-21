@@ -230,8 +230,10 @@ class EmployeeOrganisationController extends AbstractController
             'ROLE_ORG_ACCOUNTING'=>'ROLE_ORG_ACCOUNTING',
             'ROLE_ORG_BLOCK_MANAGEMENT'=>'ROLE_ORG_BLOCK_MANAGEMENT',
             'ROLE_ORG_SHOOL'=>'ROLE_ORG_SHOOL',
-            'ROLE_ORG_ACCEPT_CHILD'=>'ROLE_ORG_ACCEPT_CHILD'
-
+            'ROLE_ORG_ACCEPT_CHILD'=>'ROLE_ORG_ACCEPT_CHILD',
+            'ROLE_ORG_FERIEN_EDITOR'=>'ROLE_ORG_FERIEN_EDITOR',
+            'ROLE_ORG_FERIEN_REPORT'=>'ROLE_ORG_FERIEN_REPORT',
+            'ROLE_ORG_FERIEN_CHECKIN'=>'ROLE_ORG_FERIEN_CHECKIN'
         );
 
         $form = $this->createFormBuilder($roles);

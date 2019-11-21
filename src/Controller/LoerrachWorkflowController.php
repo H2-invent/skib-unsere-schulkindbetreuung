@@ -270,7 +270,7 @@ class LoerrachWorkflowController extends AbstractController
     }
 
     /**
-     * @Route("/loerrach/schulen/kind/delete",name="loerrach_workflow_kind_delete",methods={"GET"})
+     * @Route("/loerrach/schulen/kind/delete",name="loerrach_workflow_kind_delete",methods={"DELETE"})
      */
     public function deleteAction(Request $request, ValidatorInterface $validator)
     {
@@ -332,7 +332,7 @@ class LoerrachWorkflowController extends AbstractController
     }
 
     /**
-     * @Route("/loerrach/kinder/block/toggle",name="loerrach_workflow_kinder_block_toggle",methods={"GET"})
+     * @Route("/loerrach/kinder/block/toggle",name="loerrach_workflow_kinder_block_toggle",methods={"PATCH"})
      */
     public function kinderblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
@@ -603,7 +603,7 @@ class LoerrachWorkflowController extends AbstractController
         $organisation = $kind->getAllBlocks()[0]->getSchule()->getOrganisation();
 
         $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName() . '.pdf';
-        //todo I is to show the pdf in the browser D is to download;
+
 
         return $print->printAnmeldebestätigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->einkommensgruppen, $organisation, 'D');
 
@@ -658,7 +658,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/admin/adresse/bypass",name="loerrach_workflow_bypass",methods={"GET","POST"})
      */
     public
-    function BypassAction(Request $request, ValidatorInterface $validator)
+    function bypassAction(Request $request, ValidatorInterface $validator)
     {
         $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->find($request->get('id'));
         $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);

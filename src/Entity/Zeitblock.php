@@ -40,7 +40,7 @@ class Zeitblock
     private $kind;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Active")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Active", inversedBy="blocks")
      */
     private $active;
 

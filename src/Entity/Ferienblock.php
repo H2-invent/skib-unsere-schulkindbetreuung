@@ -89,12 +89,12 @@ class Ferienblock
     private $kinderGebucht;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Kind", mappedBy="kinderBezahlt")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Kind", mappedBy="ferienProgrammBezahlt")
      */
     private $kinderBezahlt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Kind", mappedBy="ferienBlockStorniert")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Kind", mappedBy="ferienProgrammStorniert")
      */
     private $kinderStorniert;
 

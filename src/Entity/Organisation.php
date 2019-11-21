@@ -155,10 +155,6 @@ class Organisation
      */
     private $updatedAt;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Files", mappedBy="sepa")
-     */
-    private $sepaXml;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Sepa", mappedBy="organisation")
@@ -240,7 +236,7 @@ class Organisation
     public function __construct()
     {
         $this->schule = new ArrayCollection();
-        $this->sepaXml = new ArrayCollection();
+
         $this->sepas = new ArrayCollection();
         $this->ferienblocks = new ArrayCollection();
     }
@@ -543,36 +539,6 @@ class Organisation
         return $this->image;
     }
 
-    /**
-     * @return Collection|Files[]
-     */
-    public function getSepaXml(): Collection
-    {
-        return $this->sepaXml;
-    }
-
-    public function addSepaXml(Files $sepaXml): self
-    {
-        if (!$this->sepaXml->contains($sepaXml)) {
-            $this->sepaXml[] = $sepaXml;
-            $sepaXml->setSepa($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSepaXml(Files $sepaXml): self
-    {
-        if ($this->sepaXml->contains($sepaXml)) {
-            $this->sepaXml->removeElement($sepaXml);
-            // set the owning side to null (unless already changed)
-            if ($sepaXml->getSepa() === $this) {
-                $sepaXml->setSepa(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|Sepa[]

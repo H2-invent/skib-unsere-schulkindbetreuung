@@ -1,4 +1,6 @@
 {
+    "description": "Project to manage the Shoolkids in a City",
+    "name": "skb-schulkindbetreuung/h2invent",
     "type": "project",
     "license": "proprietary",
     "require": {

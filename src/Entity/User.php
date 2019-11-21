@@ -7,17 +7,17 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
-* @ORM\Entity
-* @ORM\Table(name="fos_user")
-*/
+ * @ORM\Entity
+ * @ORM\Table(name="fos_user")
+ */
 class User extends BaseUser
 {
-/**
-* @ORM\Id
-* @ORM\Column(type="integer")
-* @ORM\GeneratedValue(strategy="AUTO")
-*/
-protected $id;
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Stadt")
      * @ORM\JoinColumn(nullable=true)
@@ -42,74 +42,75 @@ protected $id;
      * @ORM\Column(type="date", nullable=true)
      */
     private $birthday;
-public function __construct()
-{
-parent::__construct();
+
+    public function __construct()
+    {
+        parent::__construct();
 // your own logic
-}
+    }
 
-public function getVorname(): ?string
-{
-    return $this->vorname;
-}
+    public function getVorname(): ?string
+    {
+        return $this->vorname;
+    }
 
-public function setVorname(?string $vorname): self
-{
-    $this->vorname = $vorname;
+    public function setVorname(?string $vorname): self
+    {
+        $this->vorname = $vorname;
 
-    return $this;
-}
+        return $this;
+    }
 
-public function getNachname(): ?string
-{
-    return $this->nachname;
-}
+    public function getNachname(): ?string
+    {
+        return $this->nachname;
+    }
 
-public function setNachname(?string $nachname): self
-{
-    $this->nachname = $nachname;
+    public function setNachname(?string $nachname): self
+    {
+        $this->nachname = $nachname;
 
-    return $this;
-}
+        return $this;
+    }
 
-public function getId(): ?int
-{
-    return $this->id;
-}
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
-public function getBirthday(): ?\DateTimeInterface
-{
-    return $this->birthday;
-}
+    public function getBirthday(): ?\DateTimeInterface
+    {
+        return $this->birthday;
+    }
 
-public function setBirthday(?\DateTimeInterface $birthday): self
-{
-    $this->birthday = $birthday;
+    public function setBirthday(?\DateTimeInterface $birthday): self
+    {
+        $this->birthday = $birthday;
 
-    return $this;
-}
+        return $this;
+    }
 
-public function getStadt(): ?Stadt
-{
-    return $this->stadt;
-}
+    public function getStadt(): ?Stadt
+    {
+        return $this->stadt;
+    }
 
-public function setStadt(?Stadt $stadt): self
-{
-    $this->stadt = $stadt;
+    public function setStadt(?Stadt $stadt): self
+    {
+        $this->stadt = $stadt;
 
-    return $this;
-}
+        return $this;
+    }
 
-public function getOrganisation(): ?Organisation
-{
-    return $this->organisation;
-}
+    public function getOrganisation(): ?Organisation
+    {
+        return $this->organisation;
+    }
 
-public function setOrganisation(?Organisation $organisation): self
-{
-    $this->organisation = $organisation;
+    public function setOrganisation(?Organisation $organisation): self
+    {
+        $this->organisation = $organisation;
 
-    return $this;
-}
+        return $this;
+    }
 }

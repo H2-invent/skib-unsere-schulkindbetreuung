@@ -82,7 +82,7 @@ class WidgetStadtController extends AbstractController
         return new JsonResponse(array('title'=>$translator->trans('Kinder dieses Schuljahr'),'small'=>'','anzahl'=>sizeof($kinder),'symbol'=>'emoji_people'));
     }
 
-    function cmp($a, $b)
+    private function cmp($a, $b)
     {
         if ($a['active']->getVon() == $b['active']->getVon()) {
             return 0;
