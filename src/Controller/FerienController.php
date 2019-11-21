@@ -185,7 +185,6 @@ class FerienController extends AbstractController
         $blocks = array();
         $blocks = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt);
 
-        dump($blocks);
         return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'blocks' => $blocks));
     }
 
