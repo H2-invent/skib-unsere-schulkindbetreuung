@@ -91,9 +91,6 @@ class ChildController extends AbstractController
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $repo = $this->getDoctrine()->getRepository(Zeitblock::class);
-        $em = $this->getDoctrine()->getManager();
-
         $qb = $this->getDoctrine()->getRepository(Kind::class)->createQueryBuilder('k')
             ->innerJoin('k.zeitblocks','b');
 
@@ -138,7 +135,7 @@ class ChildController extends AbstractController
         }
         $qb->andWhere('k.fin = 1');
         $query = $qb->getQuery();
-        $blocks = $result = $query->getResult();
+        $blocks = $query->getResult();
         $kinderU = $blocks;
 
 

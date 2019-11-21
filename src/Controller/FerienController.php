@@ -179,7 +179,6 @@ class FerienController extends AbstractController
         }
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-        $organisation = $stadt->getOrganisations();
 
 
         $blocks = array();
@@ -259,10 +258,8 @@ class FerienController extends AbstractController
 
 
                 $cookie_kind = explode('.', $request->cookies->get('KindID'));
-                $hash_kind = hash("sha256", $cookie_kind[0] . $this->getParameter("secret"));
 
                 $cookie_seccode = explode('.', $request->cookies->get('SecID'));
-                $hash_seccode = hash("sha256", $cookie_seccode[0] . $this->getParameter("secret"));
 
 
             } else {

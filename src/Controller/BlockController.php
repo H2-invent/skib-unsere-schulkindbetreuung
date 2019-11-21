@@ -189,7 +189,5 @@ class BlockController extends AbstractController
         return $this->render('block/blockForm.html.twig',array('block'=>$block,'form'=>$form->createView()));
 
     }
-    private function sendEmailToParent(Zeitblock $zeitblock){
 
-    }
 }

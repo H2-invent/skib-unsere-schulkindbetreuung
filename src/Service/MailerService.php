@@ -19,13 +19,13 @@ use Symfony\Component\Mime\NamedAddress;
 
 class MailerService
 {
-    private $mailer;
-    private $templating;
+
+  
     private $mailgun;
     public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, MailerInterface $mailerInterface)
     {
-        $this->mailer =  $mailer;
-        $this->templating = $templating;
+
+
         $this->mailgun =$mailerInterface;
        // $this->mailgun = new Mailer(new MailgunTransport('7a751a2f220d604c08e2e019224cfbe5-816b23ef-e28e0bcb', 'mail.h2-invent.com','eu'));
     }

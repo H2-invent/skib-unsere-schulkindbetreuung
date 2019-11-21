@@ -465,26 +465,8 @@ class Kind
         return $summe;
     }
 
-    private function getBetragforKindBetreuung(Kind $kind,Stammdaten $eltern){
-        $summe = 0;
-        $blocks = $kind->getZeitblocks()->toArray();
-        $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
-        foreach ($blocks as $data){
-            if($data->getGanztag() != 0 && $data->getDeleted() == false){
-                $summe += $data->getPreise()[$eltern->getEinkommen()];
-            }
-        }
-        return $summe;
-    }
-    private function getBetragforKindMittagessen(Kind $kind,Stammdaten $eltern){
-        $summe = 0;
-        foreach ($kind->getZeitblocks() as $data){
-            if($data->getGanztag() == 0 && $data->getDeleted() == false){
-                $summe += $data->getPreise()[$eltern->getEinkommen()];
-            }
-        }
-        return $summe;
-    }
+
+
 
     public function getFin(): ?bool
     {

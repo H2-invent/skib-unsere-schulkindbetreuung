@@ -23,14 +23,14 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 class PrintRechnungService
 {
-    private $mailer;
+
     private $templating;
     private  $translator;
     protected $parameterBag;
     private $pdf;
     public function __construct(TCPDFController $tcpdf,\Swift_Mailer $mailer, EngineInterface $templating,TranslatorInterface $translator,ParameterBagInterface $parameterBag)
     {
-        $this->mailer =  $mailer;
+
         $this->templating = $templating;
         $this->translator = $translator;
         $this->parameterBag = $parameterBag;
@@ -70,17 +70,17 @@ class PrintRechnungService
         $adressComp = $adressComp.'</p>';
 
         $pdf->writeHTMLCell(
-            $w = 0,
-            $h = 0,
-            $x = 20,
-            $y = 50,
+             0,
+            0,
+            20,
+            50,
             $adressComp,
-            $border = 0,
-            $ln = 1,
-            $fill = 0,
-            $reseth = true,
-            $align = '',
-            $autopadding = true
+             0,
+            1,
+            0,
+            true,
+            '',
+             true
         );
 
         $pdf->setJPEGQuality(75);
@@ -109,32 +109,32 @@ class PrintRechnungService
         '<tr>'.'<td align="right">'.$this->translator->trans('Email').': </td><td  align="left" >'. $organisation->getEmail().'</td></tr>';
         $kontaktDaten .= '</table>';
         $pdf->writeHTMLCell(
-            $w = 300,
-            $h = 0,
-            $x = 10,
-            $y = 65,
+           300,
+             0,
+             10,
+             65,
             $kontaktDaten,
-            $border = 0,
-            $ln = 1,
-            $fill = 0,
-            $reseth = true,
+            0,
+             1,
+             0,
+            true,
             'L',
-            $autopadding = true
+            true
         );
 
         $table = $this->templating->render('rechnung/tabelle.html.twig',array('rechnung'=>$rechnung,'organisation'=>$organisation));
         $pdf->writeHTMLCell(
-            $w = 0,
-            $h = 0,
-            $x = 20,
-            $y = 100,
+            0,
+            0,
+             20,
+            100,
             $table,
-            $border = 0,
-            $ln = 1,
-            $fill = 0,
-            $reseth = true,
-            $align = '',
-            $autopadding = true
+            0,
+            1,
+             0,
+             true,
+             '',
+             true
         );
 
         // hier beginnt die Seite mit den Kindern
