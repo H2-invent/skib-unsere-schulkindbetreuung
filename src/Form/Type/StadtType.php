@@ -45,6 +45,8 @@ class StadtType extends AbstractType
         $builder
             ->add('name', TextType::class,['label'=>'Name der Stadt','translation_domain' => 'form'])
             ->add('slug', TextType::class,['label'=>'Slug der Stadt','translation_domain' => 'form'])
+            ->add('ferienprogramm', CheckboxType::class,['required'=>false,'label'=>'Wir bieten eine Ferienbetreuung über dieses Portal an','translation_domain' => 'form'])
+            ->add('schulkindBetreung', CheckboxType::class,['required'=>false,'label'=>'Wir bieten eine Schulkindbetreuung über dieses Portal an','translation_domain' => 'form'])
             ->add('email', TextType::class,['label'=>'Email','translation_domain' => 'form'])
             ->add('adresse', TextType::class,['label'=>'Straße','translation_domain' => 'form'])
             ->add('adresszusatz', TextType::class,['required'=>false,'label'=>'Adresszusatz','translation_domain' => 'form'])
@@ -71,7 +73,6 @@ class StadtType extends AbstractType
             ->add('infoAGBDe', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].agb', ])
             ->add('infoAGBEn', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].agb', ])
             ->add('infoAGBFr', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'AGB Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].agb', ])
-            ->add('ferienprogramm', CheckboxType::class,['required'=>false,'label'=>'Wir bieten eine Ferienbetreuung über dieses Portal an','translation_domain' => 'form'])
 
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
 

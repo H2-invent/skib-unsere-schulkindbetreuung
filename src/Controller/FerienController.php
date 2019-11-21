@@ -93,7 +93,7 @@ class FerienController extends AbstractController
 
 
     /**
-     * @Route("/{slug}/ferien/auswahl", name="ferien_auswahl")
+     * @Route("/{slug}/ferien/auswahl", name="ferien_auswahl", methods={"GET"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public function ferienAction(Request $request, Stadt $stadt)
@@ -115,13 +115,11 @@ class FerienController extends AbstractController
         } else {
             $kinder = $adresse->getKinds()->toArray();
         }
-        $renderKinder = array();
-        foreach ($kinder as $data) {
-            $renderKinder[$data->getSchule()->getId()] = $data;
-        }
-        return $this->render('ferien/ferien.html.twig', array('org' => $org, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $renderKinder));
+
+        return $this->render('ferien/ferien.html.twig', array('org' => $org, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $kinder));
 
     }
+
 
     /**
      * @Route("/{slug}/ferien/kind/neu",name="ferien_kind_neu",methods={"GET","POST"})
@@ -184,10 +182,11 @@ class FerienController extends AbstractController
         $organisation = $stadt->getOrganisations();
 
 
-        $block = array();
-        $block = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt);
+        $blocks = array();
+        $blocks = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt);
 
-        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'blocks' => $block));
+        dump($blocks);
+        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'blocks' => $blocks));
     }
 
 

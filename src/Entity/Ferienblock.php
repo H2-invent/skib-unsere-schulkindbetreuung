@@ -5,12 +5,16 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable as Translatable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FerienblockRepository")
  */
 class Ferienblock
 {
+
+    use Translatable;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
