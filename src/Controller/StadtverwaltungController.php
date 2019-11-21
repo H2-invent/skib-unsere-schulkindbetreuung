@@ -74,6 +74,8 @@ class StadtverwaltungController extends AbstractController
         $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         $form = $this->createForm(StadtType::class, $city);
         $form->remove('slug');
+        $form->remove('schulkindBetreung');
+        $form->remove('ferienprogramm');
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {

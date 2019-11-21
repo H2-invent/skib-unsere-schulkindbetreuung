@@ -47,17 +47,48 @@
 
                 </div>
 
-                <div class="col-md-12 mb-4 white-text text-center">
-                    <p class="lead align-content-center">
-                        <a href="{{ url }}" class="btn btn-primary btn-lg">
-                            {% if app.request.cookies.has('SecID') %}
-                                {% trans %}Kind bearbeiten{% endtrans %}
-                            {% else %}
-                                {% trans %}Hier Kind/Kinder anmelden{% endtrans %}
-                            {% endif %}
-                        </a>
-                    </p>
-                </div>
+                {% if stadt.ferienprogramm and stadt.schulkindBetreung %}
+                    <div class="col-md-6 mb-4 white-text text-center">
+                        <p class="lead align-content-center">
+                            <a href="{{ url }}" class="btn btn-primary btn-lg">
+                                {% if app.request.cookies.has('SecID') %}
+                                    {% trans %}Kind bearbeiten{% endtrans %}
+                                {% else %}
+                                    {% trans %}Kind/Kinder zur Schulkindbetreuung anmelden{% endtrans %}
+                                {% endif %}
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col-md-6 mb-4 white-text text-center">
+                        <p class="lead align-content-center">
+                            <a href="{{ path('ferien_adresse', {'slug': stadt.slug }) }}"
+                               class="btn btn-primary btn-lg">
+                                {% trans %}Kind/Kinder zur Ferienbetreuung anmelden{% endtrans %}
+                            </a>
+                        </p>
+                    </div>
+                {% elseif stadt.schulkindBetreung %}
+                    <div class="col-md-12 mb-4 white-text text-center">
+                        <p class="lead align-content-center">
+                            <a href="{{ url }}" class="btn btn-primary btn-lg">
+                                {% if app.request.cookies.has('SecID') %}
+                                    {% trans %}Kind bearbeiten{% endtrans %}
+                                {% else %}
+                                    {% trans %}Kind/Kinder zur Schulkindbetreuung anmelden{% endtrans %}
+                                {% endif %}
+                            </a>
+                        </p>
+                    </div>
+                {% elseif stadt.ferienprogramm %}
+                    <div class="col-md-12 mb-4 white-text text-center">
+                        <p class="lead align-content-center">
+                            <a href="{{ path('ferien_adresse', {'slug': stadt.slug }) }}"
+                               class="btn btn-primary btn-lg">
+                                {% trans %}Kind/Kinder zur Ferienbetreuung anmelden{% endtrans %}
+                            </a>
+                        </p>
+                    </div>
+                {% endif %}
             </div>
             <div class="col-md-12 mb-4 white-text text-center align-content-center">
                 <section id="scroll">
@@ -78,7 +109,7 @@
                 <div class="col-lg-12">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <h3>{% trans %}Herzlich Willkommen bei der neuen Schulkindbetreuung{% endtrans %}</h3>
+                            <h3>{% trans %}Herzlich Willkommen bei der neuen Kinderbetreuung{% endtrans %}</h3>
                         </div>
                         <div class="row card-body">
                             <div class="col-md-8" style="border-right: solid lightgrey 1px">
