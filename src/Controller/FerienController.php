@@ -93,7 +93,7 @@ class FerienController extends AbstractController
 
 
     /**
-     * @Route("/{slug}/ferien/auswahl", name="ferien_auswahl")
+     * @Route("/{slug}/ferien/auswahl", name="ferien_auswahl", methods={"GET"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public function ferienAction(Request $request, Stadt $stadt)
@@ -115,13 +115,11 @@ class FerienController extends AbstractController
         } else {
             $kinder = $adresse->getKinds()->toArray();
         }
-        $renderKinder = array();
-        foreach ($kinder as $data) {
-            $renderKinder[$data->getSchule()->getId()] = $data;
-        }
-        return $this->render('ferien/ferien.html.twig', array('org' => $org, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $renderKinder));
+
+        return $this->render('ferien/ferien.html.twig', array('org' => $org, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $kinder));
 
     }
+
 
     /**
      * @Route("/{slug}/ferien/kind/neu",name="ferien_kind_neu",methods={"GET","POST"})
@@ -181,13 +179,12 @@ class FerienController extends AbstractController
         }
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-        $organisation = $stadt->getOrganisations();
 
 
-        $block = array();
-        $block = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt);
+        $blocks = array();
+        $blocks = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt);
 
-        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'blocks' => $block));
+        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'blocks' => $blocks));
     }
 
 
@@ -261,10 +258,8 @@ class FerienController extends AbstractController
 
 
                 $cookie_kind = explode('.', $request->cookies->get('KindID'));
-                $hash_kind = hash("sha256", $cookie_kind[0] . $this->getParameter("secret"));
 
                 $cookie_seccode = explode('.', $request->cookies->get('SecID'));
-                $hash_seccode = hash("sha256", $cookie_seccode[0] . $this->getParameter("secret"));
 
 
             } else {

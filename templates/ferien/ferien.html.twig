@@ -34,7 +34,7 @@
                                                 <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
                                                     <a href="#"
                                                        class=" loadContent dropdown-item">{% trans %}Bearbeiten{% endtrans %}</a>
-                                                    <a href="#"
+                                                    <a href="{{ path('ferien_kind_programm', {'slug': stadt.slug,'id':k.id}) }}"
                                                        class=" loadContent dropdown-item">{% trans %}Betreuungsblöcke bearbeiten{% endtrans %}</a>
                                                     <a href="#"
                                                        class="dropdown-item">{% trans %}Löschen{% endtrans %}</a>

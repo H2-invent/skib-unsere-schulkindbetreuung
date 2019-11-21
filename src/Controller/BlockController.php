@@ -130,7 +130,7 @@ class BlockController extends AbstractController
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
             return new JsonResponse(array('error'=>1,'snack'=>$text));
-            throw new \Exception('Wrong Organisation');
+
 
         }
         $block->setDeleted(true);
@@ -154,7 +154,7 @@ class BlockController extends AbstractController
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
             return new JsonResponse(array('error'=>1,'snack'=>$text));
-            throw new \Exception('Wrong Organisation');
+
 
         }
 
@@ -189,7 +189,5 @@ class BlockController extends AbstractController
         return $this->render('block/blockForm.html.twig',array('block'=>$block,'form'=>$form->createView()));
 
     }
-    private function sendEmailToParent(Zeitblock $zeitblock){
 
-    }
 }

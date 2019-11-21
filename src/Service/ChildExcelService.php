@@ -104,7 +104,7 @@ class ChildExcelService
         //  return 0;
         // Return the excel file as an attachment
         return $temp_file;
-        return $this->file($temp_file, $fileName, ResponseHeaderBag::DISPOSITION_INLINE);
+
     }
 
 

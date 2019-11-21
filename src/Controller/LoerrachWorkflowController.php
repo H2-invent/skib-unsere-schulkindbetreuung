@@ -47,7 +47,6 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 class LoerrachWorkflowController extends AbstractController
 {
     private $einkommensgruppen;
-    private $translator;
     private $beruflicheSituation;
 
     public function __construct(TranslatorInterface $translator)
@@ -64,7 +63,7 @@ class LoerrachWorkflowController extends AbstractController
             $translator->trans('Arbeitssuchend') => 2,
             $translator->trans('Keine Angabe') => 0
         );
-        $this->translator = $translator;
+
     }
 
     /**
@@ -558,8 +557,7 @@ class LoerrachWorkflowController extends AbstractController
     function berechnungAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         // Load the data from the city into the controller as $stadt
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
-        $result = array(
+         $result = array(
             'error' => 0,
             'text' => $translator->trans('Preis erfolgreich berechnet.'),
 
@@ -621,15 +619,8 @@ class LoerrachWorkflowController extends AbstractController
             $hash = hash("sha256", $cookie_ar[0] . $this->getParameter("secret"));
             $search = array('uid' => $cookie_ar[0], 'saved' => false);
             if ($request->cookies->get('KindID') && $request->cookies->get('SecID')) {
-
-
                 $cookie_kind = explode('.', $request->cookies->get('KindID'));
-                $hash_kind = hash("sha256", $cookie_kind[0] . $this->getParameter("secret"));
-
                 $cookie_seccode = explode('.', $request->cookies->get('SecID'));
-                $hash_seccode = hash("sha256", $cookie_seccode[0] . $this->getParameter("secret"));
-
-
             } else {
                 $search['history'] = 0;
             }

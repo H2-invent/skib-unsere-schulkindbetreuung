@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /fotos/
+Disallow: /temp/
+Disallow: /fotoalbum.html

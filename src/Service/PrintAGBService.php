@@ -23,16 +23,16 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 class PrintAGBService
 {
-    private $mailer;
+
     private $templating;
-    private  $translator;
+
     protected $parameterBag;
     private $pdf;
     public function __construct(TCPDFController $tcpdf,\Swift_Mailer $mailer, EngineInterface $templating,TranslatorInterface $translator,ParameterBagInterface $parameterBag)
     {
-        $this->mailer =  $mailer;
+
         $this->templating = $templating;
-        $this->translator = $translator;
+
         $this->parameterBag = $parameterBag;
         $this->pdf = $tcpdf;
     }
@@ -94,17 +94,17 @@ class PrintAGBService
 
         $table = $this->templating->render('pdf/agb.html.twig',array('text'=>$text));
         $pdf->writeHTMLCell(
-            $w = 0,
-            $h = 0,
-            $x = 20,
-            $y = 70,
+            0,
+            0,
+           20,
+             70,
             $table,
-            $border = 0,
-            $ln = 1,
-            $fill = 0,
-            $reseth = true,
-            $align = '',
-            $autopadding = true
+             0,
+             1,
+            0,
+            true,
+            '',
+             true
         );
 
         // hier beginnt die Seite mit den Kindern

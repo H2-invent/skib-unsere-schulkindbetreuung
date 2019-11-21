@@ -5,12 +5,14 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable as Translatable;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FerienblockRepository")
  */
 class Ferienblock
 {
+    use Translatable;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -20,6 +22,7 @@ class Ferienblock
 
     /**
      * @ORM\Column(type="integer")
+      * @Assert\NotBlank()
      */
     private $minAlter;
 
@@ -30,31 +33,37 @@ class Ferienblock
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="time")
+     * @Assert\NotBlank()
      */
     private $StartTime;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
      */
     private $endDate;
 
     /**
      * @ORM\Column(type="time")
+     * @Assert\NotBlank()
      */
     private $endTime;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank()
      */
     private $endVerkauf;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank()
      */
     private $startVerkauf;
 
@@ -70,6 +79,7 @@ class Ferienblock
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $Ort;
 

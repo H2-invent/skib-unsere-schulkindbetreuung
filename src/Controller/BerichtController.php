@@ -44,7 +44,7 @@ class BerichtController extends AbstractController
         }
 
         $query = $qb->getQuery();
-        $blocks = $result = $query->getResult();
+        $blocks =  $query->getResult();
         $schuljahre = $this->getDoctrine()->getRepository(Active::class)->findBy(array('stadt' => $stadt));
         return $this->render('bericht/index.html.twig', array('blocks' =>$blocks , 'schuljahre' => $schuljahre, 'active'=>$jahr,'stadt' => $stadt));
     }
