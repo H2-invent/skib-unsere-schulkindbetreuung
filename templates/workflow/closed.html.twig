@@ -21,10 +21,8 @@
                     <div class="col-md-8 mb-1">
                         <b>{{ o.name }}</b><br>
                         {% trans %}Ansprechpartner:{% endtrans %} {{ o.ansprechpartner }}<br/>
-                        {% trans %}Telefon:{% endtrans %} <a href="telto:{{ o.telefon }}"
-                                                             target="_blank">{{ o.telefon }}</a><br/>
-                        {% trans %}E-Mail:{% endtrans %} <a href="mailto:{{ o.email }}"
-                                                            target="_blank">{{ o.email }}</a><br/>
+                        {% trans %}Telefon:{% endtrans %} <a href="tel:{{ o.telefon }}">{{ o.telefon }}</a><br/>
+                        {% trans %}E-Mail:{% endtrans %} <a href="mailto:{{ o.email }}">{{ o.email }}</a><br/>
                         {% if o.orgHomepage is not null %}
                             <a href="{{ o.orgHomepage }}"
                                target="_blank"><i
