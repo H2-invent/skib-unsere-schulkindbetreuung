@@ -110,9 +110,9 @@ class StadtverwaltungController extends AbstractController
     }
 
     /**
-     * @Route("/admin/berchner", name="admin_berechner",methods={"GET","POST"})
+     * @Route("/admin/berechner", name="admin_berechner",methods={"GET","POST"})
      */
-    public function bechnerEdit(Request $request)
+    public function berechnerEdit(Request $request)
     {
         $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         $form = $this->createForm(FormelType::class, $city);
