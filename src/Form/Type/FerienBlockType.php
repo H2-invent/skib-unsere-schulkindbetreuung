@@ -50,7 +50,7 @@ class FerienBlockType extends AbstractType
             ->add('infoTextEN', TextareaType::class, ['attr'=>['rows'=>6],'label'=>'Info Text Englisch','translation_domain' => 'form','property_path' => 'translations[en].infoText',])
             ->add('infoTextFR', TextareaType::class, ['attr'=>['rows'=>6],'label'=>'Info Text Französisch','translation_domain' => 'form','property_path' => 'translations[fr].infoText',])
             ->add('ort', TextareaType::class, ['label' => 'ort','translation_domain' => 'form'])
-            ->add('minAlter', IntegerType::class,array('required'=>false,'label'=>'Mindest Alter','translation_domain' => 'form'))
+            ->add('minAlter', IntegerType::class,array('required'=>true,'label'=>'Mindest Alter','translation_domain' => 'form'))
             ->add('maxAlter', IntegerType::class,array('required'=>false,'label'=>'Maximum Alter','translation_domain' => 'form'))
             ->add('startDate', DateType::class,array('label'=>'Start Datum','translation_domain' => 'form'))
             ->add('endDate', DateType::class, ['label' => 'End Datum','translation_domain' => 'form'])
