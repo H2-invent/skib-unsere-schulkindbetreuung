@@ -38,7 +38,11 @@
             <div class="row wow fadeIn">
 
                 <div class="col-md-12 mb-6 white-text text-center">
-                    <h1 class="font-weight-bold hauptfarbe">{% trans %} Anmeldung zur Kinderbetreuung {% endtrans %}</h1>
+                    {% if stadt.ferienprogramm %}
+                        <h1 class="font-weight-bold hauptfarbe">{% trans %} Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung {% endtrans %}</h1>
+                    {% else %}
+                        <h1 class="font-weight-bold hauptfarbe">{% trans %} Online Anmeldung zur Schulkindbetreuung {% endtrans %}</h1>
+                    {% endif %}
                     <hr class="hr-light ">
                 </div>
 
@@ -109,7 +113,7 @@
                 <div class="col-lg-12">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <h3>{% trans %}Herzlich Willkommen bei der neuen Kinderbetreuung{% endtrans %}</h3>
+                            <h3>{% trans with {"%name%":stadt.name} %} Herzlich Willkommen beim e-Service der Stadt %name% {% endtrans %}</h3>
                         </div>
                         <div class="row card-body">
                             <div class="col-md-8" style="border-right: solid lightgrey 1px">
@@ -180,12 +184,11 @@
                             <div class="card mb-2">
                                 <div class="card-body">
                                     <h4>
-                                        Stadt
+                                        {% trans %}Stadt{% endtrans %}
                                     </h4>
                                     {% if stadt.stadtHomepage is not null %}
                                         <a href="{{ stadt.stadtHomepage }}"
-                                           target="_blank"><i
-                                                    class="fas fa-external-link"></i> {% trans %}Homepage{% endtrans %}
+                                           target="_blank"><i class="fas fa-external-link-alt"></i> {% trans %}Webseite{% endtrans %}
                                         </a><br/>
                                     {% endif %}
                                     <a href="{{ path('workflow_agb',{'slug':stadt.slug}) }}"
@@ -196,7 +199,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4>
-                                        Trägern
+                                        {% trans %}Trägern{% endtrans %}
                                     </h4>
                                     <div class="row">
                                         {% for o in stadt.organisations %}
@@ -204,10 +207,10 @@
                                                 <b>{{ o.name }}</b><br>
                                                 {% trans %}Ansprechpartner:{% endtrans %} {{ o.ansprechpartner }}<br/>
                                                 <a href="mailto:{{ o.email }}"
-                                                   target="_blank">{% trans %}Kontakt{% endtrans %}</a><br/>
+                                                   target="_blank"><i class="fas fa-external-link-alt"></i> {% trans %}Kontakt{% endtrans %}</a><br/>
                                                 {% if o.orgHomepage is not null %}
                                                     <a href="{{ o.orgHomepage }}"
-                                                       target="_blank">{% trans %}Homepage{% endtrans %}</a><br/>
+                                                       target="_blank"><i class="fas fa-external-link-alt"></i> {% trans %}Homepage{% endtrans %}</a><br/>
                                                 {% endif %}
                                                 <a href="{{ path('workflow_datenschutz',{'org_id':o.id,'slug':stadt.slug}) }}"
                                                    target="_blank">{% trans %}Datenschutzhinweis{% endtrans %}</a><br/>
