@@ -66,6 +66,7 @@ class workflowController extends AbstractController
         return $this->render('workflow/closed.html.twig', array('stadt' => $stadt));
     }
 
+
     /**
      * @Route("/confirmEmail",name="workflow_confirm_Email",methods={"GET","POST"})
      */
@@ -121,6 +122,7 @@ class workflowController extends AbstractController
         }
     }
 
+
     /**
      * @Route("/resetMail",name="workflow_reset_Email",methods={"GET","POST"})
      */
@@ -174,6 +176,7 @@ class workflowController extends AbstractController
 
         return $this->render('workflow/agb.html.twig', array('stadtAGB' => $stadtAGB, 'stadt' => $stadt,'redirect' => $request->get('redirect')));
     }
+
 
     /**
      * @Route("/{slug}/agb/pdf",name="workflow_agb_pdf",methods={"GET"})
