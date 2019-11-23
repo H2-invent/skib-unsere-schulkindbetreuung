@@ -16,6 +16,7 @@ use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use League\Flysystem\FilesystemInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -28,13 +29,16 @@ class PrintAGBService
 
     protected $parameterBag;
     private $pdf;
-    public function __construct(TCPDFController $tcpdf,\Swift_Mailer $mailer, EngineInterface $templating,TranslatorInterface $translator,ParameterBagInterface $parameterBag)
+    private $fileSystem;
+
+    public function __construct(FilesystemInterface $publicUploadsFilesystem,TCPDFController $tcpdf, EngineInterface $templating,ParameterBagInterface $parameterBag)
     {
 
         $this->templating = $templating;
 
         $this->parameterBag = $parameterBag;
         $this->pdf = $tcpdf;
+        $this->fileSystem = $publicUploadsFilesystem;
     }
 
     public function printAGB($text, $type = 'D', ?Stadt $stadt=null, ?Organisation $organisation = null)
@@ -63,29 +67,25 @@ class PrintAGBService
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 
-        $logo = '';
+
         if($stadt){
             $pdf->setStadt($stadt);
             $fileName = 'AGB '.$stadt->getName();
-        if ($stadt->getImage()) {
-
-            $logo = $this->templating->render('pdf/img.html.twig', array('stadt' => $stadt));
-            $logo = $this->parameterBag->get('kernel.project_dir').'/public'.$logo;
-            $im = file_get_contents($logo);
-            $imdata = base64_encode($im);
-            $imgdata = base64_decode($imdata);
-            $pdf->Image('@'.$imgdata,140,20,50);
-        }
-        }else{
-            $fileName ='Datenschutz '.$organisation->getName();
-            $pdf->setOrganisation($organisation);
-            if ($organisation->getImage()) {
-                $logo = $this->templating->render('pdf/img.html.twig', array('stadt' => $organisation));
-                $logo = $this->parameterBag->get('kernel.project_dir').'/public'.$logo;
-                $im = file_get_contents($logo);
+            if ($stadt->getImage()) {
+                $im = $this->fileSystem->read($stadt->getImage());
                 $imdata = base64_encode($im);
                 $imgdata = base64_decode($imdata);
-                $pdf->Image('@'.$imgdata,140,20,50);
+                $pdf->Image('@' . $imgdata, 140, 20, 50);
+            }
+
+        }else{
+            $fileName ='DSGVO '.$organisation->getName();
+            $pdf->setOrganisation($organisation);
+            if ($organisation->getImage()) {
+                $im = $this->fileSystem->read($organisation->getImage());
+                $imdata = base64_encode($im);
+                $imgdata = base64_decode($imdata);
+                $pdf->Image('@' . $imgdata, 140, 20, 50);
             }
         }
 

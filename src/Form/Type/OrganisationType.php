@@ -36,6 +36,7 @@ class OrganisationType extends AbstractType
         }
         $builder
             ->add('name', TextType::class,['label'=>'Name der Organisation','translation_domain' => 'form'])
+            ->add('ferienprogramm', CheckboxType::class,['required'=>false,'label'=>'Wir bieten eine Ferienbetreuung über dieses Portal an','translation_domain' => 'form'])
             ->add('adresse', TextType::class,['label'=>'Straße','translation_domain' => 'form'])
             ->add('adresszusatz', TextType::class,['required'=>false,'label'=>'Adresszusatz','translation_domain' => 'form'])
             ->add('plz', TextType::class,['label'=>'PLZ','translation_domain' => 'form'])
@@ -61,7 +62,6 @@ class OrganisationType extends AbstractType
             ->add('datenschutzDE', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Datenschutzhinweis Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].datenschutz', ])
             ->add('datenschutzEN', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Datenschutzhinweis Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].datenschutz', ])
             ->add('datenschutzFR', TextareaType::class, ['attr'=>['rows'=>6],'required'=>false,'label'=>'Datenschutzhinweis Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].datenschutz', ])
-            ->add('ferienprogramm', CheckboxType::class,['required'=>false,'label'=>'Wir bieten eine Ferienbetreuung über dieses Portal an','translation_domain' => 'form'])
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
     }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "701d8edbcda77e270a9af6c7e76dbc1d",
+    "content-hash": "e8adeaf747a06ffbca84e1c48b754b5d",
     "packages": [
         {
             "name": "beelab/recaptcha2-bundle",
@@ -5029,29 +5029,29 @@
         },
         {
             "name": "symfony/mailgun-mailer",
-            "version": "v4.3.8",
+            "version": "v4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mailgun-mailer.git",
-                "reference": "83a85b2e1a3c002ca4d4134f96d368a764267a76"
+                "reference": "350883fa860c4a980f5d4da44073c8358e3cce24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mailgun-mailer/zipball/83a85b2e1a3c002ca4d4134f96d368a764267a76",
-                "reference": "83a85b2e1a3c002ca4d4134f96d368a764267a76",
+                "url": "https://api.github.com/repos/symfony/mailgun-mailer/zipball/350883fa860c4a980f5d4da44073c8358e3cce24",
+                "reference": "350883fa860c4a980f5d4da44073c8358e3cce24",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1.3",
-                "symfony/mailer": "^4.3.3"
+                "symfony/mailer": "^4.4|^5.0"
             },
             "require-dev": {
-                "symfony/http-client": "^4.3"
+                "symfony/http-client": "^4.3|^5.0"
             },
             "type": "symfony-bridge",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.3-dev"
+                    "dev-master": "4.4-dev"
                 }
             },
             "autoload": {
@@ -5078,7 +5078,7 @@
             ],
             "description": "Symfony Mailgun Mailer Bridge",
             "homepage": "https://symfony.com",
-            "time": "2019-09-17T09:54:03+00:00"
+            "time": "2019-10-22T15:44:54+00:00"
         },
         {
             "name": "symfony/mime",

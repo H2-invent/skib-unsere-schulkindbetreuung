@@ -119,9 +119,18 @@
                 {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
                 {% endif %}
                 {% if is_granted('ROLE_ORG_FERIEN_EDITOR') and app.user.organisation.ferienprogramm %}
-                    <li><a href="{{ path('ferien_management_show',{'org_id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">home</i> {% trans %}Mein Ferienprogramm{% endtrans %}</a>
+                    <li><a href="#feriendropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
+                                    class="material-icons">people</i>{% trans %} Ferienprogramm{% endtrans %}</a>
+                        <ul id="feriendropdownDropdown" class="collapse list-unstyled ">
+                            <li><a href="{{ path('ferien_management_show',{'org_id':app.user.organisation.id}) }}"> <i
+                                            class="material-icons">home</i> {% trans %}Programm{% endtrans %}</a>
+                            </li>
+                            <li><a href="{{ path('ferien_management_show',{'org_id':app.user.organisation.id}) }}"> <i
+                                            class="material-icons">home</i> {% trans %}Kinder{% endtrans %}</a>
+                            </li>
+                        </ul>
                     </li>
+
 
                 {% endif %}
                 {% if is_granted('ROLE_ORG_CHILD_SHOW') %}

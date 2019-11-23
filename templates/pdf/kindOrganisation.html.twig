@@ -112,19 +112,7 @@
             </td>
         </tr>
     {% endif %}
-    <tr>
-        <td>
-            {% trans %} Gebuchte Mittagessen {% endtrans %}
-        </td>
 
-        <td>
-            <ul class="list-group">
-                {%  for z in k.MittagessenblocksReal %}
-                    <li class="list-group-item">{{ z.WochentagString }}</li>
-                {% endfor %}
-            </ul>
-        </td>
-    </tr>
 
     </tbody>
 </table>
