@@ -95,7 +95,7 @@ class ChildController extends AbstractController
             ->innerJoin('k.zeitblocks','b');
 
 
-        //$qb = $repo->createQueryBuilder('b');
+
         $text = $translator->trans('Kinder betreut von der Organisation %organisation%',array('%organisation%'=>$organisation->getName()));
         $blocks = array();
        if($request->get('schule')){

@@ -28,7 +28,6 @@ class MailerService
 
 
         $this->mailgun =$mailerInterface;
-       // $this->mailgun = new Mailer(new MailgunTransport('7a751a2f220d604c08e2e019224cfbe5-816b23ef-e28e0bcb', 'mail.h2-invent.com','eu'));
     }
 
     public function sendEmail($sender, $from, $to, $betreff,$content,$attachment = array())
@@ -47,25 +46,5 @@ class MailerService
        
         $this->mailgun->send($email);
 
-/*
-  $fromSender = array($from=>$sender);
-        $message = (new \Swift_Message($betreff))
-            ->setFrom($fromSender)
-
-            ->setTo($to)
-            ->setBody(
-               $content,
-                'text/html'
-            );
-        foreach ($attachment as $data){
-            $message->attach((new \Swift_Attachment())
-              ->setFilename($data['filename'])
-              ->setContentType($data['type'])
-              ->setBody($data['body']));
-
-        }
-
-        return   $this->mailer->send($message);
-*/
     }
 }

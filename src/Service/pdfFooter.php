@@ -34,7 +34,7 @@ class pdfFooter extends \TCPDF
         // New line in footer
         // Set font
 
-        //$this->organisation = new Organisation();
+       
         // Page number
         if($this->stadt){
             $this->Line(20,$this->getY(),$this->getRemainingWidth()+15,$this->getY());

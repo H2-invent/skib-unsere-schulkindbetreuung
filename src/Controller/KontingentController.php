@@ -100,7 +100,7 @@ class KontingentController extends AbstractController
                 $kind->removeBeworben($block);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($kind);
-            //    $em->flush();
+                $em->flush();
                 return new JsonResponse(array('snack' => $translator->trans('Erfolgreich gespeichert')));
 
             }
