@@ -899,15 +899,16 @@
     $('.deleteBtn').click(function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
+        var type = $(this).attr('type');
         $.confirm({
-            title: '{{ 'Löschen'|trans }}',
+            title: '{{ 'Bestätigung'|trans }}',
             content: '{{ 'Wollen Sie diese Aktion durchführen?'|trans }}',
             theme: 'material',
             buttons: {
                 confirm: function () {
                     $.ajax({
                         url: url,
-                        type: 'DELETE',
+                        type: type,
                         success: function (data) {
                             if (data.redirect) {
                                 window.location.href= data.redirect;

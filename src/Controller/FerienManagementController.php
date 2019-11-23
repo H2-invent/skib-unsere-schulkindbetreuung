@@ -34,9 +34,7 @@ class FerienManagementController extends AbstractController
     public function neu(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $city = $organisation->getStadt();
-
-        if($organisation != $this->getUser()->getOrganisation()){
+          if($organisation != $this->getUser()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
         }
 
@@ -69,9 +67,7 @@ class FerienManagementController extends AbstractController
     public function edit(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $city = $organisation->getStadt();
-
-        if($organisation != $this->getUser()->getOrganisation()){
+         if($organisation != $this->getUser()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
         }
 
@@ -104,9 +100,7 @@ class FerienManagementController extends AbstractController
     public function delte(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $city = $organisation->getStadt();
-
-        if($organisation != $this->getUser()->getOrganisation()){
+            if($organisation != $this->getUser()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
         }
 
@@ -116,5 +110,31 @@ class FerienManagementController extends AbstractController
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
         return new JsonResponse(array('redirect'=>$this->generateUrl('ferien_management_show',array('org_id'=>$organisation->getId(),'snack'=>$text))));
+    }
+    /**
+     * @Route("/org_ferien/duplicate", name="ferien_management_duplicate", methods={"POST"})
+     */
+    public function duplicate(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        if($organisation != $this->getUser()->getOrganisation()){
+            throw new \Exception('Wrong Organisation');
+        }
+
+        $ferienblock = $this->getDoctrine()->getRepository(Ferienblock::class)->findOneBy(array('id'=>$request->get('ferien_id'),'organisation'=>$organisation));
+        $ferienblockNew = clone $ferienblock;
+        $translations = $ferienblock->getTranslations();
+        foreach ($translations as $locale => $fields) {
+            $clone = clone  $fields;
+            $clone->setTitel('[copy]'.$clone->getTitel());
+           $ferienblockNew->addTranslation($clone);
+
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($ferienblockNew);
+        $em->flush();
+        $text = $translator->trans('Erfolgreich kopiert');
+        return new JsonResponse(array('redirect'=>$this->generateUrl('ferien_management_edit',array('org_id'=>$organisation->getId(),'ferien_id'=>$ferienblockNew->getId(),'snack'=>$text))));
+
     }
 }
