@@ -67,7 +67,7 @@ class PrintService
         );
 
 
-        $logo = '';
+
         if ($organisation->getImage()) {
             $im = $this->fileSystem->read($organisation->getImage());
             $imdata = base64_encode($im);
@@ -180,7 +180,7 @@ class PrintService
         $pdf->setOrganisation($organisation);
         $pdf = $this->preparePDF($pdf,'Test','test','test');
 
-        $logo = '';
+
         if ($organisation->getImage()) {
             $im = $this->fileSystem->read($organisation->getImage());
             $imdata = base64_encode($im);
@@ -234,7 +234,7 @@ class PrintService
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
         $pdf = $this->preparePDF($pdf,'Test','test','test');
-        $logo = '';
+
         if ($organisation->getImage()) {
             $im = $this->fileSystem->read($organisation->getImage());
             $imdata = base64_encode($im);

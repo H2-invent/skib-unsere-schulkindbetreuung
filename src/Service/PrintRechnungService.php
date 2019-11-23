@@ -91,7 +91,7 @@ class PrintRechnungService
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 
-        $logo = '';
+
         if ($organisation->getImage()) {
            $im = $this->fileSystem->read($organisation->getImage());
             $imdata = base64_encode($im);

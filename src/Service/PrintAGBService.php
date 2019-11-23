@@ -31,7 +31,7 @@ class PrintAGBService
     private $pdf;
     private $fileSystem;
 
-    public function __construct(FilesystemInterface $publicUploadsFilesystem,TCPDFController $tcpdf,\Swift_Mailer $mailer, EngineInterface $templating,TranslatorInterface $translator,ParameterBagInterface $parameterBag)
+    public function __construct(FilesystemInterface $publicUploadsFilesystem,TCPDFController $tcpdf, EngineInterface $templating,ParameterBagInterface $parameterBag)
     {
 
         $this->templating = $templating;
@@ -67,7 +67,7 @@ class PrintAGBService
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 
-        $logo = '';
+
         if($stadt){
             $pdf->setStadt($stadt);
             $fileName = 'AGB '.$stadt->getName();
