@@ -929,6 +929,13 @@
     });
     $('input[type="date"]').daterangepicker({
         "singleDatePicker": true,
+        autoUpdateInput: false,
+        locale: {
+            "format": "YYYY-MM-DD",
+            "separator": " - ",
+        }
+    }, function(chosen_date) {
+        $(this).val(chosen_date.format('YYYY-MM-DD'));
     })
    .on('apply.daterangepicker', function(ev, picker) {
         //do something, like clearing an input
