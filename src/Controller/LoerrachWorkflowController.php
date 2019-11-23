@@ -120,7 +120,7 @@ class LoerrachWorkflowController extends AbstractController
             ->getForm();
         $form->handleRequest($request);
         $errors = array();
-        if ($form->isSubmitted() && $form->isValid() && $request->get('g-recaptcha-response', '') != null) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $adresse = $form->getData();
             $errors = $validator->validate($adresse);
             if (count($errors) == 0) {

@@ -7,5 +7,5 @@ oneup_flysystem:
     filesystems:
         asset_filesystem:
             adapter: asset_adapter
-            alias: League\Flysystem\asset
+            alias: League\Flysystem\Asset
             mount: asset_filesystem

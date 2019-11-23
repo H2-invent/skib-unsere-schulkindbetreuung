@@ -14,6 +14,7 @@ use App\Entity\Organisation;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 
+use League\Flysystem\FilesystemInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -25,16 +26,17 @@ class PrintService
     private $templating;
     private $translator;
     protected $parameterBag;
-
-    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    private $fileSystem;
+    public function __construct(FilesystemInterface $publicUploadsFilesystem,\Swift_Mailer $mailer, EngineInterface $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
 
         $this->templating = $templating;
         $this->translator = $translator;
         $this->parameterBag = $parameterBag;
+        $this->fileSystem = $publicUploadsFilesystem;
     }
 
-    public function printAnmeldebestätigung(Kind $kind, Stammdaten $elter, TCPDFController $tcpdf, $fileName, $einkommmensgruppen, Organisation $organisation, $type = 'D')
+    public function printAnmeldebestätigung(Kind $kind, Stammdaten $elter, Stadt $stadt,TCPDFController $tcpdf, $fileName, $einkommmensgruppen, Organisation $organisation, $type = 'D')
     {
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
@@ -81,14 +83,11 @@ class PrintService
 
         $logo = '';
         if ($organisation->getImage()) {
-            $logo = $this->templating->render('pdf/img.html.twig', array('stadt' => $organisation));
+            $im = $this->fileSystem->read($organisation->getImage());
+            $imdata = base64_encode($im);
+            $imgdata = base64_decode($imdata);
+            $pdf->Image('@' . $imgdata, 140, 20, 50);
         }
-        $logo = $this->parameterBag->get('kernel.project_dir') . '/public' . $logo;
-        $im = file_get_contents($logo);
-        $imdata = base64_encode($im);
-        $imgdata = base64_decode($imdata);
-
-        $pdf->Image('@' . $imgdata, 140, 20, 50);
 
         $kontaktDaten = '<table cellspacing="3px">' .
 
@@ -215,15 +214,11 @@ class PrintService
 
         $logo = '';
         if ($organisation->getImage()) {
-            $logo = $this->templating->render('pdf/img.html.twig', array('stadt' => $organisation));;
-
+            $im = $this->fileSystem->read($organisation->getImage());
+            $imdata = base64_encode($im);
+            $imgdata = base64_decode($imdata);
+            $pdf->Image('@' . $imgdata, 140, 20, 50);
         }
-        $logo = $this->parameterBag->get('kernel.project_dir') . '/public' . $logo;
-        $im = file_get_contents($logo);
-        $imdata = base64_encode($im);
-        $imgdata = base64_decode($imdata);
-
-        $pdf->Image('@' . $imgdata, 140, 10, 50);
 
         $kindData = $this->templating->render('pdf/kindOrganisation.html.twig', array('k' => $kind));
         $pdf->writeHTMLCell(
@@ -291,12 +286,10 @@ class PrintService
 
         $logo = '';
         if ($organisation->getImage()) {
-            $logo = $this->templating->render('pdf/img.html.twig', array('stadt' => $organisation));
-            $logo = $this->parameterBag->get('kernel.project_dir') . '/public' . $logo;
-            $im = file_get_contents($logo);
+            $im = $this->fileSystem->read($organisation->getImage());
             $imdata = base64_encode($im);
             $imgdata = base64_decode($imdata);
-            $pdf->Image('@' . $imgdata, 140, 10, 50);
+            $pdf->Image('@' . $imgdata, 140, 20, 50);
         }
 
 

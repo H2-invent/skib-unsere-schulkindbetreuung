@@ -16,6 +16,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\NamedAddress;
+use function MongoDB\BSON\fromJSON;
 
 class MailerService
 {
@@ -34,9 +35,9 @@ class MailerService
     {
 
 
-        $senderObj = new NamedAddress($from, $sender);
+
         $email = (new Email())
-            ->from($senderObj)
+            ->from(new Address($from, $sender))
             ->to($to)
             ->subject($betreff)
             ->html($content);
