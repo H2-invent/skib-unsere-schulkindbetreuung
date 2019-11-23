@@ -99,7 +99,7 @@ class PrintService
         );
 
 
-        $elternDaten = $this->templating->render('pdf/eltern.html.twig', array('eltern' => $elter, 'einkommen' => array_flip($einkommmensgruppen)));
+        $elternDaten = $this->templating->render('pdf/eltern.html.twig', array('kind'=>$kind,'eltern' => $elter, 'einkommen' => array_flip($einkommmensgruppen)));
         $pdf->writeHTMLCell(
             0,
             0,
@@ -113,8 +113,23 @@ class PrintService
             '',
             true
         );
-
         // hier beginnt die Seite mit den Kindern
+        $pdf->AddPage( 'A4');
+        $elternDaten = $this->templating->render('pdf/kindOrganisation.html.twig', array('k' => $kind));
+        $pdf->writeHTMLCell(
+            0,
+            0,
+            20,
+            20,
+            $elternDaten,
+            0,
+            1,
+            0,
+            true,
+            '',
+            true
+        );
+
         $pdf->AddPage('L', 'A4');
         $blocks = $kind->getRealZeitblocks()->toArray();
         $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
@@ -169,6 +184,8 @@ class PrintService
             '',
             true
         );
+
+
 
 
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
