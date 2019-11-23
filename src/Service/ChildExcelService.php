@@ -65,7 +65,7 @@ class ChildExcelService
         $counter = 2;
         foreach ($kinder as $data) {
             $count = 0;
-           // $data =new Kind();
+
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getVorname());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getNachname());
             $kindSheet->setCellValue($alphas[$count++] . $counter, ($data->getGeburtstag()->diff($data->getEltern()->getCreatedAt()))->y);
@@ -101,7 +101,7 @@ class ChildExcelService
 
         // Create the excel file in the tmp directory of the system
         $this->writer->save($temp_file);
-        //  return 0;
+
         // Return the excel file as an attachment
         return $temp_file;
 

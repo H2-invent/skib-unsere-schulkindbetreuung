@@ -104,7 +104,7 @@ class BlockController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $block = $form->getData();
             $errors = $validator->validate($block);
-            //try {
+
                 if (count($errors) == 0) {
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($block);
@@ -112,10 +112,7 @@ class BlockController extends AbstractController
                     $text = $translator->trans('Erfolgreich gespeichert');
                     return new JsonResponse(array('error' => 0, 'snack' => $text));
                 }
-            //}catch (\Exception $e){
-            //    $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
-            //    return new JsonResponse(array('error' => 1, 'snack' => $text));
-          //  }
+
 
         }
         return $this->render('block/blockForm.html.twig',array('block'=>$block,'form'=>$form->createView()));

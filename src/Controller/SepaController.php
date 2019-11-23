@@ -162,11 +162,7 @@ class SepaController extends AbstractController
            $pdf = $printRechnungService->printRechnung($filename,$organisation,$rechnung,'S');
            $attachment = array();
            $attachment[] = array('type'=>'application/pdf','filename'=>$filename . '.pdf','body'=>$pdf);
-          /* $attachment[] = (new \Swift_Attachment())
-               ->setFilename($filename . '.pdf')
-               ->setContentType('application/pdf')
-               ->setBody($pdf);
-            */
+
            $mailContent = $this->renderView('email/rechnungEmail.html.twig',array('rechnung'=>$rechnung,'organisation'=>$organisation));
            $betreff = $translator->trans('Rechnung ').' ' .$rechnung->getRechnungsnummer();
             $mailerService->sendEmail($organisation->getName(),$organisation->getEmail(),$data->getEmail(),$betreff,$mailContent,$attachment);

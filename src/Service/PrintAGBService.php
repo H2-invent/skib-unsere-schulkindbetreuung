@@ -50,8 +50,7 @@ class PrintAGBService
 
         $pdf->SetFont('freeserif', '', 10);
         $fileName = '';
-        //$pdf-> = $this->container->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        //todo hier musss der Test raus
+         //todo hier musss der Test raus
         $pdf->SetAuthor($fileName);
         $pdf->SetTitle($fileName);
         $pdf->SetSubject($fileName);
@@ -60,7 +59,7 @@ class PrintAGBService
         $pdf->setHeaderData('', 0, '', '', array(0, 0, 0), array(255, 255, 255));
         $pdf->setFooterData(1, 1);
 
-        //$pdf->SetMargins(20,20,40, true);
+
         $pdf->AddPage();
 
         $pdf->setJPEGQuality(75);

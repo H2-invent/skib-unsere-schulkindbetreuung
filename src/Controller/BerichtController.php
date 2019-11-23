@@ -119,7 +119,7 @@ class BerichtController extends AbstractController
         $counter = 2;
         foreach ($blocks as $data) {
             $count = 0;
-            //$data = new Zeitblock();
+
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getId());
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getVon()->format('H:i'));
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getBis()->format('H:i'));
@@ -171,7 +171,7 @@ class BerichtController extends AbstractController
         $counter = 2;
         foreach ($eltern as $data) {
             $count = 0;
-            //$data = new Stammdaten();
+
 
             $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getId());
             $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getKinderImKiga());
@@ -192,7 +192,7 @@ class BerichtController extends AbstractController
 
         // Create the excel file in the tmp directory of the system
         $writer->save($temp_file);
-       //  return 0;
+
         // Return the excel file as an attachment
         return $this->file($temp_file, $fileName, ResponseHeaderBag::DISPOSITION_INLINE);
 

@@ -150,7 +150,6 @@ class workflowController extends AbstractController
 
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
         $org_datenschutz = $organisation->translate()->getDatenschutz();
-
         return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $organisation,'stadt' => $organisation->getStadt(),  'redirect' => $request->get('redirect')));
     }
 
@@ -170,10 +169,7 @@ class workflowController extends AbstractController
      */
     public function agbAction(Request $request, TranslatorInterface $translator, Stadt $stadt)
     {
-
-        //$stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt_id'));
         $stadtAGB = $stadt->translate()->getAgb();
-
         return $this->render('workflow/agb.html.twig', array('stadtAGB' => $stadtAGB, 'stadt' => $stadt,'redirect' => $request->get('redirect')));
     }
 
@@ -184,7 +180,6 @@ class workflowController extends AbstractController
      */
     public function pdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService, Stadt $stadt)
     {
-        //$stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         return $printAGBService->printAGB($stadt->translate()->getAgb(), 'D', $stadt, null);
 
     }
