@@ -5,12 +5,12 @@
  * Date: 17.09.2019
  * Time: 20:29
  */
+
 namespace App\Form\Type;
 
 
-
-use App\Entity\Kind;
-
+use App\Entity\Stammdaten;
+use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
@@ -39,39 +39,37 @@ class LoerrachEltern extends AbstractType
         $today = intval((new \DateTime())->format('Y'));
 
         $builder
-            ->add('vorname', TextType::class,['label'=>'Vorname','translation_domain' => 'form'])
-            ->add('nachname', TextType::class,['label'=>'Name','translation_domain' => 'form'])
-            ->add('klasse', ChoiceType::class, [
-                'choices'  => [
-                    'Klasse 1' => 1,
-                    'Klasse 2' => 2,
-                    'Klasse 3' => 3,
-                    'Klasse 4' => 4,
-                    'Klasse 5' => 5,
-                    'Klasse 6' => 6,
-                ],'label'=>'Jahrgangsstufe','translation_domain' => 'form'])
-            ->add('art', ChoiceType::class, [
-                'choices'  => [
-                    'Ganztagsbetreuung' => 1,
-                    'Halbtagsbetreuung' => 2,
-                ],'label'=>'Art der Betreuung','translation_domain' => 'form'])
-            ->add('geburtstag', BirthdayType::class,['years'=>range($today-20,$today,1),'label'=>'Geburtstag','translation_domain' => 'form'])
-            ->add('allergie', TextType::class,['required'=>false,'label'=>'Mein Kind hat folgende Allergien','translation_domain' => 'form'])
-            ->add('medikamente', TextType::class,['required'=>false,'label'=>'Mein Kind benötig folgende Medikamente','translation_domain' => 'form'])
-            ->add('gluten', CheckboxType::class,['required'=>false,'label'=>'Mein Kind ist Gluten intolerant','translation_domain' => 'form'])
-            ->add('laktose', CheckboxType::class,['required'=>false,'label'=>'Mein Kind ist Laktose intolerant','translation_domain' => 'form'])
-            ->add('schweinefleisch', CheckboxType::class,['required'=>false,'label'=>'Mein Kind isst kein Schweinefleich','translation_domain' => 'form'])
-            ->add('vegetarisch', CheckboxType::class,['required'=>false,'label'=>'Mein Kind ernährt sich vegetarisch','translation_domain' => 'form'])
-            ->add('alleineHause', CheckboxType::class,['required'=>false,'label'=>'Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause','translation_domain' => 'form'])
-            ->add('ausfluege', CheckboxType::class,['required'=>false,'label'=>'Mein Kind darf an Ausflügen teilnehmen','translation_domain' => 'form'])
-            ->add('sonnencreme', CheckboxType::class,['required'=>false,'label'=>'Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden','translation_domain' => 'form'])
-            ->add('fotos', CheckboxType::class,['required'=>false,'label'=>'Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.','translation_domain' => 'form'])
-            ->add('bemerkung', TextareaType::class,['required'=>false,'label'=>'Bemerkung','translation_domain' => 'form','attr'=>['rows'=>6]]);
+            ->add('email', EmailType::class, ['label' => 'Email', 'translation_domain' => 'form'])
+            ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form', 'help' => 'Das ist eine Hilfe für diese Frage im Form'])
+            ->add('name', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
+            ->add('strasse', TextType::class, ['label' => 'Straße', 'translation_domain' => 'form'])
+            ->add('adresszusatz', TextType::class, ['required' => false, 'label' => 'Adresszusatz', 'translation_domain' => 'form'])
+            ->add('plz', TextType::class, ['label' => 'PLZ', 'translation_domain' => 'form'])
+            ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form', 'help' => 'Das ist eine Hilfe für diese Frage im Form'])
+            ->add('einkommen', ChoiceType::class, [
+                'choices' => $this->einkommensgruppen, 'label' => 'Brutto Familieneinkommen pro Monat', 'translation_domain' => 'form'])
+            ->add('beruflicheSituation', ChoiceType::class, ['choices' => $this->beruflicheSituation, 'required' => true, 'label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
+            ->add('kinderImKiga', CheckboxType::class, ['required' => false, 'label' => 'Ich habe mindestens ein weiteres Kind in einer kostenpflichtiger öffentlichen Kindergarteneinrichtung', 'translation_domain' => 'form'])
+            //->add('buk', CheckboxType::class, ['required'=>false,'label' => 'Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger', 'translation_domain' => 'form'])
+            ->add('alleinerziehend', CheckboxType::class, ['required' => false, 'label' => 'Ich bin Alleinerziehend', 'translation_domain' => 'form'])
+            ->add('notfallName', TextType::class, ['required' => true, 'label' => 'Name und Beziehung des Notfallkontakt', 'translation_domain' => 'form'])
+            ->add('notfallkontakt', TextType::class, ['required' => true, 'label' => 'Notfalltelefonnummer', 'translation_domain' => 'form'])
+            ->add('iban', TextType::class, ['required' => true, 'label' => 'IBAN für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('bic', TextType::class, ['required' => true, 'label' => 'BIC für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('kontoinhaber', TextType::class, ['required' => true, 'label' => 'Kontoinhaber für das Lastschriftmandat', 'translation_domain' => 'form'])
+            ->add('abholberechtigter', TextareaType::class, ['required' => false, 'label' => 'Weitere abholberechtigte Personen', 'translation_domain' => 'form', 'attr' => ['rows' => 6]])
+            ->add('sepaInfo', CheckboxType::class, ['required' => true, 'label' => 'SEPA-LAstschrift Mandat wird elektromisch erteilt', 'translation_domain' => 'form'])
+            ->add('gdpr', CheckboxType::class, ['required' => true, 'label' => 'Ich nehme zur Kenntniss, dass meine Daten elektronisch verarbeitet werden', 'translation_domain' => 'form'])
+            ->add('newsletter', CheckboxType::class, ['required' => false, 'label' => 'Zum Newsletter anmelden', 'translation_domain' => 'form'])
+            ->add('captcha', RecaptchaType::class, ['required' => true])
+            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form']);
     }
+
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Kind::class,
+            'data_class' => Stammdaten::class,
         ]);
 
     }

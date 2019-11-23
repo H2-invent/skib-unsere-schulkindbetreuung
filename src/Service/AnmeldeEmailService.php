@@ -47,7 +47,7 @@ class AnmeldeEmailService
         if (sizeof($kind->getBeworben()->toArray()) == 0) {//Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
             $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName() . '.pdf';
 
-            $pdf = $this->print->printAnmeldebestätigung(
+            $pdf = $this->print->printAnmeldebestaetigung(
                 $kind,
                 $adresse,
                 $stadt,

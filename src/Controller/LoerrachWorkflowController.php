@@ -603,7 +603,7 @@ class LoerrachWorkflowController extends AbstractController
         $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName() . '.pdf';
 
 
-        return $print->printAnmeldebestätigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->einkommensgruppen, $organisation, 'D');
+        return $print->printAnmeldebestaetigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->einkommensgruppen, $organisation, 'D');
 
 
     }

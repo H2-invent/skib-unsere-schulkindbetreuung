@@ -27,7 +27,8 @@ class PrintService
     private $translator;
     protected $parameterBag;
     private $fileSystem;
-    public function __construct(FilesystemInterface $publicUploadsFilesystem,\Swift_Mailer $mailer, EngineInterface $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+
+    public function __construct(FilesystemInterface $publicUploadsFilesystem, \Swift_Mailer $mailer, EngineInterface $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
 
         $this->templating = $templating;
@@ -36,25 +37,12 @@ class PrintService
         $this->fileSystem = $publicUploadsFilesystem;
     }
 
-    public function printAnmeldebestätigung(Kind $kind, Stammdaten $elter, Stadt $stadt,TCPDFController $tcpdf, $fileName, $einkommmensgruppen, Organisation $organisation, $type = 'D')
+    public function printAnmeldebestaetigung(Kind $kind, Stammdaten $elter, Stadt $stadt, TCPDFController $tcpdf, $fileName, $einkommmensgruppen, Organisation $organisation, $type = 'D')
     {
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
+        $pdf = $this->preparePDF($pdf,'Test','test','test');
 
-        //$pdf-> = $this->container->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        //todo hier musss der Test raus
-        $pdf->SetAuthor('Test');
-        $pdf->SetTitle('test');
-        $pdf->SetSubject('test');
-        $pdf->setFontSubsetting(true);
-        $pdf->SetFont('helvetica', '', 10, '', true);
-        $pdf->SetMargins(20, 15, 20, true);
-        $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
-        $pdf->setHeaderData('', 0, '', '', array(0, 0, 0), array(255, 255, 255));
-        $pdf->setFooterData(1, 1);
-
-        //$pdf->SetMargins(20,20,40, true);
-        $pdf->AddPage();
         $adressComp = '<p><small>' . $organisation->getName() . ' | ' . $organisation->getAdresse() . $organisation->getAdresszusatz() . ' | ' . $organisation->getPlz() . (' ') . $organisation->getOrt() . '</small><br><br>';
 
         $adressComp = $adressComp . $elter->getVorname() . ' ' . $elter->getName();
@@ -77,8 +65,6 @@ class PrintService
             '',
             true
         );
-        $pdf->setJPEGQuality(75);
-        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 
         $logo = '';
@@ -192,25 +178,7 @@ class PrintService
     {
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
-
-        //$pdf-> = $this->container->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        //todo hier musss der Test raus
-        $pdf->SetAuthor('Test');
-        $pdf->SetTitle('test');
-        $pdf->SetSubject('test');
-        $pdf->setFontSubsetting(true);
-        $pdf->SetFont('helvetica', '', 10, '', true);
-        $pdf->SetMargins(20, 15, 20, true);
-        $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
-        $pdf->setHeaderData('', 0, '', '', array(0, 0, 0), array(255, 255, 255));
-        $pdf->setFooterData(1, 1);
-
-        //$pdf->SetMargins(20,20,40, true);
-        $pdf->AddPage();
-
-        $pdf->setJPEGQuality(75);
-        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-
+        $pdf = $this->preparePDF($pdf,'Test','test','test');
 
         $logo = '';
         if ($organisation->getImage()) {
@@ -262,28 +230,10 @@ class PrintService
 
     public function printChildList($kinder, Organisation $organisation, $text, $fileName, TCPDFController $tcpdf, $type = 'I')
     {
+
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
-
-        //$pdf-> = $this->container->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        //todo hier musss der Test raus
-        $pdf->SetAuthor('Test');
-        $pdf->SetTitle('test');
-        $pdf->SetSubject('test');
-        $pdf->setFontSubsetting(true);
-        $pdf->SetFont('helvetica', '', 10, '', true);
-        $pdf->SetMargins(20, 15, 20, true);
-        $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
-        $pdf->setHeaderData('', 0, '', '', array(0, 0, 0), array(255, 255, 255));
-        $pdf->setFooterData(1, 1);
-
-        //$pdf->SetMargins(20,20,40, true);
-        $pdf->AddPage();
-
-        $pdf->setJPEGQuality(75);
-        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-
-
+        $pdf = $this->preparePDF($pdf,'Test','test','test');
         $logo = '';
         if ($organisation->getImage()) {
             $im = $this->fileSystem->read($organisation->getImage());
@@ -312,4 +262,21 @@ class PrintService
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }
 
+    public function preparePDF($pdf, $title, $author, $subject)
+    {
+        //todo hier musss der Test raus
+        $pdf->SetAuthor($author);
+        $pdf->SetTitle($title);
+        $pdf->SetSubject($subject);
+        $pdf->setFontSubsetting(true);
+        $pdf->SetFont('helvetica', '', 10, '', true);
+        $pdf->SetMargins(20, 15, 20, true);
+        $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
+        $pdf->setHeaderData('', 0, '', '', array(0, 0, 0), array(255, 255, 255));
+        $pdf->setFooterData(1, 1);
+        $pdf->AddPage();
+        $pdf->setJPEGQuality(75);
+        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+        return $pdf;
+    }
 }
