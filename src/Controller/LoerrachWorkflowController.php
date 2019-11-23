@@ -521,8 +521,7 @@ class LoerrachWorkflowController extends AbstractController
             $data->setFin(true);
             $em->persist($data);
             $kindNew->setEltern($adressCopy);
-            $em->persist($kindNew);
-            $em->flush();
+
             foreach ($data->getZeitblocks() as $zb) {
                 $zb->addKind($kindNew);
             }
@@ -530,9 +529,7 @@ class LoerrachWorkflowController extends AbstractController
             foreach ($data->getBeworben() as $zb) {
                 $kindNew->addBeworben($zb);
             }
-            $em->persist($kindNew);
 
-            $em->flush();
         }
         $em->persist($adresse);
         $em->persist($adressCopy);

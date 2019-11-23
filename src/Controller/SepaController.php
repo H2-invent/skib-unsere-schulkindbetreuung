@@ -107,6 +107,7 @@ class SepaController extends AbstractController
         $sepa->setSepaXML('');
         $sepa->setPdf('');
         $em->persist($sepa);
+        $em->flush();
        foreach ($eltern as $data){// für alle gefunden eltern in diesem Monat
            $type = 'FRST'; // setzte SEPA auf First Sepa
 
@@ -144,12 +145,9 @@ class SepaController extends AbstractController
            $rechnung->setPdf('');
            $rechnung->setCreatedAt(new \DateTime());
            $rechnung->setStammdaten($data);
-
             $em->persist($rechnung);
             $em->flush();
             $rechnung->setRechnungsnummer('RE'.(new \DateTime())->format('Ymd').$rechnung->getId());
-            $em->persist($rechnung);
-            $em->flush();
            $rechnung->setSepa($sepa);
            if($summe > 0){
                $rechnungen[] = $rechnung;
