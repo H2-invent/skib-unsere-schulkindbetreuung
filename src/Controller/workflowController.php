@@ -13,6 +13,7 @@ use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Form\Type\StadtType;
+use App\Service\ConfirmEmailService;
 use App\Service\MailerService;
 use App\Service\PrintAGBService;
 use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
@@ -24,6 +25,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,56 +72,16 @@ class workflowController extends AbstractController
     /**
      * @Route("/confirmEmail",name="workflow_confirm_Email",methods={"GET","POST"})
      */
-    public function confirmAction(Request $request, MailerService $mailer, TranslatorInterface $translator)
+    public function confirmAction(Request $request, MailerService $mailer, TranslatorInterface $translator,ConfirmEmailService $confirmEmailService)
     {
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt'));
-        if ($stammdaten->getEmailConfirmed()) {
-            return $this->redirect($request->get('redirect'));
-        } else {
 
-            if ($stammdaten->getConfirmationCode() == null) {
-                $stammdaten->setConfirmationCode(substr(str_shuffle(MD5(microtime())), 0, 6));
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($stammdaten);
-                $em->flush();
-            }
-            $formData = array('confirmationCode' => '',
-                'redirectUrl' => $request->get('redirect'));
-            $form = $this->createFormBuilder($formData)
-                ->add('confirmationCode', TextType::class, ['label' => 'Bestätigungscode', 'translation_domain' => 'form'])
-                ->add('redirectUrl', HiddenType::class)
-                ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form'])
-                ->getForm();
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $formData = $form->getData();
-                if ($formData['confirmationCode'] == $stammdaten->getConfirmationCode()) {
-                    $stammdaten->setEmailConfirmed(true);
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($stammdaten);
-                    $em->flush();
-                    return $this->redirect($formData['redirectUrl']);
-                }
-                return $this->redirectToRoute('workflow_confirm_Email', array('stadt' => $stadt->getId(), 'uid' => $stammdaten->getUid(), 'redirect' => $formData['redirectUrl'], 'snack' => $translator->trans('Bestätigungscode fehlerhaft')));
-            }
-            $mailBetreff = $translator->trans('Bestätigung der Email Adresse');
-            $mailContent = $this->renderView('email/bestaetigungscode.html.twig', array('eltern' => $stammdaten));
-            if ($stammdaten->getConfirmEmailSend() == false) {
-                $mailer->sendEmail('H2-Invent', 'info@h2-invent.com', $stammdaten->getEmail(), $mailBetreff, $mailContent);
-                $stammdaten->setConfirmEmailSend(true);
-                $stammdaten->setResendEmail(md5(uniqid()));
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($stammdaten);
-                $em->flush();
-            }
-
-            $text = $translator->trans('Wir haben Ihnen einen Bestätigungscode an Ihre Emailadresse gesandt. Bitte geben Sie diesen Code aus der Email hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen.');
-
-            return $this->render('workflow/formConfirmation.html.twig', array('form' => $form->createView(), 'titel' => $mailBetreff, 'text' => $text, 'stadt' => $stadt, 'stammdaten' => $stammdaten, 'redirect' => $request->get('redirect')));
+        $res = $confirmEmailService->confirm($stammdaten,$stadt,$request->get('redirect'),$request);
+        if ($res === null ){
+            return new RedirectResponse( $request->get('redirect'));
         }
+        return new Response($res);
     }
 
 
