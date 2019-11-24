@@ -24,6 +24,7 @@ use App\Service\PrintAGBService;
 use App\Service\PrintService;
 use App\Service\SchuljahrService;
 use App\Service\StamdatenFromCookie;
+use App\Service\ToogleKindBlockSchulkind;
 use App\Service\WorkflowAbschluss;
 use App\Service\WorkflowStart;
 use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
@@ -298,7 +299,7 @@ class LoerrachWorkflowController extends AbstractController
     /**
      * @Route("/loerrach/kinder/block/toggle",name="loerrach_workflow_kinder_block_toggle",methods={"PATCH"})
      */
-    public function kinderblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
+    public function kinderblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, ToogleKindBlockSchulkind $toogleKindBlockSchulkind)
     {
         $result = array(
             'text' => $translator->trans('Betreuungsblock erfolgreich gespeichert'),
@@ -306,7 +307,7 @@ class LoerrachWorkflowController extends AbstractController
             'kontingent' => false,
             'cardText' => $translator->trans('Gebucht')
         );
-        try {
+
             //Include Parents in this route
             $adresse = new Stammdaten;
             if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
@@ -314,42 +315,11 @@ class LoerrachWorkflowController extends AbstractController
             }
 
             $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
-            $result['preisUrl'] = $this->generateUrl('loerrach_workflow_preis_einKind', array('kind_id' => $kind->getId()));
             $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
-            if ($block->getMin() || $block->getMax()) {
-                $result['kontingent'] = true;
-                $result['cardText'] = $translator->trans('Angemeldet');
-            }
-            if ($block->getMin() || $block->getMax()) {
-                if (in_array($block, $kind->getBeworben()->toArray())) {
-                    $kind->removeBeworben($block);
-                } else {
-                    $kind->addBeworben($block);
-                }
-            } else {
-                if (in_array($block, $kind->getZeitblocks()->toArray())) {
-                    $kind->removeZeitblock($block);
-                } else {
-                    $kind->addZeitblock($block);
-                }
-            }
+            $result = $toogleKindBlockSchulkind->toggleKind($kind, $block);
+            return new JsonResponse($result);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($kind);
-            $em->flush();
-
-            $blocks2 = $kind->getTageWithBlocks();
-
-            if ($blocks2 < 2) {
-                $result['text'] = $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Tage müssen ausgewählt werden)');
-                $result['error'] = 2;
-            }
-        } catch (\Exception $e) {
-            $result['text'] = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
-            $result['error'] = 1;
         }
-        return new JsonResponse($result);
-    }
 
     /**
      * @Route("/{slug}/mittagessen", name="loerrach_workflow_mittagessen")
