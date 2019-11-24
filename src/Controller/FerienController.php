@@ -183,8 +183,10 @@ class FerienController extends AbstractController
 
         $dates = array();
         $dates = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt);
+        $today = new \DateTime('today');
 
-        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'dates' => $dates, 'stadt' => $stadt));
+
+        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'dates' => $dates, 'stadt' => $stadt, 'today'=> $today));
     }
 
 

@@ -9,24 +9,35 @@
         <div class="modal-body">
             {% for date in dates %}
                 <h4>
-                    {{ date.0.startdate|date('d.M.Y') }}
+                    {{ date.0.startdate|date('d.m.Y') }}
                 </h4>
                 <div class="text-left card-body" id="accordion">
                     {% for block in date %}
-                        <div class="accordion" id="accordionExample275">
-                            <div class="card z-depth-0 bordered">
+                        <div class="accordion hoverable" id="accordionProgram">
+                            <div class="card mb-1">
                                 <div class="card-header" id="heading{{ block.id }}">
-                                    <h5 class="mb-0">
-                                        <a class="btn btn-link" type="button" data-toggle="collapse"
+                                        <a type="button" data-toggle="collapse"
                                            data-target="#collapse{{ block.id }}"
                                            aria-expanded="true" aria-controls="collapse{{ block.id }}">
-                                            {{ block.translate.titel }}
+                                            <h5>
+                                                {{ block.translate.titel }}
+                                            </h5>
+                                            {% if block.startVerkauf < today and block.endVerkauf > today %}
+                                                <div class="alert alert-success" role="alert">
+                                                        <i class="fas fa-check"></i>
+                                                        Anmeldung geöffnet<br/>
+                                                </div>
+                                            {% else %}
+                                                <div class="alert alert-info" role="alert">
+                                                        <i class="fas fa-exclamation"></i>
+                                                        Anmeldung geschlossen
+                                                </div>
+                                            {% endif %}
                                         </a>
-                                    </h5>
                                 </div>
                                 <div id="collapse{{ block.id }}" class="collapse"
                                      aria-labelledby="heading{{ block.id }}"
-                                     data-parent="#accordionExample275">
+                                     data-parent="#accordionProgram">
                                     <div class="card-body">
                                         <h4 class="mt-1">
                                             {{ block.translate.titel }}<br/>
@@ -34,54 +45,73 @@
                                         <p>
                                             {{ block.translate.infoText|nl2br }}
                                         </p>
-                                        <ul class="list-group">
-                                            <li class="list-group-item">
-                                                <div class="row">
-                                                    <div class="col-sm-1">
-                                                        <i class="fas fa-map-marker-alt hauptfarbe"></i>
-                                                    </div>
-                                                    <div class="col-sm-9">
-                                                        {{ block.Ort|nl2br }}
-                                                    </div>
+                                        {% if block.startVerkauf < today and block.endVerkauf > today %}
+
+                                        {% else %}
+                                            <div class="row alert alert-info" role="alert">
+                                                <div class="col-sm-1">
+                                                    <i class="fas fa-exclamation fa-2x"></i>
                                                 </div>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <div class="row">
-                                                    <div class="col-sm-1">
-                                                        <i class="fas fa-clock hauptfarbe"></i></i>
-                                                    </div>
-                                                    <div class="col-sm-9">
-                                                        {{ block.startDate|date('d.m.Y') }} {% trans %}bis{% endtrans %} {{ block.endDate|date('d.m.Y') }}
-                                                        <br/>
-                                                        {% trans %}Begin{% endtrans %}: {{ block.startTime|date('g:i') }}<br/>
-                                                        {% trans %}Ende{% endtrans %}: {{ block.endTime|date('g:i') }}
-                                                    </div>
+                                                <div class="col-sm-10">
+                                                    Der Anmeldezeitraum für dieses Programm ist vorüber.<br/>
+                                                    Anmeldezeitraum: {{ block.startVerkauf|date('d.m.Y') }} {% trans %}bis{% endtrans %} {{ block.endVerkauf|date('d.m.Y') }}
                                                 </div>
-                                            </li>
-                                            <li class="list-group-item">
-                                                Vorverkauf: {{ block.startVerkauf|date('d.m.Y') }} {% trans %}bis{% endtrans %} {{ block.endVerkauf|date('d.m.Y') }}</li>
-                                        </ul>
+                                            </div>
+                                        {% endif %}
+                                        <hr class="hr-dark">
+                                        <div class="row mt-2">
+                                            <div class="col-sm-2">
+                                                <h5>
+                                                    {% trans %}Ort{% endtrans %}
+                                                </h5>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                {{ block.Ort|nl2br }}
+                                            </div>
+                                        </div>
 
-                                        <h5 class="mt-1">
-                                            {% trans %}Kontingent{% endtrans %}
-                                        </h5>
-                                        <ul class="list-group">
-                                            {% if block.minAnzahl is not null %}
-                                                <li class="list-group-item">{% trans %}Mindest Anzahl von Kindern{% endtrans %}
-                                                    : {{ block.minAnzahl }}</li>
-                                            {% endif %}
-                                            {% if block.maxAnzahl is not null %}
-                                                <li class="list-group-item">{% trans %}Maximale Anzahl von Kindern{% endtrans %}
-                                                    : {{ block.maxAnzahl }}</li>
-                                            {% endif %}
-                                        </ul>
+                                        <hr class="hr-dark">
+                                        <div class="row mt-2">
+                                            <div class="col-sm-2">
+                                                <h5>
+                                                    {% trans %}Termin{% endtrans %}
+                                                </h5>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <b>{{ block.startDate|date('d.m.Y') }} {% if block.startDate == block.endDate %}- {{ block.endDate|date('d.m.Y') }}{% endif %}</b><br/>
+                                                {% trans %}Begin{% endtrans %}: {{ block.startTime|date('g:i') }}<br/>
+                                                {% trans %}Ende{% endtrans %}: {{ block.endTime|date('g:i') }}
+                                            </div>
+                                        </div>
 
-                                        <h5 class="mt-1">
-                                            {% trans %}Preise{% endtrans %}
-                                        </h5>
-                                        <ul class="list-group">
+                                        <hr class="hr-dark">
+                                        <div class="row mt-2">
+                                            <div class="col-sm-2">
+                                                <h5>
+                                                    {% trans %}Anzahl Plätze{% endtrans %}
+                                                </h5>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                {% if block.minAnzahl is not null %}
+                                                    {% trans %}Minimal{% endtrans %}: {{ block.minAnzahl }}<br/>
+                                                {% endif %}
+                                                {% if block.maxAnzahl is not null %}
+                                                    {% trans %}Maximal{% endtrans %}: {{ block.maxAnzahl }}
+                                                {% endif %}
+                                            </div>
+                                        </div>
 
-                                        </ul>
+                                        <hr class="hr-dark">
+                                        <div class="row mt-2">
+                                            <div class="col-sm-2">
+                                                <h5>
+                                                    {% trans %}Preise{% endtrans %}
+                                                </h5>
+                                            </div>
+                                            <div class="col-sm-9">
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
