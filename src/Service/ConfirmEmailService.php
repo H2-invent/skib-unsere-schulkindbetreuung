@@ -41,7 +41,7 @@ class ConfirmEmailService
     private $formBuilder;
     private $twig;
     private $mailer;
-   public function __construct(MailerService $mailerService,Environment $twig, FormFactoryInterface $formBuilder,RouterInterface $router,TranslatorInterface $translator,Security $security,EntityManagerInterface $entityManager,ParameterBagInterface $params)
+   public function __construct(MailerService $mailerService,Environment $twig, FormFactoryInterface $formBuilder,RouterInterface $router,TranslatorInterface $translator,Security $security,EntityManagerInterface $entityManager)
    {
        $this->em = $entityManager;
        $this->user = $security;
