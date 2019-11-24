@@ -3,69 +3,112 @@
 
         <div class="modal-header">
             <h5 class="modal-title">{% trans %}Ferienblöcke zum Bestellen anklicken{% endtrans %}</h5>
-
-
         </div>
+
+
         <div class="modal-body">
-            <div class="row">
-
-
-                {% for date in blocks %}
-
+            {% for date in dates %}
+                <h4>
+                    {{ date.0.startdate|date('d.M.Y') }}
+                </h4>
                 <div class="text-left card-body" id="accordion">
-                    {% for b in date %}
-                        <div class="card mb-2">
-                            <div class="card-header" id="heading{{ loop.index }}">
-                                <h5 class="mb-0">
-                                    <a data-toggle="collapse" data-target="#collapse{{ loop.index }}"
-                                       aria-expanded="false" aria-controls="collapse{{ loop.index }}">
-                                        {{ b.minAlter }}
-                                    </a>
-                                </h5>
-                            </div>
+                    {% for block in date %}
+                        <div class="accordion" id="accordionExample275">
+                            <div class="card z-depth-0 bordered">
+                                <div class="card-header" id="heading{{ block.id }}">
+                                    <h5 class="mb-0">
+                                        <a class="btn btn-link" type="button" data-toggle="collapse"
+                                           data-target="#collapse{{ block.id }}"
+                                           aria-expanded="true" aria-controls="collapse{{ block.id }}">
+                                            {{ block.translate.titel }}
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapse{{ block.id }}" class="collapse"
+                                     aria-labelledby="heading{{ block.id }}"
+                                     data-parent="#accordionExample275">
+                                    <div class="card-body">
+                                        <h4 class="mt-1">
+                                            {{ block.translate.titel }}<br/>
+                                        </h4>
+                                        <p>
+                                            {{ block.translate.infoText|nl2br }}
+                                        </p>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-sm-1">
+                                                        <i class="fas fa-map-marker-alt hauptfarbe"></i>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        {{ block.Ort|nl2br }}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-sm-1">
+                                                        <i class="fas fa-clock hauptfarbe"></i></i>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        {{ block.startDate|date('d.m.Y') }} {% trans %}bis{% endtrans %} {{ block.endDate|date('d.m.Y') }}
+                                                        <br/>
+                                                        {% trans %}Begin{% endtrans %}: {{ block.startTime|date('g:i') }}<br/>
+                                                        {% trans %}Ende{% endtrans %}: {{ block.endTime|date('g:i') }}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Vorverkauf: {{ block.startVerkauf|date('d.m.Y') }} {% trans %}bis{% endtrans %} {{ block.endVerkauf|date('d.m.Y') }}</li>
+                                        </ul>
 
-                            <div id="collapse{{ loop.index }}" class="collapse"
-                                 aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
-                                <div class="card-body">
-                                    Text
+                                        <h5 class="mt-1">
+                                            {% trans %}Kontingent{% endtrans %}
+                                        </h5>
+                                        <ul class="list-group">
+                                            {% if block.minAnzahl is not null %}
+                                                <li class="list-group-item">{% trans %}Mindest Anzahl von Kindern{% endtrans %}
+                                                    : {{ block.minAnzahl }}</li>
+                                            {% endif %}
+                                            {% if block.maxAnzahl is not null %}
+                                                <li class="list-group-item">{% trans %}Maximale Anzahl von Kindern{% endtrans %}
+                                                    : {{ block.maxAnzahl }}</li>
+                                            {% endif %}
+                                        </ul>
+
+                                        <h5 class="mt-1">
+                                            {% trans %}Preise{% endtrans %}
+                                        </h5>
+                                        <ul class="list-group">
+
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
-                    {% endfor %}
-
-
                 </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p>{% trans %}Monatlicher Preis für die Betreuung (incl. Vergünstigungen){% endtrans %}: <span
-                                    class="price"></span></p>
-
-                    </div>
-                </div>
+            {% endfor %}
 
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary "
-                        data-dismiss="modal">{% trans %}Speichern{% endtrans %}</button>
-
-
-            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <p>{% trans %}Preis für die Betreuung (incl. Vergünstigungen){% endtrans %}: <span
                                 class="price"></span></p>
-
-
                 </div>
-                <script>
-                    // popovers Initialization
-                    $(function () {
-                        $('[data-toggle="popover"]').popover()
-                    })
-                </script>
             </div>
         </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary "
+                    data-dismiss="modal">{% trans %}Speichern{% endtrans %}</button>
+        </div>
     </div>
+    <script>
+        // popovers Initialization
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
+</div>
 </div>

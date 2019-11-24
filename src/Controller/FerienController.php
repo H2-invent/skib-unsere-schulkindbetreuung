@@ -165,7 +165,7 @@ class FerienController extends AbstractController
 
 
     /**
-     * @Route("/{slug}/ferien/kind/programm",name="ferien_kind_programm",methods={"GET"})
+     * @Route("/{slug}/ferien/kind/programm",name="ferien_kind_programm",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public function zeitblockAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt)
@@ -181,10 +181,10 @@ class FerienController extends AbstractController
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
 
 
-        $blocks = array();
-        $blocks = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt);
+        $dates = array();
+        $dates = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt);
 
-        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'blocks' => $blocks));
+        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'dates' => $dates, 'stadt' => $stadt));
     }
 
 
