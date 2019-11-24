@@ -30,17 +30,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class WorkflowAbschluss
 {
-    private $validator;
-    private $formFactory;
+
+
     private $em;
-    private $params;
-    private $user;
-   public function __construct(Security $security,ValidatorInterface $validator,FormFactoryInterface $formFactory,EntityManagerInterface $entityManager,ParameterBagInterface $params)
+   public function __construct(Security $security,EntityManagerInterface $entityManager,ParameterBagInterface $params)
    {
-        $this->validator = $validator;
-       $this->formFactory = $formFactory;
        $this->em = $entityManager;
-       $this->params = $params;
        $this->user = $security;
    }
 

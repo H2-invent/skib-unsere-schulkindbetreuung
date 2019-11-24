@@ -27,8 +27,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class StamdatenFromCookie
 {
-    private $validator;
-    private $formFactory;
+
     private $em;
     private $params;
    public function __construct(ValidatorInterface $validator,FormFactoryInterface $formFactory,EntityManagerInterface $entityManager,ParameterBagInterface $params)
@@ -49,8 +48,6 @@ class StamdatenFromCookie
             $hash = hash("sha256", $cookie_ar[0] . $this->params->get("secret"));
             $search = array('uid' => $cookie_ar[0], 'saved' => false);
             if ($request->cookies->get('KindID') && $request->cookies->get('SecID')) {
-                $cookie_kind = explode('.', $request->cookies->get('KindID'));
-                $cookie_seccode = explode('.', $request->cookies->get('SecID'));
             } else {
                 $search['history'] = 0;
             }
