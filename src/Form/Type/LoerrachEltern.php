@@ -27,11 +27,23 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class LoerrachEltern extends AbstractType
 {
+    private $beruflicheSituation;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->beruflicheSituation = array(
+            $translator->trans('Berufstätig') => 1,
+            $translator->trans('Arbeitssuchend') => 2,
+            $translator->trans('Keine Angabe') => 0
+        );
+
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
@@ -47,7 +59,7 @@ class LoerrachEltern extends AbstractType
             ->add('plz', TextType::class, ['label' => 'PLZ', 'translation_domain' => 'form'])
             ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form', 'help' => 'Das ist eine Hilfe für diese Frage im Form'])
             ->add('einkommen', ChoiceType::class, [
-                'choices' => $this->einkommensgruppen, 'label' => 'Brutto Familieneinkommen pro Monat', 'translation_domain' => 'form'])
+                'choices' => $options['einkommen'], 'label' => 'Brutto Familieneinkommen pro Monat', 'translation_domain' => 'form'])
             ->add('beruflicheSituation', ChoiceType::class, ['choices' => $this->beruflicheSituation, 'required' => true, 'label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
             ->add('kinderImKiga', CheckboxType::class, ['required' => false, 'label' => 'Ich habe mindestens ein weiteres Kind in einer kostenpflichtiger öffentlichen Kindergarteneinrichtung', 'translation_domain' => 'form'])
             //->add('buk', CheckboxType::class, ['required'=>false,'label' => 'Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger', 'translation_domain' => 'form'])
@@ -70,6 +82,8 @@ class LoerrachEltern extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Stammdaten::class,
+            'einkommen' => array(),
+
         ]);
 
     }
