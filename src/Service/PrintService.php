@@ -281,7 +281,7 @@ class PrintService
 
     public function preparePDF($pdf, $title, $author, $subject)
     {
-        //todo hier musss der Test raus
+
         $pdf->SetAuthor($author);
         $pdf->SetTitle($title);
         $pdf->SetSubject($subject);
