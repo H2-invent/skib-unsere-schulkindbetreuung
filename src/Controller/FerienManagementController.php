@@ -41,7 +41,7 @@ class FerienManagementController extends AbstractController
         $ferienblock = new Ferienblock();
         $ferienblock->setOrganisation($organisation);
         $ferienblock->setStadt($organisation->getStadt());
-        $ferienblock->setNamePreise(array_fill(0,$ferienblock->getAnzahlPreise(), 0));
+        $ferienblock->setNamePreise(array_fill(0,$ferienblock->getAnzahlPreise(), ''));
         $ferienblock->setPreis(array_fill(0,$ferienblock->getAnzahlPreise(), 0));
         $form = $this->createForm(FerienBlockType::class, $ferienblock);
         $form->handleRequest($request);
@@ -74,7 +74,10 @@ class FerienManagementController extends AbstractController
         }
 
         $ferienblock = $this->getDoctrine()->getRepository(Ferienblock::class)->findOneBy(array('id'=>$request->get('ferien_id'),'organisation'=>$organisation));
-
+        if($ferienblock->getPreis() === null || $ferienblock->getNamePreise() === null || sizeof($ferienblock->getPreis()) != $ferienblock->getAnzahlPreise()){
+            $ferienblock->setNamePreise(array_fill(0,$ferienblock->getAnzahlPreise(), ''));
+            $ferienblock->setPreis(array_fill(0,$ferienblock->getAnzahlPreise(), 0));
+        }
         $form = $this->createForm(FerienBlockType::class, $ferienblock);
 
         $form->handleRequest($request);
