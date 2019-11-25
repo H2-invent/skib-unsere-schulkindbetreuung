@@ -12,6 +12,7 @@ use App\Entity\Active;
 
 use App\Entity\Ferienblock;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -50,17 +51,27 @@ class FerienBlockType extends AbstractType
             ->add('infoTextDE', TextareaType::class, ['attr' => ['rows' => 6], 'label' => 'Info Text Deutsch DE', 'translation_domain' => 'form', 'property_path' => 'translations[de].infoText',])
             ->add('infoTextEN', TextareaType::class, ['attr' => ['rows' => 6], 'label' => 'Info Text Englisch', 'translation_domain' => 'form', 'property_path' => 'translations[en].infoText',])
             ->add('infoTextFR', TextareaType::class, ['attr' => ['rows' => 6], 'label' => 'Info Text Französisch', 'translation_domain' => 'form', 'property_path' => 'translations[fr].infoText',])
-            ->add('ort', TextareaType::class, ['label' => 'ort', 'translation_domain' => 'form'])
+            ->add('ort', TextareaType::class, ['label' => 'Stadt', 'translation_domain' => 'form'])
             ->add('minAlter', IntegerType::class, array('required' => true, 'label' => 'Mindest Alter', 'translation_domain' => 'form'))
             ->add('maxAlter', IntegerType::class, array('required' => false, 'label' => 'Maximum Alter', 'translation_domain' => 'form'))
-            ->add('startDate', DateType::class, array('widget' => 'single_text', 'label' => 'Start Datum', 'translation_domain' => 'form','attr'=> array('class'=>'start date-hkjdshfsh')))
-            ->add('endDate', DateType::class, ['widget' => 'single_text', 'label' => 'End Datum', 'translation_domain' => 'form','attr'=> array('class'=>'end date-hkjdshfsh')])
-            ->add('startTime', TimeType::class, ['widget' => 'single_text', 'label' => 'Anfangs Uhrzeit', 'translation_domain' => 'form'])
-            ->add('endTime', TimeType::class, ['widget' => 'single_text', 'label' => 'End Uhrzeit', 'translation_domain' => 'form'])
+            ->add('startDate', DateType::class, array('widget' => 'single_text', 'label' => 'Datum Start', 'translation_domain' => 'form','attr'=> array('class'=>'start date-hkjdshfsh')))
+            ->add('endDate', DateType::class, ['widget' => 'single_text', 'label' => 'Datum Ende', 'translation_domain' => 'form','attr'=> array('class'=>'end date-hkjdshfsh')])
+            ->add('startTime', TimeType::class, ['widget' => 'single_text', 'label' => 'Uhrzeit Anfang', 'translation_domain' => 'form'])
+            ->add('endTime', TimeType::class, ['widget' => 'single_text', 'label' => 'Uhrzeit Ende', 'translation_domain' => 'form'])
             ->add('startVerkauf', DateType::class, array('widget' => 'single_text', 'label' => 'Start Vorverkauf', 'translation_domain' => 'form'))
             ->add('endVerkauf', DateType::class, array('widget' => 'single_text', 'label' => 'End Vorverkauf', 'translation_domain' => 'form'))
             ->add('minAnzahl', IntegerType::class, array('required' => false, 'label' => 'Minimum Anzahl', 'translation_domain' => 'form'))
             ->add('maxAnzahl', IntegerType::class, array('required' => false, 'label' => 'Maximum Anzahl', 'translation_domain' => 'form'))
+            ->add('anzahlPreise', IntegerType::class, array('required' => false, 'label' => 'Anzahl Preise', 'translation_domain' => 'form'))
+
+            ->add('namePreise', CollectionType::class,[
+                'entry_type' => TextType::class,
+                'entry_options' => array('label'=>'Preise','translation_domain' => 'form')
+            ])
+            ->add('preis', CollectionType::class,[
+                'entry_type' => IntegerType::class,
+                'entry_options' => array('label'=>'Preise','translation_domain' => 'form')
+            ])
             ->add('save', SubmitType::class, ['label' => 'Speichern', 'translation_domain' => 'form']);
     }
 
@@ -68,6 +79,10 @@ class FerienBlockType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Ferienblock::class,
+            'preis' => 1,
+            'namePreise' => 1,
         ]);
+        $resolver->setAllowedTypes('preis', 'integer');
+        $resolver->setAllowedTypes('namePreise', 'integer');
     }
 }

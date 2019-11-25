@@ -120,6 +120,16 @@ class Ferienblock
      */
     private $organisation;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $anzahlPreise;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $namePreise = [];
+
     public function __construct()
     {
         $this->kinder = new ArrayCollection();
@@ -409,6 +419,30 @@ class Ferienblock
     public function setOrganisation(?Organisation $organisation): self
     {
         $this->organisation = $organisation;
+
+        return $this;
+    }
+
+    public function getAnzahlPreise(): ?int
+    {
+        return $this->anzahlPreise;
+    }
+
+    public function setAnzahlPreise(?int $anzahlPreise): self
+    {
+        $this->anzahlPreise = $anzahlPreise;
+
+        return $this;
+    }
+
+    public function getNamePreise(): ?array
+    {
+        return $this->namePreise;
+    }
+
+    public function setNamePreise(?array $namePreise): self
+    {
+        $this->namePreise = $namePreise;
 
         return $this;
     }

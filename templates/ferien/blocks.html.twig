@@ -3,69 +3,144 @@
 
         <div class="modal-header">
             <h5 class="modal-title">{% trans %}Ferienblöcke zum Bestellen anklicken{% endtrans %}</h5>
-
-
         </div>
+
+
         <div class="modal-body">
-            <div class="row">
-
-
-                {% for date in blocks %}
-
+            {% for date in dates %}
+                <h4>
+                    {{ date.0.startdate|date('d.m.Y') }}
+                </h4>
                 <div class="text-left card-body" id="accordion">
-                    {% for b in date %}
-                        <div class="card mb-2">
-                            <div class="card-header" id="heading{{ loop.index }}">
-                                <h5 class="mb-0">
-                                    <a data-toggle="collapse" data-target="#collapse{{ loop.index }}"
-                                       aria-expanded="false" aria-controls="collapse{{ loop.index }}">
-                                        {{ b.minAlter }}
-                                    </a>
-                                </h5>
-                            </div>
+                    {% for block in date %}
+                        <div class="accordion hoverable" id="accordionProgram">
+                            <div class="card mb-1">
+                                <div class="card-header" id="heading{{ block.id }}">
+                                        <a type="button" data-toggle="collapse"
+                                           data-target="#collapse{{ block.id }}"
+                                           aria-expanded="true" aria-controls="collapse{{ block.id }}">
+                                            <h5>
+                                                {{ block.translate.titel }}
+                                            </h5>
+                                            {% if block.startVerkauf < today and block.endVerkauf > today %}
+                                                <div class="alert alert-success" role="alert">
+                                                        <i class="fas fa-check"></i>
+                                                        Anmeldung geöffnet<br/>
+                                                </div>
+                                            {% else %}
+                                                <div class="alert alert-info" role="alert">
+                                                        <i class="fas fa-exclamation"></i>
+                                                        Anmeldung geschlossen
+                                                </div>
+                                            {% endif %}
+                                        </a>
+                                </div>
+                                <div id="collapse{{ block.id }}" class="collapse"
+                                     aria-labelledby="heading{{ block.id }}"
+                                     data-parent="#accordionProgram">
+                                    <div class="card-body">
+                                        <h4 class="mt-1">
+                                            {{ block.translate.titel }}<br/>
+                                        </h4>
+                                        <p>
+                                            {{ block.translate.infoText|nl2br }}
+                                        </p>
+                                        {% if block.startVerkauf < today and block.endVerkauf > today %}
 
-                            <div id="collapse{{ loop.index }}" class="collapse"
-                                 aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
-                                <div class="card-body">
-                                    Text
+                                        {% else %}
+                                            <div class="row alert alert-info" role="alert">
+                                                <div class="col-sm-1">
+                                                    <i class="fas fa-exclamation fa-2x"></i>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    Der Anmeldezeitraum für dieses Programm ist vorüber.<br/>
+                                                    Anmeldezeitraum: {{ block.startVerkauf|date('d.m.Y') }} {% trans %}bis{% endtrans %} {{ block.endVerkauf|date('d.m.Y') }}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        <hr class="hr-dark">
+                                        <div class="row mt-2">
+                                            <div class="col-sm-2">
+                                                <h5>
+                                                    {% trans %}Ort{% endtrans %}
+                                                </h5>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                {{ block.Ort|nl2br }}
+                                            </div>
+                                        </div>
+
+                                        <hr class="hr-dark">
+                                        <div class="row mt-2">
+                                            <div class="col-sm-2">
+                                                <h5>
+                                                    {% trans %}Termin{% endtrans %}
+                                                </h5>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <b>{{ block.startDate|date('d.m.Y') }} {% if block.startDate == block.endDate %}- {{ block.endDate|date('d.m.Y') }}{% endif %}</b><br/>
+                                                {% trans %}Begin{% endtrans %}: {{ block.startTime|date('g:i') }}<br/>
+                                                {% trans %}Ende{% endtrans %}: {{ block.endTime|date('g:i') }}
+                                            </div>
+                                        </div>
+
+                                        <hr class="hr-dark">
+                                        <div class="row mt-2">
+                                            <div class="col-sm-2">
+                                                <h5>
+                                                    {% trans %}Anzahl Plätze{% endtrans %}
+                                                </h5>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                {% if block.minAnzahl is not null %}
+                                                    {% trans %}Minimal{% endtrans %}: {{ block.minAnzahl }}<br/>
+                                                {% endif %}
+                                                {% if block.maxAnzahl is not null %}
+                                                    {% trans %}Maximal{% endtrans %}: {{ block.maxAnzahl }}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                        <hr class="hr-dark">
+                                        <div class="row mt-2">
+                                            <div class="col-sm-2">
+                                                <h5>
+                                                    {% trans %}Preise{% endtrans %}
+                                                </h5>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                {% for p in block.preis %}
+                                                {{ block.namePreise[loop.index-1] }}: {{p|number_format(2,',','.')}} €<br/>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
-                    {% endfor %}
-
-
                 </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p>{% trans %}Monatlicher Preis für die Betreuung (incl. Vergünstigungen){% endtrans %}: <span
-                                    class="price"></span></p>
-
-                    </div>
-                </div>
+            {% endfor %}
 
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary "
-                        data-dismiss="modal">{% trans %}Speichern{% endtrans %}</button>
-
-
-            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <p>{% trans %}Preis für die Betreuung (incl. Vergünstigungen){% endtrans %}: <span
                                 class="price"></span></p>
-
-
                 </div>
-                <script>
-                    // popovers Initialization
-                    $(function () {
-                        $('[data-toggle="popover"]').popover()
-                    })
-                </script>
             </div>
         </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary "
+                    data-dismiss="modal">{% trans %}Speichern{% endtrans %}</button>
+        </div>
     </div>
+    <script>
+        // popovers Initialization
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
+</div>
 </div>

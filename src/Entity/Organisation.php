@@ -233,6 +233,7 @@ class Organisation
      */
     private $ferienblocks;
 
+
     public function __construct()
     {
         $this->schule = new ArrayCollection();
@@ -757,4 +758,7 @@ class Organisation
 
         return $this;
     }
+
+
+
 }
