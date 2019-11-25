@@ -1,0 +1,77 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+<section class="dashboard-counts section-padding">
+    <div class="container-fluid ">
+        <div class="row">
+            <!-- Count item widget-->
+            <div class=" col-12 card">
+                <div class="card-header">
+                  <h1>{{ title }}</h1>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        {% for error in errors %}
+                            <li>{{ error.message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_label(form.namePreise) }}
+                    <ul id="preisName-fields-list"
+                        data-prototype="{{ form_widget(form.namePreise.vars.prototype)|e }}"
+                        data-widget-tags="{{ '<li class="list-group-item"></li>'|e }}"
+                        data-widget-counter="{{ form.namePreise|length }}"
+                    class="list-group">
+
+                    {% for namePreis in form.namePreise %}
+                        <li class="list-group-item">
+                            {{ form_errors(namePreis) }}
+                            {{ form_widget(namePreis) }}
+                        </li>
+                    {% endfor %}
+                    </ul>
+
+                    <button type="button"
+                            class="add-another-collection-widget btn btn-primary"
+                            data-list-selector="#preisName-fields-list">{{ 'Hinzufügen'|trans }}</button>
+                        {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block jquery %}
+<script>
+
+    jQuery(document).ready(function () {
+        jQuery('.add-another-collection-widget').click(function (e) {
+            var list = jQuery(jQuery(this).attr('data-list-selector'));
+            // Try to find the counter of the list or use the length of the list
+            var counter = list.data('widget-counter') || list.children().length;
+
+            // grab the prototype template
+            var newWidget = list.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, counter);
+            // Increase the counter
+            counter++;
+            // And store it, the length cannot be used if deleting widgets is allowed
+            list.data('widget-counter', counter);
+
+            // create a new list element and add it to the list
+            var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+            newElem.appendTo(list);
+        });
+    });
+
+</script>
+
+
+{% endblock %}
