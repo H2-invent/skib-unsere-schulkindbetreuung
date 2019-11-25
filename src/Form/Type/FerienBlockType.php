@@ -54,8 +54,8 @@ class FerienBlockType extends AbstractType
             ->add('ort', TextareaType::class, ['label' => 'Stadt', 'translation_domain' => 'form'])
             ->add('minAlter', IntegerType::class, array('required' => true, 'label' => 'Mindest Alter', 'translation_domain' => 'form'))
             ->add('maxAlter', IntegerType::class, array('required' => false, 'label' => 'Maximum Alter', 'translation_domain' => 'form'))
-            ->add('startDate', DateType::class, array('widget' => 'single_text', 'label' => 'Datum Start', 'translation_domain' => 'form','attr'=> array('class'=>'start date-hkjdshfsh')))
-            ->add('endDate', DateType::class, ['widget' => 'single_text', 'label' => 'Datum Ende', 'translation_domain' => 'form','attr'=> array('class'=>'end date-hkjdshfsh')])
+            ->add('startDate', DateType::class, array('widget' => 'single_text', 'label' => 'Datum Start', 'translation_domain' => 'form', 'attr' => array('class' => 'start date-hkjdshfsh')))
+            ->add('endDate', DateType::class, ['widget' => 'single_text', 'label' => 'Datum Ende', 'translation_domain' => 'form', 'attr' => array('class' => 'end date-hkjdshfsh')])
             ->add('startTime', TimeType::class, ['widget' => 'single_text', 'label' => 'Uhrzeit Anfang', 'translation_domain' => 'form'])
             ->add('endTime', TimeType::class, ['widget' => 'single_text', 'label' => 'Uhrzeit Ende', 'translation_domain' => 'form'])
             ->add('startVerkauf', DateType::class, array('widget' => 'single_text', 'label' => 'Start Vorverkauf', 'translation_domain' => 'form'))
@@ -64,14 +64,6 @@ class FerienBlockType extends AbstractType
             ->add('maxAnzahl', IntegerType::class, array('required' => false, 'label' => 'Maximum Anzahl', 'translation_domain' => 'form'))
             ->add('anzahlPreise', IntegerType::class, array('required' => false, 'label' => 'Anzahl Preise', 'translation_domain' => 'form'))
 
-            ->add('namePreise', CollectionType::class,[
-                'entry_type' => TextType::class,
-                'entry_options' => array('label'=>'Preise','translation_domain' => 'form')
-            ])
-            ->add('preis', CollectionType::class,[
-                'entry_type' => IntegerType::class,
-                'entry_options' => array('label'=>'Preise','translation_domain' => 'form')
-            ])
             ->add('save', SubmitType::class, ['label' => 'Speichern', 'translation_domain' => 'form']);
     }
 
