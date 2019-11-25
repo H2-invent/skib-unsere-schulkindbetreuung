@@ -233,6 +233,18 @@ class Organisation
      */
     private $ferienblocks;
 
+    //todo remove properties
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $anzahlFerienPreise;
+
+    //todo remove properties
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $nameFerienPreis = [];
+
     public function __construct()
     {
         $this->schule = new ArrayCollection();
@@ -754,6 +766,32 @@ class Organisation
                 $ferienblock->setOrganisation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAnzahlFerienPreise(): ?int
+    {
+        return $this->anzahlFerienPreise;
+    }
+
+    public function setAnzahlFerienPreise(?int $anzahlFerienPreise): self
+    {
+        $this->anzahlFerienPreise = $anzahlFerienPreise;
+
+        return $this;
+    }
+
+    //todo
+    public function getNameFerienPreis(): ?array
+    {
+        return $this->nameFerienPreis;
+    }
+
+    //todo
+    public function setNameFerienPreis(?array $nameFerienPreis): self
+    {
+        $this->nameFerienPreis = $nameFerienPreis;
 
         return $this;
     }

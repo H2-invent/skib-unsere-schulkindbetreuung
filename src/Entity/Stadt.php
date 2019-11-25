@@ -218,11 +218,14 @@ class Stadt
      */
     private $schulkindBetreung;
 
+
+    //todo remove properties
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $anzahlPreiseFerienbetreuung;
 
+    //todo remove properties
     /**
      * @ORM\Column(type="json", nullable=true)
      */

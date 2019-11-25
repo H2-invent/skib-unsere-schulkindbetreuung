@@ -109,7 +109,9 @@
                                                 </h5>
                                             </div>
                                             <div class="col-sm-9">
-
+                                                {% for p in block.preis %}
+                                                {{ block.namePreise[loop.index-1] }}: {{p|number_format(2,',','.')}} €<br/>
+                                                {% endfor %}
                                             </div>
                                         </div>
                                     </div>

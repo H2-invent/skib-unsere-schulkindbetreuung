@@ -41,6 +41,8 @@ class FerienManagementController extends AbstractController
         $ferienblock = new Ferienblock();
         $ferienblock->setOrganisation($organisation);
         $ferienblock->setStadt($organisation->getStadt());
+        $ferienblock->setNamePreise(array_fill(0,$ferienblock->getAnzahlPreise(), 0));
+        $ferienblock->setPreis(array_fill(0,$ferienblock->getAnzahlPreise(), 0));
         $form = $this->createForm(FerienBlockType::class, $ferienblock);
         $form->handleRequest($request);
 
