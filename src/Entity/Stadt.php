@@ -219,18 +219,6 @@ class Stadt
     private $schulkindBetreung;
 
 
-    //todo remove properties
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $anzahlPreiseFerienbetreuung;
-
-    //todo remove properties
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
-    private $BezeichnungPreiseFerienbetreuung = [];
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ferienblock", mappedBy="stadt")
      */
@@ -725,29 +713,9 @@ class Stadt
         return $this;
     }
 
-    public function getAnzahlPreiseFerienbetreuung(): ?int
-    {
-        return $this->anzahlPreiseFerienbetreuung;
-    }
 
-    public function setAnzahlPreiseFerienbetreuung(?int $anzahlPreiseFerienbetreuung): self
-    {
-        $this->anzahlPreiseFerienbetreuung = $anzahlPreiseFerienbetreuung;
 
-        return $this;
-    }
 
-    public function getBezeichnungPreiseFerienbetreuung(): ?array
-    {
-        return $this->BezeichnungPreiseFerienbetreuung;
-    }
-
-    public function setBezeichnungPreiseFerienbetreuung(?array $BezeichnungPreiseFerienbetreuung): self
-    {
-        $this->BezeichnungPreiseFerienbetreuung = $BezeichnungPreiseFerienbetreuung;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Ferienblock[]
