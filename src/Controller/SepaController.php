@@ -55,6 +55,7 @@ class SepaController extends AbstractController
         return $this->render('sepa/show.html.twig',array('form'=>$form->createView(),'sepa'=>$sepaData));
     }
 
+
     private function calcSepa(Sepa $sepa,TranslatorInterface $translator,SEPASimpleService $SEPASimpleService,PrintRechnungService $printRechnungService,MailerService $mailerService){
         $active = $this->getDoctrine()->getRepository(Active::class)->findSchuleBetweentwoDates($sepa->getVon(),$sepa->getBis(),$sepa->getOrganisation()->getStadt());
         $today = new \DateTime();

@@ -120,7 +120,7 @@
                 {% endif %}
                 {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
                 {% endif %}
-                {% if is_granted('ROLE_ORG_FERIEN_EDITOR') and app.user.organisation.ferienprogramm %}
+                {% if is_granted('ROLE_ORG_FERIEN_EDITOR') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
                     <li><a href="#feriendropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
                                     class="material-icons">people</i>{% trans %} Ferienprogramm{% endtrans %}</a>
                         <ul id="feriendropdownDropdown" class="collapse list-unstyled ">
@@ -210,7 +210,7 @@
                 <div class="navbar-holder d-flex align-items-center justify-content-between">
                     <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i
                                     class="icon-bars"> </i></a><a href="{{ path('dashboard') }}" class="navbar-brand">
-                            <div class="brand-text d-none d-md-inline-block"><span>Kinderbetreuung </span><strong
+                            <div class="brand-text d-none d-md-inline-block"><span>unsere Schulkindbetreuung </span><strong
                                         class="text-primary"> SKB</strong></div>
                         </a></div>
                     <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">

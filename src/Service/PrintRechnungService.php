@@ -50,8 +50,7 @@ class PrintRechnungService
         $pdf = $this->pdf->create();
         $pdf->setOrganisation($organisation);
         $fileName = $organisation->getName() . '_' . $rechnung->getRechnungsnummer();
-        //$pdf-> = $this->container->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        //todo hier musss der Test raus
+
         $pdf->SetAuthor($fileName);
         $pdf->SetTitle($fileName);
         $pdf->SetSubject($fileName);

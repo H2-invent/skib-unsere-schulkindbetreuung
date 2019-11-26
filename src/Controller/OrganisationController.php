@@ -79,6 +79,9 @@ class OrganisationController extends AbstractController
         }
 
         $form = $this->createForm(OrganisationType::class, $organisation);
+        if($organisation->getStadt()->getFerienprogramm() == false){
+            $form->remove('ferienprogramm');
+        }
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {

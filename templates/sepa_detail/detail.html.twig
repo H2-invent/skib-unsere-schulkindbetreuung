@@ -22,6 +22,7 @@
                                     <thead>
                                     <tr>
                                         <th></th>
+
                                         <th>{% trans %}Eltern{% endtrans %}</th>
                                         <th>{% trans %}Betrag/€{% endtrans %}</th>
                                         <th>{% trans %}Anzahl Kinder{% endtrans %}</th>
@@ -39,8 +40,9 @@
 
                                                     </div>
                                                 </div></td>
-                                            <td>{{ r.stammdaten.name }}</td>
-                                            <td>{{ r.summe }}</td>
+
+                                            <td>{{ r.stammdaten.vorname }} {{ r.stammdaten.name }}</td>
+                                            <td>{{ r.summe|number_format(2,',','.') }}</td>
                                             <td>{{ r.kinder|length }}</td>
 
                                         </tr>

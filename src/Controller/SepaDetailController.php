@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Rechnung;
 use App\Entity\Sepa;
 use App\Service\PrintRechnungService;
+use App\Service\SepaExcel;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,5 +62,16 @@ class SepaDetailController extends AbstractController
         return $response;
 
 
+    }
+    /**
+     * @Route("/org_accounting/print/excel", name="accounting_sepa_printExcel")
+     */
+    public function printExcel(Request $request,PrintRechnungService $printRechnungService,SepaExcel $sepaExcel)
+    {
+        $sepa = $this->getDoctrine()->getRepository(Sepa::class)->find($request->get('sepa_id'));
+        if($sepa->getOrganisation() != $this->getUser()->getOrganisation()){
+            throw new \Exception('Wrong Organisation');
+        }
+        return $this->file($sepaExcel->generateExcel($sepa),'SEPA_ID'.$sepa->getId().'.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
     }
 }

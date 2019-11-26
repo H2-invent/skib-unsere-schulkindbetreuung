@@ -50,7 +50,7 @@ class PrintAGBService
 
         $pdf->SetFont('freeserif', '', 10);
         $fileName = '';
-         //todo hier musss der Test raus
+
         $pdf->SetAuthor($fileName);
         $pdf->SetTitle($fileName);
         $pdf->SetSubject($fileName);
