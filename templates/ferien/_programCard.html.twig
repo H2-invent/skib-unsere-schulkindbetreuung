@@ -1,7 +1,7 @@
 {% if date is defined %}
 
     {% for block in date %}
-        <div class="accordion hoverable" id="accordionProgram">
+        <div class="accordion">
             <div class="card mb-1">
                 <div class="card-header" id="heading{{ block.id }}">
                     <a type="button" data-toggle="collapse"
@@ -28,7 +28,7 @@
                 </div>
                 <div id="collapse{{ block.id }}" class="collapse"
                      aria-labelledby="heading{{ block.id }}"
-                     data-parent="#accordionProgram">
+                     data-parent="#accordion">
                     <div class="card-body">
                         <h4 class="mt-1">
                             {{ block.translate.titel }}<br/>
@@ -51,7 +51,7 @@
                         {% endif %}
                         <hr class="hr-dark">
                         <div class="row mt-2">
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <h5>
                                     {% trans %}Ort{% endtrans %}
                                 </h5>
@@ -63,7 +63,7 @@
 
                         <hr class="hr-dark">
                         <div class="row mt-2">
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <h5>
                                     {% trans %}Termin{% endtrans %}
                                 </h5>
@@ -77,7 +77,7 @@
 
                         <hr class="hr-dark">
                         <div class="row mt-2">
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <h5>
                                     {% trans %}Anzahl Plätze{% endtrans %}
                                 </h5>
@@ -94,31 +94,23 @@
 
                         <hr class="hr-dark">
                         <div class="row mt-2">
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <h5>
                                     {% trans %}Preise{% endtrans %}
                                 </h5>
                             </div>
                             <div class="col-sm-9">
                                 {% for p in block.preis %}
-                                    {{ block.namePreise[loop.index-1] }}: {{p|number_format(2,',','.')}} €<br/>
+                                    <p>
+                                    {{ block.namePreise[loop.index-1] }}: {{p|number_format(2,',','.')}} €
+                                    <a href="{{ path('ferien_kinder_block_toggle', {'slug':stadt.slug,'kind_id':kind.id, 'block_id':block.id, 'preis_id':loop.index-1}) }}" class="btn chooseBlock">{% trans with {'%name%':block.namePreise[loop.index-1]} %} Hier zum %name% buchen{% endtrans %}</a>
+                                    </p>
                                 {% endfor %}
                             </div>
                         </div>
 
-                        <hr class="hr-dark">
-                        <div class="row mt-2">
-                                {% for p in block.preis %}
-                            <div class="col-2">
-                                    <div href="{{ path('ferien_kinder_block_toggle', {'kinder_id':kind.id, 'block_id':block.id, 'preis_id':p}) }}"  class="{% if block in kind.ferienProgrammGebucht %}bg-success{% endif %}{% if block in kind.ferienProgrammBeworben %}bg-warning{% endif %} chooseBlock mask rgba-white-slight card-body text-center">
-                                        <div class="loader d-none"><span class="spinner-border mr-2" role="status" aria-hidden="true"></span></div>
 
-                                        <b class="gebucht-text">{% if block in kind.ferienProgrammGebucht %}{{ 'Gebucht'|trans }}{% endif %}{% if block in kind.ferienProgrammBeworben %}{{ 'Angemeldet'|trans }}{% endif %}</b><br>
-                                        <a href="#" class="btn">{{'Hier buchen'|trans}} {% trans %}zum{% endtrans %} {{ block.namePreise[loop.index-1] }}</a>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>

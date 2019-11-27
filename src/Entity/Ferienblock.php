@@ -88,25 +88,6 @@ class Ferienblock
      */
     private $preis = [];
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Kind", mappedBy="ferienProgrammBeworben")
-     */
-    private $kinder;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Kind", mappedBy="ferienProgrammGebucht")
-     */
-    private $kinderGebucht;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Kind", mappedBy="ferienProgrammBezahlt")
-     */
-    private $kinderBezahlt;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Kind", mappedBy="ferienProgrammStorniert")
-     */
-    private $kinderStorniert;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="ferienblocks")
@@ -130,12 +111,18 @@ class Ferienblock
      */
     private $namePreise = [];
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\KindFerienblock", mappedBy="ferienblock")
+     */
+    private $kindFerienblocks;
+
     public function __construct()
     {
         $this->kinder = new ArrayCollection();
         $this->kinderGebucht = new ArrayCollection();
         $this->kinderBezahlt = new ArrayCollection();
         $this->kinderStorniert = new ArrayCollection();
+        $this->kindFerienblocks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -287,117 +274,6 @@ class Ferienblock
         return $this;
     }
 
-    /**
-     * @return Collection|Kind[]
-     */
-    public function getKinder(): Collection
-    {
-        return $this->kinder;
-    }
-
-    public function addKinder(Kind $kinder): self
-    {
-        if (!$this->kinder->contains($kinder)) {
-            $this->kinder[] = $kinder;
-            $kinder->addFerienProgrammBeworben($this);
-        }
-
-        return $this;
-    }
-
-    public function removeKinder(Kind $kinder): self
-    {
-        if ($this->kinder->contains($kinder)) {
-            $this->kinder->removeElement($kinder);
-            $kinder->removeFerienProgrammBeworben($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Kind[]
-     */
-    public function getKinderGebucht(): Collection
-    {
-        return $this->kinderGebucht;
-    }
-
-    public function addKinderGebucht(Kind $kinderGebucht): self
-    {
-        if (!$this->kinderGebucht->contains($kinderGebucht)) {
-            $this->kinderGebucht[] = $kinderGebucht;
-            $kinderGebucht->addFerienProgrammGebucht($this);
-        }
-
-        return $this;
-    }
-
-    public function removeKinderGebucht(Kind $kinderGebucht): self
-    {
-        if ($this->kinderGebucht->contains($kinderGebucht)) {
-            $this->kinderGebucht->removeElement($kinderGebucht);
-            $kinderGebucht->removeFerienProgrammGebucht($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Kind[]
-     */
-    public function getKinderBezahlt(): Collection
-    {
-        return $this->kinderBezahlt;
-    }
-
-    public function addKinderBezahlt(Kind $kinderBezahlt): self
-    {
-        if (!$this->kinderBezahlt->contains($kinderBezahlt)) {
-            $this->kinderBezahlt[] = $kinderBezahlt;
-            $kinderBezahlt->addKinderBezahlt($this);
-        }
-
-        return $this;
-    }
-
-    public function removeKinderBezahlt(Kind $kinderBezahlt): self
-    {
-        if ($this->kinderBezahlt->contains($kinderBezahlt)) {
-            $this->kinderBezahlt->removeElement($kinderBezahlt);
-            $kinderBezahlt->removeKinderBezahlt($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Kind[]
-     */
-    public function getKinderStorniert(): Collection
-    {
-        return $this->kinderStorniert;
-    }
-
-    public function addKinderStorniert(Kind $kinderStorniert): self
-    {
-        if (!$this->kinderStorniert->contains($kinderStorniert)) {
-            $this->kinderStorniert[] = $kinderStorniert;
-            $kinderStorniert->addFerienBlockStorniert($this);
-        }
-
-        return $this;
-    }
-
-    public function removeKinderStorniert(Kind $kinderStorniert): self
-    {
-        if ($this->kinderStorniert->contains($kinderStorniert)) {
-            $this->kinderStorniert->removeElement($kinderStorniert);
-            $kinderStorniert->removeFerienBlockStorniert($this);
-        }
-
-        return $this;
-    }
 
     public function getStadt(): ?Stadt
     {
@@ -445,5 +321,103 @@ class Ferienblock
         $this->namePreise = $namePreise;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|KindFerienblock[]
+     */
+    public function getKindFerienblocks(): Collection
+    {
+        return $this->kindFerienblocks;
+    }
+
+    public function addKindFerienblock(KindFerienblock $kindFerienblock): self
+    {
+        if (!$this->kindFerienblocks->contains($kindFerienblock)) {
+            $this->kindFerienblocks[] = $kindFerienblock;
+            $kindFerienblock->setFerienblock($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKindFerienblock(KindFerienblock $kindFerienblock): self
+    {
+        if ($this->kindFerienblocks->contains($kindFerienblock)) {
+            $this->kindFerienblocks->removeElement($kindFerienblock);
+            // set the owning side to null (unless already changed)
+            if ($kindFerienblock->getFerienblock() === $this) {
+                $kindFerienblock->setFerienblock(null);
+            }
+        }
+
+        return $this;
+    }
+    public function getKindFerienblocksBeworben(): Collection
+    {
+        $res = array();
+        $ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($ferienblock as $data){
+            if($data->getState() == 0){
+                $res[] = $data;
+            }
+        }
+        return new ArrayCollection($res);
+    }
+    /**
+     * @return Collection|KindFerienblock[]
+     */
+    public function getKindFerienblocksGebucht(): Collection
+    {
+        $res = array();
+        $ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($ferienblock as $data){
+            if($data->getState() == 10){
+                $res[] = $data;
+            }
+        }
+        return new ArrayCollection($res);
+    }
+    /**
+     * @return Collection|KindFerienblock[]
+     */
+    public function getKindFerienblocksStorniert(): Collection
+    {
+        $res = array();
+        $ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($ferienblock as $data){
+            if($data->getState() == 20){
+                $res[] = $data;
+            }
+        }
+        return new ArrayCollection($res);
+    }
+    /**
+     * @return Collection|KindFerienblock[]
+     */
+    public function getKindFerienblocksBezahlt(): Collection
+    {
+        $res = array();
+        $ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($ferienblock as $data){
+            if($data->getBezahlt() == true){
+                $res[] = $data;
+            }
+        }
+        return new ArrayCollection($res);
+    }
+    /**
+     * @return Collection|KindFerienblock[]
+     */
+    public function getKindFerienblocksNichtBezahlt(): Collection
+    {
+        $res = array();
+        $ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($ferienblock as $data){
+            if($data->getBezahlt() == false){
+                $res[] = $data;
+            }
+        }
+        return new ArrayCollection($res);
     }
 }

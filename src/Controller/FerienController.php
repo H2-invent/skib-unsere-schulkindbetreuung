@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Ferienblock;
 use App\Entity\Kind;
+use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use App\Form\Type\LoerrachKind;
+use App\Service\ToogleKindFerienblock;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -78,7 +80,7 @@ class FerienController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($adresse);
                 $em->flush();
-                $response = $this->redirectToRoute('workflow_confirm_Email', array('redirect' => $this->generateUrl('ferien_auswahl', array('slug'=>$stadt->getSlug())), 'uid' => $adresse->getUid(), 'stadt' => $stadt->getId()));
+                $response = $this->redirectToRoute('workflow_confirm_Email', array('redirect' => $this->generateUrl('ferien_auswahl', array('slug' => $stadt->getSlug())), 'uid' => $adresse->getUid(), 'stadt' => $stadt->getId()));
                 //$response = $this->redirectToRoute('loerrach_workflow_schulen');
                 $response->headers->setCookie($cookie);
                 return $response;
@@ -137,7 +139,7 @@ class FerienController extends AbstractController
         $kind = new Kind();
         $kind->setEltern($adresse);
         $kind->setSchule(null);
-        $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('ferien_kind_neu', array('slug'=>$stadt->getSlug()))));
+        $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('ferien_kind_neu', array('slug' => $stadt->getSlug()))));
 
         $form->handleRequest($request);
         $errors = array();
@@ -152,7 +154,7 @@ class FerienController extends AbstractController
                     $em->persist($kind);
                     $em->flush();
                     $text = $translator->trans('Erfolgreich gespeichert');
-                    return new JsonResponse(array('error' => 0, 'snack' => $text, 'next' => $this->generateUrl('ferien_kind_programm', array('slug' => $stadt->getSlug(),'kind_id' => $kind->getId()))));
+                    return new JsonResponse(array('error' => 0, 'snack' => $text, 'next' => $this->generateUrl('ferien_kind_programm', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()))));
                 }
             } catch (\Exception $e) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
@@ -186,7 +188,7 @@ class FerienController extends AbstractController
         $today = new \DateTime('today');
 
 
-        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'dates' => $dates, 'stadt' => $stadt, 'today'=> $today));
+        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'dates' => $dates, 'stadt' => $stadt, 'today' => $today));
     }
 
 
@@ -194,56 +196,17 @@ class FerienController extends AbstractController
      * @Route("/{slug}/ferien/programm/toggle",name="ferien_kinder_block_toggle",methods={"PATCH"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function ferienblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    public function ferienblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator,ToogleKindFerienblock $toogleKindFerienblock)
     {
-        $result = array(
-            'text' => $translator->trans('Betreuungsblock erfolgreich gespeichert'),
-            'error' => 0,
-            'kontingent' => false,
-            'cardText' => $translator->trans('Gebucht')
-        );
-        try {
-            //Include Parents in this route
-            $adresse = new Stammdaten;
-            if ($this->getStammdatenFromCookie($request)) {
-                $adresse = $this->getStammdatenFromCookie($request);
-            }
 
-            $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
-            $result['preisUrl'] = $this->generateUrl('loerrach_workflow_preis_einKind', array('kind_id' => $kind->getId()));
-            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
-            if ($block->getMin() || $block->getMax()) {
-                $result['kontingent'] = true;
-                $result['cardText'] = $translator->trans('Angemeldet');
-            }
-            if ($block->getMin() || $block->getMax()) {
-                if (in_array($block, $kind->getBeworben()->toArray())) {
-                    $kind->removeBeworben($block);
-                } else {
-                    $kind->addBeworben($block);
-                }
-            } else {
-                if (in_array($block, $kind->getZeitblocks()->toArray())) {
-                    $kind->removeZeitblock($block);
-                } else {
-                    $kind->addZeitblock($block);
-                }
-            }
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($kind);
-            $em->flush();
-
-            $blocks2 = $kind->getTageWithBlocks();
-
-            if ($blocks2 < 2) {
-                $result['text'] = $translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Tage müssen ausgewählt werden)');
-                $result['error'] = 2;
-            }
-        } catch (\Exception $e) {
-            $result['text'] = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
-            $result['error'] = 1;
+        $adresse = new Stammdaten;
+        if ($this->getStammdatenFromCookie($request)) {
+            $adresse = $this->getStammdatenFromCookie($request);
         }
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $block = $this->getDoctrine()->getRepository(Ferienblock::class)->find($request->get('block_id'));
+        $result = $toogleKindFerienblock->toggleKind($kind,$block,$request->get('preis_id'));
+
         return new JsonResponse($result);
     }
 
@@ -268,7 +231,7 @@ class FerienController extends AbstractController
             $result['text'] = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
             $result['error'] = 1;
         }
-        return $this->render('ferien/bezahlung.html.twig', array('stadt'=>$stadt));
+        return $this->render('ferien/bezahlung.html.twig', array('stadt' => $stadt));
     }
 
 
@@ -293,7 +256,7 @@ class FerienController extends AbstractController
             $result['error'] = 1;
         }
 
-        return $this->render('ferien/zusammenfassung.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'error'=>true));
+        return $this->render('ferien/zusammenfassung.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'error' => true));
     }
 
 

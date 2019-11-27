@@ -7,7 +7,7 @@ doctrine:
         user:                 '%env(resolve:DATABASE_USERNAME)%'
         password:             '%env(resolve:DATABASE_PASSWORD)%'
         driver: 'pdo_mysql'
-        server_version: '5.6'
+        server_version: '%env(resolve:DATABSE_SERVER)%'
         charset: utf8mb4
         default_table_options:
             charset: utf8mb4

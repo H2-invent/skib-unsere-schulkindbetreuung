@@ -19,8 +19,9 @@
                                 <th>{% trans %}Titel{% endtrans %}</th>
                                 <th>{% trans %}Angemeldet{% endtrans %}</th>
                                 <th>{% trans %}Bestätigt{% endtrans %}</th>
-                                <th>{% trans %}Bezahlt{% endtrans %}</th>
+                                <th>{% trans %}Nicht Bestätigt{% endtrans %}</th>
                                 <th>{% trans %}Storniert{% endtrans %}</th>
+                                <th>{% trans %}Bezahlt{% endtrans %}</th>
                                 <th>{% trans %}Min{% endtrans %}</th>
                                 <th>{% trans %}Max{% endtrans %}</th>
                                 <th>{% trans %}Zeitraum{% endtrans %}</th>
@@ -45,10 +46,11 @@
                                             </div>
                                         </div></td>
                                     <td>{{ b.translations.de.titel }}</td>
-                                    <td>{{ b.kinder|length }}</td>
-                                    <td>{{ b.kinderGebucht|length}}</td>
-                                    <td>{{ b.kinderBezahlt|length}}</td>
-                                    <td>{{ b.kinderStorniert|length}}</td>
+                                    <td>{{ b.kindFerienblocks|length }}</td>
+                                    <td>{{ b.kindFerienblocksGebucht|length}}</td>
+                                    <td>{{ b.kindFerienblocksBeworben|length}}</td>
+                                    <td>{{ b.kindFerienblocksStorniert|length}}</td>
+                                    <td>{{ b.kindFerienblocksBezahlt|length}}</td>
                                     <td>{{ b.minAnzahl}}</td>
                                     <td>{{ b.maxAnzahl}}</td>
                                     <td>{{ b.startDate|date('d.m.Y') }} {{ b.startTime|date('H:i') }}<br>

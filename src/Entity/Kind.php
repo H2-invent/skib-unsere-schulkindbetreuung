@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -163,29 +164,12 @@ class Kind
      */
     private $rechnungen;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Ferienblock", inversedBy="kinder")
-	 * @ORM\JoinTable(name="kind_ferienprogramm_beworben")
-     */
-    private $ferienProgrammBeworben;
+
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Ferienblock", inversedBy="kinderGebucht")
-	 * @ORM\JoinTable(name="kind_ferienprogramm_gebucht")
+     * @ORM\OneToMany(targetEntity="App\Entity\KindFerienblock", mappedBy="kind")
      */
-    private $ferienProgrammGebucht;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Ferienblock", inversedBy="kinderBezahlt")
-	  * @ORM\JoinTable(name="kind_ferienprogramm_bezahlt")
-     */
-    private $ferienProgrammBezahlt;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Ferienblock", inversedBy="kinderStorniert")
-	  * @ORM\JoinTable(name="kind_ferienprogramm_storniert")
-     */
-    private $ferienProgrammStorniert;
+    private $kindFerienblocks;
 
 
 
@@ -199,6 +183,7 @@ class Kind
         $this->ferienProgrammGebucht = new ArrayCollection();
         $this->ferienProgrammBezahlt = new ArrayCollection();
         $this->ferienProgrammStorniert = new ArrayCollection();
+        $this->kindFerienblocks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -697,108 +682,105 @@ class Kind
     }
 
     /**
-     * @return Collection|ferienblock[]
+     * @return Collection|KindFerienblock[]
      */
-    public function getFerienProgrammBeworben(): Collection
+    public function getKindFerienblocks(): Collection
     {
-        return $this->ferienProgrammBeworben;
+        return $this->kindFerienblocks;
     }
-
-    public function addFerienProgrammBeworben(ferienblock $ferienProgrammBeworben): self
-    {
-        if (!$this->ferienProgrammBeworben->contains($ferienProgrammBeworben)) {
-            $this->ferienProgrammBeworben[] = $ferienProgrammBeworben;
-        }
-
-        return $this;
-    }
-
-    public function removeFerienProgrammBeworben(ferienblock $ferienProgrammBeworben): self
-    {
-        if ($this->ferienProgrammBeworben->contains($ferienProgrammBeworben)) {
-            $this->ferienProgrammBeworben->removeElement($ferienProgrammBeworben);
-        }
-
-        return $this;
-    }
-
     /**
-     * @return Collection|ferienblock[]
+     * @return Collection|KindFerienblock[]
      */
-    public function getFerienProgrammGebucht(): Collection
+    public function getKindFerienblocksBeworben(): Collection
     {
-        return $this->ferienProgrammGebucht;
-    }
-
-    public function addFerienProgrammGebucht(ferienblock $ferienProgrammGebucht): self
-    {
-        if (!$this->ferienProgrammGebucht->contains($ferienProgrammGebucht)) {
-            $this->ferienProgrammGebucht[] = $ferienProgrammGebucht;
+        $res = array();
+        $ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($ferienblock as $data){
+            if($data->getState() == 0){
+                $res[] = $data;
+            }
         }
-
-        return $this;
+        return new ArrayCollection($res);
     }
-
-    public function removeFerienProgrammGebucht(ferienblock $ferienProgrammGebucht): self
-    {
-        if ($this->ferienProgrammGebucht->contains($ferienProgrammGebucht)) {
-            $this->ferienProgrammGebucht->removeElement($ferienProgrammGebucht);
-        }
-
-        return $this;
-    }
-
     /**
-     * @return Collection|ferienblock[]
+     * @return Collection|KindFerienblock[]
      */
-    public function getFerienProgrammBezahlt(): Collection
+    public function getKindFerienblocksGebucht(): Collection
     {
-        return $this->FerienProgrammBezahlt;
-    }
-
-    public function addFerienProgrammBezahlt(ferienblock $kinderBezahlt): self
-    {
-        if (!$this->ferienProgrammBezahlt->contains($kinderBezahlt)) {
-            $this->ferienProgrammBezahlt[] = $kinderBezahlt;
+        $res = array();
+        $ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($ferienblock as $data){
+            if($data->getState() == 10){
+                $res[] = $data;
+            }
         }
-
-        return $this;
+        return new ArrayCollection($res);
     }
-
-    public function removeFerienProgrammBezahlt(ferienblock $kinderBezahlt): self
-    {
-        if ($this->ferienProgrammBezahlt->contains($kinderBezahlt)) {
-            $this->ferienProgrammBezahlt->removeElement($kinderBezahlt);
-        }
-
-        return $this;
-    }
-
     /**
-     * @return Collection|ferienblock[]
+     * @return Collection|KindFerienblock[]
      */
-    public function getFerienProgrammStorniert(): Collection
+    public function getKindFerienblocksStorniert(): Collection
     {
-        return $this->ferienProgrammStorniert;
+        $res = array();
+        $ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($ferienblock as $data){
+            if($data->getState() == 20){
+                $res[] = $data;
+            }
+        }
+        return new ArrayCollection($res);
     }
-
-    public function addFerienProgrammStorniert(ferienblock $ferienBlockStorniert): self
+    /**
+     * @return Collection|KindFerienblock[]
+     */
+    public function getKindFerienblocksBezahlt(): Collection
     {
-        if (!$this->ferienProgrammStorniert->contains($ferienBlockStorniert)) {
-            $this->ferienProgrammStorniert[] = $ferienBlockStorniert;
+        $res = array();
+        $ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($ferienblock as $data){
+            if($data->getBezahlt() == true){
+                $res[] = $data;
+            }
+        }
+        return new ArrayCollection($res);
+    }
+    /**
+     * @return Collection|KindFerienblock[]
+     */
+    public function getKindFerienblocksNichtBezahlt(): Collection
+    {
+        $res = array();
+        $ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($ferienblock as $data){
+            if($data->getBezahlt() == false){
+                $res[] = $data;
+            }
+        }
+        return new ArrayCollection($res);
+    }
+    public function addKindFerienblock(KindFerienblock $kindFerienblock): self
+    {
+        if (!$this->kindFerienblocks->contains($kindFerienblock)) {
+            $this->kindFerienblocks[] = $kindFerienblock;
+            $kindFerienblock->setKind($this);
         }
 
         return $this;
     }
 
-    public function removeFerienProgrammStorniert(ferienblock $ferienBlockStorniert): self
+    public function removeKindFerienblock(KindFerienblock $kindFerienblock): self
     {
-        if ($this->ferienProgrammStorniert->contains($ferienBlockStorniert)) {
-            $this->ferienProgrammStorniert->removeElement($ferienBlockStorniert);
+        if ($this->kindFerienblocks->contains($kindFerienblock)) {
+            $this->kindFerienblocks->removeElement($kindFerienblock);
+            // set the owning side to null (unless already changed)
+            if ($kindFerienblock->getKind() === $this) {
+                $kindFerienblock->setKind(null);
+            }
         }
 
         return $this;
     }
+
 
 
 }
