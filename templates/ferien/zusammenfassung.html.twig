@@ -10,7 +10,7 @@
         <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
     <div class="card mb-3">
         <div class="card-header">
-    <h3 class="cover-heading">{% trans %}Daten der erziehungsberechtigten Person{% endtrans %} <a href="{{ path('loerrach_workflow_adresse') }}"> <i class="fa fa-edit"></i></a></h3>
+    <h3 class="cover-heading">{% trans %}Daten der erziehungsberechtigten Person{% endtrans %} <a href="{{ path('ferien_adresse', {'slug':stadt.slug}) }}"> <i class="fa fa-edit"></i></a></h3>
         </div>
         <div class="card-body">
         <table class="table">
@@ -26,10 +26,6 @@
             <tr>
                 <td>{% trans %} Adresse der Eltern {% endtrans %}</td>
                 <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Netto Familieneinkommen pro Monat {% endtrans %}</td>
-                <td>{{ einkommen[eltern.einkommen] }}</td>
             </tr>
             <tr>
                 <td>{% trans %} Ich habe mindestens ein weiteres Kind in einer kostenpflichtiger öffentlichen Kindergartneeinrichtung {% endtrans %}</td>
@@ -75,7 +71,7 @@
         <!-- Daten der Kinder in einer for Schleife -->
     <div class="card">
         <div class="card-header mb-2">
-        <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen') }}"> <i class="fa fa-edit"></i></a></h3>
+        <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %} <a href="{{ path('ferien_auswahl', {'slug':stadt.slug}) }}"> <i class="fa fa-edit"></i></a></h3>
         </div>
         <div class="text-left card-body" id="accordion">
             {% for k in kind %}
@@ -237,15 +233,6 @@
                 <td>
                     <h5>{% trans %} Summe {% endtrans %}</h5>
                 </td>
-                <td>
-                    <h5>
-                        {% if error == false %}
-                        {{ preis|number_format(2,',','.') }} €
-                    {% else %}
-                        {% trans %} Bitte weitere Betreuungsblöcke auswählen {% endtrans %}
-                    {% endif %}
-                    </h5>
-                </td>
             </tr>
         </table>
     <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz" value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}<br>
@@ -254,8 +241,6 @@
     </div>
     {% if error == false %}
     <button  class="btn btn-outline-primary sendButton" disabled >{% trans %}Absenden{% endtrans %}</button>
-    {% else %}
-    <a href="{{ path('loerrach_workflow_schulen') }}" class="btn btn-outline-primary">{% trans %}Weitere Blöcke hinzufügen{% endtrans %}</a>
     {% endif %}
 
 {% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'workflow/base.html.twig' %}
+
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
+        <hr class="hr-light ">
+    </div>
+
+{% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h4> {% trans %}Bezahlmethode auswählen{% endtrans %}</h4>
+        </div>
+        <div class="card-body">
+            <h4>
+                {% trans %}Folgende bezahlmethoden stehen bei den Trägern zur Verfügung{% endtrans %}
+            </h4>
+            <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{% trans %}Ausfüllhilfe{% endtrans %}" data-content="{% trans %}Wichtig, Wichtig{% endtrans %}"></i>
+
+
+            <div class="row card-body">
+
+            <div class="text-center">
+                <a href="{{ path('ferien_auswahl', {'slug':stadt.slug}) }}"
+                   class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
+                <a href="{{ path('ferien_zusammenfassung', {'slug':stadt.slug}) }}"
+                   class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

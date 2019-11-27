@@ -165,10 +165,10 @@ class FerienController extends AbstractController
 
 
     /**
-     * @Route("/{slug}/ferien/kind/programm",name="ferien_kind_programm",methods={"GET","POST"})
+     * @Route("/{slug}/ferien/programm",name="ferien_kind_programm",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function zeitblockAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt)
+    public function programmAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt)
     {
 
         $adresse = new Stammdaten;
@@ -191,9 +191,10 @@ class FerienController extends AbstractController
 
 
     /**
-     * @Route("/loerrach/kinder/block/toggle",name="ferien_kinder_block_toggle",methods={"PATCH"})
+     * @Route("/{slug}/ferien/programm/toggle",name="ferien_kinder_block_toggle",methods={"PATCH"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function kinderblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    public function ferienblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $result = array(
             'text' => $translator->trans('Betreuungsblock erfolgreich gespeichert'),
@@ -244,6 +245,55 @@ class FerienController extends AbstractController
             $result['error'] = 1;
         }
         return new JsonResponse($result);
+    }
+
+
+    /**
+     * @Route("/{slug}/ferien/bezahlung",name="ferien_bezahlung",methods={"Get","POST"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
+     */
+    public function paymentAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt)
+    {
+        try {
+            //Include Parents in this route
+            $adresse = new Stammdaten;
+            if ($this->getStammdatenFromCookie($request)) {
+                $adresse = $this->getStammdatenFromCookie($request);
+            }
+
+            $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
+
+
+        } catch (\Exception $e) {
+            $result['text'] = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+            $result['error'] = 1;
+        }
+        return $this->render('ferien/bezahlung.html.twig', array('stadt'=>$stadt));
+    }
+
+
+    /**
+     * @Route("/{slug}/ferien/zusammenfassung",name="ferien_zusammenfassung",methods={"Get","POST"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
+     */
+    public function zusammenfassungAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt)
+    {
+        try {
+            //Include Parents in this route
+            $adresse = new Stammdaten;
+            if ($this->getStammdatenFromCookie($request)) {
+                $adresse = $this->getStammdatenFromCookie($request);
+            }
+
+            $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
+
+
+        } catch (\Exception $e) {
+            $result['text'] = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+            $result['error'] = 1;
+        }
+
+        return $this->render('ferien/zusammenfassung.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'error'=>true));
     }
 
 
