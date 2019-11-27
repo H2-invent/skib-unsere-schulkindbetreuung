@@ -41,18 +41,18 @@ class ToogleKindFerienblock
 
     private $em;
     private $translator;
-    private $router;
+
     private $formBuilder;
     private $twig;
     private $mailer;
     private $stammdatenfromCookie;
 
-    public function __construct(StamdatenFromCookie $stamdatenFromCookie, MailerService $mailerService, Environment $twig, FormFactoryInterface $formBuilder, RouterInterface $router, TranslatorInterface $translator, Security $security, EntityManagerInterface $entityManager)
+    public function __construct(StamdatenFromCookie $stamdatenFromCookie, MailerService $mailerService, Environment $twig, FormFactoryInterface $formBuilder, TranslatorInterface $translator, Security $security, EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
         $this->user = $security;
         $this->translator = $translator;
-        $this->router = $router;
+
         $this->formBuilder = $formBuilder;
         $this->twig = $twig;
         $this->mailer = $mailerService;
@@ -77,7 +77,7 @@ class ToogleKindFerienblock
             }
             $kindFerienBlock = $this->em->getRepository(KindFerienblock::class)->findOneBy(array('kind' => $kind, 'ferienblock' => $block));
 
-            if ($kindFerienBlock != null) {
+            if ($kindFerienBlock !== null) {
                 $this->em->remove($kindFerienBlock);
             } else {
                 if ($block->getMinAnzahl() || $block->getMaxAnzahl()) {

@@ -738,7 +738,7 @@ class Kind
         $res = array();
         $ferienblock = $this->kindFerienblocks->toArray();
         foreach ($ferienblock as $data){
-            if($data->getBezahlt() == true){
+            if($data->getBezahlt() === true){
                 $res[] = $data;
             }
         }
@@ -752,7 +752,7 @@ class Kind
         $res = array();
         $ferienblock = $this->kindFerienblocks->toArray();
         foreach ($ferienblock as $data){
-            if($data->getBezahlt() == false){
+            if($data->getBezahlt() === false){
                 $res[] = $data;
             }
         }
