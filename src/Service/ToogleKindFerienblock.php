@@ -42,21 +42,10 @@ class ToogleKindFerienblock
     private $em;
     private $translator;
 
-    private $formBuilder;
-    private $twig;
-    private $mailer;
-    private $stammdatenfromCookie;
-
-    public function __construct(StamdatenFromCookie $stamdatenFromCookie, MailerService $mailerService, Environment $twig, FormFactoryInterface $formBuilder, TranslatorInterface $translator, Security $security, EntityManagerInterface $entityManager)
+    public function __construct(TranslatorInterface $translator,  EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
-        $this->user = $security;
         $this->translator = $translator;
-
-        $this->formBuilder = $formBuilder;
-        $this->twig = $twig;
-        $this->mailer = $mailerService;
-        $this->stammdatenfromCookie = $stamdatenFromCookie;
     }
 
     public
