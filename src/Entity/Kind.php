@@ -191,12 +191,12 @@ class Kind
         return $this->id;
     }
 
-    public function getEltern(): ?stammdaten
+    public function getEltern(): ?Stammdaten
     {
         return $this->eltern;
     }
 
-    public function setEltern(?stammdaten $eltern): self
+    public function setEltern(?Stammdaten $eltern): self
     {
         $this->eltern = $eltern;
 

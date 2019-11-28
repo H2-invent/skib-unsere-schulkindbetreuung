@@ -49,9 +49,9 @@ class KindFerienblock
     private $checkinID;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="json", nullable=true)
      */
-    private $checkinStatus = false;
+    private $checkinStatus = [];
 
     public function getId(): ?int
     {
@@ -130,15 +130,16 @@ class KindFerienblock
         return $this;
     }
 
-    public function getCheckinStatus(): ?bool
+    public function getCheckinStatus(): ?array
     {
         return $this->checkinStatus;
     }
 
-    public function setCheckinStatus(bool $checkinStatus): self
+    public function setCheckinStatus(?array $checkinStatus): self
     {
         $this->checkinStatus = $checkinStatus;
 
         return $this;
     }
+
 }
