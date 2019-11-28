@@ -43,6 +43,16 @@ class KindFerienblock
      */
     private $bezahlt = false;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $checkinID;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $checkinStatus = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +114,30 @@ class KindFerienblock
     public function setBezahlt(bool $bezahlt): self
     {
         $this->bezahlt = $bezahlt;
+
+        return $this;
+    }
+
+    public function getCheckinID(): ?string
+    {
+        return $this->checkinID;
+    }
+
+    public function setCheckinID(string $checkinID): self
+    {
+        $this->checkinID = $checkinID;
+
+        return $this;
+    }
+
+    public function getCheckinStatus(): ?bool
+    {
+        return $this->checkinStatus;
+    }
+
+    public function setCheckinStatus(bool $checkinStatus): self
+    {
+        $this->checkinStatus = $checkinStatus;
 
         return $this;
     }

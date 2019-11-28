@@ -196,7 +196,7 @@ class FerienController extends AbstractController
      * @Route("/{slug}/ferien/programm/toggle",name="ferien_kinder_block_toggle",methods={"PATCH"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function ferienblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator,ToogleKindFerienblock $toogleKindFerienblock)
+    public function ferienblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, ToogleKindFerienblock $toogleKindFerienblock)
     {
 
         $adresse = new Stammdaten;

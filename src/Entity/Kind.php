@@ -139,7 +139,7 @@ class Kind
     private $fotos = false;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\zeitblock", inversedBy="kinderBeworben")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Zeitblock", inversedBy="kinderBeworben")
      */
     private $beworben;
 

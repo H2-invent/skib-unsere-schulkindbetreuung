@@ -58,8 +58,6 @@ class ToogleKindFerienblock
             'cardText' => $this->translator->trans('Gebucht')
         );
         try {
-            //Include Parents in this route
-
             if ($block->getMinAnzahl() || $block->getMaxAnzahl()) {
                 $result['kontingent'] = true;
                 $result['cardText'] = $this->translator->trans('Angemeldet');
@@ -69,27 +67,24 @@ class ToogleKindFerienblock
             if ($kindFerienBlock !== null) {
                 $this->em->remove($kindFerienBlock);
             } else {
+                $kindFerienBlock = new KindFerienblock();
                 if ($block->getMinAnzahl() || $block->getMaxAnzahl()) {
 
-                    $kindFerienBlock = new KindFerienblock();
+
                     $kindFerienBlock->setKind($kind);
                     $kindFerienBlock->setFerienblock($block);
                     $kindFerienBlock->setState(0);
                     $kindFerienBlock->setPreis($block->getPreis()[$preisId]);
-                    $this->em->persist($kindFerienBlock);
-
                 } else {
-
-                    $kindFerienBlock = new KindFerienblock();
                     $kindFerienBlock->setKind($kind);
                     $kindFerienBlock->setFerienblock($block);
                     $kindFerienBlock->setState(0);
                     $kindFerienBlock->setPreis($block->getPreis()[$preisId]);
-                    $this->em->persist($kindFerienBlock);
 
                 }
             }
-
+            $kindFerienBlock->setCheckinID(md5(uniqid()));
+            $this->em->persist($kindFerienBlock);
             $this->em->flush();
 
         } catch (\Exception $e) {
