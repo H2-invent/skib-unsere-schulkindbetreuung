@@ -26,7 +26,8 @@ class FerienCheckinController extends AbstractController
         return $this->render('ferien_checkin/index.html.twig', [
             'controller_name' => 'FerienCheckinController',
             'error'=>$error,
-            'id'=>$checkinID,
+            'block'=>$kindFerienblock,
+            'kind'=>$kindFerienblock->getKind(),
         ]);
     }
 }
