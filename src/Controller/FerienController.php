@@ -89,12 +89,9 @@ class FerienController extends AbstractController
                 $em->persist($adresse);
                 $em->flush();
                 $response = $this->redirectToRoute('workflow_confirm_Email', array('redirect' => $this->generateUrl('ferien_auswahl', array('slug' => $stadt->getSlug())), 'uid' => $adresse->getUid(), 'stadt' => $stadt->getId()));
-                //$response = $this->redirectToRoute('loerrach_workflow_schulen');
                 $response->headers->setCookie($cookie);
                 return $response;
-            } else {
-                // return $this->redirectToRoute('task_success');
-            }
+            } 
 
         }
 
@@ -211,6 +208,7 @@ class FerienController extends AbstractController
         if ($this->getStammdatenFromCookie($request)) {
             $adresse = $this->getStammdatenFromCookie($request);
         }
+
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
         $block = $this->getDoctrine()->getRepository(Ferienblock::class)->find($request->get('block_id'));
         $result = $toogleKindFerienblock->toggleKind($kind,$block,$request->get('preis_id'));
@@ -232,12 +230,8 @@ class FerienController extends AbstractController
                 $adresse = $this->getStammdatenFromCookie($request);
             }
 
-            $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
-
-
         } catch (\Exception $e) {
             $result['text'] = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
-            $result['error'] = 1;
         }
         return $this->render('ferien/bezahlung.html.twig', array('stadt' => $stadt));
     }
@@ -261,7 +255,6 @@ class FerienController extends AbstractController
 
         } catch (\Exception $e) {
             $result['text'] = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
-            $result['error'] = 1;
         }
 
         return $this->render('ferien/zusammenfassung.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'error' => true));

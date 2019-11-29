@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ferienblock;
+use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\News;
 use App\Entity\Organisation;
@@ -188,7 +189,7 @@ class FerienManagementController extends AbstractController
     /**
      * @Route("/org_ferien/report/checkinlist", name="ferien_management_report_checkinlist", methods={"GET","POST"})
      */
-    public function checkinListFerien(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function checkinListFerien(Request $request, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
         $block = $this->getDoctrine()->getRepository(Ferienblock::class)->find($request->get('ferien_id'));
@@ -196,11 +197,29 @@ class FerienManagementController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
 
-        $list = $this->getDoctrine()->getRepository(KindFerienblock::class)->findOneBy(array('ferienblock'=>$block));
-        
+        $list = $this->getDoctrine()->getRepository(KindFerienblock::class)->findBy(array('ferienblock'=>$block));
+
         return $this->render('ferien_management/checkinList.html.twig', [
             'org' => $organisation,
             'list'=>$list,
             ]);
+    }
+
+
+    /**
+     * @Route("/org_ferien/report/checkin/toggle", name="ferien_management_report_checkin_toggle", methods={"GET","POST"})
+     */
+    public function checkinActionFerien(Request $request, TranslatorInterface $translator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $block = $this->getDoctrine()->getRepository(Ferienblock::class)->find($request->get('ferien_id'));
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('kind'=>$block->getId()));
+        if($organisation != $this->getUser()->getOrganisation()){
+            throw new \Exception('Wrong Organisation');
+        }
+
+        return $this->render('ferien_management/checkinList.html.twig', [
+            'org' => $organisation,
+        ]);
     }
 }

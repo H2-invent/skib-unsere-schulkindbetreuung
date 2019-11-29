@@ -21,7 +21,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for k in list.kind %}
+                            {% for l in list %}
                                 <tr>
                                     <td>
                                         <div class="btn-group">
@@ -31,14 +31,16 @@
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
                                                 <a class="dropdown-item"
-                                                   href="{{ path('city_admin_news_edit',{'id':k.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                   href="{{ path('city_admin_news_edit',{'id':l.kind.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
                                                 <a class="dropdown-item"
-                                                   href="{{ path('city_admin_news_delete',{'id':k.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                                   href="{{ path('city_admin_news_delete',{'id':l.kind.id}) }}">{% trans %}Löschen{% endtrans %}</a>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>Checkin</td>
-                                    <td>{{ k.vorname }} {{ k.nachname }}</td>
+                                    <td>
+
+                                    </td>
+                                    <td>{{ l.kind.vorname }} {{ l.kind.nachname }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
