@@ -9,7 +9,6 @@ use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Form\Type\LoerrachKind;
 use App\Service\ToogleKindFerienblock;
-use phpDocumentor\Reflection\Types\This;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

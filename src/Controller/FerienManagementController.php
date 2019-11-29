@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Ferienblock;
+use App\Entity\KindFerienblock;
+use App\Entity\News;
 use App\Entity\Organisation;
 use App\Form\Type\FerienBlockPreisType;
 use App\Form\Type\FerienBlockType;
@@ -29,6 +31,8 @@ class FerienManagementController extends AbstractController
 
         return $this->render('ferien_management/index.html.twig',array('blocks'=>$blocks,'org'=>$organisation));
     }
+
+
     /**
      * @Route("/org_ferien/edit/neu", name="ferien_management_neu", methods={"GET","POST"})
      */
@@ -62,6 +66,8 @@ class FerienManagementController extends AbstractController
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
 
     }
+
+
     /**
      * @Route("/org_ferien/edit/preise", name="ferien_management_preise", methods={"GET","POST"})
      */
@@ -95,6 +101,8 @@ class FerienManagementController extends AbstractController
         $title = $translator->trans('Preise bearbeiten');
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
     }
+
+
     /**
      * @Route("/org_ferien/edit/edit", name="ferien_management_edit", methods={"GET","POST"})
      */
@@ -128,6 +136,8 @@ class FerienManagementController extends AbstractController
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
 
     }
+
+
     /**
      * @Route("/org_ferien/edit/delete", name="ferien_management_delete", methods={"DELETE"})
      */
@@ -145,6 +155,8 @@ class FerienManagementController extends AbstractController
         $text = $translator->trans('Erfolgreich gelöscht');
         return new JsonResponse(array('redirect'=>$this->generateUrl('ferien_management_show',array('org_id'=>$organisation->getId(),'snack'=>$text))));
     }
+
+
     /**
      * @Route("/org_ferien/duplicate", name="ferien_management_duplicate", methods={"POST"})
      */
@@ -170,5 +182,27 @@ class FerienManagementController extends AbstractController
         $text = $translator->trans('Erfolgreich kopiert');
         return new JsonResponse(array('redirect'=>$this->generateUrl('ferien_management_edit',array('org_id'=>$organisation->getId(),'ferien_id'=>$ferienblockNew->getId(),'snack'=>$text))));
 
+    }
+
+
+    /**
+     * @Route("/org_ferien/report/checkinlist", name="ferien_management_report_checkinlist", methods={"GET","POST"})
+     */
+    public function checkinListFerien(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $block = $this->getDoctrine()->getRepository(Ferienblock::class)->find($request->get('ferien_id'));
+        if($organisation != $this->getUser()->getOrganisation()){
+            throw new \Exception('Wrong Organisation');
+        }
+
+        $list = $this->getDoctrine()->getRepository(KindFerienblock::class)->findOneBy(array('ferienblock'=>$block));
+
+        dump($list);
+        dump($block);
+        return $this->render('ferien_management/checkinList.html.twig', [
+            'org' => $organisation,
+            'list'=>$list,
+            ]);
     }
 }

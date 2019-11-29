@@ -28,22 +28,6 @@
                 <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
             </tr>
             <tr>
-                <td>{% trans %} Ich habe mindestens ein weiteres Kind in einer kostenpflichtiger öffentlichen Kindergartneeinrichtung {% endtrans %}</td>
-                <td>{{ eltern.kinderImKiga?"Ja":'Nein'|trans }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger {% endtrans %}</td>
-                <td>{{ eltern.buk?"Ja":'Nein'|trans }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Ich bin Alleinerziehend {% endtrans %}</td>
-                <td>{{ eltern.alleinerziehend?"Ja":'Nein'|trans }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Berufliche Situation der Eltern {% endtrans %}</td>
-                <td>{{ eltern.beruflicheSituation }}</td>
-            </tr>
-            <tr>
                 <td>{% trans %} Name und Beziehung des Notfallkontakt {% endtrans %}</td>
                 <td>{{ eltern.notfallName }}</td>
             </tr>
