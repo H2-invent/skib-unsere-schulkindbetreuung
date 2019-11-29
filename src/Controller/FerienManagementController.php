@@ -197,8 +197,7 @@ class FerienManagementController extends AbstractController
         }
 
         $list = $this->getDoctrine()->getRepository(KindFerienblock::class)->findOneBy(array('ferienblock'=>$block));
-
-        dump($list);
+        
         return $this->render('ferien_management/checkinList.html.twig', [
             'org' => $organisation,
             'list'=>$list,
