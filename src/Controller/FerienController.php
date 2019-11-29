@@ -34,7 +34,7 @@ class FerienController extends AbstractController
 
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
         
-        if ($stadt == null){
+        if ($stadt === null){
             return $this->redirectToRoute('workflow_city_not_found');
         }
         $adresse = new Stammdaten;
@@ -43,7 +43,7 @@ class FerienController extends AbstractController
         }
 
         //Add SecCode into if to create a SecCode the first time to be not "null"
-        if ($adresse->getUid() == null) {
+        if ($adresse->getUid() === null) {
             $adresse->setUid(md5(uniqid()))
                 ->setAngemeldet(false);
             $adresse->setCreatedAt(new \DateTime());
