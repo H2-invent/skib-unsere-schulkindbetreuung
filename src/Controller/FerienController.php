@@ -4,13 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Ferienblock;
 use App\Entity\Kind;
-use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
-use App\Entity\Zeitblock;
 use App\Form\Type\LoerrachKind;
 use App\Service\ToogleKindFerienblock;
+use phpDocumentor\Reflection\Types\This;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -30,10 +29,15 @@ class FerienController extends AbstractController
 {
     /**
      * @Route("/{slug}/ferien/adresse",name="ferien_adresse",methods={"GET","POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function adresseAction(Request $request, ValidatorInterface $validator, Stadt $stadt)
+    public function adresseAction(Request $request, ValidatorInterface $validator, $slug)
     {
+
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        
+        if ($stadt == null){
+            return $this->redirectToRoute('workflow_city_not_found');
+        }
         $adresse = new Stammdaten;
         if ($this->getStammdatenFromCookie($request)) {
             $adresse = $this->getStammdatenFromCookie($request);
@@ -44,6 +48,11 @@ class FerienController extends AbstractController
             $adresse->setUid(md5(uniqid()))
                 ->setAngemeldet(false);
             $adresse->setCreatedAt(new \DateTime());
+        }
+
+        //Check if admin has enabled ferienprogramm for the city
+        if ($stadt->getFerienprogramm() === false){
+            return $this->redirect($this->generateUrl('workflow_start', array('slug'=>$stadt->getSlug())));
         }
 
         $form = $this->createFormBuilder($adresse)
