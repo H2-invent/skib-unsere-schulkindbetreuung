@@ -116,6 +116,16 @@ class Ferienblock
      */
     private $kindFerienblocks;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $warteliste;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $modeMaximal;
+
     public function __construct()
     {
         $this->kinder = new ArrayCollection();
@@ -381,6 +391,20 @@ class Ferienblock
     /**
      * @return Collection|KindFerienblock[]
      */
+    public function getKindFerienblocksWarteliste(): Collection
+    {
+        $res = array();
+        $ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($ferienblock as $data){
+            if($data->getState() == 15){
+                $res[] = $data;
+            }
+        }
+        return new ArrayCollection($res);
+    }
+    /**
+     * @return Collection|KindFerienblock[]
+     */
     public function getKindFerienblocksStorniert(): Collection
     {
         $res = array();
@@ -419,5 +443,29 @@ class Ferienblock
             }
         }
         return new ArrayCollection($res);
+    }
+
+    public function getWarteliste(): ?bool
+    {
+        return $this->warteliste;
+    }
+
+    public function setWarteliste(bool $warteliste): self
+    {
+        $this->warteliste = $warteliste;
+
+        return $this;
+    }
+
+    public function getModeMaximal(): ?bool
+    {
+        return $this->modeMaximal;
+    }
+
+    public function setModeMaximal(bool $modeMaximal): self
+    {
+        $this->modeMaximal = $modeMaximal;
+
+        return $this;
     }
 }

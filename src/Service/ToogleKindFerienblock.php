@@ -42,7 +42,7 @@ class ToogleKindFerienblock
     private $em;
     private $translator;
 
-    public function __construct(TranslatorInterface $translator,  EntityManagerInterface $entityManager)
+    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
         $this->translator = $translator;
@@ -68,20 +68,29 @@ class ToogleKindFerienblock
                 $this->em->remove($kindFerienBlock);
             } else {
                 $kindFerienBlock = new KindFerienblock();
+                $kindFerienBlock->setKind($kind);
+                $kindFerienBlock->setFerienblock($block);
                 if ($block->getMinAnzahl() || $block->getMaxAnzahl()) {
-
-
-                    $kindFerienBlock->setKind($kind);
-                    $kindFerienBlock->setFerienblock($block);
+                    // State: Kontingent muss bestätig werden (Beworben)
                     $kindFerienBlock->setState(0);
                     $kindFerienBlock->setPreis($block->getPreis()[$preisId]);
+
+                    if (count($kindFerienBlock->getCheckinStatus(10)) < $block->getMaxAnzahl()) {
+                        // State: trotz Kontigent direkt angenommen, wenn noch min ein Plätze vorhanden sind (Gebucht)
+                        $kindFerienBlock->setState(10);
+                        $kindFerienBlock->setPreis($block->getPreis()[$preisId]);
+                    }
+
+                    if (count($kindFerienBlock->getCheckinStatus(10)) >= $block->getMaxAnzahl()) {
+                        // State: warteliste (Nicht gebucht)
+                        $kindFerienBlock->setState(15);
+                        $kindFerienBlock->setPreis($block->getPreis()[$preisId]);
+                    }
                 } else {
-                    $kindFerienBlock->setKind($kind);
-                    $kindFerienBlock->setFerienblock($block);
-                    $kindFerienBlock->setState(0);
-                    $kindFerienBlock->setPreis($block->getPreis()[$preisId]);
-
+                    // State: Ohne Kontingent direkt angemeldet (Gebucht)
+                    $kindFerienBlock->setState(10);
                 }
+                $kindFerienBlock->setPreis($block->getPreis()[$preisId]);
             }
             $kindFerienBlock->setCheckinID(md5(uniqid()));
             $this->em->persist($kindFerienBlock);

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Ferienblock;
 use App\Entity\Kind;
+use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
@@ -35,8 +36,8 @@ class FerienController extends AbstractController
     {
 
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
-        
-        if ($stadt === null){
+
+        if ($stadt === null) {
             return $this->redirectToRoute('workflow_city_not_found');
         }
         // load parent address data into controller as $adresse
@@ -55,12 +56,12 @@ class FerienController extends AbstractController
         }
 
         //Check if admin has enabled ferienprogramm for the city
-        if ($stadt->getFerienprogramm() === false){
-            return $this->redirect($this->generateUrl('workflow_start', array('slug'=>$stadt->getSlug())));
+        if ($stadt->getFerienprogramm() === false) {
+            return $this->redirect($this->generateUrl('workflow_start', array('slug' => $stadt->getSlug())));
         }
 
         $form = $this->createForm(LoerrachEltern::class, $adresse);
-        $form->remove('alleinerziehend','kinderImKiga','beruflicheSituation','einkommen');
+        $form->remove('alleinerziehend', 'kinderImKiga', 'beruflicheSituation', 'einkommen');
         $form->handleRequest($request);
 
         $errors = array();
@@ -181,7 +182,7 @@ class FerienController extends AbstractController
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
         $block = $this->getDoctrine()->getRepository(Ferienblock::class)->find($request->get('block_id'));
-        $result = $toogleKindFerienblock->toggleKind($kind,$block,$request->get('preis_id'));
+        $result = $toogleKindFerienblock->toggleKind($kind, $block, $request->get('preis_id'));
 
         return new JsonResponse($result);
     }
@@ -193,15 +194,11 @@ class FerienController extends AbstractController
      */
     public function paymentAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
-        try {
-            //Include Parents in this route
-            if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
-                $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
-            }
-
-        } catch (\Exception $e) {
-            $result['text'] = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+        //Include Parents in this route
+        if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
+            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
+
         return $this->render('ferien/bezahlung.html.twig', array('stadt' => $stadt));
     }
 
@@ -218,8 +215,11 @@ class FerienController extends AbstractController
                 $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
             }
 
-            $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
+            $kind = $adresse->getKinds();
+            $org = $this->getDoctrine()->getRepository(KindFerienblock::class)->findBy(array('kind' => $kind));
 
+
+            dump($org);
         } catch (\Exception $e) {
             $result['text'] = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
         }
