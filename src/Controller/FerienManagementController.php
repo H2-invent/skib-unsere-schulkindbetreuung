@@ -230,10 +230,8 @@ class FerienManagementController extends AbstractController
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-
         $tag = $request->get('tag');
         $selectDate = null;
-
         if ($tag === null) {
             $today = new \DateTime('today');
             $selectDate = $today->setTime(0, 0);
@@ -241,9 +239,7 @@ class FerienManagementController extends AbstractController
             $selectDate = new \DateTime($tag);
             $selectDate->setTime(0, 0);
         }
-
         $kind = $anwesenheitslisteService->anwesenheitsListe($selectDate,$organisation);
-
         //todo bitte das mal anschauen ob das noch benötigt wird -> Andy
         /*
          *

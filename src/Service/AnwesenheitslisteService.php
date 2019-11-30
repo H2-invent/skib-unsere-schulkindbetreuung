@@ -16,12 +16,12 @@ class AnwesenheitslisteService
 
 
     private $em;
-    private $translator;
 
-    public function __construct(TranslatorInterface $translator,  EntityManagerInterface $entityManager)
+
+    public function __construct( EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
-        $this->translator = $translator;
+
     }
 
     public
