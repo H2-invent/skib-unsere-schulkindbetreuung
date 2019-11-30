@@ -216,10 +216,7 @@ class FerienController extends AbstractController
             }
 
             $kind = $adresse->getKinds();
-            $org = $this->getDoctrine()->getRepository(KindFerienblock::class)->findBy(array('kind' => $kind));
 
-
-            dump($org);
         } catch (\Exception $e) {
             $result['text'] = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
         }
