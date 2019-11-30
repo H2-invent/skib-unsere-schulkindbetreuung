@@ -91,7 +91,7 @@ class LoerrachWorkflowController extends AbstractController
                 ->setAngemeldet(false);
             $adresse->setCreatedAt(new \DateTime());
         }
-        $form = $this->createForm(LoerrachEltern::class, $adresse, array('einkommen' => $this->einkommensgruppen));
+        $form = $this->createForm(LoerrachEltern::class, $adresse, array('einkommen' => array_flip($stadt->getGehaltsklassen())));
 
         $form->handleRequest($request);
         $errors = array();

@@ -46,6 +46,9 @@ class StadtverwaltungController extends AbstractController
     {
         $city = new Stadt();
 
+        if($city->getGehaltsklassen() === null || $city->getGehaltsklassen() === null || sizeof($city->getGehaltsklassen()) != $city->getPreiskategorien()){
+            $city->setGehaltsklassen(array_fill(0,$city->getPreiskategorien(), ''));
+        }
         $form = $this->createForm(StadtType::class, $city);
 
         $form->handleRequest($request);
@@ -72,6 +75,11 @@ class StadtverwaltungController extends AbstractController
     public function editStadt(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
     {
         $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+
+        if($city->getGehaltsklassen() === null || $city->getGehaltsklassen() === null || sizeof($city->getGehaltsklassen()) != $city->getPreiskategorien()){
+            $city->setGehaltsklassen(array_fill(0,$city->getPreiskategorien(), ''));
+        }
+
         $form = $this->createForm(StadtType::class, $city);
         $form->remove('slug');
         if (!$this->getUser()->hasRole('ROLE_ADMIN')){

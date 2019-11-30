@@ -224,6 +224,11 @@ class Stadt
      */
     private $ferienblocks;
 
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $gehaltsklassen = [];
+
 
     public function __construct()
     {
@@ -744,6 +749,18 @@ class Stadt
                 $ferienblock->setStadt(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGehaltsklassen(): ?array
+    {
+        return $this->gehaltsklassen;
+    }
+
+    public function setGehaltsklassen(array $gehaltsklassen): self
+    {
+        $this->gehaltsklassen = $gehaltsklassen;
 
         return $this;
     }

@@ -60,12 +60,9 @@ class FerienController extends AbstractController
         }
 
         $form = $this->createForm(LoerrachEltern::class, $adresse);
-        $form->remove('beruflicheSituation');
-        $form->remove('kinderImKiga');
-        $form->remove('alleinerziehend');
-        $form->remove('einkommen');
-
+        $form->remove('alleinerziehend','kinderImKiga','beruflicheSituation','einkommen');
         $form->handleRequest($request);
+
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $adresse = $form->getData();
@@ -130,7 +127,6 @@ class FerienController extends AbstractController
         $kind->setSchule(null);
         $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('ferien_kind_neu', array('slug' => $stadt->getSlug()))));
         $form->handleRequest($request);
-        $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $kind = $form->getData();
             $errors = $validator->validate($kind);
@@ -164,12 +160,8 @@ class FerienController extends AbstractController
         }
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-
-
-        $dates = array();
         $dates = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt);
         $today = new \DateTime('today');
-
 
         return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'dates' => $dates, 'stadt' => $stadt, 'today' => $today));
     }

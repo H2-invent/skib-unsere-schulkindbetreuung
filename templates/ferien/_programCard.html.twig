@@ -78,10 +78,12 @@
                                 <h5>
                                     {% trans %}Anzahl Plätze{% endtrans %}
                                 </h5>
+                                {% if block.minAnzahl is not null or block.maxAnzahl is not null %}
+                                    <div>{% trans %}Kontingent{% endtrans %}
+                                    <i class="fas fa-question-circle" data-toggle="popover" data-placement="top" title="{% trans %}Ausfüllhilfe{% endtrans %}" data-content="{% trans %}Für diesen Block gibt es eine Beschschränkung der Betreungsplätzte.{% endtrans %}"></i>
+                                    </div>
+                                {% endif %}
                             </div>
-                            {% if block.minAnzahl is not null or block.maxAnzahl is not null %} <div class="card-header">{% trans %}Kontingent{% endtrans %}
-                                <i class="fas fa-question-circle" data-toggle="popover" data-placement="top" title="{% trans %}Ausfüllhilfe{% endtrans %}" data-content="{% trans %}Für diesen Block gibt es eine Beschschränkung der Betreungsplätzte.{% endtrans %}"></i>
-                                </div>{% endif %}
                             <div class="col-sm-9">
                                 {% if block.minAnzahl is not null %}
                                     {% trans %}Minimal{% endtrans %}: {{ block.minAnzahl }}<br/>
