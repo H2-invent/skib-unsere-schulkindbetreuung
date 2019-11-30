@@ -9,9 +9,6 @@
                        aria-expanded="true" aria-controls="collapse{{ block.id }}">
                         <h5>
                             {{ block.translate.titel }}
-                            {% if block.minAnzahl is not null or block.maxAnzahl is not null %} <div class="card-header">{% trans %}Kontingent{% endtrans %}
-                                <i class="far fa-info-circle" data-toggle="popover" data-placement="top" title="{% trans %}Ausfüllhilfe{% endtrans %}" data-content="{% trans %}Für diesen Block gibt es eine Beschschränkung der Betreungsplätzte.{% endtrans %}"></i>
-                                </div>{% endif %}
                         </h5>
                         {% if block.startVerkauf < today and block.endVerkauf > today %}
                             <div class="alert alert-success" role="alert">
@@ -82,6 +79,9 @@
                                     {% trans %}Anzahl Plätze{% endtrans %}
                                 </h5>
                             </div>
+                            {% if block.minAnzahl is not null or block.maxAnzahl is not null %} <div class="card-header">{% trans %}Kontingent{% endtrans %}
+                                <i class="fas fa-question-circle" data-toggle="popover" data-placement="top" title="{% trans %}Ausfüllhilfe{% endtrans %}" data-content="{% trans %}Für diesen Block gibt es eine Beschschränkung der Betreungsplätzte.{% endtrans %}"></i>
+                                </div>{% endif %}
                             <div class="col-sm-9">
                                 {% if block.minAnzahl is not null %}
                                     {% trans %}Minimal{% endtrans %}: {{ block.minAnzahl }}<br/>

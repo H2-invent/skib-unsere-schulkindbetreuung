@@ -91,7 +91,7 @@ class FerienController extends AbstractController
                 $response = $this->redirectToRoute('workflow_confirm_Email', array('redirect' => $this->generateUrl('ferien_auswahl', array('slug' => $stadt->getSlug())), 'uid' => $adresse->getUid(), 'stadt' => $stadt->getId()));
                 $response->headers->setCookie($cookie);
                 return $response;
-            } 
+            }
 
         }
 

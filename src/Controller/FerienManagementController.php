@@ -9,6 +9,7 @@ use App\Entity\News;
 use App\Entity\Organisation;
 use App\Form\Type\FerienBlockPreisType;
 use App\Form\Type\FerienBlockType;
+use App\Service\CheckinFerienService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -187,39 +188,79 @@ class FerienManagementController extends AbstractController
 
 
     /**
-     * @Route("/org_ferien/report/checkinlist", name="ferien_management_report_checkinlist", methods={"GET","POST"})
+     * @Route("/org_ferien/report/checkinlist", name="ferien_management_report_checkinlist", methods={"GET"})
      */
     public function checkinListFerien(Request $request, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
         $block = $this->getDoctrine()->getRepository(Ferienblock::class)->find($request->get('ferien_id'));
+
+        if ($organisation != $block->getOrganisation()){
+            throw new \Exception('Organisation not responsible for block');
+        }
+
         if($organisation != $this->getUser()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
         }
 
+        $today = new \DateTime('today');
+        $checkinDate = $today->format('Y-m-d');
         $list = $this->getDoctrine()->getRepository(KindFerienblock::class)->findBy(array('ferienblock'=>$block));
+        $titel = $translator->trans('Anwesenheitsliste für Ferienblock');
+        $mode = 'block';
 
         return $this->render('ferien_management/checkinList.html.twig', [
             'org' => $organisation,
             'list'=>$list,
+            'today'=>$checkinDate,
+            'titel' => $titel,
+            'mode' => $mode,
             ]);
     }
 
 
     /**
-     * @Route("/org_ferien/report/checkin/toggle", name="ferien_management_report_checkin_toggle", methods={"GET","POST"})
+     * @Route("/org_ferien/report/checkinlist/tag", name="ferien_management_report_checkinlist_tag", methods={"GET"})
      */
-    public function checkinActionFerien(Request $request, TranslatorInterface $translator)
+    public function checkinListTagyFerien(Request $request, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $block = $this->getDoctrine()->getRepository(Ferienblock::class)->find($request->get('ferien_id'));
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('kind'=>$block->getId()));
         if($organisation != $this->getUser()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
         }
 
+        $tag = $request->get('tag');
+        if ($tag === null){
+            $today = new \DateTime('today');
+            $checkinDate = $today->format('Y-m-d');
+        }else{
+            $checkinDate = $tag;
+        }
+
+        $allFerienBlock = $organisation->getFerienblocks();
+        $ferienBlock = $allFerienBlock->findBy(array('startDate'=>$today));
+        $list = $this->getDoctrine()->getRepository(KindFerienblock::class)->findBy(array('ferienblock'=>$ferienBlock));
+        $titel = $translator->trans('Anwesenheitsliste');
+        $mode = 'day';
+
         return $this->render('ferien_management/checkinList.html.twig', [
             'org' => $organisation,
+            'list'=>$list,
+            'today'=>$checkinDate,
+            'titel' => $titel,
+            'mode' => $mode,
         ]);
     }
+
+
+    /**
+     * @Route("/org_ferien/report/checkin/toggle/{checkinID}", name="ferien_management_report_checkin_toggle", methods={"PATCH"})
+     */
+    public function checkinBlockAction(Request $request, TranslatorInterface $translator, $checkinID, CheckinFerienService $checkinFerienService)
+    {
+        $result = $checkinFerienService->checkin($checkinID);
+
+        return new JsonResponse($result);
+    }
+
 }

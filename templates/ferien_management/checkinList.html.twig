@@ -8,21 +8,25 @@
                 <div class=" col-12 card">
                     <div class="card-header">
                         <h1>
-                            {% trans %}Anwesenheitsliste{% endtrans %}
+                            {{ titel }} {% trans %}am{% endtrans %} {{ today }}
                         </h1>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
                             <tr>
+                                {% if mode == 'block' %}
                                 <th></th>
+                                {% endif %}
                                 <th>{% trans %}Checkin{% endtrans %}</th>
                                 <th>{% trans %}Name{% endtrans %}</th>
+                                <th>{% trans %}Programm{% endtrans %}</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for l in list %}
                                 <tr>
+                                    {% if mode == 'block' %}
                                     <td>
                                         <div class="btn-group">
                                             <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
@@ -37,10 +41,14 @@
                                             </div>
                                         </div>
                                     </td>
+                                    {% endif %}
                                     <td>
+                                        <a class="btn chooseBlock {% if today in l.checkinStatus %}bg-success{% endif %}"
+                                           href="{{ path('ferien_management_report_checkin_toggle',{'org_id':org.id,'checkinID':l.checkinID}) }}">{% trans %}Checkin{% endtrans %}</a>
 
                                     </td>
                                     <td>{{ l.kind.vorname }} {{ l.kind.nachname }}</td>
+                                    <td>{{ l.ferienblock.translate.titel }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -53,3 +61,29 @@
     </section>
 
 {% endblock %}
+
+{% block jquery %}
+    <script>
+        $(document).on('click','.chooseBlock',function (e) {
+            e.preventDefault();
+            var ele = $(this);
+            var url = ele.attr('href');
+            $.ajax({
+                url: url,
+                method: 'PATCH',
+                success: function (data) {
+
+                    if (data.error == 0) {
+                        var klasse = 'bg-success';
+
+                        ele.toggleClass(klasse);
+                    } else {
+
+                    }
+                }
+            })
+        })
+    </script>
+
+{% endblock %}
+

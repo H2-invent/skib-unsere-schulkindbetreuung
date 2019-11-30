@@ -5,9 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    {% if stadt is defined and stadt is not null %}
-        <meta name="theme-color" content="{{ stadt.hauptfarbe }}">
-    {% endif %}
     <title>{% trans %}Checkin{% endtrans %}</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -22,7 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 </head>
 
-<body class="{% if error == true %} red {% else %} green{% endif %}">
+<body class="{% if result.error == true %} red {% else %} green{% endif %}">
 <main>
     <div class="container ">
         <!--Section: Main info-->
@@ -35,19 +32,19 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3> {{ errorText }}</h3>
+                                        <h3> {{ result.errorText }}</h3>
                                     </div>
                                     <div class="card-body">
                                         {% if kind is defined and kind is not null %}
                                         <h4>
-                                            {% trans %}Name{% endtrans %}: {{ kind.vorname }} {{ kind.nachname }}
+                                            {% trans %}Name{% endtrans %}: {{ result.kind.vorname }} {{ result.kind.nachname }}
                                         </h4>
                                         {% endif %}
-                                        {% if block is defined and block is not null %}
+                                        {% if result.block is defined and result.block is not null %}
                                         <h5>
-                                            {% trans %}Programm{% endtrans %}: {{ block.ferienblock.translate.titel }}
+                                            {% trans %}Programm{% endtrans %}: {{ result.block.ferienblock.translate.titel }}
                                         </h5>
-                                        {% trans %}Ticket ID{% endtrans %}: {{ block.checkinID }}
+                                        {% trans %}Ticket ID{% endtrans %}: {{ result.block.checkinID }}
                                         {% endif %}
                                     </div>
                                 </div>
