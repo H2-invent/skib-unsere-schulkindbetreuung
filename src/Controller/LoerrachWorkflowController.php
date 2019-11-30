@@ -128,7 +128,6 @@ class LoerrachWorkflowController extends AbstractController
             return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
 
-        // load parent address data into controller as $adresse
         $adresse = new Stammdaten;
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
