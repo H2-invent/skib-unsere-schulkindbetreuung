@@ -9,6 +9,7 @@ use App\Entity\News;
 use App\Entity\Organisation;
 use App\Form\Type\FerienBlockPreisType;
 use App\Form\Type\FerienBlockType;
+use App\Service\AnwesenheitslisteService;
 use App\Service\CheckinFerienService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -223,40 +224,32 @@ class FerienManagementController extends AbstractController
     /**
      * @Route("/org_ferien/report/checkinlist/tag", name="ferien_management_report_checkinlist_tag", methods={"GET"})
      */
-    public function checkinListTagyFerien(Request $request, TranslatorInterface $translator)
+    public function checkinListTagyFerien(Request $request, TranslatorInterface $translator, AnwesenheitslisteService $anwesenheitslisteService)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $selectDate = null;
+
         $tag = $request->get('tag');
+        $selectDate = null;
+
         if ($tag === null) {
             $today = new \DateTime('today');
-            $checkinDate = $today->format('Y-m-d');
             $selectDate = $today->setTime(0, 0);
         } else {
-            $checkinDate = $tag;
             $selectDate = new \DateTime($tag);
             $selectDate->setTime(0, 0);
         }
 
-        $qb = $this->getDoctrine()->getRepository(Kind::class)->createQueryBuilder('k');
-        $qb->innerJoin('k.kindFerienblocks', 'kindFerienblocks')
-            ->innerJoin('kindFerienblocks.ferienblock', 'ferienblock')
-            ->andWhere($qb->expr()->lte('ferienblock.endDate', ':date'))
-            ->andWhere($qb->expr()->gte('ferienblock.startDate', ':date'))
-            ->andWhere('ferienblock.organisation = :organisation')
-            ->setParameter('date', $selectDate)
-            ->setParameter('organisation', $organisation);
-        $query = $qb->getQuery();
-        $kind = $query->getResult();
+        $kind = $anwesenheitslisteService->anwesenheitsListe($selectDate,$organisation);
+
+        //todo bitte das mal anschauen ob das noch benötigt wird -> Andy
         /*
+         *
                 $allFerienBlock = $organisation->getFerienblocks();
                 $ferienBlock = $allFerienBlock->findBy(array('startDate' => $today));
                 $list = $this->getDoctrine()->getRepository(KindFerienblock::class)->findBy(array('ferienblock' => $ferienBlock));
-
-
         */
         $titel = $translator->trans('Anwesenheitsliste');
         $mode = 'day';
