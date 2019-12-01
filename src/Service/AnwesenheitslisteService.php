@@ -27,15 +27,13 @@ class AnwesenheitslisteService
     public
     function anwesenheitsListe(\DateTime $selectDate,Organisation $organisation)
     {
-
-
-        $qb = $this->em->getRepository(Kind::class)->createQueryBuilder('k');
-        $qb->innerJoin('k.kindFerienblocks', 'kindFerienblocks')
-            ->andWhere($qb->expr()->andX($qb->expr()->gte('kindFerienblocks.state', ':stateGebucht'),
-                $qb->expr()->lt('kindFerienblocks.state', ':stateStorniert')))
-            ->innerJoin('kindFerienblocks.ferienblock', 'ferienblock')
-            ->andWhere($qb->expr()->lte('ferienblock.endDate', ':date'))
-            ->andWhere($qb->expr()->gte('ferienblock.startDate', ':date'))
+        $qb = $this->em->getRepository(KindFerienblock::class)->createQueryBuilder('k');
+        
+            $qb->andWhere($qb->expr()->andX($qb->expr()->gte('k.state', ':stateGebucht'),
+                $qb->expr()->lt('k.state', ':stateStorniert')))
+            ->innerJoin('k.ferienblock', 'ferienblock')
+            ->andWhere($qb->expr()->gte('ferienblock.endDate', ':date'))
+            ->andWhere($qb->expr()->lte('ferienblock.startDate', ':date'))
             ->andWhere('ferienblock.organisation = :organisation')
             ->setParameter('date', $selectDate)
             ->setParameter('organisation', $organisation)

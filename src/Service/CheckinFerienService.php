@@ -23,7 +23,7 @@ class CheckinFerienService
     }
 
     public
-    function checkin($checkinID)
+    function    checkin($checkinID)
     {
         $kindFerienBlock = $this->em->getRepository(KindFerienblock::class)->findOneBy(array('checkinID' => $checkinID));
         $today = new \DateTime('today');

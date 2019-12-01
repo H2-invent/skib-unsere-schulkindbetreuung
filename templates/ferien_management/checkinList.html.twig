@@ -43,7 +43,7 @@
                                     </td>
                                     {% endif %}
                                     <td>
-                                        <a class="btn chooseBlock {% if today in l.checkinStatus %}bg-success{% endif %}"
+                                        <a class="btn chooseBlock {% if today|date('Y-m-d') in l.checkinStatus %}bg-success{% endif %}"
                                            href="{{ path('ferien_management_report_checkin_toggle',{'org_id':org.id,'checkinID':l.checkinID}) }}">{% trans %}Checkin{% endtrans %}</a>
 
                                     </td>
@@ -75,11 +75,16 @@
 
                     if (data.error == 0) {
                         var klasse = 'bg-success';
-
                         ele.toggleClass(klasse);
+
                     } else {
 
                     }
+                    var options = {
+                        content: data.errorText, // text of the snackbar
+                        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+                    };
+                    $.snackbar(options);
                 }
             })
         })
