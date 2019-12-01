@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% trans %}Checkin{% endtrans %}</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{{ asset('frontpage/css/mdb.min.css') }}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontpage/css/snackbar.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+</head>
+
+<body class="{% if result.error == true %} red {% else %} green{% endif %}">
+<main>
+    <div class="container ">
+        <!--Section: Main info-->
+        <section class="mt-5 wow fadeIn">
+            <!--Grid row-->
+            <div class="row">
+                <!--Grid column-->
+                <div class="col-lg-12">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3> {{ result.errorText }}</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        {% if kind is defined and kind is not null %}
+                                        <h4>
+                                            {% trans %}Name{% endtrans %}: {{ result.kind.vorname }} {{ result.kind.nachname }}
+                                        </h4>
+                                        {% endif %}
+                                        {% if result.block is defined and result.block is not null %}
+                                        <h5>
+                                            {% trans %}Programm{% endtrans %}: {{ result.block.ferienblock.translate.titel }}
+                                        </h5>
+                                        {% trans %}Ticket ID{% endtrans %}: {{ result.block.checkinID }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <!--Grid column-->
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+</body>
+
+</html>
+

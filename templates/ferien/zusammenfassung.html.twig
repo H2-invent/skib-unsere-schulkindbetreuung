@@ -7,280 +7,212 @@
 
 {% endblock %}
 {% block content %}
-        <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
+    <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
     <div class="card mb-3">
         <div class="card-header">
-    <h3 class="cover-heading">{% trans %}Daten der erziehungsberechtigten Person{% endtrans %} <a href="{{ path('loerrach_workflow_adresse') }}"> <i class="fa fa-edit"></i></a></h3>
+            <h3 class="cover-heading">{% trans %}Daten der erziehungsberechtigten Person{% endtrans %} <a
+                        href="{{ path('ferien_adresse', {'slug':stadt.slug}) }}"> <i class="fa fa-edit"></i></a></h3>
         </div>
         <div class="card-body">
-        <table class="table">
-            <tbody>
-            <tr>
-                <td>{% trans %} Name der Eltern {% endtrans %}</td>
-                <td>{{ eltern.vorname }} {{ eltern.name }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} E-Mail Adresse {% endtrans %}</td>
-                <td>{{ eltern.email }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Adresse der Eltern {% endtrans %}</td>
-                <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Netto Familieneinkommen pro Monat {% endtrans %}</td>
-                <td>{{ einkommen[eltern.einkommen] }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Ich habe mindestens ein weiteres Kind in einer kostenpflichtiger öffentlichen Kindergartneeinrichtung {% endtrans %}</td>
-                <td>{{ eltern.kinderImKiga?"Ja":'Nein'|trans }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger {% endtrans %}</td>
-                <td>{{ eltern.buk?"Ja":'Nein'|trans }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Ich bin Alleinerziehend {% endtrans %}</td>
-                <td>{{ eltern.alleinerziehend?"Ja":'Nein'|trans }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Berufliche Situation der Eltern {% endtrans %}</td>
-                <td>{{ eltern.beruflicheSituation }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Name und Beziehung des Notfallkontakt {% endtrans %}</td>
-                <td>{{ eltern.notfallName }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Notfallkontakt der Eltern {% endtrans %}</td>
-                <td>{{ eltern.notfallkontakt }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Weitere abholberechtigte Personen {% endtrans %}</td>
-                <td>{{ eltern.abholberechtigter }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %} Bankverbindung für Lastschrift {% endtrans %}</td>
-                <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}<br/>{{ eltern.sepaInfo?"Ja ich Erteile der Organisation dein SEPA Lastschrift Mandant":""|trans }} </td>
-            </tr>
-            <tr>
-                <td>{% trans %} Zum Newsletter angemeldet {% endtrans %}</td>
-                <td>{{ eltern.newsletter?"Ja":'Nein'|trans }}</td>
-            </tr>
-            </tbody>
-        </table>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td>{% trans %} Name der Eltern {% endtrans %}</td>
+                    <td>{{ eltern.vorname }} {{ eltern.name }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %} E-Mail Adresse {% endtrans %}</td>
+                    <td>{{ eltern.email }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %} Adresse der Eltern {% endtrans %}</td>
+                    <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %} Name und Beziehung des Notfallkontakt {% endtrans %}</td>
+                    <td>{{ eltern.notfallName }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %} Notfallkontakt der Eltern {% endtrans %}</td>
+                    <td>{{ eltern.notfallkontakt }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %} Weitere abholberechtigte Personen {% endtrans %}</td>
+                    <td>{{ eltern.abholberechtigter }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %} Bankverbindung für Lastschrift {% endtrans %}</td>
+                    <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}
+                        <br/>{{ eltern.sepaInfo?"Ja ich Erteile der Organisation dein SEPA Lastschrift Mandant":""|trans }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{% trans %} Zum Newsletter angemeldet {% endtrans %}</td>
+                    <td>{{ eltern.newsletter?"Ja":'Nein'|trans }}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-        <!-- Daten der Kinder in einer for Schleife -->
+    <!-- Daten der Kinder in einer for Schleife -->
     <div class="card">
         <div class="card-header mb-2">
-        <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen') }}"> <i class="fa fa-edit"></i></a></h3>
+            <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %} <a
+                        href="{{ path('ferien_auswahl', {'slug':stadt.slug}) }}"> <i class="fa fa-edit"></i></a></h3>
         </div>
         <div class="text-left card-body" id="accordion">
             {% for k in kind %}
-            <div class="card mb-2">
-                <div class="card-header" id="heading{{ loop.index }}">
-                    <h5 class="mb-0">
-                        <a data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
-                            {{ k.vorname }} {{ k.nachname }} <br/><small>{% if k.tageWithBlocks < 2 %}
-                                    <div class="alert alert-danger" role="alert">
-                                    {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} </div>
-                            {% else %}{% trans %}Summe pro Monat für gebuchte Betreuungsblöcke: {% endtrans %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %} <a href="{{ path('loerrach_workflow_print_pdf',{'id':k.id}) }}"><i class="fa fa-download"></i></a>
-                            </small>
-                            
-                        </a>
-                    </h5>
-                    <a target="_blank" href={{ path('workflow_datenschutz', {'org_id':k.schule.organisation.id, 'slug':stadt.slug}) }}>{% trans %}Datenschutzhinweis der{% endtrans %} {{ k.schule.organisation.name }}</a>
-                </div>
+                <div class="card mb-2">
+                    <div class="card-header" id="heading{{ loop.index }}">
+                        <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="false"
+                               aria-controls="collapse{{ loop.index }}">
+                                {{ k.vorname }} {{ k.nachname }} <br/>
+                                <small>
+                                    {% trans %}Summe pro Monat für gebuchte Betreuungsblöcke: {% endtrans %} <a
+                                            href="{{ path('loerrach_workflow_print_pdf',{'id':k.id}) }}"><i
+                                                class="fa fa-download"></i></a>
+                                </small>
+                            </a>
+                        </h5>
+                    </div>
 
-                <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
-                    <div class="card-body">
-                        <table class="table">
-                            <tbody>
-                            <tr>
-                                <td>{% trans %} Vorname {% endtrans %}</td>
-                                <td>{{ k.vorname }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Nachname {% endtrans %}</td>
-                                <td>{{ k.nachname }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Geburtstag {% endtrans %}</td>
-                                <td>{{ k.geburtstag|date('d.m.Y') }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Schule {% endtrans %}</td>
-                                <td>{{ k.schule.name }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Klasse {% endtrans %}</td>
-                                <td>{{ k.klasse }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Allergien {% endtrans %}</td>
-                                <td>{{ k.allergie }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Medikamente {% endtrans %}</td>
-                                <td>{{ k.medikamente }}</td>
-                            </tr>
+                    <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}"
+                         data-parent="#accordion">
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td style="width: 60%">{% trans %} Vorname {% endtrans %}</td>
+                                    <td>{{ k.vorname }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Nachname {% endtrans %}</td>
+                                    <td>{{ k.nachname }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Geburtstag {% endtrans %}</td>
+                                    <td>{{ k.geburtstag|date('d.m.Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Allergien {% endtrans %}</td>
+                                    <td>{{ k.allergie }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Medikamente {% endtrans %}</td>
+                                    <td>{{ k.medikamente }}</td>
+                                </tr>
 
-                            <tr>
-                                <td>{% trans %} Mein Kind ist Gluten intolerant {% endtrans %}</td>
-                                <td>{{ k.gluten?"Ja":'Nein'|trans }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Mein Kind ist Laktose intolerant {% endtrans %}</td>
-                                <td>{{ k.laktose?"Ja":'Nein'|trans }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Mein Kind isst kein Schweinefleisch {% endtrans %}</td>
-                                <td>{{ k.schweinefleisch?"Ja":'Nein'|trans }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Vegetrarisch {% endtrans %}</td>
-                                <td>{{ k.vegetarisch?"Ja":'Nein'|trans }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause {% endtrans %}</td>
-                                <td>{{ k.alleineHause?"Ja":'Nein'|trans }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Mein Kind darf an Ausflügen teilnehmen {% endtrans %}</td>
-                                <td>{{ k.ausfluege?"Ja":'Nein'|trans }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden {% endtrans %}</td>
-                                <td>{{ k.sonnencreme?"Ja":'Nein'|trans }}</td>
-                            </tr>
-                            <tr>
-                                <td>{% trans %} Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden {% endtrans %}</td>
-                                <td>{{ k.fotos?"Ja":'Nein'|trans }}</td>
-                            </tr>
+                                <tr>
+                                    <td>{% trans %} Mein Kind ist Gluten intolerant {% endtrans %}</td>
+                                    <td>{{ k.gluten?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Mein Kind ist Laktose intolerant {% endtrans %}</td>
+                                    <td>{{ k.laktose?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Mein Kind isst kein Schweinefleisch {% endtrans %}</td>
+                                    <td>{{ k.schweinefleisch?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Vegetrarisch {% endtrans %}</td>
+                                    <td>{{ k.vegetarisch?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause {% endtrans %}</td>
+                                    <td>{{ k.alleineHause?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Mein Kind darf an Ausflügen teilnehmen {% endtrans %}</td>
+                                    <td>{{ k.ausfluege?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden {% endtrans %}</td>
+                                    <td>{{ k.sonnencreme?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden {% endtrans %}</td>
+                                    <td>{{ k.fotos?"Ja":'Nein'|trans }}</td>
+                                </tr>
 
-                            <tr>
-                                <td>{% trans %} Zuständiger Träger in der Schule {% endtrans %}</td>
-                                <td>{{ k.schule.organisation.name }}</td>
-                            </tr>
-                           {% if k.betreungsblocksReal|length > 0 %}
-                            <tr>
-                                <td>{% trans %} Bemerkung {% endtrans %}</td>
-                                <td>{{ k.bemerkung }}</td>
-                            </tr>
+                                <tr>
 
-                            <tr>
-                                <td>
-                                            {% trans %} Gebuchte Betreuungsblöcke {% endtrans %}
-                                </td>
+                                    {% for f in k.kindFerienblocks %}
+                                        <td>
+                                            Gebuchte Ferienprogramme
+                                        </td>
+                                        <td>
+                                            <b>{{ f.ferienblock.translate.titel }}</b><br/>
+                                            {{ f.ferienblock.startDate|date('d.M.Y') }}
+                                            - {{ f.ferienblock.endDate|date('d.M.Y') }}<br/>
+                                            {% trans %}Preis{% endtrans %}: {{ f.preis|number_format(2,',','.') }} €<br/>
+                                            {% trans %}Betreuunde Organisation{% endtrans %}: {{ f.ferienblock.organisation.name }}<br/>
+                                            <a target="_blank" href={{ path('workflow_datenschutz', {'org_id':f.ferienblock.organisation.id, 'slug':stadt.slug}) }}>{% trans %}Datenschutzhinweis der{% endtrans %} {{ f.ferienblock.organisation.name }}</a>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
 
-                                <td>
-                                    <ul class="list-group">
-                                        {%  for z in k.BetreungsblocksReal %}
-                                            <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </td>
-                            </tr>
-                            {% endif %}
-                            {% if k.betreungsblocksRealKontingent|length > 0 %}
-                            <tr>
-                                <td>
-                                    {% trans %} Angemeldete Betreuungsblöcke {% endtrans %}
-                                </td>
+                                <tr>
+                                    <td>
+                                        <h5>
+                                            {% trans %} Summe {% endtrans %}
+                                        </h5>
+                                    </td>
+                                    <td>
+                                        <h5>
 
-                                <td>
-                                    <ul class="list-group">
-                                        {%  for z in k.betreungsblocksRealKontingent %}
-                                            <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </td>
-                            </tr>
-                            {% endif %}
-                            <tr>
-                                <td>
-                                            {% trans %} Gebuchte Mittagessen {% endtrans %}
-                                </td>
-
-                                <td>
-                                    <ul class="list-group">
-                                        {%  for z in k.MittagessenblocksReal %}
-                                            <li class="list-group-item">{{ z.WochentagString }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5>
-                                        {% trans %} Summe {% endtrans %}
-                                    </h5>
-                                </td>
-                                <td>
-                                    <h5>
-                                        {% if k.tageWithBlocks < 2 %} {% trans %}Bitte weitere Betreuungsblöcke auswählen{% endtrans %} {% else %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %}
-                                    </h5>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                        </h5>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
             {% endfor %}
         </div>
     </div>
-        <table class="table">
-            <tr>
-                <td>
-                    <h5>{% trans %} Summe {% endtrans %}</h5>
-                </td>
-                <td>
-                    <h5>
-                        {% if error == false %}
-                        {{ preis|number_format(2,',','.') }} €
-                    {% else %}
-                        {% trans %} Bitte weitere Betreuungsblöcke auswählen {% endtrans %}
-                    {% endif %}
-                    </h5>
-                </td>
-            </tr>
-        </table>
-    <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz" value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}<br>
+    <table class="table">
+        <tr>
+            <td>
+                <h5>{% trans %} Summe {% endtrans %}</h5>
+            </td>
+        </tr>
+    </table>
+    <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz"
+           value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}
+    <br>
     <div>
-        <input id="checkboxAgb" type="checkbox" class="checkboxSelect" name="AGB" value="AGB"> <a target="_blank" href={{ path('workflow_agb', {'slug':stadt.slug}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die Allgemeine Geschäftsbeingungen der Stadt  %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese{% endtrans %}</a><br>
+        <input id="checkboxAgb" type="checkbox" class="checkboxSelect" name="AGB" value="AGB"> <a target="_blank"
+                                                                                                  href={{ path('workflow_agb', {'slug':stadt.slug}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die Allgemeine Geschäftsbeingungen der Stadt  %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese{% endtrans %}</a><br>
     </div>
-    {% if error == false %}
-    <button  class="btn btn-outline-primary sendButton" disabled >{% trans %}Absenden{% endtrans %}</button>
-    {% else %}
-    <a href="{{ path('loerrach_workflow_schulen') }}" class="btn btn-outline-primary">{% trans %}Weitere Blöcke hinzufügen{% endtrans %}</a>
-    {% endif %}
+    <button class="btn btn-outline-primary sendButton" disabled>{% trans %}Absenden{% endtrans %}</button>
 
 {% endblock %}
 {% block jquery %}
     <script>
-        var url= "{{ path('loerrach_workflow_abschluss') }}";
-            $('.checkboxSelect').on('change', function() {
-                var cbS = $('.checkboxSelect');
-                var all = true;
-                cbS.each(function (index) {
-                    if(!this.checked){
-                        all = false;
-                    }
-                });
-                if (all == true) {
-                    $('.sendButton').wrap('<a href="{{ path('loerrach_workflow_abschluss') }}">');
-                     $('.sendButton').prop('disabled', false);
-
-                }else {
-                    if($('.sendButton').parent().is("a")){
-                        $('.sendButton').unwrap();
-                    }
-                    $('.sendButton').prop('disabled', true);
+        var url = "{{ path('loerrach_workflow_abschluss') }}";
+        $('.checkboxSelect').on('change', function () {
+            var cbS = $('.checkboxSelect');
+            var all = true;
+            cbS.each(function (index) {
+                if (!this.checked) {
+                    all = false;
                 }
             });
+            if (all == true) {
+                $('.sendButton').wrap('<a href="{{ path('loerrach_workflow_abschluss') }}">');
+                $('.sendButton').prop('disabled', false);
+
+            } else {
+                if ($('.sendButton').parent().is("a")) {
+                    $('.sendButton').unwrap();
+                }
+                $('.sendButton').prop('disabled', true);
+            }
+        });
     </script>
 
 {% endblock %}

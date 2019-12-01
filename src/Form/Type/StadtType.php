@@ -11,6 +11,7 @@ namespace App\Form\Type;
 use App\Entity\Stadt;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -56,6 +57,10 @@ class StadtType extends AbstractType
             ->add('ansprechpartner', TextType::class,['label'=>'Ansprechpartner','translation_domain' => 'form'])
             ->add('stadtHomepage', TextType::class,['required'=>false,'label'=>'Homepage URL','translation_domain' => 'form'])
             ->add('preiskategorien', NumberType::class,['required'=>true,'label'=>'Anzahl der Preiskategorien','translation_domain' => 'form'])
+            ->add('gehaltsklassen', CollectionType::class, [
+                'entry_type' => TextType::class,
+                'entry_options' => array('label' => 'Bezeichnung der Gehaltsklassen', 'translation_domain' => 'form')
+            ])
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,
@@ -82,7 +87,9 @@ class StadtType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Stadt::class,
+            'gehaltsklasse'=>1,
         ]);
+        $resolver->setAllowedTypes('gehaltsklasse', 'integer');
     }
 }
 

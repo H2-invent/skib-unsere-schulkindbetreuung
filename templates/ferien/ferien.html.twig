@@ -34,7 +34,7 @@
                                                 <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
                                                     <a href="#"
                                                        class=" loadContent dropdown-item">{% trans %}Bearbeiten{% endtrans %}</a>
-                                                    <a href="{{ path('ferien_kind_programm', {'slug': stadt.slug,'id':k.id}) }}"
+                                                    <a href="{{ path('ferien_kind_programm', {'slug': stadt.slug,'kind_id':k.id}) }}"
                                                        class=" loadContent dropdown-item">{% trans %}Betreuungsblöcke bearbeiten{% endtrans %}</a>
                                                     <a href="#"
                                                        class="dropdown-item">{% trans %}Löschen{% endtrans %}</a>
@@ -52,9 +52,9 @@
                 </div>
             </section>
             <div class="text-center">
-                <a href="{{ path('loerrach_workflow_adresse') }}"
+                <a href="{{ path('ferien_adresse', {'slug':stadt.slug}) }}"
                    class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
-                <a href="{{ path('loerrach_workflow_mittagessen', {'slug':stadt.slug})}}"
+                <a href="{{ path('ferien_bezahlung', {'slug':stadt.slug})}}"
                    class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
             </div>
         </div>

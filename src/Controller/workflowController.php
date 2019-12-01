@@ -37,10 +37,15 @@ class workflowController extends AbstractController
 {
     /**
      * @Route("/{slug}/home",name="workflow_start",methods={"GET"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function welcomeAction(Request $request, Stadt $stadt)
+    public function welcomeAction(Request $request, $slug)
     {
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+
+        if ($stadt == null){
+            return $this->redirectToRoute('workflow_city_not_found');
+        }
+
         $url = '';
         switch ($stadt->getSlug()) {
             case 'loerrach':
@@ -66,6 +71,15 @@ class workflowController extends AbstractController
     {
 
         return $this->render('workflow/closed.html.twig', array('stadt' => $stadt));
+    }
+
+    /**
+     * @Route("/city-not-found",name="workflow_city_not_found",methods={"GET"})
+     */
+    public function noCityAction(Request $request)
+    {
+
+        return $this->render('workflow/noCity.html.twig');
     }
 
 

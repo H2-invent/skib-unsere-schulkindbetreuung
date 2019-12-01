@@ -71,10 +71,6 @@ class FerienBlockType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Ferienblock::class,
-            'preis' => 1,
-            'namePreise' => 1,
         ]);
-        $resolver->setAllowedTypes('preis', 'integer');
-        $resolver->setAllowedTypes('namePreise', 'integer');
     }
 }

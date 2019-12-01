@@ -39,14 +39,14 @@
 
                 <div class="col-md-12 mb-6 white-text text-center">
                     {% if stadt.ferienprogramm %}
-                        <h1 class="font-weight-bold hauptfarbe">{% trans %} Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung {% endtrans %}</h1>
+                        <h1 class="font-weight-bold h1-responsive maincolor">{% trans %} Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung {% endtrans %}</h1>
                     {% else %}
-                        <h1 class="font-weight-bold hauptfarbe">{% trans %} Online Anmeldung zur Schulkindbetreuung {% endtrans %}</h1>
+                        <h1 class="font-weight-bold h1-responsive maincolor">{% trans %} Online Anmeldung zur Schulkindbetreuung {% endtrans %}</h1>
                     {% endif %}
                     <hr class="hr-light ">
                 </div>
 
-                <div class="col-md-12 mb-4 white-text text-center ">
+                <div class="col-md-12 mb-4 white-text text-center lead">
                     <p class="lead d-none d-sm-block">{% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
 
                 </div>

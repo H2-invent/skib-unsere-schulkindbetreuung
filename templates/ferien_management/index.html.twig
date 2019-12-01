@@ -19,8 +19,9 @@
                                 <th>{% trans %}Titel{% endtrans %}</th>
                                 <th>{% trans %}Angemeldet{% endtrans %}</th>
                                 <th>{% trans %}Bestätigt{% endtrans %}</th>
-                                <th>{% trans %}Bezahlt{% endtrans %}</th>
+                                <th>{% trans %}Nicht Bestätigt{% endtrans %}</th>
                                 <th>{% trans %}Storniert{% endtrans %}</th>
+                                <th>{% trans %}Bezahlt{% endtrans %}</th>
                                 <th>{% trans %}Min{% endtrans %}</th>
                                 <th>{% trans %}Max{% endtrans %}</th>
                                 <th>{% trans %}Zeitraum{% endtrans %}</th>
@@ -38,6 +39,7 @@
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
                                                 <a class="dropdown-item" href="{{ path('ferien_management_edit',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                <a class="dropdown-item" href="{{ path('ferien_management_report_checkinlist',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Anwesenheitsliste{% endtrans %}</a>
                                                 <a class="dropdown-item" href="{{ path('ferien_management_preise',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Preise Bearbeiten{% endtrans %}</a>
                                                  <a class="dropdown-item deleteBtn" type="POST" href="{{ path('ferien_management_duplicate',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Duplizieren{% endtrans %}</a>
                                                 <a class="dropdown-item deleteBtn" type="DELETE" href="{{ path('ferien_management_delete',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Löschen{% endtrans %}</a>
@@ -45,10 +47,11 @@
                                             </div>
                                         </div></td>
                                     <td>{{ b.translations.de.titel }}</td>
-                                    <td>{{ b.kinder|length }}</td>
-                                    <td>{{ b.kinderGebucht|length}}</td>
-                                    <td>{{ b.kinderBezahlt|length}}</td>
-                                    <td>{{ b.kinderStorniert|length}}</td>
+                                    <td>{{ b.kindFerienblocks|length }}</td>
+                                    <td>{{ b.kindFerienblocksGebucht|length}}</td>
+                                    <td>{{ b.kindFerienblocksBeworben|length}}</td>
+                                    <td>{{ b.kindFerienblocksStorniert|length}}</td>
+                                    <td>{{ b.kindFerienblocksBezahlt|length}}</td>
                                     <td>{{ b.minAnzahl}}</td>
                                     <td>{{ b.maxAnzahl}}</td>
                                     <td>{{ b.startDate|date('d.m.Y') }} {{ b.startTime|date('H:i') }}<br>

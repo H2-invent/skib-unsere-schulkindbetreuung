@@ -1,0 +1,97 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <!-- Count item widget-->
+                <div class=" col-12 card">
+                    <div class="card-header">
+                        <h1>
+                            {{ titel }} {% trans %}am{% endtrans %} {{ day|date('d.m.Y') }}
+                        </h1>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                {% if mode == 'block' %}
+                                <th></th>
+                                {% endif %}
+                                {% if mode == 'day' %}
+                                <th>{% trans %}Checkin{% endtrans %}</th>
+                                {% endif %}
+                                <th>{% trans %}Name{% endtrans %}</th>
+                                <th>{% trans %}Programm{% endtrans %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for l in list %}
+                                <tr>
+                                    {% if mode == 'block' %}
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="material-icons">more_vert</i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                                <a class="dropdown-item"
+                                                   href="{{ path('city_admin_news_edit',{'id':l.kind.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                <a class="dropdown-item"
+                                                   href="{{ path('city_admin_news_delete',{'id':l.kind.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    {% endif %}
+                                    {% if mode == 'day' %}
+                                    <td>
+                                        <a class="btn chooseBlock {% if day|date('Y-m-d') in l.checkinStatus %}bg-success{% endif %}"
+                                           href="{{ path('ferien_management_report_checkin_toggle',{'org_id':org.id,'checkinID':l.checkinID,'tag':day|date('Y-m-d')}) }}">{% trans %}Checkin{% endtrans %}</a>
+                                    </td>
+                                    {% endif %}
+                                    <td>{{ l.kind.vorname }} {{ l.kind.nachname }}</td>
+                                    <td>{{ l.ferienblock.translate.titel }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        $(document).on('click','.chooseBlock',function (e) {
+            e.preventDefault();
+            var ele = $(this);
+            var url = ele.attr('href');
+            $.ajax({
+                url: url,
+                method: 'PATCH',
+                success: function (data) {
+
+                    if (data.error == 0) {
+                        var klasse = 'bg-success';
+                        ele.toggleClass(klasse);
+
+                    } else {
+
+                    }
+                    var options = {
+                        content: data.errorText, // text of the snackbar
+                        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+                    };
+                    $.snackbar(options);
+                }
+            })
+        })
+    </script>
+
+{% endblock %}
+

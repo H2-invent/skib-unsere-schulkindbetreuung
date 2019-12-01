@@ -91,7 +91,7 @@ class LoerrachWorkflowController extends AbstractController
                 ->setAngemeldet(false);
             $adresse->setCreatedAt(new \DateTime());
         }
-        $form = $this->createForm(LoerrachEltern::class, $adresse, array('einkommen' => $this->einkommensgruppen));
+        $form = $this->createForm(LoerrachEltern::class, $adresse, array('einkommen' => array_flip($stadt->getGehaltsklassen())));
 
         $form->handleRequest($request);
         $errors = array();
@@ -128,7 +128,6 @@ class LoerrachWorkflowController extends AbstractController
             return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
 
-        // load parent address data into controller as $adresse
         $adresse = new Stammdaten;
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
