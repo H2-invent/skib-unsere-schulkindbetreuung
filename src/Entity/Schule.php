@@ -188,12 +188,12 @@ class Schule
         return $this;
     }
 
-    public function getStadt(): ?stadt
+    public function getStadt(): ?Stadt
     {
         return $this->stadt;
     }
 
-    public function setStadt(?stadt $stadt): self
+    public function setStadt(?Stadt $stadt): self
     {
         $this->stadt = $stadt;
 
