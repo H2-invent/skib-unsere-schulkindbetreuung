@@ -8,7 +8,7 @@
                 <div class=" col-12 card">
                     <div class="card-header">
                         <h1>
-                            {{ titel }} {% trans %}am{% endtrans %} {{ today|date('d.m.Y') }}
+                            {{ titel }} {% trans %}am{% endtrans %} {{ day|date('d.m.Y') }}
                         </h1>
                     </div>
                     <div class="table-responsive">
@@ -18,7 +18,9 @@
                                 {% if mode == 'block' %}
                                 <th></th>
                                 {% endif %}
+                                {% if mode == 'day' %}
                                 <th>{% trans %}Checkin{% endtrans %}</th>
+                                {% endif %}
                                 <th>{% trans %}Name{% endtrans %}</th>
                                 <th>{% trans %}Programm{% endtrans %}</th>
                             </tr>
@@ -42,11 +44,12 @@
                                         </div>
                                     </td>
                                     {% endif %}
+                                    {% if mode == 'day' %}
                                     <td>
-                                        <a class="btn chooseBlock {% if today|date('Y-m-d') in l.checkinStatus %}bg-success{% endif %}"
-                                           href="{{ path('ferien_management_report_checkin_toggle',{'org_id':org.id,'checkinID':l.checkinID}) }}">{% trans %}Checkin{% endtrans %}</a>
-
+                                        <a class="btn chooseBlock {% if day|date('Y-m-d') in l.checkinStatus %}bg-success{% endif %}"
+                                           href="{{ path('ferien_management_report_checkin_toggle',{'org_id':org.id,'checkinID':l.checkinID,'tag':day|date('Y-m-d')}) }}">{% trans %}Checkin{% endtrans %}</a>
                                     </td>
+                                    {% endif %}
                                     <td>{{ l.kind.vorname }} {{ l.kind.nachname }}</td>
                                     <td>{{ l.ferienblock.translate.titel }}</td>
                                 </tr>

@@ -23,10 +23,9 @@ class CheckinFerienService
     }
 
     public
-    function    checkin($checkinID)
+    function    checkin($checkinID, $tag)
     {
         $kindFerienBlock = $this->em->getRepository(KindFerienblock::class)->findOneBy(array('checkinID' => $checkinID));
-        $today = new \DateTime('today');
 
         $result['error'] = false;
         $result['errorText'] = $this->translator->trans('Kind erfolgreich eingecheckt');
@@ -42,12 +41,12 @@ class CheckinFerienService
         $startdateFerienblock = $kindFerienBlock->getFerienblock()->getStartDate();
         $enddateFerienblock = $kindFerienBlock->getFerienblock()->getEndDate();
 
-        if ($today < $startdateFerienblock && $today > $enddateFerienblock) {
+        if ($tag < $startdateFerienblock && $tag > $enddateFerienblock) {
             $result['error'] = true;
             $result['errorText'] = $this->translator->trans('Dieses Ticket ist an einem anderen Tag gültig');
         }
 
-        $result['checkinDate'] = $today->format('Y-m-d');
+        $result['checkinDate'] = $tag;
         $status = $kindFerienBlock->getCheckinStatus() !== null ? $kindFerienBlock->getCheckinStatus() : array();
 
         if (in_array($result['checkinDate'], $status)) {

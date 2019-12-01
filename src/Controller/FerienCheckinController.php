@@ -15,7 +15,8 @@ class FerienCheckinController extends AbstractController
      */
     public function index(TranslatorInterface $translator, $checkinID, CheckinFerienService $checkinFerienService)
     {
-        $result = $checkinFerienService->checkin($checkinID);
+        $today = new \DateTime('today');
+        $result = $checkinFerienService->checkin($checkinID, $today);
 
         return $this->render('ferien_checkin/index.html.twig', [
             'result'=>$result,

@@ -207,14 +207,14 @@ class FerienManagementController extends AbstractController
 
         $today = new \DateTime('today');
         $checkinDate = $today->format('Y-m-d');
-        $list = $this->getDoctrine()->getRepository(KindFerienblock::class)->findBy(array('ferienblock' => $block));
+        $kinder = $this->getDoctrine()->getRepository(KindFerienblock::class)->findBy(array('ferienblock' => $block));
         $titel = $translator->trans('Anwesenheitsliste für Ferienblock');
         $mode = 'block';
 
         return $this->render('ferien_management/checkinList.html.twig', [
             'org' => $organisation,
-            'list' => $list,
-            'today' => $checkinDate,
+            'list' => $kinder,
+            'day' => $checkinDate,
             'titel' => $titel,
             'mode' => $mode,
         ]);
@@ -240,19 +240,13 @@ class FerienManagementController extends AbstractController
             $selectDate->setTime(0, 0);
         }
         $kind = $anwesenheitslisteService->anwesenheitsListe($selectDate,$organisation);
-        //todo bitte das mal anschauen ob das noch benötigt wird -> Andy
-        /*
-         *
-                $allFerienBlock = $organisation->getFerienblocks();
-                $ferienBlock = $allFerienBlock->findBy(array('startDate' => $today));
-                $list = $this->getDoctrine()->getRepository(KindFerienblock::class)->findBy(array('ferienblock' => $ferienBlock));
-        */
+
         $titel = $translator->trans('Anwesenheitsliste');
         $mode = 'day';
         return $this->render('ferien_management/checkinList.html.twig', [
             'org' => $organisation,
             'list' => $kind,
-            'today' => $selectDate,
+            'day' => $selectDate,
             'titel' => $titel,
             'mode' => $mode,
         ]);
@@ -264,7 +258,7 @@ class FerienManagementController extends AbstractController
      */
     public function checkinBlockAction(Request $request, TranslatorInterface $translator, $checkinID, CheckinFerienService $checkinFerienService)
     {
-        $result = $checkinFerienService->checkin($checkinID);
+        $result = $checkinFerienService->checkin($checkinID, $request->get('tag'));
 
         return new JsonResponse($result);
     }
