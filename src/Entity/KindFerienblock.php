@@ -53,6 +53,11 @@ class KindFerienblock
      */
     private $checkinStatus = [];
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $preisId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +143,18 @@ class KindFerienblock
     public function setCheckinStatus(?array $checkinStatus): self
     {
         $this->checkinStatus = $checkinStatus;
+
+        return $this;
+    }
+
+    public function getPreisId(): ?int
+    {
+        return $this->preisId;
+    }
+
+    public function setPreisId(int $preisId): self
+    {
+        $this->preisId = $preisId;
 
         return $this;
     }

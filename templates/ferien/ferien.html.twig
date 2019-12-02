@@ -36,8 +36,8 @@
                                                        class=" loadContent dropdown-item">{% trans %}Bearbeiten{% endtrans %}</a>
                                                     <a href="{{ path('ferien_kind_programm', {'slug': stadt.slug,'kind_id':k.id}) }}"
                                                        class=" loadContent dropdown-item">{% trans %}Betreuungsblöcke bearbeiten{% endtrans %}</a>
-                                                    <a href="#"
-                                                       class="dropdown-item">{% trans %}Löschen{% endtrans %}</a>
+                                                    <a type="DELETE" href="{{ path('ferien_workflow_kind_delete',{'slug':stadt.slug,'kind_id':k.id}) }}"
+                                                       class="dropdown-item deleteBtn">{% trans %}Löschen{% endtrans %}</a>
 
                                                 </div>
                                             </div>

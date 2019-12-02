@@ -57,7 +57,7 @@ class FerienblockRepository extends ServiceEntityRepository
         // the "p" is an alias you'll use in the rest of the query
         $today = new \DateTime();
         $qb = $this->createQueryBuilder('f')
-            ->andWhere('f.startDate > :today')
+            ->andWhere('f.endDate >= :today')
             ->andWhere('f.stadt <= :stadt')
             ->addOrderBy('f.startDate','asc')
             ->setParameter('today', $today)

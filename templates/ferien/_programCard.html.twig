@@ -64,7 +64,7 @@
                                 </h5>
                             </div>
                             <div class="col-sm-9">
-                                <b>{{ block.startDate|date('d.m.Y') }} {% if block.startDate == block.endDate %}- {{ block.endDate|date('d.m.Y') }}{% endif %}</b><br/>
+                                <b>{{ block.startDate|date('d.m.Y') }} {% if block.startDate != block.endDate %}- {{ block.endDate|date('d.m.Y') }}{% endif %}</b><br/>
                                 {% trans %}Begin{% endtrans %}: {{ block.startTime|date('g:i') }}<br/>
                                 {% trans %}Ende{% endtrans %}: {{ block.endTime|date('g:i') }}<br/>
                             </div>
@@ -74,7 +74,8 @@
                                 </p>
                             </div>
                             <div class="col-sm-9">
-                                <b> {{ block.startVerkauf|date('d.m.Y') }} - {{ block.endVerkauf|date('d.m.Y') }}</b><br/>
+                                <b> {{ block.startVerkauf|date('d.m.Y') }}
+                                    - {{ block.endVerkauf|date('d.m.Y') }}</b><br/>
                             </div>
                         </div>
 
@@ -120,7 +121,17 @@
                                         {{ block.namePreise[loop.index-1] }}: {{ p|number_format(2,',','.') }} €
                                         {% if block.startVerkauf < today and block.endVerkauf > today %}
                                             <a href="{{ path('ferien_kinder_block_toggle', {'slug':stadt.slug,'kind_id':kind.id, 'block_id':block.id, 'preis_id':loop.index-1}) }}"
-                                               class="btn chooseBlock {% if kind.kindFerienblocksGebucht %}bg-success{% endif %}">{% trans with {'%name%':block.namePreise[loop.index-1]} %} Hier zum %name% buchen{% endtrans %}</a>
+                                               class="btn chooseBlock
+{% if block in kind.ferienblocks %}
+{% set ferienblock = kind.kindFerienBlock(block) %}
+{% if ferienblock.preisId == loop.index-1 %}
+{% if ferienblock.state == 10 %}
+bg-success
+{% elseif ferienblock.state == 0 %}
+bg-warning
+{% endif %}
+{% endif %}
+{% endif %}">{% trans with {'%name%':block.namePreise[loop.index-1]} %} Hier zum %name% buchen{% endtrans %}</a>
                                         {% endif %}
                                     </p>
                                 {% endfor %}
