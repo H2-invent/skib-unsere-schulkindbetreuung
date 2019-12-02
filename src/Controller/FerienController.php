@@ -106,7 +106,7 @@ class FerienController extends AbstractController
 
         } else {
             $kinder = $adresse->getKinds()->toArray();
-            dump($adresse);
+
         }
 
         return $this->render('ferien/ferien.html.twig', array('org' => $org, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $kinder));
@@ -124,7 +124,7 @@ class FerienController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
         }
-        dump($adresse);
+
         $kind = new Kind();
         $kind->setEltern($adresse);
         $kind->setSchule(null);
@@ -133,7 +133,7 @@ class FerienController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $kind = $form->getData();
             $errors = $validator->validate($kind);
-            dump($adresse);
+
             try {
                 if (count($errors) === 0) {
                     $em = $this->getDoctrine()->getManager();
