@@ -689,6 +689,29 @@ class Kind
         return $this->kindFerienblocks;
     }
     /**
+     * @return Collection|Ferienblock[]
+     */
+    public function getFerienblocks(): Collection
+    {
+        $ferien = array();
+        foreach ($this->kindFerienblocks as $data){
+            $ferien[] = $data->getFerienblock();
+        }
+        return new ArrayCollection($ferien);
+    }
+    /**
+     * @return Collection|KindFerienblock[]
+     */
+    public function getKindFerienBlock(Ferienblock $ferienblock): ?KindFerienblock
+    {
+        foreach ($this->kindFerienblocks as $data){
+            if($data->getFerienblock() == $ferienblock){
+                return  $data;
+            }
+        }
+        return  null;
+    }
+    /**
      * @return Collection|KindFerienblock[]
      */
     public function getKindFerienblocksBeworben(): Collection

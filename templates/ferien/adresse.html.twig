@@ -101,9 +101,10 @@
 
                         {{ form_label(form.newsletter) }}
                         {{ form_widget(form.newsletter) }}
-
-                        {{ form_rest(form) }}
-                        {{ form_end(form) }}
+                        {{ form_widget(form.captcha) }}
+                        {{ form_widget(form.submit) }}
+                        {{ form_widget(form._token) }}
+                        {{ form_end(form,{'render_rest': false}) }}
                     </div>
                 </div>
             </div>
