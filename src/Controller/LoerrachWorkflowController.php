@@ -300,12 +300,7 @@ class LoerrachWorkflowController extends AbstractController
      */
     public function kinderblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, ToogleKindBlockSchulkind $toogleKindBlockSchulkind)
     {
-        $result = array(
-            'text' => $translator->trans('Betreuungsblock erfolgreich gespeichert'),
-            'error' => 0,
-            'kontingent' => false,
-            'cardText' => $translator->trans('Gebucht')
-        );
+
 
             //Include Parents in this route
             $adresse = new Stammdaten;

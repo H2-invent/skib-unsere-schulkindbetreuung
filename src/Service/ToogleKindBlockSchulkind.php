@@ -56,8 +56,14 @@ class ToogleKindBlockSchulkind
     }
 
     public
-    function toggleKind(Kind $kind, Zeitblock $block, $result)
+    function toggleKind(Kind $kind, Zeitblock $block)
     {
+        $result = array(
+            'text' => $this->translator->trans('Betreuungsblock erfolgreich gespeichert'),
+            'error' => 0,
+            'kontingent' => false,
+            'cardText' => $this->translator->trans('Gebucht')
+        );
         try {
             $result['preisUrl'] = $this->router->generate('loerrach_workflow_preis_einKind', array('kind_id' => $kind->getId()));
 
