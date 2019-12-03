@@ -42,7 +42,7 @@
                                                 </div>
                                             </div>
                                             {{ k.vorname }} {{ k.nachname }}
-                                            <b><span class="price">{% if k.tageWithBlocks>=2 %}{{ k.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></b>
+                                            <b><span class="price">{{ k.ferienblockPreis|number_format(2,',','.')}}€</span></b>
                                         </div>
 
                                     {% endfor %}
@@ -72,24 +72,41 @@
                 method: 'PATCH',
                 success: function (data) {
 
-                    if (data.error == 0 || data.error == 2) {
-                        var klasse = 'bg-warning';
+                    if (data.error == 0) {
 
-                        if(data.kontingent == false){
-                            klasse='bg-success';
+                        ele.addClass('active');
+                        if(data.state == 0){
+                            klasse='bg-warning';
+                            ele.addClass(klasse);
+                        }else if (data.state == 10){
+                            var klasse = 'bg-success';
+                            ele.addClass(klasse);
+
                         }
-                        ele.toggleClass(klasse);
-                        if (ele.hasClass(klasse)) {
+                        ele.closest('.priceChooseButton').find('.btn').each(function (index) {
+                            var ele = $(this);
+                            if(!ele.hasClass('active')){
+                                ele.prop('disabled',true);
+                            }
+                        });
 
-                            ele.find('.gebucht-text').text(data.cardText);
-                        } else {
-                            ele.find('.gebucht-text').text('');
+                        if(data.state <0){
+                            ele.removeClass('bg-warning');
+                            ele.removeClass('bg-success');
+                            ele.removeClass('active');
+                            ele.closest('.priceChooseButton').find('.btn').each(function (index) {
+                                var ele = $(this);
+
+                                    ele.prop('disabled',false);
+
+                            });
                         }
-                    } else {
 
+
+                            ele.text(data.cardText);
 
                     }
-                    ele.closest('.modal-body').find('.price').text(data.text);
+                    $('#price').text(data.preis);
                     if (data.error == 0) {
                         $.ajax({
                             url: data.preisUrl,

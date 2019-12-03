@@ -167,7 +167,7 @@ class Kind
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\KindFerienblock", mappedBy="kind")
+     * @ORM\OneToMany(targetEntity="App\Entity\KindFerienblock", mappedBy="kind", cascade={"remove"})
      */
     private $kindFerienblocks;
 
@@ -766,6 +766,18 @@ class Kind
             }
         }
         return new ArrayCollection($res);
+    }
+    /**
+     * @return Collection|KindFerienblock[]
+     */
+    public function getFerienblockPreis(): float
+    {
+        $preis = 0.0;
+        $ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($ferienblock as $data){
+         $preis += $data->getPreis();
+        }
+       return  $preis;
     }
     /**
      * @return Collection|KindFerienblock[]
