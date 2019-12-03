@@ -59,6 +59,7 @@
             braintree.dropin.create({
                 authorization: '{{token}}',
                 container: '#dropin-container',
+                locale: '{{ app.request.locale }}',
                 paypal: {
                     flow: 'checkout',
                     amount: '10.00',

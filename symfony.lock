@@ -17,9 +17,6 @@
     "braintree/braintree_php": {
         "version": "4.5.0"
     },
-    "clue/stream-filter": {
-        "version": "v1.4.1"
-    },
     "cron/cron": {
         "version": "1.4.1"
     },
@@ -165,9 +162,6 @@
     "markbaker/matrix": {
         "version": "1.2.0"
     },
-    "moneyphp/money": {
-        "version": "v3.2.1"
-    },
     "monolog/monolog": {
         "version": "1.24.0"
     },
@@ -183,9 +177,6 @@
     "ocramius/proxy-manager": {
         "version": "2.2.3"
     },
-    "omnipay/common": {
-        "version": "v3.0.2"
-    },
     "oneup/flysystem-bundle": {
         "version": "3.0",
         "recipe": {
@@ -197,15 +188,6 @@
         "files": [
             "./config/packages/oneup_flysystem.yaml"
         ]
-    },
-    "php-http/discovery": {
-        "version": "1.7.0"
-    },
-    "php-http/message": {
-        "version": "1.8.0"
-    },
-    "php-http/message-factory": {
-        "version": "v1.0.2"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
@@ -224,9 +206,6 @@
     },
     "psr/container": {
         "version": "1.0.0"
-    },
-    "psr/http-message": {
-        "version": "1.0.1"
     },
     "psr/link": {
         "version": "1.0.0"
