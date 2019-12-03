@@ -129,6 +129,8 @@ class FerienController extends AbstractController
         $kind->setEltern($adresse);
         $kind->setSchule(null);
         $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('ferien_kind_neu', array('slug' => $stadt->getSlug()))));
+        $form->remove('klasse');
+        $form->remove('art');
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $kind = $form->getData();
@@ -150,6 +152,43 @@ class FerienController extends AbstractController
         return $this->render('ferien/kindForm.html.twig', array('stadt' => $stadt, 'form' => $form->createView()));
     }
 
+
+    /**
+     * @Route("/{slug}/ferien/kind/edit",name="ferien_workflow_kind_edit",methods={"GET","POST"})
+     */
+    public function kindEditAction($slug, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, TranslatorInterface $translator)
+    {
+        //Include Parents in this route
+        $adresse = new Stammdaten;
+        if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
+            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
+        }
+
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('ferien_workflow_kind_edit', array('slug' => $slug,'kind_id' => $kind->getId()))));
+        $form->remove('klasse');
+        $form->remove('art');
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $kind = $form->getData();
+            $errors = $validator->validate($kind);
+
+            try {
+                if (count($errors) === 0) {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($kind);
+                    $em->flush();
+                    $text = $translator->trans('Erfolgreich gespeichert');
+                    return new JsonResponse(array('error' => 0, 'snack' => $text));
+                }
+            } catch (\Exception $e) {
+                $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+                return new JsonResponse(array('error' => 1, 'snack' => $text));
+            }
+        }
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        return $this->render('ferien/kindForm.html.twig', array('stadt' => $stadt, 'form' => $form->createView()));
+    }
 
     /**
      * @Route("/{slug}/ferien/programm",name="ferien_kind_programm",methods={"GET","POST"})
