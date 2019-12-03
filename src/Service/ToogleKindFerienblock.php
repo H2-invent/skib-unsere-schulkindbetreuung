@@ -67,7 +67,8 @@ class ToogleKindFerienblock
             if ($kindFerienBlock !== null) {
 
                 $this->em->remove($kindFerienBlock);
-
+                $result['cardText'] = $this->translator->trans('Hier buchen');
+                $result['state'] = -1;
 
             } else {
 
@@ -77,6 +78,7 @@ class ToogleKindFerienblock
                 if ($block->getMinAnzahl() || $block->getMaxAnzahl()) {
                     // State: Kontingent muss bestätig werden (Beworben)
                     $kindFerienBlock->setState(0);
+                    /*
                     if (count($kindFerienBlock->getCheckinStatus()) < $block->getMaxAnzahl()) {
                         // todo State: trotz Kontigent direkt angenommen, wenn noch min ein Plätze vorhanden sind (Gebucht)
                         $kindFerienBlock->setState(10);
@@ -86,6 +88,7 @@ class ToogleKindFerienblock
                         // todo State: warteliste (Nicht gebucht)
                         $kindFerienBlock->setState(15);
                     }
+                    */
                 } else {
                     // State: Ohne Kontingent direkt angemeldet (Gebucht)
                     $kindFerienBlock->setState(10);
@@ -96,6 +99,7 @@ class ToogleKindFerienblock
                 $kindFerienBlock->setCheckinID(md5(uniqid()));
                 $this->em->persist($kindFerienBlock);
                 $result['state'] = $kindFerienBlock->getState();
+
             }
           $this->em->flush();
         } catch (\Exception $e) {
@@ -103,7 +107,7 @@ class ToogleKindFerienblock
             $result['error'] = 1;
         }
         $this->em->flush();
-
+        $result['preis']= number_format($kind->getFerienblockPreis(),2,',','.') .'€';
         return $result;
     }
 

@@ -1,10 +1,9 @@
 {% if date is defined %}
-
     {% for block in date %}
         <div class="accordion">
             <div class="card mb-1">
                 <div class="card-header" id="heading{{ block.id }}">
-                    <a type="button" data-toggle="collapse"
+                    <a data-toggle="collapse"
                        data-target="#collapse{{ block.id }}"
                        aria-expanded="true" aria-controls="collapse{{ block.id }}">
                         <h5>
@@ -112,29 +111,10 @@
                                 </h5>
                             </div>
                             <div class="col-sm-9">
-                                {% for p in block.preis %}
-                                    <p>
+                                <span class="priceChooseButton">
+                                    {% include 'ferien/_programButton.html.twig' with {'preis':block.preis} %}
 
-
-                                        // todo price buttons have no impact on bg-success
-
-                                        {{ block.namePreise[loop.index-1] }}: {{ p|number_format(2,',','.') }} €
-                                        {% if block.startVerkauf < today and block.endVerkauf > today %}
-                                            <a href="{{ path('ferien_kinder_block_toggle', {'slug':stadt.slug,'kind_id':kind.id, 'block_id':block.id, 'preis_id':loop.index-1}) }}"
-                                               class="btn chooseBlock
-{% if block in kind.ferienblocks %}
-{% set ferienblock = kind.kindFerienBlock(block) %}
-{% if ferienblock.preisId == loop.index-1 %}
-{% if ferienblock.state == 10 %}
-bg-success
-{% elseif ferienblock.state == 0 %}
-bg-warning
-{% endif %}
-{% endif %}
-{% endif %}">{% trans with {'%name%':block.namePreise[loop.index-1]} %} Hier zum %name% buchen{% endtrans %}</a>
-                                        {% endif %}
-                                    </p>
-                                {% endfor %}
+                                </span>
                             </div>
                         </div>
                     </div>
