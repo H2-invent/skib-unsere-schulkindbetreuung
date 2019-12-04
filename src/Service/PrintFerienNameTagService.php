@@ -68,8 +68,6 @@ class PrintFerienNameTagService
         $content = $this->templating->render('ferien_bericht/namenTags.html.twig',array('ferien'=>$ferien));
         $pdf->writeHTMLCell(0, 0, 20, 70, $content, 0, 1, 0, true, '', true
         );
-        dump($ferien);
-        dump($content);
 return 0;
   return  $pdf->Output($fileName.".pdf", $type); // This will output the PDF as a Download
     }
