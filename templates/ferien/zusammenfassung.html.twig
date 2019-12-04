@@ -139,19 +139,21 @@
 
                                 <tr>
 
-                                    {% for f in k.kindFerienblocks %}
+
                                         <td>
                                             Gebuchte Ferienprogramme
                                         </td>
                                         <td>
+                                            {% for f in k.kindFerienblocks %}
                                             <b>{{ f.ferienblock.translate.titel }}</b><br/>
                                             {{ f.ferienblock.startDate|date('d.M.Y') }}
                                             - {{ f.ferienblock.endDate|date('d.M.Y') }}<br/>
                                             {% trans %}Preis{% endtrans %}: {{ f.preis|number_format(2,',','.') }} €<br/>
                                             {% trans %}Betreuunde Organisation{% endtrans %}: {{ f.ferienblock.organisation.name }}<br/>
-                                            <a target="_blank" href={{ path('workflow_datenschutz', {'org_id':f.ferienblock.organisation.id, 'slug':stadt.slug}) }}>{% trans %}Datenschutzhinweis der{% endtrans %} {{ f.ferienblock.organisation.name }}</a>
+                                            <a target="_blank" href={{ path('workflow_datenschutz', {'org_id':f.ferienblock.organisation.id, 'slug':stadt.slug}) }}>{% trans %}Datenschutzhinweis der{% endtrans %} {{ f.ferienblock.organisation.name }}</a><br/>
+                                            {% endfor %}
                                         </td>
-                                    {% endfor %}
+
                                 </tr>
 
                                 <tr>
