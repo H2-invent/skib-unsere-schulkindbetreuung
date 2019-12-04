@@ -53,13 +53,11 @@ class Kind
     private $nachname;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="integer", nullable=true)
      */
     private $klasse;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="integer", nullable=true)
      */
     private $art;
