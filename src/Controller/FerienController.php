@@ -308,7 +308,7 @@ class FerienController extends AbstractController
             }
             $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
 
-        return $this->render('ferien/adresse.html.twig', array('eltern' => $adresse, 'stadt' => $stadt));
+        return $this->render('ferien/abschluss.html.twig', array('stadt' => $stadt));
     }
 
 

@@ -24,6 +24,7 @@
 
                                 {% if kinder is defined and kinder is not null %}
                                     {% for k in kinder %}
+                                        <div class="card">
                                         <div class="card-body">
                                             <div class="btn-group">
                                                 <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
@@ -40,11 +41,24 @@
                                                        class="dropdown-item deleteBtn">{% trans %}Löschen{% endtrans %}</a>
 
                                                 </div>
+
                                             </div>
                                             {{ k.vorname }} {{ k.nachname }}
-                                            <b><span class="price">{{ k.ferienblockPreis|number_format(2,',','.')}}€</span></b>
                                         </div>
+                                        <div class="card-body">
 
+                                            <b><span class="price">{% trans %}Summe{% endtrans %}: {{ k.ferienblockPreis|number_format(2,',','.')}}€</span></b><br/>
+
+                                            {% trans %}Gebuchte Blöcke{% endtrans %}: <br/>
+                                            {% for block in k.KindFerienblocksGebucht %}
+                                    {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€
+                                            {% endfor %}
+                                            {% trans %}Beworbene Blöcke{% endtrans %}: <br/>
+                                            {% for block in k.KindFerienblocksBeworben %}
+                                                {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€
+                                            {% endfor %}
+                                        </div>
+                                        </div>
                                     {% endfor %}
                                 {% endif %}
                     </div>
