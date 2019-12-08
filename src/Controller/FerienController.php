@@ -6,10 +6,12 @@ use App\Entity\Ferienblock;
 use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
+use App\Entity\Payment;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Form\Type\LoerrachEltern;
 use App\Form\Type\LoerrachKind;
+use App\Form\Type\PaymentType;
 use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindFerienblock;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -262,6 +264,16 @@ class FerienController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
         }
+        $payment = new Payment();
+        $form = $this->createForm(PaymentType::class, $payment);
+        $form->handleRequest($request);
+
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $adresse = $form->getData();
+            $errors = $validator->validate($adresse);
+        }
+
         $gateway =  new Gateway([
             'environment' => 'sandbox',
             'merchantId' => '65xmpcc6hh6khg5d',
@@ -269,7 +281,7 @@ class FerienController extends AbstractController
             'privateKey' => 'a153a39aaef70466e97773a120b95f91',
         ]);
         $clientToken = $gateway->clientToken()->generate();
-        return $this->render('ferien/bezahlung.html.twig', array('stadt' => $stadt,'token'=>$clientToken));
+        return $this->render('ferien/bezahlung.html.twig', array('stadt' => $stadt,'token'=>$clientToken,'form'=>$form->createView()));
     }
 
 
