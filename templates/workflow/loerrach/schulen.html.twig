@@ -10,7 +10,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h4> {% trans %}Kind/Kinder hinzufügen{% endtrans %}</h4>
+            <h4> {% trans %}Daten des Kindes/Kinder{% endtrans %}</h4>
         </div>
         <div class="card-body">
             <section class="dashboard-counts section-padding" id="schulenShow">
@@ -32,7 +32,7 @@
                                     <p class="card-text">{{ s.infoText }}</p>
 
                                     <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id}) }}"
-                                       class="loadContent btn btn-outline-primary">{% trans %}Kind hinzufügen  {% endtrans %}</a>
+                                       class="loadContent btn btn-outline-primary">{% trans %}Kind anmelden  {% endtrans %}</a>
 
                                 </div>
                                 {% if kinder[s.id] is defined and kinder[s.id] is not null %}

@@ -1,52 +1,65 @@
 <!-- Footer -->
 <footer class="text-muted page-footer font-small py-1" {% if fix is not defined %}style="margin-top: 30px {% endif %}">
 
-        <div class="container align-content-center">
-            <div class="container-fluid text-center text-md-left ">
+    <div class="container align-content-center">
+        <div class="container-fluid text-center text-md-left ">
 
-                <div class="row">
+            <div class="row">
 
-                    <hr class="clearfix w-100 d-md-none d-none">
+                <hr class="clearfix w-100 d-md-none d-none">
 
-                    <div class="col-lg-3 col-md-4 mb-md-0">
-                        <ul class="list-unstyled">
-                            <div class="font-weight-bold d-none d-md-block">
-                                Anmeldeportal
-                            </div>
-                            <li>
-                                <a href={{ path('impressum') }}>{% trans %}Impressum{% endtrans %}</a>
-                            </li>
-                            <li>
-                                <a href={{ path('datenschutz') }}>{% trans %}Datenschutz{% endtrans %}</a>
-                            </li>
-                            <li>
-                                <a href={{ path('nutzungsbedingungen') }}>{% trans %}Nutzungsbedingungen{% endtrans %}</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4 mb-md-0 d-none d-md-block">
-                        <ul class="list-unstyled">
-                            <div class="font-weight-bold">
-                                Unternehmen
-                            </div>
-                            <li>
-                                <a href="https://h2-invent.com/ueber-uns/">Über uns</a>
-                            </li>
-                            <li>
-                                <a href="https://h2-invent.com/services/beratung/">Beratung</a>
-                            </li>
-                            <li>
-                                <a href="https://h2-invent.com/kontakt/">Kontakt</a>
-                            </li>
-                        </ul>
-
-                    </div>
-
+                <div class="col-lg-3 col-md-4 mb-md-0">
+                    <ul class="list-unstyled">
+                        <div class="font-weight-bold d-none d-md-block">
+                            Anmeldeportal
+                        </div>
+                        <li>
+                            <a href={{ path('impressum') }}>{% trans %}Impressum{% endtrans %}</a>
+                        </li>
+                        <li>
+                            <a href={{ path('datenschutz') }}>{% trans %}Datenschutz{% endtrans %}</a>
+                        </li>
+                        <li>
+                            <a href={{ path('nutzungsbedingungen') }}>{% trans %}Nutzungsbedingungen{% endtrans %}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-md-0 d-none d-md-block">
+                    <ul class="list-unstyled">
+                        <div class="font-weight-bold">
+                            Unternehmen
+                        </div>
+                        <li>
+                            <a href="https://h2-invent.com/ueber-uns/">Über uns</a>
+                        </li>
+                        <li>
+                            <a href="https://h2-invent.com/services/beratung/">Beratung</a>
+                        </li>
+                        <li>
+                            <a href="https://h2-invent.com/kontakt/">Kontakt</a>
+                        </li>
+                    </ul>
                 </div>
 
+                {% if app.request.attributes.get("_controller") != 'Landing' %}
+
+                    <div class="col-lg-6 col-md-8 mb-md-0 text-right">
+                        <b class="d-none d-md-block">
+                            {% trans with {"%name%":stadt.name} %}Im Auftrag der Stadt %name%{% endtrans %}
+                        </b>
+                        {% if stadt.logoUrl is not empty %}
+                            <div class="mt-2">
+                                <a href="{{ stadt.stadtHomepage }}">
+                                    <img src="{{ stadt.logoUrl }}" alt="Unsere SKiB" style="width: 210px">
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
+
         </div>
+    </div>
     <div class="footer-copyright text-center py-2">
         © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
     </div>
