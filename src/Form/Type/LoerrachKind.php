@@ -52,9 +52,9 @@ class LoerrachKind extends AbstractType
                 ],'label'=>'Jahrgangsstufe','translation_domain' => 'form'])
             ->add('art', ChoiceType::class, [
                 'choices'  => [
-                    'Ganztagsbetreuung' => 1,
-                    'Halbtagsbetreuung' => 2,
-                ],'label'=>'Art der Betreuung','translation_domain' => 'form'])
+                    'Ganztag' => 1,
+                    'Halbtag' => 2,
+                ],'label'=>'Schulform','translation_domain' => 'form'])
             ->add('geburtstag', BirthdayType::class,['years'=>range($today-20,$today,1),'label'=>'Geburtstag','translation_domain' => 'form'])
             ->add('allergie', TextType::class,['required'=>false,'label'=>'Mein Kind hat folgende Allergien','translation_domain' => 'form'])
             ->add('medikamente', TextType::class,['required'=>false,'label'=>'Mein Kind benötig folgende Medikamente','translation_domain' => 'form'])

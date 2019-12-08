@@ -246,6 +246,8 @@
             </tr>
         </table>
     <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz" value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}<br>
+    <input id="checkboxDatenschutzStadt" type="checkbox" class="checkboxSelect" name="Datenschutz" value="Datenschutzhinweis"> {% trans %}Ich habe die Datenschutzhinweise der Stadt Lörrach gelesen und akzeptiere die Verarbeitung{% endtrans %}<br>
+    <input id="checkboxStorno" type="checkbox" class="checkboxSelect" name="Datenschutz" value="Datenschutzhinweis"> {% trans %}Ich habe verstanden, dass die Bestätigung per Email wiederrufen werden kann, wenn das Maximum an Kindern für einen Betreuungszeitraum erreicht ist. Ein Recht auf Aufnahme zur Betreuung besteht nicht.{% endtrans %}<br>
     <div>
         <input id="checkboxAgb" type="checkbox" class="checkboxSelect" name="AGB" value="AGB"> <a target="_blank" href={{ path('workflow_agb', {'slug':stadt.slug}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die Allgemeine Geschäftsbeingungen der Stadt  %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese{% endtrans %}</a><br>
     </div>
