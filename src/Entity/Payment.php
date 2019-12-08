@@ -56,6 +56,11 @@ class Payment
      */
     private $kontobesitzer;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $braintreeToken;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -153,6 +158,18 @@ class Payment
     public function setKontobesitzer(?string $kontobesitzer): self
     {
         $this->kontobesitzer = $kontobesitzer;
+
+        return $this;
+    }
+
+    public function getBraintreeToken(): ?string
+    {
+        return $this->braintreeToken;
+    }
+
+    public function setBraintreeToken(?string $braintreeToken): self
+    {
+        $this->braintreeToken = $braintreeToken;
 
         return $this;
     }
