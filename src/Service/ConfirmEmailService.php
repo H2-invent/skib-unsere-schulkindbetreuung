@@ -74,7 +74,8 @@ class ConfirmEmailService
                 $formData = $form->getData();
                 if ($formData['confirmationCode'] == $stammdaten->getConfirmationCode()) {
                     $stammdaten->setEmailConfirmed(true);
-
+                    $stammdaten->setIpAdresse($request->getClientIp());
+                    $stammdaten->setConfirmDate(new \DateTime());
                     $this->em->persist($stammdaten);
                     $this->em->flush();
                     return null;
