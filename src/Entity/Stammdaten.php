@@ -210,6 +210,16 @@ class Stammdaten
      */
     private $endedAt;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $ipAdresse;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $confirmDate;
+
 
     public function __construct()
     {
@@ -682,6 +692,30 @@ class Stammdaten
     public function setEndedAt(?\DateTimeInterface $endedAt): self
     {
         $this->endedAt = $endedAt;
+
+        return $this;
+    }
+
+    public function getIpAdresse(): ?string
+    {
+        return $this->ipAdresse;
+    }
+
+    public function setIpAdresse(?string $ipAdresse): self
+    {
+        $this->ipAdresse = $ipAdresse;
+
+        return $this;
+    }
+
+    public function getConfirmDate(): ?\DateTimeInterface
+    {
+        return $this->confirmDate;
+    }
+
+    public function setConfirmDate(?\DateTimeInterface $confirmDate): self
+    {
+        $this->confirmDate = $confirmDate;
 
         return $this;
     }
