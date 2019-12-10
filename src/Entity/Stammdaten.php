@@ -127,11 +127,6 @@ class Stammdaten
     private $gdpr;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $newsletter;
-
-    /**
      * @Assert\NotBlank()
      * @ORM\Column(type="integer",nullable=true)
      */
@@ -479,18 +474,6 @@ class Stammdaten
     public function setGdpr(?bool $gdpr): self
     {
         $this->gdpr = $gdpr;
-
-        return $this;
-    }
-
-    public function getNewsletter(): ?bool
-    {
-        return $this->newsletter;
-    }
-
-    public function setNewsletter(?bool $newsletter): self
-    {
-        $this->newsletter = $newsletter;
 
         return $this;
     }

@@ -22,8 +22,8 @@ class FerienBerichtController extends AbstractController
     {
 
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->findOneBy(array('id' => $request->get('org_id')));
-        $ferien = $this->getDoctrine()->getRepository(KindFerienblock::class)->findOneBy(array('id' => $request->get('ferien_id')));
-        $pdf = $printFerienNameTagService->printNameTag($ferien,$organisation);
+        $kinder = $this->getDoctrine()->getRepository(KindFerienblock::class)->findBy(array('ferienblock' => $request->get('ferien_id'), 'state' => 10));
+        $pdf = $printFerienNameTagService->printNameTag($kinder,$organisation);
 
         return $pdf;
     }
