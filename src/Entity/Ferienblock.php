@@ -363,12 +363,23 @@ class Ferienblock
 
         return $this;
     }
+    public function getKindFerienblocksGesamt(): Collection
+    {
+        $res = array();
+        $kind_ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($kind_ferienblock as $data){
+            if($data->getState() <20 && $data->getKind()->getFin()){
+                $res[] = $data;
+            }
+        }
+        return new ArrayCollection($res);
+    }
     public function getKindFerienblocksBeworben(): Collection
     {
         $res = array();
-        $ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($ferienblock as $data){
-            if($data->getState() == 0){
+        $kind_ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($kind_ferienblock as $data){
+            if($data->getState() == 0 && $data->getKind()->getFin()){
                 $res[] = $data;
             }
         }
@@ -381,8 +392,9 @@ class Ferienblock
     {
         $res = array();
         $ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($ferienblock as $data){
-            if($data->getState() == 10){
+        $kind_ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($kind_ferienblock as $data){
+            if($data->getState() == 10 && $data->getKind()->getFin()){
                 $res[] = $data;
             }
         }
@@ -395,8 +407,9 @@ class Ferienblock
     {
         $res = array();
         $ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($ferienblock as $data){
-            if($data->getState() == 15){
+        $kind_ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($kind_ferienblock as $data){
+            if($data->getState() == 15 && $data->getKind()->getFin()){
                 $res[] = $data;
             }
         }
@@ -408,9 +421,9 @@ class Ferienblock
     public function getKindFerienblocksStorniert(): Collection
     {
         $res = array();
-        $ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($ferienblock as $data){
-            if($data->getState() == 20){
+        $kind_ferienblock = $this->kindFerienblocks->toArray();
+        foreach ($kind_ferienblock as $data){
+            if($data->getState() == 20 && $data->getKind()->getFin()){
                 $res[] = $data;
             }
         }

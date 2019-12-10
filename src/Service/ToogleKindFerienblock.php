@@ -57,10 +57,10 @@ class ToogleKindFerienblock
             'kontingent' => false,
             'cardText' => $this->translator->trans('Gebucht')
         );
-        try {
+
+      //  try {
             if ($block->getMinAnzahl() || $block->getMaxAnzahl()) {
                 $result['kontingent'] = true;
-                $result['cardText'] = $this->translator->trans('Angemeldet');
             }
             $kindFerienBlock = $this->em->getRepository(KindFerienblock::class)->findOneBy(array('kind' => $kind, 'ferienblock' => $block));
 
@@ -69,45 +69,58 @@ class ToogleKindFerienblock
                 $this->em->remove($kindFerienBlock);
                 $result['cardText'] = $this->translator->trans('Hier buchen');
                 $result['state'] = -1;
+                $this->em->flush();
+                $result['preis'] = number_format($kind->getFerienblockPreis(), 2, ',', '.') . '€';
+                return $result;
+            }
 
+            $kindFerienBlock = new KindFerienblock();
+            $kindFerienBlock->setKind($kind);
+            $kindFerienBlock->setFerienblock($block);
+            $kindFerienBlock->setPreis($block->getPreis()[$preisId]);
+            $kindFerienBlock->setPreisId($preisId);
+            $kindFerienBlock->setCheckinID(md5(uniqid()));
+
+
+            if (null === $block->getMinAnzahl() || null === $block->getMaxAnzahl()) {
+                // State: Ohne Kontingent direkt angemeldet (Gebucht)
+                $kindFerienBlock->setState(10);
+                $result['cardText'] = $this->translator->trans('Gebucht');
             } else {
 
-                $kindFerienBlock = new KindFerienblock();
-                $kindFerienBlock->setKind($kind);
-                $kindFerienBlock->setFerienblock($block);
-                if ($block->getMinAnzahl() || $block->getMaxAnzahl()) {
-                    // State: Kontingent muss bestätig werden (Beworben)
-                    $kindFerienBlock->setState(0);
-                    /*
-                    if (count($kindFerienBlock->getCheckinStatus()) < $block->getMaxAnzahl()) {
-                        // todo State: trotz Kontigent direkt angenommen, wenn noch min ein Plätze vorhanden sind (Gebucht)
-                        $kindFerienBlock->setState(10);
-                    }
+                $aktuell = sizeof($block->getKindFerienblocksGesamt()) + 1;
 
-                    if (count($kindFerienBlock->getCheckinStatus()) >= $block->getMaxAnzahl()) {
-                        // todo State: warteliste (Nicht gebucht)
-                        $kindFerienBlock->setState(15);
-                    }
-                    */
-                } else {
-                    // State: Ohne Kontingent direkt angemeldet (Gebucht)
+                // Fall 1: aktuell ist kleiner  max und kind automatisch hinzugefügt
+                //==> dann state auf 10 da das Kind gebuct ist.
+                if ($aktuell <= $block->getMaxAnzahl() && $block->getModeMaximal() === false) {
                     $kindFerienBlock->setState(10);
+                    $result['cardText'] = $this->translator->trans('Gebucht');
+                } // Fall 2:  aktuell ist kleiner  max und kind manuel hinzugefügt
+                elseif ($aktuell <= $block->getMaxAnzahl() && $block->getModeMaximal() === true) {
+                    $kindFerienBlock->setState(0);
+                    $result['cardText'] = $this->translator->trans('Angemeldet');
+                } // Fall 3:  aktuell ist größer max und kind warteliste aktiv
+                elseif ($aktuell > $block->getMaxAnzahl() && $block->getWarteliste() === true) {
+                    $kindFerienBlock->setState(0);
+                    $result['cardText'] = $this->translator->trans('Angemeldet');
+                } // Fall 4: aktuell ist größer max und kind warteliste deaktiviert
+                elseif ($aktuell > $block->getMaxAnzahl() && $block->getWarteliste() === false) {
+                    $result['state'] = -1;
+                    $result['cardText'] = $this->translator->trans('Hier buchen');
+                    $result['text'] = $this->translator->trans('Es sind keine Plätze mehr verfügbar.');
+                    $result['preis'] = number_format($kind->getFerienblockPreis(), 2, ',', '.') . '€';
+                    return $result;
                 }
-                $kindFerienBlock->setPreis($block->getPreis()[$preisId]);
-                $kindFerienBlock->setPreisId($preisId);
-
-                $kindFerienBlock->setCheckinID(md5(uniqid()));
-                $this->em->persist($kindFerienBlock);
-                $result['state'] = $kindFerienBlock->getState();
 
             }
-          $this->em->flush();
-        } catch (\Exception $e) {
-            $result['text'] = $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.');
-            $result['error'] = 1;
-        }
-        $this->em->flush();
-        $result['preis']= number_format($kind->getFerienblockPreis(),2,',','.') .'€';
+            $this->em->persist($kindFerienBlock);
+            $this->em->flush();
+       // } catch (\Exception $e) {
+        //    $result['text'] = $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+         //   $result['error'] = 1;
+       // }
+        $result['state'] = $kindFerienBlock->getState();
+        $result['preis'] = number_format($kind->getFerienblockPreis(), 2, ',', '.') . '€';
         return $result;
     }
 
