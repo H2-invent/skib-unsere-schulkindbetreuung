@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PaymentSepaRepository")
  */
@@ -20,21 +20,27 @@ class PaymentSepa
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @Assert\Iban()
      */
     private $iban;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @Assert\Bic()
      */
     private $bic;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $bankName;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $kontoinhaber;
 
