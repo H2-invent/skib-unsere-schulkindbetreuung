@@ -255,35 +255,6 @@ class FerienController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/ferien/bezahlung",name="ferien_bezahlung",methods={"Get","POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
-    public function paymentAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
-    {
-        //Include Parents in this route
-        if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
-            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
-        }
-        $payment = new Payment();
-        $form = $this->createForm(PaymentType::class, $payment);
-        $form->handleRequest($request);
-
-        $errors = array();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $adresse = $form->getData();
-            $errors = $validator->validate($adresse);
-        }
-
-        $gateway =  new Gateway([
-            'environment' => 'sandbox',
-            'merchantId' => '65xmpcc6hh6khg5d',
-            'publicKey' => 'wzkfsj9n2kbyytfp',
-            'privateKey' => 'a153a39aaef70466e97773a120b95f91',
-        ]);
-        $clientToken = $gateway->clientToken()->generate();
-        return $this->render('ferien/bezahlung.html.twig', array('stadt' => $stadt,'token'=>$clientToken,'form'=>$form->createView()));
-    }
 
 
     /**

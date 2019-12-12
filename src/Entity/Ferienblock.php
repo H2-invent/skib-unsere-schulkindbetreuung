@@ -391,7 +391,7 @@ class Ferienblock
     public function getKindFerienblocksGebucht(): Collection
     {
         $res = array();
-        $ferienblock = $this->kindFerienblocks->toArray();
+
         $kind_ferienblock = $this->kindFerienblocks->toArray();
         foreach ($kind_ferienblock as $data){
             if($data->getState() == 10 && $data->getKind()->getFin()){
@@ -406,7 +406,7 @@ class Ferienblock
     public function getKindFerienblocksWarteliste(): Collection
     {
         $res = array();
-        $ferienblock = $this->kindFerienblocks->toArray();
+      
         $kind_ferienblock = $this->kindFerienblocks->toArray();
         foreach ($kind_ferienblock as $data){
             if($data->getState() == 15 && $data->getKind()->getFin()){
