@@ -59,7 +59,7 @@ class SepaCreateService
         $this->environment = $environment;
     }
 
-    private function calcSepa(Sepa $sepa)
+    public function calcSepa(Sepa $sepa)
     {
         $active = $this->em->getRepository(Active::class)->findSchuleBetweentwoDates($sepa->getVon(), $sepa->getBis(), $sepa->getOrganisation()->getStadt());
         $today = new \DateTime();
@@ -191,7 +191,7 @@ class SepaCreateService
 
             $mailContent =   $this->environment->render('email/rechnungEmail.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
             $betreff = $this->translator->trans('Rechnung ') . ' ' . $rechnung->getRechnungsnummer();
-            $this->mailerService>sendEmail($organisation->getName(), $organisation->getEmail(), $data->getEmail(), $betreff, $mailContent, $attachment);
+           $this->mailerService->sendEmail($organisation->getName(), $organisation->getEmail(), $data->getEmail(), $betreff, $mailContent, $attachment);
 
             return $summe;
         }
