@@ -58,11 +58,9 @@
             </tr>
             <tr>
                 <td>{% trans %} Bankverbindung für Lastschrift {% endtrans %}</td>
-                <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}<br/>{{ eltern.sepaInfo?"Ja ich Erteile den Organisationen ein SEPA Lastschrift Mandant":""|trans }} </td>
-            </tr>
-            <tr>
-                <td>{% trans %} Zum Newsletter angemeldet {% endtrans %}</td>
-                <td>{{ eltern.newsletter?"Ja":'Nein'|trans }}</td>
+
+                <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}<br/>{{ eltern.sepaInfo?"Ja ich Erteile der Organisation ein SEPA Lastschrift Mandant":""|trans }} </td>
+
             </tr>
             </tbody>
         </table>
@@ -196,6 +194,7 @@
                                 </td>
                             </tr>
                             {% endif %}
+                            {% if k.mittagessenblocksReal|length > 0 %}
                             <tr>
                                 <td>
                                             {% trans %} Gebuchte Mittagessen {% endtrans %}
@@ -209,10 +208,11 @@
                                     </ul>
                                 </td>
                             </tr>
+                            {% endif %}
                             <tr>
                                 <td>
                                     <h5>
-                                        {% trans %} Summe {% endtrans %}
+                                        {% trans %} Summe pro Monat {% endtrans %}
                                     </h5>
                                 </td>
                                 <td>
@@ -232,7 +232,7 @@
         <table class="table">
             <tr>
                 <td>
-                    <h5>{% trans %} Summe {% endtrans %}</h5>
+                    <h5>{% trans %} Summe für alle Kinder pro Monat {% endtrans %}</h5>
                 </td>
                 <td>
                     <h5>
