@@ -114,9 +114,10 @@ class SepaCreateService
         $this->em->persist($sepa);
         $this->em->flush();
         foreach ($eltern as $data) {// für alle gefunden eltern in diesem Monat
-            $summe = $this->createRechnung($data,$sepa,$organisation);
-            if($summe>0){
-                $sepaSumme += $summe;
+            $re = $this->createRechnung($data,$sepa,$organisation);
+            if($re->getSumme()>0){
+                $sepaSumme += $re->getSumme();
+                $rechnungen[] = $re;
             }
         }
 
@@ -126,7 +127,7 @@ class SepaCreateService
                 $organisation->getGlauaubigerId())
         );
 
-        $sepa->setAnzahl(sizeof($sepa->getRechnungen()));
+        $sepa->setAnzahl(sizeof($rechnungen));
         $sepa->setCreatedAt(new \DateTime());
         $sepa->setPdf('');
         $sepa->setSumme($sepaSumme);
@@ -136,7 +137,8 @@ class SepaCreateService
     }
 
     
-        private function createRechnung (Stammdaten $data,Sepa $sepa, Organisation $organisation){
+        private function createRechnung (Stammdaten $data,Sepa $sepa, Organisation $organisation) :Rechnung
+        {
             $type = 'FRST'; // setzte SEPA auf First Sepa
 
             foreach ($data->getRechnungs() as $data3) {//Wenn es eine Rechnung gibt, ewlche an einem SEPA hängt,
@@ -193,7 +195,7 @@ class SepaCreateService
             $betreff = $this->translator->trans('Rechnung ') . ' ' . $rechnung->getRechnungsnummer();
            $this->mailerService->sendEmail($organisation->getName(), $organisation->getEmail(), $data->getEmail(), $betreff, $mailContent, $attachment);
 
-            return $summe;
+            return $rechnung;
         }
 
 
