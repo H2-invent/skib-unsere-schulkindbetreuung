@@ -1,0 +1,218 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="font-weight-bold hauptfarbe">{% trans %}Übersicht und Stornieren{% endtrans %}</h1>
+        <hr class="hr-light ">
+    </div>
+
+{% endblock %}
+{% block content %}
+    <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="cover-heading">{% trans %}Daten der erziehungsberechtigten Person{% endtrans %} </h3>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td>{% trans %} Name der Eltern {% endtrans %}</td>
+                    <td>{{ eltern.vorname }} {{ eltern.name }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %} E-Mail Adresse {% endtrans %}</td>
+                    <td>{{ eltern.email }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %} Adresse der Eltern {% endtrans %}</td>
+                    <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Daten der Kinder in einer for Schleife -->
+    <div class="card">
+        <div class="card-header mb-2">
+            <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %}</h3>
+        </div>
+        <div class="text-left card-body" id="accordion">
+            {% for k in kind %}
+                <div class="card mb-2">
+                    <div class="card-header" id="heading{{ loop.index }}">
+                        <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="false"
+                               aria-controls="collapse{{ loop.index }}">
+                                {{ k.vorname }} {{ k.nachname }} <br/>
+                                <small>
+                                    {% trans %}Summe der gebuchten Ferienprogramme: {% endtrans %} <a
+                                            href="{{ path('loerrach_workflow_print_pdf',{'id':k.id}) }}"><i
+                                                class="fa fa-download"></i></a>
+                                </small>
+                            </a>
+                        </h5>
+                    </div>
+
+                    <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}"
+                         data-parent="#accordion">
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td style="width: 60%">{% trans %} Vorname {% endtrans %}</td>
+                                    <td>{{ k.vorname }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Nachname {% endtrans %}</td>
+                                    <td>{{ k.nachname }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Geburtstag {% endtrans %}</td>
+                                    <td>{{ k.geburtstag|date('d.m.Y') }}</td>
+                                </tr>
+                                <tr>
+
+
+                                    <td>
+                                        Gebuchte Ferienprogramme
+                                    </td>
+                                    <td>
+                                        {% for f in k.kindFerienblocks %}
+                                            <b>{{ f.ferienblock.translate.titel }}</b>
+
+
+                                            <button href="{{ path('ferien_storno_mark', {'kind_id':k.id, 'block_id':f.id}) }}" class="btn chooseBlock">
+                                                        {% if f.state == 10 %}
+                                                            {% trans %} Stornieren{% endtrans %}
+                                                        {% elseif f.state == -1 %}
+                                                            {% trans %}Storno markiert{% endtrans %}
+                                                        {% elseif f.state == 0 %}
+                                                            {% trans %}Wartelistenplatz freigeben{% endtrans %}
+                                                        {% endif %}
+
+
+                                            </button>
+
+
+
+
+
+                                            <br/>
+                                            {{ f.ferienblock.startDate|date('d.M.Y') }}
+                                            - {{ f.ferienblock.endDate|date('d.M.Y') }}<br/>
+                                            {% trans %}Preis{% endtrans %}: {{ f.preis|number_format(2,',','.') }} €<br/>
+                                            {% trans %}Betreuunde Organisation{% endtrans %}: {{ f.ferienblock.organisation.name }}<br/>
+                                       {% endfor %}
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <h5>
+                                            {% trans %} Summe {% endtrans %}
+                                        </h5>
+                                    </td>
+                                    <td>
+                                        <h5>
+
+                                        </h5>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <table class="table">
+        <tr>
+            <td>
+                <h5>{% trans %} Summe für alle Kinder {% endtrans %}</h5>
+            </td>
+        </tr>
+    </table>
+    <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz"
+           value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}
+    <br>
+    <button class="btn btn-outline-primary sendButton" disabled>{% trans %}Änderung absenden{% endtrans %}</button>
+
+{% endblock %}
+{% block jquery %}
+    <script>
+        var url = "{{ path('ferien_abschluss',{'slug':stadt.slug}) }}";
+        $('.checkboxSelect').on('change', function () {
+            var cbS = $('.checkboxSelect');
+            var all = true;
+            cbS.each(function (index) {
+                if (!this.checked) {
+                    all = false;
+                }
+            });
+            if (all == true) {
+                $('.sendButton').wrap('<a href="{{ path('ferien_abschluss',{'slug':stadt.slug}) }}">');
+                $('.sendButton').prop('disabled', false);
+
+            } else {
+                if ($('.sendButton').parent().is("a")) {
+                    $('.sendButton').unwrap();
+                }
+                $('.sendButton').prop('disabled', true);
+            }
+        });
+    </script>
+
+
+<script>
+    $(document).on('click','.chooseBlock',function (e) {
+        e.preventDefault();
+        var ele = $(this);
+        var url = ele.attr('href');
+        $.ajax({
+            url: url,
+            method: 'PATCH',
+            success: function (data) {
+
+                if (data.error == 0) {
+
+                    ele.addClass('active');
+                    if(data.state == 0){
+                        klasse='bg-warning';
+                        ele.addClass(klasse);
+                    }else if (data.state == 10){
+                        var klasse = 'bg-success';
+                        ele.addClass(klasse);
+
+                    }
+                    ele.closest('.priceChooseButton').find('.btn').each(function (index) {
+                        var ele = $(this);
+                        if(!ele.hasClass('active')){
+                            ele.prop('disabled',true);
+                        }
+                    });
+
+                    if(data.state <0){
+                        ele.removeClass('bg-warning');
+                        ele.removeClass('bg-success');
+                        ele.removeClass('active');
+                        ele.closest('.priceChooseButton').find('.btn').each(function (index) {
+                            var ele = $(this);
+
+                            ele.prop('disabled',false);
+
+                        });
+                    }
+
+
+                    ele.text(data.cardText);
+
+                }
+            }
+        })
+    })
+
+{% endblock %}
+
