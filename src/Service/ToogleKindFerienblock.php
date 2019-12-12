@@ -58,7 +58,7 @@ class ToogleKindFerienblock
             'cardText' => $this->translator->trans('Gebucht')
         );
 
-      //  try {
+        try {
             if ($block->getMinAnzahl() || $block->getMaxAnzahl()) {
                 $result['kontingent'] = true;
             }
@@ -115,10 +115,10 @@ class ToogleKindFerienblock
             }
             $this->em->persist($kindFerienBlock);
             $this->em->flush();
-       // } catch (\Exception $e) {
-        //    $result['text'] = $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.');
-         //   $result['error'] = 1;
-       // }
+       } catch (\Exception $e) {
+            $result['text'] = $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+            $result['error'] = 1;
+        }
         $result['state'] = $kindFerienBlock->getState();
         $result['preis'] = number_format($kind->getFerienblockPreis(), 2, ',', '.') . '€';
         return $result;
