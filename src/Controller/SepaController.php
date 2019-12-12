@@ -46,7 +46,7 @@ class SepaController extends AbstractController
                 $sepa = $form->getData();
                 $sepa->setBis((clone $sepa->getVon())->modify('last day of this month'));
                 $result = $sepaCreateService->calcSepa($sepa);
-                return 0;
+             
                 return $this->redirectToRoute('accounting_overview',array('id'=>$organisation->getId(),'snack'=>$result));
             }
 
