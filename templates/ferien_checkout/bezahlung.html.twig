@@ -53,6 +53,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-12">
+                                <a href="#" class="btn btn-outline-primary">Weiter</a>
                                 <div id="dropin-container"></div>
                                 <button class="btn btn-outline-primary" id="submit-button">{{'Diese Zahlungsart verwenden'|trans}}</button>
                             </div>
@@ -73,8 +74,6 @@
                         <div class="text-center">
                             <a href="{{ path('ferien_auswahl', {'slug':stadt.slug}) }}"
                                class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
-                            <a href="{{ path('ferien_zusammenfassung', {'slug':stadt.slug}) }}"
-                               class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
                         </div>
                     </div>
                 </div>

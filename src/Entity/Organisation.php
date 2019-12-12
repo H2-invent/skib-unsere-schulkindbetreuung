@@ -233,6 +233,13 @@ class Organisation
      */
     private $ferienblocks;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Payment", mappedBy="organisation")
+     */
+    private $paymentsFerien;
+
+
+
 
     public function __construct()
     {
@@ -240,6 +247,8 @@ class Organisation
 
         $this->sepas = new ArrayCollection();
         $this->ferienblocks = new ArrayCollection();
+        $this->PaymentsFerien = new ArrayCollection();
+        $this->paymentsFerien = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -758,6 +767,38 @@ class Organisation
 
         return $this;
     }
+
+    /**
+     * @return Collection|Payment[]
+     */
+    public function getPaymentsFerien(): Collection
+    {
+        return $this->paymentsFerien;
+    }
+
+    public function addPaymentsFerien(Payment $paymentsFerien): self
+    {
+        if (!$this->paymentsFerien->contains($paymentsFerien)) {
+            $this->paymentsFerien[] = $paymentsFerien;
+            $paymentsFerien->setOrganisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaymentsFerien(Payment $paymentsFerien): self
+    {
+        if ($this->paymentsFerien->contains($paymentsFerien)) {
+            $this->paymentsFerien->removeElement($paymentsFerien);
+            // set the owning side to null (unless already changed)
+            if ($paymentsFerien->getOrganisation() === $this) {
+                $paymentsFerien->setOrganisation(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 
 

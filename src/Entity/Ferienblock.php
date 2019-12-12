@@ -406,7 +406,7 @@ class Ferienblock
     public function getKindFerienblocksWarteliste(): Collection
     {
         $res = array();
-      
+
         $kind_ferienblock = $this->kindFerienblocks->toArray();
         foreach ($kind_ferienblock as $data){
             if($data->getState() == 15 && $data->getKind()->getFin()){

@@ -10,6 +10,7 @@ namespace App\Form\Type;
 use App\Entity\Active;
 
 use App\Entity\Payment;
+use App\Entity\PaymentSepa;
 use App\Entity\Zeitblock;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -34,17 +35,17 @@ class PaymentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('kontobesitzer', NumberType::class,array('label'=>'Kontoinhaber für das Lastschriftmandat','required'=>false,'translation_domain' => 'form'))
+            ->add('kontoinhaber', NumberType::class,array('label'=>'Kontoinhaber für das Lastschriftmandat','required'=>false,'translation_domain' => 'form'))
             ->add('iban', TextType::class,array('label'=>'IBAN für das Lastschriftmandat','required'=>true,'translation_domain' => 'form'))
             ->add('bic', TextType::class,array('label'=>'BIC für das Lastschriftmandat','required'=>true,'translation_domain' => 'form'))
-            ->add('bankname', TextType::class,array('label'=>'Name der Bank','required'=>false,'translation_domain' => 'form'))
-            ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
+            ->add('bankName', TextType::class,array('label'=>'Name der Bank','required'=>false,'translation_domain' => 'form'))
+            ->add('save', SubmitType::class, ['label' => 'Weiter','translation_domain' => 'form'])
         ;
     }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Payment::class
+            'data_class' => PaymentSepa::class
         ]);
 
     }

@@ -17,160 +17,129 @@ class Payment
     private $id;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="float")
      */
-    private $braintree;
+    private $summe;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="paymentsFerien")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $nonce;
+    private $organisation;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Stammdaten", inversedBy="paymentFerien")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $iban;
+    private $stammdaten;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="datetime")
      */
-    private $bic;
+    private $createdAt;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
-    private $bankname;
+    private $ipAdresse;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\ManyToOne(targetEntity="App\Entity\PaymentSepa", inversedBy="payments")
      */
     private $sepa;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\PaymentBraintree", inversedBy="payment", cascade={"persist", "remove"})
      */
-    private $braintreeOK;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $kontobesitzer;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $braintreeToken;
+    private $braintree;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getBraintree(): ?bool
+    public function getSumme(): ?float
     {
-        return $this->braintree;
+        return $this->summe;
     }
 
-    public function setBraintree(bool $braintree): self
+    public function setSumme(float $summe): self
     {
-        $this->braintree = $braintree;
+        $this->summe = $summe;
 
         return $this;
     }
 
-    public function getNonce(): ?string
+    public function getOrganisation(): ?Organisation
     {
-        return $this->nonce;
+        return $this->organisation;
     }
 
-    public function setNonce(?string $nonce): self
+    public function setOrganisation(?Organisation $organisation): self
     {
-        $this->nonce = $nonce;
+        $this->organisation = $organisation;
 
         return $this;
     }
 
-    public function getIban(): ?string
+    public function getStammdaten(): ?Stammdaten
     {
-        return $this->iban;
+        return $this->stammdaten;
     }
 
-    public function setIban(?string $iban): self
+    public function setStammdaten(?Stammdaten $stammdaten): self
     {
-        $this->iban = $iban;
+        $this->stammdaten = $stammdaten;
 
         return $this;
     }
 
-    public function getBic(): ?string
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->bic;
+        return $this->createdAt;
     }
 
-    public function setBic(?string $bic): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->bic = $bic;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getBankname(): ?string
+    public function getIpAdresse(): ?string
     {
-        return $this->bankname;
+        return $this->ipAdresse;
     }
 
-    public function setBankname(?string $bankname): self
+    public function setIpAdresse(string $ipAdresse): self
     {
-        $this->bankname = $bankname;
+        $this->ipAdresse = $ipAdresse;
 
         return $this;
     }
 
-    public function getSepa(): ?bool
+    public function getSepa(): ?PaymentSepa
     {
         return $this->sepa;
     }
 
-    public function setSepa(bool $sepa): self
+    public function setSepa(?PaymentSepa $sepa): self
     {
         $this->sepa = $sepa;
 
         return $this;
     }
 
-    public function getBraintreeOK(): ?bool
+    public function getBraintree(): ?PaymentBraintree
     {
-        return $this->braintreeOK;
+        return $this->braintree;
     }
 
-    public function setBraintreeOK(?bool $braintreeOK): self
+    public function setBraintree(?PaymentBraintree $braintree): self
     {
-        $this->braintreeOK = $braintreeOK;
+        $this->braintree = $braintree;
 
         return $this;
     }
 
-    public function getKontobesitzer(): ?string
-    {
-        return $this->kontobesitzer;
-    }
-
-    public function setKontobesitzer(?string $kontobesitzer): self
-    {
-        $this->kontobesitzer = $kontobesitzer;
-
-        return $this;
-    }
-
-    public function getBraintreeToken(): ?string
-    {
-        return $this->braintreeToken;
-    }
-
-    public function setBraintreeToken(?string $braintreeToken): self
-    {
-        $this->braintreeToken = $braintreeToken;
-
-        return $this;
-    }
 }

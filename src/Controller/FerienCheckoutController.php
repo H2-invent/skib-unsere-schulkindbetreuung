@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Payment;
+use App\Entity\PaymentSepa;
 use App\Entity\Stadt;
 use App\Form\Type\PaymentType;
 use App\Service\StamdatenFromCookie;
@@ -23,17 +24,18 @@ class FerienCheckoutController extends AbstractController
     public function paymentAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
         //Include Parents in this route
-        if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
-            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
+        if ($stamdatenFromCookie->getStammdatenFromCookie($request,FerienController::BEZEICHNERCOOKIE)) {
+            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,FerienController::BEZEICHNERCOOKIE);
         }
-        $payment = new Payment();
+        $payment = new PaymentSepa();
         $form = $this->createForm(PaymentType::class, $payment);
         $form->handleRequest($request);
 
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
-            $adresse = $form->getData();
-            $errors = $validator->validate($adresse);
+            $payment = $form->getData();
+            $errors = $validator->validate($payment);
+            return $this->redirectToRoute('ferien_zusammenfassung',array('slug'=>$stadt->getSlug()));
         }
 
         $gateway =  new Gateway([

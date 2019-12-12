@@ -220,12 +220,21 @@ class Stammdaten
      */
     private $confirmDate;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Payment", mappedBy="stammdaten")
+     */
+    private $paymentFerien;
+
+
+
 
     public function __construct()
     {
         $this->kinds = new ArrayCollection();
         $this->rechnungen = new ArrayCollection();
         $this->rechnungs = new ArrayCollection();
+        $this->paymentsFerien = new ArrayCollection();
+        $this->paymentFerien = new ArrayCollection();
 
     }
 
@@ -719,6 +728,39 @@ class Stammdaten
 
         return $this;
     }
+
+    /**
+     * @return Collection|Payment[]
+     */
+    public function getPaymentFerien(): Collection
+    {
+        return $this->paymentFerien;
+    }
+
+    public function addPaymentFerien(Payment $paymentFerien): self
+    {
+        if (!$this->paymentFerien->contains($paymentFerien)) {
+            $this->paymentFerien[] = $paymentFerien;
+            $paymentFerien->setStammdaten($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaymentFerien(Payment $paymentFerien): self
+    {
+        if ($this->paymentFerien->contains($paymentFerien)) {
+            $this->paymentFerien->removeElement($paymentFerien);
+            // set the owning side to null (unless already changed)
+            if ($paymentFerien->getStammdaten() === $this) {
+                $paymentFerien->setStammdaten(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 
 
 }
