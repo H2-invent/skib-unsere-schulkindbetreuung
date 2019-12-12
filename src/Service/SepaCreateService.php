@@ -126,7 +126,7 @@ class SepaCreateService
                 $organisation->getGlauaubigerId())
         );
 
-        $sepa->setAnzahl(sizeof($rechnungen));
+        $sepa->setAnzahl(sizeof($sepa->getRechnungen()));
         $sepa->setCreatedAt(new \DateTime());
         $sepa->setPdf('');
         $sepa->setSumme($sepaSumme);
