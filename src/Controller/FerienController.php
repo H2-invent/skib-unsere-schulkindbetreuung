@@ -98,6 +98,8 @@ class FerienController extends AbstractController
         //Include Parents in this route
         if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
+        } else {
+            return $this->redirect($this->generateUrl('ferien_adresse', array('slug' => $stadt->getSlug())));
         }
 
         $kinder = array();
@@ -107,7 +109,6 @@ class FerienController extends AbstractController
 
         } else {
             $kinder = $adresse->getKinds()->toArray();
-
         }
 
         return $this->render('ferien/ferien.html.twig', array('org' => $org, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $kinder));
