@@ -1,7 +1,6 @@
 <style>
     td {
         border: 1px solid black;
-
         font-weight: bold;
         margin: 10px;
     }
@@ -19,10 +18,10 @@
         <th>{{'Anwesend'|trans}}</th>
         <th>{% trans %}Vorname{% endtrans %}</th>
         <th>{% trans %}Nachname{% endtrans %}</th>
-
         <th>{% trans %}Notfallkontakt{% endtrans %}</th>
         <th>{% trans %}Schule{% endtrans %}</th>
         <th>{% trans %}Klasse{% endtrans %}</th>
+        <th>{% trans %}Alleine nach Hause{% endtrans %}</th>
     </tr>
     </thead>
     <tbody>
@@ -32,10 +31,10 @@
 
             <td>{{ k.vorname }}</td>
             <td>{{ k.nachname }}</td>
-
             <td>{{ k.eltern.notfallkontakt }}</td>
             <td>{{ k.schule.name }}</td>
             <td>{{ k.klasse }}. {{ 'Klasse'|trans }}</td>
+            <td>{{ k.alleineHause?'Ja':'Nein'|trans }}</td>
         </tr>
     {% endfor %}
     </tbody>
