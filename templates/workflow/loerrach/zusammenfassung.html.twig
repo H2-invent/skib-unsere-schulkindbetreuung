@@ -192,6 +192,7 @@
                                 </td>
                             </tr>
                             {% endif %}
+                            {% if k.mittagessenblocksReal|length > 0 %}
                             <tr>
                                 <td>
                                             {% trans %} Gebuchte Mittagessen {% endtrans %}
@@ -205,6 +206,7 @@
                                     </ul>
                                 </td>
                             </tr>
+                            {% endif %}
                             <tr>
                                 <td>
                                     <h5>
