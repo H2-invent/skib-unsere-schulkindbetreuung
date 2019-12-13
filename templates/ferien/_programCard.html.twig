@@ -87,7 +87,7 @@
                                 {% if block.minAnzahl is not null or block.maxAnzahl is not null %}
                                     <div>{% trans %}Kontingent{% endtrans %}
                                         <i class="fas fa-question-circle" data-toggle="popover" data-placement="top"
-                                           title="{% trans %}Ausfüllhilfe{% endtrans %}"
+                                           title="{{ 'Information'|trans }}"
                                            data-content="{% trans %}Für diesen Block gibt es eine Beschschränkung der Betreungsplätzte.{% endtrans %}"></i>
                                     </div>
                                 {% endif %}

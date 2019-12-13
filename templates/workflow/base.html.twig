@@ -101,6 +101,9 @@
 <script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="{{ asset('frontpage/js/snackbar.js') }}"></script>
+{% include 'workflow/_cookiePopup.html.twig' %}
+
+
 <script>
     $(document).on('click', '.loadContent', function (e) {
         e.preventDefault();
@@ -110,41 +113,12 @@
         });
 
     });
-
 </script>
 <script>
     // popovers Initialization
     $(function () {
         $('[data-toggle="popover"]').popover()
     })
-</script>
-<script src="{{ asset('js/jquery.bs.gdpr.cookies.js') }}"></script>
-<script type="text/javascript">
-    var settings = {
-        message: 'Cookies erleichtern die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden. Weitere Informationen zum Datenschutz erhalten Sie über den folgenden Link: <b> Mehr erfahren  ',
-        moreLinkLabel: 'hier</b>',
-        messageMaxHeightPercent: 30,
-        moreLink: '/datenschutz/',
-        delay: 1000,
-        allowAdvancedOptions: true,
-        OnAccept: function () {
-            console.log('Yay! User accepted your cookies window!');
-            console.log('User preferences');
-            var preferences = $.fn.bsgdprcookies.GetUserPreferences();
-            console.log(preferences);
-
-        }
-    }
-
-    $(document).ready(function () {
-        $('body').bsgdprcookies(settings);
-
-        $('#cookiesBtn').on('click', function () {
-            $('body').bsgdprcookies(settings, 'reinit');
-        });
-    });
-
-
 </script>
 <script>
 
