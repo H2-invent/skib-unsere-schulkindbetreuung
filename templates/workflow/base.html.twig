@@ -101,8 +101,10 @@
 <script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="{{ asset('frontpage/js/snackbar.js') }}"></script>
-{% include 'workflow/_cookiePopup.html.twig' %}
-
+<script src="{{ asset('js/jquery.bs.gdpr.cookies.js') }}"></script>
+<script>
+{% include 'workflow/_cookiePopup.js.twig' %}
+</script>
 
 <script>
     $(document).on('click', '.loadContent', function (e) {
