@@ -29,7 +29,7 @@ class FerienCheckoutController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,FerienController::BEZEICHNERCOOKIE);
         }
         $payment = new PaymentSepa();
-        dump($adresse);
+
         if(!$adresse->getPaymentFerien()->isEmpty() && $adresse->getPaymentFerien()->toArray()[0]->getSepa()){
             $payment = $adresse->getPaymentFerien()->get(0)->getSepa();
         }
@@ -56,12 +56,5 @@ class FerienCheckoutController extends AbstractController
         $clientToken = $gateway->clientToken()->generate();
         return $this->render('ferien_checkout/bezahlung.html.twig', array('stadt' => $stadt,'token'=>$clientToken,'form'=>$form->createView()));
     }
-    /**
-     * @Route("/{slug}/ferien/bezahlung",name="ferien_bezahlung",methods={"Get","POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
-    public function paymentAction(Request $request, ValidatorInterface $validator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie,CheckoutSepaService $checkoutSepaService)
-    {
 
-    }
 }
