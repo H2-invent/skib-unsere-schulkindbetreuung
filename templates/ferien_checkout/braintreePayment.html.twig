@@ -1,0 +1,87 @@
+{% extends 'workflow/base.html.twig' %}
+
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
+        <hr class="hr-light ">
+    </div>
+
+{% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h4> {% trans %}Kreditkarte oder Paypal{% endtrans %}</h4>
+        </div>
+        <div class="card-body">
+            <h4>
+                {% trans with {'%organisation%':payment.organisation.name,'%summe%':payment.summe|number_format(2,',','.')} %}Zahlen Sie hier die Summe von %summe%€ an die Organisation %organisation% {% endtrans %}
+
+            </h4>
+            <h2>
+                {% trans with{'%ziel%':paymentAll|length,'%akt%':paymentAll|length - open|length +1} %}%akt% von %ziel%{% endtrans %}
+            </h2>
+            <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+               title="{{ 'Information'|trans }}" data-content="{% trans %}Wichtig, Wichtig{% endtrans %}"></i>
+
+
+            <div class="card z-depth-0 bordered">
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="dropin-container"></div>
+                            <button class="btn btn-outline-primary"
+                                    id="submit-button">{{ 'Diese Zahlungsart verwenden'|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <a href="{{ path('ferien_bezahlung', {'slug':stadt.slug}) }}"
+                           class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+    {% block jquery %}
+        <script src="https://js.braintreegateway.com/web/dropin/1.21.0/js/dropin.min.js"></script>
+
+        <script>
+            var button = document.querySelector('#submit-button');
+
+            braintree.dropin.create({
+                authorization: '{{ payment.braintree.token }}',
+                container: '#dropin-container',
+                locale: '{{ app.request.locale }}',
+                paypal: {
+                    flow: 'checkout',
+                    amount: '{{ payment.summe }}',
+                    currency: 'EUR',
+                    env: 'sandbox'
+                }
+            }, function (createErr, instance) {
+                button.addEventListener('click', function () {
+                    instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
+                        $.ajax({
+                            method: "POST",
+                            url: "{{path('ferien_braintree_nonce')}}",
+                            data: { token: "{{payment.braintree.token}}", nonce: payload.nonce }
+                        })
+                            .done(function( msg ) {
+                                window.location.replace("{{path('ferien_braintree_pay',{'slug':stadt.slug})}}");
+                            });
+
+                    });
+                });
+            });
+        </script>
+
+
+    {% endblock %}

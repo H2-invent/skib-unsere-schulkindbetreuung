@@ -6,10 +6,12 @@ use App\Entity\Ferienblock;
 use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
+use App\Entity\Payment;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Form\Type\LoerrachEltern;
 use App\Form\Type\LoerrachKind;
+use App\Form\Type\PaymentType;
 use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindFerienblock;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -30,8 +32,9 @@ use Braintree\Gateway;
 
 class FerienController extends AbstractController
 {
-    private $BEZEICHNERCOOKIE = 'FerienUserID';
-    private $BEZEICHNERCOOKIEKINDER = 'FerienKinderID';
+    const BEZEICHNERCOOKIE = 'FerienUserID';
+    const BEZEICHNERCOOKIEKINDER = 'FerienKinderID';
+
     /**
      * @Route("/{slug}/ferien/adresse",name="ferien_adresse",methods={"GET","POST"})
      */
@@ -45,8 +48,8 @@ class FerienController extends AbstractController
         }
         // load parent address data into controller as $adresse
         $adresse = new Stammdaten;
-        if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
-            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
+        if ($stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE)) {
+            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE);
         }
 
         //Add SecCode into if to create a SecCode the first time to be not "null"
@@ -62,7 +65,7 @@ class FerienController extends AbstractController
         }
 
         $form = $this->createForm(LoerrachEltern::class, $adresse);
-        $form->remove('alleinerziehend', 'kinderImKiga', 'beruflicheSituation', 'einkommen');
+        $form->remove('alleinerziehend', 'kinderImKiga', 'beruflicheSituation', 'einkommen','bic','iban','kontoinhaber');
         $form->handleRequest($request);
 
         $errors = array();
@@ -71,7 +74,7 @@ class FerienController extends AbstractController
             $errors = $validator->validate($adresse);
             if (count($errors) == 0) {
                 $adresse->setFin(false);
-                $cookie = new Cookie ($this->BEZEICHNERCOOKIE, $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
+                $cookie = new Cookie (self::BEZEICHNERCOOKIE, $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($adresse);
                 $em->flush();
@@ -96,19 +99,20 @@ class FerienController extends AbstractController
         $org = $this->getDoctrine()->getRepository(Organisation::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
 
         //Include Parents in this route
-        if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
-            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
+        if ($stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE)) {
+            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE);
         } else {
             return $this->redirect($this->generateUrl('ferien_adresse', array('slug' => $stadt->getSlug())));
         }
 
         $kinder = array();
-        if ($request->cookies->get($this->BEZEICHNERCOOKIEKINDER)) {
-            $cookie_kind = explode('.', $request->cookies->get($this->BEZEICHNERCOOKIEKINDER));
+        if ($request->cookies->get(self::BEZEICHNERCOOKIEKINDER)) {
+            $cookie_kind = explode('.', $request->cookies->get(self::BEZEICHNERCOOKIEKINDER));
             $kinder = $this->getDoctrine()->getRepository(Kind::class)->findBy(array('id' => $cookie_kind[0]));
 
         } else {
             $kinder = $adresse->getKinds()->toArray();
+
         }
 
         return $this->render('ferien/ferien.html.twig', array('org' => $org, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $kinder));
@@ -123,8 +127,8 @@ class FerienController extends AbstractController
     public function ferienNeukindAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
         //Include Parents in this route
-        if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
-            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
+        if ($stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE)) {
+            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE);
         }
 
         $kind = new Kind();
@@ -162,8 +166,8 @@ class FerienController extends AbstractController
     {
         //Include Parents in this route
         $adresse = new Stammdaten;
-        if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
-            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
+        if ($stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE)) {
+            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE);
         }
 
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
@@ -201,8 +205,8 @@ class FerienController extends AbstractController
     {
         //Include Parents in this route
         $adresse = new Stammdaten;
-        if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
-            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
+        if ($stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE)) {
+            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE);
         }
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
@@ -221,8 +225,8 @@ class FerienController extends AbstractController
     {
 
         //Include Parents in this route
-        if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
-            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
+        if ($stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE)) {
+            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE);
         }
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
@@ -241,8 +245,8 @@ class FerienController extends AbstractController
     {
 
         $adresse = new Stammdaten;
-        if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
-            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
+        if ($stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE)) {
+            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE);
         }
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
@@ -253,25 +257,6 @@ class FerienController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/ferien/bezahlung",name="ferien_bezahlung",methods={"Get","POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
-    public function paymentAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
-    {
-        //Include Parents in this route
-        if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
-            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
-        }
-        $gateway =  new Gateway([
-            'environment' => 'sandbox',
-            'merchantId' => '65xmpcc6hh6khg5d',
-            'publicKey' => 'wzkfsj9n2kbyytfp',
-            'privateKey' => 'a153a39aaef70466e97773a120b95f91',
-        ]);
-        $clientToken = $gateway->clientToken()->generate();
-        return $this->render('ferien/bezahlung.html.twig', array('stadt' => $stadt,'token'=>$clientToken));
-    }
 
 
     /**
@@ -282,8 +267,8 @@ class FerienController extends AbstractController
     {
         try {
             //Include Parents in this route
-            if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
-                $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
+            if ($stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE)) {
+                $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE);
             }
 
             $kind = $adresse->getKinds();
@@ -302,8 +287,8 @@ class FerienController extends AbstractController
     public function abschlussAction($slug,Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
          //Include Parents in this route
-            if ($stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE)) {
-                $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,$this->BEZEICHNERCOOKIE);
+            if ($stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE)) {
+                $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request,self::BEZEICHNERCOOKIE);
             }else {
                 return $this->redirectToRoute('ferien_adresse', array('slug'=>$slug));
             }

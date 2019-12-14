@@ -10,6 +10,7 @@ namespace App\Service;
 
 
 
+use App\Entity\Organisation;
 use League\Flysystem\FilesystemInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Templating\EngineInterface;
@@ -30,7 +31,9 @@ class PrintFerienNameTagService
         $this->pdf = $tcpdf;
     }
 
-    public function printNameTag($kinder, $organisation, $type = 'D')
+
+    public function printNameTag($kinder, Organisation $organisation, $type = 'D')
+
     {
 
         $pdf = $this->pdf->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);

@@ -50,7 +50,7 @@ class FerienBlockType extends AbstractType
             ->add('infoTextFR', TextareaType::class, ['attr' => ['rows' => 6], 'label' => 'Info Text Französisch', 'translation_domain' => 'form', 'property_path' => 'translations[fr].infoText',])
             ->add('ort', TextareaType::class, ['label' => 'Stadt', 'translation_domain' => 'form'])
             ->add('warteliste', CheckboxType::class, array('required' => false, 'label' => 'Ferienblock mit Warteliste', 'translation_domain' => 'form'))
-            ->add('modeMaximal', CheckboxType::class, array('required' => false, 'label' => 'Alle Kinder im Kontingent automatisch annehmen, dannach auf Warteliste', 'translation_domain' => 'form'))
+            ->add('modeMaximal', CheckboxType::class, array('required' => false, 'label' => 'Manuelle Bestätigung der Teilnehmer', 'translation_domain' => 'form'))
             ->add('minAlter', IntegerType::class, array('required' => true, 'label' => 'Mindest Alter', 'translation_domain' => 'form'))
             ->add('maxAlter', IntegerType::class, array('required' => false, 'label' => 'Maximum Alter', 'translation_domain' => 'form'))
             ->add('startDate', DateType::class, array('widget' => 'single_text', 'label' => 'Datum Start', 'translation_domain' => 'form', 'attr' => array('class' => 'start date-hkjdshfsh')))
@@ -59,7 +59,6 @@ class FerienBlockType extends AbstractType
             ->add('endTime', TimeType::class, ['widget' => 'single_text', 'label' => 'Uhrzeit Ende', 'translation_domain' => 'form'])
             ->add('startVerkauf', DateType::class, array('widget' => 'single_text', 'label' => 'Start Vorverkauf', 'translation_domain' => 'form'))
             ->add('endVerkauf', DateType::class, array('widget' => 'single_text', 'label' => 'End Vorverkauf', 'translation_domain' => 'form'))
-            ->add('minAnzahl', IntegerType::class, array('required' => false, 'label' => 'Minimum Anzahl', 'translation_domain' => 'form'))
             ->add('maxAnzahl', IntegerType::class, array('required' => false, 'label' => 'Maximum Anzahl', 'translation_domain' => 'form'))
             ->add('anzahlPreise', IntegerType::class, array('required' => true, 'label' => 'Anzahl Preise', 'translation_domain' => 'form'))
 

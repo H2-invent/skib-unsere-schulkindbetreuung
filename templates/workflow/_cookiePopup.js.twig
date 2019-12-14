@@ -1,5 +1,3 @@
-<script src="{{ asset('js/jquery.bs.gdpr.cookies.js') }}"></script>
-<script type="text/javascript">
     var settings = {
         title: '{% trans %}Cookie & Datenschutzhinweis{% endtrans %}',
         message: '{% trans %}Cookies ermöglichen die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden. Weitere Informationen zum Datenschutz erhalten Sie über den folgenden Link{% endtrans %}: <b>',
@@ -25,6 +23,3 @@
             $('body').bsgdprcookies(settings, 'reinit');
         });
     });
-
-
-</script>

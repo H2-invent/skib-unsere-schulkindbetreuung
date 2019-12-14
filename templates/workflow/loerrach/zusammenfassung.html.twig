@@ -58,7 +58,9 @@
             </tr>
             <tr>
                 <td>{% trans %} Bankverbindung für Lastschrift {% endtrans %}</td>
+
                 <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}<br/>{{ eltern.sepaInfo?"Ja ich Erteile der Organisation ein SEPA Lastschrift Mandant":""|trans }} </td>
+
             </tr>
             </tbody>
         </table>
