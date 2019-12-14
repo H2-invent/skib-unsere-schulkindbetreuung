@@ -149,7 +149,7 @@
 {% endblock %}
 {% block jquery %}
     <script>
-        var url = "{{ path('ferien_abschluss',{'slug':stadt.slug}) }}";
+        var url = "{{ path('ferien_storno_abschluss',{'slug':stadt.slug,'parent_id':eltern.uid}) }}";
         $('.checkboxSelect').on('change', function () {
             var cbS = $('.checkboxSelect');
             var all = true;
@@ -159,7 +159,7 @@
                 }
             });
             if (all == true) {
-                $('.sendButton').wrap('<a href="{{ path('ferien_abschluss',{'slug':stadt.slug}) }}">');
+                $('.sendButton').wrap('<a href='+url+'>');
                 $('.sendButton').prop('disabled', false);
 
             } else {
