@@ -2,6 +2,8 @@
 
 namespace App\Service;
 use App\Entity\KindFerienblock;
+use App\Entity\Payment;
+use App\Entity\PaymentRefund;
 use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -46,7 +48,7 @@ class FerienStornoService
         return $result;
     }
 
-    public function stornoAbschluss(Stammdaten $stammdaten)
+    public function stornoAbschluss(Stammdaten $stammdaten, $ipAdresse)
     {
         $qb = $this->em->getRepository(KindFerienblock::class)->createQueryBuilder('kinderBlock');
         $qb->innerJoin('kinderBlock.kind', 'kind')
@@ -56,8 +58,38 @@ class FerienStornoService
             ->setParameter('eltern', $stammdaten);
         $query = $qb->getQuery();
         $blocks = $query->getResult();
+        $org = array();
+        foreach ($blocks as $data) {
+            $org[$data->getFerienblock()->getOrganisation()->getId()][]=$data;
+        }
+        foreach ($org as $data){
+            $organisation = $data[0]->getFerienblock()->getOrganisation();
+            $payment = $this->em->getRepository(Payment::class)->findOneBy(array('stammdaten'=>$stammdaten,'organisation'=>$organisation));
+            $refund = new PaymentRefund();
+            $refund->setSumme(0);
+            $refund->setRefundFee($organisation->getStornoGebuehr());
+            $refund->setIpAdresse($ipAdresse);
+            $refund->setCreatedAt(new \DateTime());
+            $refund->setPayment($payment);
+
+            foreach ($data as $block){
+                $refund->setSumme($refund->getSumme()+$block->getPreis());
+            }
+
+            if($payment->getSepa()){
+                $refund->setRefundType(0);
+                $refund->setGezahlt(true);
+            }else{
+                $refund->setRefundType(1);
+                $refund->setGezahlt(false);
+                //todo autmatische rückzahlung dann wird gezahlt auch wieder true
+            }
+            $this->em->persist($refund);
+        }
+
         foreach ($blocks as $data) {
             $data->setState(20);
+            $data->setMarkedAsStorno(false);
             $this->em->persist($data);
         }
         $this->em->flush();
