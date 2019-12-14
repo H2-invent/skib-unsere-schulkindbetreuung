@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -57,6 +59,16 @@ class Payment
      * @ORM\Column(type="float")
      */
     private $bezahlt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PaymentRefund", mappedBy="payment")
+     */
+    private $refunds;
+
+    public function __construct()
+    {
+        $this->refunds = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -155,6 +167,37 @@ class Payment
     public function setBezahlt(float $bezahlt): self
     {
         $this->bezahlt = $bezahlt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PaymentRefund[]
+     */
+    public function getRefunds(): Collection
+    {
+        return $this->refunds;
+    }
+
+    public function addRefund(PaymentRefund $refund): self
+    {
+        if (!$this->refunds->contains($refund)) {
+            $this->refunds[] = $refund;
+            $refund->setPayment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRefund(PaymentRefund $refund): self
+    {
+        if ($this->refunds->contains($refund)) {
+            $this->refunds->removeElement($refund);
+            // set the owning side to null (unless already changed)
+            if ($refund->getPayment() === $this) {
+                $refund->setPayment(null);
+            }
+        }
 
         return $this;
     }
