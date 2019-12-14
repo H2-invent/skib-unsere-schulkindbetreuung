@@ -190,8 +190,8 @@ class FerienManagementController extends AbstractController
 
 
     /**
-     * @Route("/org_ferien/report/checkinlist", name="ferien_management_report_checkinlist", methods={"GET"})
-     */
+ * @Route("/org_ferien/report/checkinlist", name="ferien_management_report_checkinlist", methods={"GET"})
+ */
     public function checkinListFerien(Request $request, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -210,6 +210,34 @@ class FerienManagementController extends AbstractController
         $kinder = $this->getDoctrine()->getRepository(KindFerienblock::class)->findBy(array('ferienblock' => $block));
         $titel = $translator->trans('Anwesenheitsliste für Ferienblock');
         $mode = 'block';
+
+        return $this->render('ferien_management/checkinList.html.twig', [
+            'org' => $organisation,
+            'list' => $kinder,
+            'day' => $checkinDate,
+            'titel' => $titel,
+            'mode' => $mode,
+        ]);
+    }
+
+
+    /**
+     * @Route("/org_ferien/report/orders", name="ferien_management_orders", methods={"GET"})
+     */
+    public function ordersOverview(Request $request, TranslatorInterface $translator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+
+        if ($organisation != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        $today = new \DateTime('today');
+        $checkinDate = $today->format('Y-m-d');
+
+        $block = $organisation->getFerienblocks();
+        $kinder = $this->getDoctrine()->getRepository(KindFerienblock::class)->findAll(array('ferienblock' => $block));
+        $titel = $translator->trans('Alle Anmeldungen');
+        $mode = 'order';
 
         return $this->render('ferien_management/checkinList.html.twig', [
             'org' => $organisation,
