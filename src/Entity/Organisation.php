@@ -283,7 +283,7 @@ class Organisation
         return $this->schule;
     }
 
-    public function addSchule(schule $schule): self
+    public function addSchule(Schule $schule): self
     {
         if (!$this->schule->contains($schule)) {
             $this->schule[] = $schule;
@@ -293,7 +293,7 @@ class Organisation
         return $this;
     }
 
-    public function removeSchule(schule $schule): self
+    public function removeSchule(Schule $schule): self
     {
         if ($this->schule->contains($schule)) {
             $this->schule->removeElement($schule);

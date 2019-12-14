@@ -54,8 +54,6 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <a href="{{ path('ferien_braintree_start',{'slug':stadt.slug}) }}" class="btn btn-outline-primary">Weiter</a>
-                                <div id="dropin-container"></div>
-                                <button class="btn btn-outline-primary" id="submit-button">{{'Diese Zahlungsart verwenden'|trans}}</button>
                             </div>
                         </div>
                     </div>
@@ -82,31 +80,4 @@
         </div>
     </div>
     {% endblock %}
-    {% block jquery %}
-        <script src="https://js.braintreegateway.com/web/dropin/1.21.0/js/dropin.min.js"></script>
 
-        <script>
-            var button = document.querySelector('#submit-button');
-
-            braintree.dropin.create({
-                authorization: '{{token}}',
-                container: '#dropin-container',
-                locale: '{{ app.request.locale }}',
-                paypal: {
-                    flow: 'checkout',
-                    amount: '10.00',
-                    currency: 'EUR',
-                    env: 'sandbox'
-                }
-            }, function (createErr, instance) {
-                button.addEventListener('click', function () {
-                    instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
-                        console.log(payload.nonce);
-                        // Submit payload.nonce to your server
-                    });
-                });
-            });
-        </script>
-
-
-    {% endblock %}
