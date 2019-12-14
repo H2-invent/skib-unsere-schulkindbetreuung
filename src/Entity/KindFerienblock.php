@@ -58,6 +58,11 @@ class KindFerienblock
      */
     private $preisId;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $markedAsStorno;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -155,6 +160,18 @@ class KindFerienblock
     public function setPreisId(int $preisId): self
     {
         $this->preisId = $preisId;
+
+        return $this;
+    }
+
+    public function getMarkedAsStorno(): ?bool
+    {
+        return $this->markedAsStorno;
+    }
+
+    public function setMarkedAsStorno(?bool $markedAsStorno): self
+    {
+        $this->markedAsStorno = $markedAsStorno;
 
         return $this;
     }

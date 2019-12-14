@@ -82,14 +82,20 @@
                                             <b>{{ f.ferienblock.translate.titel }}</b>
 
 
-                                            <button href="{{ path('ferien_storno_mark', {'kind_id':k.id, 'block_id':f.id,'parent_id':eltern.uid}) }}" class="btn chooseBlock {% if f.state == 20 %}bg-info{% endif %}" {% if f.state == 20 %}disabled="true"{% endif %}>
-                                                        {% if f.state == 10 %}
-                                                            {% trans %} Stornieren{% endtrans %}
-                                                        {% elseif f.state == 20 %}
-                                                            {% trans %}Bereits Storniert{% endtrans %}
-                                                        {% elseif f.state == 0 %}
-                                                            {% trans %}Stornieren und Wartelistenplatz freigeben{% endtrans %}
-                                                        {% endif %}
+                                            <button href="{{ path('ferien_storno_mark', {'kind_id':k.id, 'block_id':f.id,'parent_id':eltern.uid}) }}"
+                                                    class="btn chooseBlock {% if f.markedAsStorno == true or f.state == 20 %}bg-info{% endif %}"
+                                                    {% if f.state == 20 %}disabled="true"{% endif %}>
+                                                {% if f.markedAsStorno == true %}
+                                                    {% trans %} Als Storniert vorgemerkt{% endtrans %}
+                                                {% else %}
+                                                    {% if f.state == 10 %}
+                                                        {% trans %} Stornieren{% endtrans %}
+                                                    {% elseif f.state == 20 %}
+                                                        {% trans %}Bereits Storniert{% endtrans %}
+                                                    {% elseif f.state == 0 %}
+                                                        {% trans %}Stornieren und Wartelistenplatz freigeben{% endtrans %}
+                                                    {% endif %}
+                                                {% endif %}
                                             </button>
 
 
@@ -99,9 +105,11 @@
                                             <br/>
                                             {{ f.ferienblock.startDate|date('d.M.Y') }}
                                             - {{ f.ferienblock.endDate|date('d.M.Y') }}<br/>
-                                            {% trans %}Preis{% endtrans %}: {{ f.preis|number_format(2,',','.') }} €<br/>
-                                            {% trans %}Betreuunde Organisation{% endtrans %}: {{ f.ferienblock.organisation.name }}<br/>
-                                       {% endfor %}
+                                            {% trans %}Preis{% endtrans %}: {{ f.preis|number_format(2,',','.') }} €
+                                            <br/>
+                                            {% trans %}Betreuunde Organisation{% endtrans %}: {{ f.ferienblock.organisation.name }}
+                                            <br/>
+                                        {% endfor %}
                                     </td>
 
                                 </tr>
@@ -164,28 +172,29 @@
     </script>
 
 
-<script>
-    $(document).on('click','.chooseBlock',function (e) {
-        e.preventDefault();
-        var ele = $(this);
-        var url = ele.attr('href');
-        $.ajax({
-            url: url,
-            method: 'PATCH',
-            success: function (data) {
+    <script>
+        $(document).on('click', '.chooseBlock', function (e) {
+            e.preventDefault();
+            var ele = $(this);
+            var url = ele.attr('href');
+            $.ajax({
+                url: url,
+                method: 'PATCH',
+                success: function (data) {
 
-                if (data.error == 0) {
-
-                    if(data.state == 20){
-                        klasse='bg-info';
-                        ele.addClass(klasse);
-                        ele.prop('disabled',true);
+                    if (data.error == 0) {
+                        ele.text(data.cardText);
+                        klasse = 'bg-info';
+                        if (data.state == 20) {
+                            ele.addClass(klasse);
+                        }else {
+                            ele.removeClass(klasse);
+                        }
                     }
                 }
-            }
+            })
         })
-    })
-</script>
+    </script>
 
 {% endblock %}
 

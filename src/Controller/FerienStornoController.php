@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FerienStornoController extends AbstractController
 {
@@ -36,7 +37,7 @@ class FerienStornoController extends AbstractController
     /**
      * @Route("/ferien/storno/mark", name="ferien_storno_mark", methods={"PATCH"})
      */
-    public function markAction(Request $request)
+    public function markAction(TranslatorInterface $translator, Request $request)
     {
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
         $kindFerienblock = $this->getDoctrine()->getRepository(KindFerienblock::class)->findOneBy(array('id' => $request->get('block_id')));
@@ -51,15 +52,20 @@ class FerienStornoController extends AbstractController
         if ($kindFerienblock->getState() == 20) {
             $result['text'] = 'Ferienprogram bereits storniert';
         }
-        $kindFerienblock-> setState(20);
-        $result['cardText'] = $this->trans('Storniert');
-        $result['text'] = 'Ferienprogram wurde storniert';
+        if($kindFerienblock->getMarkedAsStorno() == false){
+            $kindFerienblock->setMarkedAsStorno(true);
+            $result['cardText'] = $translator->trans('Als Storniert vorgemerkt');
+            $result['state'] = 20;
+        }else{
+            $kindFerienblock->setMarkedAsStorno(false);
+            $result['cardText'] = $translator->trans('Stornieren');
+            $result['state'] = 0;
+        }
+
         $result['error'] = 0;
-        $result['state'] = 20;
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
-        dump($kindFerienblock);
         return new JsonResponse($result);
 
     }
