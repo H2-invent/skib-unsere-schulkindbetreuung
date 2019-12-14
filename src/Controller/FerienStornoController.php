@@ -20,8 +20,8 @@ class FerienStornoController extends AbstractController
     public function index($slug, Request $request)
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('Parent_id')));
-        $kindFerienblock = $this->getDoctrine()->getRepository(KindFerienblock::class)->findOneBy(array('kind' => $request->get('kind_id')));
+        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
+        //$kindFerienblock = $this->getDoctrine()->getRepository(KindFerienblock::class)->findOneBy(array('kind' => $request->get('kind_id')));
 
         $kind = $stammdaten ->getKinds();
 
@@ -38,18 +38,28 @@ class FerienStornoController extends AbstractController
      */
     public function markAction(Request $request)
     {
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('Parent_id')));
+        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
         $kindFerienblock = $this->getDoctrine()->getRepository(KindFerienblock::class)->findOneBy(array('id' => $request->get('block_id')));
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $stammdaten, 'id' => $request->get('kind_id')));
         //$result = $toogleKindFerienblock->toggleKind($kind, $block, $request->get('preis_id'));
 
-        $kindFerienblock-> setState(-20);
-        $result['cardText'] = 'Für Storno markiert';
-        $result['text'] = 'ferienprogram wurde zum Stornieren markiert';
+        if ($stammdaten->getUid() != $request->get('parent_id')) {
+            $result = 0;
+            return new JsonResponse($result);
+        }
+
+        if ($kindFerienblock->getState() == 20) {
+            $result['text'] = 'Ferienprogram bereits storniert';
+        }
+        $kindFerienblock-> setState(20);
+        $result['cardText'] = $this->trans('Storniert');
+        $result['text'] = 'Ferienprogram wurde storniert';
         $result['error'] = 0;
+        $result['state'] = 20;
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
+        dump($kindFerienblock);
         return new JsonResponse($result);
 
     }

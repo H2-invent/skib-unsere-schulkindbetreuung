@@ -82,16 +82,14 @@
                                             <b>{{ f.ferienblock.translate.titel }}</b>
 
 
-                                            <button href="{{ path('ferien_storno_mark', {'kind_id':k.id, 'block_id':f.id}) }}" class="btn chooseBlock">
+                                            <button href="{{ path('ferien_storno_mark', {'kind_id':k.id, 'block_id':f.id,'parent_id':eltern.uid}) }}" class="btn chooseBlock {% if f.state == 20 %}bg-info{% endif %}" {% if f.state == 20 %}disabled="true"{% endif %}>
                                                         {% if f.state == 10 %}
                                                             {% trans %} Stornieren{% endtrans %}
-                                                        {% elseif f.state == -1 %}
-                                                            {% trans %}Storno markiert{% endtrans %}
+                                                        {% elseif f.state == 20 %}
+                                                            {% trans %}Bereits Storniert{% endtrans %}
                                                         {% elseif f.state == 0 %}
-                                                            {% trans %}Wartelistenplatz freigeben{% endtrans %}
+                                                            {% trans %}Stornieren und Wartelistenplatz freigeben{% endtrans %}
                                                         {% endif %}
-
-
                                             </button>
 
 
@@ -178,41 +176,16 @@
 
                 if (data.error == 0) {
 
-                    ele.addClass('active');
-                    if(data.state == 0){
-                        klasse='bg-warning';
+                    if(data.state == 20){
+                        klasse='bg-info';
                         ele.addClass(klasse);
-                    }else if (data.state == 10){
-                        var klasse = 'bg-success';
-                        ele.addClass(klasse);
-
+                        ele.prop('disabled',true);
                     }
-                    ele.closest('.priceChooseButton').find('.btn').each(function (index) {
-                        var ele = $(this);
-                        if(!ele.hasClass('active')){
-                            ele.prop('disabled',true);
-                        }
-                    });
-
-                    if(data.state <0){
-                        ele.removeClass('bg-warning');
-                        ele.removeClass('bg-success');
-                        ele.removeClass('active');
-                        ele.closest('.priceChooseButton').find('.btn').each(function (index) {
-                            var ele = $(this);
-
-                            ele.prop('disabled',false);
-
-                        });
-                    }
-
-
-                    ele.text(data.cardText);
-
                 }
             }
         })
     })
+</script>
 
 {% endblock %}
 
