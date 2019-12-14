@@ -209,7 +209,7 @@ class Organisation
     private $stripeSecret;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $stornoGebuehr;
 
@@ -689,12 +689,12 @@ class Organisation
         return $this;
     }
 
-    public function getStornoGebuehr(): ?int
+    public function getStornoGebuehr(): ?float
     {
         return $this->stornoGebuehr;
     }
 
-    public function setStornoGebuehr(?int $stornoGebuehr): self
+    public function setStornoGebuehr(?float $stornoGebuehr): self
     {
         $this->stornoGebuehr = $stornoGebuehr;
 
