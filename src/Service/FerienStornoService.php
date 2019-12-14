@@ -82,17 +82,18 @@ class FerienStornoService
         $this->em->flush();
         return $result;
     }
-    public function stornoAbschluss(Stammdaten $stammdaten){
+
+    public function stornoAbschluss(Stammdaten $stammdaten)
+    {
         $qb = $this->em->getRepository(KindFerienblock::class)->createQueryBuilder('kinderBlock');
-        $qb->innerJoin('kinderBlock.kind','kind')
+        $qb->innerJoin('kinderBlock.kind', 'kind')
             ->andWhere('kind.eltern = :eltern')
             ->andWhere('kinderBlock.markedAsStorno = true ')
-            ->andWhere($qb->expr()->lt('kinderBlock.state',20))
-            ->setParameter('eltern',$stammdaten);
+            ->andWhere($qb->expr()->lt('kinderBlock.state', 20))
+            ->setParameter('eltern', $stammdaten);
         $query = $qb->getQuery();
         $blocks = $query->getResult();
-        dump($blocks);
-        foreach ($blocks as $data){
+        foreach ($blocks as $data) {
             $data->setState(20);
             $this->em->persist($data);
         }
