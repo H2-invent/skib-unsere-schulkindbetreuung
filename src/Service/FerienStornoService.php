@@ -71,16 +71,20 @@ class FerienStornoService
             $refund->setIpAdresse($ipAdresse);
             $refund->setCreatedAt(new \DateTime());
             $refund->setPayment($payment);
+
             foreach ($data as $block){
                 $refund->setSumme($refund->getSumme()+$block->getPreis());
             }
 
             if($payment->getSepa()){
                 $refund->setRefundType(0);
+                $refund->setGezahlt(true);
             }else{
                 $refund->setRefundType(1);
-                //todo autmatische rückzahlung
+                $refund->setGezahlt(false);
+                //todo autmatische rückzahlung dann wird gezahlt auch wieder true
             }
+            $this->em->persist($refund);
         }
 
         foreach ($blocks as $data) {
@@ -88,7 +92,7 @@ class FerienStornoService
             $data->setMarkedAsStorno(false);
             $this->em->persist($data);
         }
-
+        $this->em->flush();
     }
 
 }
