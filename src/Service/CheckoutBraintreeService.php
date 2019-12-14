@@ -84,7 +84,7 @@ class CheckoutBraintreeService
                 }
                 $gateway = new Gateway([
                     'environment' => 'sandbox',
-                    //hier kommt dann der KEy der Org hin
+                    //todo hier kommt dann der KEy der Org hin
                     'merchantId' => '65xmpcc6hh6khg5d',
                     'publicKey' => 'wzkfsj9n2kbyytfp',
                     'privateKey' => 'a153a39aaef70466e97773a120b95f91',

@@ -51,14 +51,8 @@ class FerienCheckoutController extends AbstractController
                 }
             }
         }
-        $gateway = new Gateway([
-            'environment' => 'sandbox',
-            'merchantId' => '65xmpcc6hh6khg5d',
-            'publicKey' => 'wzkfsj9n2kbyytfp',
-            'privateKey' => 'a153a39aaef70466e97773a120b95f91',
-        ]);
-        $clientToken = $gateway->clientToken()->generate();
-        return $this->render('ferien_checkout/bezahlung.html.twig', array('stadt' => $stadt, 'token' => $clientToken, 'form' => $form->createView()));
+
+        return $this->render('ferien_checkout/bezahlung.html.twig', array('stadt' => $stadt,  'form' => $form->createView()));
     }
 
     /**
@@ -112,6 +106,20 @@ class FerienCheckoutController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($braintree);
         $em->flush();
+        $gateway = new Gateway([
+            'environment' => 'sandbox',
+            //todo hier kommt dann der KEy der Org hin
+            'merchantId' => '65xmpcc6hh6khg5d',
+            'publicKey' => 'wzkfsj9n2kbyytfp',
+            'privateKey' => 'a153a39aaef70466e97773a120b95f91',
+        ]);
+        $gateway->transaction()->sale([
+        'amount' => '10.00',
+        'paymentMethodNonce' => $braintree->getNonce(),
+        'options' => [
+            'submitForSettlement' => True
+        ]
+        ]);
         return new JsonResponse(array('error' => 0));
     }
 }

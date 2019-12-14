@@ -72,13 +72,7 @@ class CheckoutSepaService
                 $this->em->remove($data);
             }
             $this->em->flush();
-            $qb = $this->em->getRepository(Organisation::class)->createQueryBuilder('org');
-            $qb->innerJoin('org.ferienblocks', 'fB')
-                ->innerJoin('fB.kindFerienblocks', 'kindFb')
-                ->innerJoin('kindFb.kind', 'kind')
-                ->andWhere('kind.eltern = :eltern')
-                ->setParameter('eltern', $stammdaten);
-            $query = $qb->getQuery();
+
             $organisations = $this->paymentService->getOrganisationFromStammdaten($stammdaten);
             foreach ($organisations as $data) {
                 $blocks = $this->paymentService->getFerienBlocksKinder($data, $stammdaten);
@@ -98,7 +92,7 @@ class CheckoutSepaService
                 $this->em->persist($payment);
             }
             $this->em->flush();
-            dump($stammdaten);
+
             return true;
         } catch (\Exception $e) {
             return false;
