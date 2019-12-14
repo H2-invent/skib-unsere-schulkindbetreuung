@@ -51,6 +51,8 @@ class OrganisationType extends AbstractType
             ->add('glauaubigerId', TextType::class,['label'=>'Gläubiger ID','translation_domain' => 'form'])
             ->add('steuernummer', TextType::class,['label'=>'Steuernummer','translation_domain' => 'form'])
             ->add('umstid', TextType::class,['label'=>'UmSt. Identnummer','translation_domain' => 'form'])
+            ->add('stornoGebuehr', NumberType::class,['required'=>true,'label'=>'Stornogebühr für das Ferienprogramm','translation_domain' => 'form'])
+
             ->add('telefon', TextType::class,['label'=>'Telefonnummer','translation_domain' => 'form'])
             ->add('email', TextType::class,['label'=>'Email','translation_domain' => 'form'])
             ->add('orgHomepage', TextType::class,['required'=>false,'label'=>'Homepage URL','translation_domain' => 'form'])
