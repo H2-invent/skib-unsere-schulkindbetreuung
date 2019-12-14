@@ -93,9 +93,6 @@
                                 {% endif %}
                             </div>
                             <div class="col-sm-9">
-                                {% if block.minAnzahl is not null %}
-                                    {% trans %}Minimal{% endtrans %}: {{ block.minAnzahl }}<br/>
-                                {% endif %}
                                 {% if block.maxAnzahl is not null %}
                                     {% trans %}Maximal{% endtrans %}: {{ block.maxAnzahl }}<br/>
                                     {% trans %}Freie Plätze{% endtrans %}: {{ block.maxAnzahl - block.KindFerienblocksGebucht|length }}
