@@ -44,7 +44,7 @@ class FerienCheckoutController extends AbstractController
             $payment = $form->getData();
             $errors = $validator->validate($payment);
             if (sizeof($errors) == 0) {
-                if ($res = $checkoutSepaService->generateSepaPayment($adresse, $payment, $request->getClientIp())) {
+                if ($checkoutSepaService->generateSepaPayment($adresse, $payment, $request->getClientIp())) {
                     return $this->redirectToRoute('ferien_zusammenfassung', array('slug' => $stadt->getSlug()));
                 } else {
                     return $this->redirectToRoute('ferien_bezahlung', array('slug' => $stadt->getSlug(), 'snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
@@ -84,11 +84,7 @@ class FerienCheckoutController extends AbstractController
         }
         $openPayment = $checkoutPaymentService->getPaymentWithEmptyNonce($adresse)->toArray();
         if (sizeof($openPayment) > 0) {
-            return $this->render('ferien_checkout/braintreePayment.html.twig', array(
-                'payment' => $openPayment[0],
-                'open' => $openPayment,
-                'paymentAll' => $adresse->getPaymentFerien(),
-                'stadt' => $stadt));
+            return $this->render('ferien_checkout/braintreePayment.html.twig', array('payment' => $openPayment[0], 'open' => $openPayment, 'paymentAll' => $adresse->getPaymentFerien(), 'stadt' => $stadt));
         }
         return $this->redirectToRoute('ferien_zusammenfassung', array('slug' => $stadt->getSlug()));
     }
@@ -98,9 +94,6 @@ class FerienCheckoutController extends AbstractController
      */
     public function paymentrecieveNonceAction(TranslatorInterface $translator, CheckoutPaymentService $checkoutPaymentService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
-        if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
-            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE);
-        }
         $braintree = $this->getDoctrine()->getRepository(PaymentBraintree::class)->findOneBy(array('token' => $request->get('token')));
         $braintree->setNonce($request->get('nonce'));
         $em = $this->getDoctrine()->getManager();

@@ -49,21 +49,13 @@ class CheckoutBraintreeService
 
 
     private $em;
-    private $translator;
-    private $sepaSimpleService;
-    private $printRechnungService;
-    private $mailerService;
-    private $environment;
+
+
     private $paymentService;
 
-    public function __construct(CheckoutPaymentService $checkoutPaymentService, Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager, SEPASimpleService $sepaSimpleService, PrintRechnungService $printRechnungService, MailerService $mailerService)
+    public function __construct(CheckoutPaymentService $checkoutPaymentService,EntityManagerInterface $entityManager )
     {
         $this->em = $entityManager;
-        $this->translator = $translator;
-        $this->sepaSimpleService = $sepaSimpleService;
-        $this->printRechnungService = $printRechnungService;
-        $this->mailerService = $mailerService;
-        $this->environment = $environment;
         $this->paymentService = $checkoutPaymentService;
     }
 

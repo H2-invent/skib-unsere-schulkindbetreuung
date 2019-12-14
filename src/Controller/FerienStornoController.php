@@ -52,7 +52,7 @@ class FerienStornoController extends AbstractController
         if ($kindFerienblock->getState() == 20) {
             $result['text'] = 'Ferienprogram bereits storniert';
         }
-        if($kindFerienblock->getMarkedAsStorno() == false){
+        if($kindFerienblock->getMarkedAsStorno() === false){
             $kindFerienblock->setMarkedAsStorno(true);
             $result['cardText'] = $translator->trans('Als Storniert vorgemerkt');
             $result['state'] = 20;
