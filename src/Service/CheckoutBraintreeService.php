@@ -8,6 +8,7 @@ use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
 use App\Entity\Payment;
+use App\Entity\PaymentBraintree;
 use App\Entity\PaymentSepa;
 use App\Entity\Rechnung;
 use App\Entity\Sepa;
@@ -17,6 +18,7 @@ use App\Entity\Stammdaten;
 
 use App\Entity\Zeitblock;
 use App\Form\Type\ConfirmType;
+use Braintree\Gateway;
 use Doctrine\ORM\EntityManagerInterface;
 
 use phpDocumentor\Reflection\Types\Boolean;
@@ -42,7 +44,7 @@ use Twig\Environment;
 
 // <- Add this
 
-class CheckoutSepaService
+class CheckoutBraintreeService
 {
 
 
@@ -65,47 +67,49 @@ class CheckoutSepaService
         $this->paymentService = $checkoutPaymentService;
     }
 
-    public function generateSepaPayment(Stammdaten $stammdaten, PaymentSepa $paymentSepa, $ipAdress): bool
+    public function prepareBraintree(Stammdaten $stammdaten, $ipAdresse) :bool
     {
         try {
+            $org = $this->paymentService->getOrganisationFromStammdaten($stammdaten)->toArray();
             foreach ($stammdaten->getPaymentFerien() as $data) {
                 $this->em->remove($data);
             }
-            $this->em->flush();
-            $qb = $this->em->getRepository(Organisation::class)->createQueryBuilder('org');
-            $qb->innerJoin('org.ferienblocks', 'fB')
-                ->innerJoin('fB.kindFerienblocks', 'kindFb')
-                ->innerJoin('kindFb.kind', 'kind')
-                ->andWhere('kind.eltern = :eltern')
-                ->setParameter('eltern', $stammdaten);
-            $query = $qb->getQuery();
-            $organisations = $this->paymentService->getOrganisationFromStammdaten($stammdaten);
-            foreach ($organisations as $data) {
+            foreach ($org as $data) {
+                $payment = new Payment();
+                $braintree = new PaymentBraintree();
                 $blocks = $this->paymentService->getFerienBlocksKinder($data, $stammdaten);
                 $summe = 0.0;
                 foreach ($blocks as $data2) {
                     $summe += $data2->getPreis();
                 }
-                $payment = new Payment();
-                $payment->setSumme($summe);
-                $payment->setOrganisation($data);
-                $payment->setStammdaten($stammdaten);
-                $payment->setSepa($paymentSepa);
+                $gateway = new Gateway([
+                    'environment' => 'sandbox',
+                    //hier kommt dann der KEy der Org hin
+                    'merchantId' => '65xmpcc6hh6khg5d',
+                    'publicKey' => 'wzkfsj9n2kbyytfp',
+                    'privateKey' => 'a153a39aaef70466e97773a120b95f91',
+                ]);
+                $clientToken = $gateway->clientToken()->generate();
+
                 $payment->setCreatedAt(new \DateTime());
-                $payment->setIpAdresse($ipAdress);
-                //todo ist das wirklich bezahlt???
-                $payment->setBezahlt($summe);
+                $payment->setIpAdresse($ipAdresse);
+                $payment->setStammdaten($stammdaten);
+                $payment->setOrganisation($data);
+                $payment->setBezahlt(0);
+                $payment->setSumme($summe);
                 $this->em->persist($payment);
+
+                $braintree->setIpAdresse($ipAdresse);
+                $braintree->setCreatedAt(new \DateTime());
+                $braintree->setPayment($payment);
+                $braintree->setToken($clientToken);
+                $this->em->persist($braintree);
             }
             $this->em->flush();
-            dump($stammdaten);
             return true;
         } catch (\Exception $e) {
             return false;
         }
-
-
     }
-
 
 }

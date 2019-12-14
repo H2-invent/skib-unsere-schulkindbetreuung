@@ -85,15 +85,14 @@ class Stammdaten
     private $notfallkontakt;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="boolean",nullable=true)
      */
     private $sepaInfo;
 
     /**
      * @Assert\Iban()
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank(groups={"Schulkind"})
+     * @ORM\Column(type="text",nullable=true)
      */
     private $iban;
 
@@ -104,14 +103,14 @@ class Stammdaten
 
     /**
      * @Assert\Bic()
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text",nullable=true)
+     * @Assert\NotBlank(groups={"Schulkind"})
      */
     private $bic;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="text",nullable=true)
+     * @Assert\NotBlank(groups={"Schulkind"})
      */
     private $kontoinhaber;
 

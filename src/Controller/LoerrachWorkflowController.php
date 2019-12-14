@@ -97,7 +97,7 @@ class LoerrachWorkflowController extends AbstractController
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $adresse = $form->getData();
-            $errors = $validator->validate($adresse);
+            $errors = $validator->validate($adresse,null,['schulkind']);
             if (count($errors) == 0) {
                 $adresse->setFin(false);
                 $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);

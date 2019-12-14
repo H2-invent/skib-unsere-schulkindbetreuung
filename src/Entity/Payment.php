@@ -44,7 +44,7 @@ class Payment
     private $ipAdresse;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PaymentSepa", inversedBy="payments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\PaymentSepa", inversedBy="payments",cascade={"persist", "remove"})
      */
     private $sepa;
 
@@ -52,6 +52,11 @@ class Payment
      * @ORM\OneToOne(targetEntity="App\Entity\PaymentBraintree", inversedBy="payment", cascade={"persist", "remove"})
      */
     private $braintree;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $bezahlt;
 
     public function getId(): ?int
     {
@@ -138,6 +143,18 @@ class Payment
     public function setBraintree(?PaymentBraintree $braintree): self
     {
         $this->braintree = $braintree;
+
+        return $this;
+    }
+
+    public function getBezahlt(): ?float
+    {
+        return $this->bezahlt;
+    }
+
+    public function setBezahlt(float $bezahlt): self
+    {
+        $this->bezahlt = $bezahlt;
 
         return $this;
     }
