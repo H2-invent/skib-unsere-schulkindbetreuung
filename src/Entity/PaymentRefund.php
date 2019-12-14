@@ -42,6 +42,11 @@ class PaymentRefund
      */
     private $payment;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $refundFee;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class PaymentRefund
     public function setPayment(?Payment $payment): self
     {
         $this->payment = $payment;
+
+        return $this;
+    }
+
+    public function getRefundFee(): ?float
+    {
+        return $this->refundFee;
+    }
+
+    public function setRefundFee(float $refundFee): self
+    {
+        $this->refundFee = $refundFee;
 
         return $this;
     }

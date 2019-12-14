@@ -54,7 +54,8 @@ class FerienStornoController extends AbstractController
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
 
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
-        $ferienStornoService->stornoAbschluss($stammdaten);
-        $this->redirectToRoute('ferien_abschluss',array('slug'=>$stadt->getSlug()));
+        $ferienStornoService->stornoAbschluss($stammdaten,$request->getClientIp());
+            return 0;
+        return $this->redirectToRoute('ferien_abschluss',array('slug'=>$stadt->getSlug()));
     }
 }
