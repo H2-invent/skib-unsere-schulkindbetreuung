@@ -36,11 +36,11 @@ class PaymentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('kontoinhaber', TextType::class,array('label'=>'Kontoinhaber für das Lastschriftmandat','translation_domain' => 'form'))
-            ->add('iban', TextType::class,array('label'=>'IBAN für das Lastschriftmandat','required'=>true,'translation_domain' => 'form'))
-            ->add('bic', TextType::class,array('label'=>'BIC für das Lastschriftmandat','required'=>true,'translation_domain' => 'form'))
-            ->add('bankName', TextType::class,array('label'=>'Name der Bank','translation_domain' => 'form'))
-            ->add('sepaAllowed', CheckboxType::class,array('label'=>'SEPA-Lastschrift Mandat wird elektronisch erteilt','translation_domain' => 'form'))
+            ->add('kontoinhaber', TextType::class,array('required'=>true,'label'=>'Kontoinhaber für das Lastschriftmandat','translation_domain' => 'form'))
+            ->add('iban', TextType::class,array('required'=>true,'label'=>'IBAN für das Lastschriftmandat','translation_domain' => 'form'))
+            ->add('bic', TextType::class,array('required'=>true,'label'=>'BIC für das Lastschriftmandat','translation_domain' => 'form'))
+            ->add('bankName', TextType::class,array('required'=>true,'label'=>'Name der Bank','translation_domain' => 'form'))
+            ->add('sepaAllowed', CheckboxType::class,array('required'=>true,'label'=>'SEPA-Lastschrift Mandat wird elektronisch erteilt','translation_domain' => 'form'))
             ->add('save', SubmitType::class, ['label' => 'Weiter','translation_domain' => 'form'])
         ;
     }

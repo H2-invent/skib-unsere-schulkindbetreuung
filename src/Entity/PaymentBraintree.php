@@ -37,7 +37,7 @@ class PaymentBraintree
     private $ipAdresse;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Payment", mappedBy="braintree", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Payment", mappedBy="braintree", cascade={"persist"})
      */
     private $payment;
 

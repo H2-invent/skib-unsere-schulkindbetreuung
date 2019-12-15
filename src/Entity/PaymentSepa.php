@@ -46,6 +46,7 @@ class PaymentSepa
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
      */
     private $sepaAllowed;
 

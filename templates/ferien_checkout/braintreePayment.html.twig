@@ -17,9 +17,7 @@
                 {% trans with {'%organisation%':payment.organisation.name,'%summe%':payment.summe|number_format(2,',','.')} %}Zahlen Sie hier die Summe von %summe%€ an die Organisation %organisation% {% endtrans %}
 
             </h4>
-            <h2>
-                {% trans with{'%ziel%':paymentAll|length,'%akt%':paymentAll|length - open|length +1} %}%akt% von %ziel%{% endtrans %}
-            </h2>
+
             <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
                title="{{ 'Information'|trans }}" data-content="{% trans %}Wichtig, Wichtig{% endtrans %}"></i>
 
@@ -75,7 +73,7 @@
                             data: { token: "{{payment.braintree.token}}", nonce: payload.nonce }
                         })
                             .done(function( msg ) {
-                                window.location.replace("{{path('ferien_braintree_pay',{'slug':stadt.slug})}}");
+                                window.location.replace("{{path('ferien_bezahlung',{'slug':stadt.slug})}}");
                             });
 
                     });
