@@ -7,47 +7,190 @@
                 <!-- Count item widget-->
                 <div class=" col-12 card">
                     <div class="card-header">
-                        <h1> {{ titel }}  <a href="{{ path('ferien_management_neu',{'org_id':org.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
-                                    <i class="material-icons">add</i>
-                                </button></a></h1>
+                        <h1> Details zu {{ stammdaten.vorname }} {{ stammdaten.name }} </h1>
                     </div>
 
                     <div class="card-body">
-                            <div class="card-body">
-                                <h3>{% trans %}Details{% endtrans %}</h3>
-                                <dl class="dl-horizontal">
-                                    <dt>Checkin ID</dt>
-                                    <dd>{{ kindFerienblock.checkinID }}</dd>
-                                    <dt>Anmeldedatum</dt>
-                                    <dd>{{ kindFerienblock.kind.eltern.createdAt|date ('d.m.Y') }}</dd>
 
-                                    <dt>Bezahlung</dt>
-                                    <dd>Muss noch angegeben werden</dd>
-
-                                    <dt>Email</dt>
-                                    <dd>
-                                        {{ kindFerienblock.kind.eltern.email }}
-                                    </dd>
-
-                                </dl>
-
-                                <h3>{% trans %}Anmeldungen{% endtrans %}</h3>
-                                <dl class="dl-horizontal">
-                                    <dt>Checkin ID</dt>
-                                    <dd>{{ kindFerienblock.checkinID }}</dd>
-                                    <dt>Anmeldedatum</dt>
-                                    <dd>{{ kindFerienblock.kind.eltern.createdAt|date ('d.m.Y') }}</dd>
-
-                                    <dt>Bezahlung</dt>
-                                    <dd>Muss noch angegeben werden</dd>
-
-                                    <dt>Email</dt>
-                                    <dd>
-                                        {{ kindFerienblock.kind.eltern.email }}
-                                    </dd>
-
-                                </dl>
+                        <div class="card-body">
+                            <div class="row mb-2" style="background-color: lightgrey">
+                                <h3 style="padding: 10px">{% trans %}Details der Eltern{% endtrans %}</h3>
                             </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <dl class="dl-horizontal">
+                                        <dt>{% trans %}Name der Eltern{% endtrans %}</dt>
+                                        <dd>{{ stammdaten.vorname }} {{ stammdaten.name }}</dd>
+                                        <dt>{% trans %} Adresse der Eltern {% endtrans %}</dt>
+                                        <dd>{{ stammdaten.strasse }}<br>{{ stammdaten.plz }} {{ stammdaten.stadt }}</dd>
+
+                                        <dt>Anmeldedatum</dt>
+                                        <dd>{{ stammdaten.createdAt|date ('d.m.Y') }}</dd>
+                                    </dl>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <dl>
+                                        <dt>{% trans %} Name und Beziehung des Notfallkontakt {% endtrans %}</dt>
+                                        <dd>{{ stammdaten.notfallName }}</dd>
+                                        <dt>{% trans %} Notfallkontakt der Eltern {% endtrans %}</dt>
+                                        <dd>{{ stammdaten.notfallkontakt }}</dd>
+                                        <dt>{% trans %} Weitere abholberechtigte Personen {% endtrans %}</dt>
+                                        <dd>{{ stammdaten.abholberechtigter }}</dd>
+
+                                        <dt>Email</dt>
+                                        <dd>
+                                            {{ stammdaten.email }} <a href="mailto: {{ stammdaten.email }}"><i
+                                                        class="material-icons">mail</i></a>
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                                {% if stammdaten.paymentFerien is empty %}
+                                    <dl class="dl-horizontal col-lg-12">
+                                        <dt>Bezahlung</dt>
+                                        <dd>
+                                            <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
+                                        </dd>
+                                    </dl>
+                                {% endif %}
+                            </div>
+
+                            <div class="row mb-2" style="background-color: lightgrey">
+                                <h3 style="padding: 10px">{% trans %}Anmeldungen{% endtrans %}</h3>
+                            </div>
+
+                            <div id="accordion">
+                                {% for k in stammdaten.kinds %}
+                                    <div class="card">
+                                        <div class="card-header" id="heading{{ loop.index }}">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link" data-toggle="collapse"
+                                                        aria-expanded="false"
+                                                        data-target="#collapse{{ loop.index }}"
+                                                        aria-controls="collapse{{ loop.index }}">
+                                                    #{{ loop.index }} {{ k.vorname }} {{ k.nachname }}
+                                                </button>
+                                            </h5>
+                                        </div>
+
+                                        <div id="collapse{{ loop.index }}" class="collapse"
+                                             aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
+                                            <div class="card-body">
+
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <dl class="dl-horizontal">
+                                                            <dt>{% trans %}Name des Kindes{% endtrans %}</dt>
+                                                            <dd>{{ k.vorname }} {{ k.nachname }}</dd>
+                                                            <dt>{% trans %} Geburtstag {% endtrans %}</dt>
+                                                            <dd>{{ k.geburtstag|date('d.m.Y') }}</dd>
+                                                            <dt>{% trans %} Allergien {% endtrans %}</dt>
+                                                            <dd>{{ k.allergie }}</dd>
+                                                            <dt>{% trans %} Medikamente {% endtrans %}</dt>
+                                                            <dd>{{ k.medikamente }}</dd>
+                                                            <dt>{% trans %} Mein Kind ist Gluten intolerant {% endtrans %}</dt>
+                                                            <dd>{{ k.gluten?"Ja":'Nein'|trans }}</dd>
+                                                            <dt>{% trans %} Mein Kind ist Laktose intolerant {% endtrans %}</dt>
+                                                            <dd>{{ k.laktose?"Ja":'Nein'|trans }}</dd>
+                                                        </dl>
+                                                    </div>
+                                                    <div class="col-lg-6">
+
+                                                        <dl>
+                                                            <dt>{% trans %} Mein Kind isst kein Schweinefleisch {% endtrans %}</dt>
+                                                            <dd>{{ k.schweinefleisch?"Ja":'Nein'|trans }}</dd>
+                                                            <dt>{% trans %} Vegetrarisch {% endtrans %}</dt>
+                                                            <dd>{{ k.vegetarisch?"Ja":'Nein'|trans }}</dd>
+                                                            <dt>{% trans %} Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause {% endtrans %}</dt>
+                                                            <dd>{{ k.alleineHause?"Ja":'Nein'|trans }}</dd>
+                                                            <dt>{% trans %} Mein Kind darf an Ausflügen teilnehmen {% endtrans %}</dt>
+                                                            <dd>{{ k.ausfluege?"Ja":'Nein'|trans }}</dd>
+                                                            <dt>{% trans %} Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden {% endtrans %}</dt>
+                                                            <dd>{{ k.sonnencreme?"Ja":'Nein'|trans }}</dd>
+                                                            <dt>{% trans %} Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden {% endtrans %}</dt>
+                                                            <dd>{{ k.fotos?"Ja":'Nein'|trans }}</dd>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+
+                                                {% for f in k.kindFerienblocks %}
+                                                    <div class="row mt-3">
+                                                        <div class="col-md-10">
+                                                            <b>
+                                                                #{{ loop.index }} {{ f.ferienblock.translate.titel }}
+                                                            </b>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <b>
+                                                                {{ f.preis|number_format ('2',',','.') }} €
+                                                            </b>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            Checkin ID
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            {{ f.checkinID }}
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            Checkins
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            {% for c in f.checkinStatus %}
+                                                                {{ c }}<br/>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+
+                            <div class="row mb-2" style="background-color: lightgrey">
+                                <h3 style="padding: 10px">{% trans %}Bezahlung{% endtrans %}</h3>
+                            </div>
+
+                            {% if stammdaten.paymentFerien is empty %}
+                                <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
+                            {% else %}
+                                {% if stammdaten.paymentFerien.sepa is not null %}
+                                    <b>SEPA</b><br/>
+                                    IBAN: {{ stammdaten.paymentFerien.sepa.iban }}<br/>
+                                    BIC: {{ stammdaten.paymentFerien.sepa.bic }}
+                                {% endif %}
+                                {% if stammdaten.paymentFerien.braintree is not null %}
+                                    <b>Braintree</b><br/>
+                                    Token: {{ stammdaten.paymentFerien.braintree.token }}<br/>
+                                    Nonce: {{ stammdaten.paymentFerien.braintree.nonce }}<br/>
+                                    IP Adresse: {{ stammdaten.paymentFerien.braintree.ipAdresse }}
+                                {% endif %}
+                            {% endif %}
+
+
+                            <div class="row mb-2" style="background-color: lightgrey">
+                            <h3 style="padding: 10px">{% trans %}Rückerstattungen{% endtrans %}</h3>
+                            </div>
+                            {% if stammdaten.paymentFerien is empty %}
+                                <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
+                            {% else %}
+                                {% if stammdaten.paymentFerien.sepa is not null %}
+                                    <b>SEPA</b><br/>
+                                    IBAN: {{ stammdaten.paymentFerien.sepa.iban }}<br/>
+                                    BIC: {{ stammdaten.paymentFerien.sepa.bic }}
+                                {% endif %}
+                                {% if stammdaten.paymentFerien.braintree is not null %}
+                                    <b>Braintree</b><br/>
+                                    Token: {{ stammdaten.paymentFerien.braintree.token }}<br/>
+                                    Nonce: {{ stammdaten.paymentFerien.braintree.nonce }}<br/>
+                                    IP Adresse: {{ stammdaten.paymentFerien.braintree.ipAdresse }}
+                                {% endif %}
+                            {% endif %}
+
+                        </div>
                     </div>
                 </div>
             </div>

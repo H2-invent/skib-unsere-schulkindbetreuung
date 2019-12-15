@@ -232,29 +232,21 @@ class FerienManagementController extends AbstractController
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $today = new \DateTime('today');
-        $checkinDate = $today->format('Y-m-d');
-
-        $block = $organisation->getFerienblocks();
-        $kinder = $this->getDoctrine()->getRepository(KindFerienblock::class)->findAll(array('ferienblock' => $block));
 
         $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
         $qb->innerJoin('stammdaten.kinds','kinds')
             ->innerJoin('kinds.kindFerienblocks','kind_ferienblocks')
-            ->andWhere('kind_ferienblocks = :org')
-            ->setParameter('org',$organisation);
+            ->innerJoin('kind_ferienblocks.ferienblock','ferienblock')
+            ->andWhere('ferienblock.organisation = :org')
+            ->setParameter('org', $organisation);
         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
         $titel = $translator->trans('Alle Anmeldungen');
-        $mode = 'order';
 
-        return $this->render('ferien_management/checkinList.html.twig', [
+        return $this->render('ferien_management/orderList.html.twig', [
             'org' => $organisation,
-            'list' => $kinder,
             'stammdaten' => $stammdaten,
-            'day' => $checkinDate,
             'titel' => $titel,
-            'mode' => $mode,
         ]);
     }
 
@@ -324,7 +316,7 @@ class FerienManagementController extends AbstractController
     public function orderDetails(Request $request, TranslatorInterface $translator, AnwesenheitslisteService $anwesenheitslisteService)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $kindFerienblock = $this->getDoctrine()->getRepository(KindFerienblock::class)->find($request->get('id'));
+        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -333,7 +325,7 @@ class FerienManagementController extends AbstractController
 
         return $this->render('ferien_management/details.html.twig', [
             'org' => $organisation,
-            'kindFerienblock' => $kindFerienblock,
+            'stammdaten' => $stammdaten,
             'titel' => $titel,
         ]);
     }
