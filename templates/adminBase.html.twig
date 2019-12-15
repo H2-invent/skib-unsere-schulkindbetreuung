@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <link rel="stylesheet" href="{{ asset('css/jquery-clockpicker.min.css') }}" id="theme-stylesheet">
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
@@ -159,16 +159,23 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_ORG_FERIEN_EDITOR') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
-                            <li><a href="{{ path('ferien_management_show',{'org_id':app.user.organisation.id}) }}"> <i
-                                            class="material-icons">home</i> {% trans %}Programm{% endtrans %}</a>
-                            </li>
-                            <li><a href="{{ path('ferien_management_orders',{'org_id':app.user.organisation.id}) }}"> <i
-                                            class="material-icons">home</i> {% trans %}Anmeldungen{% endtrans %}</a>
-                            </li>
-                            <li><a href="{{ path('ferien_management_report_checkinlist_tag',{'org_id':app.user.organisation.id}) }}"> <i
-                                            class="material-icons">home</i> {% trans %}Checkin{% endtrans %}</a>
-                            </li>
+                    <li><a href="{{ path('ferien_management_show',{'org_id':app.user.organisation.id}) }}"> <i
+                                    class="material-icons">home</i> {% trans %}Programm{% endtrans %}</a>
+                    </li>
                 {% endif %}
+                {% if is_granted('ROLE_ORG_FERIEN_ORDERS') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
+                    <li><a href="{{ path('ferien_management_orders',{'org_id':app.user.organisation.id}) }}"> <i
+                                    class="material-icons">home</i> {% trans %}Anmeldungen{% endtrans %}</a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_ORG_FERIEN_CHECKIN') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
+                    <li>
+                        <a href="{{ path('ferien_management_report_checkinlist_tag',{'org_id':app.user.organisation.id}) }}">
+                            <i
+                                    class="material-icons">home</i> {% trans %}Checkin{% endtrans %}</a>
+                    </li>
+                {% endif %}
+
 
 
                 {% if is_granted('ROLE_ORG_ACCOUNTING') %}
@@ -176,9 +183,6 @@
                     <li><a href="{{ path('accounting_overview',{'id':app.user.organisation.id}) }}"> <i
                                     class="material-icons">money</i> {% trans %}SEPA Übersicht{% endtrans %}</a></li>
                 {% endif %}
-
-
-
 
 
                 <h5 class="sidenav-heading">{% trans %}Einstellungen{% endtrans %}</h5>
@@ -232,7 +236,8 @@
                 <div class="navbar-holder d-flex align-items-center justify-content-between">
                     <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i
                                     class="icon-bars"> </i></a><a href="{{ path('dashboard') }}" class="navbar-brand">
-                            <div class="brand-text d-none d-md-inline-block"><span>unsere Schulkindbetreuung </span><strong
+                            <div class="brand-text d-none d-md-inline-block">
+                                <span>unsere Schulkindbetreuung </span><strong
                                         class="text-primary"> SKB</strong></div>
                         </a></div>
                     <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
@@ -857,7 +862,7 @@
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script type="text/javascript" src="{{asset('js/jquery-clockpicker.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery-clockpicker.min.js') }}"></script>
 <script>$(document).ready(function () {
         $('body').bootstrapMaterialDesign();
     });</script>
@@ -937,7 +942,7 @@
                         type: type,
                         success: function (data) {
                             if (data.redirect) {
-                                window.location.href= data.redirect;
+                                window.location.href = data.redirect;
                             }
                         }
                     });
@@ -956,14 +961,14 @@
             "format": "YYYY-MM-DD",
             "separator": " - ",
         }
-    }, function(chosen_date) {
+    }, function (chosen_date) {
         $(this).val(chosen_date.format('YYYY-MM-DD'));
     })
-   .on('apply.daterangepicker', function(ev, picker) {
-        //do something, like clearing an input
-       var ele = $(this);
-       ele.val(picker.startDate.format('YYYY-MM-DD'))
-    });
+        .on('apply.daterangepicker', function (ev, picker) {
+            //do something, like clearing an input
+            var ele = $(this);
+            ele.val(picker.startDate.format('YYYY-MM-DD'))
+        });
     $('input[type="time"]').clockpicker({
         autoclose: true,
         donetext: "{{ 'Fertig'|trans }}"

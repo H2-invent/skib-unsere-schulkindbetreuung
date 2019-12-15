@@ -1,0 +1,57 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <!-- Count item widget-->
+                <div class=" col-12 card">
+                    <div class="card-header">
+                        <h1> {{ titel }}  <a href="{{ path('ferien_management_neu',{'org_id':org.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                                    <i class="material-icons">add</i>
+                                </button></a></h1>
+                    </div>
+
+                    <div class="card-body">
+                            <div class="card-body">
+                                <h3>{% trans %}Details{% endtrans %}</h3>
+                                <dl class="dl-horizontal">
+                                    <dt>Checkin ID</dt>
+                                    <dd>{{ kindFerienblock.checkinID }}</dd>
+                                    <dt>Anmeldedatum</dt>
+                                    <dd>{{ kindFerienblock.kind.eltern.createdAt|date ('d.m.Y') }}</dd>
+
+                                    <dt>Bezahlung</dt>
+                                    <dd>Muss noch angegeben werden</dd>
+
+                                    <dt>Email</dt>
+                                    <dd>
+                                        {{ kindFerienblock.kind.eltern.email }}
+                                    </dd>
+
+                                </dl>
+
+                                <h3>{% trans %}Anmeldungen{% endtrans %}</h3>
+                                <dl class="dl-horizontal">
+                                    <dt>Checkin ID</dt>
+                                    <dd>{{ kindFerienblock.checkinID }}</dd>
+                                    <dt>Anmeldedatum</dt>
+                                    <dd>{{ kindFerienblock.kind.eltern.createdAt|date ('d.m.Y') }}</dd>
+
+                                    <dt>Bezahlung</dt>
+                                    <dd>Muss noch angegeben werden</dd>
+
+                                    <dt>Email</dt>
+                                    <dd>
+                                        {{ kindFerienblock.kind.eltern.email }}
+                                    </dd>
+
+                                </dl>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
