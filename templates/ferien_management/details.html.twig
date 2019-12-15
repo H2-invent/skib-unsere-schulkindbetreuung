@@ -5,17 +5,20 @@
         <div class="container-fluid ">
             <div class="row">
                 <!-- Count item widget-->
-                <div class=" col-12 card">
+                <div class=" col-12 card" style="border-radius: 10px;">
                     <div class="card-header">
-                        <h1> Details zu {{ stammdaten.vorname }} {{ stammdaten.name }} </h1>
+                        <h1> Details: {{ stammdaten.vorname }} {{ stammdaten.name }} </h1>
                     </div>
 
                     <div class="card-body">
+                        <a href="{{ path('ferien_management_orders_storno', {'org_id': org.id, 'parent_id': stammdaten.uid}) }}"
+                           target="_blank" class="btn btn-primary">{% trans %}Stornieren{% endtrans %}</a>
+                        <a href="mailto: {{ stammdaten.email }}" target="_blank"
+                           class="btn btn-primary">{% trans %}Email an Eltern senden{% endtrans %}</a>
 
                         <div class="card-body">
-                            <div class="row mb-2" style="background-color: lightgrey">
-                                <h3 style="padding: 10px">{% trans %}Details der Eltern{% endtrans %}</h3>
-                            </div>
+                            <h3 class="card-title">{% trans %}Details der Eltern{% endtrans %}</h3>
+
 
                             <div class="row">
                                 <div class="col-lg-6">
@@ -41,8 +44,7 @@
 
                                         <dt>Email</dt>
                                         <dd>
-                                            {{ stammdaten.email }} <a href="mailto: {{ stammdaten.email }}"><i
-                                                        class="material-icons">mail</i></a>
+                                            {{ stammdaten.email }}
                                         </dd>
 
                                     </dl>
@@ -57,9 +59,7 @@
                                 {% endif %}
                             </div>
 
-                            <div class="row mb-2" style="background-color: lightgrey">
-                                <h3 style="padding: 10px">{% trans %}Anmeldungen{% endtrans %}</h3>
-                            </div>
+                            <h3 class="card-title">{% trans %}Anmeldungen{% endtrans %}</h3>
 
                             <div id="accordion">
                                 {% for k in stammdaten.kinds %}
@@ -149,10 +149,7 @@
                                 {% endfor %}
                             </div>
 
-
-                            <div class="row mb-2" style="background-color: lightgrey">
-                                <h3 style="padding: 10px">{% trans %}Bezahlung{% endtrans %}</h3>
-                            </div>
+                            <h3 class="card-title">{% trans %}Ticket ausdrucken{% endtrans %}</h3>
 
                             {% if stammdaten.paymentFerien is empty %}
                                 <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
@@ -171,9 +168,26 @@
                             {% endif %}
 
 
-                            <div class="row mb-2" style="background-color: lightgrey">
-                            <h3 style="padding: 10px">{% trans %}Rückerstattungen{% endtrans %}</h3>
-                            </div>
+                            <h3 class="card-title">{% trans %}Zahlungen{% endtrans %}</h3>
+
+                            {% if stammdaten.paymentFerien is empty %}
+                                <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
+                            {% else %}
+                                {% if stammdaten.paymentFerien.sepa is not null %}
+                                    <b>SEPA</b><br/>
+                                    IBAN: {{ stammdaten.paymentFerien.sepa.iban }}<br/>
+                                    BIC: {{ stammdaten.paymentFerien.sepa.bic }}
+                                {% endif %}
+                                {% if stammdaten.paymentFerien.braintree is not null %}
+                                    <b>Braintree</b><br/>
+                                    Token: {{ stammdaten.paymentFerien.braintree.token }}<br/>
+                                    Nonce: {{ stammdaten.paymentFerien.braintree.nonce }}<br/>
+                                    IP Adresse: {{ stammdaten.paymentFerien.braintree.ipAdresse }}
+                                {% endif %}
+                            {% endif %}
+
+                            <h3 class="card-title">{% trans %}Rückerstattungen{% endtrans %}</h3>
+
                             {% if stammdaten.paymentFerien is empty %}
                                 <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
                             {% else %}
