@@ -28,7 +28,6 @@ class BrainTreeCheckoutController extends AbstractController
         }
         $payment = $this->getDoctrine()->getRepository(Payment::class)->findOneBy(array('uid'=>$request->get('id')));
         $checkoutBraintreeService->prepareBraintree($adresse, $request->getClientIp(),$payment);
-        dump($payment);
             return $this->render('ferien_checkout/braintreePayment.html.twig', array('payment' => $payment, 'stadt' => $stadt));
     }
 
