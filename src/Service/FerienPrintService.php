@@ -12,32 +12,26 @@ namespace App\Service;
 use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
-use App\Entity\Stadt;
-use App\Entity\Stammdaten;
 
 use League\Flysystem\FilesystemInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\Route;
 use Symfony\Component\Templating\EngineInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 class FerienPrintService
 {
 
     private $templating;
-    private $translator;
     protected $parameterBag;
     private $fileSystem;
     private $router;
 
-    public function __construct(FilesystemInterface $publicUploadsFilesystem, \Swift_Mailer $mailer, EngineInterface $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag, UrlGeneratorInterface $router)
+    public function __construct(FilesystemInterface $publicUploadsFilesystem, EngineInterface $templating, ParameterBagInterface $parameterBag, UrlGeneratorInterface $router)
     {
 
         $this->router = $router;
         $this->templating = $templating;
-        $this->translator = $translator;
         $this->parameterBag = $parameterBag;
         $this->fileSystem = $publicUploadsFilesystem;
     }
@@ -93,7 +87,7 @@ class FerienPrintService
     }
 
 
-    public function preparePDF($pdf, $title, $author, $subject)
+    public function preparePDF(TCPDFController $pdf, $title, $author, $subject)
     {
 
         $pdf->SetAuthor($author);
