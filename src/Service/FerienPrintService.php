@@ -87,7 +87,7 @@ class FerienPrintService
     }
 
 
-    public function preparePDF(TCPDFController $pdf, $title, $author, $subject)
+    public function preparePDF($pdf, $title, $author, $subject)
     {
 
         $pdf->SetAuthor($author);

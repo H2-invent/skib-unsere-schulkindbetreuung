@@ -46,18 +46,17 @@
                                         {{ s.kinds|length }} {% trans %}Ferienanmeldungen{% endtrans %}
                                     </td>
                                     <td>
-                                        {% if s.paymentFerien is empty %}
+                                        {% if s.paymentFerienforOrg(org) is null %}
                                             <p class="text-warning">{% trans %}Anmeldung nicht abgeschlossen{% endtrans %}</p>
                                         {% else %}
-                                            {{ s.paymentFerien.summe }}
+                                            {{ s.paymentFerienforOrg(org).summe|number_format(2,',','.') }}
                                         {% endif %}
                                     </td>
                                     <td>
-                                        {% if s.paymentFerien is empty %}
+                                        {% if s.paymentFerienforOrg(org) is null %}
                                             <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
                                         {% else %}
-                                            {% if s.paymentFerien.sepa is not null %}SEPA{% endif %}
-                                            {% if s.paymentFerien.braintree is not null %}Braintree{% endif %}
+                                            {{ s.paymentFerienforOrg(org).typeAsString }}
                                         {% endif %}
                                     </td>
                                 </tr>

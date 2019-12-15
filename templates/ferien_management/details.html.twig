@@ -159,16 +159,17 @@
                             {% if stammdaten.paymentFerien is empty %}
                                 <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
                             {% else %}
-                                {% if stammdaten.paymentFerien.sepa is not null %}
+                                {% set payment = stammdaten.paymentFerienforOrg(org) %}
+                                {% if payment.sepa is not null %}
                                     <b>SEPA</b><br/>
-                                    IBAN: {{ stammdaten.paymentFerien.sepa.iban }}<br/>
-                                    BIC: {{ stammdaten.paymentFerien.sepa.bic }}
+                                    IBAN: {{ payment.sepa.iban }}<br/>
+                                    BIC: {{ payment.sepa.bic }}
                                 {% endif %}
-                                {% if stammdaten.paymentFerien.braintree is not null %}
+                                {% if payment.braintree is not null %}
                                     <b>Braintree</b><br/>
-                                    Token: {{ stammdaten.paymentFerien.braintree.token }}<br/>
-                                    Nonce: {{ stammdaten.paymentFerien.braintree.nonce }}<br/>
-                                    IP Adresse: {{ stammdaten.paymentFerien.braintree.ipAdresse }}
+                                    Token: {{ payment.braintree.token }}<br/>
+                                    Nonce: {{ payment.braintree.nonce }}<br/>
+                                    IP Adresse: {{ payment.braintree.ipAdresse }}
                                 {% endif %}
                             {% endif %}
 
@@ -178,36 +179,22 @@
                             {% if stammdaten.paymentFerien is empty %}
                                 <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
                             {% else %}
-                                {% if stammdaten.paymentFerien.sepa is not null %}
+                                {% if payment.sepa is not null %}
                                     <b>SEPA</b><br/>
-                                    IBAN: {{ stammdaten.paymentFerien.sepa.iban }}<br/>
-                                    BIC: {{ stammdaten.paymentFerien.sepa.bic }}
+                                    IBAN: {{ payment.sepa.iban }}<br/>
+                                    BIC: {{ payment.sepa.bic }}
                                 {% endif %}
-                                {% if stammdaten.paymentFerien.braintree is not null %}
+                                {% if payment.braintree is not null %}
                                     <b>Braintree</b><br/>
-                                    Token: {{ stammdaten.paymentFerien.braintree.token }}<br/>
-                                    Nonce: {{ stammdaten.paymentFerien.braintree.nonce }}<br/>
-                                    IP Adresse: {{ stammdaten.paymentFerien.braintree.ipAdresse }}
+                                    Token: {{ payment.braintree.token }}<br/>
+                                    Nonce: {{ payment.braintree.nonce }}<br/>
+                                    IP Adresse: {{ payment.braintree.ipAdresse }}
                                 {% endif %}
                             {% endif %}
 
                             <h3 class="card-title">{% trans %}Rückerstattungen{% endtrans %}</h3>
 
-                            {% if stammdaten.paymentFerien is empty %}
-                                <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
-                            {% else %}
-                                {% if stammdaten.paymentFerien.sepa is not null %}
-                                    <b>SEPA</b><br/>
-                                    IBAN: {{ stammdaten.paymentFerien.sepa.iban }}<br/>
-                                    BIC: {{ stammdaten.paymentFerien.sepa.bic }}
-                                {% endif %}
-                                {% if stammdaten.paymentFerien.braintree is not null %}
-                                    <b>Braintree</b><br/>
-                                    Token: {{ stammdaten.paymentFerien.braintree.token }}<br/>
-                                    Nonce: {{ stammdaten.paymentFerien.braintree.nonce }}<br/>
-                                    IP Adresse: {{ stammdaten.paymentFerien.braintree.ipAdresse }}
-                                {% endif %}
-                            {% endif %}
+
 
                         </div>
                     </div>
