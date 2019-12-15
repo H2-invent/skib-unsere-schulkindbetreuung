@@ -90,6 +90,7 @@ class Stammdaten
 
     /**
      * @ORM\Column(type="boolean",nullable=true)
+     * @Assert\NotBlank(groups={"Schulkind"})
      */
     private $sepaInfo;
 

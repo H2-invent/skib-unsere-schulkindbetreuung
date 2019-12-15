@@ -53,55 +53,38 @@ class CheckoutBraintreeService
 
     private $paymentService;
 
-    public function __construct(CheckoutPaymentService $checkoutPaymentService,EntityManagerInterface $entityManager )
+    public function __construct(CheckoutPaymentService $checkoutPaymentService, EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
         $this->paymentService = $checkoutPaymentService;
     }
 
-    public function prepareBraintree(Stammdaten $stammdaten, $ipAdresse) :bool
+    public function prepareBraintree(Stammdaten $stammdaten, $ipAdresse, Payment $payment): bool
     {
         try {
-            $org = $this->paymentService->getOrganisationFromStammdaten($stammdaten)->toArray();
-            foreach ($stammdaten->getPaymentFerien() as $data) {
-                $this->em->remove($data);
-            }
-            foreach ($org as $data) {
-                $payment = new Payment();
-                $braintree = new PaymentBraintree();
-                $blocks = $this->paymentService->getFerienBlocksKinder($data, $stammdaten);
-                $summe = 0.0;
-                foreach ($blocks as $data2) {
-                    $summe += $data2->getPreis();
-                }
-                $gateway = new Gateway([
-                    'environment' => 'sandbox',
-                    //todo hier kommt dann der KEy der Org hin
-                    'merchantId' => '65xmpcc6hh6khg5d',
-                    'publicKey' => 'wzkfsj9n2kbyytfp',
-                    'privateKey' => 'a153a39aaef70466e97773a120b95f91',
-                ]);
-                $clientToken = $gateway->clientToken()->generate();
-
-                $payment->setCreatedAt(new \DateTime());
-                $payment->setIpAdresse($ipAdresse);
-                $payment->setStammdaten($stammdaten);
-                $payment->setOrganisation($data);
-                $payment->setBezahlt(0);
-                $payment->setSumme($summe);
-                $this->em->persist($payment);
-
-                $braintree->setIpAdresse($ipAdresse);
-                $braintree->setCreatedAt(new \DateTime());
-                $braintree->setPayment($payment);
-                $braintree->setToken($clientToken);
-                $this->em->persist($braintree);
-            }
+        if ($payment->getBraintree()) {
+            $this->em->remove($payment->getBraintree());
             $this->em->flush();
-            return true;
-        } catch (\Exception $e) {
-            return false;
         }
+        $braintree = new PaymentBraintree();
+        $gateway = new Gateway([
+            'environment' => 'sandbox',
+            //todo hier kommt dann der KEy der Org hin
+            'merchantId' => '65xmpcc6hh6khg5d',
+            'publicKey' => 'wzkfsj9n2kbyytfp',
+            'privateKey' => 'a153a39aaef70466e97773a120b95f91',
+        ]);
+        $clientToken = $gateway->clientToken()->generate();
+        $braintree->setIpAdresse($ipAdresse);
+        $braintree->setCreatedAt(new \DateTime());
+        $braintree->setPayment($payment);
+        $braintree->setToken($clientToken);
+        $this->em->persist($braintree);
+        $this->em->flush();
+        return true;
+        } catch (\Exception $e) {
+          return false;
+         }
     }
 
 }

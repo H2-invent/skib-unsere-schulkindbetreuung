@@ -50,44 +50,26 @@ class CheckoutSepaService
 
     private $paymentService;
 
-    public function __construct(CheckoutPaymentService $checkoutPaymentService,  EntityManagerInterface $entityManager )
+    public function __construct(CheckoutPaymentService $checkoutPaymentService, EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
         $this->paymentService = $checkoutPaymentService;
     }
 
-    public function generateSepaPayment(Stammdaten $stammdaten, PaymentSepa $paymentSepa, $ipAdress): bool
+    public function generateSepaPayment(Stammdaten $stammdaten, PaymentSepa $paymentSepa, $ipAdress, Payment $payment): bool
     {
-        try {
-            foreach ($stammdaten->getPaymentFerien() as $data) {
-                $this->em->remove($data);
-            }
-            $this->em->flush();
-
-            $organisations = $this->paymentService->getOrganisationFromStammdaten($stammdaten);
-            foreach ($organisations as $data) {
-                $blocks = $this->paymentService->getFerienBlocksKinder($data, $stammdaten);
-                $summe = 0.0;
-                foreach ($blocks as $data2) {
-                    $summe += $data2->getPreis();
-                }
-                $payment = new Payment();
-                $payment->setSumme($summe);
-                $payment->setOrganisation($data);
-                $payment->setStammdaten($stammdaten);
-                $payment->setSepa($paymentSepa);
-                $payment->setCreatedAt(new \DateTime());
-                $payment->setIpAdresse($ipAdress);
-                //todo ist das wirklich bezahlt???
-                $payment->setBezahlt($summe);
-                $this->em->persist($payment);
-            }
-            $this->em->flush();
-
-            return true;
-        } catch (\Exception $e) {
-            return false;
-        }
+        // try {
+        //remove all paymants from the payment Type (sepa ans Braintree)
+        $this->paymentService->cleanPayment($payment);
+        $payment->setSepa($paymentSepa);
+        $payment->setBezahlt($payment->getSumme());
+        $payment->setFinished(true);
+        $this->em->persist($payment);
+        $this->em->flush();
+        return true;
+        // } catch (\Exception $e) {
+        //     return false;
+        // }
 
 
     }

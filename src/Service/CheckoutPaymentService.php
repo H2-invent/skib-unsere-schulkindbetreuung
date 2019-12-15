@@ -56,19 +56,20 @@ class CheckoutPaymentService
 
     }
 
-   public function getFerienBlocksKinder(Organisation $organisation, Stammdaten $stammdaten) :ArrayCollection
-   {
+    public function getFerienBlocksKinder(Organisation $organisation, Stammdaten $stammdaten): ArrayCollection
+    {
         $qb = $this->em->getRepository(KindFerienblock::class)->createQueryBuilder('kFb');
         $qb->innerJoin('kFb.ferienblock', 'ferienBlock')
             ->andWhere('ferienBlock.organisation = :organisation')
-            ->innerJoin('kFb.kind','kind')
+            ->innerJoin('kFb.kind', 'kind')
             ->andWhere('kind.eltern = :eltern')
-            ->setParameter('eltern',$stammdaten)
-            ->setParameter('organisation',$organisation);
+            ->setParameter('eltern', $stammdaten)
+            ->setParameter('organisation', $organisation);
         $query = $qb->getQuery();
         return new ArrayCollection($query->getResult());
-   }
-    public function getOrganisationFromStammdaten(Stammdaten $stammdaten) :ArrayCollection
+    }
+
+    public function getOrganisationFromStammdaten(Stammdaten $stammdaten): ArrayCollection
     {
         $qb = $this->em->getRepository(Organisation::class)->createQueryBuilder('org');
         $qb->innerJoin('org.ferienblocks', 'fB')
@@ -79,7 +80,8 @@ class CheckoutPaymentService
         $query = $qb->getQuery();
         return new ArrayCollection($query->getResult());
     }
-    public function getPaymentWithEmptyNonce(Stammdaten $stammdaten) :ArrayCollection
+
+    public function getPaymentWithEmptyNonce(Stammdaten $stammdaten): ArrayCollection
     {
         $qb = $this->em->getRepository(Payment::class)->createQueryBuilder('pay');
         $qb->innerJoin('pay.braintree', 'bT')
@@ -90,4 +92,97 @@ class CheckoutPaymentService
         return new ArrayCollection($query->getResult());
     }
 
+    public function createPayment(Stammdaten $stammdaten, $ipAdresse)
+    {
+        try {
+            foreach ($stammdaten->getPaymentFerien() as $data) {
+                $this->em->remove($data);
+            }
+            $this->em->flush();
+
+            $organisations = $this->getOrganisationFromStammdaten($stammdaten);
+            foreach ($organisations as $data) {
+                $blocks = $this->getFerienBlocksKinder($data, $stammdaten);
+                $summe = 0.0;
+                foreach ($blocks as $data2) {
+                    $summe += $data2->getPreis();
+                }
+                $payment = new Payment();
+                $payment->setSumme($summe);
+                $payment->setOrganisation($data);
+                $payment->setStammdaten($stammdaten);
+                $payment->setCreatedAt(new \DateTime());
+                $payment->setIpAdresse($ipAdresse);
+                $payment->setBezahlt(0);
+                $payment->setUid(md5(uniqid()));
+                $payment->setFinished(false);
+                $this->em->persist($payment);
+            }
+            $this->em->flush();
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function findSepaInEltern(Stammdaten $stammdaten, Organisation $organisation)
+    {
+        $first = $this->em->getRepository(PaymentSepa::class)->createQueryBuilder('sepa');
+        $first->innerJoin('sepa.payments', 'payments')
+            ->andWhere('payments.organisation = :org')
+            ->andWhere('payments.stammdaten = :stammdaten')
+            ->setParameter('org', $organisation)
+            ->setParameter('stammdaten', $stammdaten);
+        $query1 = $first->getQuery();
+        $firstRes = $query1->getFirstResult();
+        if ($firstRes) {
+            return $firstRes;
+        }
+
+        $qb = $this->em->getRepository(PaymentSepa::class)->createQueryBuilder('sepa');
+        $qb->innerJoin('sepa.payments', 'payments')
+            ->andWhere('payments.stammdaten = :stammdate')
+            ->setParameter('stammdate', $stammdaten);
+        $query = $qb->getQuery();
+        $secRes = $query->getFirstResult();
+        if ($secRes) {
+            return $secRes;
+        }
+        return new PaymentSepa();
+
+    }
+
+    public function cleanPayment(Payment $payment): bool
+    {
+        try {
+            if ($payment->getBraintree()) {
+                $bT = $payment->getBraintree();
+                $payment->setBraintree(null);
+                $this->em->remove($bT);
+            }
+            if ($payment->getSepa()) {
+                $sepa = $payment->getSepa();
+                $payment->setSepa(null);
+                $this->em->remove($sepa);
+            }
+            $this->em->flush();
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+
+    }
+
+    public function getNextPayment(Stammdaten $stammdaten)
+    {
+        $payment = $this->em->getRepository(Payment::class)->findBy(array('stammdaten' => $stammdaten,'finished'=>false), array('id' => 'asc'));
+
+        if (sizeof($payment) > 0) {
+            return $payment[0];
+        }
+        return null;
+
+    }
 }

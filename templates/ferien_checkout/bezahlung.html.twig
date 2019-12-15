@@ -14,7 +14,8 @@
     </div>
     <div class="card-body">
         <h4>
-            {% trans %}Folgende bezahlmethoden stehen bei den Trägern zur Verfügung{% endtrans %}
+            {% trans with {'%organisation%':payment.organisation.name,'%summe%':payment.summe|number_format(2,',','.')} %}Zahlen Sie hier die Summe von %summe%€ an die Organisation %organisation% {% endtrans %}
+
         </h4>
         <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
            title="{{ 'Information'|trans }}" data-content="{% trans %}Wichtig, Wichtig{% endtrans %}"></i>
@@ -55,7 +56,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-12">
-                                <a href="{{ path('ferien_braintree_start',{'slug':stadt.slug}) }}" class="btn btn-outline-primary">Weiter</a>
+                                <a href="{{ path('ferien_braintree_start',{'slug':stadt.slug,'id':payment.uid}) }}" class="btn btn-outline-primary">Weiter</a>
                             </div>
                         </div>
                     </div>

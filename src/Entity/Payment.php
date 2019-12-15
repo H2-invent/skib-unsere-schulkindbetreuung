@@ -65,6 +65,16 @@ class Payment
      */
     private $refunds;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $uid;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $finished;
+
     public function __construct()
     {
         $this->refunds = new ArrayCollection();
@@ -209,6 +219,30 @@ class Payment
                 $refund->setPayment(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUid(): ?string
+    {
+        return $this->uid;
+    }
+
+    public function setUid(string $uid): self
+    {
+        $this->uid = $uid;
+
+        return $this;
+    }
+
+    public function getFinished(): ?bool
+    {
+        return $this->finished;
+    }
+
+    public function setFinished(bool $finished): self
+    {
+        $this->finished = $finished;
 
         return $this;
     }
