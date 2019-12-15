@@ -1,0 +1,50 @@
+<style>
+    td {
+        border: 1px solid black;
+
+        font-weight: bold;
+        margin: 10px;
+    }
+
+    tr {
+        margin: 10px;
+    }
+</style>
+<h2>{% trans %}Ticket für das Ferienprogramm{% endtrans %}</h2>
+
+
+<table style="width:100%">
+    <tr>
+        <td colspan="2" style="height: 30px">
+            {{ ferienblock.ferienblock.translate.titel }}
+        </td>
+        <td>
+            {{ ferienblock.kind.eltern.stadt }}
+        </td>
+    </tr>
+    <tr>
+        <td style="height: 30px; width: 90px">
+            {{ kind.vorname }} {{ kind.nachname }}
+        </td>
+        <td colspan="2" rowspan="3">
+            {{ ferienblock.kind.eltern.stadt }}
+        </td>
+    </tr>
+    <tr>
+        <td style="height: 30px">
+            {{ kind.vorname }} {{ kind.nachname }}
+        </td>
+    </tr>
+    <tr>
+        <td style="height: 30px">
+            {{ kind.vorname }} {{ kind.nachname }}
+        </td>
+    </tr>
+</table>
+
+
+
+<h3>{{ kind.vorname }} {{ kind.nachname }} | {% trans %}Geburtstag:{% endtrans %} {{ kind.geburtstag|date('d.m.Y') }} | {% trans %}Klasse{% endtrans %}: {{ kind.klasse }}
+    <p>{{ 'Allergie'|trans }}: {{ kind.allergie }} | {{ 'Medikamente'|trans }}: {{ kind.medikamente }} | {{ 'Bemerkung' }}: {{ kind.bemerkung }} | {{ 'Monatliche Kosten'|trans }}: </p></h3>
+
+

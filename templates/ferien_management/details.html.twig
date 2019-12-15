@@ -117,10 +117,15 @@
 
                                                 {% for f in k.kindFerienblocks %}
                                                     <div class="row mt-3">
-                                                        <div class="col-md-10">
+                                                        <div class="col-md-8">
                                                             <b>
                                                                 #{{ loop.index }} {{ f.ferienblock.translate.titel }}
                                                             </b>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <a href="{{ path('ferien_ticket', {'org_id':org.id, 'kind_id':k.id, 'ferien_id':f.id}) }}">
+                                                                Ticket exportieren
+                                                            </a>
                                                         </div>
                                                         <div class="col-md-2">
                                                             <b>
