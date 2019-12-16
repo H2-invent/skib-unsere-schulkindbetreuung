@@ -41,12 +41,12 @@ class FerienAbschluss
 
 
     private $em;
-    private $translator;
 
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager)
+
+    public function __construct( EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
-        $this->translator = $translator;
+
     }
 
     public
@@ -76,14 +76,14 @@ class FerienAbschluss
         }
         $adresse->setFin(true);
         $adresse->setSaved(true);
-        //  $this->em->persist($adresse);
+          $this->em->persist($adresse);
         foreach ($adresse->getKinds() as $data) {
             $data->setSaved(true);
             $data->setFin(true);
             $this->em->persist($data);
         }
-        // $this->em->persist($adresse);
-        //  $this->em->flush();
+         $this->em->persist($adresse);
+          $this->em->flush();
     }
 
 }
