@@ -41,6 +41,16 @@ class PaymentBraintree
      */
     private $payment;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $result = [];
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $success;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,6 +118,30 @@ class PaymentBraintree
         if ($payment->getBraintree() !== $newBraintree) {
             $payment->setBraintree($newBraintree);
         }
+
+        return $this;
+    }
+
+    public function getResult(): ?array
+    {
+        return $this->result;
+    }
+
+    public function setResult(?array $result): self
+    {
+        $this->result = $result;
+
+        return $this;
+    }
+
+    public function getSuccess(): ?bool
+    {
+        return $this->success;
+    }
+
+    public function setSuccess(?bool $success): self
+    {
+        $this->success = $success;
 
         return $this;
     }
