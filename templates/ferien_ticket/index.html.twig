@@ -1,50 +1,82 @@
 <style>
     td {
         border: 1px solid black;
-
-        font-weight: bold;
-        margin: 10px;
+        margin: 0px;
+        padding: 2px;
+        min-height: 40px
     }
-
-    tr {
-        margin: 10px;
+    p {
+        padding: 0px;
+        margin: 0px;
     }
 </style>
-<h2>{% trans %}Ticket für das Ferienprogramm{% endtrans %}</h2>
 
 
-<table style="width:100%">
+<table style="width: 100%">
     <tr>
-        <td colspan="2" style="height: 30px">
-            {{ ferienblock.ferienblock.translate.titel }}
+        <td colspan="3" style="background-color: #2096ff">
+            <div style="font-size: 30px; text-align: center">
+                <b>{{ ferienblock.ferienblock.translate.titel }}</b>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b style="font-size: 15px">{{ 'Zeitraum'|trans }}:<br>
+                {{ 'Betreuungszeit'|trans }}:</b>
         </td>
         <td>
-            {{ ferienblock.kind.eltern.stadt }}
+            <b style="font-size: 15px">{% if ferienblock.ferienblock.startDate != ferienblock.ferienblock.endDate %}{{ ferienblock.ferienblock.startDate|date('d.m.') }} - {{ ferienblock.ferienblock.endDate|date('d.m.Y') }}<br>
+                {% else %}{{ ferienblock.ferienblock.startDate|date('d.m.Y') }}<br>
+                {% endif %}
+                {{ ferienblock.ferienblock.startTime|date('g:i') }} - {{ ferienblock.ferienblock.endTime|date('g:i') }}</b>
+        </td>
+        <td rowspan="4" style="text-align: center">
+            QR Code für Checkin
         </td>
     </tr>
     <tr>
-        <td style="height: 30px; width: 90px">
-            {{ kind.vorname }} {{ kind.nachname }}
+        <td>
+            <div style="font-size: 20px"> {{ 'Name'|trans }}:
+            </div>
         </td>
-        <td colspan="2" rowspan="3">
-            {{ ferienblock.kind.eltern.stadt }}
-        </td>
-    </tr>
-    <tr>
-        <td style="height: 30px">
-            {{ kind.vorname }} {{ kind.nachname }}
+        <td>
+            <div style="font-size: 20px"> {{ kind.vorname }} {{ kind.nachname }}
+            </div>
         </td>
     </tr>
     <tr>
-        <td style="height: 30px">
-            {{ kind.vorname }} {{ kind.nachname }}
+        <td>
+            <b>{{ 'Notfallkontakt'|trans }}:<br>
+                {{ 'Telefonnummer'|trans }}:
+            </b>
+        </td>
+        <td>
+            <b>{{ kind.eltern.notfallName }}<br>
+                {{ kind.eltern.notfallkontakt }}
+            </b>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>{{ 'Organisation'|trans }}:</b>
+        </td>
+        <td>
+                <b>{{ organisation.name }}</b><br>
+                {{ organisation.adresse }}<br>
+                {{ organisation.plz }} {{ organisation.ort }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>{{ 'Preis'|trans }}: {{ ferienblock.preis|number_format('2',',','.') }}€</b>
+        </td>
+        <td>
+            {{ 'Eltern'|trans }}: {{ kind.eltern.vorname }} {{ kind.eltern.name }}
+        </td>
+        <td style="text-align: center; font-size: 10px">
+            {{ ferienblock.checkinID }}
         </td>
     </tr>
 </table>
-
-
-
-<h3>{{ kind.vorname }} {{ kind.nachname }} | {% trans %}Geburtstag:{% endtrans %} {{ kind.geburtstag|date('d.m.Y') }} | {% trans %}Klasse{% endtrans %}: {{ kind.klasse }}
-    <p>{{ 'Allergie'|trans }}: {{ kind.allergie }} | {{ 'Medikamente'|trans }}: {{ kind.medikamente }} | {{ 'Bemerkung' }}: {{ kind.bemerkung }} | {{ 'Monatliche Kosten'|trans }}: </p></h3>
-
 

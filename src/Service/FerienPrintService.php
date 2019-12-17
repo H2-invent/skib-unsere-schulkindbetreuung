@@ -40,7 +40,7 @@ class FerienPrintService
     {
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
-        $pdf = $this->preparePDF($pdf,'Test','test','test');
+        $pdf = $this->preparePDF($pdf,'Ticket','H2 invent','Ticket für Ferienprogram');
 
             if ($organisation->getImage()) {
                 $im = $this->fileSystem->read($organisation->getImage());
@@ -51,7 +51,7 @@ class FerienPrintService
 
         // set style for barcode
         $style = array(
-            'border' => true,
+            'border' => false,
             'vpadding' => 'auto',
             'hpadding' => 'auto',
             'fgcolor' => array(0,0,0),
@@ -60,17 +60,15 @@ class FerienPrintService
             'module_height' => 1 // height of a single module in points
         );
 
-        // todo URL is not totally generated
-        $code = $this->router->generate('ferien_storno', array('slug' => $organisation->getStadt()->getSlug(),'parent_id'=>$kind->getEltern()->getUid()));
-        $pdf->write2DBarcode($code, 'RAW', 80, 30, 30, 20, $style, 'N');
-        $pdf->write2DBarcode($code, 'QRCODE,Q', 20, 150, 50, 50, $style, 'N');
+        $code = $this->router->generate('ferien_storno', array('slug' => $organisation->getStadt()->getSlug(),'parent_id'=>$kind->getEltern()->getUid()),UrlGeneratorInterface::ABSOLUTE_PATH);
+        $pdf->write2DBarcode($code, 'QRCODE,Q', 139, 41, 45, 45, $style, 'N');
 
         $kindData = $this->templating->render('ferien_ticket/index.html.twig', array('kind' => $kind, 'organisation'=>$organisation, 'ferienblock'=>$ferienblock));
         $pdf->writeHTMLCell(
             0,
             0,
             20,
-            20,
+            25,
             $kindData,
             0,
             1,
@@ -80,16 +78,13 @@ class FerienPrintService
             true
         );
 
-
-
-
+        dump($kindData);
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }
 
 
     public function preparePDF($pdf, $title, $author, $subject)
     {
-
         $pdf->SetAuthor($author);
         $pdf->SetTitle($title);
         $pdf->SetSubject($subject);
