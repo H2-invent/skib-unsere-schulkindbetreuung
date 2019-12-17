@@ -51,6 +51,13 @@ class PaymentBraintree
      */
     private $success;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $transactionId;
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -145,4 +152,18 @@ class PaymentBraintree
 
         return $this;
     }
+
+    public function getTransactionId(): ?string
+    {
+        return $this->transactionId;
+    }
+
+    public function setTransactionId(?string $transactionId): self
+    {
+        $this->transactionId = $transactionId;
+
+        return $this;
+    }
+
+
 }

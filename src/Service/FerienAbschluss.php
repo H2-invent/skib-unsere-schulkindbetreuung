@@ -74,12 +74,11 @@ class FerienAbschluss
         if (!$adresse->getTracing()) {
             $adresse->setTracing(md5(uniqid('stammdaten', true)));
         }
-        $adresse->setFin(true);
+
         $adresse->setSaved(true);
           $this->em->persist($adresse);
         foreach ($adresse->getKinds() as $data) {
             $data->setSaved(true);
-            $data->setFin(true);
             $this->em->persist($data);
         }
          $this->em->persist($adresse);

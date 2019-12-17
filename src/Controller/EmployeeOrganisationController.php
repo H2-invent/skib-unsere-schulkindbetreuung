@@ -236,6 +236,7 @@ class EmployeeOrganisationController extends AbstractController
             'ROLE_ORG_FERIEN_ORDERS'=>'ROLE_ORG_FERIEN_ORDERS',
             'ROLE_ORG_FERIEN_CHECKIN'=>'ROLE_ORG_FERIEN_CHECKIN',
             'ROLE_ORG_FERIEN_ADMIN'=>'ROLE_ORG_FERIEN_ADMIN',
+            'ROLE_ORG_FERIEN_STORNO'=>'ROLE_ORG_FERIEN_STORNO',
         );
 
         $form = $this->createFormBuilder($roles);

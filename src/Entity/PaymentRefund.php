@@ -52,6 +52,16 @@ class PaymentRefund
      */
     private $gezahlt;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $summeGezahlt;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $errorMessage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +147,30 @@ class PaymentRefund
     public function setGezahlt(bool $gezahlt): self
     {
         $this->gezahlt = $gezahlt;
+
+        return $this;
+    }
+
+    public function getSummeGezahlt(): ?float
+    {
+        return $this->summeGezahlt;
+    }
+
+    public function setSummeGezahlt(?float $summeGezahlt): self
+    {
+        $this->summeGezahlt = $summeGezahlt;
+
+        return $this;
+    }
+
+    public function getErrorMessage(): ?string
+    {
+        return $this->errorMessage;
+    }
+
+    public function setErrorMessage(?string $errorMessage): self
+    {
+        $this->errorMessage = $errorMessage;
 
         return $this;
     }

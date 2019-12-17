@@ -75,6 +75,4 @@ class FerienCheckoutController extends AbstractController
 
         return $this->render('ferien_checkout/bezahlung.html.twig', array('payment' => $payment, 'stadt' => $stadt, 'form' => $form->createView()));
     }
-
-
 }
