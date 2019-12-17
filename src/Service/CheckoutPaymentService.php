@@ -49,11 +49,12 @@ class CheckoutPaymentService
 
 
     private $em;
+    private $braintree;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, CheckoutBraintreeService $checkoutBraintreeService)
     {
         $this->em = $entityManager;
-
+        $this->braintree = $checkoutBraintreeService;
     }
 
     public function getFerienBlocksKinder(Organisation $organisation, Stammdaten $stammdaten): ArrayCollection
@@ -94,35 +95,34 @@ class CheckoutPaymentService
 
     public function createPayment(Stammdaten $stammdaten, $ipAdresse)
     {
+        $res = false;
         try {
-            foreach ($stammdaten->getPaymentFerien() as $data) {
-                $this->em->remove($data);
-            }
-            $this->em->flush();
-
             $organisations = $this->getOrganisationFromStammdaten($stammdaten);
             foreach ($organisations as $data) {
-                $blocks = $this->getFerienBlocksKinder($data, $stammdaten);
-                $summe = 0.0;
-                foreach ($blocks as $data2) {
-                    $summe += $data2->getPreis();
+                if (!$this->em->getRepository(Payment::class)->findOneBy(array('organisation' => $data, 'stammdaten' => $stammdaten))) {
+                    $res = true;
+                    $blocks = $this->getFerienBlocksKinder($data, $stammdaten);
+                    $summe = 0.0;
+                    foreach ($blocks as $data2) {
+                        $summe += $data2->getPreis();
+                    }
+                    $payment = new Payment();
+                    $payment->setSumme($summe);
+                    $payment->setOrganisation($data);
+                    $payment->setStammdaten($stammdaten);
+                    $payment->setCreatedAt(new \DateTime());
+                    $payment->setIpAdresse($ipAdresse);
+                    $payment->setBezahlt(0);
+                    $payment->setUid(md5(uniqid()));
+                    $payment->setFinished(false);
+                    $this->em->persist($payment);
                 }
-                $payment = new Payment();
-                $payment->setSumme($summe);
-                $payment->setOrganisation($data);
-                $payment->setStammdaten($stammdaten);
-                $payment->setCreatedAt(new \DateTime());
-                $payment->setIpAdresse($ipAdresse);
-                $payment->setBezahlt(0);
-                $payment->setUid(md5(uniqid()));
-                $payment->setFinished(false);
-                $this->em->persist($payment);
             }
             $this->em->flush();
 
-            return true;
+            return $res;
         } catch (\Exception $e) {
-            return false;
+            return $res;
         }
     }
 
@@ -177,12 +177,33 @@ class CheckoutPaymentService
 
     public function getNextPayment(Stammdaten $stammdaten)
     {
-        $payment = $this->em->getRepository(Payment::class)->findBy(array('stammdaten' => $stammdaten,'finished'=>false), array('id' => 'asc'));
+        $payment = $this->em->getRepository(Payment::class)->findBy(array('stammdaten' => $stammdaten, 'finished' => false), array('id' => 'asc'));
 
         if (sizeof($payment) > 0) {
             return $payment[0];
         }
         return null;
 
+    }
+
+    public function makePayment(Stammdaten $stammdaten):float
+    {
+        $payments = $this->em->getRepository(Payment::class)->findBy(array('stammdaten' => $stammdaten));
+
+        $summe = 0;
+        foreach ($payments as $data) {
+            if ($data->getSepa()) {
+                $data->setBezahlt($data->getSumme());
+            }
+
+            if ($data->getBraintree()) {
+                $res= $this->braintree->makeTransaction($data->getBraintree());
+                if($res === null){
+                    $summe++;
+                }
+            }
+            $summe += $data->getSumme()-$data->getBezahlt();
+        }
+        return  $summe;
     }
 }

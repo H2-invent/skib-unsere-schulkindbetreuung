@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Ferienblock;
 use App\Entity\Kind;
 use App\Entity\KindFerienblock;
+use App\Entity\Payment;
 use App\Entity\Stadt;
 
 use App\Entity\Stammdaten;
@@ -59,6 +60,14 @@ class ToogleKindFerienblock
         );
 
         try {
+            // gibt es bereits eine Paymentverbindung zwischen Den Eltern un der Org, dann lösche  diese.
+
+            $payment = $this->em->getRepository(Payment::class)->findOneBy(array('organisation'=>$block->getOrganisation(),'stammdaten'=>$kind->getEltern()));
+            if($payment){
+                $this->em->remove($payment);
+                $this->em->flush();
+            }
+
             if ($block->getMinAnzahl() || $block->getMaxAnzahl()) {
                 $result['kontingent'] = true;
             }
@@ -115,6 +124,7 @@ class ToogleKindFerienblock
             }
             $this->em->persist($kindFerienBlock);
             $this->em->flush();
+
        } catch (\Exception $e) {
             $result['text'] = $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.');
             $result['error'] = 1;

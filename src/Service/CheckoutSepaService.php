@@ -58,8 +58,8 @@ class CheckoutSepaService
 
     public function generateSepaPayment(Stammdaten $stammdaten, PaymentSepa $paymentSepa, $ipAdress, Payment $payment): bool
     {
-        // try {
-        //remove all paymants from the payment Type (sepa ans Braintree)
+       try {
+       // remove all paymants from the payment Type (sepa ans Braintree)
         $this->paymentService->cleanPayment($payment);
         $payment->setSepa($paymentSepa);
         $payment->setBezahlt($payment->getSumme());
@@ -67,9 +67,9 @@ class CheckoutSepaService
         $this->em->persist($payment);
         $this->em->flush();
         return true;
-        // } catch (\Exception $e) {
-        //     return false;
-        // }
+         } catch (\Exception $e) {
+             return false;
+        }
 
 
     }
