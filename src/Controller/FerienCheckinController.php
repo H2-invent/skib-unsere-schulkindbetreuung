@@ -11,7 +11,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class FerienCheckinController extends AbstractController
 {
     /**
-     * @Route("/org_ferien/checkin/{checkinID}", name="ferien_checkin")
+     * @Route("/org_ferien/checkin/id/{checkinID}", name="ferien_checkin")
      */
     public function index(TranslatorInterface $translator, $checkinID, CheckinFerienService $checkinFerienService)
     {

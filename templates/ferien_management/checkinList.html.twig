@@ -8,50 +8,66 @@
                 <div class=" col-12 card">
                     <div class="card-header">
                         <h1>
-                            {{ titel }} {% trans %}am{% endtrans %} {{ day|date('d.m.Y') }}
+                            {{ titel }} {% if mode != 'order' %}{% trans %}am{% endtrans %} {{ day|date('d.m.Y') }} {% endif %}
                         </h1>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                {% if mode == 'block' %}
-                                <th></th>
+                                {% if mode == 'block' or mode == 'order' %}
+                                    <th></th>
                                 {% endif %}
                                 {% if mode == 'day' %}
-                                <th>{% trans %}Checkin{% endtrans %}</th>
+                                    <th>{% trans %}Checkin{% endtrans %}</th>
                                 {% endif %}
                                 <th>{% trans %}Name{% endtrans %}</th>
                                 <th>{% trans %}Programm{% endtrans %}</th>
+                                {% if mode == 'order' %}
+                                    <th>{% trans %}Preis{% endtrans %}</th>
+                                    <th>{% trans %}Status{% endtrans %}</th>
+                                {% endif %}
                             </tr>
                             </thead>
                             <tbody>
                             {% for l in list %}
                                 <tr>
-                                    {% if mode == 'block' %}
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="material-icons">more_vert</i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-                                                <a class="dropdown-item"
-                                                   href="{{ path('city_admin_news_edit',{'id':l.kind.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
-                                                <a class="dropdown-item"
-                                                   href="{{ path('city_admin_news_delete',{'id':l.kind.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                    {% if mode == 'block' or mode == 'order' %}
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                    <i class="material-icons">more_vert</i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('ferien_management_order_detail',{'org_id':org.id, 'id':l.id}) }}">{% trans %}Details{% endtrans %}</a>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('city_admin_news_edit',{'id':l.kind.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('ferien_management_orders_storno',{'org_id':org.id, 'parent_id':l.kind.eltern.uid}) }}"
+                                                       target="_blank">{% trans %}Stornieren{% endtrans %}</a>
+                                                    {% if l.state == 20 %}
+                                                        <a class="dropdown-item" href="{{ path('city_admin_news_delete',{'id':l.kind.id}) }}">
+                                                        {% trans %}Löschen{% endtrans %}</a>
+                                                    {% endif %}
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
+                                        </td>
                                     {% endif %}
                                     {% if mode == 'day' %}
-                                    <td>
-                                        <a class="btn chooseBlock {% if day|date('Y-m-d') in l.checkinStatus %}bg-success{% endif %}"
-                                           href="{{ path('ferien_management_report_checkin_toggle',{'org_id':org.id,'checkinID':l.checkinID,'tag':day|date('Y-m-d')}) }}">{% trans %}Checkin{% endtrans %}</a>
-                                    </td>
+                                        <td>
+                                            <a class="btn chooseBlock {% if day|date('Y-m-d') in l.checkinStatus %}bg-success{% endif %}"
+                                               href="{{ path('ferien_management_report_checkin_toggle',{'org_id':org.id,'checkinID':l.checkinID,'tag':day|date('Y-m-d')}) }}">{% trans %}Checkin{% endtrans %}</a>
+                                        </td>
                                     {% endif %}
                                     <td>{{ l.kind.vorname }} {{ l.kind.nachname }}</td>
                                     <td>{{ l.ferienblock.translate.titel }}</td>
+                                    {% if mode == 'order' %}
+                                        <td>{{ l.preis }}</td>
+                                        <td>{{ l.checkinID }}</td>
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -67,7 +83,7 @@
 
 {% block jquery %}
     <script>
-        $(document).on('click','.chooseBlock',function (e) {
+        $(document).on('click', '.chooseBlock', function (e) {
             e.preventDefault();
             var ele = $(this);
             var url = ele.attr('href');

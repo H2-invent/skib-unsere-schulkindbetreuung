@@ -740,7 +740,18 @@ class Stammdaten
     {
         return $this->paymentFerien;
     }
-
+    /**
+     * @return Collection|Payment[]
+     */
+    public function getPaymentFerienforOrg(Organisation $organisation): ?Payment
+    {
+        foreach ($this->paymentFerien as $data){
+            if($data->getOrganisation() == $organisation){
+                return $data;
+            }
+        }
+        return null;
+    }
     public function addPaymentFerien(Payment $paymentFerien): self
     {
         if (!$this->paymentFerien->contains($paymentFerien)) {

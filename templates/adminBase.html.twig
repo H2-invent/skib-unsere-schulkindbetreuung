@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <link rel="stylesheet" href="{{ asset('css/jquery-clockpicker.min.css') }}" id="theme-stylesheet">
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
@@ -48,6 +48,8 @@
             background-position: center top;
         }
     </style>
+    {% block style %}
+    {% endblock %}
 
     <script type="text/javascript" src="https://clickheat.h2-invent.com/js/clickheat.js"></script>
     <noscript><p><a href="http://www.dugwood.com/clickheat/index.html">ClickHeat</a></p></noscript>
@@ -93,64 +95,16 @@
                 {% if app.user.stadt is not null %}
                     <h5 class="sidenav-heading">{{ app.user.stadt.name }}</h5>
                 {% endif %}
+
                 {% if is_granted('ROLE_CITY_EDITOR') and app.user.stadt is not null %}
                     <li><a href="{{ path('admin_stadt_edit',{'id':app.user.stadt.id}) }}"> <i class="material-icons">home</i>{% trans %}Stadt bearbeiten{% endtrans %}
                         </a></li>
                 {% endif %}
-                {% if is_granted('ROLE_CITY_SCHOOL') %}
-                    <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"> <i
-                                    class="material-icons">sports_handball</i>{% trans %}Schulen{% endtrans %}</a></li>
-                {% endif %}
                 {% if is_granted('ROLE_CITY_ADMIN') %}
                     <li><a href="{{ path('city_admin_organisation_show',{'id':app.user.stadt.id}) }}"> <i
                                     class="material-icons">home</i>{% trans %}Organisationen{% endtrans %}</a></li>
-                    <li><a href="{{ path('city_admin_schuljahr_anzeige',{'id':app.user.stadt.id}) }}"> <i
-                                    class="material-icons">home</i>{% trans %}Schuljahre{% endtrans %}</a></li>
                     <li><a href="{{ path('city_admin_news_anzeige',{'id':app.user.stadt.id}) }}"> <i
                                     class="material-icons">chat</i>{% trans %}Neuigkeiten{% endtrans %}</a></li>
-
-
-                {% endif %}
-                {% if is_granted('ROLE_ORG_ADMIN') %}
-                    <li><a href="{{ path('city_admin_organisation_detail',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">home</i> {% trans %}Meine Organisation{% endtrans %}</a></li>
-                    <li><a href="{{ path('city_employee_org_show',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">people</i> {% trans %}Meine Mitarbeiter{% endtrans %}</a>
-                    </li>
-                {% endif %}
-                {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
-                {% endif %}
-                {% if is_granted('ROLE_ORG_FERIEN_EDITOR') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
-                    <li><a href="#feriendropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
-                                    class="material-icons">people</i>{% trans %} Ferienprogramm{% endtrans %}</a>
-                        <ul id="feriendropdownDropdown" class="collapse list-unstyled ">
-                            <li><a href="{{ path('ferien_management_show',{'org_id':app.user.organisation.id}) }}"> <i
-                                            class="material-icons">home</i> {% trans %}Programm{% endtrans %}</a>
-                            </li>
-                            <li><a href="{{ path('ferien_management_show',{'org_id':app.user.organisation.id}) }}"> <i
-                                            class="material-icons">home</i> {% trans %}Kinder{% endtrans %}</a>
-                            </li>
-                            <li><a href="{{ path('ferien_management_report_checkinlist_tag',{'org_id':app.user.organisation.id}) }}"> <i
-                                            class="material-icons">home</i> {% trans %}Checkin Listen{% endtrans %}</a>
-                            </li>
-                        </ul>
-                    </li>
-
-
-                {% endif %}
-                {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
-                    <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">sports_handball</i> {% trans %}Meine Schulen{% endtrans %}
-                        </a></li>
-                    <li><a href="{{ path('child_show',{'id':app.user.organisation.id}) }}"> <i class="material-icons">emoji_people</i> {% trans %}Meine Kinder{% endtrans %}
-                        </a></li>
-                {% endif %}
-                {% if is_granted('ROLE_ORG_ACCOUNTING') %}
-                    <li><a href="{{ path('accounting_overview',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">money</i> {% trans %}Buchhaltung{% endtrans %}</a></li>
-                {% endif %}
-
-                {% if is_granted('ROLE_CITY_ADMIN') %}
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
                                     class="material-icons">people</i>{% trans %}Mitarbeiter{% endtrans %} </a>
                         <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
@@ -160,14 +114,93 @@
                         </ul>
                     </li>
                 {% endif %}
+                {% if is_granted('ROLE_ORG_ADMIN') %}
+                    <li><a href="{{ path('city_admin_organisation_detail',{'id':app.user.organisation.id}) }}"> <i
+                                    class="material-icons">home</i> {% trans %}Meine Organisation{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_employee_org_show',{'id':app.user.organisation.id}) }}"> <i
+                                    class="material-icons">people</i> {% trans %}Meine Mitarbeiter{% endtrans %}</a>
+                    </li>
+                {% endif %}
+
+                {% if app.user.stadt.schulkindBetreung is defined and app.user.stadt.schulkindBetreung == true %}
+                    <h5 class="sidenav-heading">SKiB</h5>
+                {% endif %}
+
+                {% if is_granted('ROLE_CITY_ADMIN') %}
+                    <li><a href="{{ path('city_admin_schuljahr_anzeige',{'id':app.user.stadt.id}) }}"> <i
+                                    class="material-icons">home</i>{% trans %}Schuljahre{% endtrans %}</a></li>
+                {% endif %}
+
+                {% if is_granted('ROLE_CITY_SCHOOL') %}
+                    <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"> <i
+                                    class="material-icons">sports_handball</i>{% trans %}Schulen{% endtrans %}</a></li>
+                {% endif %}
+
+                {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
+
+                {% endif %}
+
+                {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
+                    <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"> <i
+                                    class="material-icons">sports_handball</i> {% trans %}Meine Schulen{% endtrans %}
+                        </a></li>
+                    <li><a href="{{ path('child_show',{'id':app.user.organisation.id}) }}"> <i
+                                    class="material-icons">emoji_people</i> {% trans %}Angemeldete Kinder{% endtrans %}
+                        </a></li>
+                {% endif %}
+
                 {% if is_granted('ROLE_CITY_REPORT') %}
                     <li><a href="{{ path('stadt_bericht_index',{'stadt_id':app.user.stadt.id}) }}"> <i
                                     class="material-icons">table_chart</i> {% trans %}Berichte{% endtrans %}</a></li>
-
                 {% endif %}
+
+
+
+                {% if app.user.stadt.ferienprogramm is defined and app.user.stadt.ferienprogramm == true %}
+                    <h5 class="sidenav-heading">Ferienbetreuung</h5>
+                {% endif %}
+
+                {% if is_granted('ROLE_ORG_FERIEN_EDITOR') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
+                    <li><a href="{{ path('ferien_management_show',{'org_id':app.user.organisation.id}) }}"> <i
+                                    class="material-icons">home</i> {% trans %}Programm{% endtrans %}</a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_ORG_FERIEN_ORDERS') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
+                    <li><a href="{{ path('ferien_management_orders',{'org_id':app.user.organisation.id}) }}"> <i
+                                    class="material-icons">home</i> {% trans %}Anmeldungen{% endtrans %}</a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_ORG_FERIEN_CHECKIN') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
+                    <li>
+                        <a href="{{ path('ferien_management_report_checkinlist_tag',{'org_id':app.user.organisation.id}) }}">
+                            <i
+                                    class="material-icons">home</i> {% trans %}Checkin{% endtrans %}</a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_ORG_FERIEN_ADMIN') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
+                    <li>
+                        <a href="{{ path('ferien_admin_edit',{'org_id':app.user.organisation.id}) }}">
+                            <i
+                                    class="material-icons">edit</i> {% trans %}Ferien Einstellungen{% endtrans %}</a>
+                    </li>
+                {% endif %}
+
+
+
+
+                {% if is_granted('ROLE_ORG_ACCOUNTING') %}
+                    <h5 class="sidenav-heading">Buchhaltung</h5>
+                    <li><a href="{{ path('accounting_overview',{'id':app.user.organisation.id}) }}"> <i
+                                    class="material-icons">money</i> {% trans %}SEPA Übersicht{% endtrans %}</a></li>
+                {% endif %}
+
+
                 <h5 class="sidenav-heading">{% trans %}Einstellungen{% endtrans %}</h5>
                 <li><a href="{{ path('fos_user_change_password') }}"> <i
-                                class="icon-home"></i>{% trans %}Passwort ändern{% endtrans %}</a></li>
+                                class="icon-home"></i>{% trans %}Passwort ändern{% endtrans %}</a>
+                </li>
+
+
                 {% if is_granted('ROLE_ADMIN') %}
                 <h5 class="sidenav-heading">Main</h5>
                 <li><a href="index.html"> <i class="icon-home"></i>Home </a></li>
@@ -213,7 +246,8 @@
                 <div class="navbar-holder d-flex align-items-center justify-content-between">
                     <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i
                                     class="icon-bars"> </i></a><a href="{{ path('dashboard') }}" class="navbar-brand">
-                            <div class="brand-text d-none d-md-inline-block"><span>unsere Schulkindbetreuung </span><strong
+                            <div class="brand-text d-none d-md-inline-block">
+                                <span>unsere Schulkindbetreuung </span><strong
                                         class="text-primary"> SKB</strong></div>
                         </a></div>
                     <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
@@ -838,7 +872,7 @@
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script type="text/javascript" src="{{asset('js/jquery-clockpicker.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery-clockpicker.min.js') }}"></script>
 <script>$(document).ready(function () {
         $('body').bootstrapMaterialDesign();
     });</script>
@@ -918,7 +952,7 @@
                         type: type,
                         success: function (data) {
                             if (data.redirect) {
-                                window.location.href= data.redirect;
+                                window.location.href = data.redirect;
                             }
                         }
                     });
@@ -937,14 +971,14 @@
             "format": "YYYY-MM-DD",
             "separator": " - ",
         }
-    }, function(chosen_date) {
+    }, function (chosen_date) {
         $(this).val(chosen_date.format('YYYY-MM-DD'));
     })
-   .on('apply.daterangepicker', function(ev, picker) {
-        //do something, like clearing an input
-       var ele = $(this);
-       ele.val(picker.startDate.format('YYYY-MM-DD'))
-    });
+        .on('apply.daterangepicker', function (ev, picker) {
+            //do something, like clearing an input
+            var ele = $(this);
+            ele.val(picker.startDate.format('YYYY-MM-DD'))
+        });
     $('input[type="time"]').clockpicker({
         autoclose: true,
         donetext: "{{ 'Fertig'|trans }}"

@@ -1,0 +1,104 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <!-- Count item widget-->
+                <div class=" col-12 card">
+                    <div class="card-header">
+                        <h1>
+                            {{ titel }}
+                        </h1>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>{% trans %}Name{% endtrans %}</th>
+                                <th>{% trans %}Anzahl Anmeldungen{% endtrans %}</th>
+                                <th>{% trans %}Summe{% endtrans %}</th>
+                                <th>{% trans %}Bezahlart{% endtrans %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for s in stammdaten %}
+                                <tr>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
+                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                <i class="material-icons">more_vert</i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                                <a class="dropdown-item"
+                                                   href="{{ path('ferien_management_order_detail',{'org_id':org.id, 'id':s.id}) }}">{% trans %}Details{% endtrans %}</a>
+                                                <a class="dropdown-item"
+                                                   href="{{ path('ferien_management_orders_storno',{'org_id':org.id, 'parent_id':s.uid}) }}"
+                                                   target="_blank">{% trans %}Stornieren{% endtrans %}</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ s.vorname }} {{ s.name }}</td>
+                                    <td>
+                                        {{ s.kinds|length }} {% trans %}Ferienanmeldungen{% endtrans %}
+                                    </td>
+                                    <td>
+                                        {% if s.paymentFerienforOrg(org) is null %}
+                                            <p class="text-warning">{% trans %}Anmeldung nicht abgeschlossen{% endtrans %}</p>
+                                        {% else %}
+                                            {{ s.paymentFerienforOrg(org).summe|number_format(2,',','.') }}€
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if s.paymentFerienforOrg(org) is null %}
+                                            <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
+                                        {% else %}
+                                            {{ s.paymentFerienforOrg(org).typeAsString }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        $(document).on('click', '.chooseBlock', function (e) {
+            e.preventDefault();
+            var ele = $(this);
+            var url = ele.attr('href');
+            $.ajax({
+                url: url,
+                method: 'PATCH',
+                success: function (data) {
+
+                    if (data.error == 0) {
+                        var klasse = 'bg-success';
+                        ele.toggleClass(klasse);
+
+                    } else {
+
+                    }
+                    var options = {
+                        content: data.errorText, // text of the snackbar
+                        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+                    };
+                    $.snackbar(options);
+                }
+            })
+        })
+    </script>
+
+{% endblock %}
+

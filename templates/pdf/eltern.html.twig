@@ -47,10 +47,6 @@
                 <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}<br/>{{ eltern.sepaInfo?"Ja ich Erteile der betreuenden Organisation ein SEPA Lastschrift Mandant":""|trans }} </td>
             </tr>
             <tr>
-                <td>{% trans %} Zum Newsletter angemeldet {% endtrans %}</td>
-                <td>{{ eltern.newsletter?"Ja":'Nein'|trans }}</td>
-            </tr>
-            <tr>
                 <td>{% trans %} E-Mail Adresse {% endtrans %}</td>
                 <td>{{ eltern.email }}</td>
             </tr>

@@ -7,8 +7,10 @@ use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\News;
 use App\Entity\Organisation;
+use App\Entity\Stammdaten;
 use App\Form\Type\FerienBlockPreisType;
 use App\Form\Type\FerienBlockType;
+use App\Form\Type\OrganisationFerienType;
 use App\Service\AnwesenheitslisteService;
 use App\Service\CheckinFerienService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -190,7 +192,7 @@ class FerienManagementController extends AbstractController
 
 
     /**
-     * @Route("/org_ferien/report/checkinlist", name="ferien_management_report_checkinlist", methods={"GET"})
+     * @Route("/org_ferien/checkin/list", name="ferien_management_report_checkinlist", methods={"GET"})
      */
     public function checkinListFerien(Request $request, TranslatorInterface $translator)
     {
@@ -222,7 +224,53 @@ class FerienManagementController extends AbstractController
 
 
     /**
-     * @Route("/org_ferien/report/checkinlist/tag", name="ferien_management_report_checkinlist_tag", methods={"GET"})
+     * @Route("/org_ferien/orders", name="ferien_management_orders", methods={"GET"})
+     */
+    public function ordersOverview(Request $request, TranslatorInterface $translator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+
+        if ($organisation != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+
+        $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
+        $qb->innerJoin('stammdaten.kinds','kinds')
+            ->innerJoin('kinds.kindFerienblocks','kind_ferienblocks')
+            ->innerJoin('kind_ferienblocks.ferienblock','ferienblock')
+            ->andWhere('ferienblock.organisation = :org')
+            ->setParameter('org', $organisation);
+        //todo hier muss noch nach nem FIn gefagt werden, die dafür sorgt dass nur fertige Anmeldungen angezeigt werden
+        $query = $qb->getQuery();
+        $stammdaten = $query->getResult();
+        $titel = $translator->trans('Alle Anmeldungen');
+
+        return $this->render('ferien_management/orderList.html.twig', [
+            'org' => $organisation,
+            'stammdaten' => $stammdaten,
+            'titel' => $titel,
+        ]);
+    }
+
+    /**
+     * @Route("/org_ferien/orders/storno", name="ferien_management_orders_storno", methods={"GET"})
+     */
+    public function storno(Request $request, TranslatorInterface $translator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid'=>$request->get('parent_id')));
+
+        if ($organisation != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+
+        return $this->redirectToRoute('ferien_storno', array('slug'=>$organisation->getStadt()->getSlug(),'parent_id'=>$stammdaten->getUid()));
+    }
+
+
+
+    /**
+     * @Route("/org_ferien/checkin/list/tag", name="ferien_management_report_checkinlist_tag", methods={"GET"})
      */
     public function checkinListTagyFerien(Request $request, TranslatorInterface $translator, AnwesenheitslisteService $anwesenheitslisteService)
     {
@@ -239,7 +287,7 @@ class FerienManagementController extends AbstractController
             $selectDate = new \DateTime($tag);
             $selectDate->setTime(0, 0);
         }
-        $kind = $anwesenheitslisteService->anwesenheitsListe($selectDate,$organisation);
+        $kind = $anwesenheitslisteService->anwesenheitsListe($selectDate, $organisation);
 
         $titel = $translator->trans('Anwesenheitsliste');
         $mode = 'day';
@@ -254,13 +302,66 @@ class FerienManagementController extends AbstractController
 
 
     /**
-     * @Route("/org_ferien/report/checkin/toggle/{checkinID}", name="ferien_management_report_checkin_toggle", methods={"PATCH"})
+     * @Route("/org_ferien/checkin/toggle/{checkinID}", name="ferien_management_report_checkin_toggle", methods={"PATCH"})
      */
     public function checkinBlockAction(Request $request, TranslatorInterface $translator, $checkinID, CheckinFerienService $checkinFerienService)
     {
         $result = $checkinFerienService->checkin($checkinID, $request->get('tag'));
 
         return new JsonResponse($result);
+    }
+
+
+    /**
+     * @Route("/org_ferien/orders/detail", name="ferien_management_order_detail", methods={"GET"})
+     */
+    public function orderDetails(Request $request, TranslatorInterface $translator, AnwesenheitslisteService $anwesenheitslisteService)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->find($request->get('id'));
+        if ($organisation != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+
+        $titel = $translator->trans('Details');
+
+        return $this->render('ferien_management/details.html.twig', [
+            'org' => $organisation,
+            'stammdaten' => $stammdaten,
+            'titel' => $titel,
+        ]);
+    }
+
+
+    /**
+     * @Route("/org_ferien_admin/edit", name="ferien_admin_edit",methods={"GET","POST"})
+     */
+    public function ferienOrgEdit(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
+    {
+
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        if($organisation->getStadt() != $this->getUser()->getStadt() && $this->getUser()->getOrganisation()!= $organisation){
+            throw new \Exception('Wrong City');
+        }
+
+        $form = $this->createForm(OrganisationFerienType::class, $organisation);
+        $form->handleRequest($request);
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $organisation = $form->getData();
+            $errors = $validator->validate($organisation);
+            if(count($errors)== 0) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($organisation);
+                $em->flush();
+                $text = $translator->trans('Erfolgreich geändert');
+                return $this->redirectToRoute('ferien_admin_edit',array('snack'=>$text,'org_id'=>$organisation->getId()));
+            }
+
+        }
+        $title = $translator->trans('Ferieneinstellungen ändern');
+        return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
+
     }
 
 }

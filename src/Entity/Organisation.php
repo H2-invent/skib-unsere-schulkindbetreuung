@@ -238,6 +238,11 @@ class Organisation
      */
     private $paymentsFerien;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $ferienRegulation;
+
 
 
 
@@ -795,6 +800,18 @@ class Organisation
                 $paymentsFerien->setOrganisation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFerienRegulation(): ?string
+    {
+        return $this->ferienRegulation;
+    }
+
+    public function setFerienRegulation(?string $ferienRegulation): self
+    {
+        $this->ferienRegulation = $ferienRegulation;
 
         return $this;
     }

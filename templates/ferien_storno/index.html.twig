@@ -57,6 +57,7 @@
                     <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}"
                          data-parent="#accordion">
                         <div class="card-body">
+                            <h5>Daten</h5>
                             <table class="table">
                                 <tbody>
                                 <tr>
@@ -71,48 +72,44 @@
                                     <td>{% trans %} Geburtstag {% endtrans %}</td>
                                     <td>{{ k.geburtstag|date('d.m.Y') }}</td>
                                 </tr>
+                                </tbody>
+                            </table>
+
+                                        <h5>Gebuchte Ferienprogramme</h5>
+
+                                <table class="table">
+                                    <tbody>
+                                    {% for f in k.kindFerienblocks %}
                                 <tr>
-
-
                                     <td>
-                                        Gebuchte Ferienprogramme
+                                        <h5>{{ f.ferienblock.translate.titel }}</h5>
+                                        {{ f.ferienblock.startDate|date('d.M.Y') }}
+                                        - {{ f.ferienblock.endDate|date('d.M.Y') }}<br/>
+                                        {% trans %}Preis{% endtrans %}: {{ f.preis|number_format(2,',','.') }} €
+                                        <br/>
+                                        {% trans %}Betreuunde Organisation{% endtrans %}: {{ f.ferienblock.organisation.name }}
+                                        <br/>
                                     </td>
+
                                     <td>
-                                        {% for f in k.kindFerienblocks %}
-                                            <b>{{ f.ferienblock.translate.titel }}</b>
-
-
-                                            <button href="{{ path('ferien_storno_mark', {'kind_id':k.id, 'block_id':f.id,'parent_id':eltern.uid}) }}"
-                                                    class="btn chooseBlock {% if f.markedAsStorno == true or f.state == 20 %}bg-info{% endif %}"
-                                                    {% if f.state == 20 %}disabled="true"{% endif %}>
-                                                {% if f.markedAsStorno == true %}
-                                                    {% trans %} Als Storniert vorgemerkt{% endtrans %}
-                                                {% else %}
-                                                    {% if f.state == 10 %}
-                                                        {% trans %} Stornieren{% endtrans %}
-                                                    {% elseif f.state == 20 %}
-                                                        {% trans %}Bereits Storniert{% endtrans %}
-                                                    {% elseif f.state == 0 %}
-                                                        {% trans %}Stornieren und Wartelistenplatz freigeben{% endtrans %}
-                                                    {% endif %}
+                                        <button href="{{ path('ferien_storno_mark', {'kind_id':k.id, 'block_id':f.id,'parent_id':eltern.uid}) }}"
+                                                class="btn chooseBlock {% if f.markedAsStorno == true or f.state == 20 %}bg-info{% endif %}"
+                                                {% if f.state == 20 %}disabled="true"{% endif %}>
+                                            {% if f.markedAsStorno == true %}
+                                                {% trans %} Als Storniert vorgemerkt{% endtrans %}
+                                            {% else %}
+                                                {% if f.state == 10 %}
+                                                    {% trans %} Stornieren{% endtrans %}
+                                                {% elseif f.state == 20 %}
+                                                    {% trans %}Bereits Storniert{% endtrans %}
+                                                {% elseif f.state == 0 %}
+                                                    {% trans %}Stornieren und Wartelistenplatz freigeben{% endtrans %}
                                                 {% endif %}
-                                            </button>
-
-
-
-
-
-                                            <br/>
-                                            {{ f.ferienblock.startDate|date('d.M.Y') }}
-                                            - {{ f.ferienblock.endDate|date('d.M.Y') }}<br/>
-                                            {% trans %}Preis{% endtrans %}: {{ f.preis|number_format(2,',','.') }} €
-                                            <br/>
-                                            {% trans %}Betreuunde Organisation{% endtrans %}: {{ f.ferienblock.organisation.name }}
-                                            <br/>
-                                        {% endfor %}
+                                            {% endif %}
+                                        </button>
                                     </td>
-
                                 </tr>
+                                {% endfor %}
 
                                 <tr>
                                     <td>

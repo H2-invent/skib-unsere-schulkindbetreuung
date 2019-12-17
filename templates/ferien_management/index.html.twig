@@ -38,13 +38,18 @@
                                                 <i class="material-icons">more_vert</i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                                {% if is_granted ('ROLE_ORG_FERIEN_EDITOR')%}
                                                 <a class="dropdown-item" href="{{ path('ferien_management_edit',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                {% endif %}
+                                                {% if is_granted ('ROLE_ORG_FERIEN_CHECKIN') %}
                                                 <a class="dropdown-item" href="{{ path('ferien_management_report_checkinlist',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Anwesenheitsliste{% endtrans %}</a>
                                                 <a class="dropdown-item" href="{{ path('ferien_report_nametag',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Namensschilder{% endtrans %}</a>
+                                                {% endif %}
+                                                {% if is_granted ('ROLE_ORG_FERIEN_EDITOR') %}
                                                 <a class="dropdown-item" href="{{ path('ferien_management_preise',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Preise Bearbeiten{% endtrans %}</a>
-                                                 <a class="dropdown-item deleteBtn" type="POST" href="{{ path('ferien_management_duplicate',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Duplizieren{% endtrans %}</a>
+                                                <a class="dropdown-item deleteBtn" type="POST" href="{{ path('ferien_management_duplicate',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Duplizieren{% endtrans %}</a>
                                                 <a class="dropdown-item deleteBtn" type="DELETE" href="{{ path('ferien_management_delete',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Löschen{% endtrans %}</a>
-
+                                                {% endif %}
                                             </div>
                                         </div></td>
                                     <td>{{ b.translations.de.titel }}</td>
