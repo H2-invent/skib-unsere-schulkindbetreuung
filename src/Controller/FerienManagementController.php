@@ -10,6 +10,7 @@ use App\Entity\Organisation;
 use App\Entity\Stammdaten;
 use App\Form\Type\FerienBlockPreisType;
 use App\Form\Type\FerienBlockType;
+use App\Form\Type\OrganisationFerienType;
 use App\Service\AnwesenheitslisteService;
 use App\Service\CheckinFerienService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -329,6 +330,38 @@ class FerienManagementController extends AbstractController
             'stammdaten' => $stammdaten,
             'titel' => $titel,
         ]);
+    }
+
+
+    /**
+     * @Route("/org_ferien_admin/edit", name="ferien_admin_edit",methods={"GET","POST"})
+     */
+    public function ferienOrgEdit(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
+    {
+
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        if($organisation->getStadt() != $this->getUser()->getStadt() && $this->getUser()->getOrganisation()!= $organisation){
+            throw new \Exception('Wrong City');
+        }
+
+        $form = $this->createForm(OrganisationFerienType::class, $organisation);
+        $form->handleRequest($request);
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $organisation = $form->getData();
+            $errors = $validator->validate($organisation);
+            if(count($errors)== 0) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($organisation);
+                $em->flush();
+                $text = $translator->trans('Erfolgreich geändert');
+                return $this->redirectToRoute('ferien_admin_edit',array('snack'=>$text,'org_id'=>$organisation->getId()));
+            }
+
+        }
+        $title = $translator->trans('Ferieneinstellungen ändern');
+        return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
+
     }
 
 }

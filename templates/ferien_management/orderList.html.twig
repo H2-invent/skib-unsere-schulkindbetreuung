@@ -49,7 +49,7 @@
                                         {% if s.paymentFerienforOrg(org) is null %}
                                             <p class="text-warning">{% trans %}Anmeldung nicht abgeschlossen{% endtrans %}</p>
                                         {% else %}
-                                            {{ s.paymentFerienforOrg(org).summe|number_format(2,',','.') }}
+                                            {{ s.paymentFerienforOrg(org).summe|number_format(2,',','.') }}€
                                         {% endif %}
                                     </td>
                                     <td>

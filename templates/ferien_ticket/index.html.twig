@@ -80,3 +80,18 @@
     </tr>
 </table>
 
+<h1>{{ 'Kontakt'|trans }}:
+</h1>
+<b>
+    {{ 'Name'|trans }}: {{ organisation.ansprechpartnerFerien }}<br>
+    {{ 'Telefon'|trans }}: {{ organisation.ansprechpartnerFerienPhone }}<br>
+    {{ 'Email'|trans }}: {{ organisation.ansprechpartnerFerienEmail }}<br>
+</b>
+
+<h1>{{ 'Regelungen für die Teilnahme am Ferienprogram'|trans }}
+</h1>
+
+<b>{{ organisation.ferienRegulation|markdown_to_html }}
+</b>
+
+

@@ -48,6 +48,8 @@
             background-position: center top;
         }
     </style>
+    {% block style %}
+    {% endblock %}
 
     <script type="text/javascript" src="https://clickheat.h2-invent.com/js/clickheat.js"></script>
     <noscript><p><a href="http://www.dugwood.com/clickheat/index.html">ClickHeat</a></p></noscript>
@@ -175,6 +177,14 @@
                                     class="material-icons">home</i> {% trans %}Checkin{% endtrans %}</a>
                     </li>
                 {% endif %}
+                {% if is_granted('ROLE_ORG_FERIEN_ADMIN') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
+                    <li>
+                        <a href="{{ path('ferien_admin_edit',{'org_id':app.user.organisation.id}) }}">
+                            <i
+                                    class="material-icons">edit</i> {% trans %}Ferien Einstellungen{% endtrans %}</a>
+                    </li>
+                {% endif %}
+
 
 
 

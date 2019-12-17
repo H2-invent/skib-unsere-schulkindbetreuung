@@ -1,5 +1,12 @@
 {% extends 'adminBase.html.twig' %}
+{% block style %}
+    <style>
+        .dataTables_wrapper {
+            min-height: 150px !important;
+        }
+    </style>
 
+{% endblock %}
 {% block content %}
     <section class="dashboard-counts section-padding">
         <div class="container-fluid ">
@@ -154,47 +161,82 @@
                                 {% endfor %}
                             </div>
 
-                            <h3 class="card-title">{% trans %}Ticket ausdrucken{% endtrans %}</h3>
+                            {% set payment = stammdaten.paymentFerienforOrg(org) %}
 
-                            {% if stammdaten.paymentFerien is empty %}
-                                <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
-                            {% else %}
-                                {% set payment = stammdaten.paymentFerienforOrg(org) %}
-                                {% if payment.sepa is not null %}
-                                    <b>SEPA</b><br/>
-                                    IBAN: {{ payment.sepa.iban }}<br/>
-                                    BIC: {{ payment.sepa.bic }}
-                                {% endif %}
-                                {% if payment.braintree is not null %}
-                                    <b>Braintree</b><br/>
-                                    Token: {{ payment.braintree.token }}<br/>
-                                    Nonce: {{ payment.braintree.nonce }}<br/>
-                                    IP Adresse: {{ payment.braintree.ipAdresse }}
-                                {% endif %}
-                            {% endif %}
+                            <h3 class="card-title">{% trans %}Ticket ausdrucken{% endtrans %}</h3>
 
 
                             <h3 class="card-title">{% trans %}Zahlungen{% endtrans %}</h3>
 
                             {% if stammdaten.paymentFerien is empty %}
-                                <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
-                            {% else %}
+                            <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
+                        {% else %}
+                            <div >
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>
+                                        {{ 'Bezahlmethode'|trans }}
+                                    </th>
+                                    <th>
+                                        {{ 'Datum'|trans }}
+                                    </th>
+                                    <th>
+                                        {{ 'Betrag'|trans }}
+                                    </th>
+                                    <th>
+                                        {{ 'Status'|trans }}
+                                    </th>
+                                </tr>
+                                </thead>
                                 {% if payment.sepa is not null %}
-                                    <b>SEPA</b><br/>
-                                    IBAN: {{ payment.sepa.iban }}<br/>
-                                    BIC: {{ payment.sepa.bic }}
+                                    <tr>
+                                        <td>
+                                            <b>SEPA</b><br/>
+                                            IBAN: {{ payment.sepa.iban }}<br/>
+                                            BIC: {{ payment.sepa.bic }}
+                                        </td>
+                                        <td>
+                                            {{ payment.createdAt|date('d.m.y g:i') }}
+                                        </td>
+                                        <td>
+                                            {{ payment.bezahlt|number_format ('2',',','.') }}€
+                                        </td>
+                                        <td>
+                                            {{ 'bezahlt'|trans }}
+                                        </td>
+                                    </tr>
                                 {% endif %}
                                 {% if payment.braintree is not null %}
-                                    <b>Braintree</b><br/>
-                                    Token: {{ payment.braintree.token }}<br/>
-                                    Nonce: {{ payment.braintree.nonce }}<br/>
-                                    IP Adresse: {{ payment.braintree.ipAdresse }}
+                                    <tr>
+                                        <td>
+                                            <b>Braintree</b><br/>
+                                            {{ 'IP Adresse'|trans }}: {{ payment.braintree.ipAdresse }}
+                                        </td>
+                                        <td>
+                                            {{ payment.createdAt|date('d.m.y g:i') }}
+                                        </td>
+                                        <td>
+                                            {{ payment.bezahlt|number_format ('2',',','.') }}€
+                                        </td>
+                                        <td>
+                                            {{ 'bezahlt'|trans }}
+                                        </td>
+                                    </tr>
                                 {% endif %}
-                            {% endif %}
+                            </table>
+                            </div>
+{% endif %}
+
 
                             <h3 class="card-title">{% trans %}Rückerstattungen{% endtrans %}</h3>
 
-
+                            {% for r in payment.refunds %}
+                                <b>{{ 'Type'|trans }}: {{ r.refundType }}</b><br/>
+                                {{ 'Gebühren'|trans }}: {{ r.refundFee }}<br/>
+                                {{ 'Betrag'|trans }}: {{ r.summe|number_format ('2',',','.') }}€<br/>
+                                {{ 'IP Adresse'|trans }}: {{ r.ipAdresse }}
+                            {% endfor %}
 
                         </div>
                     </div>
