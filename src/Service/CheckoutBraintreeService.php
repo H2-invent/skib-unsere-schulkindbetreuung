@@ -51,12 +51,12 @@ class CheckoutBraintreeService
     private $em;
 
 
-    private $paymentService;
 
-    public function __construct(CheckoutPaymentService $checkoutPaymentService, EntityManagerInterface $entityManager)
+
+    public function __construct( EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
-        $this->paymentService = $checkoutPaymentService;
+
     }
 
     public function prepareBraintree(Stammdaten $stammdaten, $ipAdresse, Payment $payment): bool
@@ -86,5 +86,35 @@ class CheckoutBraintreeService
           return false;
          }
     }
+    public function makeTransaction(PaymentBraintree $paymentBraintree){
+        $gateway = new Gateway([
+            'environment' => 'sandbox',
+            //todo hier kommt dann der KEy der Org hin
+            'merchantId' => '65xmpcc6hh6khg5d',
+            'publicKey' => 'wzkfsj9n2kbyytfp',
+            'privateKey' => 'a153a39aaef70466e97773a120b95f91',
+        ]);
 
+        $result = $gateway->transaction()->sale([
+            'amount' => $paymentBraintree->getPayment()->getSumme(),
+            'paymentMethodNonce' => $paymentBraintree->getNonce(),
+            'options' => [
+                'submitForSettlement' => True
+            ]
+        ]);
+        $paymentBraintree->setSuccess($result->success);
+        if($result->success){
+            $paymentBraintree->getPayment()->setBezahlt(floatval($result->transaction->amount));
+            $this->em->persist($paymentBraintree);
+            $this->em->persist($paymentBraintree->getPayment());
+        }else{
+            $payment = $paymentBraintree->getPayment();
+            $payment->setBraintree(null);
+            $this->em->remove($paymentBraintree);
+            $this->em->remove($payment);
+            $paymentBraintree = null;
+        }
+        $this->em->flush();
+        return $paymentBraintree;
+    }
 }

@@ -50,6 +50,9 @@ class FerienCheckoutController extends AbstractController
         if ($payment) {
             $paymentSepa = $checkoutPaymentService->findSepaInEltern($adresse, $payment->getOrganisation());
         } else {
+            if($adresse->getFin() === true){
+                return $this->redirectToRoute('ferien_abschluss',array('slug'=>$stadt->getSlug()));
+            }
             return $this->redirectToRoute('ferien_zusammenfassung', array('slug' => $stadt->getSlug()));
         }
 

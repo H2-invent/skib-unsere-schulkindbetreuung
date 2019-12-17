@@ -31,10 +31,32 @@
 <!-- Full Page Intro -->
 <div class="view full-page-intro"
      style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+    <style>
+        .svg{
+            height: 100px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+        .svg-bottom{
+            height: 100px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
 
+    </style>
     <!-- Mask & flexbox options-->
     <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
 
+
+
+        <svg class="svg-bottom" viewBox="0 0 200 100" preserveAspectRatio="none"
+             xmlns="http://www.w3.org/2000/svg">
+
+            <circle fill="white" cx="0" cy="100" r="100" />
+            <circle fill="white" cx="200" cy="100" r="100" />
+        </svg>
         <!-- Content -->
         <div class="container">
 
