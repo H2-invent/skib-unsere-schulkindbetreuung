@@ -12,6 +12,7 @@ use App\Entity\Stammdaten;
 use App\Form\Type\LoerrachKind;
 use App\Form\Type\NewsType;
 use App\Form\Type\SchuljahrType;
+use App\Service\MailerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,6 +52,7 @@ class NewsController extends AbstractController
         $today = new \DateTime();
         $activity->setDate($today);
         $form = $this->createForm(NewsType::class, $activity);
+        $form->remove('schulen');
         $form->handleRequest($request);
 
         $errors = array();
@@ -84,6 +86,7 @@ class NewsController extends AbstractController
         $today = new \DateTime();
         $activity->setDate($today);
         $form = $this->createForm(NewsType::class, $activity);
+        $form->remove('schulen');
         $form->handleRequest($request);
 
         $errors = array();
@@ -161,7 +164,7 @@ class NewsController extends AbstractController
 
 
     /**
-     * @Route("org_news/show", name="org_news_anzeige")
+     * @Route("org_news/show", name="org_news_anzeige", methods={"GET"})
      */
     public function orgIndex(Request $request)
     {
@@ -182,7 +185,7 @@ class NewsController extends AbstractController
 
 
     /**
-     * @Route("org_news/neu", name="org_news_neu")
+     * @Route("org_news/neu", name="org_news_neu", methods={"GET","POST"})
      */
     public function orgNewsNeu(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
@@ -196,7 +199,8 @@ class NewsController extends AbstractController
         $activity->setOrganisation($organisation);
         $today = new \DateTime();
         $activity->setDate($today);
-        $form = $this->createForm(NewsType::class, $activity);
+        $schulen = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation' => $organisation));
+        $form = $this->createForm(NewsType::class, $activity, array('schulen'=>$schulen));
         $form->handleRequest($request);
 
         $errors = array();
@@ -219,7 +223,7 @@ class NewsController extends AbstractController
 
 
     /**
-     * @Route("org_news/edit", name="org_news_edit")
+     * @Route("org_news/edit", name="org_news_edit", methods={"GET","POST"})
      */
     public function orgNewsEdit(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
@@ -231,7 +235,8 @@ class NewsController extends AbstractController
 
         $today = new \DateTime();
         $activity->setDate($today);
-        $form = $this->createForm(NewsType::class, $activity);
+        $schulen = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation' => $activity->getOrganisation()));
+        $form = $this->createForm(NewsType::class, $activity, array('schulen'=>$schulen));
         $form->handleRequest($request);
 
         $errors = array();
@@ -252,9 +257,9 @@ class NewsController extends AbstractController
 
     }
     /**
-     * @Route("org_news/delete", name="org_news_delete")
+     * @Route("org_news/delete", name="org_news_delete",methods={"DELETE"})
      */
-    public function orgNewsDelete(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function orgNewsDelete(Request $request, TranslatorInterface $translator)
     {
         $activity =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
@@ -269,9 +274,9 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("org_news/deactivate", name="org_news_deactivate")
+     * @Route("org_news/deactivate", name="org_news_deactivate", methods={"PATCH"})
      */
-    public function orgNewsDeactivate(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function orgNewsDeactivate(Request $request, TranslatorInterface $translator)
     {
         $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
@@ -287,9 +292,9 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("org_news/activate", name="org_news_activate")
+     * @Route("org_news/activate", name="org_news_activate", methods={"PATCH"})
      */
-    public function orgNewsActivate(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function orgNewsActivate(Request $request, TranslatorInterface $translator)
     {
         $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
@@ -309,7 +314,6 @@ class NewsController extends AbstractController
     }
 
 
-
     /**
      * @Route("/news/{slug}/{id}",name="news_show_all",methods={"GET"})
      */
@@ -319,4 +323,33 @@ class NewsController extends AbstractController
         $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
         return $this->render('news/showNews.html.twig', array('stadt' => $stadt,'news'=>$news ));
     }
+
+
+    /**
+     * @Route("org_news/send", name="org_news_send", methods={"GET"})
+     */
+    public function orgNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService)
+    {
+        $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+
+        if ($news->getOrganisation() != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
+        $qb->innerJoin('stammdaten.kinds','kinds')
+            ->innerJoin('kinds.zeitblocks','kind_zeitblocks')
+            ->innerJoin('kind_zeitblocks.schule','schule')
+            ->andWhere('schule.news = :news')
+            ->setParameter('news', $news);
+        $query = $qb->getQuery();
+        $stammdaten = $query->getResult();
+
+        foreach ($stammdaten as $data){
+            $mailerService->sendEmail('Ranzenpost','info@h2-invent.com',$data->getEmail(),$news->getTitle(),$news->getMessage());
+    }
+
+        $text = $translator->trans('Nachricht versendet');
+        return $this->redirectToRoute('org_news_anzeige',array('id'=>$news->getOrganisation()->getId(),'snack'=>$text));
+    }
+
 }

@@ -119,6 +119,11 @@ class Schule
      */
     private $catererEmail;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\News", inversedBy="schule")
+     */
+    private $news;
+
 
 
     public function __construct()
@@ -362,6 +367,18 @@ class Schule
     public function setCatererEmail(?string $catererEmail): self
     {
         $this->catererEmail = $catererEmail;
+
+        return $this;
+    }
+
+    public function getNews(): ?News
+    {
+        return $this->news;
+    }
+
+    public function setNews(?News $news): self
+    {
+        $this->news = $news;
 
         return $this;
     }

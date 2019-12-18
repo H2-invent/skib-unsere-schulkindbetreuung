@@ -46,6 +46,9 @@
                                                     {% endif %}
                                                 <a class="dropdown-item"
                                                    href="{{ path('org_news_delete',{'id':n.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                                <a class="dropdown-item"
+                                                   href="{{ path('org_news_send',{'id':n.id}) }}">{% trans %}Per Email versenden{% endtrans %}</a>
+
                                             </div>
                                         </div>
                                     </td>
