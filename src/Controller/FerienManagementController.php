@@ -322,13 +322,22 @@ class FerienManagementController extends AbstractController
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-
+        $qb = $this->getDoctrine()->getRepository('App:Kind')->createQueryBuilder('kind')
+            ->innerJoin('kind.kindFerienblocks', 'kind_ferienblocks')
+            ->innerJoin('kind_ferienblocks.ferienblock','ferienblock')
+            ->andWhere('ferienblock.organisation = :org')
+            ->andWhere('kind.eltern = :stammdaten')
+            ->setParameter('org',$organisation)
+            ->setParameter('stammdaten',$stammdaten);
+        $query= $qb->getQuery();
+        $kinds = $query->getResult();
         $titel = $translator->trans('Details');
 
         return $this->render('ferien_management/details.html.twig', [
             'org' => $organisation,
             'stammdaten' => $stammdaten,
             'titel' => $titel,
+            'kinds'=>$kinds,
         ]);
     }
 

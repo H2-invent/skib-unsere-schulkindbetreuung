@@ -6,6 +6,7 @@ use App\Entity\Payment;
 use App\Entity\PaymentRefund;
 use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use function Doctrine\ORM\QueryBuilder;
 
@@ -17,11 +18,14 @@ class FerienStornoService
     private $em;
     private $translator;
     private $payment;
-    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator,CheckoutPaymentService $checkoutPaymentService)
+    private $logger;
+
+    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager, TranslatorInterface $translator,CheckoutPaymentService $checkoutPaymentService)
     {
         $this->em = $entityManager;
         $this->translator = $translator;
         $this->payment = $checkoutPaymentService;
+        $this->logger = $logger;
     }
 
     public function toggleBlock(KindFerienblock $kindFerienblock, Stammdaten $stammdaten)
@@ -62,6 +66,7 @@ class FerienStornoService
         $org = array();
         foreach ($blocks as $data) {
             $org[$data->getFerienblock()->getOrganisation()->getId()][]=$data;
+            $this->logger->info('storno Stammdaten '.$stammdaten->getId().' : '.$data->getId());
         }
         foreach ($org as $data){
             $organisation = $data[0]->getFerienblock()->getOrganisation();
