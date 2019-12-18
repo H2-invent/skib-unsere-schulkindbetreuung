@@ -8,6 +8,7 @@ use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
 use App\Entity\Payment;
+use App\Entity\PaymentRefund;
 use App\Entity\PaymentSepa;
 use App\Entity\Rechnung;
 use App\Entity\Sepa;
@@ -186,7 +187,7 @@ class CheckoutPaymentService
 
     }
 
-    public function makePayment(Stammdaten $stammdaten):float
+    public function makePayment(Stammdaten $stammdaten): float
     {
         $payments = $this->em->getRepository(Payment::class)->findBy(array('stammdaten' => $stammdaten));
 
@@ -197,13 +198,32 @@ class CheckoutPaymentService
             }
 
             if ($data->getBraintree()) {
-                $res= $this->braintree->makeTransaction($data->getBraintree());
-                if($res === null){
+                $res = $this->braintree->makeTransaction($data->getBraintree());
+                if ($res === null) {
                     $summe++;
                 }
             }
-            $summe += $data->getSumme()-$data->getBezahlt();
+            $summe += $data->getSumme() - $data->getBezahlt();
         }
-        return  $summe;
+        return $summe;
+    }
+
+    public function refund(PaymentRefund $paymentRefund)
+    {
+        $payment = $paymentRefund->getPayment();
+
+        if ($payment->getSepa()) {
+            $paymentRefund->setRefundType(0);
+            $paymentRefund->setGezahlt(false);
+            $paymentRefund->setSummeGezahlt($paymentRefund->getSumme()-$paymentRefund->getRefundFee());
+        }
+        if ($payment->getBraintree()) {
+            $paymentRefund->setRefundType(1);
+            $paymentRefund->setGezahlt(false);
+            $this->braintree->makeRefund($paymentRefund,$payment->getBraintree());
+            //todo autmatische rückzahlung dann wird gezahlt auch wieder true
+        }
+        return $paymentRefund->getGezahlt();
+
     }
 }

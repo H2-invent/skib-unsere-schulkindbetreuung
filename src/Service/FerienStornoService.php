@@ -16,11 +16,12 @@ class FerienStornoService
 
     private $em;
     private $translator;
-
-    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator)
+    private $payment;
+    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator,CheckoutPaymentService $checkoutPaymentService)
     {
         $this->em = $entityManager;
         $this->translator = $translator;
+        $this->payment = $checkoutPaymentService;
     }
 
     public function toggleBlock(KindFerienblock $kindFerienblock, Stammdaten $stammdaten)
@@ -76,14 +77,7 @@ class FerienStornoService
                 $refund->setSumme($refund->getSumme()+$block->getPreis());
             }
 
-            if($payment->getSepa()){
-                $refund->setRefundType(0);
-                $refund->setGezahlt(true);
-            }else{
-                $refund->setRefundType(1);
-                $refund->setGezahlt(false);
-                //todo autmatische rückzahlung dann wird gezahlt auch wieder true
-            }
+            $this->payment->refund($refund);
             $this->em->persist($refund);
         }
 
