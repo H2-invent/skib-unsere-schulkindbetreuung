@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\News;
+use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
@@ -21,7 +22,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class NewsController extends AbstractController
 {
     /**
-     * @Route("city_admin/news/show", name="city_admin_news_anzeige")
+     * @Route("city_news/show", name="city_admin_news_anzeige")
      */
     public function index(Request $request)
     {
@@ -37,7 +38,7 @@ class NewsController extends AbstractController
         ]);
     }
     /**
-     * @Route("city_admin/news/neu", name="city_admin_news_neu")
+     * @Route("city_news/neu", name="city_admin_news_neu")
      */
     public function neu(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
@@ -70,7 +71,7 @@ class NewsController extends AbstractController
 
     }
     /**
-     * @Route("city_admin/news/edit", name="city_admin_news_edit")
+     * @Route("city_news/edit", name="city_admin_news_edit")
      */
     public function edit(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
@@ -103,7 +104,7 @@ class NewsController extends AbstractController
 
     }
     /**
-     * @Route("city_admin/news/delete", name="city_admin_news_delete")
+     * @Route("city_news/delete", name="city_admin_news_delete")
      */
     public function delete(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
@@ -120,7 +121,7 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("city_admin/news/deactivate", name="city_admin_news_deactivate")
+     * @Route("city_news/deactivate", name="city_admin_news_deactivate")
      */
     public function deactivateAction(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
@@ -138,7 +139,7 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("city_admin/news/activate", name="city_admin_news_activate")
+     * @Route("city_news/activate", name="city_admin_news_activate")
      */
     public function activateAction(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
@@ -157,6 +158,156 @@ class NewsController extends AbstractController
         $text = $translator->trans('Erfolgreich aktiviert');
         return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$news->getStadt()->getId(),'snack'=>$text));
     }
+
+
+    /**
+     * @Route("org_news/show", name="org_news_anzeige")
+     */
+    public function orgIndex(Request $request)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $stadt = $organisation->getStadt();
+        if($organisation != $this->getUser()->getOrganisation()){
+            throw new \Exception('Wrong Organisation');
+        }
+        $activity = $this->getDoctrine()->getRepository(News::class)->findBy(array('organisation'=>$organisation));
+
+        return $this->render('news/news.html.twig', [
+            'city' => $stadt,
+            'news'=>$activity
+        ]);
+    }
+
+
+    /**
+     * @Route("org_news/neu", name="org_news_neu")
+     */
+    public function orgNewsNeu(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $stadt = $organisation->getStadt();
+        if($organisation != $this->getUser()->getOrganisation()){
+            throw new \Exception('Wrong Organisation');
+        }
+
+        $activity = new News();
+        $activity->setStadt($stadt);
+        $activity->setOrganisation($organisation);
+        $today = new \DateTime();
+        $activity->setDate($today);
+        $form = $this->createForm(NewsType::class, $activity);
+        $form->handleRequest($request);
+
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $news = $form->getData();
+            $errors = $validator->validate($news);
+            if(count($errors)== 0) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($news);
+                $em->flush();
+                $text = $translator->trans('Erfolgreich angelegt');
+                return $this->redirectToRoute('org_news_neu',array('id'=>$organisation->getId(),'snack'=>$text));
+            }
+
+        }
+        $title = $translator->trans('Ranzenpost erstellt');
+        return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
+
+    }
+
+
+    /**
+     * @Route("org_news/edit", name="org_news_edit")
+     */
+    public function orgNewsEdit(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $activity =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+
+        if ($activity->getOrganisation() != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+
+        $today = new \DateTime();
+        $activity->setDate($today);
+        $form = $this->createForm(NewsType::class, $activity);
+        $form->handleRequest($request);
+
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $news = $form->getData();
+            $errors = $validator->validate($news);
+            if(count($errors)== 0) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($news);
+                $em->flush();
+                $text = $translator->trans('Erfolgreich geändert');
+                return $this->redirectToRoute('org_news_anzeige',array('id'=>$activity->getOrganisation()->getId(),'snack'=>$text));
+            }
+
+        }
+        $title = $translator->trans('Ranzenpost bearbeiten');
+        return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
+
+    }
+    /**
+     * @Route("org_news/delete", name="org_news_delete")
+     */
+    public function orgNewsDelete(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $activity =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+
+        if ($activity->getOrganisation() != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($activity);
+        $em->flush();
+        $text = $translator->trans('Erfolgreich gelöscht');
+        return $this->redirectToRoute('org_news_anzeige',array('id'=>$activity->getOrganisation()->getId(),'snack'=>$text));
+    }
+
+    /**
+     * @Route("org_news/deactivate", name="org_news_deactivate")
+     */
+    public function orgNewsDeactivate(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+
+        if ($news->getOrganisation() != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        $news->setActiv(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($news);
+        $em->flush();
+        $text = $translator->trans('Erfolgreich deaktiviert');
+        return $this->redirectToRoute('org_news_anzeige',array('id'=>$news->getOrganisation()->getId(),'snack'=>$text));
+    }
+
+    /**
+     * @Route("org_news/activate", name="org_news_activate")
+     */
+    public function orgNewsActivate(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+
+        if ($news->getOrganisation() != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+
+        $today = new \DateTime();
+        $news->setActiv(true);
+        $news->setDate($today);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($news);
+        $em->flush();
+        $text = $translator->trans('Erfolgreich aktiviert');
+        return $this->redirectToRoute('org_news_anzeige',array('id'=>$news->getOrganisation()->getId(),'snack'=>$text));
+    }
+
+
 
     /**
      * @Route("/news/{slug}/{id}",name="news_show_all",methods={"GET"})

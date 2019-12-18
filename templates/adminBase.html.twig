@@ -103,8 +103,7 @@
                 {% if is_granted('ROLE_CITY_ADMIN') %}
                     <li><a href="{{ path('city_admin_organisation_show',{'id':app.user.stadt.id}) }}"> <i
                                     class="material-icons">home</i>{% trans %}Organisationen{% endtrans %}</a></li>
-                    <li><a href="{{ path('city_admin_news_anzeige',{'id':app.user.stadt.id}) }}"> <i
-                                    class="material-icons">chat</i>{% trans %}Neuigkeiten{% endtrans %}</a></li>
+
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
                                     class="material-icons">people</i>{% trans %}Mitarbeiter{% endtrans %} </a>
                         <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
@@ -114,12 +113,21 @@
                         </ul>
                     </li>
                 {% endif %}
+
+                {% if is_granted('ROLE_CITY_NEWS') %}
+                <li><a href="{{ path('city_admin_news_anzeige',{'id':app.user.stadt.id}) }}"> <i
+                                class="material-icons">chat</i>{% trans %}Neuigkeiten{% endtrans %}</a></li>
+                {% endif %}
                 {% if is_granted('ROLE_ORG_ADMIN') %}
                     <li><a href="{{ path('city_admin_organisation_detail',{'id':app.user.organisation.id}) }}"> <i
                                     class="material-icons">home</i> {% trans %}Meine Organisation{% endtrans %}</a></li>
                     <li><a href="{{ path('city_employee_org_show',{'id':app.user.organisation.id}) }}"> <i
                                     class="material-icons">people</i> {% trans %}Meine Mitarbeiter{% endtrans %}</a>
                     </li>
+                {% endif %}
+                {% if is_granted('ROLE_ORG_NEWS') %}
+                    <li><a href="{{ path('org_news_anzeige',{'id':app.user.organisation.id}) }}"> <i
+                                    class="material-icons">chat</i>{% trans %}Neuigkeiten{% endtrans %}</a></li>
                 {% endif %}
 
                 {% if app.user.stadt.schulkindBetreung is defined and app.user.stadt.schulkindBetreung == true %}

@@ -243,6 +243,11 @@ class Organisation
      */
     private $ferienRegulation;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\News", mappedBy="organisation")
+     */
+    private $orgNews;
+
 
 
 
@@ -254,6 +259,7 @@ class Organisation
         $this->ferienblocks = new ArrayCollection();
         $this->PaymentsFerien = new ArrayCollection();
         $this->paymentsFerien = new ArrayCollection();
+        $this->orgNews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -812,6 +818,37 @@ class Organisation
     public function setFerienRegulation(?string $ferienRegulation): self
     {
         $this->ferienRegulation = $ferienRegulation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|News[]
+     */
+    public function getOrgNews(): Collection
+    {
+        return $this->orgNews;
+    }
+
+    public function addOrgNews(News $orgNews): self
+    {
+        if (!$this->orgNews->contains($orgNews)) {
+            $this->orgNews[] = $orgNews;
+            $orgNews->setOrganisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrgNews(News $orgNews): self
+    {
+        if ($this->orgNews->contains($orgNews)) {
+            $this->orgNews->removeElement($orgNews);
+            // set the owning side to null (unless already changed)
+            if ($orgNews->getOrganisation() === $this) {
+                $orgNews->setOrganisation(null);
+            }
+        }
 
         return $this;
     }
