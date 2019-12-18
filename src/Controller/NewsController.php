@@ -172,9 +172,11 @@ class NewsController extends AbstractController
         }
         $activity = $this->getDoctrine()->getRepository(News::class)->findBy(array('organisation'=>$organisation));
 
-        return $this->render('news/news.html.twig', [
-            'city' => $stadt,
-            'news'=>$activity
+        $new = $this->generateUrl('org_news_neu',array('id'=>$organisation->getId()));
+        return $this->render('news/orgNews.html.twig', [
+            'org' => $organisation,
+            'news'=>$activity,
+            'link'=>$new,
         ]);
     }
 
@@ -191,7 +193,6 @@ class NewsController extends AbstractController
         }
 
         $activity = new News();
-        $activity->setStadt($stadt);
         $activity->setOrganisation($organisation);
         $today = new \DateTime();
         $activity->setDate($today);
@@ -207,7 +208,7 @@ class NewsController extends AbstractController
                 $em->persist($news);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
-                return $this->redirectToRoute('org_news_neu',array('id'=>$organisation->getId(),'snack'=>$text));
+                return $this->redirectToRoute('org_news_anzeige',array('id'=>$organisation->getId(),'snack'=>$text));
             }
 
         }
