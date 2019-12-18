@@ -2,18 +2,12 @@
     <div class="container">
         <!-- Brand -->
         {% if stadt is defined and stadt is not null %}
-            {% if stadt.logoUrl is empty %}
                 <a class="navbar-brand" href="{{ path('workflow_start', {'slug': stadt.slug}) }}">
-                    <h1 class="hauptfarbe">{{ stadt.name }}</h1>
+                    <img src="{{ asset('images/logo-skib.png') }}" alt="Unsere SKiB" style="height: 100px">
                 </a>
             {% else %}
-                <a class="navbar-brand" href="{{ path('workflow_start', {'slug': stadt.slug}) }}">
-                    <img src="{{ stadt.logoUrl }}" alt="Unsere SKiB" style="width: 250px">
-                </a>
-            {% endif %}
-        {% else %}
             <a class="navbar-brand" href="{{ path('welcome_landing') }}">
-                <strong>SchuKiB</strong>
+                <img src="{{ asset('images/logo-skib.png') }}" alt="Unsere SKiB" style="height: 100px;">
             </a>
         {% endif %}
 
