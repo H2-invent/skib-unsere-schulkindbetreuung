@@ -22,6 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 
 use phpDocumentor\Reflection\Types\Boolean;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -51,11 +52,13 @@ class CheckoutPaymentService
 
     private $em;
     private $braintree;
+    private $logger;
 
-    public function __construct(EntityManagerInterface $entityManager, CheckoutBraintreeService $checkoutBraintreeService)
+    public function __construct(LoggerInterface $logger,EntityManagerInterface $entityManager, CheckoutBraintreeService $checkoutBraintreeService)
     {
         $this->em = $entityManager;
         $this->braintree = $checkoutBraintreeService;
+        $this->logger = $logger;
     }
 
     public function getFerienBlocksKinder(Organisation $organisation, Stammdaten $stammdaten): ArrayCollection
@@ -216,6 +219,13 @@ class CheckoutPaymentService
             $paymentRefund->setRefundType(0);
             $paymentRefund->setGezahlt(false);
             $paymentRefund->setSummeGezahlt($paymentRefund->getSumme()-$paymentRefund->getRefundFee());
+            $this->logger->info('storno Payment: '.$paymentRefund->getPayment()->getId(),array('RefundId'=>$paymentRefund->getId(),'type'=>'sepa'));
+            $this->logger->info('storno Payment: '.$paymentRefund->getPayment()->getId(),array('IP'=>$paymentRefund->getIpAdresse(),'type'=>'sepa'));
+            $this->logger->info('storno Payment: '.$paymentRefund->getPayment()->getId(),array('SummeGezahlt'=>$paymentRefund->getSummeGezahlt(),'type'=>'sepa'));
+            $this->logger->info('storno Payment: '.$paymentRefund->getPayment()->getId(),array('Summe'=>$paymentRefund->getSumme(),'type'=>'sepa'));
+            $this->logger->info('storno Payment: '.$paymentRefund->getPayment()->getId(),array('RefundFee'=>$paymentRefund->getRefundFee(),'type'=>'sepa'));
+            $this->logger->info('storno Payment: '.$paymentRefund->getPayment()->getId(),array('RefundArt'=>$paymentRefund->getTypeAsString(),'type'=>'sepa'));
+
         }
         if ($payment->getBraintree()) {
             $paymentRefund->setRefundType(1);

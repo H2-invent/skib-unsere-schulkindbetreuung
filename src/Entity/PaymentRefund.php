@@ -174,4 +174,20 @@ class PaymentRefund
 
         return $this;
     }
+    public function getTypeAsString(): ?string
+    {
+        switch ($this->refundType){
+            case 0:
+                return 'Manuell';
+                break;
+            case 1:
+                return 'Automatisch';
+                break;
+            default:
+                return 'nicht angegebene';
+                break;
+        }
+
+
+    }
 }

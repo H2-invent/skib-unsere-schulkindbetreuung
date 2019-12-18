@@ -813,7 +813,17 @@ class Kind
 
         return $this;
     }
+    public function getProgrammFromOrg(Organisation $organisation){
+        $res = array();
+        foreach ($this->kindFerienblocks as $data){
+            if($data->getFerienblock()->getOrganisation() == $organisation){
+                $res[]  = $data;
+            }
 
+        }
+        return $res;
+
+    }
 
 
 }

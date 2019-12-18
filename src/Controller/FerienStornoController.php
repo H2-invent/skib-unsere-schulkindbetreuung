@@ -8,6 +8,7 @@ use App\Entity\KindFerienblock;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Service\FerienStornoService;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,12 +50,18 @@ class FerienStornoController extends AbstractController
     /**
      * @Route("/{slug}/ferien/storno/abschluss", name="ferien_storno_abschluss", methods={"GET"})
      */
-    public function stornoAbschluss($slug,TranslatorInterface $translator, Request $request,FerienStornoService $ferienStornoService)
+    public function stornoAbschluss(LoggerInterface $logger, $slug,TranslatorInterface $translator, Request $request,FerienStornoService $ferienStornoService)
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
 
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
-        $ferienStornoService->stornoAbschluss($stammdaten,$request->getClientIp());
-        return $this->redirectToRoute('ferien_abschluss',array('slug'=>$stadt->getSlug()));
+
+         $logger->info('Start Storn for '.$stammdaten->getId());
+         $ferienStornoService->stornoAbschluss($stammdaten,$request->getClientIp());
+        $res = $this->render('ferien/abschluss.html.twig', array('stadt' => $stadt));
+
+        return $res;
+
     }
+
 }
