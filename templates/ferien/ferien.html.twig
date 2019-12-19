@@ -18,15 +18,16 @@
 
             <section class="dashboard-counts section-padding" id="schulenShow">
                 <div class="container-fluid ">
+                    <div class="card-deck" style="flex-flow: column">
                     <div class="row">
 
-                    <div class="card-deck">
-                        <!-- Count item widget-->
 
-                                {% if kinder is defined and kinder is not null %}
-                                    {% for k in kinder %}
-                        <div class="col-lg-4 col-md-6">
-                                        <div class="card">
+                            <!-- Count item widget-->
+
+                            {% if kinder is defined and kinder is not null %}
+                                {% for k in kinder %}
+                                    <div class="col-lg-4 col-md-6 card">
+
                                         <div class="card-body">
                                             <div class="btn-group">
                                                 <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
@@ -35,11 +36,12 @@
 
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-                                                    <a href="{{path('ferien_workflow_kind_edit', {'slug':stadt.slug,'kind_id':k.id})}}"
+                                                    <a href="{{ path('ferien_workflow_kind_edit', {'slug':stadt.slug,'kind_id':k.id}) }}"
                                                        class=" loadContent dropdown-item">{% trans %}Bearbeiten{% endtrans %}</a>
                                                     <a href="{{ path('ferien_kind_programm', {'slug': stadt.slug,'kind_id':k.id}) }}"
                                                        class=" loadContent dropdown-item">{% trans %}Betreuungsblöcke bearbeiten{% endtrans %}</a>
-                                                    <a type="DELETE" href="{{ path('ferien_workflow_kind_delete',{'slug':stadt.slug,'kind_id':k.id}) }}"
+                                                    <a type="DELETE"
+                                                       href="{{ path('ferien_workflow_kind_delete',{'slug':stadt.slug,'kind_id':k.id}) }}"
                                                        class="dropdown-item deleteBtn">{% trans %}Löschen{% endtrans %}</a>
 
                                                 </div>
@@ -49,22 +51,22 @@
                                         </div>
                                         <div class="card-body">
 
-                                            <b><span class="price">{% trans %}Summe{% endtrans %}: {{ k.ferienblockPreis|number_format(2,',','.')}}€</span></b><br/>
+                                            <b><span class="price">{% trans %}Summe{% endtrans %}: {{ k.ferienblockPreis|number_format(2,',','.') }}€</span></b><br/>
 
                                             {% trans %}Gebuchte Blöcke{% endtrans %}: <br/>
                                             {% for block in k.KindFerienblocksGebucht %}
-                                    {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€
+                                                {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€
                                             {% endfor %}
                                             {% trans %}Beworbene Blöcke{% endtrans %}: <br/>
                                             {% for block in k.KindFerienblocksBeworben %}
                                                 {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€
                                             {% endfor %}
                                         </div>
-                                        </div>
+
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
                         </div>
-                                    {% endfor %}
-                                {% endif %}
-                    </div>
                     </div>
 
                 </div>
@@ -72,7 +74,7 @@
             <div class="text-center">
                 <a href="{{ path('ferien_adresse', {'slug':stadt.slug}) }}"
                    class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
-                <a href="{{ path('ferien_bezahlung_prepare', {'slug':stadt.slug})}}"
+                <a href="{{ path('ferien_bezahlung_prepare', {'slug':stadt.slug}) }}"
                    class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
             </div>
         </div>
@@ -80,7 +82,7 @@
 {% endblock %}
 {% block jquery %}
     <script>
-        $(document).on('click','.chooseBlock',function (e) {
+        $(document).on('click', '.chooseBlock', function (e) {
             e.preventDefault();
             var ele = $(this);
             var url = ele.attr('href');
@@ -93,35 +95,35 @@
                     if (data.error == 0) {
 
                         ele.addClass('active');
-                        if(data.state == 0){
-                            klasse='bg-warning';
+                        if (data.state == 0) {
+                            klasse = 'bg-warning';
                             ele.addClass(klasse);
-                        }else if (data.state == 10){
+                        } else if (data.state == 10) {
                             var klasse = 'bg-success';
                             ele.addClass(klasse);
 
                         }
                         ele.closest('.priceChooseButton').find('.btn').each(function (index) {
                             var ele = $(this);
-                            if(!ele.hasClass('active')){
-                                ele.prop('disabled',true);
+                            if (!ele.hasClass('active')) {
+                                ele.prop('disabled', true);
                             }
                         });
 
-                        if(data.state <0){
+                        if (data.state < 0) {
                             ele.removeClass('bg-warning');
                             ele.removeClass('bg-success');
                             ele.removeClass('active');
                             ele.closest('.priceChooseButton').find('.btn').each(function (index) {
                                 var ele = $(this);
 
-                                    ele.prop('disabled',false);
+                                ele.prop('disabled', false);
 
                             });
                         }
 
 
-                            ele.text(data.cardText);
+                        ele.text(data.cardText);
 
                     }
                     $('#price').text(data.preis);
@@ -130,12 +132,12 @@
                             url: data.preisUrl,
                             method: 'GET',
                             success: function (data) {
-                                ele.closest('.modal-body').find('.price').text(data.betrag+'€')
+                                ele.closest('.modal-body').find('.price').text(data.betrag + '€')
                             }
 
                         });
                     }
-                       // $.snackbar(options);
+                    // $.snackbar(options);
                     ele.find('.loader').addClass('d-none');
 
 
@@ -143,8 +145,8 @@
             })
         })
 
-        $("#loadContentModal").on('hide.bs.modal', function(){
-        $('#schulenShow') .load('{{ path('ferien_auswahl', {'slug':stadt.slug}) }} #schulenShow');
+        $("#loadContentModal").on('hide.bs.modal', function () {
+            $('#schulenShow').load('{{ path('ferien_auswahl', {'slug':stadt.slug}) }} #schulenShow');
         });
     </script>
 

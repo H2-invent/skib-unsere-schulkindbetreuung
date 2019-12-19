@@ -35,11 +35,10 @@ class CheckoutBraintreeService
             }
             $braintree = new PaymentBraintree();
             $gateway = new Gateway([
-                'environment' => 'sandbox',
-                //todo hier kommt dann der KEy der Org hin
-                'merchantId' => '65xmpcc6hh6khg5d',
-                'publicKey' => 'wzkfsj9n2kbyytfp',
-                'privateKey' => 'a153a39aaef70466e97773a120b95f91',
+                'environment' => $payment->getOrganisation()->getBraintreeSandbox()?'sandbox':'production',
+                'merchantId' => $payment->getOrganisation()->getBraintreeMerchantId(),
+                'publicKey' => $payment->getOrganisation()->getBraintreePublicKey(),
+                'privateKey' => $payment->getOrganisation()->getBraintreePrivateKey(),
             ]);
             $clientToken = $gateway->clientToken()->generate();
             $braintree->setIpAdresse($ipAdresse);
@@ -58,11 +57,10 @@ class CheckoutBraintreeService
     {
         if ($paymentBraintree->getSuccess() != true) {
             $gateway = new Gateway([
-                'environment' => 'sandbox',
-                //todo hier kommt dann der KEy der Org hin
-                'merchantId' => '65xmpcc6hh6khg5d',
-                'publicKey' => 'wzkfsj9n2kbyytfp',
-                'privateKey' => 'a153a39aaef70466e97773a120b95f91',
+                'environment' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreeSandbox()?'sandbox':'production',
+                'merchantId' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreeMerchantId(),
+                'publicKey' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreePublicKey(),
+                'privateKey' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreePrivateKey(),
             ]);
 
             $result = $gateway->transaction()->sale([
@@ -95,11 +93,10 @@ class CheckoutBraintreeService
     public function makeRefund(PaymentRefund $paymentRefund, PaymentBraintree $paymentBraintree)
     {
         $gateway = new Gateway([
-            'environment' => 'sandbox',
-            //todo hier kommt dann der KEy der Org hin
-            'merchantId' => '65xmpcc6hh6khg5d',
-            'publicKey' => 'wzkfsj9n2kbyytfp',
-            'privateKey' => 'a153a39aaef70466e97773a120b95f91',
+            'environment' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreeSandbox()?'sandbox':'production',
+            'merchantId' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreeMerchantId(),
+            'publicKey' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreePublicKey(),
+            'privateKey' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreePrivateKey(),
         ]);
 
         if (!$paymentRefund->getGezahlt()) {

@@ -32,6 +32,7 @@ class AnwesenheitslisteService
         $qb->andWhere($qb->expr()->andX($qb->expr()->gte('k.state', ':stateGebucht'),
             $qb->expr()->lt('k.state', ':stateStorniert')))
             ->innerJoin('k.ferienblock', 'ferienblock')
+            ->innerJoin('k.kind','kind')
             ->andWhere($qb->expr()->gte('ferienblock.endDate', ':date'))
             ->andWhere($qb->expr()->lte('ferienblock.startDate', ':date'))
             ->andWhere('ferienblock.organisation = :organisation')
