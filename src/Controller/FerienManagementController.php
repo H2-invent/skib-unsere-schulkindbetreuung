@@ -113,7 +113,7 @@ class FerienManagementController extends AbstractController
     /**
      * @Route("/org_ferien/edit/question", name="ferien_management_question", methods={"GET","POST"})
      */
-    public function FerienblockFragen(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    public function ferienblockFragen(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
