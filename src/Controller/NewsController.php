@@ -257,7 +257,7 @@ class NewsController extends AbstractController
 
     }
     /**
-     * @Route("org_news/delete", name="org_news_delete",methods={"DELETE"})
+     * @Route("org_news/delete", name="org_news_delete",methods={"GET","POST"})
      */
     public function orgNewsDelete(Request $request, TranslatorInterface $translator)
     {
