@@ -18,12 +18,14 @@
 
             <section class="dashboard-counts section-padding" id="schulenShow">
                 <div class="container-fluid ">
+                    <div class="row">
 
                     <div class="card-deck">
                         <!-- Count item widget-->
 
                                 {% if kinder is defined and kinder is not null %}
                                     {% for k in kinder %}
+                        <div class="col-lg-4 col-md-6">
                                         <div class="card">
                                         <div class="card-body">
                                             <div class="btn-group">
@@ -59,8 +61,10 @@
                                             {% endfor %}
                                         </div>
                                         </div>
+                        </div>
                                     {% endfor %}
                                 {% endif %}
+                    </div>
                     </div>
 
                 </div>
