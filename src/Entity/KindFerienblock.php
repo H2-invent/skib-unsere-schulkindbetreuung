@@ -63,6 +63,11 @@ class KindFerienblock
      */
     private $markedAsStorno;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $customQuestionAnswer = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -172,6 +177,18 @@ class KindFerienblock
     public function setMarkedAsStorno(?bool $markedAsStorno): self
     {
         $this->markedAsStorno = $markedAsStorno;
+
+        return $this;
+    }
+
+    public function getCustomQuestionAnswer(): ?array
+    {
+        return $this->customQuestionAnswer;
+    }
+
+    public function setCustomQuestionAnswer(?array $customQuestionAnswer): self
+    {
+        $this->customQuestionAnswer = $customQuestionAnswer;
 
         return $this;
     }

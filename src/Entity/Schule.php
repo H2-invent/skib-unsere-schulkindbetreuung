@@ -119,6 +119,10 @@ class Schule
      */
     private $catererEmail;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\News", mappedBy="schule")
+     */
+    private $news;
 
 
     public function __construct()
@@ -126,6 +130,7 @@ class Schule
         $this->zeitblocks = new ArrayCollection();
         $this->actives = new ArrayCollection();
         $this->kinder = new ArrayCollection();
+        $this->news = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -366,5 +371,35 @@ class Schule
         return $this;
     }
 
+    /**
+     * @return Collection|News[]
+     */
+    public function getNews(): Collection
+    {
+        return $this->news;
+    }
+
+    public function addNews(News $news): self
+    {
+        if (!$this->news->contains($news)) {
+            $this->news[] = $news;
+            $news->setSchule($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNews(News $news): self
+    {
+        if ($this->news->contains($news)) {
+            $this->news->removeElement($news);
+            // set the owning side to null (unless already changed)
+            if ($news->getSchule() === $this) {
+                $news->setSchule(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

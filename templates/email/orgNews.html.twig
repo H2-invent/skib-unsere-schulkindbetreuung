@@ -1,0 +1,22 @@
+{% extends 'email/base.html.twig' %}
+{% block header %}
+    {% trans %}Elektronische Ranzenpost von{% endtrans %} {{ organisation.name }}
+{% endblock %}
+
+{% block content %}
+    <h4 class="text-center">{{ news.title }}
+    </h4>
+    <p>
+        {{ news.message }}
+    </p>
+
+    <p style="margin-top: 30px; font-size: 10px">
+        <a href="{{ absolute_url(path('org_email_news_show_online', {'id':news.id}) ) }}">
+            {% trans %}
+                Wenn diese E-Mail nicht korrekt angezeigt wird, klicken Sie bitte hier.
+            {% endtrans %}<br>
+            {{ absolute_url(path('org_email_news_show_online', {'id':news.id}) ) }}
+        </a>
+
+    </p>
+{% endblock %}

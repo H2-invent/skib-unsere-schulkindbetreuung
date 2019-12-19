@@ -126,6 +126,12 @@ class Ferienblock
      */
     private $modeMaximal;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $customQuestion = [];
+
+
     public function __construct()
     {
         $this->kinder = new ArrayCollection();
@@ -481,4 +487,17 @@ class Ferienblock
 
         return $this;
     }
+
+    public function getCustomQuestion(): ?array
+    {
+        return $this->customQuestion;
+    }
+
+    public function setCustomQuestion(?array $customQuestion): self
+    {
+        $this->customQuestion = $customQuestion;
+
+        return $this;
+    }
+
 }
