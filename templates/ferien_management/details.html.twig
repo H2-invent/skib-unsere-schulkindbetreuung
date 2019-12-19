@@ -242,7 +242,9 @@
                                     <table>
                                         <thead>
                                         <tr>
-                                            <th></th>
+                                            <th>
+
+                                            </th>
                                             <th>
                                                 {{ 'Typ'|trans }}
                                             </th>
@@ -256,7 +258,7 @@
                                                 {{ 'Stornogebühr €'|trans }}
                                             </th>
                                             <th>
-                                                {{ 'Ausgezahlt €'|trans }}
+                                                {{ 'Rückzahlungsbetrag €'|trans }}
                                             </th>
                                             <th>
                                                 {{ 'Status'|trans }}
@@ -269,7 +271,15 @@
                                         {% for r in payment.refunds %}
                                             <tr>
                                                 <td>
+                                                    <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="material-icons">more_vert</i>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                                        {% if is_granted('ROLE_ORG_FERIEN_STORNO') %}
+                                                            <a class="dropdown-item deleteBtn" type="PATCH" href="{{ path('ferien_storno_payPack',{'id':r.id}) }}">{% trans %}Zurückzahlung anstoßen{% endtrans %}</a>
+                                                        {% endif %}
 
+                                                    </div>
                                                 </td>
 
                                                 <td>

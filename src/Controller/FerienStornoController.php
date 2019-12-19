@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Ferienblock;
 use App\Entity\Kind;
 use App\Entity\KindFerienblock;
+use App\Entity\PaymentRefund;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use App\Service\CheckoutPaymentService;
 use App\Service\FerienStornoService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,5 +65,13 @@ class FerienStornoController extends AbstractController
         return $res;
 
     }
+    /**
+     * @Route("/org_ferien/storno/payBack", name="ferien_storno_payPack", methods={"PATCH"})
+     */
+    public function payBackAction(CheckoutPaymentService $checkoutPaymentService, TranslatorInterface $translator, Request $request,FerienStornoService $ferienStornoService)
+    {
+        $refund = $this->getDoctrine()->getRepository(PaymentRefund::class)->find($request->get('id'));
 
+        return new JsonResponse(array('error'=>$checkoutPaymentService->makeRefundPAyment($refund),'redirect'=>$this->generateUrl('ferien_management_order_detail',array('org_id'=>$refund->getPayment()->getOrganisation()->getId(),'id'=>$refund->getPayment()->getStammdaten()->getId()))));
+    }
 }

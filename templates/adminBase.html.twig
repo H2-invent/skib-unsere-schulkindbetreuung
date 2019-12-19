@@ -191,6 +191,11 @@
                             <i
                                     class="material-icons">edit</i> {% trans %}Ferien Einstellungen{% endtrans %}</a>
                     </li>
+                    <li>
+                        <a href="{{ path('org_ferien_admin_payment_art',{'org_id':app.user.organisation.id}) }}">
+                            <i
+                                    class="material-icons">edit</i> {% trans %}Zahlungsarten{% endtrans %}</a>
+                    </li>
                 {% endif %}
 
 
