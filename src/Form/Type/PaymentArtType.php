@@ -38,11 +38,11 @@ class PaymentArtType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('braintreeSandbox', CheckboxType::class, array( 'label' => 'Braintree in der Sandbox', 'translation_domain' => 'form'))
-            ->add('braintreeOK', CheckboxType::class, array( 'label' => 'Braintree akzeptieren', 'translation_domain' => 'form'))
-            ->add('braintreeMerchantId', TextType::class, array( 'label' => 'Braintree Merchant ID', 'translation_domain' => 'form'))
-            ->add('braintreePrivateKey', TextType::class, array( 'label' => 'Braintree Private Key', 'translation_domain' => 'form'))
-            ->add('braintreePublicKey', TextType::class, array( 'label' => 'Braintree Public Key', 'translation_domain' => 'form'))
+            ->add('braintreeSandbox', CheckboxType::class, array( 'required'=>false,'label' => 'Braintree in der Sandbox', 'translation_domain' => 'form'))
+            ->add('braintreeOK', CheckboxType::class, array( 'required'=>false,'label' => 'Braintree akzeptieren', 'translation_domain' => 'form'))
+            ->add('braintreeMerchantId', TextType::class, array( 'required'=>false,'label' => 'Braintree Merchant ID', 'translation_domain' => 'form'))
+            ->add('braintreePrivateKey', TextType::class, array( 'required'=>false,'label' => 'Braintree Private Key', 'translation_domain' => 'form'))
+            ->add('braintreePublicKey', TextType::class, array( 'required'=>false,'label' => 'Braintree Public Key', 'translation_domain' => 'form'))
             ->add('save', SubmitType::class, ['label' => 'Weiter', 'translation_domain' => 'form']);
     }
 
