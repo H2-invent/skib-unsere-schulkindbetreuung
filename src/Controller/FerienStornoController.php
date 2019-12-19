@@ -5,9 +5,12 @@ namespace App\Controller;
 use App\Entity\Ferienblock;
 use App\Entity\Kind;
 use App\Entity\KindFerienblock;
+use App\Entity\PaymentRefund;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use App\Service\CheckoutPaymentService;
 use App\Service\FerienStornoService;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,12 +52,26 @@ class FerienStornoController extends AbstractController
     /**
      * @Route("/{slug}/ferien/storno/abschluss", name="ferien_storno_abschluss", methods={"GET"})
      */
-    public function stornoAbschluss($slug,TranslatorInterface $translator, Request $request,FerienStornoService $ferienStornoService)
+    public function stornoAbschluss(LoggerInterface $logger, $slug,TranslatorInterface $translator, Request $request,FerienStornoService $ferienStornoService)
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
 
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
-        $ferienStornoService->stornoAbschluss($stammdaten,$request->getClientIp());
-        return $this->redirectToRoute('ferien_abschluss',array('slug'=>$stadt->getSlug()));
+
+         $logger->info('Start Storn for '.$stammdaten->getId());
+         $ferienStornoService->stornoAbschluss($stammdaten,$request->getClientIp());
+        $res = $this->render('ferien/abschluss.html.twig', array('stadt' => $stadt));
+
+        return $res;
+
+    }
+    /**
+     * @Route("/org_ferien/storno/payBack", name="ferien_storno_payPack", methods={"PATCH"})
+     */
+    public function payBackAction(CheckoutPaymentService $checkoutPaymentService, TranslatorInterface $translator, Request $request,FerienStornoService $ferienStornoService)
+    {
+        $refund = $this->getDoctrine()->getRepository(PaymentRefund::class)->find($request->get('id'));
+
+        return new JsonResponse(array('error'=>$checkoutPaymentService->makeRefundPAyment($refund),'redirect'=>$this->generateUrl('ferien_management_order_detail',array('org_id'=>$refund->getPayment()->getOrganisation()->getId(),'id'=>$refund->getPayment()->getStammdaten()->getId()))));
     }
 }

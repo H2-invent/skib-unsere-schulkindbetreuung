@@ -2,45 +2,13 @@
 
 namespace App\Service;
 
-use App\Entity\Active;
-use App\Entity\Ferienblock;
-use App\Entity\Kind;
-use App\Entity\KindFerienblock;
-use App\Entity\Organisation;
 use App\Entity\Payment;
 use App\Entity\PaymentBraintree;
 use App\Entity\PaymentRefund;
-use App\Entity\PaymentSepa;
-use App\Entity\Rechnung;
-use App\Entity\Sepa;
-use App\Entity\Stadt;
-
 use App\Entity\Stammdaten;
-
-use App\Entity\Zeitblock;
-use App\Form\Type\ConfirmType;
 use Braintree\Gateway;
 use Doctrine\ORM\EntityManagerInterface;
-
-use phpDocumentor\Reflection\Types\Boolean;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Security;
-
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Twig\Environment;
+use Psr\Log\LoggerInterface;
 
 
 // <- Add this
@@ -50,12 +18,12 @@ class CheckoutBraintreeService
 
 
     private $em;
+    private $logger;
 
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
-
+        $this->logger = $logger;
     }
 
     public function prepareBraintree(Stammdaten $stammdaten, $ipAdresse, Payment $payment): bool
@@ -67,11 +35,10 @@ class CheckoutBraintreeService
             }
             $braintree = new PaymentBraintree();
             $gateway = new Gateway([
-                'environment' => 'sandbox',
-                //todo hier kommt dann der KEy der Org hin
-                'merchantId' => '65xmpcc6hh6khg5d',
-                'publicKey' => 'wzkfsj9n2kbyytfp',
-                'privateKey' => 'a153a39aaef70466e97773a120b95f91',
+                'environment' => $payment->getOrganisation()->getBraintreeSandbox()?'sandbox':'production',
+                'merchantId' => $payment->getOrganisation()->getBraintreeMerchantId(),
+                'publicKey' => $payment->getOrganisation()->getBraintreePublicKey(),
+                'privateKey' => $payment->getOrganisation()->getBraintreePrivateKey(),
             ]);
             $clientToken = $gateway->clientToken()->generate();
             $braintree->setIpAdresse($ipAdresse);
@@ -90,11 +57,10 @@ class CheckoutBraintreeService
     {
         if ($paymentBraintree->getSuccess() != true) {
             $gateway = new Gateway([
-                'environment' => 'sandbox',
-                //todo hier kommt dann der KEy der Org hin
-                'merchantId' => '65xmpcc6hh6khg5d',
-                'publicKey' => 'wzkfsj9n2kbyytfp',
-                'privateKey' => 'a153a39aaef70466e97773a120b95f91',
+                'environment' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreeSandbox()?'sandbox':'production',
+                'merchantId' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreeMerchantId(),
+                'publicKey' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreePublicKey(),
+                'privateKey' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreePrivateKey(),
             ]);
 
             $result = $gateway->transaction()->sale([
@@ -127,29 +93,44 @@ class CheckoutBraintreeService
     public function makeRefund(PaymentRefund $paymentRefund, PaymentBraintree $paymentBraintree)
     {
         $gateway = new Gateway([
-            'environment' => 'sandbox',
-            //todo hier kommt dann der KEy der Org hin
-            'merchantId' => '65xmpcc6hh6khg5d',
-            'publicKey' => 'wzkfsj9n2kbyytfp',
-            'privateKey' => 'a153a39aaef70466e97773a120b95f91',
+            'environment' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreeSandbox()?'sandbox':'production',
+            'merchantId' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreeMerchantId(),
+            'publicKey' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreePublicKey(),
+            'privateKey' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreePrivateKey(),
         ]);
 
         if (!$paymentRefund->getGezahlt()) {
-
             $result = $gateway->transaction()->refund(
                 $paymentBraintree->getTransactionId(),
                 $paymentRefund->getSumme() - $paymentRefund->getRefundFee());
             $paymentRefund->setGezahlt($result->success);
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundId' => $paymentRefund->getId(), 'type' => 'braintree'));
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('IP' => $paymentRefund->getIpAdresse(), 'type' => 'braintree'));
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('SummeGezahlt' => $paymentRefund->getSummeGezahlt(), 'type' => 'braintree'));
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Summe' => $paymentRefund->getSumme(), 'type' => 'braintree'));
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundFee' => $paymentRefund->getRefundFee(), 'type' => 'braintree'));
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundArt' => $paymentRefund->getTypeAsString(), 'type' => 'braintree'));
 
 
             if ($result->success) {
                 $paymentRefund->setSummeGezahlt($result->transaction->amount);
+                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundResult' => $result->success, 'type' => 'braintree'));
+                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Transaction Summe' => $result->transaction->amount, 'type' => 'braintree'));
+                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Transaction ID' => $result->transaction->id, 'type' => 'braintree'));
+
+
             } else {
+                $this->logger->error(serialize($result));
                 $paymentRefund->setSummeGezahlt(0);
                 $paymentRefund->setErrorMessage($result->message);
+                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundResult' => $result->success, 'type' => 'braintree'));
+                 $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Transaction ID' => $paymentBraintree->getTransactionId(), 'type' => 'braintree'));
+                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Transaction ErrorMessage' => $result->message, 'type' => 'braintree'));
+
             }
         }
         $this->em->persist($paymentRefund);
         $this->em->flush();
     }
+
 }

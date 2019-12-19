@@ -248,6 +248,31 @@ class Organisation
      */
     private $orgNews;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $braintreeOK;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $braintreeMerchantId;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $BraintreePublicKey;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $braintreePrivateKey;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $braintreeSandbox;
+
 
 
 
@@ -849,6 +874,66 @@ class Organisation
                 $orgNews->setOrganisation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBraintreeOK(): ?bool
+    {
+        return $this->braintreeOK;
+    }
+
+    public function setBraintreeOK(?bool $braintreeOK): self
+    {
+        $this->braintreeOK = $braintreeOK;
+
+        return $this;
+    }
+
+    public function getBraintreeMerchantId(): ?string
+    {
+        return $this->braintreeMerchantId;
+    }
+
+    public function setBraintreeMerchantId(?string $braintreeMerchantId): self
+    {
+        $this->braintreeMerchantId = $braintreeMerchantId;
+
+        return $this;
+    }
+
+    public function getBraintreePublicKey(): ?string
+    {
+        return $this->BraintreePublicKey;
+    }
+
+    public function setBraintreePublicKey(?string $BraintreePublicKey): self
+    {
+        $this->BraintreePublicKey = $BraintreePublicKey;
+
+        return $this;
+    }
+
+    public function getBraintreePrivateKey(): ?string
+    {
+        return $this->braintreePrivateKey;
+    }
+
+    public function setBraintreePrivateKey(?string $braintreePrivateKey): self
+    {
+        $this->braintreePrivateKey = $braintreePrivateKey;
+
+        return $this;
+    }
+
+    public function getBraintreeSandbox(): ?bool
+    {
+        return $this->braintreeSandbox;
+    }
+
+    public function setBraintreeSandbox(?bool $braintreeSandbox): self
+    {
+        $this->braintreeSandbox = $braintreeSandbox;
 
         return $this;
     }

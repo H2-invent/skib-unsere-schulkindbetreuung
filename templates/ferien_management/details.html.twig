@@ -69,7 +69,7 @@
                             <h3 class="card-title">{% trans %}Anmeldungen{% endtrans %}</h3>
 
                             <div id="accordion">
-                                {% for k in stammdaten.kinds %}
+                                {% for k in kinds %}
                                     <div class="card">
                                         <div class="card-header" id="heading{{ loop.index }}">
                                             <h5 class="mb-0">
@@ -122,28 +122,33 @@
                                                     </div>
                                                 </div>
 
-                                                {% for f in k.kindFerienblocks %}
+                                                {% for f in k.programmFromOrg(org) %}
                                                     <div class="row mt-3">
+
                                                         <div class="col-md-8">
                                                             <b>
-                                                                #{{ loop.index }} {{ f.ferienblock.translate.titel }}
+                                                                {% if f.state == 20 %}<del>{% endif %}
+                                                                    #{{ loop.index }} {{ f.ferienblock.translate.titel }}
+                                                                    {% if f.state == 20 %}</del>{% endif %}
                                                             </b>
                                                         </div>
                                                         <div class="col-md-2">
+                                                            {% if f.state != 20 %}
                                                             <a href="{{ path('ferien_ticket', {'org_id':org.id, 'kind_id':k.id, 'ferien_id':f.id}) }}">
                                                                 Ticket exportieren
+                                                                {% endif %}
                                                             </a>
                                                         </div>
                                                         <div class="col-md-2">
                                                             <b>
-                                                                {{ f.preis|number_format ('2',',','.') }} €
+                                                                {% if f.state == 20 %}<del>{% endif %}      {{ f.preis|number_format ('2',',','.') }} €    {% if f.state == 20 %}</del>{% endif %}
                                                             </b>
                                                         </div>
                                                         <div class="col-md-3">
-                                                            Checkin ID
+                                                            {% if f.state == 20 %}<del>{% endif %}   Checkin ID    {% if f.state == 20 %}</del>{% endif %}
                                                         </div>
                                                         <div class="col-md-9">
-                                                            {{ f.checkinID }}
+                                                            {% if f.state == 20 %}<del>{% endif %}  {{ f.checkinID }}    {% if f.state == 20 %}</del>{% endif %}
                                                         </div>
                                                         <div class="col-md-3">
                                                             Checkins
@@ -153,6 +158,7 @@
                                                                 {{ c }}<br/>
                                                             {% endfor %}
                                                         </div>
+
                                                     </div>
                                                 {% endfor %}
                                             </div>
@@ -171,7 +177,7 @@
                             {% if stammdaten.paymentFerien is empty %}
                             <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
                         {% else %}
-                            <div >
+                            <div class="table table-responsive" >
                             <table>
                                 <thead>
                                 <tr>
@@ -230,14 +236,80 @@
 
 
                             <h3 class="card-title">{% trans %}Rückerstattungen{% endtrans %}</h3>
+                            <ul class="list-group">
 
-                            {% for r in payment.refunds %}
-                                <b>{{ 'Type'|trans }}: {{ r.refundType }}</b><br/>
-                                {{ 'Gebühren'|trans }}: {{ r.refundFee }}<br/>
-                                {{ 'Betrag'|trans }}: {{ r.summe|number_format ('2',',','.') }}€<br/>
-                                {{ 'IP Adresse'|trans }}: {{ r.ipAdresse }}
-                            {% endfor %}
+                                <div class="table table-responsive" >
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>
 
+                                            </th>
+                                            <th>
+                                                {{ 'Typ'|trans }}
+                                            </th>
+                                            <th>
+                                                {{ 'Datum'|trans }}
+                                            </th>
+                                            <th>
+                                                {{ 'Betrag €'|trans }}
+                                            </th>
+                                            <th>
+                                                {{ 'Stornogebühr €'|trans }}
+                                            </th>
+                                            <th>
+                                                {{ 'Rückzahlungsbetrag €'|trans }}
+                                            </th>
+                                            <th>
+                                                {{ 'Status'|trans }}
+                                            </th>
+                                            <th>
+                                                {{ 'Fehlermeldung'|trans }}
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        {% for r in payment.refunds %}
+                                            <tr>
+                                                <td>
+                                                    <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="material-icons">more_vert</i>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                                        {% if is_granted('ROLE_ORG_FERIEN_STORNO') %}
+                                                            <a class="dropdown-item deleteBtn" type="PATCH" href="{{ path('ferien_storno_payPack',{'id':r.id}) }}">{% trans %}Zurückzahlung anstoßen{% endtrans %}</a>
+                                                        {% endif %}
+
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    {{ r.typeAsString }}
+                                                </td>
+                                                <td>
+                                                    {{ r.createdAt|date('d.m.Y H:i') }}
+                                                </td>
+                                                <td>
+                                                    {{ r.summe|number_format ('2',',','.') }}€
+                                                </td>
+                                                <td>
+                                                    {{ r.refundFee|number_format ('2',',','.') }}€
+                                                </td>
+                                                <td>
+                                                    {{ r.summeGezahlt|number_format ('2',',','.')  }}
+                                                </td>
+                                                <td>
+                                                    <p ><span class="badge {{ r.gezahlt?'badge-primary':'badge-danger' }} "> {{ r.gezahlt?'Ausgezahlt':'Nicht ausgezahlt'|trans }}</span></p>
+                                                </td>
+                                                <td>
+                                                    {{ r.gezahlt?'Kein Fehler':r.errorMessage }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+
+
+                            </ul>
                         </div>
                     </div>
                 </div>
