@@ -41,6 +41,16 @@ class News
      */
     private $activ;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="orgNews")
+     */
+    private $organisation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Schule", inversedBy="news")
+     */
+    private $schule;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,4 +115,29 @@ class News
 
         return $this;
     }
+
+    public function getOrganisation(): ?Organisation
+    {
+        return $this->organisation;
+    }
+
+    public function setOrganisation(?Organisation $organisation): self
+    {
+        $this->organisation = $organisation;
+
+        return $this;
+    }
+
+    public function getSchule(): ?Schule
+    {
+        return $this->schule;
+    }
+
+    public function setSchule(?Schule $schule): self
+    {
+        $this->schule = $schule;
+
+        return $this;
+    }
+
 }

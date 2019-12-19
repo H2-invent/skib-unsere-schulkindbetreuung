@@ -78,7 +78,6 @@ class FerienPrintService
             true
         );
 
-        dump($kindData);
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }
 
