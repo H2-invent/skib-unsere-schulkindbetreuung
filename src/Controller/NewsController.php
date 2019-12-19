@@ -292,7 +292,7 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("org_news/activate", name="org_news_activate", methods={"PATCH"})
+     * @Route("org_news/activate", name="org_news_activate", methods={"GET","PATCH"})
      */
     public function orgNewsActivate(Request $request, TranslatorInterface $translator)
     {
@@ -315,7 +315,7 @@ class NewsController extends AbstractController
 
 
     /**
-     * @Route("/news/{slug}/{id}",name="news_show_all",methods={"GET"})
+     * @Route("/news/city/{slug}/{id}",name="news_show_all",methods={"GET"})
      */
     public function showNewsAction(Request $request)
     {
@@ -335,21 +335,35 @@ class NewsController extends AbstractController
         if ($news->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
+
         $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
         $qb->innerJoin('stammdaten.kinds','kinds')
             ->innerJoin('kinds.zeitblocks','kind_zeitblocks')
-            ->innerJoin('kind_zeitblocks.schule','schule')
-            ->andWhere('schule.news = :news')
-            ->setParameter('news', $news);
+            ->andWhere('kind_zeitblocks.schule = :schule')
+            ->andWhere('stammdaten.fin = 1')
+            ->andWhere('stammdaten.saved = 1')
+            ->setParameter('schule', $news->getSchule());
         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
 
+        $mailContent = $this->renderView('email/orgNews.html.twig', array('organisation'=>$news->getOrganisation(), 'news' => $news, 'stammdaten'=>$stammdaten));
         foreach ($stammdaten as $data){
-            $mailerService->sendEmail('Ranzenpost','info@h2-invent.com',$data->getEmail(),$news->getTitle(),$news->getMessage());
+            $mailerService->sendEmail('Ranzenpost','info@h2-invent.com',$data->getEmail(),$news->getTitle(),$mailContent);
     }
 
         $text = $translator->trans('Nachricht versendet');
         return $this->redirectToRoute('org_news_anzeige',array('id'=>$news->getOrganisation()->getId(),'snack'=>$text));
+    }
+
+
+    /**
+     * @Route("/news/email_online/id",name="org_email_news_show_online",methods={"GET"})
+     */
+    public function orgShowNewsAction(Request $request)
+    {
+        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $stadt = $news->getOrganisation()->getStadt();
+        return $this->render('email/orgNews.html.twig', array('stadt'=>$stadt, 'organisation'=>$news->getOrganisation(), 'news' => $news));
     }
 
 }
