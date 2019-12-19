@@ -274,9 +274,9 @@ class FerienManagementController extends AbstractController
             ->innerJoin('kinds.kindFerienblocks','kind_ferienblocks')
             ->innerJoin('kind_ferienblocks.ferienblock','ferienblock')
             ->andWhere('ferienblock.organisation = :org')
+            ->andWhere('stammdaten.fin = true')
             ->setParameter('org', $organisation);
-        //todo hier muss noch nach nem FIn gefagt werden, die dafür sorgt dass nur fertige Anmeldungen angezeigt werden
-        $query = $qb->getQuery();
+         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
         $titel = $translator->trans('Alle Anmeldungen');
 
