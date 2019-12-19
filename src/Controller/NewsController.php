@@ -257,7 +257,7 @@ class NewsController extends AbstractController
 
     }
     /**
-     * @Route("org_news/delete", name="org_news_delete",methods={"DELETE"})
+     * @Route("org_news/delete", name="org_news_delete",methods={"GET","POST"})
      */
     public function orgNewsDelete(Request $request, TranslatorInterface $translator)
     {
@@ -274,7 +274,7 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("org_news/deactivate", name="org_news_deactivate", methods={"PATCH"})
+     * @Route("org_news/deactivate", name="org_news_deactivate", methods={"GET","POST"})
      */
     public function orgNewsDeactivate(Request $request, TranslatorInterface $translator)
     {
@@ -292,7 +292,7 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("org_news/activate", name="org_news_activate", methods={"GET","PATCH"})
+     * @Route("org_news/activate", name="org_news_activate", methods={"GET","POST"})
      */
     public function orgNewsActivate(Request $request, TranslatorInterface $translator)
     {

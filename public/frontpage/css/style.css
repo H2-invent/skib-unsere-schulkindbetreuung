@@ -77,3 +77,62 @@ label.required:after {
   padding-top: 30px;
   margin-top: -50px;
 }
+
+
+/* nunito-regular - latin */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../fonts/nunito/nunito-v12-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Nunito Regular'), local('Nunito-Regular'),
+  url('../../fonts/nunito/nunito-v12-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../../fonts/nunito/nunito-v12-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+  url('../../fonts/nunito/nunito-v12-latin-regular.woff') format('woff'), /* Modern Browsers */
+  url('../../fonts/nunito/nunito-v12-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('../../fonts/nunito/nunito-v12-latin-regular.svg#Nunito') format('svg'); /* Legacy iOS */
+}
+
+/* nunito-700 - latin */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../../fonts/nunito/nunito-v12-latin-700.eot'); /* IE9 Compat Modes */
+  src: local('Nunito Bold'), local('Nunito-Bold'),
+  url('../../fonts/nunito/nunito-v12-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../../fonts/nunito/nunito-v12-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+  url('../../fonts/nunito/nunito-v12-latin-700.woff') format('woff'), /* Modern Browsers */
+  url('../../fonts/nunito/nunito-v12-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('../../fonts/nunito/nunito-v12-latin-700.svg#Nunito') format('svg'); /* Legacy iOS */
+}
+
+/* TypeWriter Black */
+@font-face {
+  font-family: 'TypeWritersSubstitute';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../../fonts/typewriter/TypeWritersSubstitute-Black.ttf') format('truetype');
+}
+
+/* TypeWriter-Oblique */
+@font-face {
+  font-family: 'TypeWritersSubstitute';
+  font-weight: normal;
+  font-style: oblique;
+url('../../fonts/typewriter/TypeWritersSubstitute-Oblique.ttf') format('truetype'), /* Safari, Android, iOS */
+}
+
+body {
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: 400;
+}
+
+h1,
+h2 {
+  font-family: TypeWritersSubstitute;
+  font-style: normal;
+}
+
+

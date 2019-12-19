@@ -39,7 +39,7 @@
                                                    href="{{ path('org_news_edit',{'id':n.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
                                                 {% if n.activ == true %}
                                                 <a class="dropdown-item"
-                                                   href="{{ path('org_news_deactivate',{'id':n.id}) }}">{% trans %}Deaktivieren{% endtrans %}</a>
+                                                   href="{{ path('org_news_deactivate',{'id':n.id}) }}" >{% trans %}Deaktivieren{% endtrans %}</a>
                                                 {% else %}
                                                     <a class="dropdown-item"
                                                        href="{{ path('org_news_activate',{'id':n.id}) }}">{% trans %}Aktivieren{% endtrans %}</a>
