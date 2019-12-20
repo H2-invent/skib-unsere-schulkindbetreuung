@@ -61,6 +61,7 @@ class FerienBlockType extends AbstractType
             ->add('endVerkauf', DateType::class, array('widget' => 'single_text', 'label' => 'End Vorverkauf', 'translation_domain' => 'form'))
             ->add('maxAnzahl', IntegerType::class, array('required' => false, 'label' => 'Maximum Anzahl', 'translation_domain' => 'form'))
             ->add('anzahlPreise', IntegerType::class, array('required' => true, 'label' => 'Anzahl Preise', 'translation_domain' => 'form'))
+            ->add('amountVoucher', IntegerType::class, array('required' => true, 'label' => 'Anzahl Gutscheine', 'translation_domain' => 'form'))
 
             ->add('save', SubmitType::class, ['label' => 'Speichern', 'translation_domain' => 'form']);
     }

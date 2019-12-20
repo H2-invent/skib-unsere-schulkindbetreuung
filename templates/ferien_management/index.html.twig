@@ -7,9 +7,12 @@
                 <!-- Count item widget-->
                 <div class=" col-12 card">
                     <div class="card-header">
-                        <h1> {% trans  %}Ferienprogramm{% endtrans %}  <a href="{{ path('ferien_management_neu',{'org_id':org.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                        <h1> {% trans %}Ferienprogramm{% endtrans %} <a
+                                    href="{{ path('ferien_management_neu',{'org_id':org.id}) }}">
+                                <button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
                                     <i class="material-icons">add</i>
-                                </button></a></h1>
+                                </button>
+                            </a></h1>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover">
@@ -33,34 +36,46 @@
                             {% for b in blocks %}
 
                                 <tr>
-                                    <td> <div class="btn-group">
-                                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="material-icons">more_vert</i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-                                                {% if is_granted ('ROLE_ORG_FERIEN_EDITOR')%}
-                                                <a class="dropdown-item" href="{{ path('ferien_management_edit',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                {% if is_granted ('ROLE_ORG_FERIEN_EDITOR') %}
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('ferien_management_edit',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
                                                 {% endif %}
                                                 {% if is_granted ('ROLE_ORG_FERIEN_CHECKIN') %}
-                                                <a class="dropdown-item" href="{{ path('ferien_management_report_checkinlist',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Anwesenheitsliste{% endtrans %}</a>
-                                                <a class="dropdown-item" href="{{ path('ferien_report_nametag',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Namensschilder{% endtrans %}</a>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('ferien_management_report_checkinlist',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Anwesenheitsliste{% endtrans %}</a>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('ferien_report_nametag',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Namensschilder{% endtrans %}</a>
                                                 {% endif %}
                                                 {% if is_granted ('ROLE_ORG_FERIEN_EDITOR') %}
-                                                <a class="dropdown-item" href="{{ path('ferien_management_preise',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Preise Bearbeiten{% endtrans %}</a>
-                                                    <a class="dropdown-item" href="{{ path('ferien_management_question',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Fragen bearbeiten{% endtrans %}</a>
-                                                    <a class="dropdown-item deleteBtn" type="POST" href="{{ path('ferien_management_duplicate',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Duplizieren{% endtrans %}</a>
-                                                <a class="dropdown-item deleteBtn" type="DELETE" href="{{ path('ferien_management_delete',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('ferien_management_preise',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Preise Bearbeiten{% endtrans %}</a>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('ferien_management_voucher',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Gutscheine Bearbeiten{% endtrans %}</a>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('ferien_management_question',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Fragen bearbeiten{% endtrans %}</a>
+                                                    <a class="dropdown-item deleteBtn" type="POST"
+                                                       href="{{ path('ferien_management_duplicate',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Duplizieren{% endtrans %}</a>
+                                                    <a class="dropdown-item deleteBtn" type="DELETE"
+                                                       href="{{ path('ferien_management_delete',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Löschen{% endtrans %}</a>
                                                 {% endif %}
                                             </div>
-                                        </div></td>
+                                        </div>
+                                    </td>
                                     <td>{{ b.translations.de.titel }}</td>
                                     <td>{{ b.kindFerienblocks|length }}</td>
-                                    <td>{{ b.kindFerienblocksGebucht|length}}</td>
-                                    <td>{{ b.kindFerienblocksBeworben|length}}</td>
-                                    <td>{{ b.kindFerienblocksStorniert|length}}</td>
-                                    <td>{{ b.kindFerienblocksBezahlt|length}}</td>
-                                    <td>{{ b.minAnzahl}}</td>
-                                    <td>{{ b.maxAnzahl}}</td>
+                                    <td>{{ b.kindFerienblocksGebucht|length }}</td>
+                                    <td>{{ b.kindFerienblocksBeworben|length }}</td>
+                                    <td>{{ b.kindFerienblocksStorniert|length }}</td>
+                                    <td>{{ b.kindFerienblocksBezahlt|length }}</td>
+                                    <td>{{ b.minAnzahl }}</td>
+                                    <td>{{ b.maxAnzahl }}</td>
                                     <td>{{ b.startDate|date('d.m.Y') }} {{ b.startTime|date('H:i') }}<br>
                                         -{{ b.endDate|date('d.m.Y') }} {{ b.endTime|date('H:i') }}</td>
                                     <td>{{ b.startVerkauf|date('d.m.Y') }}<br>
@@ -71,7 +86,6 @@
                             </tbody>
                         </table>
                     </div>
-
 
 
                 </div>

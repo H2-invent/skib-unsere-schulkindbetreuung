@@ -11,6 +11,7 @@ use App\Entity\Stammdaten;
 use App\Form\Type\FerienBlockCustomQuestionType;
 use App\Form\Type\FerienBlockPreisType;
 use App\Form\Type\FerienBlockType;
+use App\Form\Type\FerienBlockVoucherType;
 use App\Form\Type\OrganisationFerienType;
 use App\Service\AnwesenheitslisteService;
 use App\Service\CheckinFerienService;
@@ -76,8 +77,8 @@ class FerienManagementController extends AbstractController
 
 
     /**
- * @Route("/org_ferien/edit/preise", name="ferien_management_preise", methods={"GET","POST"})
- */
+     * @Route("/org_ferien/edit/preise", name="ferien_management_preise", methods={"GET","POST"})
+     */
     public function preise(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -140,6 +141,47 @@ class FerienManagementController extends AbstractController
 
         }
         $title = $translator->trans('Fragen bearbeiten');
+        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
+    }
+
+
+    /**
+     * @Route("/org_ferien/edit/voucher", name="ferien_management_voucher", methods={"GET","POST"})
+     */
+    public function ferienblockVoucher(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        if ($organisation != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        $ferienblock = $this->getDoctrine()->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
+
+        if ($ferienblock->getVoucher() === null || $ferienblock->getVoucherPrice() === null) {
+            $ferienblock->setVoucher(array_fill(0, $ferienblock->getAmountVoucher(), ''));
+            $ferienblock->setVoucherPrice(array_fill(0, $ferienblock->getAmountVoucher(), '99'));
+        }
+        $size = sizeof($ferienblock->getVoucher());
+        if ($size != $ferienblock->getAmountVoucher()) {
+            array_push($ferienblock->getVoucher(), '');
+            $ferienblock->setVoucherPrice(array_fill($size + 1, $ferienblock->getAmountVoucher()-$size, '99'));
+        }
+
+        $form = $this->createForm(FerienBlockVoucherType::class, $ferienblock);
+        $form->handleRequest($request);
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $block = $form->getData();
+            $errors = $validator->validate($block);
+            if (count($errors) == 0) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($block);
+                $em->flush();
+                $text = $translator->trans('Erfolgreich geändert');
+                return $this->redirectToRoute('ferien_management_show', array('org_id' => $organisation->getId(), 'snack' => $text));
+            }
+
+        }
+        $title = $translator->trans('Gutscheine bearbeiten');
         return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
     }
 
@@ -270,13 +312,13 @@ class FerienManagementController extends AbstractController
         }
 
         $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
-        $qb->innerJoin('stammdaten.kinds','kinds')
-            ->innerJoin('kinds.kindFerienblocks','kind_ferienblocks')
-            ->innerJoin('kind_ferienblocks.ferienblock','ferienblock')
+        $qb->innerJoin('stammdaten.kinds', 'kinds')
+            ->innerJoin('kinds.kindFerienblocks', 'kind_ferienblocks')
+            ->innerJoin('kind_ferienblocks.ferienblock', 'ferienblock')
             ->andWhere('ferienblock.organisation = :org')
             ->andWhere('stammdaten.fin = true')
             ->setParameter('org', $organisation);
-         $query = $qb->getQuery();
+        $query = $qb->getQuery();
         $stammdaten = $query->getResult();
         $titel = $translator->trans('Alle Anmeldungen');
 
@@ -293,15 +335,14 @@ class FerienManagementController extends AbstractController
     public function storno(Request $request, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid'=>$request->get('parent_id')));
+        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
 
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
-        return $this->redirectToRoute('ferien_storno', array('slug'=>$organisation->getStadt()->getSlug(),'parent_id'=>$stammdaten->getUid()));
+        return $this->redirectToRoute('ferien_storno', array('slug' => $organisation->getStadt()->getSlug(), 'parent_id' => $stammdaten->getUid()));
     }
-
 
 
     /**
@@ -359,12 +400,12 @@ class FerienManagementController extends AbstractController
         }
         $qb = $this->getDoctrine()->getRepository('App:Kind')->createQueryBuilder('kind')
             ->innerJoin('kind.kindFerienblocks', 'kind_ferienblocks')
-            ->innerJoin('kind_ferienblocks.ferienblock','ferienblock')
+            ->innerJoin('kind_ferienblocks.ferienblock', 'ferienblock')
             ->andWhere('ferienblock.organisation = :org')
             ->andWhere('kind.eltern = :stammdaten')
-            ->setParameter('org',$organisation)
-            ->setParameter('stammdaten',$stammdaten);
-        $query= $qb->getQuery();
+            ->setParameter('org', $organisation)
+            ->setParameter('stammdaten', $stammdaten);
+        $query = $qb->getQuery();
         $kinds = $query->getResult();
         $titel = $translator->trans('Details');
 
@@ -372,7 +413,7 @@ class FerienManagementController extends AbstractController
             'org' => $organisation,
             'stammdaten' => $stammdaten,
             'titel' => $titel,
-            'kinds'=>$kinds,
+            'kinds' => $kinds,
         ]);
     }
 
@@ -380,11 +421,11 @@ class FerienManagementController extends AbstractController
     /**
      * @Route("/org_ferien_admin/edit", name="ferien_admin_edit",methods={"GET","POST"})
      */
-    public function ferienOrgEdit(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
+    public function ferienOrgEdit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
 
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        if($organisation->getStadt() != $this->getUser()->getStadt() && $this->getUser()->getOrganisation()!= $organisation){
+        if ($organisation->getStadt() != $this->getUser()->getStadt() && $this->getUser()->getOrganisation() != $organisation) {
             throw new \Exception('Wrong City');
         }
 
@@ -394,17 +435,17 @@ class FerienManagementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $organisation = $form->getData();
             $errors = $validator->validate($organisation);
-            if(count($errors)== 0) {
+            if (count($errors) == 0) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($organisation);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('ferien_admin_edit',array('snack'=>$text,'org_id'=>$organisation->getId()));
+                return $this->redirectToRoute('ferien_admin_edit', array('snack' => $text, 'org_id' => $organisation->getId()));
             }
 
         }
         $title = $translator->trans('Ferieneinstellungen ändern');
-        return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
+        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
 
     }
 
