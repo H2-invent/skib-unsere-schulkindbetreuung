@@ -131,6 +131,21 @@ class Ferienblock
      */
     private $customQuestion = [];
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $voucher = [];
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $voucherPrice = [];
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $amountVoucher;
+
 
     public function __construct()
     {
@@ -496,6 +511,42 @@ class Ferienblock
     public function setCustomQuestion(?array $customQuestion): self
     {
         $this->customQuestion = $customQuestion;
+
+        return $this;
+    }
+
+    public function getVoucher(): ?array
+    {
+        return $this->voucher;
+    }
+
+    public function setVoucher(?array $voucher): self
+    {
+        $this->voucher = $voucher;
+
+        return $this;
+    }
+
+    public function getVoucherPrice(): ?array
+    {
+        return $this->voucherPrice;
+    }
+
+    public function setVoucherPrice(?array $voucherPrice): self
+    {
+        $this->voucherPrice = $voucherPrice;
+
+        return $this;
+    }
+
+    public function getAmountVoucher(): ?int
+    {
+        return $this->amountVoucher;
+    }
+
+    public function setAmountVoucher(?int $amountVoucher): self
+    {
+        $this->amountVoucher = $amountVoucher;
 
         return $this;
     }

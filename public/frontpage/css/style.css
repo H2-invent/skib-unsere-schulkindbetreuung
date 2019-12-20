@@ -107,7 +107,7 @@ label.required:after {
   url('../../fonts/nunito/nunito-v12-latin-700.svg#Nunito') format('svg'); /* Legacy iOS */
 }
 
-/* TypeWriter Black */
+/* typewriter Black */
 @font-face {
   font-family: 'TypeWritersSubstitute';
   font-weight: normal;
@@ -115,7 +115,7 @@ label.required:after {
   src: url('../../fonts/typewriter/TypeWritersSubstitute-Black.ttf') format('truetype');
 }
 
-/* TypeWriter-Oblique */
+/* typewriter-Oblique */
 @font-face {
   font-family: 'TypeWritersSubstitute';
   font-weight: normal;
