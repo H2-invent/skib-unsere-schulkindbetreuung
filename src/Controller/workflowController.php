@@ -121,13 +121,20 @@ class workflowController extends AbstractController
     /**
      * @Route("/{slug}/{org_id}/datenschutz",name="workflow_datenschutz",methods={"GET"})
      */
-    public function datenschutzAction(Request $request, TranslatorInterface $translator)
+    public function datenschutzAction($slug, $org_id, Request $request, TranslatorInterface $translator)
     {
-
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $org_datenschutz = $organisation->translate()->getDatenschutz();
-        return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $organisation,'stadt' => $organisation->getStadt(),  'redirect' => $request->get('redirect')));
+        if ($org_id == 'city'){
+            $organisation = $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' =>$slug));
+            $org_datenschutz = $organisation->translate()->getDatenschutz();
+            return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $organisation, 'org_id' => $org_id,'stadt' => $organisation,  'redirect' => $request->get('redirect')));
+        } else {
+            $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+            $org_datenschutz = $organisation->translate()->getDatenschutz();
+            $stadt = $organisation->getStadt();
+            return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $organisation, 'org_id' => $org_id, 'stadt' => $stadt,  'redirect' => $request->get('redirect')));
+        }
     }
+
 
     /**
      * @Route("/{slug}/{org_id}/datenschutz/pdf",name="workflow_datenschutz_pdf",methods={"GET"})

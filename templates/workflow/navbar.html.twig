@@ -20,6 +20,19 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ path('welcome_landing') }}">{% trans %}Home{% endtrans %}</a>
                 </li>
+                {% if app.request.attributes.get("_route") != 'welcome_landing' %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {{ stadt.name }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ path('workflow_agb',{'slug':stadt.slug}) }}">{% trans %}Vertragsbedingungen{% endtrans %}</a>
+                        <a class="dropdown-item" href="{{ path('workflow_datenschutz',{'slug':stadt.slug,'org_id':'city'}) }}">{% trans %}Datenschutzhinweis{% endtrans %}</a>
+                    </div>
+
+                </li>
+                {% endif %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
