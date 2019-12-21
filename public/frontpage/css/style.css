@@ -74,8 +74,8 @@ label.required:after {
 }
 
 .anchor {
-  padding-top: 30px;
-  margin-top: -50px;
+  padding-top: 60px;
+  margin-top: -60px;
 }
 
 
@@ -135,4 +135,46 @@ h2 {
   font-style: normal;
 }
 
+.btn-primary {
+  background-color: #0057B0 !important;
+  border-radius: 500px;
+  }
+  .btn-primary:hover {
+    background-color: #005fe1 !important;
+  }
+
+.btn-secondary {
+  background-color: #E3001B !important;
+  border-radius: 500px;
+}
+.btn-secondary:hover {
+  background-color: #ff002a !important;
+}
+
+.btn-outline-primary {
+  border-color: #0057B0 !important;
+  color: #0057B0 !important;
+  border-radius: 500px;
+}
+  .btn-outline-primary:hover {
+    border-color: #005fe1 !important;
+    color: #005fe1 !important;
+  }
+
+.btn-outline-secondary {
+  border-color: #E3001B !important;
+  color: #E3001B !important;
+  border-radius: 500px;
+}
+.btn-outline-secondary:hover {
+  border-color: #ff002a !important;
+  color: #ff002a !important;
+}
+
+a {
+  color: #0057B0;
+}
+a:hover {
+  color: #005fe1;
+}
 
