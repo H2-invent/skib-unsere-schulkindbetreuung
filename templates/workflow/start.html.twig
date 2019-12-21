@@ -218,12 +218,12 @@
                                     </h4>
                                     {% if stadt.stadtHomepage is not null %}
                                         <a href="{{ stadt.stadtHomepage }}"
-                                           target="_blank"><i
+                                           target="_blank" rel="noopener noreferrer"><i
                                                     class="fas fa-external-link-alt"></i> {% trans %}Webseite{% endtrans %}
                                         </a><br/>
                                     {% endif %}
                                     <a href="{{ path('workflow_agb',{'slug':stadt.slug}) }}"
-                                       target="_blank">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der Stadt %stadt%{% endtrans %}</a><br/>
+                                       target="_blank" rel="noopener noreferrer">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der Stadt %stadt%{% endtrans %}</a><br/>
                                 </div>
                             </div>
 
@@ -243,7 +243,7 @@
                                                         href="mailto:{{ o.email }}">{{ o.email }}</a><br/>
                                                 {% if o.orgHomepage is not null %}
                                                     <a href="{{ o.orgHomepage }}"
-                                                       target="_blank"><i
+                                                       target="_blank" rel="noopener noreferrer"><i
                                                                 class="fas fa-external-link-alt"></i> {% trans %}Webseite{% endtrans %}
                                                     </a><br/>
                                                 {% endif %}
