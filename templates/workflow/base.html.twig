@@ -1,28 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    {% if stadt is defined and stadt is not null %}
-        <meta name="theme-color" content="{{ stadt.hauptfarbe }}">
-    {% endif %}
-    <title>{% trans %}Unsere Schulkindbetreuung{% endtrans %}</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <!-- Bootstrap core CSS -->
-    <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="{{ asset('frontpage/css/mdb.min.css') }}" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
-    <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('frontpage/css/snackbar.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    {% include 'workflow/inlineCSS.html.twig' with {'height':'14rem'} %}
-
+    {% include 'workflow/_head.html.twig' with {'stadt':null} %}
+    {% include 'workflow/inlineCSS.html.twig' with {'height':'70%'} %}
 </head>
 
 <body>

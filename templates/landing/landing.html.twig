@@ -1,28 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="{{ app.request.locale }}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Unsere Schulkindbetreuung</title>
-    <!-- Font Awesome -->
-    <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <!-- Bootstrap core CSS -->
-    <link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="{{ asset('frontpage/css/mdb.min.css') }}" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
-
-    <link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
-    <link href="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.css" rel="stylesheet">
-
-
+    {% include 'workflow/_head.html.twig' with {'stadt':null} %}
     {% include 'workflow/inlineCSS.html.twig' with {'height':'100%','stadt':null} %}
-
 </head>
-
 <body>
 <!-- Navbar -->
 {% include 'workflow/navbar.html.twig' with {'stadt':null} %}
@@ -136,60 +117,7 @@
 </main>
 
 
-<!-- Footer -->
-<footer class="text-muted page-footer font-small py-1" {% if fix is not defined %}style="margin-top: 30px {% endif %}">
-
-    <div class="container align-content-center">
-        <div class="container-fluid text-center text-md-left ">
-
-            <div class="row">
-
-                <hr class="clearfix w-100 d-md-none d-none">
-
-                <div class="col-lg-3 col-md-4 mb-md-0">
-                    <ul class="list-unstyled">
-                        <div class="font-weight-bold d-none d-md-block">
-                            Anmeldeportal
-                        </div>
-                        <li>
-                            <a href={{ path('impressum') }}>{% trans %}Impressum{% endtrans %}</a>
-                        </li>
-                        <li>
-                            <a href={{ path('datenschutz') }}>{% trans %}Datenschutz{% endtrans %}</a>
-                        </li>
-                        <li>
-                            <a href={{ path('nutzungsbedingungen') }}>{% trans %}Nutzungsbedingungen{% endtrans %}</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-4 mb-md-0 d-none d-md-block">
-                    <ul class="list-unstyled">
-                        <div class="font-weight-bold">
-                            Unternehmen
-                        </div>
-                        <li>
-                            <a href="https://h2-invent.com/ueber-uns/">Über uns</a>
-                        </li>
-                        <li>
-                            <a href="https://h2-invent.com/services/beratung/">Beratung</a>
-                        </li>
-                        <li>
-                            <a href="https://h2-invent.com/kontakt/">Kontakt</a>
-                        </li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-    <div class="footer-copyright text-center py-2">
-        © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
-    </div>
-</footer>
-<!-- Footer -->
+{% include 'workflow/footer.html.twig' with {'stadt':null} %}
 
 <script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
