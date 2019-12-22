@@ -44,12 +44,14 @@ class FerienAbschluss
     private $printer;
     private $ics;
     private $mailer;
-    public function __construct(MailerService $mailerService, IcsService $icsService, EntityManagerInterface $entityManager, FerienPrintService $ferienPrintService)
+    private $twig;
+    public function __construct(Environment $environment, MailerService $mailerService, IcsService $icsService, EntityManagerInterface $entityManager, FerienPrintService $ferienPrintService)
     {
         $this->em = $entityManager;
         $this->printer = $ferienPrintService;
         $this->ics = $icsService;
         $this->mailer = $mailerService;
+        $this->twig = $environment;
     }
 
     public
@@ -125,12 +127,11 @@ class FerienAbschluss
             );
         }
         $attachment[] = array('type' => 'text/calendar', 'filename' => 'Ferienprogramm.ics', 'body' => $this->ics->to_string());
-        dump($attachment);
         $this->mailer->sendEmail('SKIB Ferienprogramm',
             'info@h2-invent.com',
             $adresse->getEmail(),
-            'Tikets zu dem gebuchten Ferienprogramm',
-            '',
+            'Tickets zu dem gebuchten Ferienprogramm',
+            $this->twig->render('email/anmeldebestatigungFerien.html.twig',array('stammdaten'=>$adresse)),
             $attachment);
         return 0;
     }
