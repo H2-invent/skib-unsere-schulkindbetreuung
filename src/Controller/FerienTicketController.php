@@ -19,7 +19,7 @@ class FerienTicketController extends AbstractController
     /**
      * @Route("/ferien/ticket", name="ferien_ticket")
      */
-    public function printAction(TranslatorInterface $translator, TCPDFController $tcpdf, FerienPrintService $print, Request $request, StamdatenFromCookie $stamdatenFromCookie)
+    public function printAction(TranslatorInterface $translator,  FerienPrintService $print, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('id' => $request->get('kind_id')));
@@ -29,6 +29,6 @@ class FerienTicketController extends AbstractController
         $fileName = 'Ticket' . '_' . $kind->getVorname() . '_' . $kind->getNachname() . '.pdf';
 
 
-        return $print->printPdfTicket($kind, $tcpdf, $fileName, $organisation,$ferienblock, 'D');
+        return $print->printPdfTicket($fileName,$ferienblock, 'D');
     }
 }

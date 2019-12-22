@@ -26,23 +26,26 @@ class FerienPrintService
     protected $parameterBag;
     private $fileSystem;
     private $router;
-
-    public function __construct(FilesystemInterface $publicUploadsFilesystem, EngineInterface $templating, ParameterBagInterface $parameterBag, UrlGeneratorInterface $router)
+    private $tcpdfController;
+    public function __construct(TCPDFController $tcpdf,FilesystemInterface $publicUploadsFilesystem, EngineInterface $templating, ParameterBagInterface $parameterBag, UrlGeneratorInterface $router)
     {
 
         $this->router = $router;
         $this->templating = $templating;
         $this->parameterBag = $parameterBag;
         $this->fileSystem = $publicUploadsFilesystem;
+        $this->tcpdfController = $tcpdf;
     }
 
-    public function printPdfTicket(Kind $kind, TCPDFController $tcpdf, $fileName, Organisation $organisation, KindFerienblock $ferienblock, $type = 'D')
+    public function printPdfTicket( $fileName,  KindFerienblock $ferienblock, $type = 'D')
     {
-        $pdf = $tcpdf->create();
+        $kind = $ferienblock->getKind();
+        $organisation = $ferienblock->getFerienblock()->getOrganisation();
+        $pdf = $this->tcpdfController->create();
         $pdf->setOrganisation($organisation);
         $pdf = $this->preparePDF($pdf,'Ticket','H2 invent','Ticket für Ferienprogram');
 
-            if ($organisation->getImage()) {
+            if ($ferienblock->getFerienblock()->getOrganisation()->getImage()) {
                 $im = $this->fileSystem->read($organisation->getImage());
                 $imdata = base64_encode($im);
                 $imgdata = base64_decode($imdata);

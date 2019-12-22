@@ -306,18 +306,19 @@ class FerienController extends AbstractController
 
         }
         // finish the kind an the stammdaten
-        $ferienAbschluss->abschlussFin($adresse);
+        //$ferienAbschluss->abschlussFin($adresse);
         //tätige transaktionen
-        $summe = $checkoutPaymentService->makePayment($adresse);
+       // $summe = $checkoutPaymentService->makePayment($adresse);
 
-        if ($summe > 0) {
+       // if ($summe > 0) {
             //wenn transaktioninen fehlgeschlagen sind
-            return $this->redirectToRoute('ferien_bezahlung_prepare', array('slug' => $stadt->getSlug()));
-        }
+       //     return $this->redirectToRoute('ferien_bezahlung_prepare', array('slug' => $stadt->getSlug()));
+       // }
         //setze alles auf saved. somit ist alles abgeschlossen
-        $ferienAbschluss->abschlussSave($adresse);
+       // $ferienAbschluss->abschlussSave($adresse);
+        $ferienAbschluss->abschlussSendEmail($adresse);
         $res = $this->render('ferien/abschluss.html.twig', array('stadt' => $stadt));
-        $res->headers->clearCookie(self::BEZEICHNERCOOKIE);
+       // $res->headers->clearCookie(self::BEZEICHNERCOOKIE);
         return $res;
     }
 
