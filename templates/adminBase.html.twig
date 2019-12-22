@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Schulkindbetreuung SKB2020</title>
+    <title>Verwaltung</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -17,7 +17,6 @@
     <!-- Fontastic Custom icon font-->
     <link rel="stylesheet" href="{{ asset('css/fontastic.css') }}">
     <!-- Google fonts - Roboto -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- jQuery Circle-->
     <link rel="stylesheet" href="{{ asset('css/grasp_mobile_progress_circle-1.0.0.min.css') }}">
@@ -27,6 +26,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.default.css') }}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
@@ -63,7 +63,7 @@
                 <h2 class="h5">{{ app.user.username }}</h2><span>{{ app.user.vorname }} {{ app.user.nachname }}</span>
             </div>
             <!-- Small Brand information, appears on minimized sidebar-->
-            <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center">
+            <div class="sidenav-header-logo"><a href="{{ path('dashboard') }}" class="brand-small text-center">
                     <strong>{{ app.user.vorname|first|upper }} {{ app.user.nachname|first|upper }}</strong></a></div>
         </div>
         <!-- Sidebar Navigation Menus-->
@@ -252,8 +252,10 @@
                     <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i
                                     class="icon-bars"> </i></a><a href="{{ path('dashboard') }}" class="navbar-brand">
                             <div class="brand-text d-none d-md-inline-block">
-                                <span>unsere Schulkindbetreuung </span><strong
-                                        class="text-primary"> SKB</strong></div>
+                                <strong class="text-primary">
+                                    unsere-schulkindbetreuung
+                                </strong>
+                            </div>
                         </a></div>
                     <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                         <!-- Notifications dropdown-->
