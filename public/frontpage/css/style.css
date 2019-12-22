@@ -1,3 +1,17 @@
+:root {
+  --main-color: rgb(0,88,176);
+  --main-color-hover: rgb(0,158,251);
+  --main-color-activ: rgb(179,230,255);
+  --sec-color: rgb(245,26,32);
+  --sec-color-hover: rgb(201,2,0);
+  --sec-color-activ: rgb(244,105,104);
+  --skib-contrast-base: rgb(85,83,80);
+  --skib-contrast-dark: rgb(23,21,18);
+  --skib-contrast-light: rgb(144,142,140);
+  --skib-contrast-extra-light: rgb(232,228,226);
+}
+
+
 /* Half Page Carousel itself*/
 .carousel {
   height: 50%; }
@@ -14,19 +28,19 @@
 
 /* Navbar animation */
 .navbar {
-  background-color: rgba(0, 0, 0, 0.3); }
+  background-color: rgba(144,142,140, 0.3); }
 
 .top-nav-collapse {
-  background-color: #1C2331; }
+  background-color: var(--skib-contrast-base); }
 
 /* Adding color to the Navbar on mobile */
 @media only screen and (max-width: 768px) {
   .navbar {
-    background-color: #1C2331; } }
+    background-color: var(--skib-contrast-base) } }
 
 /* Footer color for sake of consistency with Navbar */
 .page-footer {
-  background-color: #1C2331; }
+  background-color: var(--skib-contrast-dark); }
 label.required:after {
   content: "* ";
 }
@@ -136,19 +150,27 @@ h2 {
 }
 
 .btn-primary {
-  background-color: #0057B0 !important;
+  background-color: var(--main-color) !important;
+  border-color: var(--main-color) !important;
   border-radius: 500px;
+  color: #fff !important;
   }
   .btn-primary:hover {
-    background-color: #005fe1 !important;
+    background-color: var(--main-color-hover);
   }
 
+.btn-primary:active {
+  border-color: var(--main-color-activ) !important;
+  box-shadow: var(--main-color-activ) !important;
+}
+
 .btn-secondary {
-  background-color: #E3001B !important;
+  background-color: var(--sec-color) !important;
   border-radius: 500px;
+  color: #fff !important;
 }
 .btn-secondary:hover {
-  background-color: #ff002a !important;
+  background-color: var(--sec-color-hover) !important;
 }
 
 .btn-outline-primary {
@@ -157,24 +179,52 @@ h2 {
   border-radius: 500px;
 }
   .btn-outline-primary:hover {
-    border-color: #005fe1 !important;
-    color: #005fe1 !important;
+    border-color: var(--main-color-hover) !important;
+    color: var(--main-color-hover) !important;
   }
 
 .btn-outline-secondary {
-  border-color: #E3001B !important;
-  color: #E3001B !important;
+  border-color: var(--sec-color) !important;
+  color: var(--sec-color) !important;
   border-radius: 500px;
 }
 .btn-outline-secondary:hover {
-  border-color: #ff002a !important;
-  color: #ff002a !important;
+  border-color: var(--sec-color-hover) !important;
+  color: var(--sec-color-hover) !important;
 }
 
 a {
-  color: #0057B0;
+  color: var(--main-color);
 }
 a:hover {
-  color: #005fe1;
+  color: var(--main-color-hover);
 }
 
+
+
+/* Define Custom Color in Backend */
+.bmd-btn-fab.btn-primary.custom-file-control:before, .btn-group-raised .btn-primary.custom-file-control:before, .btn-group-raised .btn.btn-primary, .btn-raised.btn-primary.custom-file-control:before, .btn.bmd-btn-fab.btn-primary, .btn.btn-raised.btn-primary {
+  color: #fff;
+  background-color: var(--main-color) !important;
+  border-color: var(--main-color) !important;
+}
+
+.mCSB_dragger_bar {
+  background-color: var(--main-color) !important;
+}
+
+.count-title i {
+  color: var(--main-color) !important;
+}
+
+.text-primary {
+  color: var(--sec-color) !important;
+}
+
+nav.navbar a.menu-btn:hover {
+  background: var(--sec-color) !important;
+}
+
+.side-navbar li a:focus, .side-navbar li a:hover {
+  background: var(--skib-contrast-base) !important;
+}
