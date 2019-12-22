@@ -105,7 +105,7 @@ class FerienAbschluss
         $attachment = array();
         foreach ($programm as $data) {
             //pdf mit dem Tiket
-            $ferienblock =  $data->getFerienblock();
+            $ferienblock = $data->getFerienblock();
             $kind =  $data->getKind();
             $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $ferienblock->translate()->getTitel();
             $pdf = $this->printer->printPdfTicket(
@@ -122,7 +122,7 @@ class FerienAbschluss
                     'dtend' => $startDate . 'T' . $ferienblock->getEndTime()->format('His'),
                     'summary' => $kind->getVorname().' '.$kind->getNachname().' '.$ferienblock->translate()->getTitel(),
                     'url' => '',
-                    'rrule' => 'FREQ=WEEKLY;UNTIL=' . $ferienblock->getEndTime()->format('Ymd') . 'T000000'
+                    'rrule' => 'FREQ=DAILY;UNTIL=' . $ferienblock->getEndDate()->format('Ymd') . 'T235900'
                 )
             );
         }

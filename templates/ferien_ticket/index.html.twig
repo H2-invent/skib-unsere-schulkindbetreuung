@@ -29,7 +29,7 @@
             <b style="font-size: 15px">{% if ferienblock.ferienblock.startDate != ferienblock.ferienblock.endDate %}{{ ferienblock.ferienblock.startDate|date('d.m.') }} - {{ ferienblock.ferienblock.endDate|date('d.m.Y') }}<br>
                 {% else %}{{ ferienblock.ferienblock.startDate|date('d.m.Y') }}<br>
                 {% endif %}
-                {{ ferienblock.ferienblock.startTime|date('g:i') }} - {{ ferienblock.ferienblock.endTime|date('g:i') }}</b>
+                {{ ferienblock.ferienblock.startTime|date('H:i') }} - {{ ferienblock.ferienblock.endTime|date('H:i') }}</b>
         </td>
         <td rowspan="4" style="text-align: center">
             QR Code für Checkin
