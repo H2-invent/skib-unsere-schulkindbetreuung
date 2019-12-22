@@ -41,8 +41,7 @@
                     </ul>
                 </div>
 
-                {% if app.request.attributes.get("_controller") != 'Landing' %}
-                    {% if stadt is defined and stadt is not null %}
+                {% if stadt is defined and stadt is not null %}
                     <div class="col-lg-6 col-md-8 mb-md-0 text-right">
                         <b class="d-none d-md-block">
                             {% trans with {"%name%":stadt.name} %}Im Auftrag der Stadt %name%{% endtrans %}
@@ -54,7 +53,6 @@
                                     <img src="{{ stadt.logoUrl }}" alt="Unsere SKiB" style="width: 210px">
                                 </a>
                             </div>
-                        {% endif %}
                         {% endif %}
                     </div>
                 {% endif %}

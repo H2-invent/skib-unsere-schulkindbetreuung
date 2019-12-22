@@ -2,9 +2,9 @@
     <div class="container">
         <!-- Brand -->
         {% if stadt is defined and stadt is not null %}
-                <a class="navbar-brand" href="{{ path('workflow_start', {'slug': stadt.slug}) }}">
-                    <img src="{{ asset('images/logo-breit-mittig.png') }}" alt="Unsere SKiB" style="height: 70px">
-                </a>
+            <a class="navbar-brand" href="{{ path('workflow_start', {'slug': stadt.slug}) }}">
+                <img src="{{ asset('images/logo-breit-mittig.png') }}" alt="Unsere SKiB" style="height: 70px">
+            </a>
         {% else %}
             <a class="navbar-brand" href="{{ path('welcome_landing') }}">
                 <img src="{{ asset('images/logo-breit-mittig.png') }}" alt="Unsere SKiB" style="height: 70px">
@@ -20,15 +20,37 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ path('welcome_landing') }}">{% trans %}Home{% endtrans %}</a>
                 </li>
+                {% if stadt is defined and stadt is not null %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            {{ stadt.name }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item"
+                               href="{{ path('workflow_agb',{'slug':stadt.slug}) }}">{% trans %}Vertragsbedingungen{% endtrans %}</a>
+                            <a class="dropdown-item"
+                               href="{{ path('workflow_datenschutz',{'slug':stadt.slug,'org_id':'city'}) }}">{% trans %}Datenschutzhinweis{% endtrans %}</a>
+                        </div>
+                    </li>
+                {% endif %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         {% trans %}Sprachen{% endtrans %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params') | merge({'_locale':'de'})) }}"><img src="{{ asset('images/flags/16/DE.png') }}" alt="Deutsch" class="mr-2"><span>Deutsch</span></a>
-                        <a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params') | merge({'_locale':'en'})) }}"><img src="{{ asset('images/flags/16/GB.png') }}" alt="English" class="mr-2"><span>English</span></a>
-                        <a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params') | merge({'_locale':'fr'})) }}"><img src="{{ asset('images/flags/16/FR.png') }}" alt="Francais" class="mr-2"><span>Francais</span></a>
+                        <a class="dropdown-item"
+                           href="{{ path(app.request.get('_route'), app.request.get('_route_params') | merge({'_locale':'de'})) }}"><img
+                                    src="{{ asset('images/flags/16/DE.png') }}" alt="Deutsch"
+                                    class="mr-2"><span>Deutsch</span></a>
+                        <a class="dropdown-item"
+                           href="{{ path(app.request.get('_route'), app.request.get('_route_params') | merge({'_locale':'en'})) }}"><img
+                                    src="{{ asset('images/flags/16/GB.png') }}" alt="English"
+                                    class="mr-2"><span>English</span></a>
+                        <a class="dropdown-item"
+                           href="{{ path(app.request.get('_route'), app.request.get('_route_params') | merge({'_locale':'fr'})) }}"><img
+                                    src="{{ asset('images/flags/16/FR.png') }}" alt="Francais" class="mr-2"><span>Francais</span></a>
                     </div>
                 </li>
                 <li class="nav-item">

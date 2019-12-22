@@ -23,6 +23,11 @@ class StadtTranslation
      */
     private $agb;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $datenschutz;
+
 
 
     public function getInfoText(): ?string
@@ -45,6 +50,18 @@ class StadtTranslation
     public function setAgb(?string $agb): self
     {
         $this->agb = $agb;
+
+        return $this;
+    }
+
+    public function getDatenschutz(): ?string
+    {
+        return $this->datenschutz;
+    }
+
+    public function setDatenschutz(?string $datenschutz): self
+    {
+        $this->datenschutz = $datenschutz;
 
         return $this;
     }

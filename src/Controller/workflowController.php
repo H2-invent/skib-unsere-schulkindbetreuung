@@ -16,6 +16,7 @@ use App\Form\Type\StadtType;
 use App\Service\ConfirmEmailService;
 use App\Service\MailerService;
 use App\Service\PrintAGBService;
+use App\Service\SchuljahrService;
 use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
 use Beelab\Recaptcha2Bundle\Validator\Constraints\Recaptcha2;
 use phpDocumentor\Reflection\Types\This;
@@ -38,13 +39,14 @@ class workflowController extends AbstractController
     /**
      * @Route("/{slug}/home",name="workflow_start",methods={"GET"})
      */
-    public function welcomeAction(Request $request, $slug)
+    public function welcomeAction(Request $request, $slug, SchuljahrService $schuljahrService)
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
 
         if ($stadt == null){
             return $this->redirectToRoute('workflow_city_not_found');
         }
+        $schuljahr = $schuljahrService->getSchuljahr($stadt);
 
         $url = '';
         switch ($stadt->getSlug()) {
@@ -59,7 +61,7 @@ class workflowController extends AbstractController
         // Load all schools from the city into the controller as $schulen
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
 
-        return $this->render('workflow/start.html.twig', array('schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'url' => $url));
+        return $this->render('workflow/start.html.twig', array('schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'url' => $url, 'schuljahr'=>$schuljahr));
     }
 
 
@@ -121,13 +123,20 @@ class workflowController extends AbstractController
     /**
      * @Route("/{slug}/{org_id}/datenschutz",name="workflow_datenschutz",methods={"GET"})
      */
-    public function datenschutzAction(Request $request, TranslatorInterface $translator)
+    public function datenschutzAction($slug, $org_id, Request $request, TranslatorInterface $translator)
     {
-
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $org_datenschutz = $organisation->translate()->getDatenschutz();
-        return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $organisation,'stadt' => $organisation->getStadt(),  'redirect' => $request->get('redirect')));
+        if ($org_id == 'city'){
+            $organisation = $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' =>$slug));
+            $org_datenschutz = $organisation->translate()->getDatenschutz();
+            return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $organisation, 'org_id' => $org_id,'stadt' => $organisation,  'redirect' => $request->get('redirect')));
+        } else {
+            $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+            $org_datenschutz = $organisation->translate()->getDatenschutz();
+            $stadt = $organisation->getStadt();
+            return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $organisation, 'org_id' => $org_id, 'stadt' => $stadt,  'redirect' => $request->get('redirect')));
+        }
     }
+
 
     /**
      * @Route("/{slug}/{org_id}/datenschutz/pdf",name="workflow_datenschutz_pdf",methods={"GET"})
