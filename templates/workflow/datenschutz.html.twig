@@ -2,17 +2,20 @@
 {% block header %}
     <div class="col-md-12 mb-6 white-text text-centerm text-md-left">
 
-        <h1 class="hauptfarbe font-weight-bold">{% trans with {'%organisation%':org.name} %}Datenschutzhinweis der Organisation %organisation%{% endtrans %}</h1>
+        <h1 class="hauptfarbe font-weight-bold">{% trans with {'%organisation%':org.name} %}Datenschutzhinweis %organisation%{% endtrans %}</h1>
         <hr class="hr-light ">
-
 
     </div>
 {% endblock %}
 {% block content %}
     <div>
-        <a href="{{ path('workflow_datenschutz_pdf',{'org_id':org.id,'slug':stadt.slug}) }}"><i class="fa fa-download"></i> </a>
+        {% if org_id != 0 %}
+        <a href="{{ path('workflow_datenschutz_pdf',{'org_id':org_id,'slug':stadt.slug}) }}"><i class="fa fa-download"></i> </a>
+        {% endif %}
         <p>
+            {% if datenschutz is not empty %}
             {{ datenschutz|markdown_to_html}}
+            {% endif %}
         </p>
     </div>
 {% endblock %}
