@@ -24,16 +24,14 @@ class FerienPrintService
 
     private $templating;
     protected $parameterBag;
-    private $fileSystem;
     private $router;
 
-    public function __construct(FilesystemInterface $publicUploadsFilesystem, EngineInterface $templating, ParameterBagInterface $parameterBag, UrlGeneratorInterface $router)
+    public function __construct(EngineInterface $templating, ParameterBagInterface $parameterBag, UrlGeneratorInterface $router)
     {
 
         $this->router = $router;
         $this->templating = $templating;
         $this->parameterBag = $parameterBag;
-        $this->fileSystem = $publicUploadsFilesystem;
     }
 
     public function printPdfTicket(Kind $kind, TCPDFController $tcpdf, $fileName, Organisation $organisation, KindFerienblock $ferienblock, $type = 'D')
