@@ -24,7 +24,6 @@ class FerienTicketController extends AbstractController
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('id' => $request->get('kind_id')));
         $ferienblock = $this->getDoctrine()->getRepository(KindFerienblock::class)->findOneBy(array('id' => $request->get('ferien_id')));
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->findOneBy(array('id' => $request->get('org_id')));
 
         $fileName = 'Ticket' . '_' . $kind->getVorname() . '_' . $kind->getNachname() . '.pdf';
 

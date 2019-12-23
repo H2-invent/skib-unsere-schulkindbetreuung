@@ -453,7 +453,7 @@ class Kind
         $blocks = $kind->getZeitblocks()->toArray();
         $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
         foreach ($blocks as $data){
-            if($data->getGanztag() !== 0 && $data->getDeleted() == false){
+            if($data->getGanztag() !== 0 && $data->getDeleted() === false){
                 $summe += $data->getPreise()[$eltern->getEinkommen()];
             }
         }
@@ -462,7 +462,7 @@ class Kind
     private function getBetragforKindMittagessen(Kind $kind,Stammdaten $eltern){
         $summe = 0;
         foreach ($kind->getZeitblocks() as $data){
-            if($data->getGanztag() === 0 && $data->getDeleted() == false){
+            if($data->getGanztag() === 0 && $data->getDeleted() === false){
                 $summe += $data->getPreise()[$eltern->getEinkommen()];
             }
         }

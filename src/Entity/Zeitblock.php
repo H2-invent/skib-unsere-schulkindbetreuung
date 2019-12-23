@@ -153,7 +153,7 @@ class Zeitblock
         $kind= array();
         foreach($this->kind->toArray() as $data) {
 
-            if($data->getFin() == true) {
+            if($data->getFin() === true) {
                 $kind[] = $data;
             }
         }
@@ -166,7 +166,7 @@ class Zeitblock
         $kind= array();
         foreach($this->kinderBeworben->toArray() as $data) {
 
-            if($data->getFin() == true) {
+            if($data->getFin() === true) {
                 $kind[] = $data;
             }
         }

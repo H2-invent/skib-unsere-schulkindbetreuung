@@ -65,7 +65,7 @@ class FerienCheckoutController extends AbstractController
             $errors = $validator->validate($payment);
             if (sizeof($errors) == 0) {
                 $checkoutSepaService->generateSepaPayment($adresse, $paymentSepa, $request->getClientIp(), $payment);
-                if ($checkoutPaymentService->getNextPayment($adresse) == null) {
+                if ($checkoutPaymentService->getNextPayment($adresse) === null) {
                     return $this->redirectToRoute('ferien_zusammenfassung', array('slug' => $stadt->getSlug()));
                 } else {
                     return $this->redirectToRoute('ferien_bezahlung', array('slug' => $stadt->getSlug(), 'snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
