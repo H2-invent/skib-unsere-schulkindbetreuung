@@ -31,6 +31,9 @@
                                href="{{ path('workflow_agb',{'slug':stadt.slug}) }}">{% trans %}Vertragsbedingungen{% endtrans %}</a>
                             <a class="dropdown-item"
                                href="{{ path('workflow_datenschutz',{'slug':stadt.slug,'org_id':'city'}) }}">{% trans %}Datenschutzhinweis{% endtrans %}</a>
+                            <a class="dropdown-item"
+                               href="{{ path('workflow_imprint',{'slug':stadt.slug}) }}">{% trans %}Impressum{% endtrans %}</a>
+
                         </div>
                     </li>
                 {% endif %}
