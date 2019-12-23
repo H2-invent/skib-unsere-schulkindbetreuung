@@ -24,16 +24,14 @@ class FerienPrintService
 
     private $templating;
     protected $parameterBag;
-    private $fileSystem;
     private $router;
 
-    public function __construct(FilesystemInterface $publicUploadsFilesystem, EngineInterface $templating, ParameterBagInterface $parameterBag, UrlGeneratorInterface $router)
+    public function __construct(EngineInterface $templating, ParameterBagInterface $parameterBag, UrlGeneratorInterface $router)
     {
 
         $this->router = $router;
         $this->templating = $templating;
         $this->parameterBag = $parameterBag;
-        $this->fileSystem = $publicUploadsFilesystem;
     }
 
     public function printPdfTicket(Kind $kind, TCPDFController $tcpdf, $fileName, Organisation $organisation, KindFerienblock $ferienblock, $type = 'D')
@@ -41,13 +39,6 @@ class FerienPrintService
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
         $pdf = $this->preparePDF($pdf,'Ticket','H2 invent','Ticket für Ferienprogram');
-
-            if ($organisation->getImage()) {
-                $im = $this->fileSystem->read($organisation->getImage());
-                $imdata = base64_encode($im);
-                $imgdata = base64_decode($imdata);
-                $pdf->Image('@' . $imgdata, 140, 20, 50);
-            }
 
         // set style for barcode
         $style = array(
@@ -61,14 +52,14 @@ class FerienPrintService
         );
 
         $code = $this->router->generate('ferien_storno', array('slug' => $organisation->getStadt()->getSlug(),'parent_id'=>$kind->getEltern()->getUid()),UrlGeneratorInterface::ABSOLUTE_PATH);
-        $pdf->write2DBarcode($code, 'QRCODE,Q', 139, 41, 45, 45, $style, 'N');
+        $pdf->write2DBarcode($code, 'QRCODE,Q', 139, 39, 45, 45, $style, 'N');
 
         $kindData = $this->templating->render('ferien_ticket/index.html.twig', array('kind' => $kind, 'organisation'=>$organisation, 'ferienblock'=>$ferienblock));
         $pdf->writeHTMLCell(
             0,
             0,
             20,
-            25,
+            15,
             $kindData,
             0,
             1,
