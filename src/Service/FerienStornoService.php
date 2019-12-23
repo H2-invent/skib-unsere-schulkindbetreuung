@@ -65,9 +65,12 @@ class FerienStornoService
         $blocks = $query->getResult();
         $org = array();
         foreach ($blocks as $data) {
+            $data->setBezahlt(false);
+            $this->em->persist($data);
             $org[$data->getFerienblock()->getOrganisation()->getId()][]=$data;
             $this->logger->info('storno Stammdaten '.$stammdaten->getId().' : '.$data->getId());
         }
+        $this->em->flush();
         foreach ($org as $data){
             $organisation = $data[0]->getFerienblock()->getOrganisation();
             $payment = $this->em->getRepository(Payment::class)->findOneBy(array('stammdaten'=>$stammdaten,'organisation'=>$organisation));

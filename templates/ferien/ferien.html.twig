@@ -148,7 +148,7 @@
 
                 }
             })
-        })
+        });
 
         $("#loadContentModal").on('hide.bs.modal', function () {
             $('#schulenShow').load('{{ path('ferien_auswahl', {'slug':stadt.slug}) }} #schulenShow');

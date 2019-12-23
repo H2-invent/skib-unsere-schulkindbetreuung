@@ -2,7 +2,7 @@
     <p>
         {{ block.namePreise[loop.index-1] }}: {{ p|number_format(2,',','.') }} €
         {% if block.startVerkauf < today and block.endVerkauf > today %}
-
+        {% if  block.maxAnzahl is null or block.maxAnzahl - block.KindFerienblocksGebucht|length >0 %}
             <button href="{{ path('ferien_kinder_block_toggle', {'slug':stadt.slug,'kind_id':kind.id, 'block_id':block.id, 'preis_id':loop.index-1}) }}"
                     class="btn chooseBlock
     {% if block in kind.ferienblocks %}
@@ -44,6 +44,7 @@
 
 
             </button>
+            {% endif %}
         {% endif %}
     </p>
 {% endfor %}

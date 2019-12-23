@@ -766,7 +766,7 @@ class Kind
         return new ArrayCollection($res);
     }
     /**
-     * @return Collection|KindFerienblock[]
+     * @return Integer|Preis
      */
     public function getFerienblockPreis(): float
     {
