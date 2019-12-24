@@ -76,7 +76,7 @@ class LoerrachWorkflowController extends AbstractController
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'Loerrach'));
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
 
-        if ($schuljahr == null) {
+        if ($schuljahr === null) {
             return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
 
@@ -86,7 +86,7 @@ class LoerrachWorkflowController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
         //Add SecCode into if to create a SecCode the first time to be not "null"
-        if ($adresse->getUid() == null) {
+        if ($adresse->getUid() === null) {
             $adresse->setUid(md5(uniqid()))
                 ->setAngemeldet(false);
             $adresse->setCreatedAt(new \DateTime());
@@ -124,7 +124,7 @@ class LoerrachWorkflowController extends AbstractController
         // Load all schools from the city into the controller as $schulen
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
-        if ($schuljahr == null) {
+        if ($schuljahr === null) {
             return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
 
@@ -347,7 +347,7 @@ class LoerrachWorkflowController extends AbstractController
 
         //Check for Anmeldung open
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
-        if ($schuljahr == null) {
+        if ($schuljahr === null) {
             return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
 
@@ -397,7 +397,7 @@ class LoerrachWorkflowController extends AbstractController
 
         //Check for Anmeldung open
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
-        if ($schuljahr == null) {
+        if ($schuljahr === null) {
             return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
 
@@ -501,7 +501,7 @@ class LoerrachWorkflowController extends AbstractController
         $em->persist($adresse);
         $em->flush();
         $response = $this->redirectToRoute('loerrach_workflow_adresse');
-        //$response = $this->redirectToRoute('loerrach_workflow_schulen');
+
         $response->headers->setCookie($cookie);
         return $response;
     }

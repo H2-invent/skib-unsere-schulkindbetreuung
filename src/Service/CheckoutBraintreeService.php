@@ -55,7 +55,7 @@ class CheckoutBraintreeService
 
     public function makeTransaction(PaymentBraintree $paymentBraintree)
     {
-        if ($paymentBraintree->getSuccess() != true) {
+        if ($paymentBraintree->getSuccess() !== true) {
             $gateway = new Gateway([
                 'environment' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreeSandbox()?'sandbox':'production',
                 'merchantId' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreeMerchantId(),

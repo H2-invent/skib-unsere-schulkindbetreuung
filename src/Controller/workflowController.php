@@ -43,7 +43,7 @@ class workflowController extends AbstractController
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
 
-        if ($stadt == null){
+        if ($stadt === null){
             return $this->redirectToRoute('workflow_city_not_found');
         }
         $schuljahr = $schuljahrService->getSchuljahr($stadt);

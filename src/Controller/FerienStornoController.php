@@ -58,7 +58,7 @@ class FerienStornoController extends AbstractController
 
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
 
-         $logger->info('Start Storn for '.$stammdaten->getId());
+         $logger->info('Start Storno for '.$stammdaten->getId());
          $ferienStornoService->stornoAbschluss($stammdaten,$request->getClientIp());
         $res = $this->render('ferien/abschluss.html.twig', array('stadt' => $stadt));
 

@@ -200,12 +200,16 @@ class CheckoutPaymentService
         foreach ($payments as $data) {
             if ($data->getSepa()) {
                 $data->setBezahlt($data->getSumme());
+                $this->setKindFerienBlockAsPAyed($data->getOrganisation(),$data->getStammdaten());
             }
 
             if ($data->getBraintree()) {
                 $res = $this->braintree->makeTransaction($data->getBraintree());
                 if ($res === null) {
                     $summe++;
+                }
+                if($data->getBraintree()->getSuccess() === true){
+                    $this->setKindFerienBlockAsPAyed($data->getOrganisation(),$data->getStammdaten());
                 }
             }
             $summe += $data->getSumme() - $data->getBezahlt();
@@ -254,5 +258,21 @@ class CheckoutPaymentService
             $this->braintree->makeRefund($paymentRefund, $payment->getBraintree());
         }
     return $paymentRefund->getGezahlt();
+    }
+    public function setKindFerienBlockAsPAyed(Organisation $organisation, Stammdaten $stammdaten){
+        $qb = $this->em->getRepository(KindFerienblock::class)->createQueryBuilder('kind_ferienblock')
+            ->innerJoin('kind_ferienblock.ferienblock','ferienblock')
+            ->innerJoin('kind_ferienblock.kind','kind')
+            ->andWhere('kind.eltern = :stammdaten')
+            ->andWhere('ferienblock.organisation = :org')
+            ->setParameter('stammdaten',$stammdaten)
+            ->setParameter('org',$organisation);
+        $query = $qb->getQuery();
+        $kindFerienblock = $query->getResult();
+        foreach ($kindFerienblock as $data){
+            $data->setBezahlt(true);
+            $this->em->persist($data);
+        }
+        $this->em->flush();
     }
 }

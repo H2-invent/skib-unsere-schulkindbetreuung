@@ -29,7 +29,11 @@
           method: 'POST',
           data: $form.serialize(),
           success:function (data) {
-              Snackbar.show({text: data.snack});
+              var options = {
+                  content: data.snack, // text of the snackbar
+                  timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+              };
+              $.snackbar(options);
 
               if (data.error == 0) {
                   if (typeof data.next != "undefined"){

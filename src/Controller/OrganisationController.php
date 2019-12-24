@@ -73,13 +73,13 @@ class OrganisationController extends AbstractController
     {
 
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
-        $city = $organisation->getStadt();
+
         if($organisation->getStadt() != $this->getUser()->getStadt() && $this->getUser()->getOrganisation()!= $organisation){
             throw new \Exception('Wrong City');
         }
 
         $form = $this->createForm(OrganisationType::class, $organisation);
-        if($organisation->getStadt()->getFerienprogramm() == false){
+        if($organisation->getStadt()->getFerienprogramm() === false){
             $form->remove('ferienprogramm');
         }
         $form->handleRequest($request);
