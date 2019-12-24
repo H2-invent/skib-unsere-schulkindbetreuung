@@ -15,11 +15,11 @@
 
 
 <div class="view"
-{% if stadt is defined and stadt is not null and stadt.image is not empty %}
+        {% if stadt is defined and stadt is not null and stadt.image is not empty %}
      style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;">
-{% else %}
-    style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
-{% endif %}
+    {% else %}
+        style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+    {% endif %}
     <!-- Mask & flexbox options-->
     <div class="mask rgba-black-light d-flex align-items-end">
         <!-- Content -->
@@ -80,7 +80,7 @@
 <script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
 <script src="{{ asset('js/jquery.bs.gdpr.cookies.js') }}"></script>
 <script>
-{% include 'workflow/_cookiePopup.js.twig' %}
+    {% include 'workflow/_cookiePopup.js.twig' %}
 </script>
 
 <script>
@@ -101,17 +101,8 @@
 </script>
 <script>
 
-    {% if app.request.query.get("snack") is defined and app.request.query.get("snack") is not null %}
-    var options = {
 
-        text: "{{ app.request.query.get("snack") }}", // text of the snackbar
-        duration: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
-        pos: 'bottom-center',
-    };
-    Snackbar.show(options);
-    {% endif %}
-
-    $(document).on('click','.deleteBtn',function (e) {
+    $(document).on('click', '.deleteBtn', function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
         var type = $(this).attr('type');
@@ -126,7 +117,7 @@
                         type: type,
                         success: function (data) {
                             if (data.redirect) {
-                                window.location.href= data.redirect;
+                                window.location.href = data.redirect;
                             }
                         }
                     });
@@ -142,6 +133,17 @@
 </script>
 
 {% block jquery %}{% endblock %}
+<script>
+    {% if app.request.query.get("snack") is defined and app.request.query.get("snack") is not null %}
+   var  optionsSnack = {
+        text: "{{ app.request.query.get("snack") }}", // text of the snackbar
+        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+    };
+    $.snackbar(optionsSnack);
+
+    {% endif %}
+</script>
+
 </body>
 
 </html>

@@ -107,8 +107,8 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_CITY_NEWS') %}
-                <li><a href="{{ path('city_admin_news_anzeige',{'id':app.user.stadt.id}) }}"> <i
-                                class="material-icons">chat</i>{% trans %}Neuigkeiten{% endtrans %}</a></li>
+                    <li><a href="{{ path('city_admin_news_anzeige',{'id':app.user.stadt.id}) }}"> <i
+                                    class="material-icons">chat</i>{% trans %}Neuigkeiten{% endtrans %}</a></li>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_ADMIN') %}
                     <li><a href="{{ path('city_admin_organisation_detail',{'id':app.user.organisation.id}) }}"> <i
@@ -880,9 +880,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script type="text/javascript" src="{{ asset('js/jquery-clockpicker.min.js') }}"></script>
-<script>$(document).ready(function () {
+<script>
+    $(document).ready(function () {
         $('body').bootstrapMaterialDesign();
-    });</script>
+    });
+</script>
 <script>
     $(document).ready(function () {
         {% block table %}

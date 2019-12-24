@@ -13,13 +13,21 @@
             <h4> {% trans %}Kind/Kinder hinzufügen{% endtrans %}</h4>
         </div>
         <div class="card-body">
+            {% if app.request.query.get("snack") is defined and app.request.query.get("snack") is not null %}
+                <h3>
+                    <div class="badge badge-danger" style="white-space: normal">
+                        {{ app.request.query.get("snack") }}
+                    </div>
+                </h3>
+            {% endif %}
+
             <a href="{{ path('ferien_kind_neu', {'slug':stadt.slug}) }}"
                class="loadContent btn btn-outline-primary">{% trans %}Kind hinzufügen  {% endtrans %}</a>
 
             <section class="dashboard-counts section-padding" id="schulenShow">
                 <div class="container-fluid ">
                     <div class="card-deck" style="flex-flow: column">
-                    <div class="row">
+                        <div class="row">
 
 
                             <!-- Count item widget-->
@@ -55,11 +63,13 @@
 
                                             {% trans %}Gebuchte Blöcke{% endtrans %}: <br/>
                                             {% for block in k.KindFerienblocksGebucht %}
-                                                {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€<br>
+                                                {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€
+                                                <br>
                                             {% endfor %}
                                             {% trans %}Beworbene Blöcke{% endtrans %}: <br/>
                                             {% for block in k.KindFerienblocksBeworben %}
-                                                {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€<br>
+                                                {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€
+                                                <br>
                                             {% endfor %}
                                         </div>
 

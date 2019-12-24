@@ -4,12 +4,11 @@
 {% endblock %}
 
 {% block content %}
-    <p class="text-center">{% trans %}Hiermit bestägen wir Ihnen die Anmeldung Ihrer Kinder{% endtrans %}    <br>
+    <p class="text-center">{% trans %}Hiermit bestägen wir Ihnen die Anmeldung Ihrer Kinder{% endtrans %} <br>
 
 
-        <center>
-            {% trans %}Über diesen Link können Sie ihre Betesllung bearbeiten.{% endtrans %}
-
+    <center>
+        {% trans %}Über diesen Link können Sie ihre Betesllung bearbeiten.{% endtrans %}
         <button href="{{ absolute_url(path('ferien_storno',{'slug':'loerrach','parent_id':stammdaten.uid})) }}">
             {% trans %}Bearbeiten {% endtrans %}
         </button>
@@ -25,7 +24,7 @@
     <br>
     <br>
     <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihr{% endtrans %}<br>
-    <b>Ihr SKiB Team</b></p>
+        <b>Ihr SKiB Team</b></p>
 
 
 {% endblock %}

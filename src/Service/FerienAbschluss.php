@@ -45,14 +45,42 @@ class FerienAbschluss
     private $ics;
     private $mailer;
     private $twig;
-    public function __construct(Environment $environment, MailerService $mailerService, IcsService $icsService, EntityManagerInterface $entityManager, FerienPrintService $ferienPrintService)
+    private $checkoutPaymentService;
+    private $router;
+
+    public function __construct(RouterInterface $router, CheckoutPaymentService $checkoutPaymentService, Environment $environment, MailerService $mailerService, IcsService $icsService, EntityManagerInterface $entityManager, FerienPrintService $ferienPrintService)
     {
         $this->em = $entityManager;
         $this->printer = $ferienPrintService;
         $this->ics = $icsService;
         $this->mailer = $mailerService;
         $this->twig = $environment;
+        $this->checkoutPaymentService = $checkoutPaymentService;
+        $this->router = $router;
     }
+
+    public function startAbschluss(Stammdaten $stammdaten, Stadt $stadt, $iPAdresse)
+    {
+
+        if ($this->checkoutPaymentService->createPayment($stammdaten, $iPAdresse)) {
+            return false;
+        }
+
+        // finish the kind and the stammdaten
+        $this->abschlussFin($stammdaten);
+        //tätige transaktionen
+        $summe = $this->checkoutPaymentService->makePayment($stammdaten);
+
+        if ($summe > 0) {
+            //wenn transaktioninen fehlgeschlagen sind
+            return false;
+        }
+        //setze alles auf saved. somit ist alles abgeschlossen
+        $this->abschlussSave($stammdaten);
+        $this->abschlussSendEmail($stammdaten);
+       return true;
+    }
+
 
     public
     function abschlussFin(Stammdaten $adresse)
@@ -106,7 +134,7 @@ class FerienAbschluss
         foreach ($programm as $data) {
             //pdf mit dem Tiket
             $ferienblock = $data->getFerienblock();
-            $kind =  $data->getKind();
+            $kind = $data->getKind();
             $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $ferienblock->translate()->getTitel();
             $pdf = $this->printer->printPdfTicket(
                 $fileName . '.pdf',
@@ -120,7 +148,7 @@ class FerienAbschluss
                     'description' => $data->getFerienblock()->translate()->getInfoText(),
                     'dtstart' => $startDate . 'T' . $ferienblock->getStartTime()->format('His'),
                     'dtend' => $startDate . 'T' . $ferienblock->getEndTime()->format('His'),
-                    'summary' => $kind->getVorname().' '.$kind->getNachname().' '.$ferienblock->translate()->getTitel(),
+                    'summary' => $kind->getVorname() . ' ' . $kind->getNachname() . ' ' . $ferienblock->translate()->getTitel(),
                     'url' => '',
                     'rrule' => 'FREQ=DAILY;UNTIL=' . $ferienblock->getEndDate()->format('Ymd') . 'T235900'
                 )
@@ -131,9 +159,35 @@ class FerienAbschluss
             'info@h2-invent.com',
             $adresse->getEmail(),
             'Tickets zu dem gebuchten Ferienprogramm',
-            $this->twig->render('email/anmeldebestatigungFerien.html.twig',array('stammdaten'=>$adresse)),
+            $this->twig->render('email/anmeldebestatigungFerien.html.twig', array('stammdaten' => $adresse)),
             $attachment);
         return 0;
+    }
+    public function checkIfStillSpace(Stammdaten $stammdaten){
+        $qb = $this->em->getRepository(KindFerienblock::class)->createQueryBuilder('kf')
+            ->innerJoin('kf.kind','kind')
+            ->andWhere('kind.eltern = :stammdaten')
+            ->setParameter('stammdaten', $stammdaten);
+        $kindFerienblock = $qb->getQuery()->getResult();
+        $check = array();
+        $max = array();
+        //alle Kinder zöhlen sowie Kinder, welche hinzukommen würde dazuzählen
+        foreach ($kindFerienblock as $data){
+            if(!array_key_exists($data->getFerienblock()->getId(),$check)){
+                $check[$data->getFerienblock()->getId()] = sizeof($data->getFerienblock()->getKindFerienblocksGebucht()) + 1;
+                $max[$data->getFerienblock()->getId()] = $data->getFerienblock()->getMaxAnzahl();
+            }else{
+                $check[$data->getFerienblock()->getId()]++;
+            }
+
+        }
+
+        foreach ($check as $key=>$data){
+            if($max[$key] !== null && $data > $max[$key]){
+                return $this->em->getRepository(Ferienblock::class)->find($key);
+            }
+        }
+        return null;
     }
 
 }

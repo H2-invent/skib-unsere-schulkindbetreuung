@@ -21,7 +21,6 @@
                                 <th></th>
                                 <th>{% trans %}Titel{% endtrans %}</th>
                                 <th>{% trans %}Angemeldet{% endtrans %}</th>
-                                <th>{% trans %}Bestätigt{% endtrans %}</th>
                                 <th>{% trans %}Nicht Bestätigt{% endtrans %}</th>
                                 <th>{% trans %}Storniert{% endtrans %}</th>
                                 <th>{% trans %}Bezahlt{% endtrans %}</th>
@@ -69,7 +68,6 @@
                                         </div>
                                     </td>
                                     <td>{{ b.translations.de.titel }}</td>
-                                    <td>{{ b.kindFerienblocks|length }}</td>
                                     <td>{{ b.kindFerienblocksGebucht|length }}</td>
                                     <td>{{ b.kindFerienblocksBeworben|length }}</td>
                                     <td>{{ b.kindFerienblocksStorniert|length }}</td>
