@@ -5,7 +5,13 @@
             <h5 class="modal-title">{% trans %}Ferienblöcke zum Bestellen anklicken{% endtrans %}</h5>
         </div>
 
+
         <div class="modal-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <input class="form-control" type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
+                </div>
+            </div>
             <div class="accordion" id="accordion">
 
             {% for date in dates %}
@@ -37,5 +43,18 @@
         $(function () {
             $('[data-toggle="popover"]').popover()
         })
+
+        $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'left',
+                locale:{
+                    format:'DD.MM.YYYY'
+                },
+            }, function(start, end, label) {
+
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+        });
+
     </script>
 </div>
