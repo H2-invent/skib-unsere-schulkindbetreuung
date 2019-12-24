@@ -291,7 +291,7 @@ class FerienController extends AbstractController
     /**
      * @Route("/{slug}/ferien/abschluss",name="ferien_abschluss",methods={"Get","POST"})
      */
-    public function abschlussAction(TranslatorInterface $translator, FerienAbschluss $ferienAbschluss,  $slug, Request $request, StamdatenFromCookie $stamdatenFromCookie)
+    public function abschlussAction(TranslatorInterface $translator, FerienAbschluss $ferienAbschluss, $slug, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
         //Include Parents in this route
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE)) {
@@ -302,14 +302,14 @@ class FerienController extends AbstractController
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
         // überprüfe ob alle Payment vorhanden sind
         $check = $ferienAbschluss->checkIfStillSpace($adresse);
-        if($check !== null){
-            return $this->redirectToRoute('ferien_auswahl', array('slug' => $stadt->getSlug(),'snack'=>$translator->trans('Das Ferienprogramm %kursname% ist bereits ausgebucht oder Sie haben zu viele Kinder angemeldet',array('%kursname%'=>$check->translate()->getTitel()) )));
+        if ($check !== null) {
+            return $this->redirectToRoute('ferien_auswahl', array('slug' => $stadt->getSlug(), 'snack' => $translator->trans('Das Ferienprogramm %kursname% ist bereits ausgebucht oder Sie haben zu viele Kinder angemeldet', array('%kursname%' => $check->translate()->getTitel()))));
 
         };
         $res = $ferienAbschluss->startAbschluss($adresse, $stadt, $request->getClientIps() === true);
         if ($res === true) {
             $result = $this->render('ferien/abschluss.html.twig', array('stadt' => $stadt));
-        //   $result->headers->clearCookie(self::BEZEICHNERCOOKIE);
+            $result->headers->clearCookie(self::BEZEICHNERCOOKIE);
             return $result;
         } else {
             return $this->redirectToRoute('ferien_bezahlung_prepare', array('slug' => $stadt->getSlug()));

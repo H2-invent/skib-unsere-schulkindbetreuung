@@ -46,9 +46,9 @@ class FerienAbschluss
     private $mailer;
     private $twig;
     private $checkoutPaymentService;
-    private $router;
 
-    public function __construct(RouterInterface $router, CheckoutPaymentService $checkoutPaymentService, Environment $environment, MailerService $mailerService, IcsService $icsService, EntityManagerInterface $entityManager, FerienPrintService $ferienPrintService)
+
+    public function __construct( CheckoutPaymentService $checkoutPaymentService, Environment $environment, MailerService $mailerService, IcsService $icsService, EntityManagerInterface $entityManager, FerienPrintService $ferienPrintService)
     {
         $this->em = $entityManager;
         $this->printer = $ferienPrintService;
@@ -56,7 +56,7 @@ class FerienAbschluss
         $this->mailer = $mailerService;
         $this->twig = $environment;
         $this->checkoutPaymentService = $checkoutPaymentService;
-        $this->router = $router;
+
     }
 
     public function startAbschluss(Stammdaten $stammdaten, Stadt $stadt, $iPAdresse)
