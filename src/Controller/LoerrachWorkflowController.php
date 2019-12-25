@@ -87,7 +87,7 @@ class LoerrachWorkflowController extends AbstractController
         }
         //Add SecCode into if to create a SecCode the first time to be not "null"
         if ($adresse->getUid() == null) {
-            $adresse->setUid(md5(uniqid()))
+            $adresse->setUid(md5(uniqid('', true)))
                 ->setAngemeldet(false);
             $adresse->setCreatedAt(new \DateTime());
         }
