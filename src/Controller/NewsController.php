@@ -216,7 +216,7 @@ class NewsController extends AbstractController
             }
 
         }
-        $title = $translator->trans('Ranzenpost erstellt');
+        $title = $translator->trans('Ranzenpost erstellen');
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
 
     }
