@@ -31,7 +31,8 @@
   background-color: rgba(144,142,140, 0.3); }
 
 .top-nav-collapse {
-  background-color: var(--skib-contrast-base); }
+  background-color: var(--skib-contrast-base);
+}
 
 /* Adding color to the Navbar on mobile */
 @media only screen and (max-width: 768px) {
@@ -156,7 +157,7 @@ h2 {
   color: #fff !important;
   }
   .btn-primary:hover {
-    background-color: var(--main-color-hover);
+    background-color: var(--main-color-hover) !important;
   }
 
 .btn-primary:active {
