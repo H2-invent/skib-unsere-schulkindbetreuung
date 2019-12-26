@@ -2,13 +2,13 @@
 {% block header %}
     <div class="col-md-12 mb-6 white-text text-center text-md-left">
             <h1 class="font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
-        <hr class="hr-light ">
+        <div class="progress mb-2">
+            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{% trans %}Adresse{% endtrans %}</div>
+        </div>
     </div>
-
 {% endblock %}
 
 {% block content %}
-
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <div class="card mb-3">
@@ -61,7 +61,7 @@
                         {{ form_widget(form.einkommen) }}
                     </div>
                     <div class="col-sm-1">
-                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, unternahlt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).{% endtrans %}"></i>
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).{% endtrans %}"></i>
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@
                         {{ form_widget(form.beruflicheSituation) }}
                     </div>
                     <div class="col-sm-1">
-                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Vorrangig aufgenommen werden Kinder von Alleinerziehenden und berufstätigen Eltern. Ein Rechtsanspruch auf Aufnahme besteht nicht.{% endtrans %}"></i>
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Eltern. Ein Rechtsanspruch auf Aufnahme besteht nicht.{% endtrans %}"></i>
                     </div>
                 </div>
 
@@ -81,7 +81,7 @@
                         {{ form_label(form.kinderImKiga) }}
                     </div>
                     <div class="col-sm-1">
-                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf den Preis des ältesten Kindes{% endtrans %}"></i>
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf die Gebühr des ältesten Kindes{% endtrans %}"></i>
                     </div>
                 </div>
                 <div class="row">
@@ -90,7 +90,7 @@
                         {{ form_label(form.alleinerziehend) }}
                     </div>
                     <div class="col-sm-1">
-                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Vorrangig aufgenommen werden Kinder von Alleinerziehenden und berufstätigen Eltern. Ein Rechtsanspruch auf Aufnahme besteht nicht.{% endtrans %}"></i>
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Eltern. Ein Rechtsanspruch auf Aufnahme besteht nicht.{% endtrans %}"></i>
 
                     </div>
                 </div>

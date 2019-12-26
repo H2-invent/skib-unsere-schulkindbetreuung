@@ -2,7 +2,9 @@
 {% block header %}
     <div class="col-md-12 mb-6 white-text text-center text-md-left">
         <h1 class="font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
-        <hr class="hr-light ">
+        <div class="progress mb-2">
+            <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">{% trans %}Mittagessen{% endtrans %}</div>
+        </div>
     </div>
 
 {% endblock %}
@@ -14,7 +16,7 @@
         </div>
         <div class="card-body">
             <h4>
-                {% trans %}Folgende Caterer stehen in den Schulen zur Verfügung.{% endtrans %}
+                {% trans %}Folgende Caterer für das Mittagessen beliefern die Schulen.{% endtrans %}
             </h4>
             <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Seit diesem Jahr kann das Mittagessen nicht mehr direkt bei der Anmeldung zur Betreuung mitbestellt werden. Bitte Nutzen Sie dafür das System des Caterers.{% endtrans %}"></i>
 

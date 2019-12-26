@@ -44,7 +44,7 @@ class ChildController extends AbstractController
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $text = $translator->trans('Kinder betreut von der Organisation');
+        $text = $translator->trans('Kinder betreut vom Träger');
         $schulen = $organisation->getSchule()->toArray();
         $schuljahre = $schulen[0]->getStadt()->getActives()->toArray();
 
@@ -96,7 +96,7 @@ class ChildController extends AbstractController
 
 
 
-        $text = $translator->trans('Kinder betreut von der Organisation %organisation%',array('%organisation%'=>$organisation->getName()));
+        $text = $translator->trans('Kinder betreut vom Träger %organisation%',array('%organisation%'=>$organisation->getName()));
         $blocks = array();
        if($request->get('schule')){
 
@@ -126,7 +126,7 @@ class ChildController extends AbstractController
         if($request->get('block')){
             $qb->andWhere('b.id = :block')
                 ->setParameter('block',$request->get('block'));
-            $text .= $translator->trans(' im ausgewählten Zeitblock');
+            $text .= $translator->trans(' im ausgewählten Betreuungsblock');
         }
         if($request->get('klasse')){
             $qb->andWhere('k.klasse = :klasse')
