@@ -28,6 +28,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Braintree\Gateway;
@@ -235,7 +236,8 @@ class FerienController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE);
         }
-
+        $startDate = new DateTime($request->get('startDate'));
+        $endDate = new DateTime($request->get('endDate'));
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
         $dates = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt);
         $today = new \DateTime('today');
@@ -281,7 +283,7 @@ class FerienController extends AbstractController
             $kind = $adresse->getKinds();
 
         } catch (\Exception $e) {
-            $result['text'] = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+
         }
 
         return $this->render('ferien/zusammenfassung.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'error' => true));
