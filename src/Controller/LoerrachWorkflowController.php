@@ -86,8 +86,10 @@ class LoerrachWorkflowController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
         //Add SecCode into if to create a SecCode the first time to be not "null"
-        if ($adresse->getUid() === null) {
-            $adresse->setUid(md5(uniqid()))
+
+        if ($adresse->getUid() == null) {
+            $adresse->setUid(md5(uniqid('', true)))
+
                 ->setAngemeldet(false);
             $adresse->setCreatedAt(new \DateTime());
         }

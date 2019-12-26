@@ -194,6 +194,10 @@ h2 {
   color: var(--sec-color-hover) !important;
 }
 
+.progress-bar {
+  background-color: var(--main-color) !important;
+}
+
 a {
   color: var(--main-color);
 }
