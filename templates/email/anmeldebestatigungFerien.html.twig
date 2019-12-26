@@ -1,0 +1,32 @@
+{% extends 'email/base.html.twig' %}
+{% block header %}
+    {% trans %}Buchungsbestätigung für die Ferienbetreuung{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <p class="text-center">{% trans %}Hiermit bestägen wir Ihnen die Anmeldung Ihrer Kinder{% endtrans %} <br>
+
+
+    <center>
+        {% trans %}Über diesen Link können Sie ihre Betesllung bearbeiten.{% endtrans %}
+        <button href="{{ absolute_url(path('ferien_storno',{'slug':'loerrach','parent_id':stammdaten.uid})) }}">
+            {% trans %}Bearbeiten {% endtrans %}
+        </button>
+    </center>
+
+
+
+    <small>{{ absolute_url(path('ferien_storno',{'slug':'loerrach','parent_id':stammdaten.uid})) }}</small>
+    <p class="text-center">{% trans %}Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
+            Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.
+            Die Kontaktdaten sind in dem PDF angehängten angegeben.{% endtrans %}
+    </p>
+    <br>
+    <br>
+    <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihr{% endtrans %}<br>
+        <b>Ihr SKiB Team</b></p>
+
+
+{% endblock %}
+
+

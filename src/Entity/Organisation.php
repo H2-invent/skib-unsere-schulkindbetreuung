@@ -311,7 +311,7 @@ class Organisation
     {
         $schuleRet = array();
         foreach ($this->schule as $data) {
-          if($data->getDeleted() == false){
+          if($data->getDeleted() === false){
             $schuleRet[] = $data;
           }
         }

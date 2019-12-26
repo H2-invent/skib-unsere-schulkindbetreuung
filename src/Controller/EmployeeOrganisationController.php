@@ -213,7 +213,7 @@ class EmployeeOrganisationController extends AbstractController
     public function UserRoles(Request $request, TranslatorInterface $translator)
     {
         $user = $this->manager->findUserBy(array('id'=>$request->get('id')));
-        $organisation = $user->getOrganisation();
+
         if ($user->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
@@ -263,7 +263,7 @@ class EmployeeOrganisationController extends AbstractController
             $user->addRole('ROLE_USER');
 
             foreach ($roles as $key => $item) {
-                if ($item == true) {
+                if ($item === true) {
                     $user->addRole($key);
                 }
             }

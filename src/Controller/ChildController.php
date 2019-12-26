@@ -118,7 +118,7 @@ class ChildController extends AbstractController
                 ->setParameter('jahr',$jahr);
              $text .= $translator->trans(' im Schuljahr schuljahr',array('schuljahr' => $jahr->getVon()->format('d.m.Y').'-'.$jahr->getBis()->format('d.m.Y')));
         }
-        if($request->get('wochentag') != null){
+        if($request->get('wochentag') !== null){
             $qb->andWhere('b.wochentag = :wochentag')
                 ->setParameter('wochentag',$request->get('wochentag'));
              $text .= $translator->trans(' am Wochentag %wochentag%',array('%wochentag%'=>$this->wochentag[$request->get('wochentag')]));
@@ -140,7 +140,7 @@ class ChildController extends AbstractController
 
 
         if($request->get('print')){
-            //todo test im Filename raus
+
             $fileName = (new \DateTime())->format('d.m.Y_H.i');
             return $printService->printChildList($kinderU,$organisation,$text,$fileName,$TCPDFController,'D');
 

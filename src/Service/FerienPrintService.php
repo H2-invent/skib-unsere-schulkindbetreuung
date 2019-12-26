@@ -25,20 +25,26 @@ class FerienPrintService
     private $templating;
     protected $parameterBag;
     private $router;
+    private $tcpdfController;
+    public function __construct(TCPDFController $tcpdf, EngineInterface $templating, ParameterBagInterface $parameterBag, UrlGeneratorInterface $router)
 
-    public function __construct(EngineInterface $templating, ParameterBagInterface $parameterBag, UrlGeneratorInterface $router)
     {
 
         $this->router = $router;
         $this->templating = $templating;
         $this->parameterBag = $parameterBag;
+         $this->tcpdfController = $tcpdf;
+
     }
 
-    public function printPdfTicket(Kind $kind, TCPDFController $tcpdf, $fileName, Organisation $organisation, KindFerienblock $ferienblock, $type = 'D')
+    public function printPdfTicket( $fileName,  KindFerienblock $ferienblock, $type = 'D')
     {
-        $pdf = $tcpdf->create();
+        $kind = $ferienblock->getKind();
+        $organisation = $ferienblock->getFerienblock()->getOrganisation();
+        $pdf = $this->tcpdfController->create();
         $pdf->setOrganisation($organisation);
         $pdf = $this->preparePDF($pdf,'Ticket','H2 invent','Ticket für Ferienprogram');
+
 
         // set style for barcode
         $style = array(

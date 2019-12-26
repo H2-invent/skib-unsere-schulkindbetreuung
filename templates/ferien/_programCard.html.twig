@@ -10,14 +10,21 @@
                             {{ block.translate.titel }}
                         </h5>
                         {% if block.startVerkauf < today and block.endVerkauf > today %}
-                            <div class="alert alert-success" role="alert">
-                                <i class="fas fa-check"></i>
-                                Anmeldung geöffnet<br/>
-                            </div>
+                            {% if  block.maxAnzahl is  null or block.maxAnzahl - block.KindFerienblocksGebucht|length >0 %}
+                                <div class="alert alert-success" role="alert">
+                                    <i class="fas fa-check"></i>
+                                    {% trans %}Anmeldung geöffnet{% endtrans %}<br/>
+                                </div>
+                            {% else %}
+                                <div class="alert alert-info" role="alert">
+                                    <i class="fas fa-exclamation"></i>
+                                    {% trans %}  Keine freien Plätze mehr vorhanden{% endtrans %}<br/>
+                                </div>
+                            {% endif %}
                         {% else %}
                             <div class="alert alert-info" role="alert">
                                 <i class="fas fa-exclamation"></i>
-                                Anmeldung geschlossen
+                                {% trans %}    Anmeldung geschlossen{% endtrans %}
                             </div>
                         {% endif %}
                     </a>
@@ -84,7 +91,7 @@
                                 <h5>
                                     {% trans %}Anzahl Plätze{% endtrans %}
                                 </h5>
-                                {% if block.minAnzahl is not null or block.maxAnzahl is not null %}
+                                {% if  block.maxAnzahl is not null %}
                                     <div>{% trans %}Kontingent{% endtrans %}
                                         <i class="fas fa-question-circle" data-toggle="popover" data-placement="top"
                                            title="{{ 'Information'|trans }}"

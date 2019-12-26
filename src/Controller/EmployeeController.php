@@ -162,12 +162,8 @@ class EmployeeController extends AbstractController
             $user->setEnabled(true);
         }
         $this->manager->updateUser($user);
-        $previous = $request->getSession()->get('previous');
-        $url = "";
-        if ($previous) {
-            $url = $previous;
-        }
-        $text = $translator->trans('Erfolgreich gespeichert');
+
+
         $referer = $request
             ->headers
             ->get('referer');
@@ -203,7 +199,7 @@ class EmployeeController extends AbstractController
                 $userManager = $this->manager;
                 $userManager->updateUser($defaultData);
 
-                if ($user->getStadt() != null) {
+                if ($user->getStadt() !== null) {
                     $text = $translator->trans('Erfolgreich gespeichert');
                     return $this->redirectToRoute(
                         'city_employee_show',
@@ -242,7 +238,7 @@ class EmployeeController extends AbstractController
             throw new \Exception('Wrong City');
         }
         $this->manager->deleteUser($user);
-        if ($user->getStadt() != null) {
+        if ($user->getStadt() !== null) {
             $text = $translator->trans('Erfolgreich gelöscht');
             return $this->redirectToRoute(
                 'city_employee_show',
@@ -298,7 +294,7 @@ class EmployeeController extends AbstractController
             }
 
             foreach ($roles as $key => $item) {
-                if ($item == true) {
+                if ($item === true) {
                     $user->addRole($key);
                 }
             }
