@@ -84,6 +84,7 @@ class StadtType extends AbstractType
             ->add('datenschutzDE', TextareaType::class, ['attr'=>['rows'=>6],'required'=>true,'label'=>'Datenschutzhinweis Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].datenschutz', ])
             ->add('datenschutzEn', TextareaType::class, ['attr'=>['rows'=>6],'required'=>true,'label'=>'Datenschutzhinweis Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].datenschutz', ])
             ->add('datenschutzFr', TextareaType::class, ['attr'=>['rows'=>6],'required'=>true,'label'=>'Datenschutzhinweis Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].datenschutz', ])
+            ->add('imprint', TextareaType::class,['attr'=>['rows'=>6],'required'=>true,'label'=>'Impressum der Stadt (Markdown)','translation_domain' => 'form'])
 
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
 

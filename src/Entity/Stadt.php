@@ -229,6 +229,11 @@ class Stadt
      */
     private $gehaltsklassen = [];
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $imprint;
+
 
     public function __construct()
     {
@@ -761,6 +766,18 @@ class Stadt
     public function setGehaltsklassen(array $gehaltsklassen): self
     {
         $this->gehaltsklassen = $gehaltsklassen;
+
+        return $this;
+    }
+
+    public function getImprint(): ?string
+    {
+        return $this->imprint;
+    }
+
+    public function setImprint(?string $imprint): self
+    {
+        $this->imprint = $imprint;
 
         return $this;
     }
