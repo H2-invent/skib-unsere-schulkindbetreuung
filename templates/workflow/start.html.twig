@@ -127,72 +127,91 @@
                         </div>
                     </div>
                     {% if stadt.schulkindBetreung %}
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h3> {% trans %}Für folgenden Schulen können Sie die Schulkindbetreuung hier online buchen.{% endtrans %}</h3>
-                            {% if schuljahr is not null %}
-                            <p style="font-family: TypeWritersSubstitute">
-                                {% trans %}Aktuelles Schuljahr{% endtrans %}: {{ schuljahr.von|date('d.m.Y') }} - {{ schuljahr.bis|date('d.m.Y') }} | {% trans %}Anmedezeitraum{% endtrans %}: {{ schuljahr.anmeldeStart|date('d.m.Y') }} - {{ schuljahr.anmeldeEnde|date('d.m.Y') }}
-                            </p>
-                            {% else %}
-                            <p style="font-family: TypeWritersSubstitute">
-                                Sie befinden sich aktuell außerhalb des Anmeldezeitraums und können die Anmeldung nicht starten.
-                            </p>
-                            {% endif %}
-                        </div>
-                        <div class="card-body">
-                            <div class="card-deck">
-                                <!-- Count item widget-->
-                                {% for s in schule %}
-                                    <div class="card hoverable ">
-                                        <div class="view overlay">
-                                            <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}"
-                                                 alt="{{ s.name }}" style="max-height: 300px">
-                                            <a href="adresse">
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
-                                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3> {% trans %}Für folgenden Schulen können Sie die Schulkindbetreuung hier online buchen.{% endtrans %}</h3>
+                                {% if schuljahr is not null %}
+                                    <p style="font-family: TypeWritersSubstitute">
+                                        {% trans %}Aktuelles Schuljahr{% endtrans %}: {{ schuljahr.von|date('d.m.Y') }}
+                                        - {{ schuljahr.bis|date('d.m.Y') }} | {% trans %}Anmedezeitraum{% endtrans %}
+                                        : {{ schuljahr.anmeldeStart|date('d.m.Y') }}
+                                        - {{ schuljahr.anmeldeEnde|date('d.m.Y') }}
+                                    </p>
+                                {% else %}
+                                    <p style="font-family: TypeWritersSubstitute">
+                                        Sie befinden sich aktuell außerhalb des Anmeldezeitraums und können die
+                                        Anmeldung nicht starten.
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <div class="card-deck">
+                                    <div class="row">
 
-                                        <div class="card-body ">
-                                            <h5 class="card-title">{{ s.name }}</h5>
-                                            <p class="card-text">
-                                                {{ s.infoText }}<br>
-                                                {% trans %}Betreuuende Organisation{% endtrans %}: {{ s.organisation.name }}
-                                            </p>
-                                        </div>
+
+                                        <!-- Count item widget-->
+                                        {% for s in schule %}
+                                            <div class="col-lg-4 col-md-6">
+                                                <div class="card hoverable ">
+                                                    <div class="view overlay">
+                                                        <img class="card-img-top"
+                                                             src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                             alt="{{ s.name }}">
+                                                        <a href="adresse">
+                                                            <div class="mask rgba-white-slight"></div>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="card-body ">
+                                                        <h5 class="card-title">{{ s.name }}</h5>
+                                                        <p class="card-text">
+                                                            {{ s.infoText }}<br>
+                                                            {% trans %}Betreuuende Organisation{% endtrans %}
+                                                            : {{ s.organisation.name }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
                                     </div>
-                                {% endfor %}
+                                </div>
                             </div>
                         </div>
-                    </div>
-{% endif %}
+                    {% endif %}
                     {% if stadt.ferienprogramm %}
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h3> {% trans %}Von folgenden Trägern kann das Ferienprogramm hier online gebucht werden.{% endtrans %}</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-deck">
-                                <!-- Count item widget-->
-                                {% for o in stadt.organisations %}
-                                    <div class="card hoverable col-lg-4 col-md-6 ">
-                                        <div class="view overlay">
-                                            <img class="card-img-top" src="{{ vich_uploader_asset(o,'imageFile') }}"
-                                                 alt="{{ o.name }}" style="max-height: 300px">
-                                            <a href="{{ path('ferien_adresse', {'slug': stadt.slug}) }}">
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
-                                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3> {% trans %}Von folgenden Trägern kann das Ferienprogramm hier online gebucht werden.{% endtrans %}</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-deck">
+                                    <div class="row">
 
-                                        <div class="card-body ">
-                                            <h5 class="card-title">{{ o.name }}</h5>
-                                            <p class="card-text">{{ o.infoText }}</p>
-                                        </div>
+
+                                        <!-- Count item widget-->
+                                        {% for o in stadt.organisations %}
+                                            <div class="col-lg-4 col-md-6">
+                                                <div class="card hoverable  ">
+                                                    <div class="view overlay">
+                                                        <img class="card-img-top"
+                                                             src="{{ vich_uploader_asset(o,'imageFile') }}"
+                                                             alt="{{ o.name }}" style="max-height: 300px">
+                                                        <a href="{{ path('ferien_adresse', {'slug': stadt.slug}) }}">
+                                                            <div class="mask rgba-white-slight"></div>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="card-body ">
+                                                        <h5 class="card-title">{{ o.name }}</h5>
+                                                        <p class="card-text">{{ o.infoText }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
                                     </div>
-                                {% endfor %}
+                                </div>
                             </div>
                         </div>
-                    </div>
                     {% endif %}
                 </div>
             </div>
@@ -218,7 +237,8 @@
                                         </a><br/>
                                     {% endif %}
                                     <a href="{{ path('workflow_agb',{'slug':stadt.slug}) }}"
-                                       target="_blank" rel="noopener noreferrer">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der Stadt %stadt%{% endtrans %}</a><br/>
+                                       target="_blank"
+                                       rel="noopener noreferrer">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der Stadt %stadt%{% endtrans %}</a><br/>
                                 </div>
                             </div>
 
