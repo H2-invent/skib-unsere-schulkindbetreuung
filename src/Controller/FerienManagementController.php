@@ -206,14 +206,14 @@ class FerienManagementController extends AbstractController
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $block = $form->getData();
-            dump($block);
+
             $errors = $validator->validate($block);
             if (count($errors) == 0) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($block);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                //return $this->redirectToRoute('ferien_management_show', array('org_id' => $organisation->getId(), 'snack' => $text));
+               return $this->redirectToRoute('ferien_management_show', array('org_id' => $organisation->getId(), 'snack' => $text));
             }
 
         }

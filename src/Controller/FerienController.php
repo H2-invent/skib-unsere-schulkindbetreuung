@@ -238,7 +238,7 @@ class FerienController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE);
         }
         $param = json_decode($request->get('param'));
-        dump($param);
+
         $startDate = null;
         $endDate = null;
         $tag = array();
