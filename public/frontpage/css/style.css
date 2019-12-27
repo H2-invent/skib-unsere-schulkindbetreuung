@@ -9,8 +9,12 @@
   --skib-contrast-dark: rgb(23,21,18);
   --skib-contrast-light: rgb(144,142,140);
   --skib-contrast-extra-light: rgb(232,228,226);
+  --skib-contrast-white: rgb(253,253,253);
 }
 
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link {
+  color: #0a0a0a;
+}
 
 /* Half Page Carousel itself*/
 .carousel {
@@ -28,16 +32,16 @@
 
 /* Navbar animation */
 .navbar {
-  background-color: rgba(144,142,140, 0.3); }
+  background-color: rgba(255,255,255, 0.4); }
 
 .top-nav-collapse {
-  background-color: var(--skib-contrast-base);
+  background-color: var(--skib-contrast-white);
 }
 
 /* Adding color to the Navbar on mobile */
 @media only screen and (max-width: 768px) {
   .navbar {
-    background-color: var(--skib-contrast-base) } }
+    background-color: var(--skib-contrast-white) } }
 
 /* Footer color for sake of consistency with Navbar */
 .page-footer {
