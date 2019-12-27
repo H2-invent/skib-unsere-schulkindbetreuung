@@ -10,7 +10,7 @@
 {% block content %}
     <div>
         {% if org_id != 0 %}
-        <a href="{{ path('workflow_datenschutz_pdf',{'org_id':org_id,'slug':stadt.slug}) }}"><i class="fa fa-download"></i> </a>
+        <a class="btn btn-primary" href="{{ path('workflow_datenschutz_pdf',{'org_id':org_id,'slug':stadt.slug}) }}"><i class="fa fa-download"></i> {% trans %}Datenschutzhinweis als PDF herunterladen{% endtrans %}</a>
         {% endif %}
         <p>
             {% if datenschutz is not empty %}
