@@ -261,6 +261,9 @@ class FerienManagementController extends AbstractController
             $ferienblockNew->addTranslation($clone);
 
         }
+        foreach ($ferienblock->getKategorie() as $data){
+            $ferienblockNew->addKategorie($data);
+        }
         $em = $this->getDoctrine()->getManager();
         $em->persist($ferienblockNew);
         $em->flush();
