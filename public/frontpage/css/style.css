@@ -142,6 +142,10 @@ body {
   font-family: Nunito;
   font-style: normal;
   font-weight: 400;
+  color: var(--skib-contrast-dark);
+}
+.card-text {
+  color: var(--skib-contrast-dark) !important;
 }
 
 h1,

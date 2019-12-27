@@ -144,7 +144,8 @@
                             <div class="card-deck">
                                 <!-- Count item widget-->
                                 {% for s in schule %}
-                                    <div class="card hoverable ">
+                                    <div class="col-md-4 mb-4">
+                                    <div class="card hoverable">
                                         <div class="view overlay">
                                             <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}"
                                                  alt="{{ s.name }}" style="max-height: 300px">
@@ -155,11 +156,12 @@
 
                                         <div class="card-body ">
                                             <h5 class="card-title">{{ s.name }}</h5>
-                                            <p class="card-text">
-                                                {{ s.infoText }}<br>
-                                                {% trans %}Betreuuende Organisation{% endtrans %}: {{ s.organisation.name }}
-                                            </p>
+
                                         </div>
+                                        <div class="card-footer">
+                                            {% trans %}Betreuuende Organisation{% endtrans %}: {{ s.organisation.name }}
+                                        </div>
+                                    </div>
                                     </div>
                                 {% endfor %}
                             </div>
@@ -228,8 +230,8 @@
                                         {% trans %}Träger{% endtrans %}
                                     </h4>
                                     {% for o in stadt.organisations %}
-                                        <div class="row">
-                                            <div class="col-md-8 mb-1">
+                                        <div class="row mb-1">
+                                            <div class="col-md-8">
                                                 <b>{{ o.name }}</b><br>
                                                 {% trans %}Ansprechpartner:{% endtrans %} {{ o.ansprechpartner }}<br/>
                                                 {% trans %}Telefon:{% endtrans %} <a
@@ -241,6 +243,11 @@
                                                        target="_blank" rel="noopener noreferrer"><i
                                                                 class="fas fa-external-link-alt"></i> {% trans %}Webseite{% endtrans %}
                                                     </a><br/>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-md-4">
+                                                {% if o.image is not empty %}
+                                                    <img src="{{ vich_uploader_asset(o,'imageFile') }}" style="max-height: 110px">
                                                 {% endif %}
                                             </div>
                                         </div>
