@@ -146,6 +146,14 @@ class Ferienblock
      */
     private $amountVoucher;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tags", inversedBy="feriens")
+     */
+    private $kategorie;
+
+
+
+
 
     public function __construct()
     {
@@ -154,6 +162,9 @@ class Ferienblock
         $this->kinderBezahlt = new ArrayCollection();
         $this->kinderStorniert = new ArrayCollection();
         $this->kindFerienblocks = new ArrayCollection();
+        $this->kategorie = new ArrayCollection();
+
+
     }
 
     public function getId(): ?int
@@ -550,5 +561,33 @@ class Ferienblock
 
         return $this;
     }
+
+    /**
+     * @return Collection|Tags[]
+     */
+    public function getKategorie(): Collection
+    {
+        return $this->kategorie;
+    }
+
+    public function addKategorie(Tags $kategorie): self
+    {
+        if (!$this->kategorie->contains($kategorie)) {
+            $this->kategorie[] = $kategorie;
+        }
+
+        return $this;
+    }
+
+    public function removeKategorie(Tags $kategorie): self
+    {
+        if ($this->kategorie->contains($kategorie)) {
+            $this->kategorie->removeElement($kategorie);
+        }
+
+        return $this;
+    }
+
+
 
 }

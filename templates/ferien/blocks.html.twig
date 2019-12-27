@@ -4,10 +4,27 @@
         <div class="modal-header">
             <h5 class="modal-title">{% trans %}Ferienblöcke zum Bestellen anklicken{% endtrans %}</h5>
         </div>
-        <div class="modal-body" >
+        <div class="modal-body" id="filter" >
             <div class="row">
                 <div class="col-md-8">
-                    <input class="form-control" type="text" name="daterange" value="01/01/2018 - 01/15/2018"/>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="daterangeInput" disabled name="daterange" readonly value="{{ 'now'|date('d.m.Y')}} - {{ 'now'|date_modify("+1 Year")|date('d.m.Y') }}" aria-label="Zeitraum"
+                               aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-md btn-outline-primary m-0 px-3 py-2 z-depth-0 waves-effect" type="button" id="buttonZeitraum">{{'Zeitraum wählen'|trans}}</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    {% for t in tags %}
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input value="{{ t.id }}" type="checkbox" class="tagFilter custom-control-input" id="tag{{ t.id }}">
+                            <label class="custom-control-label" for="tag{{ t.id }}">{{t.name}}</label>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -44,25 +61,56 @@
         // popovers Initialization
         $(function () {
             $('[data-toggle="popover"]').popover()
-        })
-
+        });
+var startDate;
+var endDate;
         $(function () {
-            $('input[name="daterange"]').daterangepicker({
+            $('#buttonZeitraum').daterangepicker({
                 opens: 'left',
                 "autoApply": true,
                 "startDate": "{{'now'|date('d/m/Y')}}",
-                "endDate": "{{ 'now'|date_modify("+7 days")|date('d/m/Y') }}",
+                "endDate": "{{ 'now'|date_modify("+1 Year")|date('d/m/Y') }}",
                 locale: {
                     format: 'DD.MM.YYYY'
                 },
+                ranges: {
+                    '{{ 'Heute'|trans }}': [moment(), moment()],
+                    '{{ 'Diese Woche'|trans }}': [moment(), moment().add(1,'w')],
+                    '{{ 'Dieser Monat'|trans }}': [moment(), moment().add(1,'M')],
+                    '{{ 'Dieses Jahr'|trans }}': [moment(), moment().add(1, 'Y')],
+
+
+                },
+                "alwaysShowCalendars": true,
             }, function (start, end, label) {
-                var url = '{{ path('ferien_kind_programm',{'slug':stadt.slug,'kind_id':kind.id}) }}';
-                url += '&start='+start.format('YYYY-MM-DD');
-                url += '&end='+end.format('YYYY-MM-DD');
-                url += ' #blockauswahl';
-                $('#blockauswahl').load(url);
+                $('#daterangeInput').val(start.format('DD.MM.YYYY')+ '-'+end.format('DD.MM.YYYY'));
+
+                startDate = start.format('YYYY-MM-DD');
+                endDate = end.format('YYYY-MM-DD');
+                getResultForFilter();
                });
         });
+        $('.tagFilter').click(function () {
+            getResultForFilter();
+        });
+    function getResultForFilter() {
+        var array = [];
+        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
 
+        for (var i = 0; i < checkboxes.length; i++) {
+            array.push(checkboxes[i].value)
+        }
+
+        var param ={
+            start: startDate,
+            end: endDate,
+            tag: array,
+        };
+
+        var url = '{{ path('ferien_kind_programm',{'slug':stadt.slug,'kind_id':kind.id}) }}';
+        url += '&param='+JSON.stringify(param);
+        url += ' #blockauswahl';
+        $('#blockauswahl').load(url);
+    }
     </script>
 </div>

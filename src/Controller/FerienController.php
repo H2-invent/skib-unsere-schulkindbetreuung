@@ -9,6 +9,7 @@ use App\Entity\Organisation;
 use App\Entity\Payment;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use App\Entity\Tags;
 use App\Form\Type\LoerrachEltern;
 use App\Form\Type\LoerrachKind;
 use App\Form\Type\PaymentType;
@@ -236,15 +237,26 @@ class FerienController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE);
         }
-        $startDate = $request->get('start')?new \DateTime($request->get('start')):null;
-        $endDate = $request->get('end')?new \DateTime($request->get('end')):null;
-    dump($startDate);
-    dump($endDate);
+        $param = json_decode($request->get('param'));
+        dump($param);
+        $startDate = null;
+        $endDate = null;
+        $tag = array();
+        if($param){
+            $startDate = isset($param->start)?new \DateTime($param->start):null;
+            $endDate = isset($param->end)?new \DateTime( $param->end):null;
+            foreach ($param->tag as $data){
+                $tag[] = $this->getDoctrine()->getRepository(Tags::class)->find($data);
+            }
+
+        }
+
+        $tags = $this->getDoctrine()->getRepository(Tags::class)->findAll();
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-        $dates = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt,$startDate,$endDate);
+        $dates = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt,$startDate,$endDate,$tag);
         $today = new \DateTime('today');
 
-        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'dates' => $dates, 'stadt' => $stadt, 'today' => $today));
+        return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'dates' => $dates, 'stadt' => $stadt, 'today' => $today,'tags'=>$tags));
     }
 
 

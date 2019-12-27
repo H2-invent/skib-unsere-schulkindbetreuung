@@ -18,7 +18,7 @@
                             {% else %}
                                 <div class="alert alert-info" role="alert">
                                     <i class="fas fa-exclamation"></i>
-                                    {% trans %}  Keine freien Plätze mehr vorhanden{% endtrans %}<br/>
+                                    {% trans %} Keine freien Plätze mehr vorhanden{% endtrans %}<br/>
                                 </div>
                             {% endif %}
                         {% else %}
@@ -38,6 +38,12 @@
                         </h4>
                         <p>
                             {{ block.translate.infoText|nl2br }}
+                        </p>
+                        <p>
+                            {{ 'Kategrie'|trans }}:<br>
+                            {% for k in block.kategorie %}
+                               {{  k.name }},
+                            {% endfor %}
                         </p>
                         {% if block.startVerkauf > today and block.endVerkauf < today %}
                             <div class="row alert alert-info" role="alert">

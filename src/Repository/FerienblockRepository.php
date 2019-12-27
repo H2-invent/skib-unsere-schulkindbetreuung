@@ -6,6 +6,7 @@ use App\Entity\Ferienblock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\Constraints\DateTime;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Ferienblock|null find($id, $lockMode = null, $lockVersion = null)
@@ -52,26 +53,34 @@ class FerienblockRepository extends ServiceEntityRepository
      * @param $price
      * @return Product[]
      */
-    public function findFerienblocksFromToday($stadt, \DateTime $start = null, \DateTime $end = null)
+    public function findFerienblocksFromToday($stadt, \DateTime $start = null, \DateTime $end = null, $tag = array())
     {
         // automatically knows to select Products
         // the "p" is an alias you'll use in the rest of the query
         $today = new \DateTime();
         $qb = $this->createQueryBuilder('f');
 
-        if ($start != null) {
-            $qb->andWhere('f.startDate > :start')
+        if ($start !== null) {
+            $qb->andWhere($qb->expr()->gte('f.startDate',':start'))
                 ->setParameter('start', $start);
         }
-        if ($end != null) {
-            $qb->andWhere('f.endDate < :end')
+        if ($end !== null) {
+            $qb->andWhere($qb->expr()->lte('f.endDate',':end'))
                 ->setParameter('end', $end);
         }
         if ($end === null && $start === null) {
             $qb->
             andWhere('f.endDate >= :today')
-            ->setParameter('today', $today);
+                ->setParameter('today', $today);
         }
+        if(sizeof($tag)> 0){
+            $qb->innerJoin('f.kategorie','kateg')
+                ->andWhere('kateg IN (:kat)')
+                ->setParameter('kat', $tag);
+
+
+        }
+
         $qb->
         andWhere('f.stadt = :stadt')
             ->addOrderBy('f.startDate', 'asc')

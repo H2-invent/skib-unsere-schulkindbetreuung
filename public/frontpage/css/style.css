@@ -5,10 +5,11 @@
   --sec-color: rgb(245,26,32);
   --sec-color-hover: rgb(201,2,0);
   --sec-color-activ: rgb(244,105,104);
-  --skib-contrast-base: rgb(255,255,255);
+  --skib-contrast-base: rgb(85,83,80);
   --skib-contrast-dark: rgb(23,21,18);
   --skib-contrast-light: rgb(144,142,140);
   --skib-contrast-extra-light: rgb(232,228,226);
+  --skib-contrast-white: rgb(253,253,253);
 }
 
 .navbar.navbar-dark .navbar-nav .nav-item .nav-link {
@@ -34,13 +35,13 @@
   background-color: rgba(255,255,255, 0.4); }
 
 .top-nav-collapse {
-  background-color: var(--skib-contrast-base);
+  background-color: var(--skib-contrast-white);
 }
 
 /* Adding color to the Navbar on mobile */
 @media only screen and (max-width: 768px) {
   .navbar {
-    background-color: var(--skib-contrast-base) } }
+    background-color: var(--skib-contrast-white) } }
 
 /* Footer color for sake of consistency with Navbar */
 .page-footer {
