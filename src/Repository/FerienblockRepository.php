@@ -52,7 +52,7 @@ class FerienblockRepository extends ServiceEntityRepository
      * @param $price
      * @return Product[]
      */
-    public function findFerienblocksFromToday($stadt, DateTime $start = null, DateTime $end = null)
+    public function findFerienblocksFromToday($stadt, \DateTime $start = null, \DateTime $end = null)
     {
         // automatically knows to select Products
         // the "p" is an alias you'll use in the rest of the query

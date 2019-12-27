@@ -236,10 +236,12 @@ class FerienController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE);
         }
-        $startDate = new DateTime($request->get('startDate'));
-        $endDate = new DateTime($request->get('endDate'));
+        $startDate = $request->get('start')?new \DateTime($request->get('start')):null;
+        $endDate = $request->get('end')?new \DateTime($request->get('end')):null;
+    dump($startDate);
+    dump($endDate);
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-        $dates = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt);
+        $dates = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt,$startDate,$endDate);
         $today = new \DateTime('today');
 
         return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'dates' => $dates, 'stadt' => $stadt, 'today' => $today));

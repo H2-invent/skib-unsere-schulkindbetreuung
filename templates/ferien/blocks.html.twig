@@ -4,31 +4,33 @@
         <div class="modal-header">
             <h5 class="modal-title">{% trans %}Ferienblöcke zum Bestellen anklicken{% endtrans %}</h5>
         </div>
-
-
-        <div class="modal-body">
+        <div class="modal-body" >
             <div class="row">
                 <div class="col-md-8">
-                    <input class="form-control" type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
+                    <input class="form-control" type="text" name="daterange" value="01/01/2018 - 01/15/2018"/>
                 </div>
             </div>
+        </div>
+        <div class="modal-body" id="blockauswahl">
+
             <div class="accordion" id="accordion">
 
-            {% for date in dates %}
-                <h4>
-                    {{ date.0.startdate|date('d.m.Y') }}
-                </h4>
+                {% for date in dates %}
+                    <h4>
+                        {{ date.0.startdate|date('d.m.Y') }}
+                    </h4>
 
                     {% if date is defined and not null %}
                         {% include 'ferien/_programCard.html.twig' with {'date':date} %}
                     {% endif %}
 
-            {% endfor %}
+                {% endfor %}
             </div>
 
             <div class="row">
                 <div class="col-lg-12">
-                    <p>{% trans %}Preis für die Ferienbetreuung{% endtrans %}: <span id="price">{{ kind.ferienblockPreis|number_format(2,',','.') }} €</span></p>
+                    <p>{% trans %}Preis für die Ferienbetreuung{% endtrans %}: <span
+                                id="price">{{ kind.ferienblockPreis|number_format(2,',','.') }} €</span></p>
                 </div>
             </div>
         </div>
@@ -44,17 +46,22 @@
             $('[data-toggle="popover"]').popover()
         })
 
-        $(function() {
+        $(function () {
             $('input[name="daterange"]').daterangepicker({
                 opens: 'left',
                 "autoApply": true,
-                locale:{
-                    format:'DD.MM.YYYY'
+                "startDate": "{{'now'|date('d/m/Y')}}",
+                "endDate": "{{ 'now'|date_modify("+7 days")|date('d/m/Y') }}",
+                locale: {
+                    format: 'DD.MM.YYYY'
                 },
-            }, function(start, end, label) {
-
-                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-            });
+            }, function (start, end, label) {
+                var url = '{{ path('ferien_kind_programm',{'slug':stadt.slug,'kind_id':kind.id}) }}';
+                url += '&start='+start.format('YYYY-MM-DD');
+                url += '&end='+end.format('YYYY-MM-DD');
+                url += ' #blockauswahl';
+                $('#blockauswahl').load(url);
+               });
         });
 
     </script>
