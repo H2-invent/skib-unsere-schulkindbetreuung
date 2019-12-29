@@ -175,11 +175,11 @@ class workflowController extends AbstractController
      */
     public function imprintAction($slug, Request $request, TranslatorInterface $translator)
     {
-        if ($slug == null){
+        if ($slug === null){
             return $this->redirectToRoute('impressum');
         }
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
-        if ($stadt->getImprint() != null){
+        if ($stadt->getImprint() !== null){
             return $this->render('workflow/imprint.html.twig', array('stadt' => $stadt));
         } else {
             return $this->redirectToRoute('impressum');

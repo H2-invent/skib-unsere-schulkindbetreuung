@@ -49,6 +49,7 @@ class StadtType extends AbstractType
         $builder
             ->add('name', TextType::class,['label'=>'Name der Stadt','translation_domain' => 'form'])
             ->add('slug', TextType::class,['label'=>'Slug der Stadt','translation_domain' => 'form'])
+            ->add('active', CheckboxType::class,['required'=>false,'label'=>'Stadt aktiv','translation_domain' => 'form'])
             ->add('ferienprogramm', CheckboxType::class,['required'=>false,'label'=>'Wir bieten eine Ferienbetreuung über dieses Portal an','translation_domain' => 'form'])
             ->add('schulkindBetreung', CheckboxType::class,['required'=>false,'label'=>'Wir bieten eine Schulkindbetreuung über dieses Portal an','translation_domain' => 'form'])
             ->add('email', TextType::class,['label'=>'Email','translation_domain' => 'form'])

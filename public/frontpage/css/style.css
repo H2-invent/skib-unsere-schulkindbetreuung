@@ -146,6 +146,18 @@ body {
   font-family: Nunito;
   font-style: normal;
   font-weight: 400;
+  color: var(--skib-contrast-dark);
+}
+.card-text {
+  color: var(--skib-contrast-dark) !important;
+}
+
+.skib-card-image {
+  padding-right: -10px;
+  margin-right: -10px;
+  padding-left: -10px;
+  margin-left: -10px;
+  border-radius: 8px
 }
 
 h1,
@@ -163,20 +175,19 @@ h2 {
   .btn-primary:hover {
     background-color: var(--main-color-hover) !important;
   }
-
-.btn-primary:active {
-  border-color: var(--main-color-activ) !important;
-  box-shadow: var(--main-color-activ) !important;
-}
+  .btn-primary:active {
+    border-color: var(--main-color-activ) !important;
+    box-shadow: var(--main-color-activ) !important;
+  }
 
 .btn-secondary {
   background-color: var(--sec-color) !important;
   border-radius: 500px;
   color: #fff !important;
 }
-.btn-secondary:hover {
-  background-color: var(--sec-color-hover) !important;
-}
+  .btn-secondary:hover {
+    background-color: var(--sec-color-hover) !important;
+  }
 
 .btn-outline-primary {
   border-color: #0057B0 !important;
@@ -193,10 +204,10 @@ h2 {
   color: var(--sec-color) !important;
   border-radius: 500px;
 }
-.btn-outline-secondary:hover {
-  border-color: var(--sec-color-hover) !important;
-  color: var(--sec-color-hover) !important;
-}
+  .btn-outline-secondary:hover {
+    border-color: var(--sec-color-hover) !important;
+    color: var(--sec-color-hover) !important;
+  }
 
 .progress-bar {
   background-color: var(--main-color) !important;
@@ -205,9 +216,9 @@ h2 {
 a {
   color: var(--main-color);
 }
-a:hover {
-  color: var(--main-color-hover);
-}
+  a:hover {
+    color: var(--main-color-hover);
+  }
 
 
 

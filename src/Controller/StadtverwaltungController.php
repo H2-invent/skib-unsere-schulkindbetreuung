@@ -85,6 +85,7 @@ class StadtverwaltungController extends AbstractController
         if (!$this->getUser()->hasRole('ROLE_ADMIN')){
            $form->remove('schulkindBetreung');
            $form->remove('ferienprogramm');
+            $form->remove('active');
        }
 
         $form->handleRequest($request);
