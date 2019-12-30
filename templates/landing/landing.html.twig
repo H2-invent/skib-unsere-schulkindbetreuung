@@ -13,13 +13,14 @@
 <div class="view full-page-intro"
      style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
     <style>
-        .svg{
+        .svg {
             height: 100px;
             position: absolute;
             top: 0;
             width: 100%;
         }
-        .svg-bottom{
+
+        .svg-bottom {
             height: 100px;
             position: absolute;
             bottom: 0;
@@ -31,12 +32,11 @@
     <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
 
 
-
         <svg class="svg-bottom" viewBox="0 0 200 100" preserveAspectRatio="none"
              xmlns="http://www.w3.org/2000/svg">
 
-            <circle fill="white" cx="0" cy="100" r="100" />
-            <circle fill="white" cx="200" cy="100" r="100" />
+            <circle fill="white" cx="0" cy="100" r="100"/>
+            <circle fill="white" cx="200" cy="100" r="100"/>
         </svg>
         <!-- Content -->
         <div class="container">
@@ -87,9 +87,12 @@
                                 <!-- Count item widget-->
                                 {% for s in stadt %}
                                     <div class="col-md-4">
-                                        <div class="card ">
+                                        <div class="card">
 
-                                            <img class="card-img-top " src="{{ vich_uploader_asset(s,'imageFile') }}">
+                                            <div class="view overlay skib-card-image">
+                                                <img class="card-img-top"
+                                                     src="{{ vich_uploader_asset(s,'imageFile') }}">
+                                            </div>
                                             <div class="card-body">
 
                                                 <h4 class="card-title">{{ s.name }}</h4>

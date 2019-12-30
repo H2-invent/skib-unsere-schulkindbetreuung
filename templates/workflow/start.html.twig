@@ -103,9 +103,11 @@
                                 <h4>
                                     Info
                                 </h4>
-                                <p>
-                                    {{ cityInfoText|nl2br }}
-                                </p>
+                                <span class="more">
+                                   {{ cityInfoText|markdown_to_html }}
+                               </span>
+
+
                             </div>
                             <div class="col-md-4">
                                 <h4>
@@ -146,34 +148,34 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-deck">
-                                    <div class="row">
+                                    <!-- Count item widget-->
+                                    {% for s in schule %}
+                                        <div class="col-md-4 mb-4">
+                                            <div class="card hoverable">
+                                                <div class="view overlay skib-card-image">
+                                                    <img class="card-img-top"
+                                                            {% if s.image %}
+                                                         src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                         alt="{{ s.name }}" style="max-height: 300px">
+                                                    {% else %}
+                                                        <img src="{{ asset('images/logo-breit-mittig.png') }}">
+                                                    {% endif %}
+                                                    <a href="adresse">
+                                                        <div class="mask rgba-white-slight"></div>
+                                                    </a>
+                                                </div>
 
+                                                <div class="card-body ">
+                                                    <h5 class="card-title">{{ s.name }}</h5>
 
-                                        <!-- Count item widget-->
-                                        {% for s in schule %}
-                                            <div class="col-lg-4 col-md-6">
-                                                <div class="card hoverable ">
-                                                    <div class="view overlay">
-                                                        <img class="card-img-top"
-                                                             src="{{ vich_uploader_asset(s,'imageFile') }}"
-                                                             alt="{{ s.name }}">
-                                                        <a href="adresse">
-                                                            <div class="mask rgba-white-slight"></div>
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="card-body ">
-                                                        <h5 class="card-title">{{ s.name }}</h5>
-                                                        <p class="card-text">
-                                                            {{ s.infoText }}<br>
-                                                            {% trans %}Betreuuende Organisation{% endtrans %}
-                                                            : {{ s.organisation.name }}
-                                                        </p>
-                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    {% trans %}Betreuender Träger{% endtrans %}
+                                                    : {{ s.organisation.name }}
                                                 </div>
                                             </div>
-                                        {% endfor %}
-                                    </div>
+                                        </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -185,30 +187,26 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-deck">
-                                    <div class="row">
+                                    <!-- Count item widget-->
+                                    {% for o in stadt.organisations %}
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="card hoverable">
+                                                <div class="view overlay">
+                                                    <img class="card-img-top"
+                                                         src="{{ vich_uploader_asset(o,'imageFile') }}"
+                                                         alt="{{ o.name }}" style="max-height: 300px">
+                                                    <a href="{{ path('ferien_adresse', {'slug': stadt.slug}) }}">
+                                                        <div class="mask rgba-white-slight"></div>
+                                                    </a>
+                                                </div>
 
-
-                                        <!-- Count item widget-->
-                                        {% for o in stadt.organisations %}
-                                            <div class="col-lg-4 col-md-6">
-                                                <div class="card hoverable  ">
-                                                    <div class="view overlay">
-                                                        <img class="card-img-top"
-                                                             src="{{ vich_uploader_asset(o,'imageFile') }}"
-                                                             alt="{{ o.name }}" style="max-height: 300px">
-                                                        <a href="{{ path('ferien_adresse', {'slug': stadt.slug}) }}">
-                                                            <div class="mask rgba-white-slight"></div>
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="card-body ">
-                                                        <h5 class="card-title">{{ o.name }}</h5>
-                                                        <p class="card-text">{{ o.infoText }}</p>
-                                                    </div>
+                                                <div class="card-body ">
+                                                    <h5 class="card-title">{{ o.name }}</h5>
+                                                    <p class="card-text">{{ o.infoText }}</p>
                                                 </div>
                                             </div>
-                                        {% endfor %}
-                                    </div>
+                                        </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -248,8 +246,8 @@
                                         {% trans %}Träger{% endtrans %}
                                     </h4>
                                     {% for o in stadt.organisations %}
-                                        <div class="row">
-                                            <div class="col-md-8 mb-1">
+                                        <div class="row mb-1">
+                                            <div class="col-md-8">
                                                 <b>{{ o.name }}</b><br>
                                                 {% trans %}Ansprechpartner:{% endtrans %} {{ o.ansprechpartner }}<br/>
                                                 {% trans %}Telefon:{% endtrans %} <a
@@ -261,6 +259,12 @@
                                                        target="_blank" rel="noopener noreferrer"><i
                                                                 class="fas fa-external-link-alt"></i> {% trans %}Webseite{% endtrans %}
                                                     </a><br/>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-md-4">
+                                                {% if o.image is not empty %}
+                                                    <img src="{{ vich_uploader_asset(o,'imageFile') }}"
+                                                         style="max-height: 110px; max-width: 100%">
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -287,6 +291,7 @@
 <script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
 <script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
+<script src="{{ asset('frontpage/vendor/hide-reveal-more-content/dist/jquery.morecontent.lite.min.js') }}"></script>
 <script>
     $(function () {
         $("a[href*=\\#]").on('click', function (e) {
@@ -303,6 +308,20 @@
         });
 
     });
+</script>
+<script>
+    $('.more').moreContent(
+        {
+            textClose: '{{ 'Mehr lesen'|trans }}',
+            textOpen: '{{ 'Schließen'|trans }}',
+            tpl: {
+
+                btn: '<button class="btn btn-primary" type="button"></button>',
+
+            },
+        }
+    );
+
 </script>
 
 </body>
