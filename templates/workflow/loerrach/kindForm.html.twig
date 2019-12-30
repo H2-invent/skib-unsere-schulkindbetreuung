@@ -30,7 +30,7 @@
           method: 'POST',
           data: $form.serialize(),
           success:function (data) {
-              Snackbar.show({text: data.snack});
+              $.snackbar({content: data.snack});
 
               if (data.error == 0) {
                   if (typeof data.next != "undefined"){
