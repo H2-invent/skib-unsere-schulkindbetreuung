@@ -248,3 +248,9 @@ nav.navbar a.menu-btn:hover {
 .side-navbar li a:focus, .side-navbar li a:hover {
   background: var(--skib-contrast-base) !important;
 }
+.morecontent span {
+  display: none;
+}
+.morelink {
+  display: block;
+}

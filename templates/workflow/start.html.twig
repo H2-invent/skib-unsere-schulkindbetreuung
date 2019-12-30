@@ -103,9 +103,11 @@
                                 <h4>
                                     Info
                                 </h4>
-                                <p>
-                                    {{ cityInfoText|markdown_to_html }}
-                                </p>
+                               <span class="more">
+                                   {{ cityInfoText|markdown_to_html }}
+                               </span>
+
+
                             </div>
                             <div class="col-md-4">
                                 <h4>
@@ -285,6 +287,7 @@
 <script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
 <script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
+<script src="{{ asset('frontpage/vendor/hide-reveal-more-content/dist/jquery.morecontent.lite.min.js') }}"></script>
 <script>
     $(function () {
         $("a[href*=\\#]").on('click', function (e) {
@@ -301,6 +304,20 @@
         });
 
     });
+</script>
+<script>
+    $('.more').moreContent(
+        {
+            textClose: '{{ 'Mehr lesen'|trans }}',
+            textOpen: '{{ 'Schließen'|trans }}',
+            tpl: {
+
+                btn: '<button class="btn btn-primary" type="button"></button>',
+
+            },
+        }
+        );
+
 </script>
 
 </body>
