@@ -153,12 +153,12 @@
                                         <div class="col-md-4 mb-4">
                                             <div class="card hoverable">
                                                 <div class="view overlay skib-card-image">
+                                                    {% if s.image %}
                                                     <img class="card-img-top"
-                                                            {% if s.image %}
                                                          src="{{ vich_uploader_asset(s,'imageFile') }}"
                                                          alt="{{ s.name }}" style="max-height: 300px">
                                                     {% else %}
-                                                        <img src="{{ asset('images/logo-breit-mittig.png') }}">
+                                                        <img class="card-img-top" src="{{ asset('images/logo-breit-mittig.png') }}">
                                                     {% endif %}
                                                     <a href="adresse">
                                                         <div class="mask rgba-white-slight"></div>
