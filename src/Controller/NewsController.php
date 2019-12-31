@@ -335,20 +335,25 @@ class NewsController extends AbstractController
         if ($news->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
+        $today = new \DateTime();
 
         $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
         $qb->innerJoin('stammdaten.kinds','kinds')
             ->innerJoin('kinds.zeitblocks','kind_zeitblocks')
+            ->innerJoin('kind_zeitblocks.active','active')
             ->andWhere('kind_zeitblocks.schule = :schule')
             ->andWhere('stammdaten.fin = 1')
             ->andWhere('stammdaten.saved = 1')
-            ->setParameter('schule', $news->getSchule());
+            ->andWhere('active.bis >= :today')
+            ->andWhere('active.von <= :today')
+            ->setParameter('schule', $news->getSchule())
+            ->setParameter('today', $today);
         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
 
         $mailContent = $this->renderView('email/orgNews.html.twig', array('organisation'=>$news->getOrganisation(), 'news' => $news, 'stammdaten'=>$stammdaten));
         foreach ($stammdaten as $data){
-            $mailerService->sendEmail('Ranzenpost','info@h2-invent.com',$data->getEmail(),$news->getTitle(),$mailContent);
+            $mailerService->sendEmail('Ranzenpost',$news->getOrganisation()->getEmail(),$data->getEmail(),$news->getTitle(),$mailContent);
     }
 
         $text = $translator->trans('Nachricht versendet');
