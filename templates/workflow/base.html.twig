@@ -113,21 +113,29 @@
         $.confirm({
             title: '{{ 'Bestätigung'|trans }}',
             content: '{{ 'Wollen Sie diese Aktion durchführen?'|trans }}',
-            theme: 'material',
+            theme: 'modern',
             buttons: {
-                confirm: function () {
-                    $.ajax({
-                        url: url,
-                        type: type,
-                        success: function (data) {
-                            if (data.redirect) {
-                                window.location.href = data.redirect;
+                confirm: {
+                    btnClass: 'btn btn-primary',
+                    text: '{{ 'Fortsetzen'|trans }}',
+                    action: function () {
+                        $.ajax({
+                            url: url,
+                            type: type,
+                            success: function (data) {
+                                if (data.redirect) {
+                                    window.location.href = data.redirect;
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 },
-                cancel: function () {
+                cancel: {
+                    btnClass: 'btn btn-secondry',
+                    text: '{{ 'Abbrechen'|trans }}',
+                    action: function () {
 
+                    }
                 },
 
             }

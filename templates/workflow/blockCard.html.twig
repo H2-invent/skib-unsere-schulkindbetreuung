@@ -13,9 +13,8 @@
 
               {% if b.ganztag == 0 %} <b>{% trans %}Mittagessen{% endtrans %}<i class="fas fa-utensils"></i> </b> <br>{% endif %}
                 <b>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</b><br>
-                Grundpreis: {{ b.preise[kind.eltern.einkommen]|number_format(2,',') }}€<br>
-                <b class="gebucht-text">{% if b in kind.zeitblocks %}{{ 'Gebucht'|trans }}{% endif %}{% if b in kind.beworben %}{{ 'Angemeldet'|trans }}{% endif %}</b><br>
-                <a href="#" class="btn">{{'Hier buchen'|trans}}</a>
+                Grundgebühr: {{ b.preise[kind.eltern.einkommen]|number_format(2,',') }}€<br>
+                <a href="#" class="btn gebucht-text">{% if b in kind.zeitblocks %}{{ 'Gebucht'|trans }}{% elseif b in kind.beworben %}{{ 'Angemeldet'|trans }} {% else %}{{ 'Hier buchen'|trans }}{% endif %}</a>
             </div>
         </div>
     {% endfor %}
