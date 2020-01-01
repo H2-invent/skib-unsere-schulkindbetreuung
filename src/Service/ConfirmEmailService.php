@@ -64,6 +64,9 @@ class ConfirmEmailService
                 $this->em->persist($stammdaten);
                 $this->em->flush();
             }
+
+
+
             $formData = array('confirmationCode' => '',
                 'redirectUrl' => $redirect);
             $form = $this->formBuilder->create(ConfirmType::class,$formData);
@@ -82,7 +85,7 @@ class ConfirmEmailService
                 }
                 return new RedirectResponse($this->router->generate('workflow_confirm_Email', array('stadt' => $stadt->getId(), 'uid' => $stammdaten->getUid(), 'redirect' => $formData['redirectUrl'], 'snack' => $this->translator->trans('Bestätigungscode fehlerhaft'))));
             }
-            $mailBetreff = $this->translator->trans('Bestätigung der Email Adresse');
+            $mailBetreff = $this->translator->trans('Bestätigung der E-Mail-Adresse');
             $mailContent = $this->twig->render('email/bestaetigungscode.html.twig', array('eltern' => $stammdaten));
             if ($stammdaten->getConfirmEmailSend() === false) {
                 $this->mailer->sendEmail('H2-Invent', 'info@h2-invent.com', $stammdaten->getEmail(), $mailBetreff, $mailContent);
@@ -92,7 +95,7 @@ class ConfirmEmailService
                 $this->em->flush();
             }
 
-            $text = $this->translator->trans('Wir haben Ihnen einen Bestätigungscode an Ihre Emailadresse gesandt. Bitte geben Sie diesen Code aus der Email hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen.');
+            $text = $this->translator->trans('Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen.');
 
             return $this->twig->render('workflow/formConfirmation.html.twig', array('form' => $form->createView(), 'titel' => $mailBetreff, 'text' => $text, 'stadt' => $stadt, 'stammdaten' => $stammdaten, 'redirect' => $request->get('redirect')));
 
