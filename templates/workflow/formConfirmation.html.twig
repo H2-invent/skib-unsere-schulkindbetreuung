@@ -19,5 +19,5 @@
     {{ form_widget(form) }}
     {{ form_end(form) }}
 
-    <a href="{{ path('workflow_reset_Email',{'uid':stammdaten.uid,'stadt':stadt.id,'redirect':redirect,'resendEmail':stammdaten.resendEmail}) }}">{{ 'Email erneut senden'|trans }}</a>
+    <a href="{{ path('workflow_reset_Email',{'uid':stammdaten.uid,'stadt':stadt.id,'redirect':redirect,'resendEmail':stammdaten.resendEmail}) }}">{{ 'E-Mail erneut senden'|trans }}</a>
 {% endblock %}

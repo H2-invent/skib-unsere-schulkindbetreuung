@@ -44,6 +44,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints\Json;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -106,7 +107,7 @@ class LoerrachWorkflowController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($adresse);
                 $em->flush();
-                $response = $this->redirectToRoute('workflow_confirm_Email', array('redirect' => $this->generateUrl('loerrach_workflow_schulen'), 'uid' => $adresse->getUid(), 'stadt' => $stadt->getId()));
+                $response = $this->redirectToRoute('workflow_confirm_Email', array('redirect' => $this->generateUrl('loerrach_workflow_schulen',array(),UrlGeneratorInterface::ABSOLUTE_URL), 'uid' => $adresse->getUid(), 'stadt' => $stadt->getId()));
                 $response->headers->setCookie($cookie);
                 return $response;
             }
@@ -424,8 +425,20 @@ class LoerrachWorkflowController extends AbstractController
         foreach ($kind as $data) {
             $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $this->einkommensgruppen);
         }
-
-        $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
+        $default = array(
+            'text'=>''
+        );
+        $form = $this->createFormBuilder($default)
+            ->add('test',TextType::class)
+            ->add('submit',SubmitType::class)
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $default = $form->getData();
+            // do with default data whatever you want ...
+        }
+        $response = $this->render('workflow/abschluss.html.twig', array('form'=>$form->createView(),'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
         $response->headers->clearCookie('UserID');
         $response->headers->clearCookie('SecID');
         $response->headers->clearCookie('KindID');

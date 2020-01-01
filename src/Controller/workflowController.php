@@ -94,8 +94,15 @@ class workflowController extends AbstractController
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt'));
 
         $res = $confirmEmailService->confirm($stammdaten,$stadt,$request->get('redirect'),$request);
+        $url = parse_url($request->get('redirect'))['host'];
         if ($res === null ){
-            return new RedirectResponse( $request->get('redirect'));
+            if($url == $request->getHost()){
+                return new RedirectResponse( $request->get('redirect'));
+            }else{
+                throw new \Exception('Wrong Redirect Adress');
+            }
+
+
         }
         return new Response($res);
     }
