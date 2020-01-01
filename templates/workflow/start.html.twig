@@ -30,8 +30,14 @@
                 </div>
 
                 <div class="col-md-12 mb-4 white-text text-center lead">
-                    <p class="lead d-none d-sm-block">{% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}</p>
 
+                    <p class="lead d-none d-sm-block">
+                        {% if stadt.active %}
+                        {% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}
+                    {% else %}
+                        {% trans with {"%name%":stadt.name} %}Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}
+                    {% endif %}
+                    </p>
                 </div>
 
                 {% if stadt.ferienprogramm and stadt.schulkindBetreung %}
@@ -154,11 +160,12 @@
                                             <div class="card hoverable">
                                                 <div class="view overlay skib-card-image">
                                                     {% if s.image %}
-                                                    <img class="card-img-top"
-                                                         src="{{ vich_uploader_asset(s,'imageFile') }}"
-                                                         alt="{{ s.name }}" style="max-height: 300px">
+                                                        <img class="card-img-top"
+                                                             src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                             alt="{{ s.name }}" style="max-height: 300px">
                                                     {% else %}
-                                                        <img class="card-img-top" src="{{ asset('images/logo-breit-mittig.png') }}">
+                                                        <img class="card-img-top"
+                                                             src="{{ asset('images/logo-breit-mittig.png') }}">
                                                     {% endif %}
                                                     <a href="adresse">
                                                         <div class="mask rgba-white-slight"></div>
