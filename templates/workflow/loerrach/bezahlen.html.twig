@@ -1,0 +1,50 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
+        <div class="progress mb-2">
+            <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0"
+                 aria-valuemax="100">{% trans %}SEPA Lastschrift Mandat{% endtrans %}</div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">
+            <h4> {% trans %}SEPA Lastschrift Mandat erstellen{% endtrans %}</h4>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <div class="col-sm-11">
+                    {{ form_start(form) }}
+                    {{ form_label(form.iban) }}
+                    {{ form_widget(form.iban) }}
+
+                    {{ form_label(form.bic) }}
+                    {{ form_widget(form.bic) }}
+
+                    {{ form_label(form.kontoinhaber) }}
+                    {{ form_widget(form.kontoinhaber) }}
+
+                    {{ form_label(form.sepaInfo) }}
+                    {{ form_widget(form.sepaInfo) }}
+                    <p>
+                        {% trans %}Ich ermächtige (Wir ermächtigen){% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>{% endfor %}, {% trans %}Zahlungen von meinem (unserem) Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein (weisen wir unser) Kreditinstitut an, die von{% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>{% endfor %} {% trans %}auf mein (unser) Konto gezogenen Lastschriften einzulösen{% endtrans %}.
+                    </p>
+
+                    {% trans %}Hinweis: Ich kann (Wir können) innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem (unserem) Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
+
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="{{ path('loerrach_workflow_mittagessen', {'slug':stadt.slug}) }}"
+                   class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
+                {{ form_label(form.submit) }}
+                {{ form_widget(form.submit) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

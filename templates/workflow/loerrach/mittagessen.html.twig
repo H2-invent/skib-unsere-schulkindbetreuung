@@ -39,7 +39,7 @@
                 <div class="text-center">
                     <a href="{{ path('loerrach_workflow_schulen') }}"
                        class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
-                    <a href="{{ path('loerrach_workflow_zusammenfassung') }}"
+                    <a href="{{ path('loerrach_workflow_bezahlen',{'slug':stadt.slug}) }}"
                        class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
                 </div>
 
