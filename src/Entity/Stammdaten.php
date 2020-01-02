@@ -33,12 +33,14 @@ class Stammdaten
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="text",nullable=true)
+     * @Encrypted()
      */
     private $vorname;
 
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="text",nullable=true)
+     * @Encrypted()
      */
     private $strasse;
 
@@ -85,6 +87,7 @@ class Stammdaten
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="text",nullable=true)
+     * @Encrypted()
      */
     private $notfallkontakt;
 
@@ -98,6 +101,7 @@ class Stammdaten
      * @Assert\Iban()
      * @Assert\NotBlank(groups={"Schulkind"})
      * @ORM\Column(type="text",nullable=true)
+     * @Encrypted()
      */
     private $iban;
 
@@ -110,12 +114,14 @@ class Stammdaten
      * @Assert\Bic()
      * @ORM\Column(type="text",nullable=true)
      * @Assert\NotBlank(groups={"Schulkind"})
+     * @Encrypted()
      */
     private $bic;
 
     /**
      * @ORM\Column(type="text",nullable=true)
      * @Assert\NotBlank(groups={"Schulkind"})
+     * @Encrypted()
      */
     private $kontoinhaber;
 
@@ -151,6 +157,7 @@ class Stammdaten
      * @Assert\Email()
      * @Assert\NotBlank()
      * @ORM\Column(type="text",nullable=true)
+     * @Encrypted()
      */
     private $email;
 
@@ -161,12 +168,14 @@ class Stammdaten
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
      */
     private $abholberechtigter;
 
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
      */
     private $notfallName;
     /**

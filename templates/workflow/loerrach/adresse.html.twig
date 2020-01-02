@@ -97,28 +97,6 @@
 
             </div>
         </div>
-        <div class="card mb-3">
-            <div class="card-header">
-                <h4> {% trans %}Daten für den SEPA Lastschrifteinzug{% endtrans %}</h4>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-11">
-                        {{ form_label(form.iban) }}
-                        {{ form_widget(form.iban) }}
-
-                        {{ form_label(form.bic) }}
-                        {{ form_widget(form.bic) }}
-
-                        {{ form_label(form.kontoinhaber) }}
-                        {{ form_widget(form.kontoinhaber) }}
-
-                        {{ form_label(form.sepaInfo) }}
-                        {{ form_widget(form.sepaInfo) }}
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="card">
             <div class="card-header">
                 <h4> {% trans %}Daten für Notfälle und weitere Informationen{% endtrans %}</h4>

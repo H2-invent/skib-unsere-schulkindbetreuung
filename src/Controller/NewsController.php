@@ -201,6 +201,7 @@ class NewsController extends AbstractController
         $activity->setDate($today);
         $schulen = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation' => $organisation));
         $form = $this->createForm(NewsType::class, $activity, array('schulen'=>$schulen));
+        $form->remove('activ');
         $form->handleRequest($request);
 
         $errors = array();
@@ -237,6 +238,7 @@ class NewsController extends AbstractController
         $activity->setDate($today);
         $schulen = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation' => $activity->getOrganisation()));
         $form = $this->createForm(NewsType::class, $activity, array('schulen'=>$schulen));
+        $form->remove('activ');
         $form->handleRequest($request);
 
         $errors = array();

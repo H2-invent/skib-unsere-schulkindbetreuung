@@ -10,12 +10,14 @@ namespace App\Controller;
 
 use App\Entity\Active;
 use App\Entity\Kind;
+use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use App\Form\Type\LoerrachEltern;
 use App\Form\Type\LoerrachKind;
+use App\Form\Type\SepaStammdatenType;
 use App\Form\Type\StadtType;
 use App\Service\AnmeldeEmailService;
 use App\Service\IcsService;
@@ -100,7 +102,7 @@ class LoerrachWorkflowController extends AbstractController
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $adresse = $form->getData();
-            $errors = $validator->validate($adresse,null,['Schulkind']);
+            $errors = $validator->validate($adresse);
             if (count($errors) == 0) {
                 $adresse->setFin(false);
                 $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
@@ -319,9 +321,9 @@ class LoerrachWorkflowController extends AbstractController
         }
 
     /**
-     * @Route("/{slug}/mittagessen", name="loerrach_workflow_mittagessen")
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+ * @Route("/{slug}/mittagessen", name="loerrach_workflow_mittagessen")
+ * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
+ */
     public function mittagessenAction(Request $request, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
         $adresse = new Stammdaten;
@@ -337,6 +339,51 @@ class LoerrachWorkflowController extends AbstractController
         }
         return $this->render('workflow/loerrach/mittagessen.html.twig', array('stadt' => $stadt, 'schule' => $renderSchulen));
     }
+
+
+    /**
+     * @Route("/{slug}/bezahlen", name="loerrach_workflow_bezahlen")
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
+     */
+    public function sepaAction(Request $request, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, ValidatorInterface $validator)
+    {
+        $adresse = new Stammdaten;
+
+        //Include Parents in this route
+        if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
+            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
+        } else {
+            return $this->redirectToRoute('loerrach_workflow_adresse');
+        }
+
+        $qb = $this->getDoctrine()->getRepository(Organisation::class)->createQueryBuilder('organisation');
+        $qb->innerJoin('organisation.schule','schule')
+            ->innerJoin('schule.kinder','kinder')
+            ->innerJoin('kinder.eltern','eltern')
+            ->andWhere('eltern.id = :stammdaten')
+            ->setParameter('stammdaten', $adresse);
+        $query = $qb->getQuery();
+        $renderOrganisation = $query->getResult();
+        $form = $this->createForm(SepaStammdatenType::class, $adresse);
+
+        $form->handleRequest($request);
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $adresse = $form->getData();
+            $errors = $validator->validate($adresse,null,['schulkind']);
+                if (count($errors) == 0) {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($adresse);
+                    $em->flush();
+
+                    $response = $this->redirectToRoute('loerrach_workflow_zusammenfassung', array('slug' => $stadt->getSlug()));
+                    return $response;
+                }
+
+        }
+        return $this->render('workflow/loerrach/bezahlen.html.twig', array('stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors, 'organisation' => $renderOrganisation));
+   }
+
 
     /**
      * @Route("/loerrach/zusammenfassung",name="loerrach_workflow_zusammenfassung",methods={"GET"})

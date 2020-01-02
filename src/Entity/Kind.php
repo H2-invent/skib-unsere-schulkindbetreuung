@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\Validator\Constraints as Assert;
+use Ambta\DoctrineEncryptBundle\Configuration\Encrypted;
 
 
 
@@ -43,12 +44,14 @@ class Kind
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
      */
     private $vorname;
 
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
      */
     private $nachname;
 
