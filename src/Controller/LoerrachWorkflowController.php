@@ -359,8 +359,7 @@ class LoerrachWorkflowController extends AbstractController
         $qb = $this->getDoctrine()->getRepository(Organisation::class)->createQueryBuilder('organisation');
         $qb->innerJoin('organisation.schule','schule')
             ->innerJoin('schule.kinder','kinder')
-            ->innerJoin('kinder.eltern','eltern')
-            ->andWhere('eltern.id = :stammdaten')
+            ->andWhere('kinder.eltern = :stammdaten')
             ->setParameter('stammdaten', $adresse);
         $query = $qb->getQuery();
         $renderOrganisation = $query->getResult();
