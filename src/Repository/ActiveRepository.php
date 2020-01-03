@@ -6,6 +6,7 @@ use App\Entity\Active;
 use App\Entity\Stadt;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Active|null find($id, $lockMode = null, $lockVersion = null)
@@ -71,7 +72,8 @@ class ActiveRepository extends ServiceEntityRepository
         // to get just one result:
         // $product = ;
     }
-    public function findSchuleBetweentwoDates(\DateTime $von, \DateTime $bis,Stadt $stadt)
+
+    public function findSchuleBetweentwoDates(\DateTime $von, \DateTime $bis, Stadt $stadt)
     {
         // automatically knows to select Products
         // the "p" is an alias you'll use in the rest of the query
@@ -81,7 +83,7 @@ class ActiveRepository extends ServiceEntityRepository
             ->andWhere('a.von <= :von')
             ->andWhere('a.bis >= :bis')
             ->setParameter('von', $von)
-            ->setParameter('bis',$bis)
+            ->setParameter('bis', $bis)
             ->setParameter('stadt', $stadt)
             ->getQuery()
             ->setMaxResults(1);
@@ -91,25 +93,38 @@ class ActiveRepository extends ServiceEntityRepository
         // to get just one result:
         // $product = ;
     }
+
     /**
      * @param $price
      * @return Product[]
      */
-    public function findSchuljahrFromCity($stadt)
+    public function findSchuljahrFromCity(Stadt $stadt)
     {
         // automatically knows to select Products
         // the "p" is an alias you'll use in the rest of the query
         $today = new \DateTime();
-        $qb = $this->createQueryBuilder('a')
-            ->andWhere('a.stadt = :stadt')
-            ->andWhere('a.von <= :today')
-            ->andWhere('a.bis >= :today')
-            ->setParameter('today', $today)
+        $qb = $this->createQueryBuilder('a');
+        $qb
+            ->andWhere('a.stadt = :stadt');
+            $qb->expr()->orX()->add(
+                $qb->expr()->andX(
+                    $qb->expr()->lte('a.von', $today),
+                    $qb->expr()->gte('a.bis', $today)
+                )
+
+            )
+            ->add(
+                $qb->expr()->andX(
+                    $qb->expr()->lte('a.anmeldeStart', $today),
+                    $qb->expr()->gte('a.anmeldeEnde', $today)
+                )
+            );
+
+            $qb
             ->setParameter('stadt', $stadt)
-            ->getQuery()
             ->setMaxResults(1);
 
-        return $qb->getOneOrNullResult();
+        return $qb->getQuery()->getOneOrNullResult();
 
         // to get just one result:
         // $product = ;
