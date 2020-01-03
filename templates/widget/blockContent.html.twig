@@ -4,8 +4,23 @@
            <h3>{% trans %}Stundenplan{% endtrans %}<i class="material-icons">expand_more</i></h3>
        </a>
     </div>
+   <div class="card-body">
+       <div class="dropdown">
+           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               {{ 'Alle Schulen'|trans }}
+           </button>
+           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+               {% for s in schule %}
+                   <a class="dropdown-item loadInTarget" data-target="#stundenplanTable" href="{{ path('widget_kids_stundenplan',{'org_id':org.id,'schule_id':s.id}) }}">{{s.name}}</a>
+               {% endfor %}
+
+           </div>
+       </div>
+
+   </div>
    <div class="collapse " aria-labelledby="headingOne" id="stundenplanCOntent">
-   <div class="card-body" >
+
+   <div class="card-body" id="stundenplanTable">
         <div class="row">
 
             <div class="col-md-2 text-center">

@@ -993,6 +993,18 @@
         donetext: "{{ 'Fertig'|trans }}"
     });
 </script>
+<script>
+    $(document).on('click','.loadInTarget',function (e) {
+        e.preventDefault();
+        var ele = $(this);
+        var url = ele.attr('href');
+      var target = ele.attr('data-target');
+      $(target).load(url+' '+target);
+        var text = ele.text();
+        var dropdown = ele.closest('.dropdown').find('button');
+        dropdown.text(text);
+    })
+</script>
 {% block jquery %}
 
 {% endblock %}
