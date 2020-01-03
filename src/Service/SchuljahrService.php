@@ -19,14 +19,13 @@ class SchuljahrService
 
 
     private $em;
-    private $params;
     private $user;
-   public function __construct(Security $security,ValidatorInterface $validator,FormFactoryInterface $formFactory,EntityManagerInterface $entityManager,ParameterBagInterface $params)
+   public function __construct(Security $security,EntityManagerInterface $entityManager)
    {
 
 
        $this->em = $entityManager;
-       $this->params = $params;
+
        $this->user = $security;
    }
 
