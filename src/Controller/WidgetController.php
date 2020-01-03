@@ -170,7 +170,8 @@ class WidgetController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
         $lastMonth = (new \DateTime())->modify('first day of last Month');
-
+        $lastDay = (new \DateTime())->modify('last day of last Month');
+        $active = $this->getDoctrine()->getRepository(Active::class)->findSchuleBetweentwoDates($lastDay,$lastDay,$organisation->getStadt());
         $qb = $this->getDoctrine()->getRepository(Sepa::class)->createQueryBuilder('s');
         $qb->andWhere('s.von <= :today')
             ->andWhere('s.bis >= :today')
@@ -180,7 +181,8 @@ class WidgetController extends AbstractController
         $query = $qb->getQuery();
         $sepa = $result = $query->getResult();
 
-        if (sizeof($sepa) == 0) {
+
+        if (sizeof($sepa) == 0 && $active !== null) {
             return new JsonResponse(array('title' => $translator->trans('Sepa-Lastschrift fällig'), 'small' => '', 'anzahl' => 1, 'symbol' => 'money'));
         } else {
             return 0;
