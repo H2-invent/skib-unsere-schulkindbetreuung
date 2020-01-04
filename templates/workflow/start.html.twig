@@ -32,7 +32,7 @@
                 <div class="col-md-12 mb-4 white-text text-center lead">
 
                     <p class="lead d-none d-sm-block">
-                        {% if stadt.active %}
+                        {% if not stadt.active %}
                         {% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}
                     {% else %}
                         {% trans with {"%name%":stadt.name} %}Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}

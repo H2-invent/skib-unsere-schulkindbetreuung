@@ -8,40 +8,26 @@
 
                 <hr class="clearfix w-100 d-md-none d-none">
 
-                <div class="col-lg-3 col-md-4 mb-md-0">
+                {% if stadt is defined and stadt is not null %}
+                <div class="col-lg-6 col-md-4 mb-md-0">
                     <ul class="list-unstyled">
                         <div class="font-weight-bold d-none d-md-block">
-                            {% trans %}Angaben von SKiB{% endtrans %}
+                            {% trans %}Rechtlich{% endtrans %}
                         </div>
                         <li>
-                            <a href={{ path('impressum') }}>{% trans %}SKiB-Impressum{% endtrans %}</a>
+                            <a href={{ path('workflow_imprint',{'slug':stadt.slug}) }}>{% trans %}Impressum{% endtrans %}</a>
                         </li>
                         <li>
-                            <a href={{ path('datenschutz') }}>{% trans %}SKiB-Datenschutz{% endtrans %}</a>
+                            <a href={{ path('workflow_datenschutz',{'slug':stadt.slug,'org_id':'city'}) }}>{% trans %}Datenschutz{% endtrans %}</a>
                         </li>
                         <li>
-                            <a href={{ path('nutzungsbedingungen') }}>{% trans %}SKiB-Nutzungsbedingungen{% endtrans %}</a>
+                            <a href={{ path('workflow_agb',{'slug':stadt.slug}) }}>{% trans %}Vertragsbedingungen{% endtrans %}</a>
+                        </li>
+                        <li>
+                            <a href={{ path('welcome_landing') }}>{% trans %}SKiB Software - H2 invent{% endtrans %}</a>
                         </li>
                     </ul>
                 </div>
-                <div class="col-lg-3 col-md-4 mb-md-0 d-none d-md-block">
-                    <ul class="list-unstyled">
-                        <div class="font-weight-bold">
-                            Unternehmen
-                        </div>
-                        <li>
-                            <a href="https://h2-invent.com/ueber-uns/">Über uns</a>
-                        </li>
-                        <li>
-                            <a href="https://h2-invent.com/services/beratung/">Beratung</a>
-                        </li>
-                        <li>
-                            <a href="https://h2-invent.com/kontakt/">Kontakt</a>
-                        </li>
-                    </ul>
-                </div>
-
-                {% if stadt is defined and stadt is not null %}
                     <div class="col-lg-6 col-md-8 mb-md-0 text-right">
                         <b class="d-none d-md-block">
                             {% trans with {"%name%":stadt.name} %}Im Auftrag der Stadt %name%{% endtrans %}
@@ -55,6 +41,24 @@
                             </div>
                         {% endif %}
                     </div>
+
+                    {% else %}
+                        <div class="col-lg-6 col-md-4 mb-md-0">
+                            <ul class="list-unstyled">
+                                <div class="font-weight-bold d-none d-md-block">
+                                    {% trans %}Rechtlich{% endtrans %}
+                                </div>
+                                <li>
+                                    <a href={{ path('impressum') }}>{% trans %}Impressum{% endtrans %}</a>
+                                </li>
+                                <li>
+                                    <a href={{ path('datenschutz') }}>{% trans %}Datenschutz{% endtrans %}</a>
+                                </li>
+                                <li>
+                                    <a href={{ path('nutzungsbedingungen') }}>{% trans %}Nutzungsbedingungen{% endtrans %}</a>
+                                </li>
+                            </ul>
+                        </div>
                 {% endif %}
             </div>
 
