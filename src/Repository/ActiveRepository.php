@@ -73,6 +73,30 @@ class ActiveRepository extends ServiceEntityRepository
         // $product = ;
     }
 
+    /**
+     * @param $price
+     * @return Product[]
+     */
+    public function findAnmeldeSchuljahrFromCity($stadt)
+    {
+        // automatically knows to select Products
+        // the "p" is an alias you'll use in the rest of the query
+        $today = new \DateTime();
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.stadt = :stadt')
+            ->andWhere('a.anmeldeStart <= :today')
+            ->andWhere('a.anmeldeEnde >= :today')
+            ->setParameter('today', $today)
+            ->setParameter('stadt', $stadt)
+            ->getQuery()
+            ->setMaxResults(1);
+
+        return $qb->getOneOrNullResult();
+
+        // to get just one result:
+        // $product = ;
+    }
+
     public function findSchuleBetweentwoDates(\DateTime $von, \DateTime $bis, Stadt $stadt)
     {
         // automatically knows to select Products
@@ -98,32 +122,18 @@ class ActiveRepository extends ServiceEntityRepository
      * @param $price
      * @return Product[]
      */
-    public function findSchuljahrFromCity(Stadt $stadt)
+    public function findSchuljahrFromCity(Stadt $stadt, \DateTime $today)
     {
         // automatically knows to select Products
         // the "p" is an alias you'll use in the rest of the query
-        $today = new \DateTime();
         $qb = $this->createQueryBuilder('a');
-        $qb
-            ->andWhere('a.stadt = :stadt');
-            $qb->expr()->orX()->add(
-                $qb->expr()->andX(
-                    $qb->expr()->lte('a.von', $today),
-                    $qb->expr()->gte('a.bis', $today)
-                )
-
-            )
-            ->add(
-                $qb->expr()->andX(
-                    $qb->expr()->lte('a.anmeldeStart', $today),
-                    $qb->expr()->gte('a.anmeldeEnde', $today)
-                )
-            );
-
-            $qb
-            ->setParameter('stadt', $stadt)
-            ->setMaxResults(1);
-
+        $qb ->andWhere('a.stadt = :stadt')
+            ->andWhere('a.anmeldeStart <= :today')
+            ->andWhere('a.bis >= :today')
+            ->orderBy('a.bis', 'DESC')
+            ->setMaxResults(1)
+            ->setParameter('today', $today)
+            ->setParameter('stadt', $stadt);
         return $qb->getQuery()->getOneOrNullResult();
 
         // to get just one result:

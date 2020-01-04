@@ -1,333 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="de" target-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="de" target-language="fr" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="9axanJz" resname="Melden Sie hier ihre Kinder für die Ganztagsbetreuung der Stadt">
-        <source>Melden Sie hier ihre Kinder für die Ganztagsbetreuung der Stadt</source>
-        <target>Aply for a free space for your kids</target>
-      </trans-unit>
-      <trans-unit id="DtNW7cW" resname="Hier meine Kinder anmelden">
-        <source>Hier meine Kinder anmelden</source>
-        <target>Aply here for a place</target>
-      </trans-unit>
-      <trans-unit id="ksXg16X" resname="Melden Sie hier ihre Kinder für die Ganztagsbetreuung der Stadt %name% an">
-        <source>Melden Sie hier ihre Kinder für die Ganztagsbetreuung der Stadt %name% an</source>
-        <target>Aply for a place for your kids in the city %name% </target>
-      </trans-unit>
-      <trans-unit id="41SVHha" resname="Beginnen Sie mit der Eingabe Ihrer Daten">
-        <source>Beginnen Sie mit der Eingabe Ihrer Daten</source>
-        <target>Start with your adress</target>
-      </trans-unit>
-      <trans-unit id="h7YL9VW" resname="Städte">
-        <source>Städte</source>
-        <target>Cities</target>
-      </trans-unit>
-      <trans-unit id="hORe5zQ" resname="Bearbeiten">
-        <source>Bearbeiten</source>
-        <target>Edit</target>
-      </trans-unit>
-      <trans-unit id="KW4_Eg9" resname="Städte Administratoren">
-        <source>Städte Administratoren</source>
-        <target>City Administrators</target>
-      </trans-unit>
-      <trans-unit id="hHiom2z" resname="Schulen">
-        <source>Schulen</source>
-        <target>Schools</target>
-      </trans-unit>
-      <trans-unit id="0rh74eB" resname="Organisationen">
-        <source>Organisationen</source>
-        <target>Organisations</target>
-      </trans-unit>
-      <trans-unit id="2bHhPzu" resname="Neu">
-        <source>Neu</source>
-        <target>New</target>
-      </trans-unit>
-      <trans-unit id="bC01IWH" resname="Löschen">
-        <source>Löschen</source>
-        <target>Delete</target>
-      </trans-unit>
-      <trans-unit id="wcIksDz" resname="Admin">
-        <source>Admin</source>
-        <target>Admin</target>
-      </trans-unit>
-      <trans-unit id="Inm9E03" resname="Stadt">
-        <source>Stadt</source>
-        <target>City</target>
-      </trans-unit>
-      <trans-unit id="0_KlttH" resname="Stadt Administratoren">
-        <source>Stadt Administratoren</source>
-        <target>City Administrators</target>
-      </trans-unit>
-      <trans-unit id="_Kc4j.e" resname="Stadt anlegen">
-        <source>Stadt anlegen</source>
-        <target>New City</target>
-      </trans-unit>
-      <trans-unit id="3N7cZyG" resname="Stadt bearbeiten">
-        <source>Stadt bearbeiten</source>
-        <target>Edit City</target>
-      </trans-unit>
-      <trans-unit id="QAUpUIQ" resname="Neuen Stadtmitarbeiter anlegen">
-        <source>Neuen Stadtmitarbeiter anlegen</source>
-        <target>Add new City employee</target>
-      </trans-unit>
-      <trans-unit id="HXIh5Jc" resname="Stadt Administratoren für %stadt%">
-        <source>Stadt Administratoren für %stadt%</source>
-        <target>City Administrators for %stadt%</target>
-      </trans-unit>
-      <trans-unit id="a8htxPu" resname="Fehler: %error%">
-        <source>Fehler: %error%</source>
-        <target>Error: %error%</target>
-      </trans-unit>
-      <trans-unit id="a.Bg5sG" resname="Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse">
-        <source>Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse</source>
-        <target>This Email is already registered</target>
-      </trans-unit>
-      <trans-unit id="TabP5k8" resname="Passwort ändern">
-        <source>Passwort ändern</source>
-        <target>Change password</target>
-      </trans-unit>
-      <trans-unit id="9ERKqla" resname="Admin toggeln">
-        <source>Admin toggeln</source>
-        <target>Toggle admin</target>
-      </trans-unit>
-      <trans-unit id="_Q5iOsg" resname="Account Deaktivieren">
-        <source>Account Deaktivieren</source>
-        <target>Deactivate acount</target>
-      </trans-unit>
-      <trans-unit id="a_rW1dR" resname="Password ändern">
-        <source>Password ändern</source>
-        <target>Change password</target>
-      </trans-unit>
-      <trans-unit id="pDIoMbq" resname="Das Passwort konnte nich geändert werden">
-        <source>Das Passwort konnte nich geändert werden</source>
-        <target>The password could not be changed</target>
-      </trans-unit>
-      <trans-unit id="9XUKXXI" resname="Einstellungen">
-        <source>Einstellungen</source>
-        <target>Settings</target>
-      </trans-unit>
-      <trans-unit id="47ienTP" resname="Username">
-        <source>Username</source>
-        <target>Username</target>
-      </trans-unit>
-      <trans-unit id="0td7b.p" resname="Vorname">
-        <source>Vorname</source>
-        <target>First name</target>
-      </trans-unit>
-      <trans-unit id="slNY7dS" resname="Nachname">
-        <source>Nachname</source>
-        <target>Last name</target>
-      </trans-unit>
-      <trans-unit id="ADipz4Z" resname="Rolle">
-        <source>Rolle</source>
-        <target>Role</target>
-      </trans-unit>
-      <trans-unit id="kg5BPH1" resname="Status">
-        <source>Status</source>
-        <target>State</target>
-      </trans-unit>
-      <trans-unit id="VwsWrux" resname="Zu diesem User wechseln">
-        <source>Zu diesem User wechseln</source>
-        <target>Impersonate to this User</target>
-      </trans-unit>
-      <trans-unit id="JS90orN" resname="Geburtstag">
-        <source>Geburtstag</source>
-        <target>Birthday</target>
-      </trans-unit>
-      <trans-unit id="iaxN3xl" resname="Original Account">
-        <source>Original Account</source>
-        <target>Original account</target>
-      </trans-unit>
-      <trans-unit id="9Mtokbn" resname="Mitarbeiter">
-        <source>Mitarbeiter</source>
-        <target>Employee</target>
-      </trans-unit>
-      <trans-unit id="e.yBlit" resname="Schule anlegen">
-        <source>Schule anlegen</source>
-        <target>New School</target>
-      </trans-unit>
-      <trans-unit id="3NHVIj9" resname="Name">
-        <source>Name</source>
-        <target>Name</target>
-      </trans-unit>
-      <trans-unit id="0VOH7Mb" resname="Slug">
-        <source>Slug</source>
-        <target>Slug</target>
-      </trans-unit>
-      <trans-unit id="56JB3rr" resname="URL">
-        <source>URL</source>
-        <target>URL</target>
-      </trans-unit>
-      <trans-unit id="bRCf2Pa" resname="Organisation anlegen">
-        <source>Organisation anlegen</source>
-        <target>New organisation</target>
-      </trans-unit>
-      <trans-unit id="eeXPIN4" resname="Adresse">
-        <source>Adresse</source>
-        <target>Adress</target>
-      </trans-unit>
-      <trans-unit id="SPRSWT_" resname="Organisations Administratoren">
-        <source>Organisations Administratoren</source>
-        <target>Organisation Administrators</target>
-      </trans-unit>
-      <trans-unit id="RZid5J_" resname="Details">
-        <source>Details</source>
-        <target>Detail</target>
-      </trans-unit>
-      <trans-unit id="0xns7kQ" resname="Adresse:">
-        <source>Adresse:</source>
-        <target>__Adresse:</target>
-      </trans-unit>
-      <trans-unit id="_mkG127" resname="Telefon">
-        <source>Telefon</source>
-        <target>__Telefon</target>
-      </trans-unit>
-      <trans-unit id="lpzL089" resname="Email">
-        <source>Email</source>
-        <target>__Email</target>
-      </trans-unit>
-      <trans-unit id="OsNmCHb" resname="Ansprechpartner">
-        <source>Ansprechpartner</source>
-        <target>__Ansprechpartner</target>
-      </trans-unit>
-      <trans-unit id="FwMioy8" resname="Info">
-        <source>Info</source>
-        <target>__Info</target>
-      </trans-unit>
-      <trans-unit id="hospV8O" resname="Organistaion">
-        <source>Organistaion</source>
-        <target>__Organistaion</target>
-      </trans-unit>
-      <trans-unit id="q1LKl78" resname="Mitarbeiter der Stadt %stadt%">
-        <source>Mitarbeiter der Stadt %stadt%</source>
-        <target>__Mitarbeiter der Stadt %stadt%</target>
-      </trans-unit>
-      <trans-unit id="jjBUF66" resname="Berechtigungen verwalten">
-        <source>Berechtigungen verwalten</source>
-        <target>__Berechtigungen verwalten</target>
-      </trans-unit>
-      <trans-unit id="ifwhezW" resname="Deaktiviert">
-        <source>Deaktiviert</source>
-        <target>Deactivated</target>
-      </trans-unit>
-      <trans-unit id="yTLzQls" resname="Kein Admin">
-        <source>Kein Admin</source>
-        <target>No Admin</target>
-      </trans-unit>
-      <trans-unit id="YXWA8Pf" resname="Unbekannter Fehler">
-        <source>Unbekannter Fehler</source>
-        <target>Unknown Error</target>
-      </trans-unit>
-      <trans-unit id="8azWWO_" resname="Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername">
-        <source>Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername</source>
-        <target>__Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername</target>
-      </trans-unit>
-      <trans-unit id="19a8pLe" resname="Stadtmitarbeiter bearbeiten">
-        <source>Stadtmitarbeiter bearbeiten</source>
-        <target>Edit city employee</target>
-      </trans-unit>
-      <trans-unit id="eobplLX" resname="Deaktivieren">
-        <source>Deaktivieren</source>
-        <target>Deactivate</target>
-      </trans-unit>
-      <trans-unit id="l5.2GBi" resname="Neuen Organisationsmitarbeiter anlegen">
-        <source>Neuen Organisationsmitarbeiter anlegen</source>
-        <target>New organisation employee</target>
-      </trans-unit>
-      <trans-unit id="RkPL0Rv" resname="Mitarbeiter der Organisation">
-        <source>Mitarbeiter der Organisation</source>
-        <target>Employee of the Organisation</target>
-      </trans-unit>
-      <trans-unit id="RU3Nh0d" resname="Mitarbeiter der Organisationen der Stadt %stadt%">
-        <source>Mitarbeiter der Organisationen der Stadt %stadt%</source>
-        <target>Employee of the city %stadt%</target>
-      </trans-unit>
-      <trans-unit id="NQvjZDz" resname="Organisation">
-        <source>Organisation</source>
-        <target>Organisation</target>
-      </trans-unit>
-      <trans-unit id="qrKDvng" resname="Mitarbeiter der Organisation %org%">
-        <source>Mitarbeiter der Organisation %org%</source>
-        <target>Employee in the orgnisation %org%</target>
-      </trans-unit>
-      <trans-unit id="l3.7Thr" resname="Alle User">
-        <source>Alle User</source>
-        <target>All Users</target>
-      </trans-unit>
-      <trans-unit id="UGw_6pk" resname="Admin ernennen">
-        <source>Admin ernennen</source>
-        <target>Promote Admin</target>
-      </trans-unit>
       <trans-unit id="8DI4NlC" resname="Erfolgreich gespeichert">
         <source>Erfolgreich gespeichert</source>
-        <target>Sucessfull saved</target>
+        <target>__Erfolgreich gespeichert</target>
       </trans-unit>
-      <trans-unit id="mUvkJi5" resname="Berechtigungen für %vorname% %nachname%">
-        <source>Berechtigungen für %vorname% %nachname%</source>
-        <target>Accessrights for Employee %vorname% %nachname%</target>
-      </trans-unit>
-      <trans-unit id="2Hxrhyc" resname="Erfolgreich angelegt">
-        <source>Erfolgreich angelegt</source>
-        <target>Sucessfully Added</target>
+      <trans-unit id="xdbz0uj" resname="Fehler: Falsche Organisation">
+        <source>Fehler: Falsche Organisation</source>
+        <target>__Fehler: Falsche Organisation</target>
       </trans-unit>
       <trans-unit id="bnIcZGC" resname="Erfolgreich gelöscht">
         <source>Erfolgreich gelöscht</source>
-        <target>Successfully deleted</target>
+        <target>__Erfolgreich gelöscht</target>
       </trans-unit>
-      <trans-unit id="YP0iY.T" resname="Rechte erfolgreich gesetzt">
-        <source>Rechte erfolgreich gesetzt</source>
-        <target>Permissinons set</target>
-      </trans-unit>
-      <trans-unit id="5a91K2w" resname="Erfolgreich geändert">
-        <source>Erfolgreich geändert</source>
-        <target>SUcessfully changed</target>
-      </trans-unit>
-      <trans-unit id="ULTPo.F" resname="Passwort erfolgreich geändert">
-        <source>Passwort erfolgreich geändert</source>
-        <target>Password sucessfully changed</target>
-      </trans-unit>
-      <trans-unit id="YTAWjT5" resname="meine Organisation">
-        <source>meine Organisation</source>
-        <target>My organisation</target>
-      </trans-unit>
-      <trans-unit id="K9IjwaJ" resname="User für %stadt%">
-        <source>User für %stadt%</source>
-        <target>User for city %stadt%</target>
-      </trans-unit>
-      <trans-unit id="1AFgdf6" resname="Keine Organisation angegeben">
-        <source>Keine Organisation angegeben</source>
-        <target>No organisation set</target>
-      </trans-unit>
-      <trans-unit id="DQIts8Z" resname="Schuljahr anlegen">
-        <source>Schuljahr anlegen</source>
-        <target>__Schuljahr anlegen</target>
-      </trans-unit>
-      <trans-unit id="O6Ye6kL" resname="Schuljahr bearbeiten">
-        <source>Schuljahr bearbeiten</source>
-        <target>__Schuljahr bearbeiten</target>
-      </trans-unit>
-      <trans-unit id="2fDA5GL" resname="Schuljahre">
-        <source>Schuljahre</source>
-        <target>__Schuljahre</target>
-      </trans-unit>
-      <trans-unit id="UDI5XSO" resname="Meine Organisation">
-        <source>Meine Organisation</source>
-        <target>__Meine Organisation</target>
-      </trans-unit>
-      <trans-unit id="osdMBiP" resname="Meine Mitarbeiter">
-        <source>Meine Mitarbeiter</source>
-        <target>__Meine Mitarbeiter</target>
-      </trans-unit>
-      <trans-unit id="eDJe41j" resname="Meine Schulen">
-        <source>Meine Schulen</source>
-        <target>__Meine Schulen</target>
-      </trans-unit>
-      <trans-unit id="8qHMcfp" resname="Sprache">
-        <source>Sprache</source>
-        <target>__Sprache</target>
+      <trans-unit id="WlWD.jo" resname="Fehler. Bitte versuchen Sie es erneut.">
+        <source>Fehler. Bitte versuchen Sie es erneut.</source>
+        <target>__Fehler. Bitte versuchen Sie es erneut.</target>
       </trans-unit>
       <trans-unit id="twP8auu" resname="Montag">
         <source>Montag</source>
@@ -349,26 +41,6 @@
         <source>Freitag</source>
         <target>__Freitag</target>
       </trans-unit>
-      <trans-unit id="ZgSUoQM" resname="Zeitblöcke">
-        <source>Zeitblöcke</source>
-        <target>__Zeitblöcke</target>
-      </trans-unit>
-      <trans-unit id="R8zmCYu" resname="Schuljahresbeginn">
-        <source>Schuljahresbeginn</source>
-        <target>__Schuljahresbeginn</target>
-      </trans-unit>
-      <trans-unit id="q9CL8ss" resname="Schuljahresende">
-        <source>Schuljahresende</source>
-        <target>__Schuljahresende</target>
-      </trans-unit>
-      <trans-unit id="WlWD.jo" resname="Fehler. Bitte versuchen Sie es erneut.">
-        <source>Fehler. Bitte versuchen Sie es erneut.</source>
-        <target>__Fehler. Bitte versuchen Sie es erneut.</target>
-      </trans-unit>
-      <trans-unit id="xdbz0uj" resname="Fehler: Falsche Organisation">
-        <source>Fehler: Falsche Organisation</source>
-        <target>__Fehler: Falsche Organisation</target>
-      </trans-unit>
       <trans-unit id="fCKq2CM" resname="Samstag">
         <source>Samstag</source>
         <target>__Samstag</target>
@@ -376,22 +48,6 @@
       <trans-unit id="pZhFklA" resname="Sonntag">
         <source>Sonntag</source>
         <target>__Sonntag</target>
-      </trans-unit>
-      <trans-unit id="DuqbrrG" resname="Neuen Block anlegen">
-        <source>Neuen Block anlegen</source>
-        <target>__Neuen Block anlegen</target>
-      </trans-unit>
-      <trans-unit id="9rL.OfV" resname="Speichern">
-        <source>Speichern</source>
-        <target>__Speichern</target>
-      </trans-unit>
-      <trans-unit id="uAj26XB" resname="Schließen">
-        <source>Schließen</source>
-        <target>__Schließen</target>
-      </trans-unit>
-      <trans-unit id="3aRcePB" resname="Blöcke geladen.">
-        <source>Blöcke geladen.</source>
-        <target>__Blöcke geladen.</target>
       </trans-unit>
       <trans-unit id="SX_VFFL" resname="Kinder betreut vom Träger">
         <source>Kinder betreut vom Träger</source>
@@ -420,6 +76,10 @@
       <trans-unit id="wyfWzSw" resname=" in der Klasse: %klasse%">
         <source> in der Klasse: %klasse%</source>
         <target>__ in der Klasse: %klasse%</target>
+      </trans-unit>
+      <trans-unit id="5a91K2w" resname="Erfolgreich geändert">
+        <source>Erfolgreich geändert</source>
+        <target>__Erfolgreich geändert</target>
       </trans-unit>
       <trans-unit id="Stvfiqn" resname="Preis erfolgreich berechnet.">
         <source>Preis erfolgreich berechnet.</source>
@@ -489,6 +149,14 @@
         <source>Kinder</source>
         <target>__Kinder</target>
       </trans-unit>
+      <trans-unit id="0td7b.p" resname="Vorname">
+        <source>Vorname</source>
+        <target>__Vorname</target>
+      </trans-unit>
+      <trans-unit id="slNY7dS" resname="Nachname">
+        <source>Nachname</source>
+        <target>__Nachname</target>
+      </trans-unit>
       <trans-unit id="SCuY4WC" resname="Alter">
         <source>Alter</source>
         <target>__Alter</target>
@@ -512,6 +180,10 @@
       <trans-unit id="XQnUg8G" resname="Eltern">
         <source>Eltern</source>
         <target>__Eltern</target>
+      </trans-unit>
+      <trans-unit id="eeXPIN4" resname="Adresse">
+        <source>Adresse</source>
+        <target>__Adresse</target>
       </trans-unit>
       <trans-unit id="Ki0ZPna" resname="Notfallnummer">
         <source>Notfallnummer</source>
@@ -597,9 +269,17 @@
         <source>Betreuende Organisation</source>
         <target>__Betreuende Organisation</target>
       </trans-unit>
+      <trans-unit id="OsNmCHb" resname="Ansprechpartner">
+        <source>Ansprechpartner</source>
+        <target>__Ansprechpartner</target>
+      </trans-unit>
       <trans-unit id="trRMl.i" resname="Telefonnummer">
         <source>Telefonnummer</source>
         <target>__Telefonnummer</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>__Email</target>
       </trans-unit>
       <trans-unit id="89VBHgv" resname="Sicherheitscode">
         <source>Sicherheitscode</source>
@@ -725,6 +405,14 @@
         <source>Anzahl Kinder</source>
         <target>__Anzahl Kinder</target>
       </trans-unit>
+      <trans-unit id="NQvjZDz" resname="Organisation">
+        <source>Organisation</source>
+        <target>__Organisation</target>
+      </trans-unit>
+      <trans-unit id="ifwhezW" resname="Deaktiviert">
+        <source>Deaktiviert</source>
+        <target>__Deaktiviert</target>
+      </trans-unit>
       <trans-unit id="ZEGhE2w" resname="Kinder im KiGa">
         <source>Kinder im KiGa</source>
         <target>__Kinder im KiGa</target>
@@ -752,6 +440,38 @@
       <trans-unit id="bZKtRuQ" resname="Sicherheitscode ungültig">
         <source>Sicherheitscode ungültig</source>
         <target>__Sicherheitscode ungültig</target>
+      </trans-unit>
+      <trans-unit id="2Hxrhyc" resname="Erfolgreich angelegt">
+        <source>Erfolgreich angelegt</source>
+        <target>__Erfolgreich angelegt</target>
+      </trans-unit>
+      <trans-unit id="YXWA8Pf" resname="Unbekannter Fehler">
+        <source>Unbekannter Fehler</source>
+        <target>__Unbekannter Fehler</target>
+      </trans-unit>
+      <trans-unit id="a.Bg5sG" resname="Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse">
+        <source>Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse</source>
+        <target>__Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse</target>
+      </trans-unit>
+      <trans-unit id="8azWWO_" resname="Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername">
+        <source>Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername</source>
+        <target>__Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername</target>
+      </trans-unit>
+      <trans-unit id="QAUpUIQ" resname="Neuen Stadtmitarbeiter anlegen">
+        <source>Neuen Stadtmitarbeiter anlegen</source>
+        <target>__Neuen Stadtmitarbeiter anlegen</target>
+      </trans-unit>
+      <trans-unit id="pDIoMbq" resname="Das Passwort konnte nich geändert werden">
+        <source>Das Passwort konnte nich geändert werden</source>
+        <target>__Das Passwort konnte nich geändert werden</target>
+      </trans-unit>
+      <trans-unit id="TabP5k8" resname="Passwort ändern">
+        <source>Passwort ändern</source>
+        <target>__Passwort ändern</target>
+      </trans-unit>
+      <trans-unit id="YP0iY.T" resname="Rechte erfolgreich gesetzt">
+        <source>Rechte erfolgreich gesetzt</source>
+        <target>__Rechte erfolgreich gesetzt</target>
       </trans-unit>
       <trans-unit id="xsZzSWN" resname="Ferienprogramm erstellen">
         <source>Ferienprogramm erstellen</source>
@@ -788,6 +508,10 @@
       <trans-unit id="xM8_3jW" resname="Anwesenheitsliste">
         <source>Anwesenheitsliste</source>
         <target>__Anwesenheitsliste</target>
+      </trans-unit>
+      <trans-unit id="RZid5J_" resname="Details">
+        <source>Details</source>
+        <target>__Details</target>
       </trans-unit>
       <trans-unit id="SRxx08g" resname="Ferieneinstellungen ändern">
         <source>Ferieneinstellungen ändern</source>
@@ -849,13 +573,97 @@
         <source>Akzeptieren oder lehnen Sie ein Kind für diesen Block ab</source>
         <target>__Akzeptieren oder lehnen Sie ein Kind für diesen Block ab</target>
       </trans-unit>
+      <trans-unit id="bRCf2Pa" resname="Organisation anlegen">
+        <source>Organisation anlegen</source>
+        <target>__Organisation anlegen</target>
+      </trans-unit>
+      <trans-unit id="e.yBlit" resname="Schule anlegen">
+        <source>Schule anlegen</source>
+        <target>__Schule anlegen</target>
+      </trans-unit>
+      <trans-unit id="DQIts8Z" resname="Schuljahr anlegen">
+        <source>Schuljahr anlegen</source>
+        <target>__Schuljahr anlegen</target>
+      </trans-unit>
+      <trans-unit id="O6Ye6kL" resname="Schuljahr bearbeiten">
+        <source>Schuljahr bearbeiten</source>
+        <target>__Schuljahr bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="19a8pLe" resname="Stadtmitarbeiter bearbeiten">
+        <source>Stadtmitarbeiter bearbeiten</source>
+        <target>__Stadtmitarbeiter bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="ULTPo.F" resname="Passwort erfolgreich geändert">
+        <source>Passwort erfolgreich geändert</source>
+        <target>__Passwort erfolgreich geändert</target>
+      </trans-unit>
+      <trans-unit id="_Kc4j.e" resname="Stadt anlegen">
+        <source>Stadt anlegen</source>
+        <target>__Stadt anlegen</target>
+      </trans-unit>
+      <trans-unit id="3N7cZyG" resname="Stadt bearbeiten">
+        <source>Stadt bearbeiten</source>
+        <target>__Stadt bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="l5.2GBi" resname="Neuen Organisationsmitarbeiter anlegen">
+        <source>Neuen Organisationsmitarbeiter anlegen</source>
+        <target>__Neuen Organisationsmitarbeiter anlegen</target>
+      </trans-unit>
       <trans-unit id="MjEGjhD" resname="Das Ferienprogramm %kursname% ist bereits ausgebucht oder Sie haben zu viele Kinder angemeldet">
         <source>Das Ferienprogramm %kursname% ist bereits ausgebucht oder Sie haben zu viele Kinder angemeldet</source>
         <target>__Das Ferienprogramm %kursname% ist bereits ausgebucht oder Sie haben zu viele Kinder angemeldet</target>
       </trans-unit>
+      <trans-unit id="iaxN3xl" resname="Original Account">
+        <source>Original Account</source>
+        <target>__Original Account</target>
+      </trans-unit>
+      <trans-unit id="wcIksDz" resname="Admin">
+        <source>Admin</source>
+        <target>__Admin</target>
+      </trans-unit>
+      <trans-unit id="h7YL9VW" resname="Städte">
+        <source>Städte</source>
+        <target>__Städte</target>
+      </trans-unit>
+      <trans-unit id="l3.7Thr" resname="Alle User">
+        <source>Alle User</source>
+        <target>__Alle User</target>
+      </trans-unit>
+      <trans-unit id="0rh74eB" resname="Organisationen">
+        <source>Organisationen</source>
+        <target>__Organisationen</target>
+      </trans-unit>
+      <trans-unit id="9Mtokbn" resname="Mitarbeiter">
+        <source>Mitarbeiter</source>
+        <target>__Mitarbeiter</target>
+      </trans-unit>
+      <trans-unit id="Inm9E03" resname="Stadt">
+        <source>Stadt</source>
+        <target>__Stadt</target>
+      </trans-unit>
       <trans-unit id="QyiAyKD" resname="Neuigkeiten">
         <source>Neuigkeiten</source>
         <target>__Neuigkeiten</target>
+      </trans-unit>
+      <trans-unit id="UDI5XSO" resname="Meine Organisation">
+        <source>Meine Organisation</source>
+        <target>__Meine Organisation</target>
+      </trans-unit>
+      <trans-unit id="osdMBiP" resname="Meine Mitarbeiter">
+        <source>Meine Mitarbeiter</source>
+        <target>__Meine Mitarbeiter</target>
+      </trans-unit>
+      <trans-unit id="2fDA5GL" resname="Schuljahre">
+        <source>Schuljahre</source>
+        <target>__Schuljahre</target>
+      </trans-unit>
+      <trans-unit id="hHiom2z" resname="Schulen">
+        <source>Schulen</source>
+        <target>__Schulen</target>
+      </trans-unit>
+      <trans-unit id="eDJe41j" resname="Meine Schulen">
+        <source>Meine Schulen</source>
+        <target>__Meine Schulen</target>
       </trans-unit>
       <trans-unit id="8AymnFc" resname="Angemeldete Kinder">
         <source>Angemeldete Kinder</source>
@@ -889,6 +697,14 @@
         <source>SEPA Übersicht</source>
         <target>__SEPA Übersicht</target>
       </trans-unit>
+      <trans-unit id="9XUKXXI" resname="Einstellungen">
+        <source>Einstellungen</source>
+        <target>__Einstellungen</target>
+      </trans-unit>
+      <trans-unit id="8qHMcfp" resname="Sprache">
+        <source>Sprache</source>
+        <target>__Sprache</target>
+      </trans-unit>
       <trans-unit id="X5AGiMm" resname="Bestätigung">
         <source>Bestätigung</source>
         <target>__Bestätigung</target>
@@ -896,6 +712,10 @@
       <trans-unit id="gQghjkX" resname="Wollen Sie das Element wirkisch löschen?">
         <source>Wollen Sie das Element wirkisch löschen?</source>
         <target>__Wollen Sie das Element wirkisch löschen?</target>
+      </trans-unit>
+      <trans-unit id="bC01IWH" resname="Löschen">
+        <source>Löschen</source>
+        <target>__Löschen</target>
       </trans-unit>
       <trans-unit id="HZMs13C" resname="Wollen Sie diese Aktion durchführen?">
         <source>Wollen Sie diese Aktion durchführen?</source>
@@ -905,9 +725,77 @@
         <source>Fertig</source>
         <target>__Fertig</target>
       </trans-unit>
+      <trans-unit id="mUvkJi5" resname="Berechtigungen für %vorname% %nachname%">
+        <source>Berechtigungen für %vorname% %nachname%</source>
+        <target>__Berechtigungen für %vorname% %nachname%</target>
+      </trans-unit>
+      <trans-unit id="a8htxPu" resname="Fehler: %error%">
+        <source>Fehler: %error%</source>
+        <target>__Fehler: %error%</target>
+      </trans-unit>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target>__Name</target>
+      </trans-unit>
+      <trans-unit id="0VOH7Mb" resname="Slug">
+        <source>Slug</source>
+        <target>__Slug</target>
+      </trans-unit>
+      <trans-unit id="56JB3rr" resname="URL">
+        <source>URL</source>
+        <target>__URL</target>
+      </trans-unit>
+      <trans-unit id="hORe5zQ" resname="Bearbeiten">
+        <source>Bearbeiten</source>
+        <target>__Bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="KW4_Eg9" resname="Städte Administratoren">
+        <source>Städte Administratoren</source>
+        <target>__Städte Administratoren</target>
+      </trans-unit>
       <trans-unit id="WJPGpRl" resname="Berechnungsformel für Betreuung">
         <source>Berechnungsformel für Betreuung</source>
         <target>__Berechnungsformel für Betreuung</target>
+      </trans-unit>
+      <trans-unit id="K9IjwaJ" resname="User für %stadt%">
+        <source>User für %stadt%</source>
+        <target>__User für %stadt%</target>
+      </trans-unit>
+      <trans-unit id="47ienTP" resname="Username">
+        <source>Username</source>
+        <target>__Username</target>
+      </trans-unit>
+      <trans-unit id="JS90orN" resname="Geburtstag">
+        <source>Geburtstag</source>
+        <target>__Geburtstag</target>
+      </trans-unit>
+      <trans-unit id="ADipz4Z" resname="Rolle">
+        <source>Rolle</source>
+        <target>__Rolle</target>
+      </trans-unit>
+      <trans-unit id="kg5BPH1" resname="Status">
+        <source>Status</source>
+        <target>__Status</target>
+      </trans-unit>
+      <trans-unit id="UGw_6pk" resname="Admin ernennen">
+        <source>Admin ernennen</source>
+        <target>__Admin ernennen</target>
+      </trans-unit>
+      <trans-unit id="_Q5iOsg" resname="Account Deaktivieren">
+        <source>Account Deaktivieren</source>
+        <target>__Account Deaktivieren</target>
+      </trans-unit>
+      <trans-unit id="a_rW1dR" resname="Password ändern">
+        <source>Password ändern</source>
+        <target>__Password ändern</target>
+      </trans-unit>
+      <trans-unit id="VwsWrux" resname="Zu diesem User wechseln">
+        <source>Zu diesem User wechseln</source>
+        <target>__Zu diesem User wechseln</target>
+      </trans-unit>
+      <trans-unit id="yTLzQls" resname="Kein Admin">
+        <source>Kein Admin</source>
+        <target>__Kein Admin</target>
       </trans-unit>
       <trans-unit id="1j_378O" resname="Berichte von %active%">
         <source>Berichte von %active%</source>
@@ -952,6 +840,18 @@
       <trans-unit id=".YCE0aV" resname="Neuen Block anlegen am %tag%">
         <source>Neuen Block anlegen am %tag%</source>
         <target>__Neuen Block anlegen am %tag%</target>
+      </trans-unit>
+      <trans-unit id="9rL.OfV" resname="Speichern">
+        <source>Speichern</source>
+        <target>__Speichern</target>
+      </trans-unit>
+      <trans-unit id="uAj26XB" resname="Schließen">
+        <source>Schließen</source>
+        <target>__Schließen</target>
+      </trans-unit>
+      <trans-unit id="3aRcePB" resname="Blöcke geladen.">
+        <source>Blöcke geladen.</source>
+        <target>__Blöcke geladen.</target>
       </trans-unit>
       <trans-unit id="9swBy37" resname="Fehler">
         <source>Fehler</source>
@@ -1077,6 +977,30 @@
         <source>Sicherheitscodeabfrage</source>
         <target>__Sicherheitscodeabfrage</target>
       </trans-unit>
+      <trans-unit id="0xns7kQ" resname="Adresse:">
+        <source>Adresse:</source>
+        <target>__Adresse:</target>
+      </trans-unit>
+      <trans-unit id="_mkG127" resname="Telefon">
+        <source>Telefon</source>
+        <target>__Telefon</target>
+      </trans-unit>
+      <trans-unit id="FwMioy8" resname="Info">
+        <source>Info</source>
+        <target>__Info</target>
+      </trans-unit>
+      <trans-unit id="RkPL0Rv" resname="Mitarbeiter der Organisation">
+        <source>Mitarbeiter der Organisation</source>
+        <target>__Mitarbeiter der Organisation</target>
+      </trans-unit>
+      <trans-unit id="hospV8O" resname="Organistaion">
+        <source>Organistaion</source>
+        <target>__Organistaion</target>
+      </trans-unit>
+      <trans-unit id="1AFgdf6" resname="Keine Organisation angegeben">
+        <source>Keine Organisation angegeben</source>
+        <target>__Keine Organisation angegeben</target>
+      </trans-unit>
       <trans-unit id="ZvUjbfL" resname="Buchungsbestätigung für die Schulkindbetreuung">
         <source>Buchungsbestätigung für die Schulkindbetreuung</source>
         <target>__Buchungsbestätigung für die Schulkindbetreuung</target>
@@ -1190,6 +1114,26 @@
       <trans-unit id="nWV2IiO" resname="Im Anhang finden Sie die genaue Kostenaufschlüsselung und weitere Informationen zu Ihrem SEPA-Lastschriftmandat.">
         <source>Im Anhang finden Sie die genaue Kostenaufschlüsselung und weitere Informationen zu Ihrem SEPA-Lastschriftmandat.</source>
         <target>__Im Anhang finden Sie die genaue Kostenaufschlüsselung und weitere Informationen zu Ihrem SEPA-Lastschriftmandat.</target>
+      </trans-unit>
+      <trans-unit id="q1LKl78" resname="Mitarbeiter der Stadt %stadt%">
+        <source>Mitarbeiter der Stadt %stadt%</source>
+        <target>__Mitarbeiter der Stadt %stadt%</target>
+      </trans-unit>
+      <trans-unit id="eobplLX" resname="Deaktivieren">
+        <source>Deaktivieren</source>
+        <target>__Deaktivieren</target>
+      </trans-unit>
+      <trans-unit id="jjBUF66" resname="Berechtigungen verwalten">
+        <source>Berechtigungen verwalten</source>
+        <target>__Berechtigungen verwalten</target>
+      </trans-unit>
+      <trans-unit id="RU3Nh0d" resname="Mitarbeiter der Organisationen der Stadt %stadt%">
+        <source>Mitarbeiter der Organisationen der Stadt %stadt%</source>
+        <target>__Mitarbeiter der Organisationen der Stadt %stadt%</target>
+      </trans-unit>
+      <trans-unit id="qrKDvng" resname="Mitarbeiter der Organisation %org%">
+        <source>Mitarbeiter der Organisation %org%</source>
+        <target>__Mitarbeiter der Organisation %org%</target>
       </trans-unit>
       <trans-unit id="EfmaxLu" resname="Online Anmeldung">
         <source>Online Anmeldung</source>
@@ -1836,6 +1780,14 @@
         von Ihrem Konto: IBAN %iban%, BIC %bic%, zum Fälligkeitsdatum %einzugsdatum% ein. Wir bitten Sie, für Kontodeckung zu sorgen.</source>
         <target>__Wie mit Ihnen vereinbart ziehen wir unsere Forderungen in Höhe von %betrag%€ mit dem SEPA-Lastschrift Nr. %mandat% zu der Gläubiger-Identitfikationsnummer %glaubigerid%
         von Ihrem Konto: IBAN %iban%, BIC %bic%, zum Fälligkeitsdatum %einzugsdatum% ein. Wir bitten Sie, für Kontodeckung zu sorgen.</target>
+      </trans-unit>
+      <trans-unit id="R8zmCYu" resname="Schuljahresbeginn">
+        <source>Schuljahresbeginn</source>
+        <target>__Schuljahresbeginn</target>
+      </trans-unit>
+      <trans-unit id="q9CL8ss" resname="Schuljahresende">
+        <source>Schuljahresende</source>
+        <target>__Schuljahresende</target>
       </trans-unit>
       <trans-unit id="Vyi7P3." resname="Buchhaltung">
         <source>Buchhaltung</source>
