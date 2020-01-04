@@ -248,3 +248,11 @@ nav.navbar a.menu-btn:hover {
 .side-navbar li a:focus, .side-navbar li a:hover {
   background: var(--skib-contrast-base) !important;
 }
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link:hover {
+  color: var(--sec-color);
+}
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link {
+  color: var(--main-color);
+  font-family: 'TypeWritersSubstitute';
+  font-weight: 400;
+}
