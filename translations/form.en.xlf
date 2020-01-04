@@ -9,6 +9,10 @@
         <source>Name</source>
         <target>Last name</target>
       </trans-unit>
+      <trans-unit id="slNY7dS" resname="Nachname">
+        <source>Nachname</source>
+        <target>__Nachname</target>
+      </trans-unit>
       <trans-unit id="0td7b.p" resname="Vorname">
         <source>Vorname</source>
         <target>First name</target>
@@ -21,29 +25,29 @@
         <source>Adresszusatz</source>
         <target>Adress additional</target>
       </trans-unit>
-      <trans-unit id="1zm99PQ" resname="Netto Haushaltseinkommen">
-        <source>Netto Haushaltseinkommen</source>
-        <target>Netto Income</target>
+      <trans-unit id="mgry4nw" resname="NBrutto Familieneinkommen pro Monat">
+        <source>NBrutto Familieneinkommen pro Monat</source>
+        <target>__Brutto Familieneinkommen pro Monat</target>
       </trans-unit>
       <trans-unit id="9rL.OfV" resname="Speichern">
         <source>Speichern</source>
         <target>Save</target>
       </trans-unit>
-      <trans-unit id="ocfCnkj" resname="Kind im Kindergarten">
-        <source>Kind im Kindergarten</source>
-        <target>Kids in the Kindergarten</target>
+      <trans-unit id="eOWQG8T" resname="Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung">
+        <source>Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung</source>
+        <target>__Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung</target>
       </trans-unit>
-      <trans-unit id=".1vHbRv" resname="BUK Empfänger">
-        <source>BUK Empfänger</source>
-        <target>BUC reciever</target>
+      <trans-unit id="R5FDEAx" resname="Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger">
+        <source>Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger</source>
+        <target>__Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger</target>
       </trans-unit>
       <trans-unit id="U5zZGkQ" resname="Berufliche Situation der Eltern">
         <source>Berufliche Situation der Eltern</source>
         <target>Profession of the parents</target>
       </trans-unit>
-      <trans-unit id="soWzzWN" resname="Notfallkontakt">
-        <source>Notfallkontakt</source>
-        <target>Emergency contact</target>
+      <trans-unit id="vFumzvS" resname="Notfalltelefonnummer">
+        <source>Notfalltelefonnummer</source>
+        <target>__Notfalltelefonnummer</target>
       </trans-unit>
       <trans-unit id="ap89FH4" resname="IBAN für das Lastschriftmandat">
         <source>IBAN für das Lastschriftmandat</source>
@@ -105,9 +109,29 @@
         <source>Gläubiger ID</source>
         <target>__Gläubiger ID</target>
       </trans-unit>
-      <trans-unit id="08zDV_x" resname="Info Text">
-        <source>Info Text</source>
-        <target>Info text</target>
+      <trans-unit id=".xbWfp2" resname="Info Text Deutsch">
+        <source>Info Text Deutsch</source>
+        <target>__Info text Deutsch</target>
+      </trans-unit>
+      <trans-unit id="QE26eNt" resname="Info Text Englisch">
+        <source>Info Text Englisch</source>
+        <target>__Info text Englisch</target>
+      </trans-unit>
+      <trans-unit id="cW7_9ch" resname="Info Text Französisch">
+        <source>Info Text Französisch</source>
+        <target>__Info text Französisch</target>
+      </trans-unit>
+      <trans-unit id="b8tpNiP" resname="AGB Deutsch (Markdown)">
+        <source>AGB Deutsch (Markdown)</source>
+        <target>__AGB Deutsch (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="ZJx3xM6" resname="AGB Englisch (Markdown)">
+        <source>AGB Englisch (Markdown)</source>
+        <target>__AGB Englisch (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="bpFNbLA" resname="AGB Französisch (Markdown)">
+        <source>AGB Französisch (Markdown)</source>
+        <target>__AGB Französisch (Markdown)</target>
       </trans-unit>
       <trans-unit id="trRMl.i" resname="Telefonnummer">
         <source>Telefonnummer</source>
@@ -188,6 +212,330 @@
       <trans-unit id="mIMpHmZ" resname="Preis">
         <source>Preis</source>
         <target>__Preis</target>
+      </trans-unit>
+      <trans-unit id="wA6PJA_" resname="BIC für das Lastschriftmandat">
+        <source>BIC für das Lastschriftmandat</source>
+        <target>__BIC für das Lastschriftmandat</target>
+      </trans-unit>
+      <trans-unit id="ebXHZwy" resname="Kontoinhaber für das Lastschriftmandat">
+        <source>Kontoinhaber für das Lastschriftmandat</source>
+        <target>__Kontoinhaber für das Lastschriftmandat</target>
+      </trans-unit>
+      <trans-unit id="wgwDdOh" resname="Schulform">
+        <source>Schulform</source>
+        <target>__Schulform</target>
+      </trans-unit>
+      <trans-unit id="vYXS4gp" resname="Jahrgangsstufe">
+        <source>Jahrgangsstufe</source>
+        <target>__Jahrgangsstufe</target>
+      </trans-unit>
+      <trans-unit id="jG6YHlK" resname="Ganztagsbetreuung">
+        <source>Ganztagsbetreuung</source>
+        <target>__Ganztagsbetreuung</target>
+      </trans-unit>
+      <trans-unit id="KnKZGcE" resname="Halbtagsbetreuung">
+        <source>Halbtagsbetreuung</source>
+        <target>__Halbtagsbetreuung</target>
+      </trans-unit>
+      <trans-unit id="2ntsNlx" resname="Mein Kind benötig folgende Medikamente">
+        <source>Mein Kind benötig folgende Medikamente</source>
+        <target>__Kind benötig folgende Medikamente</target>
+      </trans-unit>
+      <trans-unit id="Q0OhL24" resname="Mein Kind hat folgende Allergien">
+        <source>Mein Kind hat folgende Allergien</source>
+        <target>__Kind hat folgende Allergien</target>
+      </trans-unit>
+      <trans-unit id="jqvaCh5" resname="Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden.">
+        <source>Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden.</source>
+        <target>__Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden</target>
+      </trans-unit>
+      <trans-unit id="urJCTwm" resname="Zum Newsletter anmelden">
+        <source>Zum Newsletter anmelden</source>
+        <target>__Zum Newsletter anmelden</target>
+      </trans-unit>
+      <trans-unit id="0RKZRDd" resname="Klasse 1">
+        <source>Klasse 1</source>
+        <target>__Klasse 1</target>
+      </trans-unit>
+      <trans-unit id="2VTaSJf" resname="Klasse 2">
+        <source>Klasse 2</source>
+        <target>__Klasse 2</target>
+      </trans-unit>
+      <trans-unit id="Yw.fhNf" resname="Klasse 3">
+        <source>Klasse 3</source>
+        <target>__Klasse 3</target>
+      </trans-unit>
+      <trans-unit id="KZ5gckW" resname="Klasse 4">
+        <source>Klasse 4</source>
+        <target>__Klasse 4</target>
+      </trans-unit>
+      <trans-unit id="EQGUQpS" resname="Klasse 5">
+        <source>Klasse 5</source>
+        <target>__Klasse 5</target>
+      </trans-unit>
+      <trans-unit id="JwBy5Zq" resname="Klasse 6">
+        <source>Klasse 6</source>
+        <target>__Klasse 6</target>
+      </trans-unit>
+      <trans-unit id="_Xt6oOn" resname="Bemerkung">
+        <source>Bemerkung</source>
+        <target>__Bemerkung</target>
+      </trans-unit>
+      <trans-unit id="joTYD59" resname="weiter">
+        <source>weiter</source>
+        <target>next</target>
+      </trans-unit>
+      <trans-unit id="bSx.MCu" resname="Anzahl der Preiskategorien">
+        <source>Anzahl der Preiskategorien</source>
+        <target>__Anzahl der Preiskategorien</target>
+      </trans-unit>
+      <trans-unit id="awhtVjc" resname="Sicherheitscode der Eltern">
+        <source>Sicherheitscode der Eltern</source>
+        <target>__Sicherheitscode der Eltern</target>
+      </trans-unit>
+      <trans-unit id="_WwsV.4" resname="Name und Beziehung des Notfallkontakts">
+        <source>Name und Beziehung des Notfallkontakts</source>
+        <target>__Name und Beziehung des Notfallkontakts</target>
+      </trans-unit>
+      <trans-unit id="5fM56N9" resname="Ich bin alleinerziehend">
+        <source>Ich bin alleinerziehend</source>
+        <target>__Ich bin alleinerziehend</target>
+      </trans-unit>
+      <trans-unit id="RS4UXgU" resname="Weitere abholberechtigte Personen">
+        <source>Weitere abholberechtigte Personen</source>
+        <target>__Weitere abholberechtigte Personen</target>
+      </trans-unit>
+      <trans-unit id="oc2paVv" resname="Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause">
+        <source>Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause</source>
+        <target>__Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause</target>
+      </trans-unit>
+      <trans-unit id="a9GI.w4" resname="Mein Kind darf an Ausflügen teilnehmen">
+        <source>Mein Kind darf an Ausflügen teilnehmen</source>
+        <target>__Mein Kind darf an Ausflügen teilnehmen</target>
+      </trans-unit>
+      <trans-unit id="Qco3..e" resname="Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden">
+        <source>Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden</source>
+        <target>__Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden</target>
+      </trans-unit>
+      <trans-unit id="gR8Y02X" resname="Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.">
+        <source>Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.</source>
+        <target>__Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.</target>
+      </trans-unit>
+      <trans-unit id="rTAOHPw" resname="Mein Kind ernährt sich vegetarisch">
+        <source>Mein Kind ernährt sich vegetarisch</source>
+        <target>__Mein Kind ernährt sich vegetarisch</target>
+      </trans-unit>
+      <trans-unit id="TmHkjJR" resname="Mein Kind isst kein Schweinefleich">
+        <source>Mein Kind isst kein Schweinefleich</source>
+        <target>__Mein Kind isst kein Schweinefleich</target>
+      </trans-unit>
+      <trans-unit id=".a8vgi5" resname="Mein Kind ist Gluten intolerant">
+        <source>Mein Kind ist Gluten intolerant</source>
+        <target>__Mein Kind ist Gluten intolerant</target>
+      </trans-unit>
+      <trans-unit id="Jj8dWM7" resname="Mein Kind ist Laktose intolerant">
+        <source>Mein Kind ist Laktose intolerant</source>
+        <target>__Mein Kind ist Laktose intolerant</target>
+      </trans-unit>
+      <trans-unit id="jkE7jK9" resname="Tag des Lastschrifteinzugs">
+        <source>Tag des Lastschrifteinzugs</source>
+        <target>__Tag des Lastschrifteinzugs</target>
+      </trans-unit>
+      <trans-unit id="h_Yfk8C" resname="Beginn des Abrechnungszeitraums">
+        <source>Beginn des Abrechnungszeitraums</source>
+        <target>__Beginn des Abrechnungszeitraums</target>
+      </trans-unit>
+      <trans-unit id="0Sh19UV" resname="Datenschutzhinweis Deutsch (Markdown)">
+        <source>Datenschutzhinweis Deutsch (Markdown)</source>
+        <target>__Datenschutzhinweis Deutsch (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="0sgqqnW" resname="Datenschutzhinweis Englisch (Markdown)">
+        <source>Datenschutzhinweis Englisch (Markdown)</source>
+        <target>__Datenschutzhinweis Englisch (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="RASD4xH" resname="Datenschutzhinweis Französisch (Markdown)">
+        <source>Datenschutzhinweis Französisch (Markdown)</source>
+        <target>__Datenschutzhinweis Französisch (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="Egy_4e5" resname="AGB hochladen. Diese wird an die Bestätigungsemail angehängt">
+        <source>AGB hochladen. Diese wird an die Bestätigungsemail angehängt</source>
+        <target>__AGB hochladen. Diese wird an die Bestätigungsemail angehängt</target>
+      </trans-unit>
+      <trans-unit id="7TAbULa" resname="URL für Logo">
+        <source>URL für Logo</source>
+        <target>__URL für Logo</target>
+      </trans-unit>
+      <trans-unit id="CqmdQbA" resname="Steuernummer">
+        <source>Steuernummer</source>
+        <target>__Steuernummer</target>
+      </trans-unit>
+      <trans-unit id="t1ndVQ8" resname="UmSt. Identnummer">
+        <source>UmSt. Identnummer</source>
+        <target>__UmSt. Identnummer</target>
+      </trans-unit>
+      <trans-unit id="aKDz1aK" resname="Homepage URL">
+        <source>Homepage URL</source>
+        <target>__Homepage URL</target>
+      </trans-unit>
+      <trans-unit id="kwc3iyZ" resname="Neuigkeit auf der Startseite sichtbar">
+        <source>Neuigkeit auf der Startseite sichtbar</source>
+        <target>__Neuigkeit auf der Startseite sichtbar</target>
+      </trans-unit>
+      <trans-unit id="UzZ7xlJ" resname="Nachricht">
+        <source>Nachricht</source>
+        <target>__Nachricht</target>
+      </trans-unit>
+      <trans-unit id="q8r8gtq" resname="Titel">
+        <source>Titel</source>
+        <target>__Titel</target>
+      </trans-unit>
+      <trans-unit id="D5raBVI" resname="Wir bieten eine Ferienbetreuung über dieses Portal an">
+        <source>Wir bieten eine Ferienbetreuung über dieses Portal an</source>
+        <target>__Wir bieten eine Ferienbetreuung über dieses Portal an</target>
+      </trans-unit>
+      <trans-unit id="fb3gz4B" resname="Wir bieten eine Schulkindbetreuung über dieses Portal an">
+        <source>Wir bieten eine Schulkindbetreuung über dieses Portal an</source>
+        <target>__Wir bieten eine Schulkindbetreuung über dieses Portal an</target>
+      </trans-unit>
+      <trans-unit id="sElE8_." resname="Anzahl Preise">
+        <source>Anzahl Preise</source>
+        <target>__Anzahl Preise</target>
+      </trans-unit>
+      <trans-unit id="SvhqdCS" resname="Maximum Anzahl">
+        <source>Maximum Anzahl</source>
+        <target>__Maximum Anzahl</target>
+      </trans-unit>
+      <trans-unit id="IprR5w9" resname="Minimum Anzahl">
+        <source>Minimum Anzahl</source>
+        <target>__Minimum Anzahl</target>
+      </trans-unit>
+      <trans-unit id="WpK4bPU" resname="End Vorverkauf">
+        <source>End Vorverkauf</source>
+        <target>__End Vorverkauf</target>
+      </trans-unit>
+      <trans-unit id="LYGUhSo" resname="Start Vorverkauf">
+        <source>Start Vorverkauf</source>
+        <target>__Start Vorverkauf</target>
+      </trans-unit>
+      <trans-unit id="wATqV_z" resname="Uhrzeit Ende">
+        <source>Uhrzeit Ende</source>
+        <target>__Uhrzeit Ende</target>
+      </trans-unit>
+      <trans-unit id="pUDkk3w" resname="Uhrzeit Anfang">
+        <source>Uhrzeit Anfang</source>
+        <target>__Uhrzeit Anfang</target>
+      </trans-unit>
+      <trans-unit id="U4vdzi2" resname="Datum Ende">
+        <source>Datum Ende</source>
+        <target>__Datum Ende</target>
+      </trans-unit>
+      <trans-unit id="7OvapAB" resname="Datum Start">
+        <source>Datum Start</source>
+        <target>__Datum Start</target>
+      </trans-unit>
+      <trans-unit id=".j6I_j." resname="Maximum Alter">
+        <source>Maximum Alter</source>
+        <target>__Maximum Alter</target>
+      </trans-unit>
+      <trans-unit id="f7janzx" resname="Mindest Alter">
+        <source>Mindest Alter</source>
+        <target>__Mindest Alter</target>
+      </trans-unit>
+      <trans-unit id="ntHRPEH" resname="Bezeichnung der Gehaltsklassen">
+        <source>Bezeichnung der Gehaltsklassen</source>
+        <target>__Bezeichnung der Gehaltsklassen</target>
+      </trans-unit>
+      <trans-unit id="pK8wa4T" resname="Ferienblock mit Warteliste">
+        <source>Ferienblock mit Warteliste</source>
+        <target>__Ferienblock mit Warteliste</target>
+      </trans-unit>
+      <trans-unit id="7QyfPuf" resname="Manuelle Bestätigung der Teilnehmer">
+        <source>Manuelle Bestätigung der Teilnehmer</source>
+        <target>__Alle Kinder im Kontingent automatisch annehmen, dannach auf Warteliste</target>
+      </trans-unit>
+      <trans-unit id="3aa_C2l" resname="Stornogebühr für das Ferienprogramm">
+        <source>Stornogebühr für das Ferienprogramm</source>
+        <target>__Stornogebühr für das Ferienprogramm</target>
+      </trans-unit>
+      <trans-unit id="A3d1bYV" resname="Regelungen Ferienprogram (Markdown)">
+        <source>Regelungen Ferienprogram (Markdown)</source>
+        <target>__Regelungen Ferienprogram (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="La4dMGC" resname="Ansprechpartner Email">
+        <source>Ansprechpartner Email</source>
+        <target>__Ansprechpartner Email</target>
+      </trans-unit>
+      <trans-unit id="pMDmJoW" resname="Ansprechpartner Telefon">
+        <source>Ansprechpartner Telefon</source>
+        <target>__Ansprechpartner Telefon</target>
+      </trans-unit>
+      <trans-unit id="9j9bBsv" resname="Ansprechpartner Ferien">
+        <source>Ansprechpartner Ferien</source>
+        <target>__Ansprechpartner Ferien</target>
+      </trans-unit>
+      <trans-unit id="Cg.sdxz" resname="Name der Schule für den Versand der Nachricht">
+        <source>Name der Schule für den Versand der Nachricht</source>
+        <target>__Name der Schule für den Versand der Nachricht</target>
+      </trans-unit>
+      <trans-unit id="irvb633" resname="Braintree akzeptieren">
+        <source>Braintree akzeptieren</source>
+        <target>__Braintree akzeptieren</target>
+      </trans-unit>
+      <trans-unit id="3U0K97t" resname="Braintree Merchant ID">
+        <source>Braintree Merchant ID</source>
+        <target>__Braintree Merchant ID</target>
+      </trans-unit>
+      <trans-unit id="CCB2T4s" resname="Braintree Private Key">
+        <source>Braintree Private Key</source>
+        <target>__Braintree Private Key</target>
+      </trans-unit>
+      <trans-unit id="ObTjSoP" resname="Braintree Public Key">
+        <source>Braintree Public Key</source>
+        <target>__Braintree Public Key</target>
+      </trans-unit>
+      <trans-unit id="z7Y3GZG" resname="Braintree in der Sandbox">
+        <source>Braintree in der Sandbox</source>
+        <target>__Braintree in der Sandbox</target>
+      </trans-unit>
+      <trans-unit id="qnzdzRp" resname="Impressum der Stadt (Markdown)">
+        <source>Impressum der Stadt (Markdown)</source>
+        <target>__Impressum der Stadt (Markdown)</target>
+      </trans-unit>
+      <trans-unit id=".YdFiBK" resname="Straße Nr.">
+        <source>Straße Nr.</source>
+        <target>__Straße Nr.</target>
+      </trans-unit>
+      <trans-unit id="7kzDX6W" resname="Brutto Familieneinkommen pro Monat">
+        <source>Brutto Familieneinkommen pro Monat</source>
+        <target>__Brutto Familieneinkommen pro Monat</target>
+      </trans-unit>
+      <trans-unit id="7KMrC1e" resname="Kategorie (strg halten für Mehrfachauswahl)">
+        <source>Kategorie (strg halten für Mehrfachauswahl)</source>
+        <target>__Kategorie (strg halten für Mehrfachauswahl)</target>
+      </trans-unit>
+      <trans-unit id="UJyyKYg" resname="Stadt aktiv">
+        <source>Stadt aktiv</source>
+        <target>__Stadt aktiv</target>
+      </trans-unit>
+      <trans-unit id="1zm99PQ" resname="Netto Haushaltseinkommen">
+        <source>Netto Haushaltseinkommen</source>
+        <target>Netto Income</target>
+      </trans-unit>
+      <trans-unit id="ocfCnkj" resname="Kind im Kindergarten">
+        <source>Kind im Kindergarten</source>
+        <target>Kids in the Kindergarten</target>
+      </trans-unit>
+      <trans-unit id=".1vHbRv" resname="BUK Empfänger">
+        <source>BUK Empfänger</source>
+        <target>BUC reciever</target>
+      </trans-unit>
+      <trans-unit id="soWzzWN" resname="Notfallkontakt">
+        <source>Notfallkontakt</source>
+        <target>Emergency contact</target>
+      </trans-unit>
+      <trans-unit id="08zDV_x" resname="Info Text">
+        <source>Info Text</source>
+        <target>Info text</target>
       </trans-unit>
       <trans-unit id="bRV2_kJ" resname="Username*">
         <source>Username*</source>
