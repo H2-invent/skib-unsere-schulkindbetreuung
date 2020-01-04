@@ -33,9 +33,9 @@ class SchuljahrService
     function getSchuljahr(Stadt $stadt)
     {
         if ($this->user->getUser() && $this->user->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE')) {
-            return $this->em->getRepository(Active::class)->findSchuljahrFromCity($stadt);
+            return $this->em->getRepository(Active::class)->findSchuljahrFromCity($stadt,new \DateTime());
         } else {
-            return $this->em->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+            return $this->em->getRepository(Active::class)->findAnmeldeSchuljahrFromCity($stadt);
         }
     }
 
