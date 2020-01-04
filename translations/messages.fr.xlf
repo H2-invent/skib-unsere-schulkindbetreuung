@@ -2173,6 +2173,14 @@
         <source>Anmeldeportal Schulkindbetreuung</source>
         <target>__Anmeldeportal Schulkindbetreuung</target>
       </trans-unit>
+      <trans-unit id="CLHBpnG" resname="Rechtlich">
+        <source>Rechtlich</source>
+        <target>__Rechtlich</target>
+      </trans-unit>
+      <trans-unit id="e6ZlZKx" resname="SKiB Software - H2 invent">
+        <source>SKiB Software - H2 invent</source>
+        <target>__SKiB Software - H2 invent</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
