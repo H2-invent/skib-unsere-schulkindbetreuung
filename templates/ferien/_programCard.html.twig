@@ -11,10 +11,23 @@
                         </h5>
                         {% if block.startVerkauf < today and block.endVerkauf > today %}
                             {% if  block.maxAnzahl is  null or block.maxAnzahl - block.KindFerienblocksGebucht|length >0 %}
-                                <div class="alert alert-success" role="alert">
-                                    <i class="fas fa-check"></i>
-                                    {% trans %}Anmeldung geöffnet{% endtrans %}<br/>
-                                </div>
+                                {% set alter = kind.geburtstag.diff(date('now')).y %}
+                                {% if block.minAlter  is not null and block.minAlter > alter %}
+                                    <div class="alert alert-warning" role="alert">
+                                        <i class="fas fa-exclamation"></i>
+                                        {% trans %}Das Kind Ist zu jung für dieses Programm{% endtrans %}<br/>
+                                    </div>
+                                {% elseif block.maxAlter  is not null and block.maxAlter < alter %}
+                                    <div class="alert alert-warning" role="alert">
+                                        <i class="fas fa-exclamation"></i>
+                                        {% trans %}Das Kind Ist zu alt für dieses Programm{% endtrans %}<br/>
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-success" role="alert">
+                                        <i class="fas fa-check"></i>
+                                        {% trans %}Anmeldung geöffnet{% endtrans %}<br/>
+                                    </div>
+                                {% endif %}
                             {% else %}
                                 <div class="alert alert-info" role="alert">
                                     <i class="fas fa-exclamation"></i>
@@ -24,7 +37,7 @@
                         {% else %}
                             <div class="alert alert-info" role="alert">
                                 <i class="fas fa-exclamation"></i>
-                                {% trans %}    Anmeldung geschlossen{% endtrans %}
+                                {% trans %}Anmeldung geschlossen{% endtrans %}
                             </div>
                         {% endif %}
                     </a>
@@ -42,7 +55,7 @@
                         <p>
                             {{ 'Kategrie'|trans }}:<br>
                             {% for k in block.kategorie %}
-                               {{  k.name }},
+                                {{ k.name }},
                             {% endfor %}
                         </p>
                         {% if block.startVerkauf > today and block.endVerkauf < today %}
@@ -112,7 +125,27 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {% if block.maxAlter is not null or block.minAlter is not null %}
+                            <hr class="hr-dark">
+                            <div class="row mt-2">
+                                <div class="col-sm-3">
+                                    <h5>
+                                        {% trans %}Empfohlenes Alter{% endtrans %}
+                                    </h5>
 
+                                </div>
+                                <div class="col-sm-9">
+                                    {% if block.maxAlter is not null %}
+                                        {% trans %}Maximales Alter{% endtrans %}: {{ block.maxAlter }}<br/>
+
+                                    {% endif %}
+                                    {% if block.minAlter is not null %}
+
+                                        {% trans %}Minimal Alter{% endtrans %}: {{ block.minAlter }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
                         <hr class="hr-dark">
                         <div class="row mt-2">
                             <div class="col-sm-3">
