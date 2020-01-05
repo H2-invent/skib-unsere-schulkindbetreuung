@@ -53,7 +53,7 @@ class FerienblockRepository extends ServiceEntityRepository
      * @param $price
      * @return Product[]
      */
-    public function findFerienblocksFromToday($stadt, \DateTime $start = null, \DateTime $end = null, $tag = array())
+    public function findFerienblocksFromToday($stadt, \DateTime $start = null, \DateTime $end = null, $tag = array(),$freeSpace = null)
     {
         // automatically knows to select Products
         // the "p" is an alias you'll use in the rest of the query
@@ -73,6 +73,7 @@ class FerienblockRepository extends ServiceEntityRepository
             andWhere('f.endDate >= :today')
                 ->setParameter('today', $today);
         }
+
         if(sizeof($tag)> 0){
             $qb->innerJoin('f.kategorie','kateg')
                 ->andWhere('kateg IN (:kat)')
@@ -88,8 +89,16 @@ class FerienblockRepository extends ServiceEntityRepository
 
         $ferien = $qb->getQuery()->getResult();
         $res = array();
+        dump($freeSpace);
         foreach ($ferien as $data) {
-            $res[$data->getStartDate()->format('d.m.Y')][] = $data;
+            if($freeSpace !== null && $freeSpace== true){
+                if($data->getMaxAnzahl() - sizeof($data->getKindFerienblocksGebucht())> 0){
+                    $res[$data->getStartDate()->format('d.m.Y')][] = $data;
+                }
+            }else{
+                $res[$data->getStartDate()->format('d.m.Y')][] = $data;
+            }
+
         }
         return $res;
         // to get just one result:

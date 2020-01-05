@@ -243,9 +243,11 @@ class FerienController extends AbstractController
         $startDate = null;
         $endDate = null;
         $tag = array();
+        $onlyEmptyCourse = null;
         if($param){
             $startDate = isset($param->start)?new \DateTime($param->start):null;
             $endDate = isset($param->end)?new \DateTime( $param->end):null;
+            $onlyEmptyCourse = isset($param->freeSpace)?$param->freeSpace:null;
             foreach ($param->tag as $data){
                 $tag[] = $this->getDoctrine()->getRepository(Tags::class)->find($data);
             }
@@ -254,9 +256,8 @@ class FerienController extends AbstractController
 
         $tags = $this->getDoctrine()->getRepository(Tags::class)->findAll();
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-        $dates = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt,$startDate,$endDate,$tag);
+        $dates = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt,$startDate,$endDate,$tag,$onlyEmptyCourse);
         $today = new \DateTime('today');
-
         return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'dates' => $dates, 'stadt' => $stadt, 'today' => $today,'tags'=>$tags));
     }
 
