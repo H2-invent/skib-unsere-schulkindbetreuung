@@ -16,6 +16,12 @@
                     </div>
 
                 </div>
+                <div class="col-md-2">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input value="true" type="checkbox" class="freeFilter custom-control-input" id="freeSpace">
+                        <label class="custom-control-label" for="freeSpace">{{ 'Nur Ferienprogramme mit freien Plätzen anzeigen'|trans}}</label>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -64,6 +70,7 @@
         });
 var startDate;
 var endDate;
+var freeSpace;
         $(function () {
             $('#buttonZeitraum').daterangepicker({
                 opens: 'left',
@@ -93,9 +100,12 @@ var endDate;
         $('.tagFilter').click(function () {
             getResultForFilter();
         });
+        $('.freeFilter').click(function () {
+            getResultForFilter();
+        });
     function getResultForFilter() {
         var array = [];
-        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+        var checkboxes = $('.tagFilter:checkbox:checked');
 
         for (var i = 0; i < checkboxes.length; i++) {
             array.push(checkboxes[i].value)
@@ -105,6 +115,7 @@ var endDate;
             start: startDate,
             end: endDate,
             tag: array,
+            freeSpace:$('#freeSpace').is(':checked'),
         };
 
         var url = '{{ path('ferien_kind_programm',{'slug':stadt.slug,'kind_id':kind.id}) }}';
