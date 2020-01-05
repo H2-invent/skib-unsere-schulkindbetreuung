@@ -38,7 +38,7 @@
                     </h4>
 
                     {% if date is defined and not null %}
-                        {% include 'ferien/_programCard.html.twig' with {'date':date} %}
+                        {% include 'ferien/_programCard.html.twig' with {'date':date,'kind':kind} %}
                     {% endif %}
 
                 {% endfor %}
