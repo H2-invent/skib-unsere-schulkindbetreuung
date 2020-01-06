@@ -21,7 +21,7 @@ class BrainTreeCheckoutController extends AbstractController
      * @Route("/{slug}/ferien/braintree/prepare",name="ferien_braintree_start",methods={"Get"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function paymentPrepareAction(CheckoutPaymentService $checkoutPaymentService, Stadt $stadt, TranslatorInterface $translator, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
+    public function paymentPrepareAction( Stadt $stadt, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE);

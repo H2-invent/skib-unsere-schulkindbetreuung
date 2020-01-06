@@ -55,10 +55,13 @@
 
                                                 <div class="tab-pane" id="deals" role="tabpanel"
                                                      aria-labelledby="deals-tab">
-                                                    <h4>In Progress</h4>
+                                                    {{ form_row(form.stripeOK) }}
+                                                    {{ form_row(form.stripeID) }}
+                                                    {{ form_row(form.stripeSecret) }}
                                                 </div>
                                             </div>
                                         </div>
+
                                         {{ form_widget(form) }}
                                         {{ form_end(form) }}
                                     </div>

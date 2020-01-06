@@ -76,7 +76,7 @@ class FerienAbschluss
             return false;
         }
         //setze alles auf saved. somit ist alles abgeschlossen
-        $this->abschlussSave($stammdaten);
+       // $this->abschlussSave($stammdaten);
         $this->abschlussSendEmail($stammdaten);
        return true;
     }

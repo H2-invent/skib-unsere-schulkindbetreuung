@@ -75,6 +75,11 @@ class Payment
      */
     private $finished;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\PaymentStripe", inversedBy="payment",cascade={"persist", "remove"})
+     */
+    private $paymentStripes;
+
     public function __construct()
     {
         $this->refunds = new ArrayCollection();
@@ -246,5 +251,18 @@ class Payment
 
         return $this;
     }
+
+    public function getPaymentStripe(): ?PaymentStripe
+    {
+        return $this->paymentStripes;
+    }
+
+    public function setPaymentStripe(?PaymentStripe $paymentStripe): self
+    {
+        $this->paymentStripes = $paymentStripe;
+
+        return $this;
+    }
+
 
 }

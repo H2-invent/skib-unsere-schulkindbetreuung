@@ -43,6 +43,10 @@ class PaymentArtType extends AbstractType
             ->add('braintreeMerchantId', TextType::class, array( 'required'=>false,'label' => 'Braintree Merchant ID', 'translation_domain' => 'form'))
             ->add('braintreePrivateKey', TextType::class, array( 'required'=>false,'label' => 'Braintree Private Key', 'translation_domain' => 'form'))
             ->add('braintreePublicKey', TextType::class, array( 'required'=>false,'label' => 'Braintree Public Key', 'translation_domain' => 'form'))
+            ->add('stripeOK', CheckboxType::class, array( 'required'=>false,'label' => 'Stripe akzeptieren', 'translation_domain' => 'form'))
+            ->add('stripeID', TextType::class, array( 'required'=>false,'label' => 'Stripe Public Key', 'translation_domain' => 'form'))
+            ->add('stripeSecret', TextType::class, array( 'required'=>false,'label' => 'Stripe Private Key', 'translation_domain' => 'form'))
+
             ->add('save', SubmitType::class, ['label' => 'Weiter', 'translation_domain' => 'form']);
     }
 

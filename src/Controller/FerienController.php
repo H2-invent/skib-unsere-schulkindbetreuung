@@ -325,6 +325,7 @@ class FerienController extends AbstractController
 
         };
         $res = $ferienAbschluss->startAbschluss($adresse, $stadt, $request->getClientIps() === true);
+
         if ($res === true) {
             $result = $this->render('ferien/abschluss.html.twig', array('stadt' => $stadt));
             $result->headers->clearCookie(self::BEZEICHNERCOOKIE);
@@ -334,6 +335,5 @@ class FerienController extends AbstractController
         }
 
     }
-
 
 }

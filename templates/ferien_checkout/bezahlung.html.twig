@@ -71,6 +71,33 @@
                     </div>
                 </div>
             {% endif %}
+            {% if payment.organisation.stripeOK %}
+                <div class="card z-depth-0 bordered">
+                    <div class="card-header" id="headingTwo3">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed " type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo3" aria-expanded="false" aria-controls="collapseTwo3">
+
+
+                                <img style="width: 120px"
+                                     src="https://www.girokonto.org/wp-content/uploads/2010/07/mastercard-visa-american-express-logos-1024x240.png"
+                                     alt="Credit card" class="img-thumbnail img">
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo3" class="collapse " aria-labelledby="headingTwo3"
+                         data-parent="#accordionExample275">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <a href="{{ path('ferien_stripe_start',{'slug':stadt.slug,'id':payment.uid}) }}"
+                                       class="btn btn-outline-primary">Weiter</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
         <div class="row card-body">
             <div class="col-lg-12">

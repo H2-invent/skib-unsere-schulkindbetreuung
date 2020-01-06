@@ -55,12 +55,14 @@ class CheckoutPaymentService
     private $em;
     private $braintree;
     private $logger;
+    private $stripe;
 
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager, CheckoutBraintreeService $checkoutBraintreeService)
+    public function __construct(CheckoutStripeService $checkoutStripeService, LoggerInterface $logger, EntityManagerInterface $entityManager, CheckoutBraintreeService $checkoutBraintreeService)
     {
         $this->em = $entityManager;
         $this->braintree = $checkoutBraintreeService;
         $this->logger = $logger;
+        $this->stripe = $checkoutStripeService;
     }
 
     public function getFerienBlocksKinder(Organisation $organisation, Stammdaten $stammdaten): ArrayCollection
@@ -121,11 +123,10 @@ class CheckoutPaymentService
                     $payment->setBezahlt(0);
                     $payment->setUid(md5(uniqid()));
                     $payment->setFinished(false);
-                    $this->em->persist($payment);
+                   $this->em->persist($payment);
                 }
             }
             $this->em->flush();
-
             return $res;
         } catch (\Exception $e) {
             return $res;
@@ -209,6 +210,15 @@ class CheckoutPaymentService
                     $summe++;
                 }
                 if($data->getBraintree()->getSuccess() === true){
+                    $this->setKindFerienBlockAsPAyed($data->getOrganisation(),$data->getStammdaten());
+                }
+            }
+            if ($data->getPaymentStripe()) {
+                $res = $this->stripe->makeTransaction($data->getPaymentStripe());
+                if ($res === null) {
+                    $summe++;
+                }
+                if($data->getPaymentStripe()->getStatus() === true){
                     $this->setKindFerienBlockAsPAyed($data->getOrganisation(),$data->getStammdaten());
                 }
             }
