@@ -85,7 +85,6 @@ class CheckoutStripeService
                 'charge'=>$paymentStripe->getTransactionId(),
 
             ));
-            dump($re);
             $paymentRefund->setGezahlt($re->status=="succeeded"?true:false);
             $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundId' => $paymentRefund->getId(), 'type' => $reType));
             $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('IP' => $paymentRefund->getIpAdresse(), 'type' => $reType));
