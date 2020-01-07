@@ -328,7 +328,7 @@ class FerienController extends AbstractController
 
         if ($res === true) {
             $result = $this->render('ferien/abschluss.html.twig', array('stadt' => $stadt));
-          //  $result->headers->clearCookie(self::BEZEICHNERCOOKIE);
+            $result->headers->clearCookie(self::BEZEICHNERCOOKIE);
             return $result;
         } else {
             return $this->redirectToRoute('ferien_bezahlung_prepare', array('slug' => $stadt->getSlug()));
