@@ -77,7 +77,6 @@ class CheckoutStripeService
         $stripe = new Stripe();
         $stripe->setApiKey($paymentStripe->getPayment()->getOrganisation()->getStripeSecret());
 
-        //todo refund muss gemacht werden
         $reType = 'stripe';
         if (!$paymentRefund->getGezahlt()) {
             $re = (new Refund())->create(array(
