@@ -38,7 +38,7 @@ class BrainTreeCheckoutController extends AbstractController
     {
         $braintree = $this->getDoctrine()->getRepository(PaymentBraintree::class)->findOneBy(array('token' => $request->get('token')));
         $braintree->setNonce($request->get('nonce'));
-        $braintree->getPayment()->setFinished(true);
+        $braintree->getPayment()->setFinished(true)->setArtString('Credit Card/Paypal');
         $em = $this->getDoctrine()->getManager();
         $em->persist($braintree);
         $em->flush();

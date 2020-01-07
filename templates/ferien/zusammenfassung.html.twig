@@ -178,9 +178,21 @@
     <table class="table">
         <tr>
             <td>
-                <h5>{% trans %} Summe für alle Kinder {% endtrans %}</h5>
+                <h5>{% trans %} Gewählte Summe und Zahlungsart {% endtrans %}</h5>
             </td>
+            <td>
+
+            </td>
+            <td></td>
         </tr>
+        {% for p in eltern.paymentFerien %}
+            <tr>
+                <td><h4>{{ p.organisation.name }}</h4></td>
+                <td><h4>{{ p.summe|number_format(2,',','.') }}€</h4></td>
+                <td><h4>{{ p.artString }}</h4></td>
+            </tr>
+
+        {% endfor %}
     </table>
     <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz"
            value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}

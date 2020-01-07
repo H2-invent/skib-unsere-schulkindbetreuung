@@ -248,6 +248,11 @@ class CheckoutPaymentService
             $paymentRefund->setGezahlt(false);
             $this->braintree->makeRefund($paymentRefund, $payment->getBraintree());
         }
+        if ($payment->getPaymentStripe()) {
+            $paymentRefund->setRefundType(1);
+            $paymentRefund->setGezahlt(false);
+            $this->stripe->makeRefund($paymentRefund, $payment->getPaymentStripe());
+        }
         return $paymentRefund->getGezahlt();
 
     }

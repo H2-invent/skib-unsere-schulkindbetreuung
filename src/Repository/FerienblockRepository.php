@@ -89,9 +89,8 @@ class FerienblockRepository extends ServiceEntityRepository
 
         $ferien = $qb->getQuery()->getResult();
         $res = array();
-        dump($freeSpace);
         foreach ($ferien as $data) {
-            if($freeSpace !== null && $freeSpace== true){
+            if($freeSpace !== null && $freeSpace === true){
                 if($data->getMaxAnzahl() - sizeof($data->getKindFerienblocksGebucht())> 0){
                     $res[$data->getStartDate()->format('d.m.Y')][] = $data;
                 }

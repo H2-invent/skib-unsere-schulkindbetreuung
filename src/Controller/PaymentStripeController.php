@@ -49,6 +49,7 @@ class PaymentStripeController extends AbstractController
         $payment->setPaymentStripe($stripe);
         $stripe->setStatus(false);
         $payment->setFinished(true);
+        $payment->setArtString('Credit Card');
         $em = $this->getDoctrine()->getManager();
         $em->persist($stripe);
         $em->persist($payment);

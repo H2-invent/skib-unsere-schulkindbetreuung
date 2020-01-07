@@ -10,6 +10,7 @@ use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Stripe\Charge;
+use Stripe\Refund;
 use Stripe\Stripe;
 
 
@@ -71,43 +72,43 @@ class CheckoutStripeService
 
     }
 
-    public function makeRefund(PaymentRefund $paymentRefund, PaymentBraintree $paymentBraintree)
+    public function makeRefund(PaymentRefund $paymentRefund, PaymentStripe $paymentStripe)
     {
+        $stripe = new Stripe();
+        $stripe->setApiKey($paymentStripe->getPayment()->getOrganisation()->getStripeSecret());
+
         //todo refund muss gemacht werden
-        $gateway = new Gateway([
-            'environment' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreeSandbox()?'sandbox':'production',
-            'merchantId' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreeMerchantId(),
-            'publicKey' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreePublicKey(),
-            'privateKey' => $paymentBraintree->getPayment()->getOrganisation()->getBraintreePrivateKey(),
-        ]);
-
+        $reType = 'stripe';
         if (!$paymentRefund->getGezahlt()) {
-            $result = $gateway->transaction()->refund(
-                $paymentBraintree->getTransactionId(),
-                $paymentRefund->getSumme() - $paymentRefund->getRefundFee());
-            $paymentRefund->setGezahlt($result->success);
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundId' => $paymentRefund->getId(), 'type' => 'braintree'));
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('IP' => $paymentRefund->getIpAdresse(), 'type' => 'braintree'));
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('SummeGezahlt' => $paymentRefund->getSummeGezahlt(), 'type' => 'braintree'));
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Summe' => $paymentRefund->getSumme(), 'type' => 'braintree'));
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundFee' => $paymentRefund->getRefundFee(), 'type' => 'braintree'));
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundArt' => $paymentRefund->getTypeAsString(), 'type' => 'braintree'));
+            $re = (new Refund())->create(array(
+                'amount'=>($paymentRefund->getSumme()-$paymentRefund->getRefundFee())*100,
+                'charge'=>$paymentStripe->getTransactionId(),
+
+            ));
+            dump($re);
+            $paymentRefund->setGezahlt($re->status=="succeeded"?true:false);
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundId' => $paymentRefund->getId(), 'type' => $reType));
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('IP' => $paymentRefund->getIpAdresse(), 'type' => $reType));
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('SummeGezahlt' => $paymentRefund->getSummeGezahlt(), 'type' => $reType));
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Summe' => $paymentRefund->getSumme(), 'type' => $reType));
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundFee' => $paymentRefund->getRefundFee(), 'type' => $reType));
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundArt' => $paymentRefund->getTypeAsString(), 'type' => $reType));
 
 
-            if ($result->success) {
-                $paymentRefund->setSummeGezahlt($result->transaction->amount);
-                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundResult' => $result->success, 'type' => 'braintree'));
-                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Transaction Summe' => $result->transaction->amount, 'type' => 'braintree'));
-                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Transaction ID' => $result->transaction->id, 'type' => 'braintree'));
+            if ($paymentRefund->getGezahlt()) {
+                $paymentRefund->setSummeGezahlt($re->amount/100);
+                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundResult' => $re->status, 'type' => $reType));
+                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Transaction Summe' => $re->amount, 'type' => $reType));
+                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Transaction ID' => $re->id, 'type' => $reType));
 
 
             } else {
-                $this->logger->error(serialize($result));
+                $this->logger->error(serialize($re->toArray()));
                 $paymentRefund->setSummeGezahlt(0);
-                $paymentRefund->setErrorMessage($result->message);
-                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundResult' => $result->success, 'type' => 'braintree'));
-                 $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Transaction ID' => $paymentBraintree->getTransactionId(), 'type' => 'braintree'));
-                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Transaction ErrorMessage' => $result->message, 'type' => 'braintree'));
+                $paymentRefund->setErrorMessage($re->failure_reason);
+                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundResult' => $re->status, 'type' => $reType));
+                 $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Transaction ID' => $paymentStripe->getTransactionId(), 'type' => $reType));
+                $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Transaction ErrorMessage' => $re->failure_reason, 'type' => $reType));
 
             }
         }

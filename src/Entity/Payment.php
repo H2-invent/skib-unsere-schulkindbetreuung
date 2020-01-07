@@ -80,6 +80,11 @@ class Payment
      */
     private $paymentStripes;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $artString;
+
     public function __construct()
     {
         $this->refunds = new ArrayCollection();
@@ -162,6 +167,9 @@ class Payment
         }
         if ($this->braintree){
             $output[] = 'Braintree';
+        }
+        if ($this->paymentStripes){
+            $output[] = 'Stripe';
         }
         // hier können noch mehr Zahlmetoden rein
         return  implode(', ',$output );
@@ -260,6 +268,18 @@ class Payment
     public function setPaymentStripe(?PaymentStripe $paymentStripe): self
     {
         $this->paymentStripes = $paymentStripe;
+
+        return $this;
+    }
+
+    public function getArtString(): ?string
+    {
+        return $this->artString;
+    }
+
+    public function setArtString(?string $artString): self
+    {
+        $this->artString = $artString;
 
         return $this;
     }
