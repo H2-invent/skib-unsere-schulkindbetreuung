@@ -64,6 +64,7 @@ class CheckoutSepaService
         $payment->setSepa($paymentSepa);
         $payment->setBezahlt($payment->getSumme());
         $payment->setFinished(true);
+        $payment->setArtString('SEPA');
         $this->em->persist($payment);
         $this->em->flush();
         return true;

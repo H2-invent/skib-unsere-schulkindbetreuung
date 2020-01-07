@@ -75,6 +75,16 @@ class Payment
      */
     private $finished;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\PaymentStripe", inversedBy="payment",cascade={"persist", "remove"})
+     */
+    private $paymentStripes;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $artString;
+
     public function __construct()
     {
         $this->refunds = new ArrayCollection();
@@ -157,6 +167,9 @@ class Payment
         }
         if ($this->braintree){
             $output[] = 'Braintree';
+        }
+        if ($this->paymentStripes){
+            $output[] = 'Stripe';
         }
         // hier können noch mehr Zahlmetoden rein
         return  implode(', ',$output );
@@ -246,5 +259,30 @@ class Payment
 
         return $this;
     }
+
+    public function getPaymentStripe(): ?PaymentStripe
+    {
+        return $this->paymentStripes;
+    }
+
+    public function setPaymentStripe(?PaymentStripe $paymentStripe): self
+    {
+        $this->paymentStripes = $paymentStripe;
+
+        return $this;
+    }
+
+    public function getArtString(): ?string
+    {
+        return $this->artString;
+    }
+
+    public function setArtString(?string $artString): self
+    {
+        $this->artString = $artString;
+
+        return $this;
+    }
+
 
 }

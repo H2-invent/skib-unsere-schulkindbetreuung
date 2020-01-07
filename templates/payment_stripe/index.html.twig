@@ -1,0 +1,115 @@
+{% extends 'workflow/base.html.twig' %}
+
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
+        <hr class="hr-light ">
+    </div>
+
+{% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h4> {% trans %}Kreditkarte{% endtrans %}</h4>
+        </div>
+        <div class="card-body">
+            <h4>
+                {% trans with {'%organisation%':payment.organisation.name,'%summe%':payment.summe|number_format(2,',','.')} %}Zahlen Sie hier die Summe von %summe%€ an die Organisation %organisation% {% endtrans %}
+
+            </h4>
+
+
+            <div class="card z-depth-0 bordered">
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form action="{{ path('ferien_stripe_token',{'slug':stadt.slug}) }}" method="post" id="payment-form">
+                                <input type="hidden" value="{{ payment.uid }}" name="paymentId">
+                                <div class="form-row row">
+                                    <div class="col-lg-12">
+                                    <label for="card-element">
+                                        Credit or debit card
+                                    </label>
+                                    <div id="card-element">
+                                        <!-- A Stripe Element will be inserted here. -->
+                                    </div>
+
+                                    <!-- Used to display Element errors. -->
+                                    <div id="card-errors" role="alert"></div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary">Submit Payment</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <a href="{{ path('ferien_bezahlung', {'slug':stadt.slug}) }}"
+                           class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+    {% block jquery %}
+        <script src="https://js.stripe.com/v3/"></script>
+
+        <script>
+            var stripe = Stripe('{{org.stripeID}}');
+            var elements = stripe.elements();
+
+            // Custom styling can be passed to options when creating an Element.
+            var style = {
+                base: {
+                    // Add your base input styles here. For example:
+                    fontSize: '16px',
+                    color: "#32325d",
+                }
+            };
+
+            // Create an instance of the card Element.
+            var card = elements.create('card', {style: style});
+
+            // Add an instance of the card Element into the `card-element` <div>.
+            card.mount('#card-element');
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                stripe.createToken(card).then(function(result) {
+                    if (result.error) {
+                        // Inform the customer that there was an error.
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        // Send the token to your server.
+                        stripeTokenHandler(result.token);
+                    }
+                });
+            });
+
+            function stripeTokenHandler(token) {
+                console.log(token);
+                // Insert the token ID into the form so it gets submitted to the server
+                var form = document.getElementById('payment-form');
+                var hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'stripeToken');
+                hiddenInput.setAttribute('value', token.id);
+                form.appendChild(hiddenInput);
+                // Submit the form
+                form.submit();
+            }
+        </script>
+
+
+    {% endblock %}

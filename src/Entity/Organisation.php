@@ -273,6 +273,11 @@ class Organisation
      */
     private $braintreeSandbox;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $stripeOK = false;
+
 
 
 
@@ -934,6 +939,18 @@ class Organisation
     public function setBraintreeSandbox(?bool $braintreeSandbox): self
     {
         $this->braintreeSandbox = $braintreeSandbox;
+
+        return $this;
+    }
+
+    public function getStripeOK(): ?bool
+    {
+        return $this->stripeOK;
+    }
+
+    public function setStripeOK(?bool $stripeOK): self
+    {
+        $this->stripeOK = $stripeOK;
 
         return $this;
     }

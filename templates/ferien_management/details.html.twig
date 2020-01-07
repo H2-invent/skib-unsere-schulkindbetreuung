@@ -127,7 +127,8 @@
 
                                                         <div class="col-md-8">
                                                             <b>
-                                                                {% if f.state == 20 %}<del>{% endif %}
+                                                                {% if f.state == 20 %}
+                                                                <del>{% endif %}
                                                                     #{{ loop.index }} {{ f.ferienblock.translate.titel }}
                                                                     {% if f.state == 20 %}</del>{% endif %}
                                                             </b>
@@ -141,14 +142,19 @@
                                                         </div>
                                                         <div class="col-md-2">
                                                             <b>
-                                                                {% if f.state == 20 %}<del>{% endif %}      {{ f.preis|number_format ('2',',','.') }} €    {% if f.state == 20 %}</del>{% endif %}
+                                                                {% if f.state == 20 %}
+                                                                <del>{% endif %}      {{ f.preis|number_format ('2',',','.') }}
+                                                                    € {% if f.state == 20 %}</del>{% endif %}
                                                             </b>
                                                         </div>
                                                         <div class="col-md-3">
-                                                            {% if f.state == 20 %}<del>{% endif %}   Checkin ID    {% if f.state == 20 %}</del>{% endif %}
+                                                            {% if f.state == 20 %}
+                                                            <del>{% endif %} Checkin
+                                                                ID {% if f.state == 20 %}</del>{% endif %}
                                                         </div>
                                                         <div class="col-md-9">
-                                                            {% if f.state == 20 %}<del>{% endif %}  {{ f.checkinID }}    {% if f.state == 20 %}</del>{% endif %}
+                                                            {% if f.state == 20 %}
+                                                            <del>{% endif %}  {{ f.checkinID }}    {% if f.state == 20 %}</del>{% endif %}
                                                         </div>
                                                         <div class="col-md-3">
                                                             Checkins
@@ -175,70 +181,87 @@
                             <h3 class="card-title">{% trans %}Zahlungen{% endtrans %}</h3>
 
                             {% if stammdaten.paymentFerien is empty %}
-                            <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
-                        {% else %}
-                            <div class="table table-responsive" >
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>
-                                        {{ 'Bezahlmethode'|trans }}
-                                    </th>
-                                    <th>
-                                        {{ 'Datum'|trans }}
-                                    </th>
-                                    <th>
-                                        {{ 'Betrag'|trans }}
-                                    </th>
-                                    <th>
-                                        {{ 'Status'|trans }}
-                                    </th>
-                                </tr>
-                                </thead>
-                                {% if payment.sepa is not null %}
-                                    <tr>
-                                        <td>
-                                            <b>SEPA</b><br/>
-                                            IBAN: {{ payment.sepa.iban }}<br/>
-                                            BIC: {{ payment.sepa.bic }}
-                                        </td>
-                                        <td>
-                                            {{ payment.createdAt|date('d.m.y g:i') }}
-                                        </td>
-                                        <td>
-                                            {{ payment.bezahlt|number_format ('2',',','.') }}€
-                                        </td>
-                                        <td>
-                                            {{ 'bezahlt'|trans }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                                {% if payment.braintree is not null %}
-                                    <tr>
-                                        <td>
-                                            <b>Braintree</b><br/>
-                                            {{ 'IP Adresse'|trans }}: {{ payment.braintree.ipAdresse }}
-                                        </td>
-                                        <td>
-                                            {{ payment.createdAt|date('d.m.y g:i') }}
-                                        </td>
-                                        <td>
-                                            {{ payment.bezahlt|number_format ('2',',','.') }}€
-                                        </td>
-                                        <td>
-                                            {{ 'bezahlt'|trans }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                            </table>
-                            </div>
-{% endif %}
+                                <p class="alert alert-warning">{% trans %}Betrag ist noch offen{% endtrans %}</p>
+                            {% else %}
+                                <div class="table table-responsive">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                {{ 'Bezahlmethode'|trans }}
+                                            </th>
+                                            <th>
+                                                {{ 'Datum'|trans }}
+                                            </th>
+                                            <th>
+                                                {{ 'Betrag'|trans }}
+                                            </th>
+                                            <th>
+                                                {{ 'Status'|trans }}
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        {% if payment.sepa is not null %}
+                                            <tr>
+                                                <td>
+                                                    <b>SEPA</b><br/>
+                                                    IBAN: {{ payment.sepa.iban }}<br/>
+                                                    BIC: {{ payment.sepa.bic }}
+                                                </td>
+                                                <td>
+                                                    {{ payment.createdAt|date('d.m.y g:i') }}
+                                                </td>
+                                                <td>
+                                                    {{ payment.bezahlt|number_format ('2',',','.') }}€
+                                                </td>
+                                                <td>
+                                                    {{ 'bezahlt'|trans }}
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                        {% if payment.braintree is not null %}
+                                            <tr>
+                                                <td>
+                                                    <b>Braintree</b><br/>
+                                                    {{ 'IP Adresse'|trans }}: {{ payment.braintree.ipAdresse }}
+                                                </td>
+                                                <td>
+                                                    {{ payment.createdAt|date('d.m.y g:i') }}
+                                                </td>
+                                                <td>
+                                                    {{ payment.bezahlt|number_format ('2',',','.') }}€
+                                                </td>
+                                                <td>
+                                                    {{ 'bezahlt'|trans }}
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                        {% if payment.PaymentStripe is not null %}
+                                            <tr>
+                                                <td>
+                                                    <b>Stripe</b><br/>
+                                                    {{ 'IP Adresse'|trans }}: {{ payment.ipAdresse }}
+                                                </td>
+                                                <td>
+                                                    {{ payment.createdAt|date('d.m.y g:i') }}
+                                                </td>
+                                                <td>
+                                                    {{ payment.bezahlt|number_format ('2',',','.') }}€
+                                                </td>
+                                                <td>
+                                                    {{ 'bezahlt'|trans }}
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    </table>
+                                </div>
+                            {% endif %}
 
 
                             <h3 class="card-title">{% trans %}Rückerstattungen{% endtrans %}</h3>
                             <ul class="list-group">
 
-                                <div class="table table-responsive" >
+                                <div class="table table-responsive">
                                     <table>
                                         <thead>
                                         <tr>
@@ -271,12 +294,15 @@
                                         {% for r in payment.refunds %}
                                             <tr>
                                                 <td>
-                                                    <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <button class="btn bmd-btn-icon dropdown-toggle" type="button"
+                                                            id="ex2" data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
                                                         <i class="material-icons">more_vert</i>
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
                                                         {% if is_granted('ROLE_ORG_FERIEN_STORNO') %}
-                                                            <a class="dropdown-item deleteBtn" type="PATCH" href="{{ path('ferien_storno_payPack',{'id':r.id}) }}">{% trans %}Zurückzahlung anstoßen{% endtrans %}</a>
+                                                            <a class="dropdown-item deleteBtn" type="PATCH"
+                                                               href="{{ path('ferien_storno_payPack',{'id':r.id}) }}">{% trans %}Zurückzahlung anstoßen{% endtrans %}</a>
                                                         {% endif %}
 
                                                     </div>
@@ -295,10 +321,12 @@
                                                     {{ r.refundFee|number_format ('2',',','.') }}€
                                                 </td>
                                                 <td>
-                                                    {{ r.summeGezahlt|number_format ('2',',','.')  }}
+                                                    {{ r.summeGezahlt|number_format ('2',',','.') }}
                                                 </td>
                                                 <td>
-                                                    <p ><span class="badge {{ r.gezahlt?'badge-primary':'badge-danger' }} "> {{ r.gezahlt?'Ausgezahlt':'Nicht ausgezahlt'|trans }}</span></p>
+                                                    <p>
+                                                        <span class="badge {{ r.gezahlt?'badge-primary':'badge-danger' }} "> {{ r.gezahlt?'Ausgezahlt':'Nicht ausgezahlt'|trans }}</span>
+                                                    </p>
                                                 </td>
                                                 <td>
                                                     {{ r.gezahlt?'Kein Fehler':r.errorMessage }}
@@ -318,3 +346,4 @@
     </section>
 
 {% endblock %}
+

@@ -55,12 +55,14 @@ class CheckoutPaymentService
     private $em;
     private $braintree;
     private $logger;
+    private $stripe;
 
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager, CheckoutBraintreeService $checkoutBraintreeService)
+    public function __construct(CheckoutStripeService $checkoutStripeService, LoggerInterface $logger, EntityManagerInterface $entityManager, CheckoutBraintreeService $checkoutBraintreeService)
     {
         $this->em = $entityManager;
         $this->braintree = $checkoutBraintreeService;
         $this->logger = $logger;
+        $this->stripe = $checkoutStripeService;
     }
 
     public function getFerienBlocksKinder(Organisation $organisation, Stammdaten $stammdaten): ArrayCollection
@@ -121,11 +123,10 @@ class CheckoutPaymentService
                     $payment->setBezahlt(0);
                     $payment->setUid(md5(uniqid()));
                     $payment->setFinished(false);
-                    $this->em->persist($payment);
+                   $this->em->persist($payment);
                 }
             }
             $this->em->flush();
-
             return $res;
         } catch (\Exception $e) {
             return $res;
@@ -212,6 +213,15 @@ class CheckoutPaymentService
                     $this->setKindFerienBlockAsPAyed($data->getOrganisation(),$data->getStammdaten());
                 }
             }
+            if ($data->getPaymentStripe()) {
+                $res = $this->stripe->makeTransaction($data->getPaymentStripe());
+                if ($res === null) {
+                    $summe++;
+                }
+                if($data->getPaymentStripe()->getStatus() === true){
+                    $this->setKindFerienBlockAsPAyed($data->getOrganisation(),$data->getStammdaten());
+                }
+            }
             $summe += $data->getSumme() - $data->getBezahlt();
         }
         return $summe;
@@ -237,6 +247,11 @@ class CheckoutPaymentService
             $paymentRefund->setRefundType(1);
             $paymentRefund->setGezahlt(false);
             $this->braintree->makeRefund($paymentRefund, $payment->getBraintree());
+        }
+        if ($payment->getPaymentStripe()) {
+            $paymentRefund->setRefundType(1);
+            $paymentRefund->setGezahlt(false);
+            $this->stripe->makeRefund($paymentRefund, $payment->getPaymentStripe());
         }
         return $paymentRefund->getGezahlt();
 

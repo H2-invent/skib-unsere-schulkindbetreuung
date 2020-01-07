@@ -21,7 +21,7 @@ class BrainTreeCheckoutController extends AbstractController
      * @Route("/{slug}/ferien/braintree/prepare",name="ferien_braintree_start",methods={"Get"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function paymentPrepareAction(CheckoutPaymentService $checkoutPaymentService, Stadt $stadt, TranslatorInterface $translator, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
+    public function paymentPrepareAction( Stadt $stadt, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE);
@@ -38,7 +38,7 @@ class BrainTreeCheckoutController extends AbstractController
     {
         $braintree = $this->getDoctrine()->getRepository(PaymentBraintree::class)->findOneBy(array('token' => $request->get('token')));
         $braintree->setNonce($request->get('nonce'));
-        $braintree->getPayment()->setFinished(true);
+        $braintree->getPayment()->setFinished(true)->setArtString('Credit Card/Paypal');
         $em = $this->getDoctrine()->getManager();
         $em->persist($braintree);
         $em->flush();
