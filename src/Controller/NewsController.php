@@ -207,6 +207,7 @@ class NewsController extends AbstractController
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $news = $form->getData();
+            $news->setActiv(false);
             $errors = $validator->validate($news);
             if(count($errors)== 0) {
                 $em = $this->getDoctrine()->getManager();
@@ -244,6 +245,7 @@ class NewsController extends AbstractController
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $news = $form->getData();
+            $news->setActiv(false);
             $errors = $validator->validate($news);
             if(count($errors)== 0) {
                 $em = $this->getDoctrine()->getManager();
