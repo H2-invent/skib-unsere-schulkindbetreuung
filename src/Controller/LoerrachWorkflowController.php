@@ -55,18 +55,16 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 class LoerrachWorkflowController extends AbstractController
 {
-    private $einkommensgruppen;
-
+    private $beruflicheSituation;
 
     public function __construct(TranslatorInterface $translator)
     {
-        $this->einkommensgruppen = array(
-            '0 - 1.499 Euro' => 0,
-            '1.500 - 2.499 Euro' => 1,
-            '2.500 . 3.499 Euro' => 2,
-            '3.500 . 5.999 Euro' => 3,
-            'über 6.000 Euro' => 4,
+        $this->beruflicheSituation = array(
+            $translator->trans('Berufstätig') => 1,
+            $translator->trans('Arbeitssuchend') => 2,
+            $translator->trans('Keine Angabe') => 0
         );
+
     }
 
     /**
@@ -96,7 +94,7 @@ class LoerrachWorkflowController extends AbstractController
                 ->setAngemeldet(false);
             $adresse->setCreatedAt(new \DateTime());
         }
-        $form = $this->createForm(LoerrachEltern::class, $adresse, array('einkommen' => array_flip($stadt->getGehaltsklassen())));
+        $form = $this->createForm(LoerrachEltern::class, $adresse, array('einkommen' => array_flip($stadt->getGehaltsklassen()),'beruflicheSituation'=>$this->beruflicheSituation));
 
         $form->handleRequest($request);
         $errors = array();
@@ -422,7 +420,7 @@ class LoerrachWorkflowController extends AbstractController
             }
         }
 
-        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('einkommen' => array_flip($this->einkommensgruppen), 'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis' => $preis, 'error' => $error, 'stadtAGB' => $stadtAgb));
+        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('einkommen' => $stadt->getGehaltsklassen(), 'beruflicheSituation'=> array_flip($this->beruflicheSituation),'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis' => $preis, 'error' => $error, 'stadtAGB' => $stadtAgb));
     }
 
     /**

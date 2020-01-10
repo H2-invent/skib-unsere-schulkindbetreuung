@@ -15,12 +15,12 @@
                                 {% if block.minAlter  is not null and block.minAlter > alter %}
                                     <div class="alert alert-warning" role="alert">
                                         <i class="fas fa-exclamation"></i>
-                                        {% trans %}Das Kind Ist zu jung für dieses Programm{% endtrans %}<br/>
+                                        {% trans %}Das Kind ist zu jung für dieses Programm{% endtrans %}<br/>
                                     </div>
                                 {% elseif block.maxAlter  is not null and block.maxAlter < alter %}
                                     <div class="alert alert-warning" role="alert">
                                         <i class="fas fa-exclamation"></i>
-                                        {% trans %}Das Kind Ist zu alt für dieses Programm{% endtrans %}<br/>
+                                        {% trans %}Das Kind ist zu alt für dieses Programm{% endtrans %}<br/>
                                     </div>
                                 {% else %}
                                     <div class="alert alert-success" role="alert">
@@ -31,7 +31,7 @@
                             {% else %}
                                 <div class="alert alert-info" role="alert">
                                     <i class="fas fa-exclamation"></i>
-                                    {% trans %} Keine freien Plätze mehr vorhanden{% endtrans %}<br/>
+                                    {% trans %}Keine freien Plätze mehr vorhanden{% endtrans %}<br/>
                                 </div>
                             {% endif %}
                         {% else %}
@@ -64,8 +64,8 @@
                                     <i class="fas fa-exclamation fa-2x"></i>
                                 </div>
                                 <div class="col-sm-10">
-                                    Der Anmeldezeitraum für dieses Programm ist vorüber.<br/>
-                                    Anmeldezeitraum: {{ block.startVerkauf|date('d.m.Y') }} {% trans %}bis{% endtrans %} {{ block.endVerkauf|date('d.m.Y') }}
+                                    {% trans %}Der Anmeldezeitraum für dieses Programm ist vorüber{% endtrans %}.<br/>
+                                    {% trans %}Anmeldezeitraum{% endtrans %}: {{ block.startVerkauf|date('d.m.Y') }} {% trans %}bis{% endtrans %} {{ block.endVerkauf|date('d.m.Y') }}
                                 </div>
                             </div>
                         {% endif %}

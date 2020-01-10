@@ -40,7 +40,7 @@ class LoerrachKind extends AbstractType
 
         $builder
             ->add('vorname', TextType::class,['label'=>'Vorname','translation_domain' => 'form'])
-            ->add('nachname', TextType::class,['label'=>'Name','translation_domain' => 'form'])
+            ->add('nachname', TextType::class,['label'=>'Nachname','translation_domain' => 'form'])
             ->add('klasse', ChoiceType::class, [
                 'choices'  => [
                     'Klasse 1' => 1,
