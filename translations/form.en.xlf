@@ -45,6 +45,10 @@
         <source>Berufliche Situation der Eltern</source>
         <target>Profession of the parents</target>
       </trans-unit>
+      <trans-unit id="qhLfgH2" resname="Name des Notfallkontakts">
+        <source>Name des Notfallkontakts</source>
+        <target>__Name des Notfallkontakt</target>
+      </trans-unit>
       <trans-unit id="vFumzvS" resname="Notfalltelefonnummer">
         <source>Notfalltelefonnummer</source>
         <target>__Notfalltelefonnummer</target>
@@ -69,9 +73,9 @@
         <source>Username</source>
         <target>Username</target>
       </trans-unit>
-      <trans-unit id="lpzL089" resname="Email">
-        <source>Email</source>
-        <target>Email</target>
+      <trans-unit id="L65vsws" resname="E-Mail">
+        <source>E-Mail</source>
+        <target>E-Mail</target>
       </trans-unit>
       <trans-unit id="o2wQFXD" resname="Passwort">
         <source>Passwort</source>
@@ -85,9 +89,9 @@
         <source>Name der Schule</source>
         <target>Name of the School</target>
       </trans-unit>
-      <trans-unit id="xhJ.1EZ" resname="PLZ">
-        <source>PLZ</source>
-        <target>__PLZ</target>
+      <trans-unit id="O0jRfpX" resname="Postleitzahl">
+        <source>Postleitzahl</source>
+        <target>__Postleitzahl</target>
       </trans-unit>
       <trans-unit id="Inm9E03" resname="Stadt">
         <source>Stadt</source>
@@ -516,6 +520,18 @@
       <trans-unit id="UJyyKYg" resname="Stadt aktiv">
         <source>Stadt aktiv</source>
         <target>__Stadt aktiv</target>
+      </trans-unit>
+      <trans-unit id="lRv6Lh5" resname="Stripe Public Key">
+        <source>Stripe Public Key</source>
+        <target>__ Stripe Public Key</target>
+      </trans-unit>
+      <trans-unit id="NYASOpU" resname="Stripe Private Key">
+        <source>Stripe Private Key</source>
+        <target>__Stripe Public Key</target>
+      </trans-unit>
+      <trans-unit id="D2p5JXQ" resname="Stripe akzeptieren">
+        <source>Stripe akzeptieren</source>
+        <target>__ Stripe akzeptieren</target>
       </trans-unit>
     </body>
   </file>
