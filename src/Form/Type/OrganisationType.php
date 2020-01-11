@@ -52,7 +52,7 @@ class OrganisationType extends AbstractType
             ->add('steuernummer', TextType::class,['label'=>'Steuernummer','translation_domain' => 'form'])
             ->add('umstid', TextType::class,['label'=>'UmSt. Identnummer','translation_domain' => 'form'])
             ->add('telefon', TextType::class,['label'=>'Telefonnummer','translation_domain' => 'form'])
-            ->add('email', TextType::class,['label'=>'Email','translation_domain' => 'form'])
+            ->add('email', TextType::class,['label'=>'E-Mail','translation_domain' => 'form'])
             ->add('orgHomepage', TextType::class,['required'=>false,'label'=>'Homepage URL','translation_domain' => 'form'])
             ->add('infoText', TextareaType::class,['label'=>'Info Text','translation_domain' => 'form','attr'=>['rows'=>3]])
             ->add('imageFile', VichImageType::class, [

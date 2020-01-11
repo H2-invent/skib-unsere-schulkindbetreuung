@@ -105,7 +105,7 @@ class PrintRechnungService
             '<tr>' . '<td align="right">' . $this->translator->trans('Betreuende Organisation') . ': </td><td  align="left" >' . $organisation->getName() . '</td></tr>' .
             '<tr>' . '<td align="right">' . $this->translator->trans('Ansprechpartner') . ': </td><td  align="left" >' . $organisation->getAnsprechpartner() . '</td></tr>' .
             '<tr>' . '<td align="right">' . $this->translator->trans('Telefonnummer') . ': </td><td  align="left" >' . $organisation->getTelefon() . '</td></tr>';
-        '<tr>' . '<td align="right">' . $this->translator->trans('Email') . ': </td><td  align="left" >' . $organisation->getEmail() . '</td></tr>';
+        '<tr>' . '<td align="right">' . $this->translator->trans('E-Mail') . ': </td><td  align="left" >' . $organisation->getEmail() . '</td></tr>';
         $kontaktDaten .= '</table>';
         $pdf->writeHTMLCell(
             300,

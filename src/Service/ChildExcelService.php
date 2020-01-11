@@ -55,9 +55,9 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Medikamente'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Allergien'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Bemerkung'));
-        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Glutenintollerant'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Gluten intolerant'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kein Schweinefleisch'));
-        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Laktoseintollerant'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Laktose intolerant'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Darf mit Sonnencreme eingecremt werden'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Darf an Ausflügen teilnehmen'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Darf alleine nach Hause'));

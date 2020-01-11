@@ -4,7 +4,7 @@
         <h1 class="font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
         <hr class="hr-light ">
         <div class="progress mb-2">
-            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{% trans %}Ferienblöcke buchen{% endtrans %}</div>
+            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{% trans %}Ferienprogramm buchen{% endtrans %}</div>
         </div>
     </div>
 
@@ -25,7 +25,7 @@
             {% endif %}
 
             <a href="{{ path('ferien_kind_neu', {'slug':stadt.slug}) }}"
-               class="loadContent btn btn-outline-primary">{% trans %}Kind hinzufügen  {% endtrans %}</a>
+               class="loadContent btn btn-outline-primary">{% trans %}Kind hinzufügen{% endtrans %}</a>
 
             <section class="dashboard-counts section-padding" id="schulenShow">
                 <div class="container-fluid ">
@@ -50,7 +50,7 @@
                                                     <a href="{{ path('ferien_workflow_kind_edit', {'slug':stadt.slug,'kind_id':k.id}) }}"
                                                        class=" loadContent dropdown-item">{% trans %}Bearbeiten{% endtrans %}</a>
                                                     <a href="{{ path('ferien_kind_programm', {'slug': stadt.slug,'kind_id':k.id}) }}"
-                                                       class=" loadContent dropdown-item">{% trans %}Betreuungsblöcke bearbeiten{% endtrans %}</a>
+                                                       class=" loadContent dropdown-item">{% trans %}Ferienprogramm bearbeiten{% endtrans %}</a>
                                                     <a type="DELETE"
                                                        href="{{ path('ferien_workflow_kind_delete',{'slug':stadt.slug,'kind_id':k.id}) }}"
                                                        class="dropdown-item deleteBtn">{% trans %}Löschen{% endtrans %}</a>
@@ -64,12 +64,12 @@
 
                                             <b><span class="price">{% trans %}Summe{% endtrans %}: {{ k.ferienblockPreis|number_format(2,',','.') }}€</span></b><br/>
 
-                                            {% trans %}Gebuchte Blöcke{% endtrans %}: <br/>
+                                            {% trans %}Gebuchte Betreuungszeitfenster{% endtrans %}: <br/>
                                             {% for block in k.KindFerienblocksGebucht %}
                                                 {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€
                                                 <br>
                                             {% endfor %}
-                                            {% trans %}Beworbene Blöcke{% endtrans %}: <br/>
+                                            {% trans %}Beworbene Betreuungszeitfenster{% endtrans %}: <br/>
                                             {% for block in k.KindFerienblocksBeworben %}
                                                 {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€
                                                 <br>

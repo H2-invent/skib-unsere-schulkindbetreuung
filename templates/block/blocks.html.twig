@@ -44,7 +44,7 @@
             dropdown.text(text);
             LoadContentUrl = "{{ path('block_schule_getBlocks',{'shool':schule.id}) }}" + "&id=" + ele.attr('data-id');
             $('#blockContent').load(LoadContentUrl, function () {
-                $.snackbar({content: "{% trans %}Blöcke geladen.{% endtrans %}"});
+                $.snackbar({content: "{% trans %}Zeitfenster geladen.{% endtrans %}"});
             })
         });
         $('#blockContent').load(LoadContentUrl);

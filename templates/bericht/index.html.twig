@@ -39,11 +39,11 @@
                                 {% if active is null %}
                                     <a href="{{ path('stadt_bericht_export',{'stadt_id':stadt.id}) }}"
                                        id="excelDownload"
-                                       class="btn btn-primary">{% trans %}Download als Excel{% endtrans %}</a>
+                                       class="btn btn-primary">{% trans %}Download Excel{% endtrans %}</a>
                                 {% else %}
                                     <a href="{{ path('stadt_bericht_export',{'stadt_id':stadt.id,'schuljahr':active.id}) }}"
                                        id="excelDownload"
-                                       class="btn btn-primary">{% trans %}Download als Excel{% endtrans %}</a>
+                                       class="btn btn-primary">{% trans %}Download Excel{% endtrans %}</a>
                                 {% endif %}
                             </div>
                         </div>

@@ -22,9 +22,9 @@
 
                 <div class="col-md-12 mb-6 white-text text-center">
                     {% if stadt.ferienprogramm %}
-                        <h1 class="font-weight-bold h1-responsive maincolor">{% trans %} Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung {% endtrans %}</h1>
+                        <h1 class="font-weight-bold h1-responsive maincolor">{% trans %}Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung{% endtrans %}</h1>
                     {% else %}
-                        <h1 class="font-weight-bold h1-responsive maincolor">{% trans %} Online Anmeldung zur Schulkindbetreuung {% endtrans %}</h1>
+                        <h1 class="font-weight-bold h1-responsive maincolor">{% trans %}Online Anmeldung zur Schulkindbetreuung{% endtrans %}</h1>
                     {% endif %}
                     <hr class="hr-light ">
                 </div>
@@ -33,9 +33,9 @@
 
                     <p class="lead d-none d-sm-block">
                         {% if not stadt.active %}
-                        {% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}
+                        {% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an{% endtrans %}
                     {% else %}
-                        {% trans with {"%name%":stadt.name} %}Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an{% endtrans %}
+                        {% trans with {"%name%":stadt.name} %}Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an{% endtrans %}
                     {% endif %}
                     </p>
                 </div>
@@ -114,7 +114,7 @@
                             </div>
                             <div class="col-md-4">
                                 <h4>
-                                    {% trans %}News{% endtrans %}
+                                    {% trans %}Neuigkeiten{% endtrans %}
                                 </h4>
                                 {% if stadt.news is not null %}
                                     {% for n in stadt.news if n.activ %}
@@ -144,8 +144,7 @@
                                     </p>
                                 {% else %}
                                     <p style="font-family: TypeWritersSubstitute">
-                                        Sie befinden sich aktuell außerhalb des Anmeldezeitraums und können die
-                                        Anmeldung nicht starten.
+                                        {% trans %}Sie befinden sich aktuell außerhalb des Anmeldezeitraums und können die Anmeldung nicht starten.{% endtrans %}
                                     </p>
                                 {% endif %}
                             </div>
@@ -240,7 +239,7 @@
                                     {% endif %}
                                     <a href="{{ path('workflow_agb',{'slug':stadt.slug}) }}"
                                        target="_blank"
-                                       rel="noopener noreferrer">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der Stadt %stadt%{% endtrans %}</a><br/>
+                                       rel="noopener noreferrer">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der %stadt%{% endtrans %}</a><br/>
                                 </div>
                             </div>
 
@@ -253,10 +252,10 @@
                                         <div class="row mb-1">
                                             <div class="col-md-8">
                                                 <b>{{ o.name }}</b><br>
-                                                {% trans %}Ansprechpartner:{% endtrans %} {{ o.ansprechpartner }}<br/>
-                                                {% trans %}Telefon:{% endtrans %} <a
+                                                {% trans %}Ansprechpartner{% endtrans %}: {{ o.ansprechpartner }}<br/>
+                                                {% trans %}Telefon{% endtrans %}: <a
                                                         href="tel:{{ o.telefon }}">{{ o.telefon }}</a><br/>
-                                                {% trans %}E-Mail:{% endtrans %} <a
+                                                {% trans %}E-Mail{% endtrans %}: <a
                                                         href="mailto:{{ o.email }}">{{ o.email }}</a><br/>
                                                 {% if o.orgHomepage is not null %}
                                                     <a href="{{ o.orgHomepage }}"

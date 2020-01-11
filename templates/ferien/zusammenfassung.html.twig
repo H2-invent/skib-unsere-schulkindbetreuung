@@ -20,31 +20,31 @@
             <table class="table">
                 <tbody>
                 <tr>
-                    <td>{% trans %} Name der Eltern {% endtrans %}</td>
+                    <td>{% trans %}Name der Eltern{% endtrans %}</td>
                     <td>{{ eltern.vorname }} {{ eltern.name }}</td>
                 </tr>
                 <tr>
-                    <td>{% trans %} E-Mail Adresse {% endtrans %}</td>
+                    <td>{% trans %}E-Mail Adresse{% endtrans %}</td>
                     <td>{{ eltern.email }}</td>
                 </tr>
                 <tr>
-                    <td>{% trans %} Adresse der Eltern {% endtrans %}</td>
+                    <td>{% trans %}Adresse der Eltern{% endtrans %}</td>
                     <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
                 </tr>
                 <tr>
-                    <td>{% trans %} Name und Beziehung des Notfallkontakt {% endtrans %}</td>
+                    <td>{% trans %}Name und Beziehung des Notfallkontakt{% endtrans %}</td>
                     <td>{{ eltern.notfallName }}</td>
                 </tr>
                 <tr>
-                    <td>{% trans %} Notfallkontakt der Eltern {% endtrans %}</td>
+                    <td>{% trans %}Notfallkontakt der Eltern{% endtrans %}</td>
                     <td>{{ eltern.notfallkontakt }}</td>
                 </tr>
                 <tr>
-                    <td>{% trans %} Weitere abholberechtigte Personen {% endtrans %}</td>
+                    <td>{% trans %}Weitere abholberechtigte Personen{% endtrans %}</td>
                     <td>{{ eltern.abholberechtigter }}</td>
                 </tr>
                 <tr>
-                    <td>{% trans %} Bankverbindung für Lastschrift {% endtrans %}</td>
+                    <td>{% trans %}Bankverbindung für Lastschrift{% endtrans %}</td>
                     <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}
                         <br/>{{ eltern.sepaInfo?"Ja ich Erteile der Organisation ein SEPA Lastschrift Mandant":""|trans }}
                     </td>
@@ -69,7 +69,7 @@
                                aria-controls="collapse{{ loop.index }}">
                                 {{ k.vorname }} {{ k.nachname }} <br/>
                                 <small>
-                                    {% trans %}Summe der gebuchten Ferienprogramme: {% endtrans %} <a
+                                    {% trans %}Gesamtbetrag für die gebuchten Ferienprogramme{% endtrans %}: <a
                                             href="{{ path('loerrach_workflow_print_pdf',{'id':k.id}) }}"><i
                                                 class="fa fa-download"></i></a>
                                 </small>
@@ -83,56 +83,56 @@
                             <table class="table">
                                 <tbody>
                                 <tr>
-                                    <td style="width: 60%">{% trans %} Vorname {% endtrans %}</td>
+                                    <td style="width: 60%">{% trans %}Vorname{% endtrans %}</td>
                                     <td>{{ k.vorname }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Nachname {% endtrans %}</td>
+                                    <td>{% trans %}Nachname{% endtrans %}</td>
                                     <td>{{ k.nachname }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Geburtstag {% endtrans %}</td>
+                                    <td>{% trans %}Geburtstag{% endtrans %}</td>
                                     <td>{{ k.geburtstag|date('d.m.Y') }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Allergien {% endtrans %}</td>
+                                    <td>{% trans %}Allergien{% endtrans %}</td>
                                     <td>{{ k.allergie }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Medikamente {% endtrans %}</td>
+                                    <td>{% trans %}Medikamente{% endtrans %}</td>
                                     <td>{{ k.medikamente }}</td>
                                 </tr>
 
                                 <tr>
-                                    <td>{% trans %} Mein Kind ist Gluten intolerant {% endtrans %}</td>
+                                    <td>{% trans %}Mein Kind ist Gluten intolerant{% endtrans %}</td>
                                     <td>{{ k.gluten?"Ja":'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Mein Kind ist Laktose intolerant {% endtrans %}</td>
+                                    <td>{% trans %}Mein Kind ist Laktose intolerant{% endtrans %}</td>
                                     <td>{{ k.laktose?"Ja":'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Mein Kind isst kein Schweinefleisch {% endtrans %}</td>
+                                    <td>{% trans %}Mein Kind isst kein Schweinefleisch{% endtrans %}</td>
                                     <td>{{ k.schweinefleisch?"Ja":'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Vegetrarisch {% endtrans %}</td>
+                                    <td>{% trans %}Vegetrarisch{% endtrans %}</td>
                                     <td>{{ k.vegetarisch?"Ja":'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause {% endtrans %}</td>
+                                    <td>{% trans %}Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause{% endtrans %}</td>
                                     <td>{{ k.alleineHause?"Ja":'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Mein Kind darf an Ausflügen teilnehmen {% endtrans %}</td>
+                                    <td>{% trans %}Mein Kind darf an Ausflügen teilnehmen{% endtrans %}</td>
                                     <td>{{ k.ausfluege?"Ja":'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden {% endtrans %}</td>
+                                    <td>{% trans %}Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden{% endtrans %}</td>
                                     <td>{{ k.sonnencreme?"Ja":'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden {% endtrans %}</td>
+                                    <td>{% trans %}Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden{% endtrans %}</td>
                                     <td>{{ k.fotos?"Ja":'Nein'|trans }}</td>
                                 </tr>
 
@@ -140,7 +140,7 @@
 
 
                                         <td>
-                                            Gebuchte Ferienprogramme
+                                            {% trans %}Gebuchte Ferienprogramme{% endtrans %}
                                         </td>
                                         <td>
                                             {% for f in k.kindFerienblocks %}
@@ -149,7 +149,7 @@
                                             - {{ f.ferienblock.endDate|date('d.M.Y') }}<br/>
                                             {% trans %}Preis{% endtrans %}: {{ f.preis|number_format(2,',','.') }} €<br/>
                                             {% trans %}Betreuende Organisation{% endtrans %}: {{ f.ferienblock.organisation.name }}<br/>
-                                            <a target="_blank" href={{ path('workflow_datenschutz', {'org_id':f.ferienblock.organisation.id, 'slug':stadt.slug}) }}>{% trans %}Datenschutzhinweis der{% endtrans %} {{ f.ferienblock.organisation.name }}</a><br/>
+                                            <a target="_blank" href={{ path('workflow_datenschutz', {'org_id':f.ferienblock.organisation.id, 'slug':stadt.slug}) }}>{% trans %}Datenschutzhinweis{% endtrans %} {{ f.ferienblock.organisation.name }}</a><br/>
                                             {% endfor %}
                                         </td>
 
@@ -158,7 +158,7 @@
                                 <tr>
                                     <td>
                                         <h5>
-                                            {% trans %} Summe {% endtrans %}
+                                            {% trans %}Summe{% endtrans %}
                                         </h5>
                                     </td>
                                     <td>
@@ -178,7 +178,7 @@
     <table class="table">
         <tr>
             <td>
-                <h5>{% trans %} Gewählte Summe und Zahlungsart {% endtrans %}</h5>
+                <h5>{% trans %}Gewählte Summe und Zahlungsart{% endtrans %}</h5>
             </td>
             <td>
 
@@ -199,7 +199,7 @@
     <br>
     <div>
         <input id="checkboxAgb" type="checkbox" class="checkboxSelect" name="AGB" value="AGB"> <a target="_blank"
-                                                                                                  href={{ path('workflow_agb', {'slug':stadt.slug}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die allgemeinen Geschäftsbedingungen der Stadt  %stadt% zur Ferienbetreuung gelesen und akzeptiere diese{% endtrans %}</a><br>
+                                                                                                  href={{ path('workflow_agb', {'slug':stadt.slug}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die allgemeinen Geschäftsbedingungen der %stadt% zur Ferienbetreuung gelesen und akzeptiere diese{% endtrans %}</a><br>
     </div>
     <button class="btn btn-outline-primary sendButton" disabled>{% trans %}Absenden{% endtrans %}</button>
 

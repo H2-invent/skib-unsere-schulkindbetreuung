@@ -16,76 +16,76 @@
 <table cellpadding="5px" >
     <tbody>
     <tr>
-        <td>{% trans %} Vorname {% endtrans %}</td>
+        <td>{% trans %}Vorname{% endtrans %}</td>
         <td>{{ k.vorname }}</td>
     </tr>
     <tr>
-        <td>{% trans %} Nachname {% endtrans %}</td>
+        <td>{% trans %}Nachname{% endtrans %}</td>
         <td>{{ k.nachname }}</td>
     </tr>
     <tr>
-        <td>{% trans %} Geburtstag {% endtrans %}</td>
+        <td>{% trans %}Geburtstag{% endtrans %}</td>
         <td>{{ k.geburtstag|date('d.m.Y') }}</td>
     </tr>
     <tr>
-        <td>{% trans %} Schule {% endtrans %}</td>
+        <td>{% trans %}Schule{% endtrans %}</td>
         <td>{{ k.schule.name }}</td>
     </tr>
     <tr>
-        <td>{% trans %} Klasse {% endtrans %}</td>
+        <td>{% trans %}Klasse{% endtrans %}</td>
         <td>{{ k.klasse }}</td>
     </tr>
     <tr>
-        <td>{% trans %} Allergien {% endtrans %}</td>
+        <td>{% trans %}Allergien{% endtrans %}</td>
         <td>{{ k.allergie }}</td>
     </tr>
     <tr>
-        <td>{% trans %} Medikamente {% endtrans %}</td>
+        <td>{% trans %}Medikamente{% endtrans %}</td>
         <td>{{ k.medikamente }}</td>
     </tr>
 
     <tr>
-        <td>{% trans %} Gluten intolerant {% endtrans %}</td>
+        <td>{% trans %}Gluten intolerant{% endtrans %}</td>
         <td>{{ k.gluten?"Ja":'Nein'|trans }}</td>
     </tr>
     <tr>
-        <td>{% trans %} ist Laktose intolerant {% endtrans %}</td>
+        <td>{% trans %}Laktose intolerant{% endtrans %}</td>
         <td>{{ k.laktose?"Ja":'Nein'|trans }}</td>
     </tr>
     <tr>
-        <td>{% trans %}  Kein Schweinefleisch {% endtrans %}</td>
+        <td>{% trans %}Kein Schweinefleisch{% endtrans %}</td>
         <td>{{ k.schweinefleisch?"Ja":'Nein'|trans }}</td>
     </tr>
     <tr>
-        <td>{% trans %} Vegetrarisch {% endtrans %}</td>
+        <td>{% trans %}Vegetrarisch{% endtrans %}</td>
         <td>{{ k.vegetarisch?"Ja":'Nein'|trans }}</td>
     </tr>
     <tr>
-        <td>{% trans %}  Darf alleine nach Hause {% endtrans %}</td>
+        <td>{% trans %}Darf alleine nach Hause{% endtrans %}</td>
         <td>{{ k.alleineHause?"Ja":'Nein'|trans }}</td>
     </tr>
     <tr>
-        <td>{% trans %} Darf an Ausflügen teilnehmen {% endtrans %}</td>
+        <td>{% trans %}Darf an Ausflügen teilnehmen{% endtrans %}</td>
         <td>{{ k.ausfluege?"Ja":'Nein'|trans }}</td>
     </tr>
     <tr>
-        <td>{% trans %}Darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden {% endtrans %}</td>
+        <td>{% trans %}Darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden{% endtrans %}</td>
         <td>{{ k.sonnencreme?"Ja":'Nein'|trans }}</td>
     </tr>
     <tr>
-        <td>{% trans %} Fotos, dürfen sowohl in der öffentlichen Presse veröffentlicht werden {% endtrans %}</td>
+        <td>{% trans %}Fotos, dürfen in der öffentlichen Presse veröffentlicht werden{% endtrans %}</td>
         <td>{{ k.fotos?"Ja":'Nein'|trans }}</td>
     </tr>
 
     {% if k.betreungsblocksReal|length > 0 %}
         <tr>
-            <td>{% trans %} Bemerkung {% endtrans %}</td>
+            <td>{% trans %}Bemerkung{% endtrans %}</td>
             <td>{{ k.bemerkung }}</td>
         </tr>
 
         <tr>
             <td>
-                {% trans %} Gebuchte Betreuungsblöcke {% endtrans %}
+                {% trans %}Gebuchte Betreuungszeitfenster{% endtrans %}
             </td>
 
             <td>
@@ -100,7 +100,7 @@
     {% if k.betreungsblocksRealKontingent|length > 0 %}
         <tr>
             <td>
-                {% trans %} Angemeldete Betreuungsblöcke {% endtrans %}
+                {% trans %}Angemeldete Betreuungszeitfenster{% endtrans %}
             </td>
 
             <td>
