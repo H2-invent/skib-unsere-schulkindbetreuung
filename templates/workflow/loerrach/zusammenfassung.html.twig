@@ -12,7 +12,7 @@
         <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
     <div class="card mb-3">
         <div class="card-header">
-    <h3 class="cover-heading">{% trans %}Daten des Erziehungsberechtigten{% endtrans %} <a href="{{ path('loerrach_workflow_adresse') }}"> <i class="fa fa-edit"></i> {% trans %}bearbeiten{% endtrans %}</a></h3>
+    <h3 class="cover-heading">{% trans %}Daten des Erziehungsberechtigten{% endtrans %} <a href="{{ path('loerrach_workflow_adresse') }}"> <i class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
         </div>
         <div class="card-body">
         <table class="table table-responsive">
@@ -65,7 +65,7 @@
         <!-- Daten der Kinder in einer for Schleife -->
     <div class="card mb-2">
         <div class="card-header mb-2">
-        <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen') }}"> <i class="fa fa-edit"></i> {% trans %}bearbeiten{% endtrans %}</a></h3>
+        <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen') }}"> <i class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
         </div>
         <div class="text-left card-body" id="accordion">
             {% for k in kind %}
@@ -207,7 +207,7 @@
                             <tr>
                                 <td>
                                     <h5>
-                                        {% trans %}Summe pro Monat{% endtrans %}
+                                        {% trans %}Gebühren pro Monat{% endtrans %}
                                     </h5>
                                 </td>
                                 <td>
@@ -227,7 +227,7 @@
 
 <div class="card">
     <div class="card-header mb-2">
-        <h3 class="cover-heading">{% trans %}Bankverbindung für Lastschrift{% endtrans %} <a href="{{ path('loerrach_workflow_bezahlen', {'slug':stadt.slug}) }}"> <i class="fa fa-edit"></i> {% trans %}bearbeiten{% endtrans %}</a></h3>
+        <h3 class="cover-heading">{% trans %}Bankverbindung für Lastschrift{% endtrans %} <a href="{{ path('loerrach_workflow_bezahlen', {'slug':stadt.slug}) }}"> <i class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
     </div>
     <div class="text-left card-body">
 

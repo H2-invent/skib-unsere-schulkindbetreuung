@@ -709,7 +709,7 @@
         <source>Bestätigung</source>
         <target>__Bestätigung</target>
       </trans-unit>
-      <trans-unit id="gQghjkX" resname="Wollen Sie das Element wirkisch löschen?">
+      <trans-unit id="gQghjkX" resname="Wollen Sie das Element wirklich löschen?">
         <source>Wollen Sie das Element wirkisch löschen?</source>
         <target>__Wollen Sie das Element wirkisch löschen?</target>
       </trans-unit>
@@ -810,7 +810,7 @@
         <target>__Alle Schuljahre</target>
       </trans-unit>
       <trans-unit id="SYTJhmE" resname="Download als Excel">
-        <source>Download als Excel</source>
+        <source>Download Excel</source>
         <target>__Download als Excel</target>
       </trans-unit>
       <trans-unit id="IR0LuM9" resname="Block">

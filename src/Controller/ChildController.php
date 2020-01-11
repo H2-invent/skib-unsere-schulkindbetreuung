@@ -126,7 +126,7 @@ class ChildController extends AbstractController
         if($request->get('block')){
             $qb->andWhere('b.id = :block')
                 ->setParameter('block',$request->get('block'));
-            $text .= $translator->trans(' im ausgewählten Betreuungsblock');
+            $text .= $translator->trans(' im ausgewählten Betreuungszeitfenster');
         }
         if($request->get('klasse')){
             $qb->andWhere('k.klasse = :klasse')

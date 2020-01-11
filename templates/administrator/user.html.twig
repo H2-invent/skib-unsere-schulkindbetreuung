@@ -8,7 +8,7 @@
             <div class=" col-12 card">
                 <div class="card-header">
                     {% if city is defined %}
-                  <h1> {% trans with {'%stadt%':city.name} %}User für %stadt%{% endtrans %}  <a href="{{ path('admin_stadtadmin_neu',{'id':city.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                  <h1> {% trans with {'%stadt%':city.name} %}Benutzer für %stadt%{% endtrans %}  <a href="{{ path('admin_stadtadmin_neu',{'id':city.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
                          <i class="material-icons">add</i>
                       </button></a></h1>
                     {% else %}

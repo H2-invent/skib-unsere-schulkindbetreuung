@@ -64,12 +64,12 @@
 
                                             <b><span class="price">{% trans %}Summe{% endtrans %}: {{ k.ferienblockPreis|number_format(2,',','.') }}€</span></b><br/>
 
-                                            {% trans %}Gebuchte Blöcke{% endtrans %}: <br/>
+                                            {% trans %}Gebuchte Betreuungszeitfenster{% endtrans %}: <br/>
                                             {% for block in k.KindFerienblocksGebucht %}
                                                 {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€
                                                 <br>
                                             {% endfor %}
-                                            {% trans %}Beworbene Blöcke{% endtrans %}: <br/>
+                                            {% trans %}Beworbene Betreuungszeitfenster{% endtrans %}: <br/>
                                             {% for block in k.KindFerienblocksBeworben %}
                                                 {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€
                                                 <br>

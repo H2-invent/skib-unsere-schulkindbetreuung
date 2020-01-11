@@ -59,7 +59,7 @@ class ToogleKindBlockSchulkind
     function toggleKind(Kind $kind, Zeitblock $block)
     {
         $result = array(
-            'text' => $this->translator->trans('Betreuungsblock erfolgreich gespeichert'),
+            'text' => $this->translator->trans('Betreuungszeitfenster erfolgreich gespeichert'),
             'error' => 0,
             'kontingent' => false,
             'cardText' => $this->translator->trans('Gebucht')
@@ -92,7 +92,7 @@ class ToogleKindBlockSchulkind
             $blocks2 = $kind->getTageWithBlocks();
 
             if ($blocks2 < 2) {
-                $result['text'] = $this->translator->trans('Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Tage müssen ausgewählt werden)');
+                $result['text'] = $this->translator->trans('Bitte weiteren Betreuungszeitfenster auswählen (Mindestens zwei Tage müssen ausgewählt werden)');
                 $result['error'] = 2;
             }
         } catch (\Exeption $e) {

@@ -26,7 +26,7 @@
                     {% if s.schule.catererName is not null %}
                     <div class="card card-body md-3 mr-1">
                         <h5>{{ s.schule.name }}</h5>
-                        <b>{% trans %}Caterer:{% endtrans %} <br>{{ s.schule.catererName }}</b><br/>
+                        <b>{% trans %}Caterer{% endtrans %}: <br>{{ s.schule.catererName }}</b><br/>
                         {% trans %}Homepage{% endtrans %}: <a href="{{ s.schule.catererUrl }}" target="_blank">{{ s.schule.catererUrl }}</a><br/>
                         {% trans %}E-Mail{% endtrans %}: <a href="mailto:{{ s.schule.catererEmail }}" target="_blank">{{ s.schule.catererEmail }}</a><br/>
                     </div>

@@ -115,13 +115,13 @@ class workflowController extends AbstractController
     {
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt'));
-        $text = $translator->trans('Die Email konnte nicht erneut vesandt werden');
+        $text = $translator->trans('Die E-Mail konnte nicht erneut vesandt werden');
         if ($request->get('resendEmail') == $stammdaten->getResendEmail()) {
             $stammdaten->setConfirmEmailSend(false);
             $em = $this->getDoctrine()->getManager();
             $em->persist($stammdaten);
             $em->flush();
-            $text = $translator->trans('Die Email wurde erfolgreich versandt');
+            $text = $translator->trans('Die E-Mail wurde erfolgreich versandt');
         }
 
         return $this->redirectToRoute('workflow_confirm_Email', array('stadt' => $stadt->getId(), 'snack' => $text, 'uid' => $stammdaten->getUid(), 'redirect' => $request->get('redirect')));

@@ -68,7 +68,7 @@ class NewsController extends AbstractController
             }
 
         }
-        $title = $translator->trans('News Eintrag erstellt');
+        $title = $translator->trans('Neuigkeit erstellt');
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
 
     }
@@ -102,7 +102,7 @@ class NewsController extends AbstractController
             }
 
         }
-        $title = $translator->trans('News Eintrag bearbeiten');
+        $title = $translator->trans('Neuigkeit bearbeiten');
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
 
     }
