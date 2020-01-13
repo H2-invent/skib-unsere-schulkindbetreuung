@@ -191,7 +191,7 @@ class SepaCreateService
             $attachment[] = array('type' => 'application/pdf', 'filename' => $filename . '.pdf', 'body' => $pdf);
 
             $mailContent =   $this->environment->render('email/rechnungEmail.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
-            $betreff = $this->translator->trans('Rechnung ') . ' ' . $rechnung->getRechnungsnummer();
+            $betreff = $this->translator->trans('Rechnung') . ' ' . $rechnung->getRechnungsnummer();
            $this->mailerService->sendEmail($organisation->getName(), $organisation->getEmail(), $data->getEmail(), $betreff, $mailContent, $attachment);
 
             return $rechnung;

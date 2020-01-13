@@ -29,17 +29,17 @@
                     {% set ferienblock = kind.kindFerienBlock(block) %}
                     {% if ferienblock.preisId == loop.index-1 %}
                         {% if ferienblock.state == 10 %}
-                            {% trans %} Gebucht{% endtrans %}
+                            {% trans %}Gebucht{% endtrans %}
                         {% elseif ferienblock.state == 0 %}
-                            {% trans %} Angemeldet{% endtrans %}
+                            {% trans %}Angemeldet{% endtrans %}
                         {% endif %}
 
                     {% else %}
-                        {% trans %} Hier buchen{% endtrans %}
+                        {% trans %}Hier buchen{% endtrans %}
                     {% endif %}
 
                 {% else %}
-                    {% trans %} Hier buchen{% endtrans %}
+                    {% trans %}Hier buchen{% endtrans %}
                 {% endif %}
 
 

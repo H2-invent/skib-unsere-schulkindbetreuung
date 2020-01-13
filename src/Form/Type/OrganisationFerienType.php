@@ -27,7 +27,7 @@ class OrganisationFerienType extends AbstractType
             ->add('stornoGebuehr', NumberType::class,['required'=>true,'label'=>'Stornogebühr für das Ferienprogramm','translation_domain' => 'form'])
             ->add('ansprechpartnerFerien', TextType::class,['required'=>true,'label'=>'Ansprechpartner Ferien','translation_domain' => 'form'])
             ->add('ansprechpartnerFerienEmail', TextType::class,['required'=>true,'label'=>'Ansprechpartner Telefon','translation_domain' => 'form'])
-            ->add('ansprechpartnerFerienPhone', TextType::class,['required'=>true,'label'=>'Ansprechpartner Email','translation_domain' => 'form'])
+            ->add('ansprechpartnerFerienPhone', TextType::class,['required'=>true,'label'=>'Ansprechpartner E-Mail','translation_domain' => 'form'])
             ->add('ferienRegulation', TextareaType::class,['label'=>'Regelungen Ferienprogram (Markdown)','translation_domain' => 'form'])
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;

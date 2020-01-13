@@ -183,7 +183,7 @@ class WidgetController extends AbstractController
 
 
         if (sizeof($sepa) == 0 && $active !== null) {
-            return new JsonResponse(array('title' => $translator->trans('Sepa-Lastschrift fällig'), 'small' => '', 'anzahl' => 1, 'symbol' => 'money'));
+            return new JsonResponse(array('title' => $translator->trans('SEPA Lastschrift fällig'), 'small' => '', 'anzahl' => 1, 'symbol' => 'money'));
         } else {
             return 0;
         }

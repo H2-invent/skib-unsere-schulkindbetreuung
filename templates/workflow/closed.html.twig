@@ -1,7 +1,7 @@
 {% extends 'workflow/base.html.twig' %}
 {% block header %}
     <div class="col-md-12 mb-6 white-text text-center text-md-left">
-        <h1 class="display-4 font-weight-bold hauptfarbe">{% trans %}Unsere online Anmeldung{% endtrans %}</h1>
+        <h1 class="display-4 font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
         <hr class="hr-light ">
     </div>
 {% endblock %}
@@ -20,9 +20,9 @@
                 <div class="row">
                     <div class="col-md-8 mb-1">
                         <b>{{ o.name }}</b><br>
-                        {% trans %}Ansprechpartner:{% endtrans %} {{ o.ansprechpartner }}<br/>
-                        {% trans %}Telefon:{% endtrans %} <a href="tel:{{ o.telefon }}">{{ o.telefon }}</a><br/>
-                        {% trans %}E-Mail:{% endtrans %} <a href="mailto:{{ o.email }}">{{ o.email }}</a><br/>
+                        {% trans %}Ansprechpartner{% endtrans %}: {{ o.ansprechpartner }}<br/>
+                        {% trans %}Telefon{% endtrans %}: <a href="tel:{{ o.telefon }}">{{ o.telefon }}</a><br/>
+                        {% trans %}E-Mail{% endtrans %}: <a href="mailto:{{ o.email }}">{{ o.email }}</a><br/>
                         {% if o.orgHomepage is not null %}
                             <a href="{{ o.orgHomepage }}"
                                target="_blank"

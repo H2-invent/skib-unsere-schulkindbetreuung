@@ -76,7 +76,7 @@ class StadtadminController extends AbstractController
                 $text = $translator->trans('Erfolgreich angelegt');
                 return $this->redirectToRoute('admin_stadtadmin',array('snack'=>$text,'id'=>$city->getId()));
             }catch ( \Exception $e) {
-                $errorText = $translator->trans('Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse');
+                $errorText = $translator->trans('Die E-Mail existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse');
                 return $this->render(
                     'administrator/error.html.twig',
                     array('error' => $errorText)
@@ -110,7 +110,7 @@ class StadtadminController extends AbstractController
                 $text = $translator->trans('Erfolgreich geändert');
                 return $this->redirectToRoute('admin_stadtadmin',array('snack'=>$text,'id'=>$defaultData->getStadt()->getId()));
             }catch ( \Exception $e) {
-                $errorText = $translator->trans('Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse');
+                $errorText = $translator->trans('Die E-Mail existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse');
                 return $this->render(
                     'administrator/error.html.twig',
                     array('error' => $errorText)
@@ -150,7 +150,7 @@ class StadtadminController extends AbstractController
                 return $this->redirectToRoute('admin_stadtadmin', array('snack'=>$text,'id' => $defaultData->getStadt()->getId()));
             } catch (\Exception $e) {
                 $errorText = $translator->trans(
-                    'Das Passwort konnte nich geändert werden'
+                    'Das Passwort konnte nicht geändert werden'
                 );
 
                 return $this->render(

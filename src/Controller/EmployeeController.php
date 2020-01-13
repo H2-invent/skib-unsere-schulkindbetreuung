@@ -74,7 +74,7 @@ class EmployeeController extends AbstractController
                 );
                 if($userManager->findUserByEmail($defaultData->getEmail())){
                     $errorText = $translator->trans(
-                        'Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse'
+                        'Die E-Mail existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse'
                     );
                 }elseif($userManager->findUserByUsername($defaultData->getUsername())) {
                     $errorText = $translator->trans(
@@ -126,7 +126,7 @@ class EmployeeController extends AbstractController
                 return $this->redirectToRoute('city_employee_show', array('snack'=>$text,'id' => $defaultData->getStadt()->getId()));
             } catch (\Exception $e) {
                 $errorText = $translator->trans(
-                    'Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse'
+                    'Die E-Mail existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse'
                 );
 
                 return $this->render(
@@ -300,7 +300,7 @@ class EmployeeController extends AbstractController
             }
             $this->manager->updateUser($user);
 
-            $text = $translator->trans('Rechte erfolgreich gesetzt');
+            $text = $translator->trans('Berechtigungen erfolgreich gesetzt');
             return $this->redirectToRoute('city_employee_show', array('snack'=>$text,'id' => $user->getStadt()->getId()));
         }
 

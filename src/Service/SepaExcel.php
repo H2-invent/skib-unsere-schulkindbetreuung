@@ -43,7 +43,7 @@ class SepaExcel
         $sepaSheet->setTitle($this->translator->trans('Rechnungen'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Vorname'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Nachname'));
-        $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Betrag'));
+        $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Betrag in €'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Anzahl der Kinder'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('IBAN'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('BIC'));

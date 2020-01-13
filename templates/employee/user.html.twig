@@ -7,7 +7,7 @@
             <!-- Count item widget-->
             <div class=" col-12 card">
                 <div class="card-header">
-                  <h1> {% trans with {'%stadt%':city.name} %}Mitarbeiter der Stadt %stadt%{% endtrans %}  <a href="{{ path('city_employee_new',{'id':city.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                  <h1> {% trans with {'%stadt%':city.name} %}Mitarbeiter der %stadt%{% endtrans %}  <a href="{{ path('city_employee_new',{'id':city.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
                          <i class="material-icons">add</i>
                       </button></a></h1>
                 </div>

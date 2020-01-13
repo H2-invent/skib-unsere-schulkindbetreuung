@@ -16,7 +16,7 @@
             <h4> {% trans %}SEPA Lastschrift Mandat erstellen{% endtrans %}</h4>
         </div>
         <div class="card-body">
-            <div class="mb-3">
+            <div class="mb-4">
                 <div class="col-sm-11">
                     {{ form_start(form) }}
                     {{ form_label(form.iban) }}
@@ -27,13 +27,15 @@
 
                     {{ form_label(form.kontoinhaber) }}
                     {{ form_widget(form.kontoinhaber) }}
-
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="col-sm-11">
                     {{ form_label(form.sepaInfo) }}
                     {{ form_widget(form.sepaInfo) }}
                     <p>
-                        {% trans %}Ich ermächtige (Wir ermächtigen){% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>{% endfor %}, {% trans %}Zahlungen von meinem (unserem) Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein (weisen wir unser) Kreditinstitut an, die von{% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>{% endfor %} {% trans %}auf mein (unser) Konto gezogenen Lastschriften einzulösen{% endtrans %}.
+                        {% trans %}Ich ermächtige (Wir ermächtigen){% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>, {% endfor %}{% trans %}Zahlungen von meinem (unserem) Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein (weisen wir unser) Kreditinstitut an, die von{% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>, {% endfor %}{% trans %}auf mein (unser) Konto gezogenen Lastschriften einzulösen{% endtrans %}.
                     </p>
-
                     {% trans %}Hinweis: Ich kann (Wir können) innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem (unserem) Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
 
                 </div>

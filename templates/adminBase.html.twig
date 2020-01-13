@@ -112,9 +112,9 @@
                 {% endif %}
                 {% if is_granted('ROLE_ORG_ADMIN') %}
                     <li><a href="{{ path('city_admin_organisation_detail',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">home</i> {% trans %}Meine Organisation{% endtrans %}</a></li>
+                                    class="material-icons">home</i> {% trans %}Organisation{% endtrans %}</a></li>
                     <li><a href="{{ path('city_employee_org_show',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">people</i> {% trans %}Meine Mitarbeiter{% endtrans %}</a>
+                                    class="material-icons">people</i> {% trans %}Mitarbeiter{% endtrans %}</a>
                     </li>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_NEWS') %}
@@ -833,7 +833,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">{% trans %}Wollen Sie das Element wirkisch löschen?{% endtrans %}</button>
+                            data-dismiss="modal">{% trans %}Wollen Sie das Element wirklich löschen?{% endtrans %}</button>
                     <button type="button" class="btn btn-primary">{% trans %}Löschen{% endtrans %}</button>
                 </div>
             </div>
