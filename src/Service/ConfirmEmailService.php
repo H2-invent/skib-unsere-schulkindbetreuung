@@ -88,14 +88,14 @@ class ConfirmEmailService
             $mailBetreff = $this->translator->trans('Bestätigung der E-Mail-Adresse');
             $mailContent = $this->twig->render('email/bestaetigungscode.html.twig', array('eltern' => $stammdaten));
             if ($stammdaten->getConfirmEmailSend() === false) {
-                $this->mailer->sendEmail('H2-Invent', 'info@h2-invent.com', $stammdaten->getEmail(), $mailBetreff, $mailContent);
+                $this->mailer->sendEmail('Unsere Schulkindbetreuung', 'info@h2-invent.com', $stammdaten->getEmail(), $mailBetreff, $mailContent);
                 $stammdaten->setConfirmEmailSend(true);
                 $stammdaten->setResendEmail(md5(uniqid()));
                 $this->em->persist($stammdaten);
                 $this->em->flush();
             }
 
-            $text = $this->translator->trans('Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen.');
+            $text = $this->translator->trans('Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch Ihrem Spamordner nach.');
 
             return $this->twig->render('workflow/formConfirmation.html.twig', array('form' => $form->createView(), 'titel' => $mailBetreff, 'text' => $text, 'stadt' => $stadt, 'stammdaten' => $stammdaten, 'redirect' => $request->get('redirect')));
 
