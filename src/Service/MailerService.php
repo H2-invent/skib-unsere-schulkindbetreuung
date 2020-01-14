@@ -9,6 +9,7 @@
 namespace App\Service;
 
 
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\Mailer\Bridge\Mailgun\Http\MailgunTransport;
 
@@ -28,22 +29,22 @@ class MailerService
     private $mailgun;
     private $smtp;
     private $swift;
-    public function __construct(MailerInterface $mailerInterface, TransportInterface $smtp,\Swift_Mailer $swift_Mailer)
+    private $parameter;
+    public function __construct(ParameterBagInterface $parameterBag, MailerInterface $mailerInterface, TransportInterface $smtp,\Swift_Mailer $swift_Mailer)
     {
         $this->smtp = $smtp;
         $this->mailgun =$mailerInterface;
         $this->swift = $swift_Mailer;
+        $this->parameter=$parameterBag;
     }
 
     public function sendEmail($sender, $from, $to, $betreff,$content,$attachment = array())
     {
 
-        $env = new Dotenv();
-        $env->load(__DIR__.'/../../.env', __DIR__.'/../../.env.local');
-        $mailprovider = $_ENV['MAILPROVIDER'];
-        if($mailprovider == 'MAILGUN'){
+
+        if($this->parameter->get('mailProvider') == 'MAILGUN'){
             $this->sendViaMailgun($sender,$from,$to,$betreff,$content,$attachment);
-        }elseif ($mailprovider=='SWIFTMAILER'){
+        }elseif ($this->parameter->get('mailProvider')=='SWIFTMAILER'){
             $this->sendViaSwiftMailer($sender,$from,$to,$betreff,$content,$attachment);
         }
 
