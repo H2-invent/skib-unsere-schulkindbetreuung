@@ -15,8 +15,11 @@ class LandingController extends AbstractController
      */
     public function welcomeAction(TranslatorInterface $translator, Request $request)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findBy(array('deleted'=>false, 'active'=>true));
-        $title = $translator->trans('Schulkindbetreuung').' | '.$translator->trans('Online Anmeldung und Verwaltung');
-        return $this->render('landing/landing.html.twig',array('title'=>$title,'stadt'=>$stadt));
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findBy(array('deleted' => false, 'active' => true));
+        $title = $translator->trans('Schulkindbetreuung SKiB') . ' | ' . $translator->trans('Online Anmeldung und Verwaltung');
+        $metaDescription = $translator->trans('SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
+Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
+');
+        return $this->render('landing/landing.html.twig', array('metaDescription' => $metaDescription, 'title' => $title, 'stadt' => $stadt));
     }
 }

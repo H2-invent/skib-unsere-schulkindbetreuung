@@ -61,7 +61,8 @@ class workflowController extends AbstractController
         // Load all schools from the city into the controller as $schulen
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
         $title = $translator->trans('Schulkindbetreuung und Ferienbetreuung der Stadt').' '.$stadt->getName().' | '.$translator->trans('Hier anmelden');
-        return $this->render('workflow/start.html.twig', array('title'=>$title,'schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'url' => $url, 'schuljahr'=>$schuljahr));
+        $metaDescription = substr($stadt->translate()->getInfoText(),0,150);
+        return $this->render('workflow/start.html.twig', array('metaDescription'=>$metaDescription, 'title'=>$title,'schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'url' => $url, 'schuljahr'=>$schuljahr));
     }
 
 
