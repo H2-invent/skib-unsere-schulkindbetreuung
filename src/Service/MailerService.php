@@ -9,6 +9,7 @@
 namespace App\Service;
 
 
+use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\Mailer\Bridge\Mailgun\Http\MailgunTransport;
 
 use Symfony\Component\Mailer\Mailer;
@@ -36,14 +37,26 @@ class MailerService
 
     public function sendEmail($sender, $from, $to, $betreff,$content,$attachment = array())
     {
-        /*
+
+        $env = new Dotenv();
+        $env->load(__DIR__.'/../../.env', __DIR__.'/../../.env.local');
+        $mailprovider = $_ENV['MAILPROVIDER'];
+        if($mailprovider == 'MAILGUN'){
+            $this->sendViaMailgun($sender,$from,$to,$betreff,$content,$attachment);
+        }elseif ($mailprovider=='SWIFTMAILER'){
+            $this->sendViaSwiftMailer($sender,$from,$to,$betreff,$content,$attachment);
+        }
+
+    }
+
+    private function sendViaSwiftMailer($sender, $from, $to, $betreff,$content,$attachment = array()){
         $message = (new \Swift_Message($betreff))
             ->setFrom(array('noreply@unsere-schulkindbetreuung.de'=>$sender))
             ->setTo($to)
             ->setBody(
 
-                   $content
-                    ,'text/html'
+                $content
+                ,'text/html'
             )
 
         ;
@@ -51,8 +64,8 @@ class MailerService
             $message->attach(new \Swift_Attachment($data['body'],$data['filename'],$data['type']));
         };
         $this->swift->send($message);
-*/
-
+    }
+    private function sendViaMailgun($sender, $from, $to, $betreff,$content,$attachment = array()){
         $email = (new Email())
             ->from(new Address($from, $sender))
             ->to($to)
@@ -63,7 +76,5 @@ class MailerService
         };
 
         $this->mailgun->send($email);
-
-
     }
 }
