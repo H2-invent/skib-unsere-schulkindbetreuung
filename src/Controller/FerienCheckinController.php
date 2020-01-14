@@ -13,11 +13,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class FerienCheckinController extends AbstractController
 {
     /**
-     * @Route("/org_ferien/checkin/id/{checkinID}", name="ferien_checkin",methods={"GET","POST"})
+     * @Route("/checkin/id/{checkinID}", name="ferien_checkin",methods={"GET","POST"})
      */
     public function index(Request $request, TranslatorInterface $translator, $checkinID, CheckinFerienService $checkinFerienService)
     {
-        $today = new \DateTime('today');
+        $today = (new \DateTime('today'))->format('Y-m-d');
         $result = $checkinFerienService->checkin($checkinID, $today);
         if($request->isMethod('GET')){
              return $this->render('ferien_checkin/index.html.twig', [
