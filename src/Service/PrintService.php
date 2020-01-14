@@ -98,8 +98,7 @@ class PrintService
             true
         );
 
-
-        $elternDaten = $this->templating->render('pdf/eltern.html.twig', array('kind'=>$kind,'eltern' => $elter, 'einkommen' => array_flip($einkommmensgruppen)));
+        $elternDaten = $this->templating->render('pdf/eltern.html.twig', array('kind'=>$kind,'eltern' => $elter, 'einkommen' => $einkommmensgruppen));
         $pdf->writeHTMLCell(
             0,
             0,

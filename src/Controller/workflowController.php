@@ -47,22 +47,24 @@ class workflowController extends AbstractController
             return $this->redirectToRoute('workflow_city_not_found');
         }
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
-
-        $url = '';
-        switch ($stadt->getSlug()) {
-            case 'loerrach':
-                $url = $this->generateUrl('loerrach_workflow_adresse');
-                break;
-            default:
-                break;
-
-        }
         $cityInfoText = $stadt->translate()->getInfoText();
         // Load all schools from the city into the controller as $schulen
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
-        $title = $translator->trans('Schulkindbetreuung und Ferienbetreuung der Stadt').' '.$stadt->getName().' | '.$translator->trans('Hier anmelden');
-        $metaDescription = substr($stadt->translate()->getInfoText(),0,150);
-        return $this->render('workflow/start.html.twig', array('metaDescription'=>$metaDescription, 'title'=>$title,'schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'url' => $url, 'schuljahr'=>$schuljahr));
+        $title = $translator->trans('Schulkindbetreuung und Ferienbetreuung der Stadt').' '.$stadt->getName().' | '.$translator->trans(' Hier anmelden');
+        $text = $stadt->translate()->getInfoText();
+        $array = explode('. ',$text);
+        $text = $array[0];
+        $count = 0;
+        $metaDescription = '';
+        foreach ($array as $data){
+            $count = strlen($data);
+            if($count< 150){
+                $metaDescription.= $data;
+            }else{
+                break;
+            }
+        }
+        return $this->render('workflow/start.html.twig', array('metaDescription'=>$metaDescription, 'title'=>$title,'schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'schuljahr'=>$schuljahr));
     }
 
 

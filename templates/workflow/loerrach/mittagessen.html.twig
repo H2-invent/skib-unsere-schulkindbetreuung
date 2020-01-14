@@ -37,7 +37,7 @@
                 {% trans %}Vergessen Sie nicht das Mittagessen für Ihr Kind/Ihre Kinder zu bestellen.{% endtrans %}
             </div>
                 <div class="text-center">
-                    <a href="{{ path('loerrach_workflow_schulen') }}"
+                    <a href="{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }}"
                        class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
                     <a href="{{ path('loerrach_workflow_bezahlen',{'slug':stadt.slug}) }}"
                        class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
