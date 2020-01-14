@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
 <head>
+
     {% include 'workflow/_head.html.twig' with {'stadt':null} %}
+
     {% include 'workflow/inlineCSS.html.twig' with {'height':'100%'} %}
 </head>
 <body>
@@ -43,7 +45,7 @@
                 {% if stadt.ferienprogramm and stadt.schulkindBetreung %}
                     <div class="col-md-6 mb-4 white-text text-center">
                         <p class="lead align-content-center">
-                            <a href="{{ url }}" class="btn btn-primary btn-lg">
+                            <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}" class="btn btn-primary btn-lg">
                                 {% if app.request.cookies.has('SecID') %}
                                     {% trans %}Kind bearbeiten{% endtrans %}
                                 {% else %}

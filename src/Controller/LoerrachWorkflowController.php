@@ -68,13 +68,13 @@ class LoerrachWorkflowController extends AbstractController
     }
 
     /**
-     * @Route("/loerrach/adresse",name="loerrach_workflow_adresse",methods={"GET","POST"})
+     * @Route("/{slug}/adresse",name="loerrach_workflow_adresse",methods={"GET","POST"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function adresseAction(Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function adresseAction(Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
 
 
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'Loerrach'));
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
 
         if ($schuljahr === null) {
@@ -90,11 +90,10 @@ class LoerrachWorkflowController extends AbstractController
 
         if ($adresse->getUid() === null) {
             $adresse->setUid(md5(uniqid('', true)))
-
                 ->setAngemeldet(false);
             $adresse->setCreatedAt(new \DateTime());
         }
-        $form = $this->createForm(LoerrachEltern::class, $adresse, array('einkommen' => array_flip($stadt->getGehaltsklassen()),'beruflicheSituation'=>$this->beruflicheSituation));
+        $form = $this->createForm(LoerrachEltern::class, $adresse, array('einkommen' => array_flip($stadt->getGehaltsklassen()), 'beruflicheSituation' => $this->beruflicheSituation));
 
         $form->handleRequest($request);
         $errors = array();
@@ -107,7 +106,7 @@ class LoerrachWorkflowController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($adresse);
                 $em->flush();
-                $response = $this->redirectToRoute('workflow_confirm_Email', array('redirect' => $this->generateUrl('loerrach_workflow_schulen',array(),UrlGeneratorInterface::ABSOLUTE_URL), 'uid' => $adresse->getUid(), 'stadt' => $stadt->getId()));
+                $response = $this->redirectToRoute('workflow_confirm_Email', array('redirect' => $this->generateUrl('loerrach_workflow_schulen', array('slug'=>$stadt->getSlug()), UrlGeneratorInterface::ABSOLUTE_URL), 'uid' => $adresse->getUid(), 'stadt' => $stadt->getId()));
                 $response->headers->setCookie($cookie);
                 return $response;
             }
@@ -117,13 +116,12 @@ class LoerrachWorkflowController extends AbstractController
 
 
     /**
-     * @Route("/loerrach/schulen",name="loerrach_workflow_schulen",methods={"GET"})
+     * @Route("/{slug}/schulen",name="loerrach_workflow_schulen",methods={"GET"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function schulenAction(Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function schulenAction(Stadt $stadt, Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
 
-        // Load the data from the city into the controller as $stadt
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
         // Load all schools from the city into the controller as $schulen
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
@@ -135,7 +133,7 @@ class LoerrachWorkflowController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         } else {
-            return $this->redirectToRoute('loerrach_workflow_adresse');
+            return $this->redirectToRoute('loerrach_workflow_adresse', array('slug' => $stadt->getSlug()));
         }
         $kinder = array();
         if ($request->cookies->get('KindID')) {
@@ -153,9 +151,10 @@ class LoerrachWorkflowController extends AbstractController
     }
 
     /**
-     * @Route("/loerrach/schulen/kind/neu",name="loerrach_workflow_schulen_kind_neu",methods={"GET","POST"})
+     * @Route("/{slug}/schulen/kind/neu",name="loerrach_workflow_schulen_kind_neu",methods={"GET","POST"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function neukindAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
+    public function neukindAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
     {
         $adresse = new Stammdaten;
 
@@ -169,7 +168,7 @@ class LoerrachWorkflowController extends AbstractController
         $kind = new Kind();
         $kind->setEltern($adresse);
         $kind->setSchule($schule);
-        $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('schule_id' => $schule->getId()))));
+        $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug'=>$stadt->getSlug(),'schule_id' => $schule->getId()))));
 
         $form->handleRequest($request);
         $errors = array();
@@ -184,7 +183,7 @@ class LoerrachWorkflowController extends AbstractController
                     $em->persist($kind);
                     $em->flush();
                     $text = $translator->trans('Erfolgreich gespeichert');
-                    return new JsonResponse(array('error' => 0, 'snack' => $text, 'next' => $this->generateUrl('loerrach_workflow_schulen_kind_zeitblock', array('kind_id' => $kind->getId()))));
+                    return new JsonResponse(array('error' => 0, 'snack' => $text, 'next' => $this->generateUrl('loerrach_workflow_schulen_kind_zeitblock', array('slug'=>$stadt->getSlug(),'kind_id' => $kind->getId()))));
                 }
             } catch (\Exception $e) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
@@ -196,9 +195,10 @@ class LoerrachWorkflowController extends AbstractController
     }
 
     /**
-     * @Route("/loerrach/schulen/kind/edit",name="loerrach_workflow_schulen_kind_edit",methods={"GET","POST"})
+     * @Route("/{slug}/schulen/kind/edit",name="loerrach_workflow_schulen_kind_edit",methods={"GET","POST"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function editkindAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
+    public function editkindAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
     {
         $adresse = new Stammdaten;
 
@@ -209,7 +209,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
         $form = $this->createForm(LoerrachKind::class, $kind, array(
-            'action' => $this->generateUrl('loerrach_workflow_schulen_kind_edit', array('kind_id' => $kind->getId()))
+            'action' => $this->generateUrl('loerrach_workflow_schulen_kind_edit', array('slug'=>$stadt->getSlug(), 'kind_id' => $kind->getId()))
         ));
         $form->remove('art');
         $form->handleRequest($request);
@@ -237,9 +237,10 @@ class LoerrachWorkflowController extends AbstractController
     }
 
     /**
-     * @Route("/loerrach/schulen/kind/delete",name="loerrach_workflow_kind_delete",methods={"DELETE"})
+     * @Route("/{slug}/schulen/kind/delete",name="loerrach_workflow_kind_delete",methods={"DELETE"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function deleteAction(Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie)
+    public function deleteAction(Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie)
     {
         //Include Parents in this route
         $adresse = new Stammdaten;
@@ -250,13 +251,14 @@ class LoerrachWorkflowController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($kind);
         $em->flush();
-        return new JsonResponse(array('redirect' => $this->generateUrl('loerrach_workflow_schulen')));
+        return new JsonResponse(array('redirect' => $this->generateUrl('loerrach_workflow_schulen',array('slug'=>$stadt->getSlug()))));
     }
 
     /**
-     * @Route("/loerrach/schulen/kind/zeitblock",name="loerrach_workflow_schulen_kind_zeitblock",methods={"GET"})
+     * @Route("/{slug}/schulen/kind/zeitblock",name="loerrach_workflow_schulen_kind_zeitblock",methods={"GET"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function kindzeitblockAction(Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function kindzeitblockAction(Stadt $stadt, Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
 
         $adresse = new Stammdaten;
@@ -295,33 +297,34 @@ class LoerrachWorkflowController extends AbstractController
             $renderBlocks[$data->getWochentag()][] = $data;
         }
 
-        return $this->render('workflow/loerrach/blockKinder.html.twig', array('kind' => $kind, 'blocks' => $renderBlocks));
+        return $this->render('workflow/loerrach/blockKinder.html.twig', array('stadt'=>$stadt,'kind' => $kind, 'blocks' => $renderBlocks));
     }
 
     /**
-     * @Route("/loerrach/kinder/block/toggle",name="loerrach_workflow_kinder_block_toggle",methods={"PATCH"})
+     * @Route("/{slug}/kinder/block/toggle",name="loerrach_workflow_kinder_block_toggle",methods={"PATCH"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function kinderblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, ToogleKindBlockSchulkind $toogleKindBlockSchulkind)
+    public function kinderblocktoggleAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, ToogleKindBlockSchulkind $toogleKindBlockSchulkind)
     {
 
 
-            //Include Parents in this route
-            $adresse = new Stammdaten;
-            if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
-                $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
-            }
-
-            $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
-            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
-            $result = $toogleKindBlockSchulkind->toggleKind($kind, $block);
-            return new JsonResponse($result);
-
+        //Include Parents in this route
+        $adresse = new Stammdaten;
+        if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
+            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
 
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
+        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        $result = $toogleKindBlockSchulkind->toggleKind($stadt, $kind, $block);
+        return new JsonResponse($result);
+
+    }
+
     /**
- * @Route("/{slug}/mittagessen", name="loerrach_workflow_mittagessen")
- * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
- */
+     * @Route("/{slug}/mittagessen", name="loerrach_workflow_mittagessen")
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
+     */
     public function mittagessenAction(Request $request, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
         $adresse = new Stammdaten;
@@ -355,8 +358,8 @@ class LoerrachWorkflowController extends AbstractController
         }
 
         $qb = $this->getDoctrine()->getRepository(Organisation::class)->createQueryBuilder('organisation');
-        $qb->innerJoin('organisation.schule','schule')
-            ->innerJoin('schule.kinder','kinder')
+        $qb->innerJoin('organisation.schule', 'schule')
+            ->innerJoin('schule.kinder', 'kinder')
             ->andWhere('kinder.eltern = :stammdaten')
             ->setParameter('stammdaten', $adresse);
         $query = $qb->getQuery();
@@ -367,28 +370,28 @@ class LoerrachWorkflowController extends AbstractController
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $adresse = $form->getData();
-            $errors = $validator->validate($adresse,null,['schulkind']);
-                if (count($errors) == 0) {
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($adresse);
-                    $em->flush();
+            $errors = $validator->validate($adresse, null, ['schulkind']);
+            if (count($errors) == 0) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($adresse);
+                $em->flush();
 
-                    $response = $this->redirectToRoute('loerrach_workflow_zusammenfassung', array('slug' => $stadt->getSlug()));
-                    return $response;
-                }
+                $response = $this->redirectToRoute('loerrach_workflow_zusammenfassung', array('slug' => $stadt->getSlug()));
+                return $response;
+            }
 
         }
         return $this->render('workflow/loerrach/bezahlen.html.twig', array('stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors, 'organisation' => $renderOrganisation));
-   }
+    }
 
 
     /**
-     * @Route("/loerrach/zusammenfassung",name="loerrach_workflow_zusammenfassung",methods={"GET"})
+     * @Route("/{slug}/zusammenfassung",name="loerrach_workflow_zusammenfassung",methods={"GET"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function zusammenfassungAction(Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function zusammenfassungAction(Stadt $stadt, Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
         // Load the data from the city into the controller as $stadt
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
         $stadtAgb = $stadt->translate()->getAgb();
 
 
@@ -420,11 +423,12 @@ class LoerrachWorkflowController extends AbstractController
             }
         }
 
-        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('einkommen' => $stadt->getGehaltsklassen(), 'beruflicheSituation'=> array_flip($this->beruflicheSituation),'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis' => $preis, 'error' => $error, 'stadtAGB' => $stadtAgb));
+        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('einkommen' => $stadt->getGehaltsklassen(), 'beruflicheSituation' => array_flip($this->beruflicheSituation), 'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis' => $preis, 'error' => $error, 'stadtAGB' => $stadtAgb));
     }
 
     /**
-     * @Route("/loerrach/abschluss",name="loerrach_workflow_abschluss",methods={"GET","POST"})
+     * @Route("/{slug}/abschluss",name="loerrach_workflow_abschluss",methods={"GET","POST"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public function abschlussAction(Request $request,
                                     ValidatorInterface $validator,
@@ -437,10 +441,9 @@ class LoerrachWorkflowController extends AbstractController
                                     AnmeldeEmailService $anmeldeEmailService,
                                     StamdatenFromCookie $stamdatenFromCookie,
                                     SchuljahrService $schuljahrService,
-                                    WorkflowAbschluss $workflowAbschluss)
+                                    WorkflowAbschluss $workflowAbschluss,
+                                    Stadt $stadt)
     {
-        // Load the data from the city into the controller as $stadt
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
 
         //Check for Anmeldung open
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
@@ -453,13 +456,13 @@ class LoerrachWorkflowController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         } else {
-            return $this->redirectToRoute('loerrach_workflow_adresse');
+            return $this->redirectToRoute('loerrach_workflow_adresse',array('slug'=>$stadt->getSlug()));
         }
 
         $kind = $adresse->getKinds();
         foreach ($kind as $data) {
             if ($data->getTageWithBlocks() < 2) {
-                $this->redirectToRoute('loerrach_workflow_zusammenfassung');
+                $this->redirectToRoute('loerrach_workflow_zusammenfassung',array('slug'=>$stadt->getSlug()));
             }
         }
 
@@ -467,14 +470,14 @@ class LoerrachWorkflowController extends AbstractController
         $workflowAbschluss->abschluss($adresse, $kind);
 //Emails an die Eltern senden
         foreach ($kind as $data) {
-            $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $this->einkommensgruppen);
+            $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $stadt->getGehaltsklassen());
         }
         $default = array(
-            'text'=>''
+            'text' => ''
         );
         $form = $this->createFormBuilder($default)
-            ->add('test',TextType::class)
-            ->add('submit',SubmitType::class)
+            ->add('test', TextType::class)
+            ->add('submit', SubmitType::class)
             ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -482,7 +485,7 @@ class LoerrachWorkflowController extends AbstractController
             $default = $form->getData();
             // do with default data whatever you want ...
         }
-        $response = $this->render('workflow/abschluss.html.twig', array('form'=>$form->createView(),'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
+        $response = $this->render('workflow/abschluss.html.twig', array('form' => $form->createView(), 'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
         $response->headers->clearCookie('UserID');
         $response->headers->clearCookie('SecID');
         $response->headers->clearCookie('KindID');
@@ -491,10 +494,11 @@ class LoerrachWorkflowController extends AbstractController
     }
 
     /**
-     * @Route("/loerrach/berechnung/einKind",name="loerrach_workflow_preis_einKind",methods={"GET"})
+     * @Route("/{slug}/berechnung/einKind",name="loerrach_workflow_preis_einKind",methods={"GET"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public
-    function berechnungAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
+    function berechnungAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
     {
         // Load the data from the city into the controller as $stadt
         $result = array(
@@ -528,7 +532,8 @@ class LoerrachWorkflowController extends AbstractController
     }
 
     /**
-     * @Route("/loerrach/berechnung/printPdf",name="loerrach_workflow_print_pdf",methods={"GET"})
+     * @Route("/{slug}/berechnung/printPdf",name="loerrach_workflow_print_pdf",methods={"GET"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public
     function prinPdf(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, TCPDFController $tcpdf, PrintService $print, StamdatenFromCookie $stamdatenFromCookie)
@@ -543,7 +548,7 @@ class LoerrachWorkflowController extends AbstractController
         $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName() . '.pdf';
 
 
-        return $print->printAnmeldebestaetigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->einkommensgruppen, $organisation, 'D');
+        return $print->printAnmeldebestaetigung($kind, $elter, $stadt, $tcpdf, $fileName, $stadt->getGehaltsklassen(), $organisation, 'D');
 
 
     }

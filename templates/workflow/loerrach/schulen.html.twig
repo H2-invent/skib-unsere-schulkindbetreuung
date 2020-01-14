@@ -37,7 +37,7 @@
                                         <h5 class="card-title">{{ s.name }}</h5>
                                         <p class="card-text">{{ s.infoText }}</p>
 
-                                        <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id}) }}"
+                                        <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id,'slug':stadt.slug}) }}"
                                            class="loadContent btn btn-outline-primary">{% trans %}Kind anmelden{% endtrans %}</a>
 
                                     </div>
@@ -52,12 +52,12 @@
 
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-                                                        <a href="{{ path('loerrach_workflow_schulen_kind_edit', {'kind_id':k.id}) }}"
+                                                        <a href="{{ path('loerrach_workflow_schulen_kind_edit', {'kind_id':k.id,'slug':stadt.slug}) }}"
                                                            class=" loadContent dropdown-item">{% trans %}Bearbeiten{% endtrans %}</a>
-                                                        <a href="{{ path('loerrach_workflow_schulen_kind_zeitblock', {'kind_id':k.id}) }}"
+                                                        <a href="{{ path('loerrach_workflow_schulen_kind_zeitblock', {'kind_id':k.id,'slug':stadt.slug}) }}"
                                                            class=" loadContent dropdown-item">{% trans %}Betreuungszeitfenster bearbeiten{% endtrans %}</a>
                                                         <a type="DELETE"
-                                                           href="{{ path('loerrach_workflow_kind_delete', {'kind_id':k.id}) }}"
+                                                           href="{{ path('loerrach_workflow_kind_delete', {'kind_id':k.id,'slug':stadt.slug}) }}"
                                                            class="dropdown-item deleteBtn">{% trans %}Löschen{% endtrans %}</a>
 
                                                     </div>
@@ -77,7 +77,7 @@
                 </div>
             </section>
             <div class="text-center">
-                <a href="{{ path('loerrach_workflow_adresse') }}"
+                <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"
                    class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
                 <a href="{{ path('loerrach_workflow_mittagessen', {'slug':stadt.slug}) }}"
                    class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
@@ -134,7 +134,7 @@
         })
 
         $("#loadContentModal").on('hide.bs.modal', function () {
-            $('#schulenShow').load('{{ path('loerrach_workflow_schulen') }} #schulenShow');
+            $('#schulenShow').load('{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #schulenShow');
         });
     </script>
 

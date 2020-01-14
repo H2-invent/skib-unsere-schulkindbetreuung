@@ -12,7 +12,7 @@
         <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
     <div class="card mb-3">
         <div class="card-header">
-    <h3 class="cover-heading">{% trans %}Daten des Erziehungsberechtigten{% endtrans %} <a href="{{ path('loerrach_workflow_adresse') }}"> <i class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
+    <h3 class="cover-heading">{% trans %}Daten des Erziehungsberechtigten{% endtrans %} <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"> <i class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
         </div>
         <div class="card-body">
         <table class="table table-responsive">
@@ -65,7 +65,7 @@
         <!-- Daten der Kinder in einer for Schleife -->
     <div class="card mb-2">
         <div class="card-header mb-2">
-        <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen') }}"> <i class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
+        <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %} <a href="{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }}"> <i class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
         </div>
         <div class="text-left card-body" id="accordion">
             {% for k in kind %}
@@ -76,7 +76,7 @@
                             {{ k.vorname }} {{ k.nachname }} <small><i class="fa fa-info-circle" style="color: var(--main-color)"></i><br/>{% if k.tageWithBlocks < 2 %}
                                     <div class="alert alert-danger" role="alert">
                                     {% trans %}Bitte weitere Betreuungszeitfenster auswählen{% endtrans %} </div>
-                            {% else %}{% trans %}Gebühr pro Monat für gebuchte Betreuung{% endtrans %}: {{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %} <a href="{{ path('loerrach_workflow_print_pdf',{'id':k.id}) }}"><i class="fa fa-download"></i></a>
+                            {% else %}{% trans %}Gebühr pro Monat für gebuchte Betreuung{% endtrans %}: {{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %} <a href="{{ path('loerrach_workflow_print_pdf',{'slug':stadt.slug,'id':k.id}) }}"><i class="fa fa-download"></i></a>
                             </small>
                             
                 </a>
@@ -265,13 +265,13 @@
     {% if error == false %}
     <button  class="btn btn-outline-primary sendButton" disabled >{% trans %}Absenden{% endtrans %}</button>
     {% else %}
-    <a href="{{ path('loerrach_workflow_schulen') }}" class="btn btn-outline-primary">{% trans %}Weitere Betreuungszeitfenster hinzufügen{% endtrans %}</a>
+    <a href="{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }}" class="btn btn-outline-primary">{% trans %}Weitere Betreuungszeitfenster hinzufügen{% endtrans %}</a>
     {% endif %}
 
 {% endblock %}
 {% block jquery %}
     <script>
-        var url= "{{ path('loerrach_workflow_abschluss') }}";
+        var url= "{{ path('loerrach_workflow_abschluss',{'slug':stadt.slug}) }}";
             $('.checkboxSelect').on('change', function() {
                 var cbS = $('.checkboxSelect');
                 var all = true;
@@ -281,7 +281,7 @@
                     }
                 });
                 if (all == true) {
-                    $('.sendButton').wrap('<a href="{{ path('loerrach_workflow_abschluss') }}">');
+                    $('.sendButton').wrap('<a href="{{ path('loerrach_workflow_abschluss',{'slug':stadt.slug}) }}">');
                      $('.sendButton').prop('disabled', false);
 
                 }else {

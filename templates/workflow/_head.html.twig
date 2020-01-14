@@ -1,7 +1,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>{% trans %}Anmeldeportal Schulkindbetreuung{% endtrans %} {% if stadt is defined and stadt is not null %}{{ stadt.name }}{% endif %}</title>
+<title>{% if title is defined and title is not null %}{{ title }}{% else %}{% trans %}Anmeldeportal Schulkindbetreuung{% endtrans %} | {% if stadt is defined and stadt is not null %}{{ stadt.name }}{% endif %}{% endif %}</title>
+{% if metaDescription is defined and metaDescription is not null %}
+<meta name="description" content="{{ metaDescription }}"/>
+{% endif %}
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Bootstrap core CSS -->
