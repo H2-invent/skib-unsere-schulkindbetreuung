@@ -39,7 +39,7 @@ class workflowController extends AbstractController
     /**
      * @Route("/{slug}/home",name="workflow_start",methods={"GET"})
      */
-    public function welcomeAction(Request $request, $slug, SchuljahrService $schuljahrService)
+    public function welcomeAction(TranslatorInterface $translator, Request $request, $slug, SchuljahrService $schuljahrService)
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
 
@@ -60,8 +60,8 @@ class workflowController extends AbstractController
         $cityInfoText = $stadt->translate()->getInfoText();
         // Load all schools from the city into the controller as $schulen
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
-
-        return $this->render('workflow/start.html.twig', array('schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'url' => $url, 'schuljahr'=>$schuljahr));
+        $title = $translator->trans('Schulkindbetreuung und Ferienbetreuung der Stadt').' '.$stadt->getName().' | '.$translator->trans('Hier anmelden');
+        return $this->render('workflow/start.html.twig', array('title'=>$title,'schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'url' => $url, 'schuljahr'=>$schuljahr));
     }
 
 
