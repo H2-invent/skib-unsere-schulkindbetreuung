@@ -30,7 +30,9 @@ class CheckinFerienService
         $result['error'] = false;
         $result['errorText'] = $this->translator->trans('Kind erfolgreich eingecheckt');
         $result['checkinText'] = $this->translator->trans('Eingecheckt');
-
+        $result['vorname']= $kindFerienBlock->getKind()->getVorname();
+        $result['nachname']= $kindFerienBlock->getKind()->getNachname();
+        $result['kurs']= $kindFerienBlock->getFerienblock()->translate()->getTitel();
         if ($kindFerienBlock === null) {
             $result['error'] = true;
             $result['errorText'] = $this->translator->trans('Ticket ist falsch oder ungültig');
