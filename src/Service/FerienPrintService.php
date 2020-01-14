@@ -57,7 +57,7 @@ class FerienPrintService
             'module_height' => 1 // height of a single module in points
         );
 
-        $code = $this->router->generate('ferien_checkin', array('checkinID' =>$ferienblock->getCheckinID()),UrlGeneratorInterface::ABSOLUTE_PATH);
+        $code = $this->router->generate('ferien_checkin', array('checkinID' =>$ferienblock->getCheckinID()),UrlGeneratorInterface::ABSOLUTE_URL);
         $pdf->write2DBarcode($code, 'QRCODE,Q', 139, 39, 45, 45, $style, 'N');
 
         $kindData = $this->templating->render('ferien_ticket/index.html.twig', array('kind' => $kind, 'organisation'=>$organisation, 'ferienblock'=>$ferienblock));
