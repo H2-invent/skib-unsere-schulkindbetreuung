@@ -9,7 +9,7 @@
 namespace App\Service;
 
 
-//use Symfony\Component\Mailer\Bridge\Mailgun\Http\MailgunTransport;
+use Symfony\Component\Mailer\Bridge\Mailgun\Http\MailgunTransport;
 
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
@@ -36,6 +36,7 @@ class MailerService
 
     public function sendEmail($sender, $from, $to, $betreff,$content,$attachment = array())
     {
+        /*
         $message = (new \Swift_Message($betreff))
             ->setFrom(array('noreply@unsere-schulkindbetreuung.de'=>$sender))
             ->setTo($to)
@@ -50,8 +51,8 @@ class MailerService
             $message->attach(new \Swift_Attachment($data['body'],$data['filename'],$data['type']));
         };
         $this->swift->send($message);
+*/
 
-/*
         $email = (new Email())
             ->from(new Address($from, $sender))
             ->to($to)
@@ -60,9 +61,9 @@ class MailerService
         foreach ($attachment as $data){
             $email->attach($data['body'],$data['filename'],$data['type']);
         };
-        //$this->smtp->send($email);
+
         $this->mailgun->send($email);
-*/
+
 
     }
 }
