@@ -44,7 +44,7 @@ class CheckinFerienService
         $startdateFerienblock = $kindFerienBlock->getFerienblock()->getStartDate();
         $enddateFerienblock = $kindFerienBlock->getFerienblock()->getEndDate();
 
-        if ($tagDate < $startdateFerienblock && $tagDate > $enddateFerienblock) {
+        if ($tagDate < $startdateFerienblock || $tagDate > $enddateFerienblock) {
             $result['error'] = true;
             $result['errorText'] = $this->translator->trans('Dieses Ticket ist an einem anderen Tag gültig');
         }
