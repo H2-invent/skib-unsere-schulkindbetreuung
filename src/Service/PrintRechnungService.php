@@ -61,7 +61,7 @@ class PrintRechnungService
         $pdf->setHeaderData('', 0, '', '', array(0, 0, 0), array(255, 255, 255));
         $pdf->setFooterData(1, 1);
 
-        //$pdf->SetMargins(20,20,40, true);
+
         $pdf->AddPage();
         $adressComp = '<p><small>' . $organisation->getName() . ' | ' . $organisation->getAdresse() . $organisation->getAdresszusatz() . ' | ' . $organisation->getPlz() . (' ') . $organisation->getOrt() . '</small><br><br>';
 

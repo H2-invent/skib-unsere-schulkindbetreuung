@@ -124,7 +124,7 @@ class Ferienblock
     /**
      * @ORM\Column(type="boolean")
      */
-    private $modeMaximal;
+    private $modeMaximal=false;
 
     /**
      * @ORM\Column(type="json", nullable=true)
