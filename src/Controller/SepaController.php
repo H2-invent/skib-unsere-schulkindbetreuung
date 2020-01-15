@@ -5,9 +5,12 @@ namespace App\Controller;
 use App\Entity\Active;
 use App\Entity\Organisation;
 use App\Entity\Rechnung;
+use App\Entity\Schule;
 use App\Entity\Sepa;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use App\Form\Type\customerIDStammdatenType;
+use App\Form\Type\SepaStammdatenType;
 use App\Form\Type\SepaType;
 use App\Service\MailerService;
 use App\Service\PrintRechnungService;
@@ -15,6 +18,8 @@ use App\Service\SepaCreateService;
 use App\Service\SEPASimpleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,7 +32,7 @@ class SepaController extends AbstractController
     /**
      * @Route("/org_accounting/overview", name="accounting_overview",methods={"GET","POST"})
      */
-    public function index( Request $request,SepaCreateService $sepaCreateService, ValidatorInterface $validator)
+    public function index(Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator)
     {
         set_time_limit(600);
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
@@ -42,19 +47,74 @@ class SepaController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $errors = $validator->validate($sepa);
-            if(count($errors)== 0) {
+            if (count($errors) == 0) {
                 $sepa = $form->getData();
                 $sepa->setBis((clone $sepa->getVon())->modify('last day of this month'));
                 $result = $sepaCreateService->calcSepa($sepa);
 
-                return $this->redirectToRoute('accounting_overview',array('id'=>$organisation->getId(),'snack'=>$result));
+                return $this->redirectToRoute('accounting_overview', array('id' => $organisation->getId(), 'snack' => $result));
             }
 
         }
 
-        $sepaData = $this->getDoctrine()->getRepository(Sepa::class)->findBy(array('organisation'=>$organisation));
+        $sepaData = $this->getDoctrine()->getRepository(Sepa::class)->findBy(array('organisation' => $organisation));
 
-        return $this->render('sepa/show.html.twig',array('form'=>$form->createView(),'sepa'=>$sepaData));
+        return $this->render('sepa/show.html.twig', array('form' => $form->createView(), 'sepa' => $sepaData));
+    }
+
+    /**
+     * @Route("/org_accounting/showdata", name="accounting_showdata",methods={"GET"})
+     */
+    public function showStammdaten(Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        if ($organisation != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+
+        $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
+        $qb->innerJoin('stammdaten.kinds', 'kinds')
+            ->innerJoin('kinds.schule', 'schule')
+            ->andWhere('schule.organisation = :org')
+            ->setParameter('org', $organisation);
+        if ($request->get('year_id')) {
+            $year = $this->getDoctrine()->getRepository(Active::class)->find($request->get('year_id'));
+            $qb->innerJoin('kinds.zeitblocks', 'zeitbocks')
+                ->andWhere('zeitbocks.active = :year')
+                ->setParameter('year', $year);
+        };
+        $query = $qb->getQuery();
+        $stammdaten = $query->getResult();
+
+        return $this->render('sepa/showData.html.twig', array('organisation' => $organisation, 'stammdaten' => $stammdaten));
+    }
+
+
+    /**
+     * @Route("/org_accounting/showdata/customerid", name="accounting_showdata_customerid",methods={"GET","POST"})
+     */
+    public function customerIDStammdaten(Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        if ($organisation != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+
+        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->find($request->get('stammdaten_id'));
+        $form = $this->createForm(customerIDStammdatenType::class, $stammdaten);
+
+        $form->handleRequest($request);
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $stammdaten = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($stammdaten);
+            $em->flush();
+
+            $response = $this->redirectToRoute('accounting_showdata', array('id' => $organisation->getId()));
+            return $response;
+        }
+        return $this->render('sepa/customerID.html.twig', array('form' => $form->createView(), 'stammdaten' => $stammdaten));
     }
 
 

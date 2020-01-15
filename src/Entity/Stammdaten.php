@@ -238,6 +238,11 @@ class Stammdaten
      */
     private $paymentFerien;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $customerID;
+
 
 
 
@@ -780,6 +785,18 @@ class Stammdaten
                 $paymentFerien->setStammdaten(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCustomerID(): ?string
+    {
+        return $this->customerID;
+    }
+
+    public function setCustomerID(?string $customerID): self
+    {
+        $this->customerID = $customerID;
 
         return $this;
     }

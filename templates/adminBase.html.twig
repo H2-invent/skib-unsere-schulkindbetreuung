@@ -70,6 +70,7 @@
         <div class="main-menu">
 
             <ul id="side-main-menu" class="side-menu list-unstyled">
+                <li><a href="{{ path('dashboard') }}">{% trans %}Dashboard{% endtrans %}</a></li>
                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                     <li>
                         <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">{% trans %}Original Account{% endtrans %}</a>
@@ -197,6 +198,8 @@
                     <h5 class="sidenav-heading">Buchhaltung</h5>
                     <li><a href="{{ path('accounting_overview',{'id':app.user.organisation.id}) }}"> <i
                                     class="material-icons">money</i> {% trans %}SEPA Übersicht{% endtrans %}</a></li>
+                    <li><a href="{{ path('accounting_showdata',{'id':app.user.organisation.id}) }}"> <i
+                                    class="material-icons">money</i> {% trans %}Stammdaten{% endtrans %}</a></li>
                 {% endif %}
 
 

@@ -755,7 +755,7 @@
       </trans-unit>
       <trans-unit id="88tsYx0" resname="Benutzer für %stadt%">
         <source>Benutzer für %stadt%</source>
-        <target state="translated">User for %city%</target>
+        <target state="translated">User for %stadt%</target>
       </trans-unit>
       <trans-unit id="47ienTP" resname="Username">
         <source>Username</source>
@@ -1113,7 +1113,7 @@
       </trans-unit>
       <trans-unit id="eAXuGwF" resname="Der berechnet Betrag in Höhe von %betrag%€ dient zu Ihrer Information.">
         <source>Der berechnet Betrag in Höhe von %betrag%€ dient zu Ihrer Information.</source>
-        <target state="translated">The calculated amount of %amount%€ is for your information.</target>
+        <target state="translated">The calculated amount of %betrag%€ is for your information.</target>
       </trans-unit>
       <trans-unit id="nWV2IiO" resname="Im Anhang finden Sie die genaue Kostenaufschlüsselung und weitere Informationen zu Ihrem SEPA-Lastschriftmandat.">
         <source>Im Anhang finden Sie die genaue Kostenaufschlüsselung und weitere Informationen zu Ihrem SEPA-Lastschriftmandat.</source>
@@ -1133,7 +1133,7 @@
       </trans-unit>
       <trans-unit id="Rh4IIyQ" resname="Mitarbeiter der Organisationen der %stadt%">
         <source>Mitarbeiter der Organisationen der %stadt%</source>
-        <target state="translated">Employees of the organizations of %city%</target>
+        <target state="translated">Employees of the organizations of %stadt%</target>
       </trans-unit>
       <trans-unit id="qrKDvng" resname="Mitarbeiter der Organisation %org%">
         <source>Mitarbeiter der Organisation %org%</source>
@@ -1721,7 +1721,7 @@
       </trans-unit>
       <trans-unit id="GMVPile" resname="Folgende Träger stehen für weitere Fragen zur Verfügung">
         <source>Folgende Träger stehen für weitere Fragen zur Verfügung</source>
-        <target state="translated">The following carriers are available for further questions</target>
+        <target state="translated">The following organizations are available for further questions</target>
       </trans-unit>
       <trans-unit id="_Gkce6M" resname="Webseite">
         <source>Webseite</source>
@@ -1733,7 +1733,7 @@
       </trans-unit>
       <trans-unit id="7c6_B49" resname="Daten des Erziehungsberechtigten">
         <source>Daten des Erziehungsberechtigten</source>
-        <target state="translated">Data of the legal guardian</target>
+        <target state="translated">Data of the parents</target>
       </trans-unit>
       <trans-unit id="7kzDX6W" resname="Brutto Familieneinkommen pro Monat">
         <source>Brutto Familieneinkommen pro Monat</source>
@@ -1777,7 +1777,7 @@
       </trans-unit>
       <trans-unit id="cU7CKq5" resname="Darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden">
         <source>Darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden</source>
-        <target state="translated">__Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden</target>
+        <target state="translated">May be creamed in the summer with commercially available sunscreen</target>
       </trans-unit>
       <trans-unit id="sHZuk.." resname="Fotos, dürfen in der öffentlichen Presse veröffentlicht werden">
         <source>Fotos, dürfen in der öffentlichen Presse veröffentlicht werden</source>
@@ -1867,7 +1867,7 @@
       </trans-unit>
       <trans-unit id="mkOBsfe" resname="Datenschutzhinweis als PDF herunterladen">
         <source>Datenschutzhinweis als PDF herunterladen</source>
-        <target state="translated">Download data protection notice as PDF</target>
+        <target state="translated">Download data protection policy as PDF</target>
       </trans-unit>
       <trans-unit id="CLHBpnG" resname="Rechtlich">
         <source>Rechtlich</source>
@@ -1891,7 +1891,7 @@
       </trans-unit>
       <trans-unit id="1C61Lnb" resname="Impressum %stadt%">
         <source>Impressum %stadt%</source>
-        <target state="translated">Imprint %city%</target>
+        <target state="translated">Imprint %stadt%</target>
       </trans-unit>
       <trans-unit id="blnC7zN" resname="Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).">
         <source>Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).</source>
@@ -2055,11 +2055,11 @@
       </trans-unit>
       <trans-unit id="7jfzYiF" resname="Schreiben Sie uns an damit wir Kontakt zu der Stadtverwaltung aufnehmen können und unsere-Schulkindbetreuung bald auch in Ihrer Stadt eingesetzt wird.">
         <source>Schreiben Sie uns an damit wir Kontakt zu der Stadtverwaltung aufnehmen können und unsere-Schulkindbetreuung bald auch in Ihrer Stadt eingesetzt wird.</source>
-        <target state="translated">Write to us so that we can contact the city administration and our school child care will soon be used in your city.</target>
+        <target state="translated">Write to us so that we can contact the city administration and our school child care will soon be available in your city.</target>
       </trans-unit>
       <trans-unit id="qVVtHT5" resname="Vielen Dank Ihr unsere-Schulkindbetreuung Team">
         <source>Vielen Dank Ihr unsere-Schulkindbetreuung Team</source>
-        <target state="translated">Thank you our school child care team</target>
+        <target state="translated">Thank you Your SKiB Team</target>
       </trans-unit>
       <trans-unit id="U9e4VJt" resname="Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung">
         <source>Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung</source>
@@ -2071,7 +2071,7 @@
       </trans-unit>
       <trans-unit id="AogfjhA" resname="Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an">
         <source>Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an</source>
-        <target state="translated">This website is currently under development. Please do not enter any real personal data. Register your child/child for the %name %school childcare here</target>
+        <target state="translated">This website is currently under development. Please do not enter any real personal data. Register your child/child for the %name% school childcare here</target>
       </trans-unit>
       <trans-unit id="EAtUQdw" resname="Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an">
         <source>Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an</source>
