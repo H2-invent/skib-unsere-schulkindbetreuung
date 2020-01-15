@@ -50,7 +50,7 @@ class workflowController extends AbstractController
         $cityInfoText = $stadt->translate()->getInfoText();
         // Load all schools from the city into the controller as $schulen
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
-        $title = $translator->trans('Schulkind- und Ferienbetreuung der Stadt').' '.$stadt->getName().' | '.$translator->trans(' Hier anmelden');
+        $title = $translator->trans('Schulkindbetreuung und Ferienbetreuung der Stadt').' '.$stadt->getName().' | '.$translator->trans(' Hier anmelden');
         $text = $stadt->translate()->getInfoText();
         $array = explode('. ',$text);
         $text = $array[0];
