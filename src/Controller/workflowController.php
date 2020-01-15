@@ -59,7 +59,7 @@ class workflowController extends AbstractController
         foreach ($array as $data){
             $count = strlen($data);
             if($count< 150){
-                $metaDescription.= $data;
+                $metaDescription.= $data.'. ';
             }else{
                 break;
             }
