@@ -15,7 +15,7 @@ class SeoController extends AbstractController
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findBy(array('active'=>true,'deleted'=>false));
 
-        $res = this->render('seo/index.xml.twig', [
+        $res = $this->render('seo/index.xml.twig', [
         'stadt'=>$stadt
         ]);
 		 $res->headers->set('Content-Type', 'text/xml');
