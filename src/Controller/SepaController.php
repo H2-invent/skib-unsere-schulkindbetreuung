@@ -49,13 +49,9 @@ class SepaController extends AbstractController
 
                 return $this->redirectToRoute('accounting_overview',array('id'=>$organisation->getId(),'snack'=>$result));
             }
-
         }
-
         $sepaData = $this->getDoctrine()->getRepository(Sepa::class)->findBy(array('organisation'=>$organisation));
-
         return $this->render('sepa/show.html.twig',array('form'=>$form->createView(),'sepa'=>$sepaData));
     }
-
 
 }
