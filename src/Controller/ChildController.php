@@ -118,7 +118,7 @@ class ChildController extends AbstractController
                 ->setParameter('jahr',$jahr);
              $text .= $translator->trans(' im Schuljahr schuljahr',array('schuljahr' => $jahr->getVon()->format('d.m.Y').'-'.$jahr->getBis()->format('d.m.Y')));
         }
-        if($request->get('wochentag')){
+        if($request->get('wochentag')!== ""){
             $qb->andWhere('b.wochentag = :wochentag')
                 ->setParameter('wochentag',$request->get('wochentag'));
              $text .= $translator->trans(' am Wochentag %wochentag%',array('%wochentag%'=>$this->wochentag[$request->get('wochentag')]));
