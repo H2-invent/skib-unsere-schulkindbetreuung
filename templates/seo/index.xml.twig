@@ -34,8 +34,58 @@
                         href="{{ absolute_url(path('workflow_start',{'slug':s.slug}| merge({'_locale':'en'}))) }}"/>
             <xhtml:link rel="alternate" hreflang="fr"
                         href="{{ absolute_url(path('workflow_start',{'slug':s.slug}| merge({'_locale':'fr'}))) }}"/>
-            <lastmod>{{ date|date('Y-m-d') }}T{{ date|date('H:i:s') }}+00:00</lastmod>
+            <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+            <pririty>0.9</pririty>
         </url>
+        <url>
+            <loc>{{ absolute_url(path('workflow_imprint',{'slug':s.slug})) }}</loc>
+            <xhtml:link rel="alternate" hreflang="de"
+                        href="{{ absolute_url(path('workflow_imprint',{'slug':s.slug}| merge({'_locale':'de'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="en"
+                        href="{{ absolute_url(path('workflow_imprint',{'slug':s.slug}| merge({'_locale':'en'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="fr"
+                        href="{{ absolute_url(path('workflow_imprint',{'slug':s.slug}| merge({'_locale':'fr'}))) }}"/>
+            <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+            <pririty>0.2</pririty>
+        </url>
+
+        <url>
+            <loc>{{ absolute_url(path('workflow_agb',{'slug':s.slug})) }}</loc>
+            <xhtml:link rel="alternate" hreflang="de"
+                        href="{{ absolute_url(path('workflow_agb',{'slug':s.slug}| merge({'_locale':'de'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="en"
+                        href="{{ absolute_url(path('workflow_agb',{'slug':s.slug}| merge({'_locale':'en'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="fr"
+                        href="{{ absolute_url(path('workflow_agb',{'slug':s.slug}| merge({'_locale':'fr'}))) }}"/>
+            <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+            <pririty>0.2</pririty>
+        </url>
+        {% if s.schulkindBetreung == true %}
+        <url>
+            <loc>{{ absolute_url(path('loerrach_workflow_adresse',{'slug':s.slug})) }}</loc>
+            <xhtml:link rel="alternate" hreflang="de"
+                        href="{{ absolute_url(path('loerrach_workflow_adresse',{'slug':s.slug}| merge({'_locale':'de'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="en"
+                        href="{{ absolute_url(path('loerrach_workflow_adresse',{'slug':s.slug}| merge({'_locale':'en'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="fr"
+                        href="{{ absolute_url(path('loerrach_workflow_adresse',{'slug':s.slug}| merge({'_locale':'fr'}))) }}"/>
+            <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+            <pririty>0.5</pririty>
+        </url>
+        {% endif %}
+        {% if s.ferienprogramm == true %}
+            <url>
+                <loc>{{ absolute_url(path('ferien_adresse',{'slug':s.slug})) }}</loc>
+                <xhtml:link rel="alternate" hreflang="de"
+                            href="{{ absolute_url(path('ferien_adresse',{'slug':s.slug}| merge({'_locale':'de'}))) }}"/>
+                <xhtml:link rel="alternate" hreflang="en"
+                            href="{{ absolute_url(path('ferien_adresse',{'slug':s.slug}| merge({'_locale':'en'}))) }}"/>
+                <xhtml:link rel="alternate" hreflang="fr"
+                            href="{{ absolute_url(path('ferien_adresse',{'slug':s.slug}| merge({'_locale':'fr'}))) }}"/>
+                <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+                <pririty>0.5</pririty>
+            </url>
+        {% endif %}
     {% endfor %}
 
 </urlset>
