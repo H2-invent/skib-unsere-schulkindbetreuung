@@ -49,7 +49,8 @@ class SepaCreateService
     private $printRechnungService;
     private $mailerService;
     private $environment;
-    public function __construct(Environment $environment,TranslatorInterface $translator, EntityManagerInterface $entityManager,SEPASimpleService $sepaSimpleService,PrintRechnungService $printRechnungService,MailerService $mailerService)
+
+    public function __construct(Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager, SEPASimpleService $sepaSimpleService, PrintRechnungService $printRechnungService, MailerService $mailerService)
     {
         $this->em = $entityManager;
         $this->translator = $translator;
@@ -114,8 +115,8 @@ class SepaCreateService
         $this->em->persist($sepa);
         $this->em->flush();
         foreach ($eltern as $data) {// für alle gefunden eltern in diesem Monat
-            $re = $this->createRechnung($data,$sepa,$organisation);
-            if($re->getSumme()>0){
+            $re = $this->createRechnung($data, $sepa, $organisation);
+            if ($re->getSumme() > 0) {
                 $sepaSumme += $re->getSumme();
                 $rechnungen[] = $re;
             }
@@ -136,66 +137,84 @@ class SepaCreateService
         return $this->translator->trans('Das SEPA-Lastschrift wurde erfolgreich angelegt');
     }
 
-    
-        private function createRechnung (Stammdaten $data,Sepa $sepa, Organisation $organisation) :Rechnung
-        {
-            $type = 'FRST'; // setzte SEPA auf First Sepa
 
-            foreach ($data->getRechnungs() as $data3) {//Wenn es eine Rechnung gibt, ewlche an einem SEPA hängt,
-                if ($data3->getSepa()) {
-                    $type = 'RCUR';// dann setzte SEPA Typ auf folgenden LAstschrift SEPA
-                    break;
-                }
+    private function createRechnung(Stammdaten $data, Sepa $sepa, Organisation $organisation): Rechnung
+    {
+        $type = 'FRST'; // setzte SEPA auf First Sepa
+
+        foreach ($data->getRechnungs() as $data3) {//Wenn es eine Rechnung gibt, ewlche an einem SEPA hängt,
+            if ($data3->getSepa()) {
+                $type = 'RCUR';// dann setzte SEPA Typ auf folgenden LAstschrift SEPA
+                break;
             }
-
-            $summe = 0.0;
-
-            $kinderDerEltern = array();
-            foreach ($data->getKinds() as $data3) {// nur kinder aus dieser ORganisation werden berechnet
-                if ($data3->getSchule()->getOrganisation()=== $organisation) {
-                    $kinderDerEltern[] = $data3;
-                }
-            }
-            $rechnung = new Rechnung();
-
-            foreach ($kinderDerEltern as $data2) {// berechne die summe aller kinder
-
-                $summe += $data2->getPreisforBetreuung();
-
-
-                foreach ($data2->getZeitblocks() as $zb) {// füge alle ZEitblöcke an die rechnung an
-                    $rechnung->addZeitblock($zb);
-                }
-                $rechnung->addKinder($data2);
-            }
-
-            $rechnung->setVon($sepa->getVon());
-            $rechnung->setBis($sepa->getBis());
-            $rechnung->setSumme($summe);
-
-            $rechnung->setPdf('');
-            $rechnung->setCreatedAt(new \DateTime());
-            $rechnung->setStammdaten($data);
-            $this->em->persist($rechnung);
-            $this->em->flush();
-            $rechnung->setRechnungsnummer('RE' . (new \DateTime())->format('Ymd') . $rechnung->getId());
-            $rechnung->setSepa($sepa);
-            if ($summe > 0) {
-                //todo check ob alle angaben richtig sind
-                $this->sepaSimpleService->Add($sepa->getEinzugsDatum()->format('Y-m-d'), $rechnung->getSumme(), $rechnung->getStammdaten()->getKontoinhaber(), $rechnung->getStammdaten()->getIban(), $rechnung->getStammdaten()->getBic(),
-                    NULL, NULL, $rechnung->getRechnungsnummer(), $rechnung->getRechnungsnummer(), $type, 'skb-' . $rechnung->getStammdaten()->getConfirmationCode(), $rechnung->getStammdaten()->getCreatedAt()->format('Y-m-d'));
-            }
-            $filename = $this->translator->trans('Rechnung') . ' ' . $rechnung->getRechnungsnummer();
-            $pdf = $this->printRechnungService->printRechnung($filename, $organisation, $rechnung, 'S');
-            $attachment = array();
-            $attachment[] = array('type' => 'application/pdf', 'filename' => $filename . '.pdf', 'body' => $pdf);
-
-            $mailContent =   $this->environment->render('email/rechnungEmail.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
-            $betreff = $this->translator->trans('Rechnung') . ' ' . $rechnung->getRechnungsnummer();
-           $this->mailerService->sendEmail($organisation->getName(), $organisation->getEmail(), $data->getEmail(), $betreff, $mailContent, $attachment);
-
-            return $rechnung;
         }
 
+        $summe = 0.0;
+
+        $kinderDerEltern = array();
+        foreach ($data->getKinds() as $data3) {// nur kinder aus dieser ORganisation werden berechnet
+            if ($data3->getSchule()->getOrganisation() === $organisation) {
+                $kinderDerEltern[] = $data3;
+            }
+        }
+        $rechnung = new Rechnung();
+
+        foreach ($kinderDerEltern as $data2) {// berechne die summe aller kinder
+
+            $summe += $data2->getPreisforBetreuung();
+
+
+            foreach ($data2->getZeitblocks() as $zb) {// füge alle ZEitblöcke an die rechnung an
+                $rechnung->addZeitblock($zb);
+            }
+            $rechnung->addKinder($data2);
+        }
+
+        $rechnung->setVon($sepa->getVon());
+        $rechnung->setBis($sepa->getBis());
+        $rechnung->setSumme($summe);
+
+        $rechnung->setPdf('');
+        $rechnung->setCreatedAt(new \DateTime());
+        $rechnung->setStammdaten($data);
+        $this->em->persist($rechnung);
+        $this->em->flush();
+        $rechnung->setRechnungsnummer('RE' . (new \DateTime())->format('Ymd') . $rechnung->getId());
+        $rechnung->setSepa($sepa);
+        if ($summe > 0) {
+            //todo check ob alle angaben richtig sind
+            $this->sepaSimpleService->Add($sepa->getEinzugsDatum()->format('Y-m-d'), $rechnung->getSumme(), $rechnung->getStammdaten()->getKontoinhaber(), $rechnung->getStammdaten()->getIban(), $rechnung->getStammdaten()->getBic(),
+                NULL, NULL, $rechnung->getRechnungsnummer(), $rechnung->getRechnungsnummer(), $type, 'skb-' . $rechnung->getStammdaten()->getConfirmationCode(), $rechnung->getStammdaten()->getCreatedAt()->format('Y-m-d'));
+        }
+
+        return $rechnung;
+    }
+
+    public function collectallFromSepa(Sepa $sepa)
+    {
+        try {
+            foreach ($sepa->getRechnungen() as $data) {
+                $this->sendRechnung($data);
+            }
+            return true;
+        }catch (\Exception $e){
+            return false;
+        }
+
+    }
+
+    public function sendRechnung(Rechnung $rechnung)
+    {
+        $organisation = $rechnung->getSepa()->getOrganisation();
+        $filename = $this->translator->trans('Rechnung') . ' ' . $rechnung->getRechnungsnummer();
+        $pdf = $this->printRechnungService->printRechnung($filename, $organisation, $rechnung, 'S');
+        $attachment = array();
+        $attachment[] = array('type' => 'application/pdf', 'filename' => $filename . '.pdf', 'body' => $pdf);
+
+        $mailContent = $this->environment->render('email/rechnungEmail.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
+        $betreff = $this->translator->trans('Rechnung') . ' ' . $rechnung->getRechnungsnummer();
+        $this->mailerService->sendEmail($organisation->getName(), $organisation->getEmail(), $rechnung->getStammdaten()->getEmail(), $betreff, $mailContent, $attachment);
+
+    }
 
 }
