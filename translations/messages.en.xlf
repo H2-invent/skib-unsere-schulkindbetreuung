@@ -97,8 +97,8 @@
         <source>Preis erfolgreich berechnet.</source>
         <target state="translated">Price calculated successfully.</target>
       </trans-unit>
-      <trans-unit id="sve14vV" resname="Bitte weiteren Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)">
-        <source>Bitte weiteren Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)</source>
+      <trans-unit id="sve14vV" resname="Bitte weitere Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)">
+        <source>Bitte weitere Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)</source>
         <target state="translated">Please select additional childcare slots (at least two slots must be selected)</target>
       </trans-unit>
       <trans-unit id="uTu8sJd" resname="AGB ">
