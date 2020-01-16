@@ -38,6 +38,9 @@ class StadtType extends AbstractType
             $stadt->translate('de')->setDatenschutz('');
             $stadt->translate('en')->setDatenschutz('');
             $stadt->translate('fr')->setDatenschutz('');
+            $stadt->translate('de')->setCatererInfo('');
+            $stadt->translate('en')->setCatererInfo('');
+            $stadt->translate('fr')->setCatererInfo('');
 
             foreach ($stadt->getNewTranslations() as $newTranslation) {
                 if (!$stadt->getTranslations()->contains($newTranslation) && !$stadt->getNewTranslations()->isEmpty()) {
@@ -85,6 +88,10 @@ class StadtType extends AbstractType
             ->add('datenschutzDE', TextareaType::class, ['attr'=>['rows'=>6],'required'=>true,'label'=>'Datenschutzhinweis Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].datenschutz', ])
             ->add('datenschutzEn', TextareaType::class, ['attr'=>['rows'=>6],'required'=>true,'label'=>'Datenschutzhinweis Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].datenschutz', ])
             ->add('datenschutzFr', TextareaType::class, ['attr'=>['rows'=>6],'required'=>true,'label'=>'Datenschutzhinweis Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].datenschutz', ])
+            ->add('catererInfoDE', TextareaType::class, ['attr'=>['rows'=>6],'required'=>true,'label'=>'Caterer Info Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].catererInfo', ])
+            ->add('catererInfoEn', TextareaType::class, ['attr'=>['rows'=>6],'required'=>true,'label'=>'Caterer Info Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].catererInfo', ])
+            ->add('catererInfoFr', TextareaType::class, ['attr'=>['rows'=>6],'required'=>true,'label'=>'Caterer Info Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].catererInfo', ])
+
             ->add('imprint', TextareaType::class,['attr'=>['rows'=>6],'required'=>true,'label'=>'Impressum der Stadt (Markdown)','translation_domain' => 'form'])
 
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])

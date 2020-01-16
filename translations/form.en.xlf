@@ -25,9 +25,9 @@
         <source>Adresszusatz</source>
         <target state="translated">Address (additional)</target>
       </trans-unit>
-      <trans-unit id="mgry4nw" resname="NBrutto Familieneinkommen pro Monat">
-        <source>NBrutto Familieneinkommen pro Monat</source>
-        <target state="translated">Brutto Family income per month</target>
+      <trans-unit id="7kzDX6W" resname="Brutto Familieneinkommen pro Monat">
+        <source>Brutto Familieneinkommen pro Monat</source>
+        <target state="translated">Gross family income per month</target>
       </trans-unit>
       <trans-unit id="9rL.OfV" resname="Speichern">
         <source>Speichern</source>
@@ -509,10 +509,6 @@
         <source>Straße Nr.</source>
         <target state="translated">Street No.</target>
       </trans-unit>
-      <trans-unit id="7kzDX6W" resname="Brutto Familieneinkommen pro Monat">
-        <source>Brutto Familieneinkommen pro Monat</source>
-        <target state="translated">Gross family income per month</target>
-      </trans-unit>
       <trans-unit id="7KMrC1e" resname="Kategorie (strg halten für Mehrfachauswahl)">
         <source>Kategorie (strg halten für Mehrfachauswahl)</source>
         <target state="translated">Category (keep strg for multiple selection)</target>
@@ -532,6 +528,22 @@
       <trans-unit id="D2p5JXQ" resname="Stripe akzeptieren">
         <source>Stripe akzeptieren</source>
         <target state="translated">Accept Stripe</target>
+      </trans-unit>
+      <trans-unit id="W7pZS56" resname="Caterer Info Deutsch (Markdown)">
+        <source>Caterer Info Deutsch (Markdown)</source>
+        <target>Caterer Info German (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="GmaCtFS" resname="Caterer Info Englisch (Markdown)">
+        <source>Caterer Info Englisch (Markdown)</source>
+        <target>Caterer Info English (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="yt7GnqI" resname="Caterer Info Französisch (Markdown)">
+        <source>Caterer Info Französisch (Markdown)</source>
+        <target>Caterer Info French (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="mgry4nw" resname="NBrutto Familieneinkommen pro Monat">
+        <source>NBrutto Familieneinkommen pro Monat</source>
+        <target state="translated">Brutto Family income per month</target>
       </trans-unit>
     </body>
   </file>
