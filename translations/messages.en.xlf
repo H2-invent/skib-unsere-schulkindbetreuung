@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="8DI4NlC" resname="Erfolgreich gespeichert">
         <source>Erfolgreich gespeichert</source>
-        <target state="translated">Successfully saved.</target>
+        <target state="translated">Successfully saved</target>
       </trans-unit>
       <trans-unit id="xdbz0uj" resname="Fehler: Falsche Organisation">
         <source>Fehler: Falsche Organisation</source>
@@ -59,23 +59,23 @@
       </trans-unit>
       <trans-unit id="MHxXQ1g" resname=" an der Schule %schule%">
         <source> an der Schule %schule%</source>
-        <target state="translated">at school %schule%</target>
+        <target state="translated"> at school %schule%</target>
       </trans-unit>
       <trans-unit id="cMIpBBY" resname=" im Schuljahr schuljahr">
         <source> im Schuljahr schuljahr</source>
-        <target state="translated">in the school year</target>
+        <target state="translated"> in the school year</target>
       </trans-unit>
       <trans-unit id="XGoUgtg" resname=" am Wochentag %wochentag%">
         <source> am Wochentag %wochentag%</source>
-        <target state="translated">on the day of the week %wochentag%</target>
+        <target state="translated"> on the day of the week %wochentag%</target>
       </trans-unit>
       <trans-unit id="Z.kNJwW" resname=" im ausgewählten Betreuungszeitfenster">
         <source> im ausgewählten Betreuungszeitfenster</source>
-        <target state="translated">in the selected care window</target>
+        <target state="translated"> in the selected time slot</target>
       </trans-unit>
       <trans-unit id="wyfWzSw" resname=" in der Klasse: %klasse%">
         <source> in der Klasse: %klasse%</source>
-        <target state="translated">in class: %klasse%</target>
+        <target state="translated"> in class: %klasse%</target>
       </trans-unit>
       <trans-unit id="TdX_eYL" resname="Berufstätig">
         <source>Berufstätig</source>
@@ -97,13 +97,13 @@
         <source>Preis erfolgreich berechnet.</source>
         <target state="translated">Price calculated successfully.</target>
       </trans-unit>
-      <trans-unit id="sve14vV" resname="Bitte weiteren Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)">
-        <source>Bitte weiteren Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)</source>
+      <trans-unit id="sve14vV" resname="Bitte weitere Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)">
+        <source>Bitte weitere Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)</source>
         <target state="translated">Please select additional childcare slots (at least two slots must be selected)</target>
       </trans-unit>
       <trans-unit id="uTu8sJd" resname="AGB ">
         <source>AGB </source>
-        <target state="translated">Terms</target>
+        <target state="translated">Terms and Conditions </target>
       </trans-unit>
       <trans-unit id="BvWUZMy" resname="Mittagessen">
         <source>Mittagessen</source>
@@ -115,11 +115,11 @@
       </trans-unit>
       <trans-unit id="5kiqUjy" resname="Buchungsbestätigung der Schulkindbetreuung für ">
         <source>Buchungsbestätigung der Schulkindbetreuung für </source>
-        <target state="translated">Booking confirmation of school childcare for</target>
+        <target state="translated">Booking confirmation of school childcare for </target>
       </trans-unit>
       <trans-unit id="Qk8oezd" resname="Anmeldeinformation der Schulkindbetreuung für ">
         <source>Anmeldeinformation der Schulkindbetreuung für </source>
-        <target state="translated">Registration information of the school child care for</target>
+        <target state="translated">Registration information of the school child care for </target>
       </trans-unit>
       <trans-unit id="SX9ku_n" resname="Kind erfolgreich eingecheckt">
         <source>Kind erfolgreich eingecheckt</source>
@@ -1241,7 +1241,7 @@
       </trans-unit>
       <trans-unit id="47DEQpj" resname="">
         <source/>
-        <target state="needs-translation"/>
+        <target/>
       </trans-unit>
       <trans-unit id="bXHPK6K" resname="Daten der Kinder">
         <source>Daten der Kinder</source>
@@ -1957,10 +1957,6 @@
         <source>Homepage</source>
         <target state="translated">Homepage</target>
       </trans-unit>
-      <trans-unit id="pkT960H" resname="Vergessen Sie nicht das Mittagessen für Ihr Kind/Ihre Kinder zu bestellen.">
-        <source>Vergessen Sie nicht das Mittagessen für Ihr Kind/Ihre Kinder zu bestellen.</source>
-        <target state="translated">Don't forget to order lunch for your child/children.</target>
-      </trans-unit>
       <trans-unit id="3uL6YMH" resname="Schulen und Kinder">
         <source>Schulen und Kinder</source>
         <target state="translated">Schools and children</target>
@@ -2144,6 +2140,62 @@
       <trans-unit id="PYZx790" resname="Anmeldeportal Schulkindbetreuung">
         <source>Anmeldeportal Schulkindbetreuung</source>
         <target state="translated">Registration portal School childcare</target>
+      </trans-unit>
+      <trans-unit id="pSijS_N" resname="Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch Ihrem Spamordner nach.">
+        <source>Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch Ihrem Spamordner nach.</source>
+        <target state="translated">We have sent a confirmation code to your e-mail address. Please enter this code from the e-mail here. This is necessary to protect your children's data in the best possible way. This may take a few minutes. Please also check your spam folder.</target>
+      </trans-unit>
+      <trans-unit id="uEwfnJM" resname="Kundennummer">
+        <source>Kundennummer</source>
+        <target state="translated">Customer ID</target>
+      </trans-unit>
+      <trans-unit id="WKN3jBj" resname="Straße">
+        <source>Straße</source>
+        <target state="translated">Street</target>
+      </trans-unit>
+      <trans-unit id="xhJ.1EZ" resname="PLZ">
+        <source>PLZ</source>
+        <target state="translated">Postcode</target>
+      </trans-unit>
+      <trans-unit id="Z7aWRoY" resname="Dashboard">
+        <source>Dashboard</source>
+        <target state="translated">Dashboard</target>
+      </trans-unit>
+      <trans-unit id="x4_VmXI" resname="Stammdaten">
+        <source>Stammdaten</source>
+        <target state="translated">Facts and figures</target>
+      </trans-unit>
+      <trans-unit id="t5z8i19" resname="Kundennummer hinzufügen/ändern für %v% %n%">
+        <source>Kundennummer hinzufügen/ändern für %v% %n%</source>
+        <target state="translated">Add/change customer number for %v% %n%</target>
+      </trans-unit>
+      <trans-unit id="XE9zHIP" resname="Stammdaten für die Buchhhaltung">
+        <source>Stammdaten für die Buchhhaltung</source>
+        <target state="translated">Master data for accounting</target>
+      </trans-unit>
+      <trans-unit id="zK7_4jn" resname="Alle Jahre">
+        <source>Alle Jahre</source>
+        <target state="translated">All school years</target>
+      </trans-unit>
+      <trans-unit id="O0jRfpX" resname="Postleitzahl">
+        <source>Postleitzahl</source>
+        <target state="translated">Postcode</target>
+      </trans-unit>
+      <trans-unit id="WMKwySr" resname="Wohnort">
+        <source>Wohnort</source>
+        <target state="translated">City</target>
+      </trans-unit>
+      <trans-unit id="c59QNGQ" resname="Kundennummer zuweisen/ändern">
+        <source>Kundennummer zuweisen/ändern</source>
+        <target state="translated">Assign/change customer number</target>
+      </trans-unit>
+      <trans-unit id="syeYwkW" resname="Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch in Ihrem Spamordner nach.">
+        <source>Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch in Ihrem Spamordner nach.</source>
+        <target state="translated">We have sent a confirmation code to your e-mail address. Please enter this code from the e-mail here. This is necessary to protect your children's data in the best possible way. This may take a few minutes. Please also check your spam folder.</target>
+      </trans-unit>
+      <trans-unit id="XAbXtjr" resname="Wichtig: Diesen Bestätigungscode sicher aufbewahren!">
+        <source>Wichtig: Diesen Bestätigungscode sicher aufbewahren!</source>
+        <target state="translated">Important: Keep this confirmation code safe!</target>
       </trans-unit>
     </body>
   </file>
