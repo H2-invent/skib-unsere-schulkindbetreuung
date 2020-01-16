@@ -127,6 +127,10 @@
                                             {{ n.message|nl2br|length > 70 ? n.message|nl2br|slice(0,70)~'...':n.message }}
                                         </p>
                                     {% endfor %}
+                                    <a href="{{ path('news_show_page', {'slug': stadt.slug }) }}"
+                                       class="btn btn-primary">
+                                        {% trans %}Alle Neuigkeiten der Stadt{% endtrans %}
+                                    </a>
                                 {% endif %}
                             </div>
                         </div>
