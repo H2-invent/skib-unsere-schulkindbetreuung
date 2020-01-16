@@ -1,0 +1,87 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <!-- Count item widget-->
+                <div class=" col-12 card">
+                    <div class="card-header">
+                        <h1> {{ 'Stammdaten für die Buchhhaltung'|trans }}
+                        </h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{ 'Alle Jahre'|trans }}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item loadInTarget" data-target="#table" href="{{ path('accounting_showdata',{'id':organisation.id}) }}">{{ 'Alle Jahre'|trans }}</a>
+                                        {% for y in organisation.stadt.actives %}
+                                            <a class="dropdown-item loadInTarget" data-target="#table" href="{{ path('accounting_showdata',{'id':organisation.id,'year_id':y.id}) }}">{{y.von|date('d.m.Y')}}</a>
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+
+                                    <table class="table table-hover" id="table">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>{% trans %}Kundennummer{% endtrans %}</th>
+                                            <th>{% trans %}Name{% endtrans %}</th>
+                                            <th>{% trans %}E-Mail{% endtrans %}</th>
+                                            <th>{% trans %}Straße{% endtrans %}</th>
+                                            <th>{% trans %}Postleitzahl{% endtrans %}</th>
+                                            <th>{% trans %}Wohnort{% endtrans %}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for s in stammdaten %}
+                                            <tr>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button class="btn bmd-btn-icon dropdown-toggle" type="button"
+                                                                id="ex2" data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                            <i class="material-icons">more_vert</i>
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-left"
+                                                             aria-labelledby="ex2">
+                                                            <a class="dropdown-item"
+                                                               href="{{ path('accounting_showdata_customerid', {'id':organisation.id, 'stammdaten_id':s.id}) }}">{% trans %}Kundennummer zuweisen/ändern{% endtrans %}</a>
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>{{ s.customerID }}</td>
+                                                <td>{{ s.vorname }} {{ s.name }}</td>
+                                                <td>{{ s.email }}</td>
+                                                <td>{{ s.strasse }}</td>
+                                                <td>{{ s.plz }}</td>
+                                                <td>{{ s.stadt }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block jquery %}
+
+
+{% endblock %}

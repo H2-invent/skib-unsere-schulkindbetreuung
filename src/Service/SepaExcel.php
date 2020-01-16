@@ -41,21 +41,31 @@ class SepaExcel
         $count = 0;
         $sepaSheet = $this->spreadsheet->createSheet();
         $sepaSheet->setTitle($this->translator->trans('Rechnungen'));
+        $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kundennummer'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Vorname'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Nachname'));
+        $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Straße'));
+        $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('PLZ'));
+        $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Stadt'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Betrag in €'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Anzahl der Kinder'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('IBAN'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('BIC'));
+        $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kontoinhaber'));
            $counter = 2;
         foreach ($sepa->getRechnungen() as $data) {
             $count = 0;
+            $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getCustomerID());
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getVorname());
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getName());
+            $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getStrasse());
+            $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getPlz());
+            $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getStadt());
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getSumme());
             $sepaSheet->setCellValue($alphas[$count++] . $counter, sizeof($data->getKinder()));
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getIban());
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getBic());
+            $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getKontoinhaber());
                     $counter++;
         }
         $sheetIndex = $this->spreadsheet->getIndex(
