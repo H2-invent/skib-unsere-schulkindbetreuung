@@ -317,6 +317,17 @@ class NewsController extends AbstractController
         return $this->redirectToRoute('org_news_anzeige',array('id'=>$news->getOrganisation()->getId(),'snack'=>$text));
     }
 
+    /**
+     * @Route("/news/city/{slug}",name="news_show_page",methods={"GET"})
+     */
+    public function newsPageAction($slug, Request $request)
+    {
+        $stadt =  $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug'=>$slug));
+        $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt'=>$stadt,'activ'=>true));
+            return $this->render('news/newsPage.twig', array('stadt' => $stadt, 'news'=>$news ));
+
+    }
+
 
     /**
      * @Route("/news/city/{slug}/{id}",name="news_show_all",methods={"GET"})
@@ -325,7 +336,11 @@ class NewsController extends AbstractController
     {
         $stadt =  $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('slug'));
         $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
-        return $this->render('news/showNews.html.twig', array('stadt' => $stadt,'news'=>$news ));
+        if($request->isXmlHttpRequest()) {
+            return $this->render('news/showNews.html.twig', array('stadt' => $stadt,'news'=>$news ));
+        } else {
+            return $this->render('news/showNewsPage.twig', array('stadt' => $stadt,'news'=>$news ));
+        }
     }
 
 

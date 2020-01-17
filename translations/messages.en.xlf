@@ -97,7 +97,7 @@
         <source>Preis erfolgreich berechnet.</source>
         <target state="translated">Price calculated successfully.</target>
       </trans-unit>
-      <trans-unit id="sve14vV" resname="Bitte weitere Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)">
+      <trans-unit id="fr3glj3" resname="Bitte weitere Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)">
         <source>Bitte weitere Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)</source>
         <target state="translated">Please select additional childcare slots (at least two slots must be selected)</target>
       </trans-unit>
@@ -2196,6 +2196,22 @@
       <trans-unit id="XAbXtjr" resname="Wichtig: Diesen Bestätigungscode sicher aufbewahren!">
         <source>Wichtig: Diesen Bestätigungscode sicher aufbewahren!</source>
         <target state="translated">Important: Keep this confirmation code safe!</target>
+      </trans-unit>
+      <trans-unit id="YEySstx" resname="Alle Neuigkeiten">
+        <source>Alle Neuigkeiten</source>
+        <target state="translated">All News</target>
+      </trans-unit>
+      <trans-unit id="lBFODqf" resname="Erstellt am">
+        <source>Erstellt am</source>
+        <target state="translated">Created at</target>
+      </trans-unit>
+      <trans-unit id="EyEb.q5" resname="Neuigkeit">
+        <source>Neuigkeit</source>
+        <target state="translated">News</target>
+      </trans-unit>
+      <trans-unit id="fCQ84Uw" resname="Alle Neuigkeiten der Stadt">
+        <source>Alle Neuigkeiten der Stadt</source>
+        <target state="translated">All News</target>
       </trans-unit>
     </body>
   </file>
