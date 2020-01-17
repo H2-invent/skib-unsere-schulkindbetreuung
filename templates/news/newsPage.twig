@@ -8,16 +8,17 @@
 {% endblock %}
 {% block content %}
     {% for n in news %}
-    <div class="card">
-        <div class="card-header">
-            <h3>{{ n.title }}</h3>
-        </div>
-        <div class="card-body">
-            {{ n.message }}
-        </div>
-        <div class="card-footer">
-            {% trans %}Erstellt am{% endtrans %}: {{ n.date|date('d.m.Y') }}
-        </div>
-    </div>
+
+        <h2>{{ n.title }}</h2><b>{% trans %}Erstellt am{% endtrans %}: {{ n.createdDate|date('d.m.Y') }}{% if n.date %} | {% trans %}Bearbeitet am{% endtrans %}: {{ n.date|date('d.m.Y') }}{% endif %}</b>
+
+        <p>
+            {{ n.message|nl2br|length > 150 ? n.message|nl2br|slice(0,150)~'...':n.message|nl2br }}
+        </p>
+
+        <a class="btn btn-primary"
+           href="{{ path('news_show_all', {'id': n.id, 'slug': stadt.slug}) }}">
+            <b>{% trans %}Weiterlesen{% endtrans %}</b>
+        </a>
+        <hr class="hr-dark ">
     {% endfor %}
 {% endblock %}

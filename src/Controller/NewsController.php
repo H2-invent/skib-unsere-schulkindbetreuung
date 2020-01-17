@@ -50,7 +50,7 @@ class NewsController extends AbstractController
         $activity = new News();
         $activity->setStadt($stadt);
         $today = new \DateTime();
-        $activity->setDate($today);
+        $activity->setCreatedDate($today);
         $form = $this->createForm(NewsType::class, $activity);
         $form->remove('schulen');
         $form->handleRequest($request);
@@ -198,7 +198,7 @@ class NewsController extends AbstractController
         $activity = new News();
         $activity->setOrganisation($organisation);
         $today = new \DateTime();
-        $activity->setDate($today);
+        $activity->setCreatedDate($today);
         $schulen = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation' => $organisation));
         $form = $this->createForm(NewsType::class, $activity, array('schulen'=>$schulen));
         $form->remove('activ');

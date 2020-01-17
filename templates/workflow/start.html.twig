@@ -124,7 +124,7 @@
                                         </a>
                                         <br/>
                                         <p>
-                                            {{ n.message|nl2br|length > 70 ? n.message|nl2br|slice(0,70)~'...':n.message }}
+                                            {{ n.message|length > 70 ? n.message|nl2br|slice(0,70)~'...':n.message|nl2br }}
                                         </p>
                                     {% endfor %}
                                     <a href="{{ path('news_show_page', {'slug': stadt.slug }) }}"

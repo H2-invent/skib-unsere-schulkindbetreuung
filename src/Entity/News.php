@@ -32,7 +32,7 @@ class News
     private $stadt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",  nullable=true)
      */
     private $date;
 
@@ -50,6 +50,11 @@ class News
      * @ORM\ManyToOne(targetEntity="App\Entity\Schule", inversedBy="news")
      */
     private $schule;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdDate;
 
     public function getId(): ?int
     {
@@ -97,7 +102,7 @@ class News
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(\DateTimeInterface $date): ?self
     {
         $this->date = $date;
 
@@ -136,6 +141,18 @@ class News
     public function setSchule(?Schule $schule): self
     {
         $this->schule = $schule;
+
+        return $this;
+    }
+
+    public function getCreatedDate(): ?\DateTimeInterface
+    {
+        return $this->createdDate;
+    }
+
+    public function setCreatedDate(\DateTimeInterface $createdDate): self
+    {
+        $this->createdDate = $createdDate;
 
         return $this;
     }
