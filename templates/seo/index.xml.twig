@@ -123,7 +123,21 @@
                 <lastmod>{{ date|date('Y-m-d') }}</lastmod>
                 <priority>0.2</priority>
             </url>
-            {% endfor %}
+        {% endfor %}
+
+        {% for n in s.news %}
+            <url>
+                <loc>{{ absolute_url(path('news_show_all',{'slug':s.slug,'id':n.id})) }}</loc>
+                <xhtml:link rel="alternate" hreflang="de"
+                            href="{{ absolute_url(path('news_show_all',{'slug':s.slug,'id':n.id}| merge({'_locale':'de'}))) }}"/>
+                <xhtml:link rel="alternate" hreflang="en"
+                            href="{{ absolute_url(path('news_show_all',{'slug':s.slug,'id':n.id}| merge({'_locale':'en'}))) }}"/>
+                <xhtml:link rel="alternate" hreflang="fr"
+                            href="{{ absolute_url(path('news_show_all',{'slug':s.slug,'id':n.id}| merge({'_locale':'fr'}))) }}"/>
+                <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+                <priority>0.5</priority>
+            </url>
+        {% endfor %}
     {% endfor %}
 
 </urlset>
