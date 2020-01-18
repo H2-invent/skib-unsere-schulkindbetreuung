@@ -321,11 +321,13 @@ class NewsController extends AbstractController
     /**
      * @Route("/news/city/{slug}/{id}",name="news_show_all",methods={"GET"})
      */
-    public function showNewsAction(Request $request)
+    public function showNewsAction(Request $request,TranslatorInterface $translator)
     {
         $stadt =  $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('slug'));
         $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
-        return $this->render('news/showNews.html.twig', array('stadt' => $stadt,'news'=>$news ));
+        $title = $news->getTitle().' | '.$news->getStadt()->getName();
+        $metaDescription = $news->getMessage();
+        return $this->render('news/showNews.html.twig', array('metaDescription'=>$metaDescription,'title'=>$title,'stadt' => $stadt,'news'=>$news ));
     }
 
 
