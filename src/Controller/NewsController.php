@@ -51,7 +51,8 @@ class NewsController extends AbstractController
         $activity->setStadt($stadt);
         $today = new \DateTime();
         $activity->setCreatedDate($today);
-        $form = $this->createForm(NewsType::class, $activity);
+        $schulen = $stadt->getSchules();
+        $form = $this->createForm(NewsType::class, $activity, array('schulen'=>$schulen));
         $form->remove('schulen');
         $form->handleRequest($request);
 
@@ -85,7 +86,8 @@ class NewsController extends AbstractController
 
         $today = new \DateTime();
         $activity->setDate($today);
-        $form = $this->createForm(NewsType::class, $activity);
+        $schulen = $activity->getStadt()->getSchules();
+        $form = $this->createForm(NewsType::class, $activity, array('schulen'=>$schulen));
         $form->remove('schulen');
         $form->handleRequest($request);
 
@@ -356,6 +358,11 @@ class NewsController extends AbstractController
         }
         $today = new \DateTime();
 
+        if ($news->getSchule()->isEmpty()){
+            $text = $translator->trans('Nachricht konnte nicht versendet');
+            return $this->redirectToRoute('org_news_anzeige',array('id'=>$news->getOrganisation()->getId(),'snack'=>$text));
+        }
+
         $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
         $qb->innerJoin('stammdaten.kinds','kinds')
             ->innerJoin('kinds.zeitblocks','kind_zeitblocks')
@@ -365,12 +372,14 @@ class NewsController extends AbstractController
             ->andWhere('stammdaten.saved = 1')
             ->andWhere('active.bis >= :today')
             ->andWhere('active.von <= :today')
-            ->setParameter('schule', $news->getSchule())
             ->setParameter('today', $today);
+        foreach ($news->getSchule() as $schule) {
+            $qb->setParameter('schule', $schule);
+        }
         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
 
-        $mailContent = $this->renderView('email/orgNews.html.twig', array('organisation'=>$news->getOrganisation(), 'news' => $news, 'stammdaten'=>$stammdaten));
+        $mailContent = $this->renderView('email/news.html.twig', array('sender'=>$news->getOrganisation(), 'news' => $news, 'stammdaten'=>$stammdaten));
         foreach ($stammdaten as $data){
             $mailerService->sendEmail('Ranzenpost',$news->getOrganisation()->getEmail(),$data->getEmail(),$news->getTitle(),$mailContent);
     }
@@ -381,13 +390,64 @@ class NewsController extends AbstractController
 
 
     /**
+     * @Route("city_news/send", name="city_news_send", methods={"GET"})
+     */
+    public function cityNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService)
+    {
+        $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+
+        if ($news->getStadt() != $this->getUser()->getStadt()) {
+            throw new \Exception('Wrong City');
+        }
+        $today = new \DateTime();
+
+        if ($news->getSchule()->isEmpty()){
+            $text = $translator->trans('Nachricht konnte nicht versendet');
+            return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$news->getStadt()->getId(),'snack'=>$text));
+        }
+
+        $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
+
+        $qb->innerJoin('stammdaten.kinds','kinds')
+            ->innerJoin('kinds.zeitblocks','kind_zeitblocks')
+            ->innerJoin('kind_zeitblocks.active','active')
+            ->andWhere('kind_zeitblocks.schule = :schule')
+            ->andWhere('stammdaten.fin = 1')
+            ->andWhere('stammdaten.saved = 1')
+            ->andWhere('active.bis >= :today')
+            ->andWhere('active.von <= :today')
+            ->setParameter('today', $today);
+
+        foreach ($news->getSchule() as $schule) {
+            $qb->setParameter('schule', $schule);
+        }
+        $query = $qb->getQuery();
+        $stammdaten = $query->getResult();
+
+        $mailContent = $this->renderView('email/news.html.twig', array('sender'=>$news->getStadt(), 'news' => $news, 'stammdaten'=>$stammdaten));
+        foreach ($stammdaten as $data){
+            $mailerService->sendEmail('Ranzenpost',$news->getStadt()->getEmail(),$data->getEmail(),$news->getTitle(),$mailContent);
+        }
+
+        $text = $translator->trans('Nachricht versendet');
+        return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$news->getStadt()->getId(),'snack'=>$text));
+    }
+
+
+    /**
      * @Route("/news/email_online/id",name="org_email_news_show_online",methods={"GET"})
      */
     public function orgShowNewsAction(Request $request)
     {
         $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
-        $stadt = $news->getOrganisation()->getStadt();
-        return $this->render('email/orgNews.html.twig', array('stadt'=>$stadt, 'organisation'=>$news->getOrganisation(), 'news' => $news));
+
+        if ($news->getOrganisation()){
+            $stadt = $news->getOrganisation()->getStadt();
+            return $this->render('email/news.html.twig', array('stadt'=>$stadt, 'sender'=>$news->getOrganisation(), 'news' => $news));
+        } else {
+            return $this->render('email/news.html.twig', array('stadt'=>$news->getStadt(), 'sender'=>$news->getStadt(), 'news' => $news));
+
+        }
     }
 
 }

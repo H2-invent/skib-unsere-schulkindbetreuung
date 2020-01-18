@@ -120,7 +120,7 @@ class Schule
     private $catererEmail;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\News", mappedBy="schule")
+     * @ORM\ManyToMany(targetEntity="App\Entity\News", mappedBy="schule")
      */
     private $news;
 
@@ -383,7 +383,7 @@ class Schule
     {
         if (!$this->news->contains($news)) {
             $this->news[] = $news;
-            $news->setSchule($this);
+            $news->addSchule($this);
         }
 
         return $this;
@@ -393,10 +393,7 @@ class Schule
     {
         if ($this->news->contains($news)) {
             $this->news->removeElement($news);
-            // set the owning side to null (unless already changed)
-            if ($news->getSchule() === $this) {
-                $news->setSchule(null);
-            }
+            $news->removeSchule($this);
         }
 
         return $this;

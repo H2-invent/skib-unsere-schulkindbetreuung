@@ -39,15 +39,16 @@
                                                    href="{{ path('org_news_edit',{'id':n.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
                                                 <a class="dropdown-item"
                                                    href="{{ path('org_news_delete',{'id':n.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                                {% if n.schule is not empty %}
                                                 <a class="dropdown-item"
                                                    href="{{ path('org_news_send',{'id':n.id}) }}">{% trans %}Per Email versenden{% endtrans %}</a>
-
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </td>
                                     <td>{{ n.title }}</td>
                                     <td>{{ n.message }}</td>
-                                    <td>{% if n.schule %}{{ n.schule.name }}{% endif %}</td>
+                                    <td>{% for s in n.schule %}{{ s.name }}<br>{% endfor %}</td>
                                     <td>{{ n.date|date("d.m.Y G:i") }}</td>
                                 </tr>
                             {% endfor %}
