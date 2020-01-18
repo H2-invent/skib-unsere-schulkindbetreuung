@@ -2,3 +2,4 @@ User-agent: *
 Disallow: /frontpage/*
 Disallow: /uploads/*
 Disallow: /fonts/*
+Disallow: /images/flags/*
