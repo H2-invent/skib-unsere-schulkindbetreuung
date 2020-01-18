@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function Doctrine\ORM\QueryBuilder;
 
 class NewsController extends AbstractController
 {
@@ -363,23 +364,28 @@ class NewsController extends AbstractController
         $today = new \DateTime();
 
         if ($news->getSchule()->isEmpty()) {
-            $text = $translator->trans('Nachricht konnte nicht versendet');
+            $text = $translator->trans('Nachricht konnte nicht versendet werden');
             return $this->redirectToRoute('org_news_anzeige', array('id' => $news->getOrganisation()->getId(), 'snack' => $text));
         }
 
         $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
+
         $qb->innerJoin('stammdaten.kinds', 'kinds')
             ->innerJoin('kinds.zeitblocks', 'kind_zeitblocks')
-            ->innerJoin('kind_zeitblocks.active', 'active')
-            ->andWhere('kind_zeitblocks.schule = :schule')
-            ->andWhere('stammdaten.fin = 1')
+            ->innerJoin('kind_zeitblocks.active', 'active');
+        $count = 0;
+
+        foreach ($news->getSchule() as $schule) {
+            $qb->orWhere('kind_zeitblocks.schule = :schule' . $count)
+                ->setParameter('schule' . $count, $schule);
+            $count++;
+        }
+        $qb->andWhere('stammdaten.fin = 1')
             ->andWhere('stammdaten.saved = 1')
             ->andWhere('active.bis >= :today')
             ->andWhere('active.von <= :today')
             ->setParameter('today', $today);
-        foreach ($news->getSchule() as $schule) {
-            $qb->setParameter('schule', $schule);
-        }
+
         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
 
@@ -418,8 +424,7 @@ class NewsController extends AbstractController
         $count = 0;
 
         foreach ($news->getSchule() as $schule) {
-            $qb->
-            andWhere('kind_zeitblocks.schule = :schule' . $count)
+            $qb->orWhere('kind_zeitblocks.schule = :schule' . $count)
                 ->setParameter('schule' . $count, $schule);
             $count++;
         }
@@ -432,7 +437,8 @@ class NewsController extends AbstractController
 
         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
-
+        dump($stammdaten);
+        return 0;
         $mailContent = $this->renderView('email/news.html.twig', array('sender' => $news->getStadt(), 'news' => $news, 'stammdaten' => $stammdaten));
         foreach ($stammdaten as $data) {
             $mailerService->sendEmail('Ranzenpost', $news->getStadt()->getEmail(), $data->getEmail(), $news->getTitle(), $mailContent);
