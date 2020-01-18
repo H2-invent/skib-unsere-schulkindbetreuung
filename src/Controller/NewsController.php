@@ -28,20 +28,21 @@ class NewsController extends AbstractController
     public function index(Request $request)
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
-        if($stadt != $this->getUser()->getStadt()){
+        if ($stadt != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
-        $activity = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt'=>$stadt));
+        $activity = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt' => $stadt));
 
         return $this->render('news/news.html.twig', [
             'city' => $stadt,
-            'news'=>$activity
+            'news' => $activity
         ]);
     }
+
     /**
      * @Route("city_news/neu", name="city_admin_news_neu")
      */
-    public function neu(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function neu(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         if ($stadt != $this->getUser()->getStadt()) {
@@ -52,7 +53,7 @@ class NewsController extends AbstractController
         $today = new \DateTime();
         $activity->setCreatedDate($today);
         $schulen = $stadt->getSchules();
-        $form = $this->createForm(NewsType::class, $activity, array('schulen'=>$schulen));
+        $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen));
         $form->remove('schulen');
         $form->handleRequest($request);
 
@@ -60,25 +61,26 @@ class NewsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $news = $form->getData();
             $errors = $validator->validate($news);
-            if(count($errors)== 0) {
+            if (count($errors) == 0) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($news);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
-                return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$stadt->getId(),'snack'=>$text));
+                return $this->redirectToRoute('city_admin_news_anzeige', array('id' => $stadt->getId(), 'snack' => $text));
             }
 
         }
         $title = $translator->trans('Neuigkeit erstellt');
-        return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
+        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
 
     }
+
     /**
      * @Route("city_news/edit", name="city_admin_news_edit")
      */
-    public function edit(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function edit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $activity =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $activity = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
         if ($activity->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
@@ -87,7 +89,7 @@ class NewsController extends AbstractController
         $today = new \DateTime();
         $activity->setDate($today);
         $schulen = $activity->getStadt()->getSchules();
-        $form = $this->createForm(NewsType::class, $activity, array('schulen'=>$schulen));
+        $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen));
         $form->remove('schulen');
         $form->handleRequest($request);
 
@@ -95,25 +97,26 @@ class NewsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $news = $form->getData();
             $errors = $validator->validate($news);
-            if(count($errors)== 0) {
+            if (count($errors) == 0) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($news);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$activity->getStadt()->getId(),'snack'=>$text));
+                return $this->redirectToRoute('city_admin_news_anzeige', array('id' => $activity->getStadt()->getId(), 'snack' => $text));
             }
 
         }
         $title = $translator->trans('Neuigkeit bearbeiten');
-        return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
+        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
 
     }
+
     /**
      * @Route("city_news/delete", name="city_admin_news_delete")
      */
-    public function delete(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function delete(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $activity =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $activity = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
         if ($activity->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
@@ -122,15 +125,15 @@ class NewsController extends AbstractController
         $em->remove($activity);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
-        return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$activity->getStadt()->getId(),'snack'=>$text));
+        return $this->redirectToRoute('city_admin_news_anzeige', array('id' => $activity->getStadt()->getId(), 'snack' => $text));
     }
 
     /**
      * @Route("city_news/deactivate", name="city_admin_news_deactivate")
      */
-    public function deactivateAction(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function deactivateAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
@@ -140,15 +143,15 @@ class NewsController extends AbstractController
         $em->persist($news);
         $em->flush();
         $text = $translator->trans('Erfolgreich deaktiviert');
-        return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$news->getStadt()->getId(),'snack'=>$text));
+        return $this->redirectToRoute('city_admin_news_anzeige', array('id' => $news->getStadt()->getId(), 'snack' => $text));
     }
 
     /**
      * @Route("city_news/activate", name="city_admin_news_activate")
      */
-    public function activateAction(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function activateAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
@@ -161,7 +164,7 @@ class NewsController extends AbstractController
         $em->persist($news);
         $em->flush();
         $text = $translator->trans('Erfolgreich aktiviert');
-        return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$news->getStadt()->getId(),'snack'=>$text));
+        return $this->redirectToRoute('city_admin_news_anzeige', array('id' => $news->getStadt()->getId(), 'snack' => $text));
     }
 
 
@@ -172,16 +175,16 @@ class NewsController extends AbstractController
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
         $stadt = $organisation->getStadt();
-        if($organisation != $this->getUser()->getOrganisation()){
+        if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $activity = $this->getDoctrine()->getRepository(News::class)->findBy(array('organisation'=>$organisation));
+        $activity = $this->getDoctrine()->getRepository(News::class)->findBy(array('organisation' => $organisation));
 
-        $new = $this->generateUrl('org_news_neu',array('id'=>$organisation->getId()));
+        $new = $this->generateUrl('org_news_neu', array('id' => $organisation->getId()));
         return $this->render('news/orgNews.html.twig', [
             'org' => $organisation,
-            'news'=>$activity,
-            'link'=>$new,
+            'news' => $activity,
+            'link' => $new,
         ]);
     }
 
@@ -189,11 +192,11 @@ class NewsController extends AbstractController
     /**
      * @Route("org_news/neu", name="org_news_neu", methods={"GET","POST"})
      */
-    public function orgNewsNeu(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function orgNewsNeu(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
         $stadt = $organisation->getStadt();
-        if($organisation != $this->getUser()->getOrganisation()){
+        if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
@@ -202,7 +205,7 @@ class NewsController extends AbstractController
         $today = new \DateTime();
         $activity->setCreatedDate($today);
         $schulen = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation' => $organisation));
-        $form = $this->createForm(NewsType::class, $activity, array('schulen'=>$schulen));
+        $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen));
         $form->remove('activ');
         $form->handleRequest($request);
 
@@ -211,17 +214,17 @@ class NewsController extends AbstractController
             $news = $form->getData();
             $news->setActiv(false);
             $errors = $validator->validate($news);
-            if(count($errors)== 0) {
+            if (count($errors) == 0) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($news);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
-                return $this->redirectToRoute('org_news_anzeige',array('id'=>$organisation->getId(),'snack'=>$text));
+                return $this->redirectToRoute('org_news_anzeige', array('id' => $organisation->getId(), 'snack' => $text));
             }
 
         }
         $title = $translator->trans('Ranzenpost erstellen');
-        return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
+        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
 
     }
 
@@ -229,9 +232,9 @@ class NewsController extends AbstractController
     /**
      * @Route("org_news/edit", name="org_news_edit", methods={"GET","POST"})
      */
-    public function orgNewsEdit(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function orgNewsEdit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $activity =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $activity = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
         if ($activity->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
@@ -240,7 +243,7 @@ class NewsController extends AbstractController
         $today = new \DateTime();
         $activity->setDate($today);
         $schulen = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation' => $activity->getOrganisation()));
-        $form = $this->createForm(NewsType::class, $activity, array('schulen'=>$schulen));
+        $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen));
         $form->remove('activ');
         $form->handleRequest($request);
 
@@ -249,25 +252,26 @@ class NewsController extends AbstractController
             $news = $form->getData();
             $news->setActiv(false);
             $errors = $validator->validate($news);
-            if(count($errors)== 0) {
+            if (count($errors) == 0) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($news);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('org_news_anzeige',array('id'=>$activity->getOrganisation()->getId(),'snack'=>$text));
+                return $this->redirectToRoute('org_news_anzeige', array('id' => $activity->getOrganisation()->getId(), 'snack' => $text));
             }
 
         }
         $title = $translator->trans('Ranzenpost bearbeiten');
-        return $this->render('administrator/neu.html.twig',array('title'=>$title,'form' => $form->createView(),'errors'=>$errors));
+        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
 
     }
+
     /**
      * @Route("org_news/delete", name="org_news_delete",methods={"GET","POST"})
      */
     public function orgNewsDelete(Request $request, TranslatorInterface $translator)
     {
-        $activity =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $activity = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
         if ($activity->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
@@ -276,7 +280,7 @@ class NewsController extends AbstractController
         $em->remove($activity);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
-        return $this->redirectToRoute('org_news_anzeige',array('id'=>$activity->getOrganisation()->getId(),'snack'=>$text));
+        return $this->redirectToRoute('org_news_anzeige', array('id' => $activity->getOrganisation()->getId(), 'snack' => $text));
     }
 
     /**
@@ -284,7 +288,7 @@ class NewsController extends AbstractController
      */
     public function orgNewsDeactivate(Request $request, TranslatorInterface $translator)
     {
-        $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
@@ -294,7 +298,7 @@ class NewsController extends AbstractController
         $em->persist($news);
         $em->flush();
         $text = $translator->trans('Erfolgreich deaktiviert');
-        return $this->redirectToRoute('org_news_anzeige',array('id'=>$news->getOrganisation()->getId(),'snack'=>$text));
+        return $this->redirectToRoute('org_news_anzeige', array('id' => $news->getOrganisation()->getId(), 'snack' => $text));
     }
 
     /**
@@ -302,7 +306,7 @@ class NewsController extends AbstractController
      */
     public function orgNewsActivate(Request $request, TranslatorInterface $translator)
     {
-        $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
@@ -316,7 +320,7 @@ class NewsController extends AbstractController
         $em->persist($news);
         $em->flush();
         $text = $translator->trans('Erfolgreich aktiviert');
-        return $this->redirectToRoute('org_news_anzeige',array('id'=>$news->getOrganisation()->getId(),'snack'=>$text));
+        return $this->redirectToRoute('org_news_anzeige', array('id' => $news->getOrganisation()->getId(), 'snack' => $text));
     }
 
     /**
@@ -324,9 +328,9 @@ class NewsController extends AbstractController
      */
     public function newsPageAction($slug, Request $request)
     {
-        $stadt =  $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug'=>$slug));
-        $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt'=>$stadt,'activ'=>true));
-            return $this->render('news/newsPage.twig', array('stadt' => $stadt, 'news'=>$news ));
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true));
+        return $this->render('news/newsPage.twig', array('stadt' => $stadt, 'news' => $news));
 
     }
 
@@ -336,12 +340,12 @@ class NewsController extends AbstractController
      */
     public function showNewsAction(Request $request)
     {
-        $stadt =  $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('slug'));
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('slug'));
         $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
-        if($request->isXmlHttpRequest()) {
-            return $this->render('news/showNews.html.twig', array('stadt' => $stadt,'news'=>$news ));
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('news/showNews.html.twig', array('stadt' => $stadt, 'news' => $news));
         } else {
-            return $this->render('news/showNewsPage.twig', array('stadt' => $stadt,'news'=>$news ));
+            return $this->render('news/showNewsPage.twig', array('stadt' => $stadt, 'news' => $news));
         }
     }
 
@@ -351,22 +355,22 @@ class NewsController extends AbstractController
      */
     public function orgNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService)
     {
-        $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
         $today = new \DateTime();
 
-        if ($news->getSchule()->isEmpty()){
+        if ($news->getSchule()->isEmpty()) {
             $text = $translator->trans('Nachricht konnte nicht versendet');
-            return $this->redirectToRoute('org_news_anzeige',array('id'=>$news->getOrganisation()->getId(),'snack'=>$text));
+            return $this->redirectToRoute('org_news_anzeige', array('id' => $news->getOrganisation()->getId(), 'snack' => $text));
         }
 
         $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
-        $qb->innerJoin('stammdaten.kinds','kinds')
-            ->innerJoin('kinds.zeitblocks','kind_zeitblocks')
-            ->innerJoin('kind_zeitblocks.active','active')
+        $qb->innerJoin('stammdaten.kinds', 'kinds')
+            ->innerJoin('kinds.zeitblocks', 'kind_zeitblocks')
+            ->innerJoin('kind_zeitblocks.active', 'active')
             ->andWhere('kind_zeitblocks.schule = :schule')
             ->andWhere('stammdaten.fin = 1')
             ->andWhere('stammdaten.saved = 1')
@@ -379,13 +383,13 @@ class NewsController extends AbstractController
         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
 
-        $mailContent = $this->renderView('email/news.html.twig', array('sender'=>$news->getOrganisation(), 'news' => $news, 'stammdaten'=>$stammdaten));
-        foreach ($stammdaten as $data){
-            $mailerService->sendEmail('Ranzenpost',$news->getOrganisation()->getEmail(),$data->getEmail(),$news->getTitle(),$mailContent);
-    }
+        $mailContent = $this->renderView('email/news.html.twig', array('sender' => $news->getOrganisation(), 'news' => $news, 'stammdaten' => $stammdaten));
+        foreach ($stammdaten as $data) {
+            $mailerService->sendEmail('Ranzenpost', $news->getOrganisation()->getEmail(), $data->getEmail(), $news->getTitle(), $mailContent);
+        }
 
         $text = $translator->trans('Nachricht versendet');
-        return $this->redirectToRoute('org_news_anzeige',array('id'=>$news->getOrganisation()->getId(),'snack'=>$text));
+        return $this->redirectToRoute('org_news_anzeige', array('id' => $news->getOrganisation()->getId(), 'snack' => $text));
     }
 
 
@@ -394,43 +398,48 @@ class NewsController extends AbstractController
      */
     public function cityNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService)
     {
-        $news =  $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
         $today = new \DateTime();
 
-        if ($news->getSchule()->isEmpty()){
-            $text = $translator->trans('Nachricht konnte nicht versendet');
-            return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$news->getStadt()->getId(),'snack'=>$text));
+        if ($news->getSchule()->isEmpty()) {
+            $text = $translator->trans('Nachricht konnte nicht versendet werden');
+            return $this->redirectToRoute('city_admin_news_anzeige', array('id' => $news->getStadt()->getId(), 'snack' => $text));
         }
 
         $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
 
-        $qb->innerJoin('stammdaten.kinds','kinds')
-            ->innerJoin('kinds.zeitblocks','kind_zeitblocks')
-            ->innerJoin('kind_zeitblocks.active','active')
-            ->andWhere('kind_zeitblocks.schule = :schule')
-            ->andWhere('stammdaten.fin = 1')
+        $qb->innerJoin('stammdaten.kinds', 'kinds')
+            ->innerJoin('kinds.zeitblocks', 'kind_zeitblocks')
+            ->innerJoin('kind_zeitblocks.active', 'active');
+        $count = 0;
+
+        foreach ($news->getSchule() as $schule) {
+            $qb->
+            andWhere('kind_zeitblocks.schule = :schule' . $count)
+                ->setParameter('schule' . $count, $schule);
+            $count++;
+        }
+        $qb->andWhere('stammdaten.fin = 1')
             ->andWhere('stammdaten.saved = 1')
             ->andWhere('active.bis >= :today')
             ->andWhere('active.von <= :today')
             ->setParameter('today', $today);
 
-        foreach ($news->getSchule() as $schule) {
-            $qb->setParameter('schule', $schule);
-        }
+
         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
 
-        $mailContent = $this->renderView('email/news.html.twig', array('sender'=>$news->getStadt(), 'news' => $news, 'stammdaten'=>$stammdaten));
-        foreach ($stammdaten as $data){
-            $mailerService->sendEmail('Ranzenpost',$news->getStadt()->getEmail(),$data->getEmail(),$news->getTitle(),$mailContent);
+        $mailContent = $this->renderView('email/news.html.twig', array('sender' => $news->getStadt(), 'news' => $news, 'stammdaten' => $stammdaten));
+        foreach ($stammdaten as $data) {
+            $mailerService->sendEmail('Ranzenpost', $news->getStadt()->getEmail(), $data->getEmail(), $news->getTitle(), $mailContent);
         }
 
         $text = $translator->trans('Nachricht versendet');
-        return $this->redirectToRoute('city_admin_news_anzeige',array('id'=>$news->getStadt()->getId(),'snack'=>$text));
+        return $this->redirectToRoute('city_admin_news_anzeige', array('id' => $news->getStadt()->getId(), 'snack' => $text));
     }
 
 
@@ -441,11 +450,11 @@ class NewsController extends AbstractController
     {
         $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
-        if ($news->getOrganisation()){
+        if ($news->getOrganisation()) {
             $stadt = $news->getOrganisation()->getStadt();
-            return $this->render('email/news.html.twig', array('stadt'=>$stadt, 'sender'=>$news->getOrganisation(), 'news' => $news));
+            return $this->render('email/news.html.twig', array('stadt' => $stadt, 'sender' => $news->getOrganisation(), 'news' => $news));
         } else {
-            return $this->render('email/news.html.twig', array('stadt'=>$news->getStadt(), 'sender'=>$news->getStadt(), 'news' => $news));
+            return $this->render('email/news.html.twig', array('stadt' => $news->getStadt(), 'sender' => $news->getStadt(), 'news' => $news));
 
         }
     }
