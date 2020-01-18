@@ -25,9 +25,9 @@
         <source>Adresszusatz</source>
         <target state="translated">Address (additional)</target>
       </trans-unit>
-      <trans-unit id="mgry4nw" resname="NBrutto Familieneinkommen pro Monat">
-        <source>NBrutto Familieneinkommen pro Monat</source>
-        <target state="translated">Brutto Family income per month</target>
+      <trans-unit id="7kzDX6W" resname="Brutto Familieneinkommen pro Monat">
+        <source>Brutto Familieneinkommen pro Monat</source>
+        <target state="translated">Gross family income per month</target>
       </trans-unit>
       <trans-unit id="9rL.OfV" resname="Speichern">
         <source>Speichern</source>
@@ -52,14 +52,6 @@
       <trans-unit id="vFumzvS" resname="Notfalltelefonnummer">
         <source>Notfalltelefonnummer</source>
         <target state="translated">Emergency phone number</target>
-      </trans-unit>
-      <trans-unit id="ap89FH4" resname="IBAN für das Lastschriftmandat">
-        <source>IBAN für das Lastschriftmandat</source>
-        <target state="translated">IBAN for the direct debit mandate</target>
-      </trans-unit>
-      <trans-unit id="g0ZIpDI" resname="SEPA-LAstschrift Mandat wird elektromisch erteilt">
-        <source>SEPA-LAstschrift Mandat wird elektromisch erteilt</source>
-        <target state="translated">SEPA-LAstschrift Mandate is issued electromically</target>
       </trans-unit>
       <trans-unit id="KAAmbDC" resname="Name der Stadt">
         <source>Name der Stadt</source>
@@ -100,10 +92,6 @@
       <trans-unit id="wyhu2rk" resname="Name der Organisation">
         <source>Name der Organisation</source>
         <target state="translated">Name of the organization</target>
-      </trans-unit>
-      <trans-unit id="2Bz6Sw." resname="BIC">
-        <source>BIC</source>
-        <target state="translated">BIC</target>
       </trans-unit>
       <trans-unit id="e1gvFKc" resname="Name der Bank">
         <source>Name der Bank</source>
@@ -217,13 +205,29 @@
         <source>Preis</source>
         <target state="translated">Price</target>
       </trans-unit>
+      <trans-unit id="ap89FH4" resname="IBAN für das Lastschriftmandat">
+        <source>IBAN für das Lastschriftmandat</source>
+        <target state="translated">IBAN for the direct debit mandate</target>
+      </trans-unit>
+      <trans-unit id="g0ZIpDI" resname="SEPA-LAstschrift Mandat wird elektromisch erteilt">
+        <source>SEPA-LAstschrift Mandat wird elektromisch erteilt</source>
+        <target state="translated">SEPA-LAstschrift Mandate is issued electromically</target>
+      </trans-unit>
       <trans-unit id="wA6PJA_" resname="BIC für das Lastschriftmandat">
         <source>BIC für das Lastschriftmandat</source>
         <target state="translated">BIC for the direct debit mandate</target>
       </trans-unit>
+      <trans-unit id="2Bz6Sw." resname="BIC">
+        <source>BIC</source>
+        <target state="translated">BIC</target>
+      </trans-unit>
       <trans-unit id="ebXHZwy" resname="Kontoinhaber für das Lastschriftmandat">
         <source>Kontoinhaber für das Lastschriftmandat</source>
         <target state="translated">Account holder for the direct debit mandate</target>
+      </trans-unit>
+      <trans-unit id="HgVt5xU" resname="SEPA-Lastschrift Mandat wird elektronisch erteilt">
+        <source>SEPA-Lastschrift Mandat wird elektronisch erteilt</source>
+        <target>SEPA Direct Debit Mandate is issued electronically</target>
       </trans-unit>
       <trans-unit id="wgwDdOh" resname="Schulform">
         <source>Schulform</source>
@@ -360,10 +364,6 @@
       <trans-unit id="RASD4xH" resname="Datenschutzhinweis Französisch (Markdown)">
         <source>Datenschutzhinweis Französisch (Markdown)</source>
         <target state="translated">Privacy Policy French (Markdown)</target>
-      </trans-unit>
-      <trans-unit id="Egy_4e5" resname="AGB hochladen. Diese wird an die Bestätigungsemail angehängt">
-        <source>AGB hochladen. Diese wird an die Bestätigungsemail angehängt</source>
-        <target state="translated">ETUC. This is attached to the confirmation email</target>
       </trans-unit>
       <trans-unit id="7TAbULa" resname="URL für Logo">
         <source>URL für Logo</source>
@@ -509,10 +509,6 @@
         <source>Straße Nr.</source>
         <target state="translated">Street No.</target>
       </trans-unit>
-      <trans-unit id="7kzDX6W" resname="Brutto Familieneinkommen pro Monat">
-        <source>Brutto Familieneinkommen pro Monat</source>
-        <target state="translated">Gross family income per month</target>
-      </trans-unit>
       <trans-unit id="7KMrC1e" resname="Kategorie (strg halten für Mehrfachauswahl)">
         <source>Kategorie (strg halten für Mehrfachauswahl)</source>
         <target state="translated">Category (keep strg for multiple selection)</target>
@@ -532,6 +528,26 @@
       <trans-unit id="D2p5JXQ" resname="Stripe akzeptieren">
         <source>Stripe akzeptieren</source>
         <target state="translated">Accept Stripe</target>
+      </trans-unit>
+      <trans-unit id="W7pZS56" resname="Caterer Info Deutsch (Markdown)">
+        <source>Caterer Info Deutsch (Markdown)</source>
+        <target>Caterer Info German (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="GmaCtFS" resname="Caterer Info Englisch (Markdown)">
+        <source>Caterer Info Englisch (Markdown)</source>
+        <target>Caterer Info English (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="yt7GnqI" resname="Caterer Info Französisch (Markdown)">
+        <source>Caterer Info Französisch (Markdown)</source>
+        <target>Caterer Info French (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="Egy_4e5" resname="AGB hochladen. Diese wird an die Bestätigungsemail angehängt">
+        <source>AGB hochladen. Diese wird an die Bestätigungsemail angehängt</source>
+        <target state="translated">ETUC. This is attached to the confirmation email</target>
+      </trans-unit>
+      <trans-unit id="mgry4nw" resname="NBrutto Familieneinkommen pro Monat">
+        <source>NBrutto Familieneinkommen pro Monat</source>
+        <target state="translated">Brutto Family income per month</target>
       </trans-unit>
     </body>
   </file>

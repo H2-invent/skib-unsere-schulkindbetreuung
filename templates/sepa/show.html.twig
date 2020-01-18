@@ -102,6 +102,8 @@
                                                                href="{{ path('accounting_sepa_printXML',{'id':s.id}) }}">{% trans %}Download SEPA-XML{% endtrans %}</a>
                                                             <a class="dropdown-item"
                                                                href="{{ path('accounting_sepa_printExcel',{'sepa_id':s.id}) }}">{% trans %}Download Excel{% endtrans %}</a>
+                                                            <a class="dropdown-item"
+                                                               href="{{ path('accounting_send_bill',{'sepa_id':s.id}) }}">{% trans %}Rechnung an alle Eltern versenden{% endtrans %}</a>
 
                                                         </div>
                                                     </div>

@@ -28,6 +28,11 @@ class StadtTranslation
      */
     private $datenschutz;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $catererInfo;
+
 
 
     public function getInfoText(): ?string
@@ -62,6 +67,18 @@ class StadtTranslation
     public function setDatenschutz(?string $datenschutz): self
     {
         $this->datenschutz = $datenschutz;
+
+        return $this;
+    }
+
+    public function getCatererInfo(): ?string
+    {
+        return $this->catererInfo;
+    }
+
+    public function setCatererInfo(?string $catererInfo): self
+    {
+        $this->catererInfo = $catererInfo;
 
         return $this;
     }

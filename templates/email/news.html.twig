@@ -1,6 +1,6 @@
 {% extends 'email/base.html.twig' %}
 {% block header %}
-    {% trans %}Elektronische Neuigkeit von{% endtrans %} {{ organisation.name }}
+    {% trans %}Elektronische Neuigkeit von{% endtrans %} {{ sender.name }}
 {% endblock %}
 
 {% block content %}
@@ -8,6 +8,9 @@
     </h4>
     <p>
         {{ news.message|nl2br }}
+    </p>
+    <p>
+        {% trans %}Erstellt am{% endtrans %}: {{ news.createdDate|date('d.m.Y') }}
     </p>
 
     <p style="margin-top: 30px; font-size: 10px">
