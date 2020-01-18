@@ -368,26 +368,7 @@ class NewsController extends AbstractController
             return $this->redirectToRoute('org_news_anzeige', array('id' => $news->getOrganisation()->getId(), 'snack' => $text));
         }
 
-        $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
-
-        $qb->innerJoin('stammdaten.kinds', 'kinds')
-            ->innerJoin('kinds.zeitblocks', 'kind_zeitblocks')
-            ->innerJoin('kind_zeitblocks.active', 'active');
-        $count = 0;
-
-        foreach ($news->getSchule() as $schule) {
-            $qb->orWhere('kind_zeitblocks.schule = :schule' . $count)
-                ->setParameter('schule' . $count, $schule);
-            $count++;
-        }
-        $qb->andWhere('stammdaten.fin = 1')
-            ->andWhere('stammdaten.saved = 1')
-            ->andWhere('active.bis >= :today')
-            ->andWhere('active.von <= :today')
-            ->setParameter('today', $today);
-
-        $query = $qb->getQuery();
-        $stammdaten = $query->getResult();
+        $stammdaten = $this->getStammdatenFromNEws($news,$today);
 
         $mailContent = $this->renderView('email/news.html.twig', array('sender' => $news->getOrganisation(), 'news' => $news, 'stammdaten' => $stammdaten));
         foreach ($stammdaten as $data) {
@@ -415,28 +396,8 @@ class NewsController extends AbstractController
             $text = $translator->trans('Nachricht konnte nicht versendet werden');
             return $this->redirectToRoute('city_admin_news_anzeige', array('id' => $news->getStadt()->getId(), 'snack' => $text));
         }
+        $stammdaten = $this->getStammdatenFromNEws($news,$today);
 
-        $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
-
-        $qb->innerJoin('stammdaten.kinds', 'kinds')
-            ->innerJoin('kinds.zeitblocks', 'kind_zeitblocks')
-            ->innerJoin('kind_zeitblocks.active', 'active');
-        $count = 0;
-
-        foreach ($news->getSchule() as $schule) {
-            $qb->orWhere('kind_zeitblocks.schule = :schule' . $count)
-                ->setParameter('schule' . $count, $schule);
-            $count++;
-        }
-        $qb->andWhere('stammdaten.fin = 1')
-            ->andWhere('stammdaten.saved = 1')
-            ->andWhere('active.bis >= :today')
-            ->andWhere('active.von <= :today')
-            ->setParameter('today', $today);
-
-
-        $query = $qb->getQuery();
-        $stammdaten = $query->getResult();
         dump($stammdaten);
         return 0;
         $mailContent = $this->renderView('email/news.html.twig', array('sender' => $news->getStadt(), 'news' => $news, 'stammdaten' => $stammdaten));
@@ -465,4 +426,27 @@ class NewsController extends AbstractController
         }
     }
 
+    private function getStammdatenFromNEws(News $news, \DateTime $today){
+        $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
+
+        $qb->innerJoin('stammdaten.kinds', 'kinds')
+            ->innerJoin('kinds.zeitblocks', 'kind_zeitblocks')
+            ->innerJoin('kind_zeitblocks.active', 'active');
+        $count = 0;
+
+        foreach ($news->getSchule() as $schule) {
+            $qb->orWhere('kind_zeitblocks.schule = :schule' . $count)
+                ->setParameter('schule' . $count, $schule);
+            $count++;
+        }
+        $qb->andWhere('stammdaten.fin = 1')
+            ->andWhere('stammdaten.saved = 1')
+            ->andWhere('active.bis >= :today')
+            ->andWhere('active.von <= :today')
+            ->setParameter('today', $today);
+
+        $query = $qb->getQuery();
+        $stammdaten = $query->getResult();
+        return $stammdaten;
+    }
 }
