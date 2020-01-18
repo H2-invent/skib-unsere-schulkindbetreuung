@@ -43,7 +43,7 @@ class FerienController extends AbstractController
     /**
      * @Route("/{slug}/ferien/adresse",name="ferien_adresse",methods={"GET","POST"})
      */
-    public function adresseAction(Request $request, ValidatorInterface $validator, $slug, StamdatenFromCookie $stamdatenFromCookie)
+    public function adresseAction(TranslatorInterface $translator, Request $request, ValidatorInterface $validator, $slug, StamdatenFromCookie $stamdatenFromCookie)
     {
 
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
@@ -91,8 +91,9 @@ class FerienController extends AbstractController
             }
 
         }
+        $title= $translator->trans('Online Anmeldung für Ferienbetreuung').'->'.$translator->trans('Adresse').' | '.$stadt->getName();
 
-        return $this->render('ferien/adresse.html.twig', array('stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors));
+        return $this->render('ferien/adresse.html.twig', array('title'=>$title,'stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors));
     }
 
 

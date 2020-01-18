@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SeoController extends AbstractController
 {
     /**
-     * @Route("/sitemap.xml", name="seo")
+     * @Route("/sitemap.xml", name="sitemap")
      */
     public function index()
     {
