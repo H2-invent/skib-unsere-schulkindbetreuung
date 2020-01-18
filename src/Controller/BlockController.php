@@ -21,13 +21,7 @@ class BlockController extends AbstractController
     private $einkommensgruppen;
     public function __construct(TranslatorInterface $translator)
     {
-        $this->einkommensgruppen = array(
-            '0 - 1.499 Euro' => 0,
-            '1.500 - 2.499 Euro' => 1,
-            '2.500 . 3.499 Euro' => 2,
-            '3.500 . 5.999 Euro' => 3,
-            'über 6.000 Euro' => 4,
-        );
+
 
     }
     /**
@@ -136,7 +130,7 @@ class BlockController extends AbstractController
         $em->flush();
         $kinder = $block->getKindwithFin();
         foreach ($kinder as $data){
-            $anmeldeEmailService->sendEmail($data,$data->getEltern(),$block->getSchule()->getStadt(),$this->einkommensgruppen);
+            $anmeldeEmailService->sendEmail($data,$data->getEltern(),$block->getSchule()->getStadt(),$block->getSchule()->getStadt()->getGehaltsklassen());
         }
 
         $text = $translator->trans('Erfolgreich gelöscht');

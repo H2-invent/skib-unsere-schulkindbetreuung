@@ -467,7 +467,7 @@ class LoerrachWorkflowController extends AbstractController
         $workflowAbschluss->abschluss($adresse, $kind);
 //Emails an die Eltern senden
         foreach ($kind as $data) {
-            $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $this->einkommensgruppen);
+            $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $stadt->getGehaltsklassen());
         }
         $default = array(
             'text'=>''
@@ -543,7 +543,7 @@ class LoerrachWorkflowController extends AbstractController
         $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName() . '.pdf';
 
 
-        return $print->printAnmeldebestaetigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->einkommensgruppen, $organisation, 'D');
+        return $print->printAnmeldebestaetigung($kind, $elter, $stadt, $tcpdf, $fileName, $stadt->getGehaltsklassen(), $organisation, 'D');
 
 
     }
