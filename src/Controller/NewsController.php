@@ -331,9 +331,11 @@ class NewsController extends AbstractController
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
         $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true));
+
         $title= $translator->trans('Alle Neuigkeiten der Stadt').' '.$stadt->getName().' | '.$stadt->getName();
 
         return $this->render('news/newsPage.html.twig', array('title'=>$title,'stadt' => $stadt, 'news' => $news));
+
 
     }
 
@@ -352,7 +354,9 @@ class NewsController extends AbstractController
         if ($request->isXmlHttpRequest()) {
             return $this->render('news/showNews.html.twig', array('stadt' => $stadt, 'news' => $news));
         } else {
+
             return $this->render('news/showNewsPage.html.twig', array('title'=>$title, 'metaDescription'=>$metaDescription,'stadt' => $stadt, 'news' => $news));
+
         }
 
     }
