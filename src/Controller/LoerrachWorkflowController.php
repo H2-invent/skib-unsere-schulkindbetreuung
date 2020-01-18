@@ -71,7 +71,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/adresse",name="loerrach_workflow_adresse",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function adresseAction(Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function adresseAction(TranslatorInterface $translator, Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
 
 
@@ -111,7 +111,8 @@ class LoerrachWorkflowController extends AbstractController
                 return $response;
             }
         }
-        return $this->render('workflow/loerrach/adresse.html.twig', array('stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors));
+        $title= $translator->trans('Anmeldeportal Schulkindbetreuung').'->'.$translator->trans('Adresse').' | '.$stadt->getName();
+        return $this->render('workflow/loerrach/adresse.html.twig', array('title'=>$title, 'stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors));
     }
 
 

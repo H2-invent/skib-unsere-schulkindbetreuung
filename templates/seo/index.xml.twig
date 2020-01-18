@@ -117,10 +117,25 @@
             </url>
 
         {% endfor %}
-
+        <!-- City: Newsuebersicht {{ s.name }} News -->
+        <url>
+            <loc>{{ absolute_url(path('news_show_page',{'slug':s.slug})) }}</loc>
+            <xhtml:link rel="alternate" hreflang="de"
+                        href="{{ absolute_url(path('news_show_page',{'slug':s.slug}| merge({'_locale':'de'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="en"
+                        href="{{ absolute_url(path('news_show_page',{'slug':s.slug}| merge({'_locale':'en'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="fr"
+                        href="{{ absolute_url(path('news_show_page',{'slug':s.slug}| merge({'_locale':'fr'}))) }}"/>
+            <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+            <priority>0.5</priority>
+        </url>
         {% for n in s.news %}
             <!-- City: {{ s.name }} News -->
-
+            {% if n.date is null %}
+                {% set date = n.createdAt %}
+            {% else %}
+                {% set date = n.date %}
+            {% endif %}
             <url>
                 <loc>{{ absolute_url(path('news_show_all',{'slug':s.slug,'id':n.id})) }}</loc>
                 <xhtml:link rel="alternate" hreflang="de"
