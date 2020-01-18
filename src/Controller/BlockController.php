@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 class BlockController extends AbstractController
 {
-    private $einkommensgruppen;
+
     public function __construct(TranslatorInterface $translator)
     {
 

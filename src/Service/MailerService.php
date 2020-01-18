@@ -37,19 +37,16 @@ class MailerService
 
     public function sendEmail($sender, $from, $to, $betreff,$content,$attachment = array())
     {
-
-        $env = new Dotenv();
-        $env->load(__DIR__.'/../../.env', __DIR__.'/../../.env.local');
-        $mailprovider = $_ENV['MAILPROVIDER'];
+        $mailprovider = getenv('MAILPROVIDER');
         if($mailprovider == 'MAILGUN'){
             $this->sendViaMailgun($sender,$from,$to,$betreff,$content,$attachment);
         }elseif ($mailprovider=='SWIFTMAILER'){
-            $this->sendViaSwiftMailer($sender,$from,$to,$betreff,$content,$attachment);
+            $this->sendViaSwiftMailer($sender,$to,$betreff,$content,$attachment);
         }
 
     }
 
-    private function sendViaSwiftMailer($sender, $from, $to, $betreff,$content,$attachment = array()){
+    private function sendViaSwiftMailer($sender,  $to, $betreff,$content,$attachment = array()){
         $message = (new \Swift_Message($betreff))
             ->setFrom(array('noreply@unsere-schulkindbetreuung.de'=>$sender))
             ->setTo($to)
