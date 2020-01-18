@@ -9,7 +9,8 @@ parameters:
     app.path.uploads: /uploads
     secret: '%env(APP_SECRET)%'
     locale: 'de'
-    mailProvider: '%env(MYMAIL_PROVIDER)%'
+    mailprovider: '%env(MAILPROVIDER)%'
+
 
 services:
     # default configuration for services in *this* file
