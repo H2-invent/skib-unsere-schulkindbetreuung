@@ -1,0 +1,128 @@
+Name: Last name
+Nachname: __Nachname
+Vorname: First name
+Straße: Street
+Adresszusatz: Adress additional
+NBrutto Familieneinkommen pro Monat: __Brutto Familieneinkommen pro Monat
+Speichern: Save
+Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung: __Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung
+Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger: __Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger
+Berufliche Situation der Eltern: Profession of the parents
+Notfalltelefonnummer: __Notfalltelefonnummer
+IBAN für das Lastschriftmandat: IBAN for SEPA
+SEPA-LAstschrift Mandat wird elektromisch erteilt: SEPA electronic
+Name der Stadt: Name of the city
+Slug der Stadt: Slug of the city
+Username: Username
+Email: Email
+Passwort: Password
+Geburtstag: Birthday
+Name der Schule: Name of the School
+PLZ: __PLZ
+Stadt: City
+Name der Organisation: Name of the organisation
+BIC: BIC
+Name der Bank: Name of the Bank
+Gläubiger ID: __Gläubiger ID
+Info Text Deutsch: __Info text Deutsch
+Info Text Englisch: __Info text Englisch
+Info Text Französisch: __Info text Französisch
+AGB Deutsch (Markdown): __AGB Deutsch (Markdown)
+AGB Englisch (Markdown): __AGB Englisch (Markdown)
+AGB Französisch (Markdown): __AGB Französisch (Markdown)
+Telefonnummer: Phone
+SMTP Server: SMTP Server
+SMTP Port: SMTP Port
+SMTP Username: SMTP Username
+SMTP Passwort: SMTP Password
+Ansprechpartner: __Ansprechpartner
+Hauptfarbe(HTML Code): __Hauptfarbe(HTML Code)
+Akzentfarbe (HTML Code): __Akzentfarbe (HTML Code)
+Akzentfarbe Fehler (HTML Code): __Akzentfarbe Fehler (HTML Code)
+Logo hochladen: Upload logo
+ROLE_CITY_DASHBOARD: __Darf das Dashboard sehen
+ROLE_CITY_SCHOOL: __Darf Schulen sehen und bearbeiten
+ROLE_CITY_REPORT: __Darf Report zu den ORganisationen sehen
+Schuljahresbegin: __Schuljahresbegin
+Schuljahresende: __Schuljahresende
+Beginn der Anmeldung: __Beginn der Anmeldung
+Ende der Anmeldung: __Ende der Anmeldung
+Betreuungsbeginn: __Betreuungsbeginn
+Betreuungsende: __Betreuungsende
+Preis: __Preis
+BIC für das Lastschriftmandat: __BIC für das Lastschriftmandat
+Kontoinhaber für das Lastschriftmandat: __Kontoinhaber für das Lastschriftmandat
+Schulform: __Schulform
+Jahrgangsstufe: __Jahrgangsstufe
+Ganztagsbetreuung: __Ganztagsbetreuung
+Halbtagsbetreuung: __Halbtagsbetreuung
+Mein Kind benötig folgende Medikamente: __Kind benötig folgende Medikamente
+Mein Kind hat folgende Allergien: __Kind hat folgende Allergien
+Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden.: __Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden
+Zum Newsletter anmelden: __Zum Newsletter anmelden
+Klasse 1: __Klasse 1
+Klasse 2: __Klasse 2
+Klasse 3: __Klasse 3
+Klasse 4: __Klasse 4
+Klasse 5: __Klasse 5
+Klasse 6: __Klasse 6
+Bemerkung: __Bemerkung
+weiter: next
+Anzahl der Preiskategorien: __Anzahl der Preiskategorien
+Sicherheitscode der Eltern: __Sicherheitscode der Eltern
+Name und Beziehung des Notfallkontakts: __Name und Beziehung des Notfallkontakts
+Ich bin alleinerziehend: __Ich bin alleinerziehend
+Weitere abholberechtigte Personen: __Weitere abholberechtigte Personen
+Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause: __Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause
+Mein Kind darf an Ausflügen teilnehmen: __Mein Kind darf an Ausflügen teilnehmen
+Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden: __Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden
+Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.: __Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.
+Mein Kind ernährt sich vegetarisch: __Mein Kind ernährt sich vegetarisch
+Mein Kind isst kein Schweinefleich: __Mein Kind isst kein Schweinefleich
+Mein Kind ist Gluten intolerant: __Mein Kind ist Gluten intolerant
+Mein Kind ist Laktose intolerant: __Mein Kind ist Laktose intolerant
+Tag des Lastschrifteinzugs: __Tag des Lastschrifteinzugs
+Beginn des Abrechnungszeitraums: __Beginn des Abrechnungszeitraums
+Datenschutzhinweis Deutsch (Markdown): __Datenschutzhinweis Deutsch (Markdown)
+Datenschutzhinweis Englisch (Markdown): __Datenschutzhinweis Englisch (Markdown)
+Datenschutzhinweis Französisch (Markdown): __Datenschutzhinweis Französisch (Markdown)
+AGB hochladen. Diese wird an die Bestätigungsemail angehängt: __AGB hochladen. Diese wird an die Bestätigungsemail angehängt
+URL für Logo: __URL für Logo
+Steuernummer: __Steuernummer
+UmSt. Identnummer: __UmSt. Identnummer
+Homepage URL: __Homepage URL
+Neuigkeit auf der Startseite sichtbar: __Neuigkeit auf der Startseite sichtbar
+Nachricht: __Nachricht
+Titel: __Titel
+Wir bieten eine Ferienbetreuung über dieses Portal an: __Wir bieten eine Ferienbetreuung über dieses Portal an
+Wir bieten eine Schulkindbetreuung über dieses Portal an: __Wir bieten eine Schulkindbetreuung über dieses Portal an
+Anzahl Preise: __Anzahl Preise
+Maximum Anzahl: __Maximum Anzahl
+Minimum Anzahl: __Minimum Anzahl
+End Vorverkauf: __End Vorverkauf
+Start Vorverkauf: __Start Vorverkauf
+Uhrzeit Ende: __Uhrzeit Ende
+Uhrzeit Anfang: __Uhrzeit Anfang
+Datum Ende: __Datum Ende
+Datum Start: __Datum Start
+Maximum Alter: __Maximum Alter
+Mindest Alter: __Mindest Alter
+Bezeichnung der Gehaltsklassen: __Bezeichnung der Gehaltsklassen
+Ferienblock mit Warteliste: __Ferienblock mit Warteliste
+Manuelle Bestätigung der Teilnehmer: __Alle Kinder im Kontingent automatisch annehmen, dannach auf Warteliste
+Stornogebühr für das Ferienprogramm: __Stornogebühr für das Ferienprogramm
+Regelungen Ferienprogram (Markdown): __Regelungen Ferienprogram (Markdown)
+Ansprechpartner Email: __Ansprechpartner Email
+Ansprechpartner Telefon: __Ansprechpartner Telefon
+Ansprechpartner Ferien: __Ansprechpartner Ferien
+Name der Schule für den Versand der Nachricht: __Name der Schule für den Versand der Nachricht
+Braintree akzeptieren: __Braintree akzeptieren
+Braintree Merchant ID: __Braintree Merchant ID
+Braintree Private Key: __Braintree Private Key
+Braintree Public Key: __Braintree Public Key
+Braintree in der Sandbox: __Braintree in der Sandbox
+Impressum der Stadt (Markdown): __Impressum der Stadt (Markdown)
+Straße Nr.: __Straße Nr.
+Brutto Familieneinkommen pro Monat: __Brutto Familieneinkommen pro Monat
+Kategorie (strg halten für Mehrfachauswahl): __Kategorie (strg halten für Mehrfachauswahl)
+Stadt aktiv: __Stadt aktiv

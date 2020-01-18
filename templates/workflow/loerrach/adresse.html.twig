@@ -1,0 +1,129 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+            <h1 class="font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
+        <div class="progress mb-2">
+            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{% trans %}Adresse{% endtrans %}</div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h4> {% trans %}Daten eines Erziehungsberechtigten{% endtrans %}</h4>
+            </div>
+            <div class="card-body">
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email) }}
+                    </div>
+                    <div class="col-sm-1">
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Die E-Mail Adresse ist wichtig, da alle Dokumente, Bestätigungen und Rechnungen automatisch an diese E-Mail geschickt werden.{% endtrans %}"></i>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-11">
+                {{ form_label(form.vorname) }}
+                {{ form_widget(form.vorname) }}
+
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+
+                {{ form_label(form.strasse) }}
+                {{ form_widget(form.strasse) }}
+
+                {{ form_label(form.adresszusatz) }}
+                {{ form_widget(form.adresszusatz) }}
+
+                {{ form_label(form.plz) }}
+                {{ form_widget(form.plz) }}
+
+                {{ form_label(form.stadt) }}
+                {{ form_widget(form.stadt) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_label(form.einkommen) }}
+                        {{ form_widget(form.einkommen) }}
+                    </div>
+                    <div class="col-sm-1">
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).{% endtrans %}"></i>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_label(form.beruflicheSituation) }}
+                        {{ form_widget(form.beruflicheSituation) }}
+                    </div>
+                    <div class="col-sm-1">
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Eltern. Ein Rechtsanspruch auf Aufnahme besteht nicht.{% endtrans %}"></i>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_widget(form.kinderImKiga) }}
+                        {{ form_label(form.kinderImKiga) }}
+                    </div>
+                    <div class="col-sm-1">
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf die Gebühr des ältesten Kindes{% endtrans %}"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_widget(form.alleinerziehend) }}
+                        {{ form_label(form.alleinerziehend) }}
+                    </div>
+                    <div class="col-sm-1">
+                        <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Eltern. Ein Rechtsanspruch auf Aufnahme besteht nicht.{% endtrans %}"></i>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h4> {% trans %}Daten für Notfälle und weitere Informationen{% endtrans %}</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-11">
+                        {{ form_label(form.notfallName) }}
+                        {{ form_widget(form.notfallName) }}
+
+                        {{ form_label(form.notfallkontakt) }}
+                        {{ form_widget(form.notfallkontakt) }}
+
+                        {{ form_label(form.abholberechtigter) }}
+                        {{ form_widget(form.abholberechtigter) }}
+
+                        {{ form_label(form.gdpr) }}
+                        {{ form_widget(form.gdpr) }}
+
+                        {{ form_rest(form) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

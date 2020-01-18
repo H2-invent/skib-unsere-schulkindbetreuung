@@ -1,0 +1,121 @@
+<style>
+    td {
+        border: 1px solid black;
+
+        font-weight: bold;
+        margin: 10px;
+    }
+
+    tr {
+        margin: 5px;
+    }
+</style>
+<h2>{% trans %}Zusammenfassung{% endtrans %}</h2>
+        <h2>{% trans %}Daten des Kindes{% endtrans %}: {{ k.vorname }} {{ k.nachname }}</h2>
+
+<table cellpadding="5px" >
+    <tbody>
+    <tr>
+        <td>{% trans %}Vorname{% endtrans %}</td>
+        <td>{{ k.vorname }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Nachname{% endtrans %}</td>
+        <td>{{ k.nachname }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Geburtstag{% endtrans %}</td>
+        <td>{{ k.geburtstag|date('d.m.Y') }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Schule{% endtrans %}</td>
+        <td>{{ k.schule.name }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Klasse{% endtrans %}</td>
+        <td>{{ k.klasse }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Allergien{% endtrans %}</td>
+        <td>{{ k.allergie }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Medikamente{% endtrans %}</td>
+        <td>{{ k.medikamente }}</td>
+    </tr>
+
+    <tr>
+        <td>{% trans %}Gluten intolerant{% endtrans %}</td>
+        <td>{{ k.gluten?"Ja":'Nein'|trans }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Laktose intolerant{% endtrans %}</td>
+        <td>{{ k.laktose?"Ja":'Nein'|trans }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Kein Schweinefleisch{% endtrans %}</td>
+        <td>{{ k.schweinefleisch?"Ja":'Nein'|trans }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Vegetrarisch{% endtrans %}</td>
+        <td>{{ k.vegetarisch?"Ja":'Nein'|trans }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Darf alleine nach Hause{% endtrans %}</td>
+        <td>{{ k.alleineHause?"Ja":'Nein'|trans }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Darf an Ausflügen teilnehmen{% endtrans %}</td>
+        <td>{{ k.ausfluege?"Ja":'Nein'|trans }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden{% endtrans %}</td>
+        <td>{{ k.sonnencreme?"Ja":'Nein'|trans }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Fotos, dürfen in der öffentlichen Presse veröffentlicht werden{% endtrans %}</td>
+        <td>{{ k.fotos?"Ja":'Nein'|trans }}</td>
+    </tr>
+
+    {% if k.betreungsblocksReal|length > 0 %}
+        <tr>
+            <td>{% trans %}Bemerkung{% endtrans %}</td>
+            <td>{{ k.bemerkung }}</td>
+        </tr>
+
+        <tr>
+            <td>
+                {% trans %}Gebuchte Betreuungszeitfenster{% endtrans %}
+            </td>
+
+            <td>
+                <ul class="list-group">
+                    {%  for z in k.BetreungsblocksReal %}
+                        <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    {% endif %}
+    {% if k.betreungsblocksRealKontingent|length > 0 %}
+        <tr>
+            <td>
+                {% trans %}Angemeldete Betreuungszeitfenster{% endtrans %}
+            </td>
+
+            <td>
+                <ul class="list-group">
+                    {%  for z in k.betreungsblocksRealKontingent %}
+                        <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    {% endif %}
+
+
+    </tbody>
+</table>
+
+
+        <!-- Daten der Kinder in einer for Schleife -->

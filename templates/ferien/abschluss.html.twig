@@ -1,0 +1,20 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
+        <hr class="hr-light ">
+        <div class="progress mb-2">
+            <div class="progress-bar" role="progressbar" style="width:100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{% trans %}Fertig{% endtrans %}</div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block content %}
+    <h1 class="cover-heading">{% trans %}Fertig{% endtrans %}</h1>
+
+    <div>
+        <p>
+            {% trans %} Vielen Dank für Ihre Anmeldung ... {% endtrans %}
+        </p>
+    </div>
+{% endblock %}

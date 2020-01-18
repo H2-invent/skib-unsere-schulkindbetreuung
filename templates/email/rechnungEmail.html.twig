@@ -1,0 +1,24 @@
+{% extends 'email/base.html.twig' %}
+{% block header %}
+    {% trans %}Rechnung für die Schulkindbetreuung{% endtrans %}
+{% endblock %}
+
+{% block content %}
+
+    {% trans with {'%org%':organisation.name} %}Hiermit senden wir Ihnen ihre Rechnung für die Schulkindbetreuung an der Organisation %org% zu.{% endtrans %}
+
+    {% if rechnung.summe > 0 %}
+        {% trans with {'%betrag%':rechnung.summe|number_format(2,',','.'),'%einzugsdatum%':rechnung.sepa.einzugsDatum|date('d.m.Y')} %}Der berechnet Betrag in Höhe von<br><b>%betrag%€</b> <br> wird am <br><b>%einzugsdatum%</b><br> eingezogen.{% endtrans %}
+    {% else %}
+        {% trans with {'%betrag%':rechnung.summe|number_format(2,',','.')} %}Der berechnet Betrag in Höhe von %betrag%€ dient zu Ihrer Information.{% endtrans %}
+
+    {% endif %}
+    <p>{% trans %}Im Anhang finden Sie die genaue Kostenaufschlüsselung und weitere Informationen zu Ihrem SEPA-Lastschriftmandat.{% endtrans %}</p>
+    <p>{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}</p>
+    <b>{{ organisation.name }}</b>
+
+{% endblock %}
+
+
+
+

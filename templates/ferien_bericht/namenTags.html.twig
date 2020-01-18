@@ -1,0 +1,19 @@
+<body>
+<table style="width:100%">
+
+
+    {% for rk in render_kind %}
+        <tr style="height: 300px">
+            {% for k in rk %}
+                <td style="width: 25%; text-align: center; height: 100px">
+                    <h2>
+                        {{ k.kind.vorname }}
+                    </h2>
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+
+</table>
+
+</body>

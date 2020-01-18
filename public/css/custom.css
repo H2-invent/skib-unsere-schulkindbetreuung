@@ -1,0 +1,13 @@
+/* your styles go here */
+td{
+    vertical-align: middle!important;
+}
+.required:after {
+    content: "*";
+}
+.dataTables_wrapper{
+    min-height: 500px;
+}
+.modal-dialog {
+    max-width: 90%;
+}

@@ -1,0 +1,79 @@
+   <div class="card-header">
+
+       <a  data-toggle="collapse" href="#stundenplanCOntent" role="button" aria-expanded="false" aria-controls="collapseExample">
+           <h3>{% trans %}Stundenplan{% endtrans %}<i class="material-icons">expand_more</i></h3>
+       </a>
+    </div>
+   <div class="card-body">
+       <div class="dropdown">
+           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               {{ 'Alle Schulen'|trans }}
+           </button>
+           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+               {% for s in schule %}
+                   <a class="dropdown-item loadInTarget" data-target="#stundenplanTable" href="{{ path('widget_kids_stundenplan',{'org_id':org.id,'schule_id':s.id}) }}">{{s.name}}</a>
+               {% endfor %}
+
+           </div>
+       </div>
+
+   </div>
+   <div class="collapse " aria-labelledby="headingOne" id="stundenplanCOntent">
+
+   <div class="card-body" id="stundenplanTable">
+        <div class="row">
+
+            <div class="col-md-2 text-center">
+                <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
+
+                {% if blocks[0] is defined %}
+                    {% include 'widget/blockCard.html.twig' with {'blocks': blocks[0]} %}
+                {% endif %}
+            </div>
+            <div class="col-md-2 text-center">
+                <h5 class="card-title">{% trans %}Dienstag{% endtrans %}</h5>
+
+                {% if blocks[1] is defined %}
+                    {% include 'widget/blockCard.html.twig' with {'blocks': blocks[1]} %}
+                {% endif %}
+            </div>
+            <div class="col-md-2 text-center">
+                <h5 class="card-title">{% trans %}Mittwoch{% endtrans %}</h5>
+
+                {% if blocks[2] is defined %}
+                    {% include 'widget/blockCard.html.twig' with {'blocks': blocks[2]} %}
+                {% endif %}
+            </div>
+            <div class="col-md-2 text-center">
+                <h5 class="card-title">{% trans %}Donnerstag{% endtrans %}</h5>
+
+                {% if blocks[3] is defined %}
+                    {% include 'widget/blockCard.html.twig' with {'blocks': blocks[3]} %}
+                {% endif %}
+            </div>
+            <div class="col-md-2 text-center">
+                <h5 class="card-title">{% trans %}Freitag{% endtrans %}</h5>
+
+                {% if blocks[4] is defined %}
+                    {% include 'widget/blockCard.html.twig' with {'blocks': blocks[4]} %}
+                {% endif %}
+            </div>
+
+            <div class="col-md-1 text-center">
+                <h5 class="card-title">{% trans %}Samstag{% endtrans %}</h5>
+
+                {% if blocks[5] is defined %}
+                    {% include 'widget/blockCard.html.twig' with {'blocks': blocks[5]} %}
+                {% endif %}
+            </div>
+            <div class="col-md-1 text-center">
+                <h5 class="card-title">{% trans %}Sonntag{% endtrans %}</h5>
+
+                {% if blocks[6] is defined %}
+                    {% include 'widget/blockCard.html.twig' with {'blocks': blocks[6]} %}
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+   </div>

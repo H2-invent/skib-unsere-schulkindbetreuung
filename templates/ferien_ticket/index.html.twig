@@ -1,0 +1,102 @@
+<style>
+    td {
+        border: 1px solid black;
+        margin: 0px;
+        padding: 2px;
+        min-height: 40px
+    }
+    p {
+        padding: 0px;
+        margin: 0px;
+    }
+</style>
+
+
+<table style="width: 100%">
+    <tr>
+        <td colspan="2" style="background-color: #2096ff">
+            <div style="font-size: 30px; text-align: center">
+                <b>{{ ferienblock.ferienblock.translate.titel }}</b>
+            </div>
+        </td>
+        <td>
+            <div style="text-align: center">
+                <img  src="{{ vich_uploader_asset(organisation,'imageFile') }}" alt="Unsere SKiB" style="height: 60px;">
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b style="font-size: 15px">{{ 'Zeitraum'|trans }}:<br>
+                {{ 'Betreuungszeit'|trans }}:</b>
+        </td>
+        <td>
+            <b style="font-size: 15px">{% if ferienblock.ferienblock.startDate != ferienblock.ferienblock.endDate %}{{ ferienblock.ferienblock.startDate|date('d.m.') }} - {{ ferienblock.ferienblock.endDate|date('d.m.Y') }}<br>
+                {% else %}{{ ferienblock.ferienblock.startDate|date('d.m.Y') }}<br>
+                {% endif %}
+                {{ ferienblock.ferienblock.startTime|date('H:i') }} - {{ ferienblock.ferienblock.endTime|date('H:i') }}</b>
+        </td>
+        <td rowspan="4" style="text-align: center">
+            QR Code für Checkin
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div style="font-size: 20px"> {{ 'Name'|trans }}:
+            </div>
+        </td>
+        <td>
+            <div style="font-size: 20px"> {{ kind.vorname }} {{ kind.nachname }}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>{{ 'Notfallkontakt'|trans }}:<br>
+                {{ 'Telefonnummer'|trans }}:
+            </b>
+        </td>
+        <td>
+            <b>{{ kind.eltern.notfallName }}<br>
+                {{ kind.eltern.notfallkontakt }}
+            </b>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>{{ 'Organisation'|trans }}:</b>
+        </td>
+        <td>
+                <b>{{ organisation.name }}</b><br>
+                {{ organisation.adresse }}<br>
+                {{ organisation.plz }} {{ organisation.ort }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>{{ 'Preis'|trans }}: {{ ferienblock.preis|number_format('2',',','.') }}€</b>
+        </td>
+        <td>
+            {{ 'Eltern'|trans }}: {{ kind.eltern.vorname }} {{ kind.eltern.name }}
+        </td>
+        <td style="text-align: center; font-size: 10px">
+            {{ ferienblock.checkinID }}
+        </td>
+    </tr>
+</table>
+
+<h1>{{ 'Kontakt'|trans }}:
+</h1>
+<b>
+    {{ 'Name'|trans }}: {{ organisation.ansprechpartnerFerien }}<br>
+    {{ 'Telefon'|trans }}: {{ organisation.ansprechpartnerFerienPhone }}<br>
+    {{ 'Email'|trans }}: {{ organisation.ansprechpartnerFerienEmail }}<br>
+</b>
+
+<h1>{{ 'Regelungen für die Teilnahme am Ferienprogram'|trans }}
+</h1>
+
+<b>{{ organisation.ferienRegulation|markdown_to_html }}
+</b>
+
+

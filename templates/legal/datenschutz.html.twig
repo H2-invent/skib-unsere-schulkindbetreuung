@@ -1,0 +1,116 @@
+{% extends 'workflow/base.html.twig' %}
+
+{% block header %}
+    <div class="col-md-6 mb-4 white-text text-centerm text-md-left">
+        <h1 class="font-weight-bold">SKiB</h1>
+        <hr class="hr-light ">
+    </div>
+{% endblock %}
+{% block content %}
+
+<div class="row ">
+    <div class="col-md-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3> {% trans %}Datenschutzhinweise auf Seiten von H2 invent{% endtrans %}</h3>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-1">
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <p>
+                            {% trans %}
+                                Alle bei der Anmeldung eingegebenen Daten werden dem Träger der Schulkindbetreuung zur Abwicklung der Schulkindbetreuung mitgeteilt.
+                            {% endtrans %}
+                        </p>
+                    </div>
+                    <div class="col-md-1">
+                        <i class="fas fa-lock fa-2x"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <p>
+                            {% trans %}
+                                Jede Verbindung von Ihrem Rechner zu SKB und zwischen den Servern von der Schulkindbetreuung ist durch Verschlüsselung nach aktuellen Standards geschützt.
+                            {% endtrans %}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-1">
+                        <i class="fas fa-code fa-2x"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <p>
+                            {% trans %}
+                                Beim Anmelden setzen wir Cookies ein, um die Funktionalität bequem zu gewährleisten und um sicherzustellen, welcher Daten Ihnen gehört. Wir speichern keine IP-Adressen, Browserdaten, Referer oder andere unnötige Metadaten.
+                            {% endtrans %}
+                        </p>
+                    </div>
+                    <div class="col-md-1">
+                        <i class="fas fa-globe fa-2x"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <p>
+                            {% trans %}
+                                Alle Server von H2 invent befinden sich in deutschen Rechenzentren und deutsches Datenschutzrecht ist anwendbar. Das Team von SKB hat technisch Zugriff auf Ihre Daten, benutzt diesen aber ausschliesslich im Falle einer Supportanfrage zur Fehleranalyse.
+                            {% endtrans %}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-1">
+                        <i class="fas fa-envelope  fa-2x"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <p>
+                            {% trans %}
+                                Wenn Sie in einer E-Mail, die wir Ihnen zu einer Anmeldung senden, erstmalig einen Link anklicken, speichern wir die Information, dass Ihre E-Mail-Adresse anscheinend funktioniert und korrekt ist.
+                            {% endtrans %}
+                        </p>
+                    </div>
+                    <div class="col-md-1">
+                        <i class="fas fa-credit-card fa-2x"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <p>
+                            {% trans %}
+                                Wenn Sie per Banküberweisung zahlen, werden zahlungsrelevante Metadaten bei Ihrer und der Bank des Trägers anfallen.
+                            {% endtrans %}
+                            <br/>
+                            {% trans %}
+                                Wenn Sie per SEPA-Bankeinzug zahlen, werden zahlungsrelevante Metadaten bei Ihrer und der Bank des Trägers anfallen.
+                            {% endtrans %}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3> {% trans %}Datenschutzhinweise auf Seiten der Träger{% endtrans %}</h3>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <i class="fas fa-sitemap  fa-2x"></i>
+                    </div>
+                    <div class="col-md-10">
+                        <p>
+                            {% trans %}
+                                Für Informationen zum Datenschutz auf Seiten des Trägers kontaktieren Sie bitte den jeweiligen Träger.
+                            {% endtrans %}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

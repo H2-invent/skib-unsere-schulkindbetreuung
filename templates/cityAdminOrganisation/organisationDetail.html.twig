@@ -1,0 +1,44 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+<section class="dashboard-counts section-padding">
+    <div class="container-fluid ">
+        <div class="row">
+            <!-- Count item widget-->
+            <div class=" col-12 card">
+                <div class="card-header">
+                  <h1> {{ organisation.name }}<a href="{{ path('city_admin_organisation_edit',{'id':organisation.id}) }}"> <button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                              <i class="material-icons">edit</i>
+                          </button></a></h1>
+                </div>
+               <div class="card-header">
+                   <div class="row">
+                       <div class="col-md-6">
+                           <img src="{{ vich_uploader_asset(organisation,'imageFile') }}" class="img-thumbnail">
+                       </div>
+                       <div class=" col-md-6">
+                           <ul class="list-group">
+                               <li class="list-group-item">
+                                   <h2>{% trans %}Adresse{% endtrans %}:</h2>
+                                   {{ organisation.adresse }}
+                                   {{ organisation.adresszusatz }},
+                                   {{ organisation.plz }} {{ organisation.ort }}
+                               </li>
+                               <li class="list-group-item"><h2>{% trans %} Schulen{% endtrans %}: </h2> {% for s in organisation.schule %} {% if is_granted('ROLE_ORG_SHOOL') %}<a href="{{ path('city_admin_schule_detail',{'id':s.id}) }}"> {{ s.name }}, </a>{% else %}{{ s.name }}{% endif %}{% endfor %}</li>
+                               <li class="list-group-item"><h2>{% trans %}Telefon{% endtrans %}: </h2>{{ organisation.telefon }}</li>
+                               <li class="list-group-item"><h2>{% trans %}Email{% endtrans %}: </h2>{{ organisation.email }}</li>
+                               <li class="list-group-item"><h2>{% trans %}Ansprechpartner{% endtrans %}: </h2>{{ organisation.ansprechpartner }}</li>
+                               <li class="list-group-item"><h2>{% trans %}Info{% endtrans %}: </h2>{{ organisation.infoText|nl2br }}</li>
+                            </ul>
+                       </div>
+
+                   </div>
+
+               </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

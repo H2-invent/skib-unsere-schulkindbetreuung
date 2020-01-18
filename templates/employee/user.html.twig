@@ -1,0 +1,66 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+<section class="dashboard-counts section-padding">
+    <div class="container-fluid ">
+        <div class="row">
+            <!-- Count item widget-->
+            <div class=" col-12 card">
+                <div class="card-header">
+                  <h1> {% trans with {'%stadt%':city.name} %}Mitarbeiter der %stadt%{% endtrans %}  <a href="{{ path('city_employee_new',{'id':city.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                         <i class="material-icons">add</i>
+                      </button></a></h1>
+                </div>
+<div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>{% trans %}Username{% endtrans %}</th>
+                        <th>{% trans %}Vorname{% endtrans %}</th>
+                        <th>{% trans %}Nachname{% endtrans %}</th>
+                        <th>{% trans %}Geburtstag{% endtrans %}</th>
+
+                        <th>{% trans %}Status{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for u in user %}
+
+                    <tr>
+                        <td> <div class="btn-group">
+                                <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                    <a class="dropdown-item" href="{{ path('city_employee_edit',{'id':u.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                    <a class="dropdown-item" href="{{ path('city_admin_city_employee_deactivate',{'id':u.id}) }}">{{ u.enabled== false?'Aktivieren':'Deaktivieren'|trans }}</a>
+                                    <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_changePw',{'id':u.id}) }}">{% trans %}Password ändern{% endtrans %}</a>
+                                    <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_roles',{'id':u.id}) }}">{% trans %}Berechtigungen verwalten{% endtrans %}</a>
+                                    <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_delete',{'id':u.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+
+                                </div>
+                            </div></td>
+                        <td>{{ u.username }}</td>
+                        <td>{{ u.vorname }}</td>
+                        <td>{{ u.nachname }}</td>
+                        <td>{{ u.birthday|date('d.m.Y') }}</td>
+                        <td>{{ u.enabled?"Activ":"Deaktiviert"|trans }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+</div>
+
+                {% for u in user %}
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

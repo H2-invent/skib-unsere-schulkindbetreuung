@@ -1,0 +1,37 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-centerm text-md-left align-items-md-center">
+
+        <h1 class="hauptfarbe font-weight-bold">{% trans with {'%stadt%':stadt.name} %}Impressum %stadt%{% endtrans %}</h1>
+        <hr class="hr-light ">
+
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-8">
+            <p>
+                {{ stadt.imprint|markdown_to_html|nl2br }}
+            </p>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+            <div class="card-header">
+                Software & technische Umsetzung
+            </div>
+                <div class="card-body">
+                    <a href="https://h2-invent.com"><img style="width: 100%" src="https://h2-invent.com/wp-content/uploads/2019/04/H2-invent-2.png"></a>
+                    <p class="mt-5">
+                        H2 invent GmbH<br>
+                        Gewerbestraße 9<br>
+                        79539 Lörrach
+            </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

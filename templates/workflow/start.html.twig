@@ -1,8 +1,336 @@
-{% extends 'workflow/base.html.twig' %}
-{% block content %}
-        <h1 class="cover-heading">{{ stadt.name }}</h1>
-        <p class="lead">{% trans with {"%name%":stadt.name} %}Melden Sie hier ihre Kinder für die Ganztagsbetreuung der Stadt %name% an{% endtrans %}</p>
-        <p class="lead">
-            <a href="{{ path('workflow_adresse',{'stadt':stadt.slug}) }}" class="btn btn-lg btn-secondary">{% trans %}Hier meine Kinder anmelden{% endtrans %}</a>
-        </p>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    {% include 'workflow/_head.html.twig' with {'stadt':null} %}
+    {% include 'workflow/inlineCSS.html.twig' with {'height':'100%'} %}
+</head>
+<body>
+<!-- Navbar -->
+{% include 'workflow/navbar.html.twig' %}
+<!-- Navbar -->
+
+<div class="view full-page-intro "
+     {% if stadt.image is empty %}style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;"
+     {% else %}style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;"
+        {% endif %}>
+
+    <div class="mask d-flex justify-content-center align-items-end rgba-black-light">
+
+        <div class="container ">
+
+            <div class="row wow fadeIn">
+
+                <div class="col-md-12 mb-6 white-text text-center">
+                    {% if stadt.ferienprogramm %}
+                        <h1 class="font-weight-bold h1-responsive maincolor">{% trans %}Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung{% endtrans %}</h1>
+                    {% else %}
+                        <h1 class="font-weight-bold h1-responsive maincolor">{% trans %}Online Anmeldung zur Schulkindbetreuung{% endtrans %}</h1>
+                    {% endif %}
+                    <hr class="hr-light ">
+                </div>
+
+                <div class="col-md-12 mb-4 white-text text-center lead">
+
+                    <p class="lead d-none d-sm-block">
+                        {% if not stadt.active %}
+                        {% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an{% endtrans %}
+                    {% else %}
+                        {% trans with {"%name%":stadt.name} %}Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an{% endtrans %}
+                    {% endif %}
+                    </p>
+                </div>
+
+                {% if stadt.ferienprogramm and stadt.schulkindBetreung %}
+                    <div class="col-md-6 mb-4 white-text text-center">
+                        <p class="lead align-content-center">
+                            <a href="{{ url }}" class="btn btn-primary btn-lg">
+                                {% if app.request.cookies.has('SecID') %}
+                                    {% trans %}Kind bearbeiten{% endtrans %}
+                                {% else %}
+                                    {% trans %}Kind/Kinder zur Schulkindbetreuung anmelden{% endtrans %}
+                                {% endif %}
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col-md-6 mb-4 white-text text-center">
+                        <p class="lead align-content-center">
+                            <a href="{{ path('ferien_adresse', {'slug': stadt.slug }) }}"
+                               class="btn btn-primary btn-lg">
+                                {% trans %}Kind/Kinder zur Ferienbetreuung anmelden{% endtrans %}
+                            </a>
+                        </p>
+                    </div>
+                {% elseif stadt.schulkindBetreung %}
+                    <div class="col-md-12 mb-4 white-text text-center">
+                        <p class="lead align-content-center">
+                            <a href="{{ url }}" class="btn btn-primary btn-lg">
+                                {% if app.request.cookies.has('SecID') %}
+                                    {% trans %}Kind bearbeiten{% endtrans %}
+                                {% else %}
+                                    {% trans %}Kind/Kinder zur Schulkindbetreuung anmelden{% endtrans %}
+                                {% endif %}
+                            </a>
+                        </p>
+                    </div>
+                {% elseif stadt.ferienprogramm %}
+                    <div class="col-md-12 mb-4 white-text text-center">
+                        <p class="lead align-content-center">
+                            <a href="{{ path('ferien_adresse', {'slug': stadt.slug }) }}"
+                               class="btn btn-primary btn-lg">
+                                {% trans %}Kind/Kinder zur Ferienbetreuung anmelden{% endtrans %}
+                            </a>
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-12 mb-4 white-text text-center align-content-center">
+                <section id="scroll">
+
+                    <a href="#start"><span></span></a>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+<main>
+    <div class="container anchor" id="start">
+
+        <section class="mt-5 wow fadeIn">
+
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h3>{% trans %}Herzlich Willkommen bei SKiB{% endtrans %}</h3>
+                        </div>
+                        <div class="row card-body">
+                            <div class="col-md-8" style="border-right: solid lightgrey 1px">
+                                <span class="more">
+                                   {{ cityInfoText|markdown_to_html }}
+                               </span>
+
+
+                            </div>
+                            <div class="col-md-4">
+                                <h4>
+                                    {% trans %}Neuigkeiten{% endtrans %}
+                                </h4>
+                                {% if stadt.news is not null %}
+                                    {% for n in stadt.news if n.activ %}
+                                        <a class="loadContent"
+                                           href="{{ path('news_show_all', {'id': n.id, 'slug': stadt.slug}) }}">
+                                            <b>{{ n.title }}</b>
+                                        </a>
+                                        <br/>
+                                        <p>
+                                            {{ n.message|length > 70 ? n.message|nl2br|slice(0,70)~'...':n.message|nl2br }}
+                                        </p>
+                                    {% endfor %}
+                                    <a href="{{ path('news_show_page', {'slug': stadt.slug }) }}"
+                                       class="btn btn-primary">
+                                        {% trans %}Alle Neuigkeiten der Stadt{% endtrans %}
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% if stadt.schulkindBetreung %}
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3> {% trans %}Für folgenden Schulen können Sie die Schulkindbetreuung hier online buchen.{% endtrans %}</h3>
+                                {% if schuljahr is not null %}
+                                    <p style="font-family: TypeWritersSubstitute">
+                                        {% trans %}Aktuelles Schuljahr{% endtrans %}: {{ schuljahr.von|date('d.m.Y') }}
+                                        - {{ schuljahr.bis|date('d.m.Y') }} | {% trans %}Anmedezeitraum{% endtrans %}
+                                        : {{ schuljahr.anmeldeStart|date('d.m.Y') }}
+                                        - {{ schuljahr.anmeldeEnde|date('d.m.Y') }}
+                                    </p>
+                                {% else %}
+                                    <p style="font-family: TypeWritersSubstitute">
+                                        {% trans %}Sie befinden sich aktuell außerhalb des Anmeldezeitraums und können die Anmeldung nicht starten.{% endtrans %}
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <div class="card-deck">
+                                    <!-- Count item widget-->
+                                    {% for s in schule %}
+                                        <div class="col-md-4 mb-4">
+                                            <div class="card hoverable">
+                                                <div class="view overlay skib-card-image">
+                                                    {% if s.image %}
+                                                        <img class="card-img-top"
+                                                             src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                             alt="{{ s.name }}" style="max-height: 300px">
+                                                    {% else %}
+                                                        <img class="card-img-top"
+                                                             src="{{ asset('images/logo-breit-mittig.png') }}">
+                                                    {% endif %}
+                                                    <a href="adresse">
+                                                        <div class="mask rgba-white-slight"></div>
+                                                    </a>
+                                                </div>
+
+                                                <div class="card-body ">
+                                                    <h5 class="card-title">{{ s.name }}</h5>
+
+                                                </div>
+                                                <div class="card-footer">
+                                                    {% trans %}Betreuender Träger{% endtrans %}
+                                                    : {{ s.organisation.name }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if stadt.ferienprogramm %}
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3> {% trans %}Von folgenden Trägern kann das Ferienprogramm hier online gebucht werden.{% endtrans %}</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-deck">
+                                    <!-- Count item widget-->
+                                    {% for o in stadt.organisations %}
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="card hoverable">
+                                                <div class="view overlay">
+                                                    <img class="card-img-top"
+                                                         src="{{ vich_uploader_asset(o,'imageFile') }}"
+                                                         alt="{{ o.name }}" style="max-height: 300px">
+                                                    <a href="{{ path('ferien_adresse', {'slug': stadt.slug}) }}">
+                                                        <div class="mask rgba-white-slight"></div>
+                                                    </a>
+                                                </div>
+
+                                                <div class="card-body ">
+                                                    <h5 class="card-title">{{ o.name }}</h5>
+                                                    <p class="card-text">{{ o.infoText }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h3> {% trans %}Weitere Informationen{% endtrans %}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    <h4>
+                                        {% trans %}Stadt{% endtrans %}
+                                    </h4>
+                                    {% if stadt.stadtHomepage is not null %}
+                                        <a href="{{ stadt.stadtHomepage }}"
+                                           target="_blank" rel="noopener noreferrer"><i
+                                                    class="fas fa-external-link-alt"></i> {% trans %}Webseite{% endtrans %}
+                                        </a><br/>
+                                    {% endif %}
+                                    <a href="{{ path('workflow_agb',{'slug':stadt.slug}) }}"
+                                       target="_blank"
+                                       rel="noopener noreferrer">{% trans with{'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der %stadt%{% endtrans %}</a><br/>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>
+                                        {% trans %}Träger{% endtrans %}
+                                    </h4>
+                                    {% for o in stadt.organisations %}
+                                        <div class="row mb-1">
+                                            <div class="col-md-8">
+                                                <b>{{ o.name }}</b><br>
+                                                {% trans %}Ansprechpartner{% endtrans %}: {{ o.ansprechpartner }}<br/>
+                                                {% trans %}Telefon{% endtrans %}: <a
+                                                        href="tel:{{ o.telefon }}">{{ o.telefon }}</a><br/>
+                                                {% trans %}E-Mail{% endtrans %}: <a
+                                                        href="mailto:{{ o.email }}">{{ o.email }}</a><br/>
+                                                {% if o.orgHomepage is not null %}
+                                                    <a href="{{ o.orgHomepage }}"
+                                                       target="_blank" rel="noopener noreferrer"><i
+                                                                class="fas fa-external-link-alt"></i> {% trans %}Webseite{% endtrans %}
+                                                    </a><br/>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-md-4">
+                                                {% if o.image is not empty %}
+                                                    <img src="{{ vich_uploader_asset(o,'imageFile') }}"
+                                                         style="max-height: 110px; max-width: 100%">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <hr class="hr-bold">
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+{% include 'workflow/footer.html.twig' %}
+<div class="modal fade" id="loadContentModal" tabindex="-1" role="dialog" aria-labelledby="loadContentModal"
+     aria-hidden="true">
+
+</div>
+
+<script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
+<script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
+<script src="{{ asset('frontpage/vendor/hide-reveal-more-content/dist/jquery.morecontent.lite.min.js') }}"></script>
+<script>
+    $(function () {
+        $("a[href*=\\#]").on('click', function (e) {
+            e.preventDefault();
+            $('html, body').animate({scrollTop: $($(this).attr('href')).offset().top}, 500, 'linear');
+        });
+    });
+
+    $(document).on('click', '.loadContent', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $('#loadContentModal').load(url, function () {
+            $('#loadContentModal ').modal('show');
+        });
+
+    });
+</script>
+<script>
+    $('.more').moreContent(
+        {
+            textClose: '{{ 'Mehr lesen'|trans }}',
+            textOpen: '{{ 'Schließen'|trans }}',
+            tpl: {
+
+                btn: '<button class="btn btn-primary" type="button"></button>',
+
+            },
+        }
+    );
+
+</script>
+
+</body>
+
+</html>

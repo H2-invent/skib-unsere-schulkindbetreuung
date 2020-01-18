@@ -1,0 +1,269 @@
+:root {
+  --main-color: rgb(0,88,176);
+  --main-color-hover: rgb(0,158,251);
+  --main-color-activ: rgb(179,230,255);
+  --sec-color: rgb(245,26,32);
+  --sec-color-hover: rgb(201,2,0);
+  --sec-color-activ: rgb(244,105,104);
+  --skib-contrast-base: rgb(85,83,80);
+  --skib-contrast-dark: rgb(23,21,18);
+  --skib-contrast-light: rgb(144,142,140);
+  --skib-contrast-extra-light: rgb(232,228,226);
+  --skib-contrast-white: rgb(253,253,253);
+}
+
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link {
+  color: #0a0a0a;
+}
+
+/* Half Page Carousel itself*/
+.carousel {
+  height: 50%; }
+  .carousel .carousel-inner {
+    height: 100%; }
+    .carousel .carousel-inner .carousel-item,
+    .carousel .carousel-inner .active {
+      height: 100%; }
+
+/* Adjustment for mobile devices*/
+@media (max-width: 776px) {
+  .carousel {
+    height: 100%; } }
+
+/* Navbar animation */
+.navbar {
+  background-color: rgba(255,255,255, 0.4); }
+
+.top-nav-collapse {
+  background-color: var(--skib-contrast-white);
+}
+
+/* Adding color to the Navbar on mobile */
+@media only screen and (max-width: 768px) {
+  .navbar {
+    background-color: var(--skib-contrast-white) } }
+
+/* Footer color for sake of consistency with Navbar */
+.page-footer {
+  background-color: var(--skib-contrast-dark); }
+label.required:after {
+  content: "* ";
+}
+
+#scroll a {
+  padding-top: 10px;
+}
+#scroll a span {
+  margin-top: -30px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin-left: -2px;
+  border-left: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  -webkit-animation: sdb04 2s infinite;
+  animation: sdb04 2s infinite;
+  box-sizing: border-box;
+}
+@-webkit-keyframes sdb04 {
+  0% {
+    -webkit-transform: rotate(-45deg) translate(0, 0);
+  }
+  20% {
+    -webkit-transform: rotate(-45deg) translate(-10px, 10px);
+  }
+  40% {
+    -webkit-transform: rotate(-45deg) translate(0, 0);
+  }
+}
+@keyframes sdb04 {
+  0% {
+    transform: rotate(-45deg) translate(0, 0);
+  }
+  20% {
+    transform: rotate(-45deg) translate(-10px, 10px);
+  }
+  40% {
+    transform: rotate(-45deg) translate(0, 0);
+  }
+}
+
+.anchor {
+  padding-top: 60px;
+  margin-top: -60px;
+}
+
+
+/* nunito-regular - latin */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../fonts/nunito/nunito-v12-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Nunito Regular'), local('Nunito-Regular'),
+  url('../../fonts/nunito/nunito-v12-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../../fonts/nunito/nunito-v12-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+  url('../../fonts/nunito/nunito-v12-latin-regular.woff') format('woff'), /* Modern Browsers */
+  url('../../fonts/nunito/nunito-v12-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('../../fonts/nunito/nunito-v12-latin-regular.svg#Nunito') format('svg'); /* Legacy iOS */
+}
+
+/* nunito-700 - latin */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../../fonts/nunito/nunito-v12-latin-700.eot'); /* IE9 Compat Modes */
+  src: local('Nunito Bold'), local('Nunito-Bold'),
+  url('../../fonts/nunito/nunito-v12-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../../fonts/nunito/nunito-v12-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+  url('../../fonts/nunito/nunito-v12-latin-700.woff') format('woff'), /* Modern Browsers */
+  url('../../fonts/nunito/nunito-v12-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('../../fonts/nunito/nunito-v12-latin-700.svg#Nunito') format('svg'); /* Legacy iOS */
+}
+
+/* typewriter Black */
+@font-face {
+  font-family: 'TypeWritersSubstitute';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../../fonts/typewriter/TypeWritersSubstitute-Black.ttf') format('truetype');
+}
+
+/* typewriter-Oblique */
+@font-face {
+  font-family: 'TypeWritersSubstitute';
+  font-weight: normal;
+  font-style: oblique;
+url('../../fonts/typewriter/TypeWritersSubstitute-Oblique.ttf') format('truetype'), /* Safari, Android, iOS */
+}
+
+body {
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: 400;
+  color: var(--skib-contrast-dark);
+}
+.card-text {
+  color: var(--skib-contrast-dark) !important;
+}
+
+.skib-card-image {
+  margin-right: -13px;
+  margin-left: -10px;
+  border-radius: 8px;
+  padding-right: 8px;
+  padding-top: 3px;
+  margin-top: -10px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+
+}
+.skib-card-image .card-img-top{
+  webkit-filter: drop-shadow(2px 2px 3px #222);
+  filter: drop-shadow(2px 2px 3px #222);
+  border-top-left-radius: calc(0.25rem - 1px);
+  border-top-right-radius: calc(0.25rem - 1px);
+  border-bottom-left-radius: calc(0.25rem - 1px);
+  border-bottom-right-radius: calc(0.25rem - 1px);
+}
+h1,
+h2 {
+  font-family: TypeWritersSubstitute;
+  font-style: normal;
+}
+
+.btn-primary {
+  background-color: var(--main-color) !important;
+  border-color: var(--main-color) !important;
+  border-radius: 500px;
+  color: #fff !important;
+  }
+  .btn-primary:hover {
+    background-color: var(--main-color-hover) !important;
+  }
+  .btn-primary:active {
+    border-color: var(--main-color-activ) !important;
+    box-shadow: var(--main-color-activ) !important;
+  }
+
+.btn-secondary {
+  background-color: var(--sec-color) !important;
+  border-radius: 500px;
+  color: #fff !important;
+}
+  .btn-secondary:hover {
+    background-color: var(--sec-color-hover) !important;
+  }
+
+.btn-outline-primary {
+  border-color: #0057B0 !important;
+  color: #0057B0 !important;
+  border-radius: 500px;
+}
+  .btn-outline-primary:hover {
+    border-color: var(--main-color-hover) !important;
+    color: var(--main-color-hover) !important;
+  }
+
+.btn-outline-secondary {
+  border-color: var(--sec-color) !important;
+  color: var(--sec-color) !important;
+  border-radius: 500px;
+}
+  .btn-outline-secondary:hover {
+    border-color: var(--sec-color-hover) !important;
+    color: var(--sec-color-hover) !important;
+  }
+
+.progress-bar {
+  background-color: var(--main-color) !important;
+}
+
+a {
+  color: var(--main-color);
+}
+  a:hover {
+    color: var(--main-color-hover);
+  }
+
+
+
+/* Define Custom Color in Backend */
+.bmd-btn-fab.btn-primary.custom-file-control:before, .btn-group-raised .btn-primary.custom-file-control:before, .btn-group-raised .btn.btn-primary, .btn-raised.btn-primary.custom-file-control:before, .btn.bmd-btn-fab.btn-primary, .btn.btn-raised.btn-primary {
+  color: #fff;
+  background-color: var(--main-color) !important;
+  border-color: var(--main-color) !important;
+}
+
+.mCSB_dragger_bar {
+  background-color: var(--main-color) !important;
+}
+
+.count-title i {
+  color: var(--main-color) !important;
+}
+
+.text-primary {
+  color: var(--sec-color) !important;
+}
+
+nav.navbar a.menu-btn:hover {
+  background: var(--sec-color) !important;
+}
+
+.side-navbar li a:focus, .side-navbar li a:hover {
+  background: var(--skib-contrast-base) !important;
+}
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link:hover {
+  color: var(--sec-color);
+}
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link {
+  color: var(--main-color);
+  font-family: 'TypeWritersSubstitute';
+  font-weight: 400;
+}

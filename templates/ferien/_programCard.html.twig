@@ -1,0 +1,168 @@
+{% if date is defined %}
+    {% for block in date %}
+        <div class="accordion">
+            <div class="card mb-1">
+                <div class="card-header" id="heading{{ block.id }}">
+                    <a data-toggle="collapse"
+                       data-target="#collapse{{ block.id }}"
+                       aria-expanded="true" aria-controls="collapse{{ block.id }}">
+                        <h5>
+                            {{ block.translate.titel }}
+                        </h5>
+                        {% if block.startVerkauf < today and block.endVerkauf > today %}
+                            {% if  block.maxAnzahl is  null or block.maxAnzahl - block.KindFerienblocksGebucht|length >0 %}
+                                {% set alter = kind.geburtstag.diff(date('now')).y %}
+                                {% if block.minAlter  is not null and block.minAlter > alter %}
+                                    <div class="alert alert-warning" role="alert">
+                                        <i class="fas fa-exclamation"></i>
+                                        {% trans %}Das Kind ist zu jung für dieses Programm{% endtrans %}<br/>
+                                    </div>
+                                {% elseif block.maxAlter  is not null and block.maxAlter < alter %}
+                                    <div class="alert alert-warning" role="alert">
+                                        <i class="fas fa-exclamation"></i>
+                                        {% trans %}Das Kind ist zu alt für dieses Programm{% endtrans %}<br/>
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-success" role="alert">
+                                        <i class="fas fa-check"></i>
+                                        {% trans %}Anmeldung geöffnet{% endtrans %}<br/>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <div class="alert alert-info" role="alert">
+                                    <i class="fas fa-exclamation"></i>
+                                    {% trans %}Keine freien Plätze mehr vorhanden{% endtrans %}<br/>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="alert alert-info" role="alert">
+                                <i class="fas fa-exclamation"></i>
+                                {% trans %}Anmeldung geschlossen{% endtrans %}
+                            </div>
+                        {% endif %}
+                    </a>
+                </div>
+                <div id="collapse{{ block.id }}" class="collapse"
+                     aria-labelledby="heading{{ block.id }}"
+                     data-parent="#accordion">
+                    <div class="card-body">
+                        <h4 class="mt-1">
+                            {{ block.translate.titel }}<br/>
+                        </h4>
+                        <p>
+                            {{ block.translate.infoText|nl2br }}
+                        </p>
+                        <p>
+                            {{ 'Kategrie'|trans }}:<br>
+                            {% for k in block.kategorie %}
+                                {{ k.name }},
+                            {% endfor %}
+                        </p>
+                        {% if block.startVerkauf > today and block.endVerkauf < today %}
+                            <div class="row alert alert-info" role="alert">
+                                <div class="col-sm-1">
+                                    <i class="fas fa-exclamation fa-2x"></i>
+                                </div>
+                                <div class="col-sm-10">
+                                    {% trans %}Der Anmeldezeitraum für dieses Programm ist vorüber{% endtrans %}.<br/>
+                                    {% trans %}Anmeldezeitraum{% endtrans %}: {{ block.startVerkauf|date('d.m.Y') }} {% trans %}bis{% endtrans %} {{ block.endVerkauf|date('d.m.Y') }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <hr class="hr-dark">
+                        <div class="row mt-2">
+                            <div class="col-sm-3">
+                                <h5>
+                                    {% trans %}Ort{% endtrans %}
+                                </h5>
+                            </div>
+                            <div class="col-sm-9">
+                                {{ block.Ort|nl2br }}
+                            </div>
+                        </div>
+
+                        <hr class="hr-dark">
+                        <div class="row mt-2">
+                            <div class="col-sm-3">
+                                <h5>
+                                    {% trans %}Termin{% endtrans %}
+                                </h5>
+                            </div>
+                            <div class="col-sm-9">
+                                <b>{{ block.startDate|date('d.m.Y') }} {% if block.startDate != block.endDate %}- {{ block.endDate|date('d.m.Y') }}{% endif %}</b><br/>
+                                {% trans %}Begin{% endtrans %}: {{ block.startTime|date('g:i') }}<br/>
+                                {% trans %}Ende{% endtrans %}: {{ block.endTime|date('g:i') }}<br/>
+                            </div>
+                            <div class="col-sm-3">
+                                <p>
+                                    {% trans %}Anmeldezeitraum{% endtrans %}
+                                </p>
+                            </div>
+                            <div class="col-sm-9">
+                                <b> {{ block.startVerkauf|date('d.m.Y') }}
+                                    - {{ block.endVerkauf|date('d.m.Y') }}</b><br/>
+                            </div>
+                        </div>
+
+                        <hr class="hr-dark">
+                        <div class="row mt-2">
+                            <div class="col-sm-3">
+                                <h5>
+                                    {% trans %}Anzahl Plätze{% endtrans %}
+                                </h5>
+                                {% if  block.maxAnzahl is not null %}
+                                    <div>{% trans %}Kontingent{% endtrans %}
+                                        <i class="fas fa-question-circle" data-toggle="popover" data-placement="top"
+                                           title="{{ 'Information'|trans }}"
+                                           data-content="{% trans %}Für diesen Block gibt es eine Beschschränkung der Betreungsplätzte.{% endtrans %}"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-sm-9">
+                                {% if block.maxAnzahl is not null %}
+                                    {% trans %}Maximal{% endtrans %}: {{ block.maxAnzahl }}<br/>
+                                    {% trans %}Freie Plätze{% endtrans %}: {{ block.maxAnzahl - block.KindFerienblocksGebucht|length }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if block.maxAlter is not null or block.minAlter is not null %}
+                            <hr class="hr-dark">
+                            <div class="row mt-2">
+                                <div class="col-sm-3">
+                                    <h5>
+                                        {% trans %}Empfohlenes Alter{% endtrans %}
+                                    </h5>
+
+                                </div>
+                                <div class="col-sm-9">
+                                    {% if block.maxAlter is not null %}
+                                        {% trans %}Maximales Alter{% endtrans %}: {{ block.maxAlter }}<br/>
+
+                                    {% endif %}
+                                    {% if block.minAlter is not null %}
+
+                                        {% trans %}Minimal Alter{% endtrans %}: {{ block.minAlter }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <hr class="hr-dark">
+                        <div class="row mt-2">
+                            <div class="col-sm-3">
+                                <h5>
+                                    {% trans %}Preise{% endtrans %}
+                                </h5>
+                            </div>
+                            <div class="col-sm-9">
+                                <span class="priceChooseButton">
+                                    {% include 'ferien/_programButton.html.twig' with {'preis':block.preis} %}
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}

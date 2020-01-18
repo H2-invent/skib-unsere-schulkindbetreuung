@@ -1,0 +1,106 @@
+{% extends 'workflow/base.html.twig' %}
+
+
+{% block header %}
+    <div class="col-md-6 mb-4 white-text text-centerm text-md-left">
+        <h1 class="font-weight-bold">{% trans %}SKiB{% endtrans %}</h1>
+        <hr class="hr-light ">
+    </div>
+{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3> {% trans %}Impressum{% endtrans %}</h3>
+            </div>
+            <div class="card-body">
+                    <h4>{% trans %}Anschrift{% endtrans %}</h4>
+                <p>
+                <table>
+                    <tr>
+                        <td>
+                            <h5>
+                                {% trans %}
+                                    H2 invent GmbH
+                                {% endtrans %}
+                            </h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                                {% trans %}
+                                    Gewerbestraße 9 (HALLE9)
+                                {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                                D-79539 Lörrach
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                </table>
+                </p>
+                    <h4>{% trans %}Kontakt{% endtrans %}</h4>
+                    <p>
+                        <table>
+                    <tr>
+                        <td>
+                            {% trans %}
+                            Vertretungsberechtige Geschäftsführer: Andreas Holzmann
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                            Telefon: 07621-7925862
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                                EMail: info@h2-invent.com
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                                Registergericht: Amtsgericht Freiburg im Breisgau
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                                Registernummer: HRB 720434
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                                Umsatzsteuer-Identifikationsnummer gem. § 27a UStG: DE326041099
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans %}
+                                Inhaltlich Verantwortlicher gem. § 55 II RStV: H2 invent GmbH
+                            {% endtrans %}
+                        </td>
+                    </tr>
+                        </table>
+                    </p>
+            </div>
+
+    </div>
+</div>
+
+{% endblock %}

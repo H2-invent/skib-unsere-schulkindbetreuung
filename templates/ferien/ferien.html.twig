@@ -1,0 +1,171 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="font-weight-bold hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
+        <hr class="hr-light ">
+        <div class="progress mb-2">
+            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{% trans %}Ferienprogramm buchen{% endtrans %}</div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">
+            <h4> {% trans %}Kind/Kinder hinzufügen{% endtrans %}</h4>
+        </div>
+        <div class="card-body">
+            {% if app.request.query.get("snack") is defined and app.request.query.get("snack") is not null %}
+                <h3>
+                    <div class="badge badge-danger" style="white-space: normal">
+                        {{ app.request.query.get("snack") }}
+                    </div>
+                </h3>
+            {% endif %}
+
+            <a href="{{ path('ferien_kind_neu', {'slug':stadt.slug}) }}"
+               class="loadContent btn btn-outline-primary">{% trans %}Kind hinzufügen{% endtrans %}</a>
+
+            <section class="dashboard-counts section-padding" id="schulenShow">
+                <div class="container-fluid ">
+                    <div class="card-deck" style="flex-flow: column">
+                        <div class="row">
+
+
+                            <!-- Count item widget-->
+
+                            {% if kinder is defined and kinder is not null %}
+                                {% for k in kinder %}
+                                    <div class="col-lg-4 col-md-6 card">
+
+                                        <div class="card-body">
+                                            <div class="btn-group">
+                                                <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                                    <a href="{{ path('ferien_workflow_kind_edit', {'slug':stadt.slug,'kind_id':k.id}) }}"
+                                                       class=" loadContent dropdown-item">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                    <a href="{{ path('ferien_kind_programm', {'slug': stadt.slug,'kind_id':k.id}) }}"
+                                                       class=" loadContent dropdown-item">{% trans %}Ferienprogramm bearbeiten{% endtrans %}</a>
+                                                    <a type="DELETE"
+                                                       href="{{ path('ferien_workflow_kind_delete',{'slug':stadt.slug,'kind_id':k.id}) }}"
+                                                       class="dropdown-item deleteBtn">{% trans %}Löschen{% endtrans %}</a>
+
+                                                </div>
+
+                                            </div>
+                                            {{ k.vorname }} {{ k.nachname }}
+                                        </div>
+                                        <div class="card-body">
+
+                                            <b><span class="price">{% trans %}Summe{% endtrans %}: {{ k.ferienblockPreis|number_format(2,',','.') }}€</span></b><br/>
+
+                                            {% trans %}Gebuchte Betreuungszeitfenster{% endtrans %}: <br/>
+                                            {% for block in k.KindFerienblocksGebucht %}
+                                                {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€
+                                                <br>
+                                            {% endfor %}
+                                            {% trans %}Beworbene Betreuungszeitfenster{% endtrans %}: <br/>
+                                            {% for block in k.KindFerienblocksBeworben %}
+                                                {{ block.ferienblock.translate.titel }} | {% trans %}Preis{% endtrans %}: {{ block.preis|number_format(2,',','.') }}€
+                                                <br>
+                                            {% endfor %}
+                                        </div>
+
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            <div class="text-center">
+                <a href="{{ path('ferien_adresse', {'slug':stadt.slug}) }}"
+                   class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
+                <a href="{{ path('ferien_bezahlung_prepare', {'slug':stadt.slug}) }}"
+                   class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block jquery %}
+    <script>
+        $(document).on('click', '.chooseBlock', function (e) {
+            e.preventDefault();
+            var ele = $(this);
+            var url = ele.attr('href');
+            ele.find('.loader').removeClass('d-none');
+            $.ajax({
+                url: url,
+                method: 'PATCH',
+                success: function (data) {
+
+                    if (data.error == 0) {
+
+                        ele.addClass('active');
+                        if (data.state == 0) {
+                            klasse = 'bg-warning';
+                            ele.addClass(klasse);
+                        } else if (data.state == 10) {
+                            var klasse = 'bg-success';
+                            ele.addClass(klasse);
+
+                        }
+                        ele.closest('.priceChooseButton').find('.btn').each(function (index) {
+                            var ele = $(this);
+                            if (!ele.hasClass('active')) {
+                                ele.prop('disabled', true);
+                            }
+                        });
+
+                        if (data.state < 0) {
+                            ele.removeClass('bg-warning');
+                            ele.removeClass('bg-success');
+                            ele.removeClass('active');
+                            ele.closest('.priceChooseButton').find('.btn').each(function (index) {
+                                var ele = $(this);
+
+                                ele.prop('disabled', false);
+
+                            });
+                        }
+
+
+                        ele.text(data.cardText);
+
+                    }
+                    $('#price').text(data.preis);
+                    if (data.error == 0) {
+                        $.ajax({
+                            url: data.preisUrl,
+                            method: 'GET',
+                            success: function (data) {
+                                ele.closest('.modal-body').find('.price').text(data.betrag + '€')
+                            }
+
+                        });
+                    }
+                    var options = {
+                        content: data.text, // text of the snackbar
+                        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+                    };
+                    $.snackbar(options);
+
+                    ele.find('.loader').addClass('d-none');
+
+
+                }
+            })
+        });
+
+        $("#loadContentModal").on('hide.bs.modal', function () {
+            $('#schulenShow').load('{{ path('ferien_auswahl', {'slug':stadt.slug}) }} #schulenShow');
+        });
+    </script>
+
+{% endblock %}

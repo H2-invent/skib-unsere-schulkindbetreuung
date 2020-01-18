@@ -1,0 +1,18 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-centerm text-md-left align-items-md-center">
+
+        <h1 class="hauptfarbe font-weight-bold">{% trans with {'%stadt%':stadt.name} %}Allgemeine Vertragsbedingungen der %stadt%{% endtrans %}</h1>
+        <hr class="hr-light ">
+
+    </div>
+{% endblock %}
+{% block content %}
+    <div>
+            <a class="btn btn-primary" href="{{ path('workflow_agb_pdf',{'slug':stadt.slug}) }}"><i class="fa fa-download"></i> {% trans %}Vertragsbedingungen als PDF herunterladen{% endtrans %}</a>
+
+        <p>
+            {{ stadtAGB|markdown_to_html }}
+        </p>
+    </div>
+{% endblock %}

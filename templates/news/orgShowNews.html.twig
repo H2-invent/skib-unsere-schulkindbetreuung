@@ -1,0 +1,38 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="display-4 font-weight-bold hauptfarbe">{% trans %}Elektronische Benachrichtigung{% endtrans %}</h1>
+        <hr class="hr-light ">
+    </div>
+{% endblock %}
+{% block content %}
+    <h1 class="cover-heading">{% trans with {"%name%":stadt.name} %} Anmeldung zur Schulkindbetreuung in %name% geschlossen {% endtrans %}</h1>
+    <p class="lead">{% trans with {"%name%":stadt.name} %}Sie befinden sich außerhalb des Anmeldezeitraums für die Schulkindbetreuung in %name%. {% endtrans %}</p>
+
+    <div class="card">
+        <div class="card-header">
+            <h4>
+                {% trans %}Folgende Träger stehen für weitere Fragen zur Verfügung{% endtrans %}.
+            </h4>
+        </div>
+        <div class="card-body">
+            {% for o in stadt.organisations %}
+                <div class="row">
+                    <div class="col-md-8 mb-1">
+                        <b>{{ o.name }}</b><br>
+                        {% trans %}Ansprechpartner{% endtrans %}: {{ o.ansprechpartner }}<br/>
+                        {% trans %}Telefon{% endtrans %}: <a href="tel:{{ o.telefon }}">{{ o.telefon }}</a><br/>
+                        {% trans %}E-Mail{% endtrans %}: <a href="mailto:{{ o.email }}">{{ o.email }}</a><br/>
+                        {% if o.orgHomepage is not null %}
+                            <a href="{{ o.orgHomepage }}"
+                               target="_blank"><i
+                                        class="fas fa-external-link-alt"></i> {% trans %}Webseite{% endtrans %}</a><br/>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr class="hr-bold">
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}

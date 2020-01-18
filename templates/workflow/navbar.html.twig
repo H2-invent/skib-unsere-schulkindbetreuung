@@ -1,0 +1,76 @@
+<nav class="navbar fixed-top navbar-expand-md navbar-custom navbar-dark scrolling-navbar">
+    <div class="container">
+        <!-- Brand -->
+        {% if stadt is defined and stadt is not null %}
+            <a class="navbar-brand" href="{{ path('workflow_start', {'slug': stadt.slug}) }}">
+                <img src="{{ asset('images/logo-breit-mittig.png') }}" alt="Unsere SKiB" style="height: 70px">
+            </a>
+        {% else %}
+            <a class="navbar-brand" href="{{ path('welcome_landing') }}">
+                <img src="{{ asset('images/logo-breit-mittig.png') }}" alt="Unsere SKiB" style="height: 70px">
+            </a>
+        {% endif %}
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCustom">
+            <i class="fa fa-bars fa-lg py-1 text-black-50"></i>
+        </button>
+
+        <div class="navbar-collapse collapse" id="navbarCustom">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                {% if stadt is defined and stadt is not null %}
+                    <a class="nav-link" href="{{ path('workflow_start',{'slug':stadt.slug}) }}">{% trans %}Start{% endtrans %}</a>
+                    {% else %}
+                        <a class="nav-link" href="{{ path('welcome_landing') }}">{% trans %}SKiB{% endtrans %}</a>
+                {% endif %}
+                </li>
+                {% if stadt is defined and stadt is not null %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            {{ stadt.name }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item"
+                               href="{{ path('workflow_agb',{'slug':stadt.slug}) }}">{% trans %}Vertragsbedingungen{% endtrans %}</a>
+                            <a class="dropdown-item"
+                               href="{{ path('workflow_datenschutz',{'slug':stadt.slug,'org_id':'city'}) }}">{% trans %}Datenschutzhinweis{% endtrans %}</a>
+                            <a class="dropdown-item"
+                               href="{{ path('workflow_imprint',{'slug':stadt.slug}) }}">{% trans %}Impressum{% endtrans %}</a>
+
+                        </div>
+                    </li>
+                {% endif %}
+                {% if stadt is defined and stadt is not null %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('news_show_page', {'slug':stadt.slug}) }}">{% trans %}Neuigkeiten{% endtrans %}</a>
+                </li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {% trans %}Sprachen{% endtrans %}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item"
+                           href="{{ path(app.request.get('_route'), app.request.get('_route_params') | merge({'_locale':'de'})) }}"><img
+                                    src="{{ asset('images/flags/16/DE.png') }}" alt="Deutsch"
+                                    class="mr-2"><span>Deutsch</span></a>
+                        <a class="dropdown-item"
+                           href="{{ path(app.request.get('_route'), app.request.get('_route_params') | merge({'_locale':'en'})) }}"><img
+                                    src="{{ asset('images/flags/16/GB.png') }}" alt="English"
+                                    class="mr-2"><span>English</span></a>
+                        <a class="dropdown-item"
+                           href="{{ path(app.request.get('_route'), app.request.get('_route_params') | merge({'_locale':'fr'})) }}"><img
+                                    src="{{ asset('images/flags/16/FR.png') }}" alt="Francais" class="mr-2"><span>Francais</span></a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('dashboard') }}">{% trans %}Mitarbeiterlogin{% endtrans %}</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+</nav>

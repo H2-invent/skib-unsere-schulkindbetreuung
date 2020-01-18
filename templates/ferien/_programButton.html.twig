@@ -1,0 +1,50 @@
+{% for p in preis %}
+    <p>
+        {{ block.namePreise[loop.index-1] }}: {{ p|number_format(2,',','.') }} €
+        {% if block.startVerkauf < today and block.endVerkauf > today %}
+        {% if  block.maxAnzahl is null or block.maxAnzahl - block.KindFerienblocksGebucht|length >0 %}
+            <button href="{{ path('ferien_kinder_block_toggle', {'slug':stadt.slug,'kind_id':kind.id, 'block_id':block.id, 'preis_id':loop.index-1}) }}"
+                    class="btn chooseBlock
+    {% if block in kind.ferienblocks %}
+        {% set ferienblock = kind.kindFerienBlock(block) %}
+        {% if ferienblock.preisId == loop.index-1 %}
+            {% if ferienblock.state == 10 %}
+                bg-success
+            {% elseif ferienblock.state == 0 %}
+                bg-warning
+            {% endif %}
+        {% endif %}
+    {% endif %}
+"
+                    {% if block in kind.ferienblocks %}
+                        {% set ferienblock = kind.kindFerienBlock(block) %}
+                        {% if ferienblock.preisId == loop.index-1 %}
+
+                        {% else %}
+                            disabled="true"
+                        {% endif %}
+                    {% endif %}
+            >
+                {% if block in kind.ferienblocks %}
+                    {% set ferienblock = kind.kindFerienBlock(block) %}
+                    {% if ferienblock.preisId == loop.index-1 %}
+                        {% if ferienblock.state == 10 %}
+                            {% trans %}Gebucht{% endtrans %}
+                        {% elseif ferienblock.state == 0 %}
+                            {% trans %}Angemeldet{% endtrans %}
+                        {% endif %}
+
+                    {% else %}
+                        {% trans %}Hier buchen{% endtrans %}
+                    {% endif %}
+
+                {% else %}
+                    {% trans %}Hier buchen{% endtrans %}
+                {% endif %}
+
+
+            </button>
+            {% endif %}
+        {% endif %}
+    </p>
+{% endfor %}

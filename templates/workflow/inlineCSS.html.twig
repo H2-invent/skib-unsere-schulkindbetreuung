@@ -1,0 +1,39 @@
+<style type="text/css">
+    html,
+    body,
+    header,
+    .view {
+        height: {{height}};
+    }
+
+    @media (min-width: 800px) and (max-width: 850px) {
+        .navbar:not(.top-nav-collapse) {
+            background: #1C2331 !important;
+        }
+    }
+
+    {% if stadt is defined and stadt is not null %}
+    .btn-primary {
+        background-color: {{ stadt.hauptfarbe }} !important;
+        border-color: {{ stadt.hauptfarbe }} !important;
+        color: #fff;
+    }
+
+    .btn-outline-primary {
+        border: 2px solid;
+        border-color: {{ stadt.hauptfarbe }} !important;
+    }
+
+    .maincolor {
+        color: {{ stadt.hauptfarbe }} !important;
+    }
+
+    .popover-header {
+        background-color: {{ stadt.hauptfarbe }} !important;
+    }
+
+    .popover {
+        border: 1px solid {{ stadt.hauptfarbe }} !important;
+    }
+    {% endif %}
+</style>

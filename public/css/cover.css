@@ -3,11 +3,7 @@
  */
 
 /* Links */
-a,
-a:focus,
-a:hover {
-  color: #fff;
-}
+
 
 /* Custom default button */
 .btn-secondary,
@@ -26,7 +22,6 @@ a:hover {
 
 html,
 body {
-  height: 100%;
   background-color: #333;
 }
 

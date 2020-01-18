@@ -1,0 +1,159 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+<section class="dashboard-counts section-padding">
+    <div class="container-fluid ">
+        <div class="row">
+            <!-- Count item widget-->
+            <div class=" col-12 card">
+                <div class="card-header">
+                  <h1> {% if is_granted('ROLE_ORG_CHILD_CHANGE') %} <a href="{{ path('workflow_start',{'slug':organisation.stadt.slug}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                         <i class="material-icons">add</i>
+                      </button></a>{% endif %}
+                  </h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {% trans %}Alle Schuljahre{% endtrans %}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="schuljahrSelector dropdown-item" data-type="schuljahr" data-value="null"  href="#"> {% trans %}Alle Schuljahre{% endtrans %}</a>
+
+                                {% for s in schuljahre %}
+                                    <a class="schuljahrSelector dropdown-item" data-type="schuljahr" data-value="{{s.id}}" data-id="#">{{ s.von|date('d.m.Y') }} - {{ s.bis|date('d.m.Y') }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {% trans %}Alle Schulen{% endtrans %}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="schuljahrSelector dropdown-item"  data-type="schule"  data-value="null"  href="#"> {% trans %}Alle Schulen{% endtrans %}</a>
+
+                                {% for s in organisation.schule %}
+                                    <a class="schuljahrSelector dropdown-item" data-type="schule" data-value="{{ s.id }}" data-id="{{ s.id }}" href="#">{{ s.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {% trans %}Alle Wochentage{% endtrans %}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value=null href="#"> {% trans %}Alle Wochentage{% endtrans %}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="0"  href="#">{{ 'Montag'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="1" href="#">{{ 'Dienstag'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="2" href="#">{{ 'Mittwoch'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="3" href="#">{{ 'Donnerstag'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="4" href="#">{{ 'Freitag'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="5" href="#">{{ 'Samstag'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="wochentag" data-value="6" href="#">{{ 'Sonntag'|trans }}</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {% trans %}Alle Jahrgangsstufen{% endtrans %}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value=null href="#"> {% trans %}Alle Jahrgangsstufen{% endtrans %}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="1"  href="#">1. {{ 'Klasse'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="2" href="#">2. {{ 'Klasse'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="3" href="#">3. {{ 'Klasse'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="4" href="#">4. {{ 'Klasse'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="5" href="#">5. {{ 'Klasse'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="6" href="#">6. {{ 'Klasse'|trans }}</a>
+                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="7" href="#">7. {{ 'Klasse'|trans }}</a>
+                                </div>
+                            </div>
+                            <button class="print btn btn-secondary" type="button">
+                               PDF
+                            </button>
+                            <button class="spreadsheet btn btn-secondary" type="button">
+                                EXCEL
+                            </button>
+                        </div>
+                    </div>
+                </div>
+<div id="childTable">
+
+</div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block jquery %}
+<script>
+    var search =
+        {
+            schule: null,
+            wochentag: null,
+            schuljahr: null,
+            klasse: null,
+            {% if app.request.query.get("block") is defined and app.request.query.get("block") is not null %}
+            block: {{ app.request.query.get("block") }},
+    {% else %}
+            block:null,
+    {% endif %}
+
+            organisation: {{ organisation.id }},
+        };
+
+    $('.dropdown-item').click(function () {
+        var ele = $(this);
+        var text = ele.text();
+        var dropdown = ele.closest('.dropdown').find('button');
+        dropdown.text(text);
+        var type = ele.attr('data-type');
+        var value = ele.attr('data-value') == 'null'? null:ele.attr('data-value');
+        search.block = null;
+
+        switch (type) {
+            case 'schule':
+                search.schule = value;
+                break;
+            case 'wochentag':
+                search.wochentag = value;
+                break;
+            case 'schuljahr':
+                search.schuljahr = value;
+                break;
+            case 'klasse':
+                search.klasse = value;
+                break;
+            default:
+                break;
+
+        }
+        $('#childTable').load('{{ path('child_child_Table') }}',search);
+    });
+    $('.print').click(function () {
+        search.print= true;
+        console.log(search);
+        window.location='{{ path('child_child_Table') }}?'+$.param(search);
+
+        delete search.print;
+        console.log(search);
+    });
+    $('.spreadsheet').click(function () {
+        search.spread= true;
+        console.log(search);
+        window.location='{{ path('child_child_Table') }}?'+$.param(search);
+
+        delete search.spread;
+        console.log(search);
+    });
+    $('#childTable').load('{{ path('child_child_Table') }}',search);
+
+
+</script>
+
+{% endblock %}

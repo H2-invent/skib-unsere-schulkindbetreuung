@@ -1,0 +1,50 @@
+<style>
+    td {
+        border-bottom: 1px solid black;
+        font-weight: bold;
+        margin: 10px;
+    }
+
+    tr {
+        margin: 5px;
+    }
+</style>
+
+    <h3>{% trans %}Daten des Erziehungsberechtigten{% endtrans %}</h3>
+
+
+        <table cellpadding="5px" >
+            <tbody>
+            <tr>
+                <td>{% trans %}Name der Eltern{% endtrans %}</td>
+                <td>{{ eltern.vorname }} {{ eltern.name }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}E-Mail Adresse{% endtrans %}</td>
+                <td>{{ eltern.email }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Adresse der Eltern{% endtrans %}</td>
+                <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
+            </tr>
+
+
+            <tr>
+                <td>{% trans %}Name des Notfallkontakt{% endtrans %}</td>
+                <td>{{ eltern.notfallName }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Notfallkontakt{% endtrans %}</td>
+                <td>{{ eltern.notfallkontakt }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Weitere abholberechtigte Personen{% endtrans %}</td>
+                <td>{{ eltern.abholberechtigter|nl2br }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+
+
+        <!-- Daten der Kinder in einer for Schleife -->

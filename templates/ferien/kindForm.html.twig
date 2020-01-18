@@ -1,0 +1,52 @@
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+<div class="modal-header">
+    <h5 class="modal-title">{% trans %}Daten des Kindes eingeben{% endtrans %}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    {{ form_start(form, {
+        'attr': {
+            'novalidate': 'novalidate',
+            'class':'ajaxForm'
+
+        }
+    }) }}
+
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-outline-primary ">{% trans %}Weiter{% endtrans %}</button>
+    {{ form_end(form) }}
+</div>
+<script>
+  $('.ajaxForm').submit(function(e) {
+      e.preventDefault();
+      var $form = $(e.currentTarget);
+      $.ajax({
+          url: $form.attr('action'),
+          method: 'POST',
+          data: $form.serialize(),
+          success:function (data) {
+              var options = {
+                  content: data.snack, // text of the snackbar
+                  timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+              };
+              $.snackbar(options);
+
+              if (data.error == 0) {
+                  if (typeof data.next != "undefined"){
+                      $('#loadContentModal').load(data.next);
+
+                  }else {
+                      $('#loadContentModal').modal ('hide');
+                  }
+              }
+          }
+      });
+  })
+</script>
+
+</div>
+</div>

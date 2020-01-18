@@ -1,0 +1,53 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+<section class="dashboard-counts section-padding">
+    <div class="container-fluid ">
+        <div class="row">
+            <!-- Count item widget-->
+            <div class=" col-12 card">
+                <div class="card-header">
+                  <h1> {% trans %}Organisationen{% endtrans %}  <a href="{{ path('city_admin_organisation_new',{'id':city.id}) }}"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                         <i class="material-icons">add</i>
+                      </button></a></h1>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>{% trans %}Name{% endtrans %}</th>
+                            <th>{% trans %}Adresse{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for o in organisation %}
+                            <tr>
+                                <td>
+                                    <div class="btn-group">
+                                        <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="material-icons">more_vert</i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                            <a class="dropdown-item" href="{{ path('city_admin_organisation_edit',{'id':o.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                            <a class="dropdown-item" href="{{ path('city_admin_organisation_detail',{'id':o.id}) }}">{% trans %}Details{% endtrans %}</a>
+                                            <a class="dropdown-item" href="{{ path('city_admin_organisation_delete',{'id':o.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                            <a class="dropdown-item" href="{{ path('city_employee_org_show',{'id':o.id}) }}">{% trans %}Mitarbeiter der Organisation{% endtrans %}</a>
+
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ o.name }}</td>
+                                <td>{{ o.adresse }} {{ o.adresszusatz }}, {{ o.plz }} {{ o.ort }}</td>
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

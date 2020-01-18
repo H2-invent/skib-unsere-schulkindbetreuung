@@ -1,0 +1,119 @@
+{% extends 'workflow/base.html.twig' %}
+
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="font-weight-bold hauptfarbe">{% trans %}Bezahlung wählen{% endtrans %}</h1>
+        <hr class="hr-light ">
+        <div class="progress mb-2">
+            <div class="progress-bar" role="progressbar" style="width:60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">{% trans %}Bezahlung wählen{% endtrans %}</div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4> {% trans %}Bezahlmethode auswählen{% endtrans %}</h4>
+    </div>
+    <div class="card-body">
+        <h4>
+            {% trans with {'%organisation%':payment.organisation.name,'%summe%':payment.summe|number_format(2,',','.')} %}Zahlen Sie hier die Summe von %summe%€ an die Organisation %organisation% {% endtrans %}
+
+        </h4>
+        <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+           title="{{ 'Information'|trans }}" data-content="{% trans %}Hier können Sie Ihre bevorzugte Zahlungsmethode auswählen und für die Zahlung verwenden{% endtrans %}"></i>
+
+        <div class="accordion" id="accordionExample275">
+            <div class="card z-depth-0 bordered">
+                <div class="card-header" id="headingOne2">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne2"
+                                aria-expanded="true" aria-controls="collapseOne2">
+                            SEPA-Lastschrift
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseOne2" class="collapse" aria-labelledby="headingOne2"
+                     data-parent="#accordionExample275">
+                    <div class="card-body">
+                        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                        {{ form_widget(form) }}
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+            {% if payment.organisation.BraintreeOK %}
+                <div class="card z-depth-0 bordered">
+                    <div class="card-header" id="headingTwo2">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed " type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2">
+
+                                <img src="https://www.paypalobjects.com/webstatic/de_DE/i/de-pp-logo-100px.png"
+                                     border="0" alt="PayPal Logo"/>
+                                <img style="width: 120px"
+                                     src="https://www.girokonto.org/wp-content/uploads/2010/07/mastercard-visa-american-express-logos-1024x240.png"
+                                     alt="Credit" class="img-thumbnail img">
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo2" class="collapse " aria-labelledby="headingTwo2"
+                         data-parent="#accordionExample275">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <a href="{{ path('ferien_braintree_start',{'slug':stadt.slug,'id':payment.uid}) }}"
+                                       class="btn btn-outline-primary">Weiter</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if payment.organisation.stripeOK %}
+                <div class="card z-depth-0 bordered">
+                    <div class="card-header" id="headingTwo3">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed " type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo3" aria-expanded="false" aria-controls="collapseTwo3">
+
+
+                                <img style="width: 120px"
+                                     src="https://www.girokonto.org/wp-content/uploads/2010/07/mastercard-visa-american-express-logos-1024x240.png"
+                                     alt="Credit card" class="img-thumbnail img">
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo3" class="collapse " aria-labelledby="headingTwo3"
+                         data-parent="#accordionExample275">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <a href="{{ path('ferien_stripe_start',{'slug':stadt.slug,'id':payment.uid}) }}"
+                                       class="btn btn-outline-primary">Weiter</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="row card-body">
+            <div class="col-lg-12">
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center">
+                            <a href="{{ path('ferien_auswahl', {'slug':stadt.slug}) }}"
+                               class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+

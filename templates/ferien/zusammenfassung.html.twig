@@ -1,0 +1,231 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="font-weight-bold hauptfarbe">{% trans %}Zusammenfassung{% endtrans %}</h1>
+        <hr class="hr-light ">
+        <div class="progress mb-2">
+            <div class="progress-bar" role="progressbar" style="width:80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">{% trans %}Zusammenfassung{% endtrans %}</div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block content %}
+    <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="cover-heading">{% trans %}Daten der erziehungsberechtigten Person{% endtrans %} <a
+                        href="{{ path('ferien_adresse', {'slug':stadt.slug}) }}"> <i class="fa fa-edit"></i></a></h3>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td>{% trans %}Name der Eltern{% endtrans %}</td>
+                    <td>{{ eltern.vorname }} {{ eltern.name }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}E-Mail Adresse{% endtrans %}</td>
+                    <td>{{ eltern.email }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}Adresse der Eltern{% endtrans %}</td>
+                    <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}Name und Beziehung des Notfallkontakt{% endtrans %}</td>
+                    <td>{{ eltern.notfallName }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}Notfallkontakt der Eltern{% endtrans %}</td>
+                    <td>{{ eltern.notfallkontakt }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}Weitere abholberechtigte Personen{% endtrans %}</td>
+                    <td>{{ eltern.abholberechtigter }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}Bankverbindung für Lastschrift{% endtrans %}</td>
+                    <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}
+                        <br/>{{ eltern.sepaInfo?"Ja ich Erteile der Organisation ein SEPA Lastschrift Mandant":""|trans }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Daten der Kinder in einer for Schleife -->
+    <div class="card">
+        <div class="card-header mb-2">
+            <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %} <a
+                        href="{{ path('ferien_auswahl', {'slug':stadt.slug}) }}"> <i class="fa fa-edit"></i></a></h3>
+        </div>
+        <div class="text-left card-body" id="accordion">
+            {% for k in kind %}
+                <div class="card mb-2">
+                    <div class="card-header" id="heading{{ loop.index }}">
+                        <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="false"
+                               aria-controls="collapse{{ loop.index }}">
+                                {{ k.vorname }} {{ k.nachname }} <br/>
+                                <small>
+                                    {% trans %}Gesamtbetrag für die gebuchten Ferienprogramme{% endtrans %}: <a
+                                            href="{{ path('loerrach_workflow_print_pdf',{'id':k.id}) }}"><i
+                                                class="fa fa-download"></i></a>
+                                </small>
+                            </a>
+                        </h5>
+                    </div>
+
+                    <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}"
+                         data-parent="#accordion">
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td style="width: 60%">{% trans %}Vorname{% endtrans %}</td>
+                                    <td>{{ k.vorname }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Nachname{% endtrans %}</td>
+                                    <td>{{ k.nachname }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Geburtstag{% endtrans %}</td>
+                                    <td>{{ k.geburtstag|date('d.m.Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Allergien{% endtrans %}</td>
+                                    <td>{{ k.allergie }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Medikamente{% endtrans %}</td>
+                                    <td>{{ k.medikamente }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>{% trans %}Mein Kind ist Gluten intolerant{% endtrans %}</td>
+                                    <td>{{ k.gluten?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Mein Kind ist Laktose intolerant{% endtrans %}</td>
+                                    <td>{{ k.laktose?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Mein Kind isst kein Schweinefleisch{% endtrans %}</td>
+                                    <td>{{ k.schweinefleisch?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Vegetrarisch{% endtrans %}</td>
+                                    <td>{{ k.vegetarisch?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause{% endtrans %}</td>
+                                    <td>{{ k.alleineHause?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Mein Kind darf an Ausflügen teilnehmen{% endtrans %}</td>
+                                    <td>{{ k.ausfluege?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden{% endtrans %}</td>
+                                    <td>{{ k.sonnencreme?"Ja":'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden{% endtrans %}</td>
+                                    <td>{{ k.fotos?"Ja":'Nein'|trans }}</td>
+                                </tr>
+
+                                <tr>
+
+
+                                        <td>
+                                            {% trans %}Gebuchte Ferienprogramme{% endtrans %}
+                                        </td>
+                                        <td>
+                                            {% for f in k.kindFerienblocks %}
+                                            <b>{{ f.ferienblock.translate.titel }}</b><br/>
+                                            {{ f.ferienblock.startDate|date('d.M.Y') }}
+                                            - {{ f.ferienblock.endDate|date('d.M.Y') }}<br/>
+                                            {% trans %}Preis{% endtrans %}: {{ f.preis|number_format(2,',','.') }} €<br/>
+                                            {% trans %}Betreuende Organisation{% endtrans %}: {{ f.ferienblock.organisation.name }}<br/>
+                                            <a target="_blank" href={{ path('workflow_datenschutz', {'org_id':f.ferienblock.organisation.id, 'slug':stadt.slug}) }}>{% trans %}Datenschutzhinweis{% endtrans %} {{ f.ferienblock.organisation.name }}</a><br/>
+                                            {% endfor %}
+                                        </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <h5>
+                                            {% trans %}Summe{% endtrans %}
+                                        </h5>
+                                    </td>
+                                    <td>
+                                        <h5>
+
+                                        </h5>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <table class="table">
+        <tr>
+            <td>
+                <h5>{% trans %}Gewählte Summe und Zahlungsart{% endtrans %}</h5>
+            </td>
+            <td>
+
+            </td>
+            <td></td>
+        </tr>
+        {% for p in eltern.paymentFerien %}
+            <tr>
+                <td><h4>{{ p.organisation.name }}</h4></td>
+                <td><h4>{{ p.summe|number_format(2,',','.') }}€</h4></td>
+                <td><h4>{{ p.artString }}</h4></td>
+            </tr>
+
+        {% endfor %}
+    </table>
+    <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz"
+           value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}
+    <br>
+    <div>
+        <input id="checkboxAgb" type="checkbox" class="checkboxSelect" name="AGB" value="AGB"> <a target="_blank"
+                                                                                                  href={{ path('workflow_agb', {'slug':stadt.slug}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die allgemeinen Geschäftsbedingungen der %stadt% zur Ferienbetreuung gelesen und akzeptiere diese{% endtrans %}</a><br>
+    </div>
+    <button class="btn btn-outline-primary sendButton" disabled>{% trans %}Absenden{% endtrans %}</button>
+
+{% endblock %}
+{% block jquery %}
+    <script>
+        var url = "{{ path('ferien_abschluss',{'slug':stadt.slug}) }}";
+        $('.checkboxSelect').on('change', function () {
+            var cbS = $('.checkboxSelect');
+            var all = true;
+            cbS.each(function (index) {
+                if (!this.checked) {
+                    all = false;
+                }
+            });
+            if (all == true) {
+                $('.sendButton').wrap('<a href="{{ path('ferien_abschluss',{'slug':stadt.slug}) }}">');
+                $('.sendButton').prop('disabled', false);
+
+            } else {
+                if ($('.sendButton').parent().is("a")) {
+                    $('.sendButton').unwrap();
+                }
+                $('.sendButton').prop('disabled', true);
+            }
+        });
+    </script>
+
+{% endblock %}

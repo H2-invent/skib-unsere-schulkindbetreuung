@@ -1,0 +1,35 @@
+<style>
+    td {
+        border: 1px solid black;
+
+        font-weight: bold;
+        margin: 10px;
+    }
+
+    tr {
+        margin: 5px;
+    }
+</style>
+        <h2>{% trans %}Zusammenfassung{% endtrans %}</h2>
+
+
+    <h3>{{ kind.vorname }} {{ kind.nachname }} | {% trans %}Geburtstag{% endtrans %}: {{ kind.geburtstag|date('d.m.Y') }} | {% trans %}Klasse{% endtrans %}: {{ kind.klasse }}
+    <p>{{ 'Allergie'|trans }}: {{ kind.allergie }} | {{ 'Medikamente'|trans }}: {{ kind.medikamente }} | {{ 'Bemerkung' }}: {{ kind.bemerkung }} | {{ 'Monatliche Kosten'|trans }}: {{ kind.preisforBetreuung|number_format(2,',','.') }}€</p></h3>
+
+
+        <table cellpadding="3px">
+            <thead>
+            <tr>
+                <th>{{ 'Montag'|trans }}</th>
+                <th>{{ 'Dienstag'|trans }}</th>
+                <th>{{ 'Mittwoch'|trans }}</th>
+                <th>{{ 'Donnerstag'|trans }}</th>
+                <th>{{ 'Freitag'|trans }}</th>
+                <th>{{ 'Samstag'|trans }}</th>
+                <th>{{ 'Sonntag'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+           {{ table|raw }}
+            </tbody>
+        </table>

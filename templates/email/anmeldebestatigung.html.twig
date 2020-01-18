@@ -1,0 +1,32 @@
+{% extends 'email/base.html.twig' %}
+{% block header %}
+    {% trans %}Buchungsbestätigung für die Schulkindbetreuung{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <p class="text-center">{% trans %}Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:{% endtrans %}<br>
+
+    <b>{{ kind.vorname }} {{ kind.nachname }}</b> </p>
+    <p class="text-center">{% trans %}Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.
+            Dieser ist nur einmalig gültig und wird Ihnen mit der Bestätigung neu zugeandt.
+            Dieser Mechanismus verhindert einen Missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.{% endtrans %}</p>
+    <h3 class="text-center">
+        {{ 'Sicherheitscode'|trans }}: {{ eltern.secCode }}
+    </h3>
+    <h3 class="text-center">
+        {% trans %}Wichtig: Diesen Bestätigungscode sicher aufbewahren!{% endtrans %}
+    </h3>
+    <p class="text-center">{% trans %}Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
+            Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.
+            Die Kontaktdaten sind in dem PDF angehängten angegeben.{% endtrans %}
+    </p>
+    <br>
+    <br>
+    <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}<br>
+    <b>{{ kind.zeitblocks[0].schule.organisation.name }}</b></p>
+    </div>
+
+
+{% endblock %}
+
+
