@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,7 +34,7 @@ class News
     private $stadt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",  nullable=true)
      */
     private $date;
 
@@ -45,11 +47,21 @@ class News
      * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="orgNews")
      */
     private $organisation;
+    
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Schule", inversedBy="news")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Schule", inversedBy="news")
      */
     private $schule;
+
+    public function __construct()
+    {
+        $this->schule = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -97,7 +109,7 @@ class News
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(\DateTimeInterface $date): ?self
     {
         $this->date = $date;
 
@@ -128,14 +140,41 @@ class News
         return $this;
     }
 
-    public function getSchule(): ?Schule
+
+    public function getCreatedDate(): ?\DateTimeInterface
+    {
+        return $this->createdDate;
+    }
+
+    public function setCreatedDate(\DateTimeInterface $createdDate): self
+    {
+        $this->createdDate = $createdDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Schule[]
+     */
+    public function getSchule(): Collection
     {
         return $this->schule;
     }
 
-    public function setSchule(?Schule $schule): self
+    public function addSchule(Schule $schule): self
     {
-        $this->schule = $schule;
+        if (!$this->schule->contains($schule)) {
+            $this->schule[] = $schule;
+        }
+
+        return $this;
+    }
+
+    public function removeSchule(Schule $schule): self
+    {
+        if ($this->schule->contains($schule)) {
+            $this->schule->removeElement($schule);
+        }
 
         return $this;
     }

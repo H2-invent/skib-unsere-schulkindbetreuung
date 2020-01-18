@@ -37,6 +37,7 @@ class NewsType extends AbstractType
                 'choices' => $options['schulen'],
                 'label'=>'Name der Schule für den Versand der Nachricht',
                 'translation_domain' => 'form',
+                'multiple' =>true,
             ])
             ->add('activ', CheckboxType::class,array('label'=>'Neuigkeit auf der Startseite sichtbar','translation_domain' => 'form'))
 

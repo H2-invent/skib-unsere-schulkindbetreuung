@@ -2213,6 +2213,18 @@
         <source>Alle Neuigkeiten der Stadt</source>
         <target state="translated">All News</target>
       </trans-unit>
+      <trans-unit id="fTb5ncN" resname="Bearbeitet am">
+        <source>Bearbeitet am</source>
+        <target state="translated">Modified on</target>
+      </trans-unit>
+      <trans-unit id="Oc09MmC" resname="Weiterlesen">
+        <source>Weiterlesen</source>
+        <target state="translated">Read more</target>
+      </trans-unit>
+      <trans-unit id="j4mueG7" resname="Zur Übersicht">
+        <source>Zur Übersicht</source>
+        <target state="translated">To the overview</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
