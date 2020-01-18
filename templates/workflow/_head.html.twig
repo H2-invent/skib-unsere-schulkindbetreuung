@@ -5,6 +5,9 @@
 {% if metaDescription is defined and metaDescription is not null %}
 <meta name="description" content="{{ metaDescription }}"/>
 {% endif %}
+
+
+
 <meta property="og:image" content="
 {% if stadt is defined and stadt is not null %}
 {{ absolute_url( vich_uploader_asset(stadt.image)) }}
@@ -18,7 +21,7 @@
 {% else %}
 SKiB ist bisher die einzige Onlinelösung für die Anmeldung und die Verwaltung der Schulkindbetreuung und Ferienbetreuung.
 {% endif %}"/>
-<meta property="og:type" content=“website“/>
+<meta property="og:type" content="website"/>
 {% set url =  absolute_url(path(app.request.get('_route'), app.request.get('_route_params'))) %}
 <meta property="og:url" content="{{ url }}"/>
 <meta property="og:site_name" content="SKiB unsere-Schulkindbetreuung.de"/>
