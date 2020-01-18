@@ -398,7 +398,7 @@ class NewsController extends AbstractController
         }
         $stammdaten = $this->getStammdatenFromNEws($news,$today);
 
-    
+
         $mailContent = $this->renderView('email/news.html.twig', array('sender' => $news->getStadt(), 'news' => $news, 'stammdaten' => $stammdaten));
         foreach ($stammdaten as $data) {
             $mailerService->sendEmail('Ranzenpost', $news->getStadt()->getEmail(), $data->getEmail(), $news->getTitle(), $mailContent);
