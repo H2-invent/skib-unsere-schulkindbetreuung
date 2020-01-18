@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="//www.seokratie.de/wp-content/plugins/wordpress-seo-premium/css/main-sitemap.xsl"?>
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="{{absolute_url(path('sitemap'))}}"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
     http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd"
@@ -22,6 +22,7 @@
         <priority>1</priority>
     </url>
     {% for s in stadt %}
+        <!-- City: {{ s.name }} News -->
 
         {% if s.news|length>0 %}
             {% set date = s.news[0].date %}
@@ -101,6 +102,8 @@
         </url>
 
         {% for o in s.organisations %}
+            <!-- City: {{ s.name }} Organisation: {{ o.name }} -->
+
             <url>
                 <loc>{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':o.id})) }}</loc>
                 <xhtml:link rel="alternate" hreflang="de"
@@ -112,20 +115,12 @@
                 <lastmod>{{ date|date('Y-m-d') }}</lastmod>
                 <priority>0.2</priority>
             </url>
-            <url>
-                <loc>{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':o.id})) }}</loc>
-                <xhtml:link rel="alternate" hreflang="de"
-                            href="{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':o.id}| merge({'_locale':'de'}))) }}"/>
-                <xhtml:link rel="alternate" hreflang="en"
-                            href="{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':o.id}| merge({'_locale':'en'}))) }}"/>
-                <xhtml:link rel="alternate" hreflang="fr"
-                            href="{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':o.id}| merge({'_locale':'fr'}))) }}"/>
-                <lastmod>{{ date|date('Y-m-d') }}</lastmod>
-                <priority>0.2</priority>
-            </url>
+
         {% endfor %}
 
         {% for n in s.news %}
+            <!-- City: {{ s.name }} News -->
+
             <url>
                 <loc>{{ absolute_url(path('news_show_all',{'slug':s.slug,'id':n.id})) }}</loc>
                 <xhtml:link rel="alternate" hreflang="de"
@@ -137,6 +132,7 @@
                 <lastmod>{{ date|date('Y-m-d') }}</lastmod>
                 <priority>0.5</priority>
             </url>
+
         {% endfor %}
     {% endfor %}
 
