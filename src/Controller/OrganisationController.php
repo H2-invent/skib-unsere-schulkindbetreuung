@@ -44,8 +44,6 @@ class OrganisationController extends AbstractController
             throw new \Exception('Wrong City');
         }
         $organisation = new Organisation();
-
-
         $form = $this->createForm(OrganisationType::class, $organisation);
         $form->handleRequest($request);
         $errors = array();

@@ -7,8 +7,8 @@
                 <!-- Count item widget-->
                 <div class=" col-12 card">
                     <div class="card-header">
-                        <h1> {% trans %}Neuigkeiten{% endtrans %} <a
-                                    href="{{ path('content_n',{'id':city.id}) }}">
+                        <h1> {% trans %}Content{% endtrans %} <a
+                                    href="{{ path('content_new') }}">
                                 <button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
                                     <i class="material-icons">add</i>
                                 </button>
@@ -21,13 +21,13 @@
                                 <th></th>
                                 <th>{% trans %}Sichtbar{% endtrans %}</th>
                                 <th>{% trans %}Titel{% endtrans %}</th>
-                                <th>{% trans %}News Nachricht{% endtrans %}</th>
+                                <th>{% trans %}Icon{% endtrans %}</th>
                                 <th>{% trans %}Datum{% endtrans %}</th>
-                                <th>{% trans %}Schulen{% endtrans %}</th>
+                                <th>{% trans %}Last Change{% endtrans %}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for n in news %}
+                            {% for c in content %}
                                 <tr>
                                     <td>
                                         <div class="btn-group">
@@ -37,28 +37,26 @@
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
                                                 <a class="dropdown-item"
-                                                   href="{{ path('city_admin_news_edit',{'id':n.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                   href="{{ path('content_edit',{'content_id':c.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
                                                 <a class="dropdown-item"
-                                                   {% if n.schule is not empty%}
-                                                   href="{{ path('city_news_send',{'id':n.id}) }}">{% trans %}Per Email versenden{% endtrans %}</a>
-                                                    {% endif %}
-                                                {% if n.activ == true %}
-                                                <a class="dropdown-item"
-                                                   href="{{ path('city_admin_news_deactivate',{'id':n.id}) }}">{% trans %}Deaktivieren{% endtrans %}</a>
+
+                                                {% if c.activ == true %}
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('content_activate',{'content_id':c.id}) }}">{% trans %}Deaktivieren{% endtrans %}</a>
                                                 {% else %}
                                                     <a class="dropdown-item"
-                                                       href="{{ path('city_admin_news_activate',{'id':n.id}) }}">{% trans %}Aktivieren{% endtrans %}</a>
-                                                    {% endif %}
+                                                       href="{{ path('content_activate',{'content_id':c.id}) }}">{% trans %}Aktivieren{% endtrans %}</a>
+                                                {% endif %}
                                                 <a class="dropdown-item"
-                                                   href="{{ path('city_admin_news_delete',{'id':n.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                                   href="{{ path('content_delete',{'content_id':c.id}) }}">{% trans %}Löschen{% endtrans %}</a>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{{ n.activ?"Ja":'Nein'|trans }}</td>
-                                    <td>{{ n.title }}</td>
-                                    <td>{{ n.message }}</td>
-                                    <td>{{ n.date|date("d.m.Y G:i") }}</td>
-                                    <td>{% for s in n.schule %}{{ s.name }}<br>{% endfor %}</td>
+                                    <td>{{ c.activ?"Ja":'Nein'|trans }}</td>
+                                    <td>{{ c.translate.title }}</td>
+                                    <td>{{ c.icon }}</td>
+                                    <td>{{ c.createdAt|date("d.m.Y G:i") }}</td>
+                                    <td>{{ c.date|date("d.m.Y G:i") }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
