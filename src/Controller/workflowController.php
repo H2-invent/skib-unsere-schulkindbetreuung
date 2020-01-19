@@ -143,7 +143,7 @@ class workflowController extends AbstractController
             $titel = $translator->trans('Datenschutzhinweis %organisation%',array('%organisation%'=>$stadt->getName())). ' | '.$stadt->getName().' | unsere-Schulkindbetreuung.de';
             $metaDescrition= $translator->trans('Datenschutzhinweis %organisation%',array('%organisation%'=>$stadt->getName()));
 
-            return $this->render('workflow/datenschutz.html.twig', array('metaDescription'=>$metaDescrition, 'title'=>$titel,'datenschutz' => $org_datenschutz, 'org' => $stadt, 'org_id' => $org_id,'stadt' => $stadt,  'redirect' => $request->get('redirect')));
+            return $this->render('workflow/datenschutz.html.twig', array('metaDescription'=>$metaDescrition, 'title'=>$titel,'datenschutz' => $org_datenschutz, 'org' => $stadt, 'org_id' => $org_id,'stadt' => $stadt));
         } else {
             $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
             $org_datenschutz = $organisation->translate()->getDatenschutz();
@@ -151,7 +151,7 @@ class workflowController extends AbstractController
             $titel = $translator->trans('Datenschutzhinweis %organisation%',array('%organisation%'=>$organisation->getName())). ' | '.$stadt->getName().' | unsere-Schulkindbetreuung.de';
             $metaDescrition= $translator->trans('Datenschutzhinweis %organisation%',array('%organisation%'=>$organisation->getName()));
 
-            return $this->render('workflow/datenschutz.html.twig', array('metaDescription'=>$metaDescrition, 'title'=>$titel,'datenschutz' => $org_datenschutz, 'org' => $organisation, 'org_id' => $org_id, 'stadt' => $stadt,  'redirect' => $request->get('redirect')));
+            return $this->render('workflow/datenschutz.html.twig', array('metaDescription'=>$metaDescrition, 'title'=>$titel,'datenschutz' => $org_datenschutz, 'org' => $organisation, 'org_id' => $org_id, 'stadt' => $stadt));
         }
     }
 

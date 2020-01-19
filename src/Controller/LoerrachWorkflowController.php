@@ -424,7 +424,7 @@ class LoerrachWorkflowController extends AbstractController
             }
         }
 
-        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('einkommen' => $stadt->getGehaltsklassen(), 'beruflicheSituation' => array_flip($this->beruflicheSituation), 'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis' => $preis, 'error' => $error, 'stadtAGB' => $stadtAgb));
+        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array( 'beruflicheSituation' => array_flip($this->beruflicheSituation), 'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis' => $preis, 'error' => $error));
     }
 
     /**
