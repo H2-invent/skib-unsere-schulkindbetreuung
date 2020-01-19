@@ -393,7 +393,7 @@ class LoerrachWorkflowController extends AbstractController
     public function zusammenfassungAction(Stadt $stadt, Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
         // Load the data from the city into the controller as $stadt
-        $stadtAgb = $stadt->translate()->getAgb();
+      
 
 
         //Check for Anmeldung open
