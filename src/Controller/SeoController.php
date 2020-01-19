@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Content;
 use App\Entity\Stadt;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,9 +15,10 @@ class SeoController extends AbstractController
         public function index()
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findBy(array('active'=>true,'deleted'=>false));
-
+        $content = $this->getDoctrine()->getRepository(Content::class)->findBy(array('activ'=>true));
         $res = $this->render('seo/index.xml.twig', [
-        'stadt'=>$stadt
+        'stadt'=>$stadt,
+            'content'=>$content
         ]);
 		 $res->headers->set('Content-Type', 'text/xml');
 		 return $res;

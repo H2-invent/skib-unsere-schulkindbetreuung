@@ -68,6 +68,7 @@
 </div>
 
 <main>
+    {% if contentSelect is defined and contentSelect is not null  %}
     <div class="container anchor" id="stadtliste">
         <section class="mt-5 wow fadeIn">
             <div class="row">
@@ -93,6 +94,7 @@
             </div>
         </section>
     </div>
+    {% endif %}
     <div class="container anchor" id="stadtliste">
         <section class="mt-5 wow fadeIn">
             <div class="row">
