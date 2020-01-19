@@ -135,15 +135,23 @@ class workflowController extends AbstractController
      */
     public function datenschutzAction($slug, $org_id, Request $request, TranslatorInterface $translator)
     {
+
         if ($org_id == 'city'){
-            $organisation = $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' =>$slug));
-            $org_datenschutz = $organisation->translate()->getDatenschutz();
-            return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $organisation, 'org_id' => $org_id,'stadt' => $organisation,  'redirect' => $request->get('redirect')));
+
+            $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' =>$slug));
+            $org_datenschutz = $stadt->translate()->getDatenschutz();
+            $titel = $translator->trans('Datenschutzhinweis %organisation%',array('%organisation%'=>$stadt->getName())). ' | '.$stadt->getName().' | unsere-Schulkindbetreuung.de';
+            $metaDescrition= $translator->trans('Datenschutzhinweis %organisation%',array('%organisation%'=>$stadt->getName()));
+
+            return $this->render('workflow/datenschutz.html.twig', array('metaDescription'=>$metaDescrition, 'title'=>$titel,'datenschutz' => $org_datenschutz, 'org' => $stadt, 'org_id' => $org_id,'stadt' => $stadt,  'redirect' => $request->get('redirect')));
         } else {
             $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
             $org_datenschutz = $organisation->translate()->getDatenschutz();
             $stadt = $organisation->getStadt();
-            return $this->render('workflow/datenschutz.html.twig', array('datenschutz' => $org_datenschutz, 'org' => $organisation, 'org_id' => $org_id, 'stadt' => $stadt,  'redirect' => $request->get('redirect')));
+            $titel = $translator->trans('Datenschutzhinweis %organisation%',array('%organisation%'=>$organisation->getName())). ' | '.$stadt->getName().' | unsere-Schulkindbetreuung.de';
+            $metaDescrition= $translator->trans('Datenschutzhinweis %organisation%',array('%organisation%'=>$organisation->getName()));
+
+            return $this->render('workflow/datenschutz.html.twig', array('metaDescription'=>$metaDescrition, 'title'=>$titel,'datenschutz' => $org_datenschutz, 'org' => $organisation, 'org_id' => $org_id, 'stadt' => $stadt,  'redirect' => $request->get('redirect')));
         }
     }
 
@@ -165,7 +173,10 @@ class workflowController extends AbstractController
     public function agbAction(Request $request, TranslatorInterface $translator, Stadt $stadt)
     {
         $stadtAGB = $stadt->translate()->getAgb();
-        return $this->render('workflow/agb.html.twig', array('stadtAGB' => $stadtAGB, 'stadt' => $stadt,'redirect' => $request->get('redirect')));
+        $titel = $translator->trans('AGB'). ' | '.$stadt->getName().' | unsere-Schulkindbetreuung.de';
+        $metaDescrition= $translator->trans('Allgemeine Vertragsbedingungen der %stadt%',array('%stadt%'=>$stadt->getName()));
+
+        return $this->render('workflow/agb.html.twig', array('metaDescription'=>$metaDescrition, 'title'=>$titel,'stadtAGB' => $stadtAGB, 'stadt' => $stadt,'redirect' => $request->get('redirect')));
     }
 
 
@@ -189,8 +200,10 @@ class workflowController extends AbstractController
             return $this->redirectToRoute('impressum');
         }
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        $titel = $translator->trans('Impressum'). ' | '.$stadt->getName().' | unsere-Schulkindbetreuung.de';
+        $metaDescrition= $translator->trans('Impressum %stadt%',array('%stadt%'=>$stadt->getName()));
         if ($stadt->getImprint() !== null){
-            return $this->render('workflow/imprint.html.twig', array('stadt' => $stadt));
+            return $this->render('workflow/imprint.html.twig', array('metaDescription'=>$metaDescrition, 'title'=>$titel, 'stadt' => $stadt));
         } else {
             return $this->redirectToRoute('impressum');
         }
