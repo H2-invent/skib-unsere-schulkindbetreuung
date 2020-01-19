@@ -8,10 +8,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SeoController extends AbstractController
 {
-    /**
-     * @Route("/sitemap.xml", name="sitemap")
-     */
-    public function index()
+        /**
+         * @Route("/sitemap.xml", name="sitemap")
+         */
+        public function index()
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findBy(array('active'=>true,'deleted'=>false));
 
@@ -20,5 +20,14 @@ class SeoController extends AbstractController
         ]);
 		 $res->headers->set('Content-Type', 'text/xml');
 		 return $res;
+    }
+    /**
+     * @Route("/robots.txt", name="robots")
+     */
+    public function robots()
+    {
+             $res = $this->render('seo/robots.html.twig');
+        $res->headers->set('Content-Type', 'text/plain');
+        return $res;
     }
 }
