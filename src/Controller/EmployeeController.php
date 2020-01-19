@@ -18,10 +18,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class EmployeeController extends AbstractController
 {
     private $manager;
+    private $availRole;
 
     public function __construct(UserManagerInterface $manager)
     {
         $this->manager = $manager;
+        $this->availRole = array(
+            'ROLE_CITY_DASHBOARD' => 'ROLE_CITY_DASHBOARD',
+            'ROLE_CITY_SCHOOL' => 'ROLE_CITY_SCHOOL',
+            'ROLE_CITY_REPORT' => 'ROLE_CITY_REPORT',
+            'ROLE_CITY_NEWS' => 'ROLE_CITY_NEWS',
+        );
     }
 
     /**
@@ -33,7 +40,7 @@ class EmployeeController extends AbstractController
         if ($city != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
-        $user = $this->getDoctrine()->getRepository(User::class)->findBy(array('stadt' => $city,'organisation'=>null));
+        $user = $this->getDoctrine()->getRepository(User::class)->findBy(array('stadt' => $city, 'organisation' => null));
         return $this->render(
             'employee/user.html.twig',
             [
@@ -66,22 +73,21 @@ class EmployeeController extends AbstractController
                 $userManager = $this->manager;
                 $userManager->updateUser($defaultData);
                 $text = $translator->trans('Erfolgreich angelegt');
-                return $this->redirectToRoute('city_employee_show', array('snack'=>$text,'id' => $city->getId()));
+                return $this->redirectToRoute('city_employee_show', array('snack' => $text, 'id' => $city->getId()));
             } catch (\Exception $e) {
                 $userManager = $this->manager;
                 $errorText = $translator->trans(
                     'Unbekannter Fehler'
                 );
-                if($userManager->findUserByEmail($defaultData->getEmail())){
+                if ($userManager->findUserByEmail($defaultData->getEmail())) {
                     $errorText = $translator->trans(
                         'Die E-Mail existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse'
                     );
-                }elseif($userManager->findUserByUsername($defaultData->getUsername())) {
+                } elseif ($userManager->findUserByUsername($defaultData->getUsername())) {
                     $errorText = $translator->trans(
                         'Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername'
                     );
                 }
-
 
 
                 return $this->render(
@@ -123,7 +129,7 @@ class EmployeeController extends AbstractController
                 $userManager = $this->manager;
                 $userManager->updateUser($defaultData);
                 $text = $translator->trans('Erfolgreich gespeichert');
-                return $this->redirectToRoute('city_employee_show', array('snack'=>$text,'id' => $defaultData->getStadt()->getId()));
+                return $this->redirectToRoute('city_employee_show', array('snack' => $text, 'id' => $defaultData->getStadt()->getId()));
             } catch (\Exception $e) {
                 $errorText = $translator->trans(
                     'Die E-Mail existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse'
@@ -203,7 +209,7 @@ class EmployeeController extends AbstractController
                     $text = $translator->trans('Erfolgreich gespeichert');
                     return $this->redirectToRoute(
                         'city_employee_show',
-                        array('snack'=>$text,'id' => $defaultData->getStadt()->getId())
+                        array('snack' => $text, 'id' => $defaultData->getStadt()->getId())
                     );
 
                 }
@@ -242,12 +248,13 @@ class EmployeeController extends AbstractController
             $text = $translator->trans('Erfolgreich gelöscht');
             return $this->redirectToRoute(
                 'city_employee_show',
-                array('snack'=>$text,'id' => $user->getStadt()->getId())
+                array('snack' => $text, 'id' => $user->getStadt()->getId())
             );
 
         }
 
     }
+
     /**
      * @Route("login/city_admin/userRoles", name="city_admin_mitarbeiter_roles")
      */
@@ -263,47 +270,41 @@ class EmployeeController extends AbstractController
             $roles[$data] = true;
         }
 
-        $availRole = array(
-            'ROLE_CITY_DASHBOARD' => 'ROLE_CITY_DASHBOARD',
-            'ROLE_CITY_SCHOOL' => 'ROLE_CITY_SCHOOL',
-            'ROLE_CITY_REPORT' => 'ROLE_CITY_REPORT',
-            'ROLE_CITY_NEWS'=>'ROLE_CITY_NEWS',
-
-
-        );
-
         $form = $this->createFormBuilder($roles);
-        foreach ($availRole as $key => $data) {
+        foreach ($this->availRole as $key => $data) {
             $form->add(
                 $key,
                 CheckboxType::class,
-                array('required' => false, 'label' => $data,'translation_domain' => 'form')
+                array('required' => false, 'label' => $data, 'translation_domain' => 'form')
             );
         }
-        $form->add('Speichern', SubmitType::class,array('translation_domain' => 'form'));
+        $form->add('Speichern', SubmitType::class, array('translation_domain' => 'form'));
         $formI = $form->getForm();
         $formI->handleRequest($request);
 
 
         if ($formI->isSubmitted() && $formI->isValid()) {
-
-            $roles = $formI->getData();
-
-            foreach ($availRole as $data) {
-                $user->removeRole($data);
-            }
-
-            foreach ($roles as $key => $item) {
-                if ($item === true) {
-                    $user->addRole($key);
-                }
-            }
+            $user = $this->addNewRoles($user, $this->availRole, $formI->getData());
             $this->manager->updateUser($user);
 
             $text = $translator->trans('Berechtigungen erfolgreich gesetzt');
-            return $this->redirectToRoute('city_employee_show', array('snack'=>$text,'id' => $user->getStadt()->getId()));
+            return $this->redirectToRoute('city_employee_show', array('snack' => $text, 'id' => $user->getStadt()->getId()));
         }
 
-        return $this->render('administrator/EditRoles.twig', array('user'=>$user, 'form' => $formI->createView()));
+        return $this->render('administrator/EditRoles.twig', array('user' => $user, 'form' => $formI->createView()));
+    }
+
+    private function addNewRoles(User $user, $availRole, $roles)
+    {
+        foreach ($availRole as $data) {
+            $user->removeRole($data);
+        }
+
+        foreach ($roles as $key => $item) {
+            if ($item === true) {
+                $user->addRole($key);
+            }
+        }
+        return $user;
     }
 }

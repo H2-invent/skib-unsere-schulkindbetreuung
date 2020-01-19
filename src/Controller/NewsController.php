@@ -345,7 +345,7 @@ class NewsController extends AbstractController
      */
     public function showNewsAction(Request $request,TranslatorInterface $translator)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('slug'));
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug'=>$request->get('slug')));
         $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
         $title = $news->getTitle().' | '.$news->getStadt()->getName();
