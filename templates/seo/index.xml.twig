@@ -16,7 +16,21 @@
         <lastmod>2020-01-13T16:27:45+00:00</lastmod>
         <priority>1</priority>
     </url>
+    <!--Features of SKiB -->
+{% for c in content %}
 
+    <url>
+        <loc>{{ absolute_url(path('welcome_landing_slug',{'content':c.slug})) }}</loc>
+        <xhtml:link rel="alternate" hreflang="de"
+                    href="{{ absolute_url(path('welcome_landing_slug',{'content':c.slug})) }}| merge({'_locale':'de'}))) }}"/>
+        <xhtml:link rel="alternate" hreflang="en"
+                    href="{{ absolute_url(path('welcome_landing_slug',{'content':c.slug})) }}| merge({'_locale':'en'}))) }}"/>
+        <xhtml:link rel="alternate" hreflang="fr"
+                    href="{{ absolute_url(path('welcome_landing_slug',{'content':c.slug})) }} | merge({'_locale':'fr'}))) }}"/>
+        <lastmod>2020-01-13T16:27:45+00:00</lastmod>
+        <priority>0.9</priority>
+    </url>
+    {% endfor %}
     {% for s in stadt %}
         <!-- City: {{ s.name }} News -->
 
@@ -34,7 +48,7 @@
             <xhtml:link rel="alternate" hreflang="fr"
                         href="{{ absolute_url(path('workflow_start',{'slug':s.slug}| merge({'_locale':'fr'}))) }}"/>
             <lastmod>{{ date|date('Y-m-d') }}</lastmod>
-            <priority>0.9</priority>
+            <priority>0.8</priority>
         </url>
 
         {% if s.schulkindBetreung == true %}
