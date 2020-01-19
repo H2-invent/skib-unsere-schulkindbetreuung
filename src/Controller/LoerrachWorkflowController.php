@@ -393,7 +393,7 @@ class LoerrachWorkflowController extends AbstractController
     public function zusammenfassungAction(Stadt $stadt, Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
         // Load the data from the city into the controller as $stadt
-      
+
 
 
         //Check for Anmeldung open
@@ -473,20 +473,8 @@ class LoerrachWorkflowController extends AbstractController
         foreach ($kind as $data) {
             $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $stadt->getGehaltsklassen());
         }
-        $default = array(
-            'text' => ''
-        );
-        $form = $this->createFormBuilder($default)
-            ->add('test', TextType::class)
-            ->add('submit', SubmitType::class)
-            ->getForm();
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            // data is an array with "name", "email", and "message" keys
-            $default = $form->getData();
-            // do with default data whatever you want ...
-        }
-        $response = $this->render('workflow/abschluss.html.twig', array('form' => $form->createView(), 'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
+
+        $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
         $response->headers->clearCookie('UserID');
         $response->headers->clearCookie('SecID');
         $response->headers->clearCookie('KindID');
