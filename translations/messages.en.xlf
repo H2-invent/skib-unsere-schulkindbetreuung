@@ -2221,9 +2221,129 @@
         <source>Weiterlesen</source>
         <target state="translated">Read more</target>
       </trans-unit>
-      <trans-unit id="j4mueG7" resname="Zur Übersicht">
+      <trans-unit id="Ir.e87L" resname="Zur Übersicht">
         <source>Zur Übersicht</source>
         <target state="translated">To the overview</target>
+      </trans-unit>
+      <trans-unit id="83.HlhJ" resname="Schulkindbetreuung SKiB">
+        <source>Schulkindbetreuung SKiB</source>
+        <target state="translated">School child care SKiB</target>
+      </trans-unit>
+      <trans-unit id="bedt2uH" resname="Online Anmeldung und Verwaltung">
+        <source>Online Anmeldung und Verwaltung</source>
+        <target state="translated">Online application and administration</target>
+      </trans-unit>
+      <trans-unit id="zmlkEaD" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;&#10;Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;&#10;">
+        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
+Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
+</source>
+        <target state="translated">SKiB is so far the only online solution for the registration and administration of school childcare and holiday care.
+The web application enables direct networking between parents, external organisations and the municipal administration or school authorities. 
+</target>
+      </trans-unit>
+      <trans-unit id="gq8j58x" resname="Nachricht konnte nicht versendet werden">
+        <source>Nachricht konnte nicht versendet werden</source>
+        <target state="translated">The message could not be sent</target>
+      </trans-unit>
+      <trans-unit id="lYBlt4a" resname="Schulkindbetreuung und Ferienbetreuung von ">
+        <source>Schulkindbetreuung und Ferienbetreuung von </source>
+        <target state="translated">School child care and holiday care of </target>
+      </trans-unit>
+      <trans-unit id="L5N7_3u" resname=" Hier anmelden">
+        <source> Hier anmelden</source>
+        <target state="translated"> Register here</target>
+      </trans-unit>
+      <trans-unit id="7w.oc7t" resname="AGB">
+        <source>AGB</source>
+        <target state="translated">Terms &amp; Conditions</target>
+      </trans-unit>
+      <trans-unit id="3nw6On8" resname="Content anlegen">
+        <source>Content anlegen</source>
+        <target state="translated">Creating content</target>
+      </trans-unit>
+      <trans-unit id="9dAe0Tf" resname="Content bearbeiten">
+        <source>Content bearbeiten</source>
+        <target state="translated">Editing Content</target>
+      </trans-unit>
+      <trans-unit id="KkPR.LQ" resname="Die Email wurde erfolgreich versandt">
+        <source>Die Email wurde erfolgreich versandt</source>
+        <target state="translated">The email was sent successfully</target>
+      </trans-unit>
+      <trans-unit id="Wa.wWgN" resname="Die E-Mail konnte nicht vesandt werden">
+        <source>Die E-Mail konnte nicht vesandt werden</source>
+        <target state="translated">The e-mail could not be sent</target>
+      </trans-unit>
+      <trans-unit id="FhZB0Ue" resname="Frontpage Content">
+        <source>Frontpage Content</source>
+        <target state="translated">Frontpage Content</target>
+      </trans-unit>
+      <trans-unit id="R70pB1_" resname="Content">
+        <source>Content</source>
+        <target state="translated">Content</target>
+      </trans-unit>
+      <trans-unit id="o1q81tr" resname="Icon">
+        <source>Icon</source>
+        <target state="translated">Icon</target>
+      </trans-unit>
+      <trans-unit id="9PoCIRF" resname="Last Change">
+        <source>Last Change</source>
+        <target state="translated">Last Change</target>
+      </trans-unit>
+      <trans-unit id="9VQ5Tv0" resname="Webanwendung für die  Anmeldung und Verwaltung">
+        <source>Webanwendung für die  Anmeldung und Verwaltung</source>
+        <target>__Webanwendung für die  Anmeldung und Verwaltung</target>
+      </trans-unit>
+      <trans-unit id="knbQTEa" resname="Die Schulkindbetreuung ist eine &lt;b&gt;komplexe Dienstleistung&lt;/b&gt;. Viele Menschen&#10;                                                                                              und Institutionen sind bei der Finanzierung, Planung, Verwaltung und&#10;                                                                                              Umsetzung beteiligt.&lt;br&gt;&#10;                                &lt;br&gt;&#10;                                Die &lt;b&gt;gestiegene Komplexität&lt;/b&gt; und die Erwartungshaltungen der Beteiligten&#10;                                                                  machen eine Veränderung notwendig.&lt;br&gt;&lt;br&gt;&#10;                                &lt;b&gt;Vereinbarkeit von Familie und Beruf und die Chancengleichheit für alle Kinder&lt;/b&gt;&#10;                                fordern den Ausbau und die Modernisierung des Betreuungssystems.&lt;br&gt;&lt;br&gt;&#10;                                Der &lt;b&gt;Schulträger von Morgen&lt;/b&gt; stellt eine innovative, moderne und transparente&#10;                                                                  Informationsplattform, Anmeldung und Verwaltung allen Beteiligten zur&#10;                                                                  Verfügung.&lt;br&gt;&lt;br&gt;&#10;                                &lt;b&gt;Digitalisierung und umweltbewusstes Handeln&lt;/b&gt; sind zentrale Themen&#10;                                unserer Zeit.">
+        <source>Die Schulkindbetreuung ist eine &lt;b&gt;komplexe Dienstleistung&lt;/b&gt;. Viele Menschen
+                                                                                              und Institutionen sind bei der Finanzierung, Planung, Verwaltung und
+                                                                                              Umsetzung beteiligt.&lt;br&gt;
+                                &lt;br&gt;
+                                Die &lt;b&gt;gestiegene Komplexität&lt;/b&gt; und die Erwartungshaltungen der Beteiligten
+                                                                  machen eine Veränderung notwendig.&lt;br&gt;&lt;br&gt;
+                                &lt;b&gt;Vereinbarkeit von Familie und Beruf und die Chancengleichheit für alle Kinder&lt;/b&gt;
+                                fordern den Ausbau und die Modernisierung des Betreuungssystems.&lt;br&gt;&lt;br&gt;
+                                Der &lt;b&gt;Schulträger von Morgen&lt;/b&gt; stellt eine innovative, moderne und transparente
+                                                                  Informationsplattform, Anmeldung und Verwaltung allen Beteiligten zur
+                                                                  Verfügung.&lt;br&gt;&lt;br&gt;
+                                &lt;b&gt;Digitalisierung und umweltbewusstes Handeln&lt;/b&gt; sind zentrale Themen
+                                unserer Zeit.</source>
+        <target state="translated">School child care is a complex service. Many people
+                                                                                              and institutions are involved in financing, planning, administration and
+                                                                                              Implementation involved.&lt;br&gt;
+                                &lt;br&gt;
+                                The &lt;b&gt;increased complexity&lt;/b&gt; and the expectations of those involved
+                                                                  make a change necessary. &lt;br&gt;&lt;br&gt;
+                                &lt;b&gt; Compatibility of family and career and equal opportunities for all children&lt;/b&gt;
+                                call for the expansion and modernisation of the care system.&lt;br&gt;&lt;br&gt;
+                                The &lt;b&gt; school carrier of tomorrow&lt;/b&gt; represents an innovative, modern and transparent
+                                                                  information platform, registration and administration for all participants to
+                                                                  Order.
+                                &lt;Digitisation and environmental awareness are central themes
+                                of our time.</target>
+      </trans-unit>
+      <trans-unit id="HbMpwLI" resname="Die Angebotspalette der Schulkindbetreuung ist sehr groß und unübersichtlich. Ich fühle mich oft überfordert und deshalb wünsche ich mir eine transparente Plattform.">
+        <source>Die Angebotspalette der Schulkindbetreuung ist sehr groß und unübersichtlich. Ich fühle mich oft überfordert und deshalb wünsche ich mir eine transparente Plattform.</source>
+        <target state="translated">The range of school childcare services is very large and confusing. I often feel overwhelmed and therefore I would like a transparent platform.</target>
+      </trans-unit>
+      <trans-unit id="xgVxdz_" resname="Beatrice (Mutter von drei Söhnen)">
+        <source>Beatrice (Mutter von drei Söhnen)</source>
+        <target state="translated">Beatrice (Mother of three sons)</target>
+      </trans-unit>
+      <trans-unit id="UYivmMb" resname="Ich möchte mehr Zeit mit den Kindern verbringen und nicht ständig Listen führen.">
+        <source>Ich möchte mehr Zeit mit den Kindern verbringen und nicht ständig Listen führen.</source>
+        <target state="translated">I want to spend more time with the children and not constantly keep lists.</target>
+      </trans-unit>
+      <trans-unit id="lWmL25C" resname="Catarina (Sozialpädagogin)">
+        <source>Catarina (Sozialpädagogin)</source>
+        <target state="translated">Catarina (Social worker)</target>
+      </trans-unit>
+      <trans-unit id="X7eX6r3" resname="Rechnung an alle Eltern versenden">
+        <source>Rechnung an alle Eltern versenden</source>
+        <target state="translated">Send invoice to all parents</target>
+      </trans-unit>
+      <trans-unit id="TbVQzZh" resname="Sitemap">
+        <source>Sitemap</source>
+        <target state="translated">Sitemap</target>
       </trans-unit>
     </body>
   </file>
