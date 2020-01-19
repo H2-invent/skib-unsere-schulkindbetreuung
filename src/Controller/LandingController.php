@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Content;
 use App\Entity\Stadt;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,6 +14,7 @@ class LandingController extends AbstractController
 {
     /**
      * @Route("/", name="welcome_landing")
+
      */
     public function welcomeAction(TranslatorInterface $translator, Request $request)
     {
@@ -20,6 +23,24 @@ class LandingController extends AbstractController
         $metaDescription = $translator->trans('SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
 Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
 ');
-        return $this->render('landing/landing.html.twig', array('metaDescription' => $metaDescription, 'title' => $title, 'stadt' => $stadt));
+        $contentAll = $this->getDoctrine()->getRepository(Content::class)->findBy(array('activ'=>true));
+
+            $content = $this->getDoctrine()->getRepository(Content::class)->findOneBy(array('activ'=>true));
+
+        return $this->render('landing/landing.html.twig', array('content'=>$contentAll,'contentSelect'=>$content, 'metaDescription' => $metaDescription, 'title' => $title, 'stadt' => $stadt));
+    }
+    /**
+     * @Route("/feature/{content}", name="welcome_landing_slug")
+     * @ParamConverter("content", options={"mapping"={"content"="slug"}})
+     */
+    public function welcomeFeatureAction(Content $content, TranslatorInterface $translator, Request $request)
+    {
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findBy(array('deleted' => false, 'active' => true));
+        $title = $content->translate()->getTitle() .' | unsere-Schulkindbetreuung.de';
+        $metaDescription = $content->translate()->getMeta();
+
+        $contentAll = $this->getDoctrine()->getRepository(Content::class)->findBy(array('activ'=>true));
+
+        return $this->render('landing/landing.html.twig', array('content'=>$contentAll,'contentSelect'=>$content, 'metaDescription' => $metaDescription, 'title' => $title, 'stadt' => $stadt));
     }
 }
