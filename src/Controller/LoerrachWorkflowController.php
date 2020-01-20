@@ -47,6 +47,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Json;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -71,7 +73,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/adresse",name="loerrach_workflow_adresse",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function adresseAction(TranslatorInterface $translator, Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function adresseAction(AuthorizationCheckerInterface $authorizationChecker, TranslatorInterface $translator, Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
 
 
@@ -98,9 +100,16 @@ class LoerrachWorkflowController extends AbstractController
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
-            $adresse = $form->getData();
+           // $adresse = $form->getData();
             $errors = $validator->validate($adresse);
             if (count($errors) == 0) {
+                if($authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE')){
+                    $adresse->setEmailConfirmed(true);
+                    $adresse->setConfirmEmailSend(true);
+                    $adresse->setConfirmationCode(str_shuffle(MD5(microtime())), 0, 6);
+                    $adresse->setIpAdresse($request->getClientIp());
+                    $adresse->setConfirmDate(new \DateTime());
+                }
                 $adresse->setFin(false);
                 $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
                 $em = $this->getDoctrine()->getManager();
