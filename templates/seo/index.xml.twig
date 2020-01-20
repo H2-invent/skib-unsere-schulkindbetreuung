@@ -22,11 +22,11 @@
     <url>
         <loc>{{ absolute_url(path('welcome_landing_slug',{'content':c.slug})) }}</loc>
         <xhtml:link rel="alternate" hreflang="de"
-                    href="{{ absolute_url(path('welcome_landing_slug',{'content':c.slug})) }}| merge({'_locale':'de'}))) }}"/>
+                    href="{{ absolute_url(path('welcome_landing_slug',{'content':c.slug} | merge({'_locale':'de'}))) }}"/>
         <xhtml:link rel="alternate" hreflang="en"
-                    href="{{ absolute_url(path('welcome_landing_slug',{'content':c.slug})) }}| merge({'_locale':'en'}))) }}"/>
+                    href="{{ absolute_url(path('welcome_landing_slug',{'content':c.slug} | merge({'_locale':'en'}))) }}"/>
         <xhtml:link rel="alternate" hreflang="fr"
-                    href="{{ absolute_url(path('welcome_landing_slug',{'content':c.slug})) }} | merge({'_locale':'fr'}))) }}"/>
+                    href="{{ absolute_url(path('welcome_landing_slug',{'content':c.slug}  | merge({'_locale':'fr'}))) }}"/>
         <lastmod>2020-01-13T16:27:45+00:00</lastmod>
         <priority>0.9</priority>
     </url>
