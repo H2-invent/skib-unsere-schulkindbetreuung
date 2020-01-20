@@ -278,6 +278,11 @@ class Organisation
      */
     private $stripeOK = false;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $slug;
+
 
 
 
@@ -951,6 +956,18 @@ class Organisation
     public function setStripeOK(?bool $stripeOK): self
     {
         $this->stripeOK = $stripeOK;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
