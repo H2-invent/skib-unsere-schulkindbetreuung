@@ -100,7 +100,7 @@ class LoerrachWorkflowController extends AbstractController
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
-           // $adresse = $form->getData();
+            $adresse = $form->getData();
             $errors = $validator->validate($adresse);
             if (count($errors) == 0) {
                 if($authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE')){
