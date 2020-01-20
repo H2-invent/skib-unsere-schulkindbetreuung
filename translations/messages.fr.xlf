@@ -7,1007 +7,1007 @@
     <body>
       <trans-unit id="8DI4NlC" resname="Erfolgreich gespeichert">
         <source>Erfolgreich gespeichert</source>
-        <target>__Erfolgreich gespeichert</target>
+        <target state="translated">Enregistré avec succès</target>
       </trans-unit>
       <trans-unit id="xdbz0uj" resname="Fehler: Falsche Organisation">
         <source>Fehler: Falsche Organisation</source>
-        <target>__Fehler: Falsche Organisation</target>
+        <target state="translated">Erreur : Organisation incorrecte</target>
       </trans-unit>
       <trans-unit id="bnIcZGC" resname="Erfolgreich gelöscht">
         <source>Erfolgreich gelöscht</source>
-        <target>__Erfolgreich gelöscht</target>
+        <target state="translated">Supprimé avec succès</target>
       </trans-unit>
       <trans-unit id="WlWD.jo" resname="Fehler. Bitte versuchen Sie es erneut.">
         <source>Fehler. Bitte versuchen Sie es erneut.</source>
-        <target>__Fehler. Bitte versuchen Sie es erneut.</target>
+        <target state="translated">Erreur. S'll vous plaît, réessayez.</target>
       </trans-unit>
       <trans-unit id="twP8auu" resname="Montag">
         <source>Montag</source>
-        <target>__Montag</target>
+        <target state="translated">Lundi</target>
       </trans-unit>
       <trans-unit id="wuECyh8" resname="Dienstag">
         <source>Dienstag</source>
-        <target>__Dienstag</target>
+        <target state="translated">Mardi</target>
       </trans-unit>
       <trans-unit id="dsk60VS" resname="Mittwoch">
         <source>Mittwoch</source>
-        <target>__Mittwoch</target>
+        <target state="translated">Mercredi</target>
       </trans-unit>
       <trans-unit id="sVxNqoC" resname="Donnerstag">
         <source>Donnerstag</source>
-        <target>__Donnerstag</target>
+        <target state="translated">Jeudi</target>
       </trans-unit>
       <trans-unit id="WBXd8f_" resname="Freitag">
         <source>Freitag</source>
-        <target>__Freitag</target>
+        <target state="translated">Vendredi</target>
       </trans-unit>
       <trans-unit id="fCKq2CM" resname="Samstag">
         <source>Samstag</source>
-        <target>__Samstag</target>
+        <target state="translated">Samedi</target>
       </trans-unit>
       <trans-unit id="pZhFklA" resname="Sonntag">
         <source>Sonntag</source>
-        <target>__Sonntag</target>
+        <target state="translated">Dimanche</target>
       </trans-unit>
       <trans-unit id="SX_VFFL" resname="Kinder betreut vom Träger">
         <source>Kinder betreut vom Träger</source>
-        <target>__Kinder betreut vom Träger</target>
+        <target state="translated">Enfants pris en charge par le organisation</target>
       </trans-unit>
       <trans-unit id="fnXM_kX" resname="Kinder betreut vom Träger %organisation%">
         <source>Kinder betreut vom Träger %organisation%</source>
-        <target>__Kinder betreut vom Träger %organisation%</target>
+        <target state="translated">Enfants pris en charge par l'institution %organisation%</target>
       </trans-unit>
       <trans-unit id="MHxXQ1g" resname=" an der Schule %schule%">
         <source> an der Schule %schule%</source>
-        <target>__ an der Schule %schule%</target>
+        <target state="translated"> à l'école %schule%</target>
       </trans-unit>
       <trans-unit id="cMIpBBY" resname=" im Schuljahr schuljahr">
         <source> im Schuljahr schuljahr</source>
-        <target>__ im Schuljahr schuljahr</target>
+        <target state="translated">dans l'année scolaire</target>
       </trans-unit>
       <trans-unit id="XGoUgtg" resname=" am Wochentag %wochentag%">
         <source> am Wochentag %wochentag%</source>
-        <target>__ am Wochentag %wochentag%</target>
+        <target state="translated">le jour de la semaine %wochentag%</target>
       </trans-unit>
       <trans-unit id="EfGJqqe" resname=" im ausgewählten Betreuungsblock">
         <source> im ausgewählten Betreuungsblock</source>
-        <target>__ im ausgewählten Betreuungsblock</target>
+        <target state="translated">dans le bloc de soins sélectionnés</target>
       </trans-unit>
       <trans-unit id="wyfWzSw" resname=" in der Klasse: %klasse%">
         <source> in der Klasse: %klasse%</source>
-        <target>__ in der Klasse: %klasse%</target>
+        <target state="translated">en classe: %klasse%</target>
       </trans-unit>
       <trans-unit id="5a91K2w" resname="Erfolgreich geändert">
         <source>Erfolgreich geändert</source>
-        <target>__Erfolgreich geändert</target>
+        <target state="translated">Modifié avec succès</target>
       </trans-unit>
       <trans-unit id="Stvfiqn" resname="Preis erfolgreich berechnet.">
         <source>Preis erfolgreich berechnet.</source>
-        <target>__Preis erfolgreich berechnet.</target>
+        <target state="translated">Prix calculé avec succès.</target>
       </trans-unit>
       <trans-unit id="2utvuWy" resname="Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)">
         <source>Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)</source>
-        <target>__Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)</target>
+        <target state="translated">S'il vous plaît sélectionner bloc de soins supplémentaires (au moins deux blocs doivent être sélectionnés)</target>
       </trans-unit>
       <trans-unit id="TdX_eYL" resname="Berufstätig">
         <source>Berufstätig</source>
-        <target>__Berufstätig</target>
+        <target state="translated">Travail</target>
       </trans-unit>
       <trans-unit id="QQePsE_" resname="Arbeitssuchend">
         <source>Arbeitssuchend</source>
-        <target>__Arbeitssuchend</target>
+        <target state="translated">Demandeur d'emploi</target>
       </trans-unit>
       <trans-unit id="Zl7ocK9" resname="Keine Angabe">
         <source>Keine Angabe</source>
-        <target>__Keine Angabe</target>
+        <target state="translated">Pas applicable</target>
       </trans-unit>
       <trans-unit id="uTu8sJd" resname="AGB ">
         <source>AGB </source>
-        <target>__AGB </target>
+        <target state="translated">Termes</target>
       </trans-unit>
       <trans-unit id="BvWUZMy" resname="Mittagessen">
         <source>Mittagessen</source>
-        <target>__Mittagessen</target>
+        <target state="translated">Déjeuner</target>
       </trans-unit>
       <trans-unit id="aQyr43t" resname="Betreuung">
         <source>Betreuung</source>
-        <target>__Betreuung</target>
+        <target state="translated">Assistance</target>
       </trans-unit>
       <trans-unit id="5kiqUjy" resname="Buchungsbestätigung der Schulkindbetreuung für ">
         <source>Buchungsbestätigung der Schulkindbetreuung für </source>
-        <target>__Buchungsbestätigung der Schulkindbetreuung für </target>
+        <target state="translated">Réservation de confirmation de la garde d'enfants scolaire pour </target>
       </trans-unit>
       <trans-unit id="Qk8oezd" resname="Anmeldeinformation der Schulkindbetreuung für ">
         <source>Anmeldeinformation der Schulkindbetreuung für </source>
-        <target>__Anmeldeinformation der Schulkindbetreuung für </target>
+        <target state="translated">Informations d'inscription de la garde d'enfants scolaire pour </target>
       </trans-unit>
       <trans-unit id="SX9ku_n" resname="Kind erfolgreich eingecheckt">
         <source>Kind erfolgreich eingecheckt</source>
-        <target>__Kind erfolgreich eingecheckt</target>
+        <target state="translated">Enfant enregistré avec succès</target>
       </trans-unit>
       <trans-unit id="93G5IXM" resname="Eingecheckt">
         <source>Eingecheckt</source>
-        <target>__Eingecheckt</target>
+        <target state="translated">Vérifié</target>
       </trans-unit>
       <trans-unit id="RWs1FUs" resname="Ticket ist falsch oder ungültig">
         <source>Ticket ist falsch oder ungültig</source>
-        <target>__Ticket ist falsch oder ungültig</target>
+        <target state="translated">Le billet est incorrect ou invalide</target>
       </trans-unit>
       <trans-unit id="jebtSCD" resname="Dieses Ticket ist an einem anderen Tag gültig">
         <source>Dieses Ticket ist an einem anderen Tag gültig</source>
-        <target>__Dieses Ticket ist an einem anderen Tag gültig</target>
+        <target state="translated">Ce billet est valable un autre jour</target>
       </trans-unit>
       <trans-unit id="Cdyr3T." resname="Kind für den heutigen Tag bereits eingecheckt">
         <source>Kind für den heutigen Tag bereits eingecheckt</source>
-        <target>__Kind für den heutigen Tag bereits eingecheckt</target>
+        <target state="translated">Enfant déjà enregistré pour aujourd'hui</target>
       </trans-unit>
       <trans-unit id="CZAQFYn" resname="Das Ticket wurde Storniert und kann nicht eingcheckt werden">
         <source>Das Ticket wurde Storniert und kann nicht eingcheckt werden</source>
-        <target>__Das Ticket wurde Storniert und kann nicht eingcheckt werden</target>
+        <target state="translated">Le billet a été annulé et ne peut pas être vérifié</target>
       </trans-unit>
       <trans-unit id="6qGuv9h" resname="Kinder">
         <source>Kinder</source>
-        <target>__Kinder</target>
+        <target state="translated">Enfants</target>
       </trans-unit>
       <trans-unit id="0td7b.p" resname="Vorname">
         <source>Vorname</source>
-        <target>__Vorname</target>
+        <target state="translated">Prénom</target>
       </trans-unit>
       <trans-unit id="slNY7dS" resname="Nachname">
         <source>Nachname</source>
-        <target>__Nachname</target>
+        <target state="translated">Nom de famille</target>
       </trans-unit>
       <trans-unit id="SCuY4WC" resname="Alter">
         <source>Alter</source>
-        <target>__Alter</target>
+        <target state="translated">Âge</target>
       </trans-unit>
       <trans-unit id="7r7sncu" resname="Klasse">
         <source>Klasse</source>
-        <target>__Klasse</target>
+        <target state="translated">Classe</target>
       </trans-unit>
       <trans-unit id="ao0A19T" resname="Typ Numerisch">
         <source>Typ Numerisch</source>
-        <target>__Typ Numerisch</target>
+        <target state="translated">Type Numeric</target>
       </trans-unit>
       <trans-unit id="GwJBg8s" resname="Typ">
         <source>Typ</source>
-        <target>__Typ</target>
+        <target state="translated">Type</target>
       </trans-unit>
       <trans-unit id="UFD0ECn" resname="Schule">
         <source>Schule</source>
-        <target>__Schule</target>
+        <target state="translated">École</target>
       </trans-unit>
       <trans-unit id="XQnUg8G" resname="Eltern">
         <source>Eltern</source>
-        <target>__Eltern</target>
+        <target state="translated">Parents</target>
       </trans-unit>
       <trans-unit id="eeXPIN4" resname="Adresse">
         <source>Adresse</source>
-        <target>__Adresse</target>
+        <target state="translated">Adresse</target>
       </trans-unit>
       <trans-unit id="Ki0ZPna" resname="Notfallnummer">
         <source>Notfallnummer</source>
-        <target>__Notfallnummer</target>
+        <target state="translated">Numéro d'urgence</target>
       </trans-unit>
       <trans-unit id="soWzzWN" resname="Notfallkontakt">
         <source>Notfallkontakt</source>
-        <target>__Notfallkontakt</target>
+        <target state="translated">Contact d'urgence</target>
       </trans-unit>
       <trans-unit id="NqyH5xp" resname="Abholung durch">
         <source>Abholung durch</source>
-        <target>__Abholung durch</target>
+        <target state="translated">Ramassage par</target>
       </trans-unit>
       <trans-unit id="D4G5IGp" resname="Medikamente">
         <source>Medikamente</source>
-        <target>__Medikamente</target>
+        <target state="translated">Médicaments</target>
       </trans-unit>
       <trans-unit id="pJx25eL" resname="Allergien">
         <source>Allergien</source>
-        <target>__Allergien</target>
+        <target state="translated">Allergies</target>
       </trans-unit>
       <trans-unit id="_Xt6oOn" resname="Bemerkung">
         <source>Bemerkung</source>
-        <target>__Bemerkung</target>
+        <target state="translated">Commentaire</target>
       </trans-unit>
       <trans-unit id="hIXg6pG" resname="Glutenintollerant">
         <source>Glutenintollerant</source>
-        <target>__Glutenintollerant</target>
+        <target state="translated">Inllerant de gluten</target>
       </trans-unit>
       <trans-unit id="y.AkFG7" resname="Kein Schweinefleisch">
         <source>Kein Schweinefleisch</source>
-        <target>__Kein Schweinefleisch</target>
+        <target state="translated">Pas de porc</target>
       </trans-unit>
       <trans-unit id="nSHDYRZ" resname="Laktoseintollerant">
         <source>Laktoseintollerant</source>
-        <target>__Laktoseintollerant</target>
+        <target state="translated">Insinuation au lactose</target>
       </trans-unit>
       <trans-unit id="7JsqV2H" resname="Darf mit Sonnencreme eingecremt werden">
         <source>Darf mit Sonnencreme eingecremt werden</source>
-        <target>__Darf mit Sonnencreme eingecremt werden</target>
+        <target state="translated">Peut être crémé avec de la crème solaire</target>
       </trans-unit>
       <trans-unit id="4mNe4vO" resname="Darf an Ausflügen teilnehmen">
         <source>Darf an Ausflügen teilnehmen</source>
-        <target>__Darf an Ausflügen teilnehmen</target>
+        <target state="translated">Participer peut-être à des excursions</target>
       </trans-unit>
       <trans-unit id="edFjuru" resname="Darf alleine nach Hause">
         <source>Darf alleine nach Hause</source>
-        <target>__Darf alleine nach Hause</target>
+        <target state="translated">Peut rentrer seul à la maison</target>
       </trans-unit>
       <trans-unit id="ycr6aDx" resname="Fotos dürfen veröffentlicht werden">
         <source>Fotos dürfen veröffentlicht werden</source>
-        <target>__Fotos dürfen veröffentlicht werden</target>
+        <target state="translated">Les photos peuvent être publiées</target>
       </trans-unit>
       <trans-unit id="CcWdhLi" resname="Bestätigungscode fehlerhaft">
         <source>Bestätigungscode fehlerhaft</source>
-        <target>__Bestätigungscode fehlerhaft</target>
+        <target state="translated">Code de confirmation incorrect</target>
       </trans-unit>
       <trans-unit id="alwRvHE" resname="Bestätigung der E-Mail-Adresse">
         <source>Bestätigung der E-Mail-Adresse</source>
-        <target>__Bestätigung der E-Mail-Adresse</target>
+        <target state="translated">Confirmation de l'adresse e-mail</target>
       </trans-unit>
       <trans-unit id="O9ca35K" resname="Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen.">
         <source>Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen.</source>
-        <target>__Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen.</target>
+        <target state="translated">Nous vous avons envoyé un code de confirmation à votre adresse e-mail. S'il vous plaît entrer ce code à partir de l'e-mail ici. Ceci est nécessaire pour protéger les données de vos enfants de la meilleure façon possible.</target>
       </trans-unit>
       <trans-unit id="yuOujiA" resname="Als Storniert vorgemerkt">
         <source>Als Storniert vorgemerkt</source>
-        <target>__Als Storniert vorgemerkt</target>
+        <target state="translated">Prévu comme annulé</target>
       </trans-unit>
       <trans-unit id="gaX2a3K" resname="Stornieren">
         <source>Stornieren</source>
-        <target>__Stornieren</target>
+        <target state="translated">Annuler</target>
       </trans-unit>
       <trans-unit id="JeKC2oz" resname="Rechnungsdatum">
         <source>Rechnungsdatum</source>
-        <target>__Rechnungsdatum</target>
+        <target state="translated">Date de la facture</target>
       </trans-unit>
       <trans-unit id="rXPkiXz" resname="Rechnungsnummer">
         <source>Rechnungsnummer</source>
-        <target>__Rechnungsnummer</target>
+        <target state="translated">facture</target>
       </trans-unit>
       <trans-unit id="BqL27j3" resname="Betreuende Organisation">
         <source>Betreuende Organisation</source>
-        <target>__Betreuende Organisation</target>
+        <target state="translated">Organisation de supervision</target>
       </trans-unit>
       <trans-unit id="OsNmCHb" resname="Ansprechpartner">
         <source>Ansprechpartner</source>
-        <target>__Ansprechpartner</target>
+        <target state="translated">Contact</target>
       </trans-unit>
       <trans-unit id="trRMl.i" resname="Telefonnummer">
         <source>Telefonnummer</source>
-        <target>__Telefonnummer</target>
+        <target state="translated">Numéro de téléphone</target>
       </trans-unit>
       <trans-unit id="lpzL089" resname="Email">
         <source>Email</source>
-        <target>__Email</target>
+        <target state="translated">E-mail</target>
       </trans-unit>
       <trans-unit id="89VBHgv" resname="Sicherheitscode">
         <source>Sicherheitscode</source>
-        <target>__Sicherheitscode</target>
+        <target state="translated">Code de sécurité</target>
       </trans-unit>
       <trans-unit id="U4CfhA9" resname="Anmeldedatum">
         <source>Anmeldedatum</source>
-        <target>__Anmeldedatum</target>
+        <target state="translated">Date d'inscription</target>
       </trans-unit>
       <trans-unit id="WpgnVX_" resname="Warten auf Bestätigung">
         <source>Warten auf Bestätigung</source>
-        <target>__Warten auf Bestätigung</target>
+        <target state="translated">En attente de confirmation</target>
       </trans-unit>
       <trans-unit id="NGbheDm" resname="Fehler: Bis-Datum liegt vor dem Von-Datum">
         <source>Fehler: Bis-Datum liegt vor dem Von-Datum</source>
-        <target>__Fehler: Bis-Datum liegt vor dem Von-Datum</target>
+        <target state="translated">Erreur: À ce jour est avant la date de la date</target>
       </trans-unit>
       <trans-unit id="2SYjLcY" resname="Fehler: Es sind nur Abrechnungen für Vergangene Monate zulässig">
         <source>Fehler: Es sind nur Abrechnungen für Vergangene Monate zulässig</source>
-        <target>__Fehler: Es sind nur Abrechnungen für Vergangene Monate zulässig</target>
+        <target state="translated">Erreur : Seuls les règlements des derniers mois sont autorisés</target>
       </trans-unit>
       <trans-unit id="XHg7TJF" resname="Fehler: Kein Schuljahr in diesem Zeitraum gefunden">
         <source>Fehler: Kein Schuljahr in diesem Zeitraum gefunden</source>
-        <target>__Fehler: Kein Schuljahr in diesem Zeitraum gefunden</target>
+        <target state="translated">Erreur: Aucune année scolaire trouvée dans cette période</target>
       </trans-unit>
       <trans-unit id="UjnDBXR" resname="Fehler: Es ist bereits ein SEPA-Lastschrift in diesem Zeitraum vorhanden">
         <source>Fehler: Es ist bereits ein SEPA-Lastschrift in diesem Zeitraum vorhanden</source>
-        <target>__Fehler: Es ist bereits ein SEPA-Lastschrift in diesem Zeitraum vorhanden</target>
+        <target state="translated">Erreur : Un prélèvement SEPA existe déjà pendant cette période</target>
       </trans-unit>
       <trans-unit id=".ek2GQo" resname="Das SEPA-Lastschrift wurde erfolgreich angelegt">
         <source>Das SEPA-Lastschrift wurde erfolgreich angelegt</source>
-        <target>__Das SEPA-Lastschrift wurde erfolgreich angelegt</target>
+        <target state="translated">Le prélèvement SEPA a été créé avec succès</target>
       </trans-unit>
       <trans-unit id="hlnFzzx" resname="Rechnung">
         <source>Rechnung</source>
-        <target>__Rechnung</target>
+        <target state="translated">Facture</target>
       </trans-unit>
       <trans-unit id="Mh1voD8" resname="Rechnung ">
         <source>Rechnung </source>
-        <target>__Rechnung </target>
+        <target state="translated">Facture</target>
       </trans-unit>
       <trans-unit id="j4PniOh" resname="Rechnungen">
         <source>Rechnungen</source>
-        <target>__Rechnungen</target>
+        <target state="translated">Factures</target>
       </trans-unit>
       <trans-unit id="fEoKRbQ" resname="Betrag">
         <source>Betrag</source>
-        <target>__Betrag</target>
+        <target state="translated">Montant</target>
       </trans-unit>
       <trans-unit id="xS1_lcU" resname="Anzahl der Kinder">
         <source>Anzahl der Kinder</source>
-        <target>__Anzahl der Kinder</target>
+        <target state="translated">Nombre d'enfants</target>
       </trans-unit>
       <trans-unit id="fjRcO6e" resname="IBAN">
         <source>IBAN</source>
-        <target>__IBAN</target>
+        <target state="translated">IBAN</target>
       </trans-unit>
       <trans-unit id="2Bz6Sw." resname="BIC">
         <source>BIC</source>
-        <target>__BIC</target>
+        <target state="translated">BIC</target>
       </trans-unit>
       <trans-unit id="YieKVp2" resname="Betreuungsblock erfolgreich gespeichert">
         <source>Betreuungsblock erfolgreich gespeichert</source>
-        <target>__Betreuungsblock erfolgreich gespeichert</target>
+        <target state="translated">Bloc de soins sauvé avec succès</target>
       </trans-unit>
       <trans-unit id="z5FqV7l" resname="Gebucht">
         <source>Gebucht</source>
-        <target>__Gebucht</target>
+        <target state="translated">Réservé</target>
       </trans-unit>
       <trans-unit id="UxoTyfC" resname="Angemeldet">
         <source>Angemeldet</source>
-        <target>__Angemeldet</target>
+        <target state="translated">Connecté</target>
       </trans-unit>
       <trans-unit id="l6zoh6_" resname="Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Tage müssen ausgewählt werden)">
         <source>Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Tage müssen ausgewählt werden)</source>
-        <target>__Bitte weiteren Betreuungsblock auswählen (Mindestens zwei Tage müssen ausgewählt werden)</target>
+        <target state="translated">S'il vous plaît sélectionner bloc de soins supplémentaires (au moins deux jours doivent être sélectionnés)</target>
       </trans-unit>
       <trans-unit id="BKcjSeG" resname="Ferienprogramm erfolgreich gespeichert">
         <source>Ferienprogramm erfolgreich gespeichert</source>
-        <target>__Ferienprogramm erfolgreich gespeichert</target>
+        <target state="translated">Programme de vacances sauvé avec succès</target>
       </trans-unit>
       <trans-unit id="4LSnlJE" resname="Hier buchen">
         <source>Hier buchen</source>
-        <target>__Hier buchen</target>
+        <target state="translated">Réservez ici</target>
       </trans-unit>
       <trans-unit id="AqbvUa8" resname="Es sind keine Plätze mehr verfügbar.">
         <source>Es sind keine Plätze mehr verfügbar.</source>
-        <target>__Es sind keine Plätze mehr verfügbar.</target>
+        <target state="translated">Il n'y a plus de places disponibles.</target>
       </trans-unit>
       <trans-unit id="aEH7eyq" resname="Betreuungsblöcke">
         <source>Betreuungsblöcke</source>
-        <target>__Betreuungsblöcke</target>
+        <target state="translated">Blocs de soins</target>
       </trans-unit>
       <trans-unit id="ZA6Gy8J" resname="Von">
         <source>Von</source>
-        <target>__Von</target>
+        <target state="translated">De</target>
       </trans-unit>
       <trans-unit id="B4qBU3K" resname="Bis">
         <source>Bis</source>
-        <target>__Bis</target>
+        <target state="translated">Jusqu’à</target>
       </trans-unit>
       <trans-unit id="5fNfVMV" resname="Wochentag">
         <source>Wochentag</source>
-        <target>__Wochentag</target>
+        <target state="translated">Jour de la semaine</target>
       </trans-unit>
       <trans-unit id="xjoi5oq" resname="Wochentag Numerisch">
         <source>Wochentag Numerisch</source>
-        <target>__Wochentag Numerisch</target>
+        <target state="translated">Jour de la semaine Numeric</target>
       </trans-unit>
       <trans-unit id="VuCVScX" resname="Preise">
         <source>Preise</source>
-        <target>__Preise</target>
+        <target state="translated">Prix</target>
       </trans-unit>
       <trans-unit id="C_lwEg8" resname="Schuljahr von">
         <source>Schuljahr von</source>
-        <target>__Schuljahr von</target>
+        <target state="translated">Année scolaire de</target>
       </trans-unit>
       <trans-unit id="XbDoDN3" resname="Schuljahr Bis">
         <source>Schuljahr Bis</source>
-        <target>__Schuljahr Bis</target>
+        <target state="translated">Année scolaire À</target>
       </trans-unit>
       <trans-unit id="0Z73o2J" resname="Anzahl Kinder">
         <source>Anzahl Kinder</source>
-        <target>__Anzahl Kinder</target>
+        <target state="translated">Nombre d'enfants</target>
       </trans-unit>
       <trans-unit id="NQvjZDz" resname="Organisation">
         <source>Organisation</source>
-        <target>__Organisation</target>
+        <target state="translated">Organisation</target>
       </trans-unit>
       <trans-unit id="ifwhezW" resname="Deaktiviert">
         <source>Deaktiviert</source>
-        <target>__Deaktiviert</target>
+        <target state="translated">Désactivé (-e/s)</target>
       </trans-unit>
       <trans-unit id="ZEGhE2w" resname="Kinder im KiGa">
         <source>Kinder im KiGa</source>
-        <target>__Kinder im KiGa</target>
+        <target state="translated">Enfants à KiGa</target>
       </trans-unit>
       <trans-unit id="ULFUhQH" resname="Berufliche Situation">
         <source>Berufliche Situation</source>
-        <target>__Berufliche Situation</target>
+        <target state="translated">Situation professionnelle</target>
       </trans-unit>
       <trans-unit id="QX8pkQf" resname="Berufliche Situation numerisch">
         <source>Berufliche Situation numerisch</source>
-        <target>__Berufliche Situation numerisch</target>
+        <target state="translated">Situation professionnelle numériquement</target>
       </trans-unit>
       <trans-unit id="38XalC7" resname="Alleinerziehend">
         <source>Alleinerziehend</source>
-        <target>__Alleinerziehend</target>
+        <target state="translated">Parent unique</target>
       </trans-unit>
       <trans-unit id="3xj0_s4" resname="Einkommensgruppe">
         <source>Einkommensgruppe</source>
-        <target>__Einkommensgruppe</target>
+        <target state="translated">Groupe de revenus</target>
       </trans-unit>
       <trans-unit id="ycFF5L." resname="Anzahl an Kindern">
         <source>Anzahl an Kindern</source>
-        <target>__Anzahl an Kindern</target>
+        <target state="translated">Nombre d'enfants</target>
       </trans-unit>
       <trans-unit id="bZKtRuQ" resname="Sicherheitscode ungültig">
         <source>Sicherheitscode ungültig</source>
-        <target>__Sicherheitscode ungültig</target>
+        <target state="translated">Code de sécurité invalide</target>
       </trans-unit>
       <trans-unit id="2Hxrhyc" resname="Erfolgreich angelegt">
         <source>Erfolgreich angelegt</source>
-        <target>__Erfolgreich angelegt</target>
+        <target state="translated">Créé avec succès</target>
       </trans-unit>
       <trans-unit id="YXWA8Pf" resname="Unbekannter Fehler">
         <source>Unbekannter Fehler</source>
-        <target>__Unbekannter Fehler</target>
+        <target state="translated">Erreur inconnue</target>
       </trans-unit>
       <trans-unit id="a.Bg5sG" resname="Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse">
         <source>Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse</source>
-        <target>__Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse</target>
+        <target state="translated">L'e-mail existe déjà. S'il vous plaît utiliser une adresse e-mail différente</target>
       </trans-unit>
       <trans-unit id="8azWWO_" resname="Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername">
         <source>Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername</source>
-        <target>__Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername</target>
+        <target state="translated">Le nom d'utilisateur existe déjà. S'il vous plaît utiliser un nom d'utilisateur différent</target>
       </trans-unit>
       <trans-unit id="QAUpUIQ" resname="Neuen Stadtmitarbeiter anlegen">
         <source>Neuen Stadtmitarbeiter anlegen</source>
-        <target>__Neuen Stadtmitarbeiter anlegen</target>
+        <target state="translated">Créer de nouveaux employés municipaux</target>
       </trans-unit>
       <trans-unit id="pDIoMbq" resname="Das Passwort konnte nich geändert werden">
         <source>Das Passwort konnte nich geändert werden</source>
-        <target>__Das Passwort konnte nich geändert werden</target>
+        <target state="translated">Le mot de passe n'a pas pu être changé</target>
       </trans-unit>
       <trans-unit id="TabP5k8" resname="Passwort ändern">
         <source>Passwort ändern</source>
-        <target>__Passwort ändern</target>
+        <target state="translated">Modifier le mot de passe</target>
       </trans-unit>
       <trans-unit id="YP0iY.T" resname="Rechte erfolgreich gesetzt">
         <source>Rechte erfolgreich gesetzt</source>
-        <target>__Rechte erfolgreich gesetzt</target>
+        <target state="translated">Droits fixés avec succès</target>
       </trans-unit>
       <trans-unit id="xsZzSWN" resname="Ferienprogramm erstellen">
         <source>Ferienprogramm erstellen</source>
-        <target>__Ferienprogramm erstellen</target>
+        <target state="translated">Créer un programme de vacances</target>
       </trans-unit>
       <trans-unit id="8oUMrku" resname="Preise bearbeiten">
         <source>Preise bearbeiten</source>
-        <target>__Preise bearbeiten</target>
+        <target state="translated">Modifier les prix</target>
       </trans-unit>
       <trans-unit id="bTQW9ci" resname="Fragen bearbeiten">
         <source>Fragen bearbeiten</source>
-        <target>__Fragen bearbeiten</target>
+        <target state="translated">Modifier les questions</target>
       </trans-unit>
       <trans-unit id="4BJxmLO" resname="Gutscheine bearbeiten">
         <source>Gutscheine bearbeiten</source>
-        <target>__Gutscheine bearbeiten</target>
+        <target state="translated">Modifier les bons</target>
       </trans-unit>
       <trans-unit id="mXjvhtn" resname="Ferienprogramm bearbeiten">
         <source>Ferienprogramm bearbeiten</source>
-        <target>__Ferienprogramm bearbeiten</target>
+        <target state="translated">Modifier le programme des fêtes</target>
       </trans-unit>
       <trans-unit id="SEHuFth" resname="Erfolgreich kopiert">
         <source>Erfolgreich kopiert</source>
-        <target>__Erfolgreich kopiert</target>
+        <target state="translated">Copié avec succès</target>
       </trans-unit>
       <trans-unit id="bJrT2U7" resname="Anwesenheitsliste für Ferienblock">
         <source>Anwesenheitsliste für Ferienblock</source>
-        <target>__Anwesenheitsliste für Ferienblock</target>
+        <target state="translated">Liste d'assistance pour le bloc de vacances</target>
       </trans-unit>
       <trans-unit id="eYM7sGm" resname="Alle Anmeldungen">
         <source>Alle Anmeldungen</source>
-        <target>__Alle Anmeldungen</target>
+        <target state="translated">Toutes les inscriptions</target>
       </trans-unit>
       <trans-unit id="xM8_3jW" resname="Anwesenheitsliste">
         <source>Anwesenheitsliste</source>
-        <target>__Anwesenheitsliste</target>
+        <target state="translated">Présence</target>
       </trans-unit>
       <trans-unit id="RZid5J_" resname="Details">
         <source>Details</source>
-        <target>__Details</target>
+        <target state="translated">Détails</target>
       </trans-unit>
       <trans-unit id="SRxx08g" resname="Ferieneinstellungen ändern">
         <source>Ferieneinstellungen ändern</source>
-        <target>__Ferieneinstellungen ändern</target>
+        <target state="translated">Modifier les paramètres de vacances</target>
       </trans-unit>
       <trans-unit id="jEZPMJe" resname="News Eintrag erstellt">
         <source>News Eintrag erstellt</source>
-        <target>__News Eintrag erstellt</target>
+        <target state="translated">Entrée de nouvelles créée</target>
       </trans-unit>
       <trans-unit id="lL.TRli" resname="News Eintrag bearbeiten">
         <source>News Eintrag bearbeiten</source>
-        <target>__News Eintrag bearbeiten</target>
+        <target state="translated">Modifier l'entrée de nouvelles</target>
       </trans-unit>
       <trans-unit id="a2VlXxI" resname="Erfolgreich deaktiviert">
         <source>Erfolgreich deaktiviert</source>
-        <target>__Erfolgreich deaktiviert</target>
+        <target state="translated">Désactivé avec succès</target>
       </trans-unit>
       <trans-unit id="h1oAWk1" resname="Erfolgreich aktiviert">
         <source>Erfolgreich aktiviert</source>
-        <target>__Erfolgreich aktiviert</target>
+        <target state="translated">Activé avec succès</target>
       </trans-unit>
       <trans-unit id="KxdUo83" resname="Ranzenpost erstellen">
         <source>Ranzenpost erstellen</source>
-        <target>__Ranzenpost erstellen</target>
+        <target state="translated">Créer Ranzenpost</target>
       </trans-unit>
       <trans-unit id="7iz7Sih" resname="Ranzenpost bearbeiten">
         <source>Ranzenpost bearbeiten</source>
-        <target>__Ranzenpost bearbeiten</target>
+        <target state="translated">Modifier Ranzenpost</target>
       </trans-unit>
       <trans-unit id="2YL1jzh" resname="Nachricht versendet">
         <source>Nachricht versendet</source>
-        <target>__Nachricht versendet</target>
+        <target state="translated">Message envoyé</target>
       </trans-unit>
       <trans-unit id="S2B57f9" resname="Anwesende Kinder heute">
         <source>Anwesende Kinder heute</source>
-        <target>__Anwesende Kinder heute</target>
+        <target state="translated">Les enfants présents aujourd'hui</target>
       </trans-unit>
       <trans-unit id="TlYbzur" resname="Kinder dieses Schuljahr">
         <source>Kinder dieses Schuljahr</source>
-        <target>__Kinder dieses Schuljahr</target>
+        <target state="translated">Enfants cette année scolaire</target>
       </trans-unit>
       <trans-unit id="iGpRsY9" resname="Kinder angemeldet">
         <source>Kinder angemeldet</source>
-        <target>__Kinder angemeldet</target>
+        <target state="translated">Enfants inscrits</target>
       </trans-unit>
       <trans-unit id="nKsWYiB" resname="Sepa-Lastschrift fällig">
         <source>Sepa-Lastschrift fällig</source>
-        <target>__Sepa-Lastschrift fällig</target>
+        <target state="translated">Débit direct Sepa dû</target>
       </trans-unit>
       <trans-unit id="I1BfpCB" resname="Die Email konnte nicht erneut vesandt werden">
         <source>Die Email konnte nicht erneut vesandt werden</source>
-        <target>__Die Email konnte nicht erneut vesandt werden</target>
+        <target state="translated">L'e-mail ne pouvait pas être envoyé à nouveau</target>
       </trans-unit>
       <trans-unit id="KkPR.LQ" resname="Die Email wurde erfolgreich versandt">
         <source>Die Email wurde erfolgreich versandt</source>
-        <target>__Die Email wurde erfolgreich versandt</target>
+        <target state="translated">L'e-mail a été envoyé avec succès</target>
       </trans-unit>
       <trans-unit id="KNybOAL" resname="Akzeptieren oder lehnen Sie ein Kind für diesen Block ab">
         <source>Akzeptieren oder lehnen Sie ein Kind für diesen Block ab</source>
-        <target>__Akzeptieren oder lehnen Sie ein Kind für diesen Block ab</target>
+        <target state="translated">Accepter ou rejeter un enfant pour ce bloc</target>
       </trans-unit>
       <trans-unit id="bRCf2Pa" resname="Organisation anlegen">
         <source>Organisation anlegen</source>
-        <target>__Organisation anlegen</target>
+        <target state="translated">Créer une organisation</target>
       </trans-unit>
       <trans-unit id="e.yBlit" resname="Schule anlegen">
         <source>Schule anlegen</source>
-        <target>__Schule anlegen</target>
+        <target state="translated">Création d'une école</target>
       </trans-unit>
       <trans-unit id="DQIts8Z" resname="Schuljahr anlegen">
         <source>Schuljahr anlegen</source>
-        <target>__Schuljahr anlegen</target>
+        <target state="translated">Création d'une année scolaire</target>
       </trans-unit>
       <trans-unit id="O6Ye6kL" resname="Schuljahr bearbeiten">
         <source>Schuljahr bearbeiten</source>
-        <target>__Schuljahr bearbeiten</target>
+        <target state="translated">Année scolaire de travail</target>
       </trans-unit>
       <trans-unit id="19a8pLe" resname="Stadtmitarbeiter bearbeiten">
         <source>Stadtmitarbeiter bearbeiten</source>
-        <target>__Stadtmitarbeiter bearbeiten</target>
+        <target state="translated">Employés de ville de travail</target>
       </trans-unit>
       <trans-unit id="ULTPo.F" resname="Passwort erfolgreich geändert">
         <source>Passwort erfolgreich geändert</source>
-        <target>__Passwort erfolgreich geändert</target>
+        <target state="translated">Mot de passe modifié avec succès</target>
       </trans-unit>
       <trans-unit id="_Kc4j.e" resname="Stadt anlegen">
         <source>Stadt anlegen</source>
-        <target>__Stadt anlegen</target>
+        <target state="translated">Création d'une ville</target>
       </trans-unit>
       <trans-unit id="3N7cZyG" resname="Stadt bearbeiten">
         <source>Stadt bearbeiten</source>
-        <target>__Stadt bearbeiten</target>
+        <target state="translated">Modifier la ville</target>
       </trans-unit>
       <trans-unit id="l5.2GBi" resname="Neuen Organisationsmitarbeiter anlegen">
         <source>Neuen Organisationsmitarbeiter anlegen</source>
-        <target>__Neuen Organisationsmitarbeiter anlegen</target>
+        <target state="translated">Créer un nouvel employé organisationnel</target>
       </trans-unit>
       <trans-unit id="MjEGjhD" resname="Das Ferienprogramm %kursname% ist bereits ausgebucht oder Sie haben zu viele Kinder angemeldet">
         <source>Das Ferienprogramm %kursname% ist bereits ausgebucht oder Sie haben zu viele Kinder angemeldet</source>
-        <target>__Das Ferienprogramm %kursname% ist bereits ausgebucht oder Sie haben zu viele Kinder angemeldet</target>
+        <target state="translated">Le programme de vacances %kursname% est déjà complet ou vous avez enregistré trop d'enfants</target>
       </trans-unit>
       <trans-unit id="iaxN3xl" resname="Original Account">
         <source>Original Account</source>
-        <target>__Original Account</target>
+        <target state="translated">Compte original</target>
       </trans-unit>
       <trans-unit id="wcIksDz" resname="Admin">
         <source>Admin</source>
-        <target>__Admin</target>
+        <target state="translated">Admin </target>
       </trans-unit>
       <trans-unit id="h7YL9VW" resname="Städte">
         <source>Städte</source>
-        <target>__Städte</target>
+        <target state="translated">Villes</target>
       </trans-unit>
       <trans-unit id="l3.7Thr" resname="Alle User">
         <source>Alle User</source>
-        <target>__Alle User</target>
+        <target state="translated">Tous les utilisateurs</target>
       </trans-unit>
       <trans-unit id="0rh74eB" resname="Organisationen">
         <source>Organisationen</source>
-        <target>__Organisationen</target>
+        <target state="translated">Organisations</target>
       </trans-unit>
       <trans-unit id="9Mtokbn" resname="Mitarbeiter">
         <source>Mitarbeiter</source>
-        <target>__Mitarbeiter</target>
+        <target state="translated">Employé</target>
       </trans-unit>
       <trans-unit id="Inm9E03" resname="Stadt">
         <source>Stadt</source>
-        <target>__Stadt</target>
+        <target state="translated">Ville</target>
       </trans-unit>
       <trans-unit id="QyiAyKD" resname="Neuigkeiten">
         <source>Neuigkeiten</source>
-        <target>__Neuigkeiten</target>
+        <target state="translated">Nouvelles</target>
       </trans-unit>
       <trans-unit id="UDI5XSO" resname="Meine Organisation">
         <source>Meine Organisation</source>
-        <target>__Meine Organisation</target>
+        <target state="translated">Mon organisation</target>
       </trans-unit>
       <trans-unit id="osdMBiP" resname="Meine Mitarbeiter">
         <source>Meine Mitarbeiter</source>
-        <target>__Meine Mitarbeiter</target>
+        <target state="translated">Mes employés</target>
       </trans-unit>
       <trans-unit id="2fDA5GL" resname="Schuljahre">
         <source>Schuljahre</source>
-        <target>__Schuljahre</target>
+        <target state="translated">Années scolaires</target>
       </trans-unit>
       <trans-unit id="hHiom2z" resname="Schulen">
         <source>Schulen</source>
-        <target>__Schulen</target>
+        <target state="translated">Écoles</target>
       </trans-unit>
       <trans-unit id="eDJe41j" resname="Meine Schulen">
         <source>Meine Schulen</source>
-        <target>__Meine Schulen</target>
+        <target state="translated">Mes écoles</target>
       </trans-unit>
       <trans-unit id="8AymnFc" resname="Angemeldete Kinder">
         <source>Angemeldete Kinder</source>
-        <target>__Angemeldete Kinder</target>
+        <target state="translated">Enfants inscrits</target>
       </trans-unit>
       <trans-unit id="El.bTEq" resname="Berichte">
         <source>Berichte</source>
-        <target>__Berichte</target>
+        <target state="translated">Rapports</target>
       </trans-unit>
       <trans-unit id="GWizslU" resname="Programm">
         <source>Programm</source>
-        <target>__Programm</target>
+        <target state="translated">Programme</target>
       </trans-unit>
       <trans-unit id="HHBW3XO" resname="Anmeldungen">
         <source>Anmeldungen</source>
-        <target>__Anmeldungen</target>
+        <target state="translated">Applications</target>
       </trans-unit>
       <trans-unit id="C.QiQO0" resname="Checkin">
         <source>Checkin</source>
-        <target>__Checkin</target>
+        <target state="translated">Check-in</target>
       </trans-unit>
       <trans-unit id="OW570KD" resname="Ferien Einstellungen">
         <source>Ferien Einstellungen</source>
-        <target>__Ferien Einstellungen</target>
+        <target state="translated">Paramètres de vacances</target>
       </trans-unit>
       <trans-unit id="xWrPCuc" resname="Zahlungsarten">
         <source>Zahlungsarten</source>
-        <target>__Zahlungsarten</target>
+        <target state="translated">Modes de paiement</target>
       </trans-unit>
       <trans-unit id="4LIsr10" resname="SEPA Übersicht">
         <source>SEPA Übersicht</source>
-        <target>__SEPA Übersicht</target>
+        <target state="translated">Aperçu SEPA</target>
       </trans-unit>
       <trans-unit id="9XUKXXI" resname="Einstellungen">
         <source>Einstellungen</source>
-        <target>__Einstellungen</target>
+        <target state="translated">Réglages</target>
       </trans-unit>
       <trans-unit id="8qHMcfp" resname="Sprache">
         <source>Sprache</source>
-        <target>__Sprache</target>
+        <target state="translated">Langue </target>
       </trans-unit>
       <trans-unit id="X5AGiMm" resname="Bestätigung">
         <source>Bestätigung</source>
-        <target>__Bestätigung</target>
+        <target state="translated">Confirmation</target>
       </trans-unit>
       <trans-unit id="gQghjkX" resname="Wollen Sie das Element wirkisch löschen?">
         <source>Wollen Sie das Element wirkisch löschen?</source>
-        <target>__Wollen Sie das Element wirkisch löschen?</target>
+        <target state="translated">Voulez-vous supprimer l'élément d'une manière possible?</target>
       </trans-unit>
       <trans-unit id="bC01IWH" resname="Löschen">
         <source>Löschen</source>
-        <target>__Löschen</target>
+        <target state="translated">Supprimer</target>
       </trans-unit>
       <trans-unit id="HZMs13C" resname="Wollen Sie diese Aktion durchführen?">
         <source>Wollen Sie diese Aktion durchführen?</source>
-        <target>__Wollen Sie diese Aktion durchführen?</target>
+        <target state="translated">Voulez-vous effectuer cette action?</target>
       </trans-unit>
       <trans-unit id="JdUtfoZ" resname="Fertig">
         <source>Fertig</source>
-        <target>__Fertig</target>
+        <target state="translated">C'est fait !</target>
       </trans-unit>
       <trans-unit id="mUvkJi5" resname="Berechtigungen für %vorname% %nachname%">
         <source>Berechtigungen für %vorname% %nachname%</source>
-        <target>__Berechtigungen für %vorname% %nachname%</target>
+        <target state="translated">Autorisations pour %premier nom % %dernier nom %</target>
       </trans-unit>
       <trans-unit id="a8htxPu" resname="Fehler: %error%">
         <source>Fehler: %error%</source>
-        <target>__Fehler: %error%</target>
+        <target state="translated">Erreur: %erreur%</target>
       </trans-unit>
       <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
-        <target>__Name</target>
+        <target state="translated">Nom</target>
       </trans-unit>
       <trans-unit id="0VOH7Mb" resname="Slug">
         <source>Slug</source>
-        <target>__Slug</target>
+        <target state="translated">Slug</target>
       </trans-unit>
       <trans-unit id="56JB3rr" resname="URL">
         <source>URL</source>
-        <target>__URL</target>
+        <target state="translated">URL</target>
       </trans-unit>
       <trans-unit id="hORe5zQ" resname="Bearbeiten">
         <source>Bearbeiten</source>
-        <target>__Bearbeiten</target>
+        <target state="translated">Modifier</target>
       </trans-unit>
       <trans-unit id="KW4_Eg9" resname="Städte Administratoren">
         <source>Städte Administratoren</source>
-        <target>__Städte Administratoren</target>
+        <target state="translated">Administrateurs des villes</target>
       </trans-unit>
       <trans-unit id="WJPGpRl" resname="Berechnungsformel für Betreuung">
         <source>Berechnungsformel für Betreuung</source>
-        <target>__Berechnungsformel für Betreuung</target>
+        <target state="translated">Formule de calcul pour les soins</target>
       </trans-unit>
       <trans-unit id="K9IjwaJ" resname="User für %stadt%">
         <source>User für %stadt%</source>
-        <target>__User für %stadt%</target>
+        <target state="translated">Utilisateur pour %stadt%</target>
       </trans-unit>
       <trans-unit id="47ienTP" resname="Username">
         <source>Username</source>
-        <target>__Username</target>
+        <target state="translated">Nom d'utilisateur</target>
       </trans-unit>
       <trans-unit id="JS90orN" resname="Geburtstag">
         <source>Geburtstag</source>
-        <target>__Geburtstag</target>
+        <target state="translated">Anniversaire</target>
       </trans-unit>
       <trans-unit id="ADipz4Z" resname="Rolle">
         <source>Rolle</source>
-        <target>__Rolle</target>
+        <target state="translated">Rôle</target>
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target>__Status</target>
+        <target state="translated">Statut</target>
       </trans-unit>
       <trans-unit id="UGw_6pk" resname="Admin ernennen">
         <source>Admin ernennen</source>
-        <target>__Admin ernennen</target>
+        <target state="translated">Nommer l'administrateur</target>
       </trans-unit>
       <trans-unit id="_Q5iOsg" resname="Account Deaktivieren">
         <source>Account Deaktivieren</source>
-        <target>__Account Deaktivieren</target>
+        <target state="translated">Compte désactivé</target>
       </trans-unit>
       <trans-unit id="a_rW1dR" resname="Password ändern">
         <source>Password ändern</source>
-        <target>__Password ändern</target>
+        <target state="translated">Changer de mot de passe</target>
       </trans-unit>
       <trans-unit id="VwsWrux" resname="Zu diesem User wechseln">
         <source>Zu diesem User wechseln</source>
-        <target>__Zu diesem User wechseln</target>
+        <target state="translated">Passez à cet utilisateur</target>
       </trans-unit>
       <trans-unit id="yTLzQls" resname="Kein Admin">
         <source>Kein Admin</source>
-        <target>__Kein Admin</target>
+        <target state="translated">Pas d'administrateur</target>
       </trans-unit>
       <trans-unit id="1j_378O" resname="Berichte von %active%">
         <source>Berichte von %active%</source>
-        <target>__Berichte von %active%</target>
+        <target state="translated">Rapports de %active%</target>
       </trans-unit>
       <trans-unit id="NmSJVXn" resname="Export">
         <source>Export</source>
-        <target>__Export</target>
+        <target state="translated">Exporter</target>
       </trans-unit>
       <trans-unit id="XqaB_1k" resname="Alle Schuljahre">
         <source>Alle Schuljahre</source>
-        <target>__Alle Schuljahre</target>
+        <target state="translated">Toutes les années scolaires</target>
       </trans-unit>
       <trans-unit id="SYTJhmE" resname="Download als Excel">
         <source>Download als Excel</source>
-        <target>__Download als Excel</target>
+        <target state="translated">Télécharger sous Excel</target>
       </trans-unit>
       <trans-unit id="IR0LuM9" resname="Block">
         <source>Block</source>
-        <target>__Block</target>
+        <target state="translated">Bloc</target>
       </trans-unit>
       <trans-unit id="EF43vCK" resname="Kontingent">
         <source>Kontingent</source>
-        <target>__Kontingent</target>
+        <target state="translated">Quota</target>
       </trans-unit>
       <trans-unit id="_18n1UV" resname="Detail">
         <source>Detail</source>
-        <target>__Detail</target>
+        <target state="translated">Détail</target>
       </trans-unit>
       <trans-unit id="3qeTMhR" resname="Min">
         <source>Min</source>
-        <target>__Min</target>
+        <target state="translated">Min</target>
       </trans-unit>
       <trans-unit id="oaWTbTs" resname="Max">
         <source>Max</source>
-        <target>__Max</target>
+        <target state="translated">Max</target>
       </trans-unit>
       <trans-unit id=".KAUxnf" resname="gelöscht/deaktiviert">
         <source>gelöscht/deaktiviert</source>
-        <target>__gelöscht/deaktiviert</target>
+        <target state="translated">supprimé/désactivé</target>
       </trans-unit>
       <trans-unit id=".YCE0aV" resname="Neuen Block anlegen am %tag%">
         <source>Neuen Block anlegen am %tag%</source>
-        <target>__Neuen Block anlegen am %tag%</target>
+        <target state="translated">Créez un nouveau bloc sur %tag%</target>
       </trans-unit>
       <trans-unit id="9rL.OfV" resname="Speichern">
         <source>Speichern</source>
-        <target>__Speichern</target>
+        <target state="translated">Enregistrer</target>
       </trans-unit>
       <trans-unit id="uAj26XB" resname="Schließen">
         <source>Schließen</source>
-        <target>__Schließen</target>
+        <target state="translated">Pour fermer</target>
       </trans-unit>
       <trans-unit id="3aRcePB" resname="Blöcke geladen.">
         <source>Blöcke geladen.</source>
-        <target>__Blöcke geladen.</target>
+        <target state="translated">Blocs chargés.</target>
       </trans-unit>
       <trans-unit id="9swBy37" resname="Fehler">
         <source>Fehler</source>
-        <target>__Fehler</target>
+        <target state="translated">Erreur</target>
       </trans-unit>
       <trans-unit id="EG0viST" resname="Seite nicht gefunden">
         <source>Seite nicht gefunden</source>
-        <target>__Seite nicht gefunden</target>
+        <target state="translated">Page introuvable</target>
       </trans-unit>
       <trans-unit id="uh4l5ld" resname="Interner Serverfehler">
         <source>Interner Serverfehler</source>
-        <target>__Interner Serverfehler</target>
+        <target state="translated">Erreur de serveur interne</target>
       </trans-unit>
       <trans-unit id="g3dcIGG" resname="Alle Schulen">
         <source>Alle Schulen</source>
-        <target>__Alle Schulen</target>
+        <target state="translated">Toutes les écoles</target>
       </trans-unit>
       <trans-unit id="rC4ZTu9" resname="Alle Wochentage">
         <source>Alle Wochentage</source>
-        <target>__Alle Wochentage</target>
+        <target state="translated">Tous les jours de la semaine</target>
       </trans-unit>
       <trans-unit id="9tAZG1v" resname="Alle Jahrgangsstufen">
         <source>Alle Jahrgangsstufen</source>
-        <target>__Alle Jahrgangsstufen</target>
+        <target state="translated">Tous les grades</target>
       </trans-unit>
       <trans-unit id="nVicoPO" resname="Zusammenfassung">
         <source>Zusammenfassung</source>
-        <target>__Zusammenfassung</target>
+        <target state="translated">Résumé</target>
       </trans-unit>
       <trans-unit id="ARvy7Hz" resname="Daten der erziehungsberechtigten Person">
         <source>Daten der erziehungsberechtigten Person</source>
-        <target>__Daten der erziehungsberechtigten Person</target>
+        <target state="translated">Données de la personne ayant droit au congé parental</target>
       </trans-unit>
       <trans-unit id="P2jt0rc" resname="Letzte Speicherung">
         <source>Letzte Speicherung</source>
-        <target>__Letzte Speicherung</target>
+        <target state="translated">Dernier stockage</target>
       </trans-unit>
       <trans-unit id="8wY3ckc" resname="Name der Eltern">
         <source>Name der Eltern</source>
-        <target>__Name der Eltern</target>
+        <target state="translated">Nom des parents</target>
       </trans-unit>
       <trans-unit id="Up_TjZv" resname="E-Mail Adresse">
         <source>E-Mail Adresse</source>
-        <target>__E-Mail Adresse</target>
+        <target state="translated">Adresse e-mail</target>
       </trans-unit>
       <trans-unit id="ppTWbud" resname="Adresse der Eltern">
         <source>Adresse der Eltern</source>
-        <target>__Adresse der Eltern</target>
+        <target state="translated">Adresse des parents</target>
       </trans-unit>
       <trans-unit id="U5zZGkQ" resname="Berufliche Situation der Eltern">
         <source>Berufliche Situation der Eltern</source>
-        <target>__Berufliche Situation der Eltern</target>
+        <target state="translated">Situation professionnelle des parents</target>
       </trans-unit>
       <trans-unit id="ite8DQ9" resname="Name und Beziehung des Notfallkontakt">
         <source>Name und Beziehung des Notfallkontakt</source>
-        <target>__Name und Beziehung des Notfallkontakt</target>
+        <target state="translated">Nom et relation de contact d'urgence</target>
       </trans-unit>
       <trans-unit id="dnQ5L6a" resname="Notfallkontakt der Eltern">
         <source>Notfallkontakt der Eltern</source>
-        <target>__Notfallkontakt der Eltern</target>
+        <target state="translated">Contact d'urgence des parents</target>
       </trans-unit>
       <trans-unit id="RS4UXgU" resname="Weitere abholberechtigte Personen">
         <source>Weitere abholberechtigte Personen</source>
-        <target>__Weitere abholberechtigte Personen</target>
+        <target state="translated">Autres personnes ayant droit à un ramassage</target>
       </trans-unit>
       <trans-unit id="EwGD3bz" resname="Daten des Kinds">
         <source>Daten des Kinds</source>
-        <target>__Daten des Kinds</target>
+        <target state="translated">Données de l'enfant</target>
       </trans-unit>
       <trans-unit id=".a8vgi5" resname="Mein Kind ist Gluten intolerant">
         <source>Mein Kind ist Gluten intolerant</source>
-        <target>__Mein Kind ist Gluten intolerant</target>
+        <target state="translated">Mon enfant est intolérant au gluten</target>
       </trans-unit>
       <trans-unit id="kOvBveb" resname="Nein">
         <source>Nein</source>
-        <target>__Nein</target>
+        <target state="translated">Non</target>
       </trans-unit>
       <trans-unit id="Jj8dWM7" resname="Mein Kind ist Laktose intolerant">
         <source>Mein Kind ist Laktose intolerant</source>
-        <target>__Mein Kind ist Laktose intolerant</target>
+        <target state="translated">Mon enfant est intolérant au lactose</target>
       </trans-unit>
       <trans-unit id="qDVRxRS" resname="Mein Kind isst kein Schweinefleisch">
         <source>Mein Kind isst kein Schweinefleisch</source>
-        <target>__Mein Kind isst kein Schweinefleisch</target>
+        <target state="translated">Mon enfant ne mange pas de porc</target>
       </trans-unit>
       <trans-unit id="BiOCtbE" resname="Vegetrarisch">
         <source>Vegetrarisch</source>
-        <target>__Vegetrarisch</target>
+        <target state="translated">Végétarien</target>
       </trans-unit>
       <trans-unit id="oc2paVv" resname="Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause">
         <source>Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause</source>
-        <target>__Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause</target>
+        <target state="translated">Après la fin des soins réservés, mon enfant est autorisé à rentrer seul à la maison</target>
       </trans-unit>
       <trans-unit id="a9GI.w4" resname="Mein Kind darf an Ausflügen teilnehmen">
         <source>Mein Kind darf an Ausflügen teilnehmen</source>
-        <target>__Mein Kind darf an Ausflügen teilnehmen</target>
+        <target state="translated">Mon enfant est autorisé à participer à des excursions</target>
       </trans-unit>
       <trans-unit id="Qco3..e" resname="Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden">
         <source>Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden</source>
-        <target>__Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden</target>
+        <target state="translated">Mon enfant peut être crémé en été avec un écran solaire disponible dans le commerce</target>
       </trans-unit>
       <trans-unit id="dyZZc9x" resname="Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden">
         <source>Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden</source>
-        <target>__Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden</target>
+        <target state="translated">Les photos de mon enfant peuvent être publiées dans la presse publique</target>
       </trans-unit>
       <trans-unit id="dZvLQlT" resname="Gebuchte Betreuungsblöcke">
         <source>Gebuchte Betreuungsblöcke</source>
-        <target>__Gebuchte Betreuungsblöcke</target>
+        <target state="translated">Blocs de soins réservés</target>
       </trans-unit>
       <trans-unit id="cW.Lea0" resname="Angemeldete Betreuungsblöcke">
         <source>Angemeldete Betreuungsblöcke</source>
-        <target>__Angemeldete Betreuungsblöcke</target>
+        <target state="translated">Blocs de support enregistrés</target>
       </trans-unit>
       <trans-unit id="7511jOP" resname="Gebuchte Mittagessen">
         <source>Gebuchte Mittagessen</source>
-        <target>__Gebuchte Mittagessen</target>
+        <target state="translated">Déjeuners réservés</target>
       </trans-unit>
       <trans-unit id="TqqAaJn" resname="Historie">
         <source>Historie</source>
-        <target>__Historie</target>
+        <target state="translated">Historique</target>
       </trans-unit>
       <trans-unit id="81aATpI" resname="Sicherheitscodeabfrage">
         <source>Sicherheitscodeabfrage</source>
-        <target>__Sicherheitscodeabfrage</target>
+        <target state="translated">Requête de code de sécurité</target>
       </trans-unit>
       <trans-unit id="0xns7kQ" resname="Adresse:">
         <source>Adresse:</source>
-        <target>__Adresse:</target>
+        <target state="translated">Adresse:</target>
       </trans-unit>
       <trans-unit id="_mkG127" resname="Telefon">
         <source>Telefon</source>
-        <target>__Telefon</target>
+        <target state="translated">Téléphone</target>
       </trans-unit>
       <trans-unit id="FwMioy8" resname="Info">
         <source>Info</source>
-        <target>__Info</target>
+        <target state="translated">Info</target>
       </trans-unit>
       <trans-unit id="RkPL0Rv" resname="Mitarbeiter der Organisation">
         <source>Mitarbeiter der Organisation</source>
-        <target>__Mitarbeiter der Organisation</target>
+        <target state="translated">Employés de l'organisation</target>
       </trans-unit>
       <trans-unit id="hospV8O" resname="Organistaion">
         <source>Organistaion</source>
-        <target>__Organistaion</target>
+        <target state="translated">Organistaion (Organistaion)</target>
       </trans-unit>
       <trans-unit id="1AFgdf6" resname="Keine Organisation angegeben">
         <source>Keine Organisation angegeben</source>
-        <target>__Keine Organisation angegeben</target>
+        <target state="translated">Aucune organisation spécifiée</target>
       </trans-unit>
       <trans-unit id="ZvUjbfL" resname="Buchungsbestätigung für die Schulkindbetreuung">
         <source>Buchungsbestätigung für die Schulkindbetreuung</source>
-        <target>__Buchungsbestätigung für die Schulkindbetreuung</target>
+        <target state="translated">Confirmation de réservation pour la garde d'enfants à l'école</target>
       </trans-unit>
       <trans-unit id="xNALMSn" resname="Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:">
         <source>Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:</source>
-        <target>__Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:</target>
+        <target state="translated">Par la présente, nous vous fournissons l'enregistrement de votre enfant:</target>
       </trans-unit>
       <trans-unit id="1BfLGMj" resname="Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser ist nur einmalig gültig und wird Ihnen mit der Bestätigung neu zugeandt.&#10;            Dieser Mechanismus verhindert einen Missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.">
         <source>Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.
@@ -1240,7 +1240,7 @@
         <target>__Bankverbindung für Lastschrift</target>
       </trans-unit>
       <trans-unit id="47DEQpj" resname="">
-        <source></source>
+        <source/>
         <target>__</target>
       </trans-unit>
       <trans-unit id="bXHPK6K" resname="Daten der Kinder">
