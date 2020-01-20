@@ -142,7 +142,7 @@
         {% for n in s.news %}
             <!-- City: {{ s.name }} News -->
             {% if n.date is null %}
-                {% set date = n.createdAt %}
+                {% set date = n.createdDate %}
             {% else %}
                 {% set date = n.date %}
             {% endif %}
