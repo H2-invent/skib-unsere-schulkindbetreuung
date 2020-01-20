@@ -139,7 +139,7 @@ class OrganisationController extends AbstractController
         // everything to lower and no spaces begin or end
         $url = strtolower(trim($url));
         //replace accent characters, depends your language is needed
-      
+
         // decode html maybe needed if there's html I normally don't use this
 
         // adding - for spaces and union characters
