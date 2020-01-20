@@ -180,6 +180,7 @@ class EmployeeController extends AbstractController
 
     /**
      * @Route("/city_admin/mitarbeiter/changePw", name="city_admin_mitarbeiter_changePw")
+     * * @Route("/org_admin/mitarbeiter/changePw", name="org_admin_mitarbeiter_changePw")
      */
     public function changePw(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
     {
