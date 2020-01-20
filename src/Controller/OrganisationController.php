@@ -48,7 +48,7 @@ class OrganisationController extends AbstractController
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
-            //$organisation = $form->getData();
+            $organisation = $form->getData();
             $organisation->setStadt($city);
             $organisation->setSlug($this->friendly_url($organisation->getName()));
             $errors = $validator->validate($organisation);
@@ -139,9 +139,9 @@ class OrganisationController extends AbstractController
         // everything to lower and no spaces begin or end
         $url = strtolower(trim($url));
         //replace accent characters, depends your language is needed
-        //$url=replace_accents($url);
+      
         // decode html maybe needed if there's html I normally don't use this
-        //$url = html_entity_decode($url,ENT_QUOTES,'UTF8');
+
         // adding - for spaces and union characters
         $find = array(' ', '&', '\r\n', '\n', '+', ',');
         $url = str_replace($find, '-', $url);
@@ -149,7 +149,7 @@ class OrganisationController extends AbstractController
         $find = array('/[^a-z0-9\-<>]/', '/[\-]+/', '/<[^>]*>/');
         $repl = array('', '-', '');
         $url = preg_replace($find, $repl, $url);
-        //return the friendly url
+
         return $url;
     }
 }
