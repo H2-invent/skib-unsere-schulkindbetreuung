@@ -235,7 +235,7 @@
                             <div class="card mb-2">
                                 <div class="card-body">
                                     <h4>
-                                        {% trans %}Stadt{% endtrans %}
+                                        {{ stadt.name }}
                                     </h4>
                                     {% if stadt.stadtHomepage is not null %}
                                         <a href="{{ stadt.stadtHomepage }}"

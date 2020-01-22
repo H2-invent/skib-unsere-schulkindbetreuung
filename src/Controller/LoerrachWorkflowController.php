@@ -512,7 +512,7 @@ class LoerrachWorkflowController extends AbstractController
 
         if ($kind->getTageWithBlocks() < 2) {
             $result['error'] = 1;
-            $result['text'] = $translator->trans('Bitte weitere Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)');
+            $result['text'] = $translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)');
             return new JsonResponse($result);
         }
         $result['betrag'] = number_format($kind->getPreisforBetreuung(), 2, ',', '.');
