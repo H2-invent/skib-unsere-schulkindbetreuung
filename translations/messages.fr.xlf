@@ -1013,1173 +1013,1173 @@
         <source>Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.
             Dieser ist nur einmalig gültig und wird Ihnen mit der Bestätigung neu zugeandt.
             Dieser Mechanismus verhindert einen Missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.</source>
-        <target>__Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.
-            Dieser ist nur einmalig gültig und wird Ihnen mit der Bestätigung neu zugeandt.
-            Dieser Mechanismus verhindert einen Missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.</target>
+        <target state="translated">Pour communiquer avec le transporteur, vous devez fournir ce code de sécurité.
+            Ceci n'est valable qu'une seule fois et vous sera réaffecté avec la confirmation.
+            Ce mécanisme empêche des tiers d'accéder de manière inappropriée aux données de vos enfants.</target>
       </trans-unit>
       <trans-unit id="s5wccT1" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.&#10;            Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.&#10;            Die Kontaktdaten sind in dem PDF angehängten angegeben.">
         <source>Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
             Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.
             Die Kontaktdaten sind in dem PDF angehängten angegeben.</source>
-        <target>__Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
-            Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.
-            Die Kontaktdaten sind in dem PDF angehängten angegeben.</target>
+        <target state="translated">Dans l'annexe, vous trouverez vos données et celle de vos enfants en format PDF pour le contrôle.
+            Veuillez vérifier vos données et contacter votre organisation locale si vous avez des questions.
+            Les coordonnées sont fournies dans le PDF ci-joint.</target>
       </trans-unit>
       <trans-unit id="1.lx3bs" resname="Mit freundlichen Grüßen Ihre betreuende Organisation">
         <source>Mit freundlichen Grüßen Ihre betreuende Organisation</source>
-        <target>__Mit freundlichen Grüßen Ihre betreuende Organisation</target>
+        <target state="translated">Yoursincea sincèrement votre organisation de soutien</target>
       </trans-unit>
       <trans-unit id="DPWfUcS" resname="Anmeldebestätigung für die Schulkindbetreuung">
         <source>Anmeldebestätigung für die Schulkindbetreuung</source>
-        <target>__Anmeldebestätigung für die Schulkindbetreuung</target>
+        <target state="translated">Confirmation de l'inscription à la garde d'enfants à l'école</target>
       </trans-unit>
       <trans-unit id="SxN_L9t" resname="Sie haben Ihr Kind für die Schulkindbetreuung angemeldet:">
         <source>Sie haben Ihr Kind für die Schulkindbetreuung angemeldet:</source>
-        <target>__Sie haben Ihr Kind für die Schulkindbetreuung angemeldet:</target>
+        <target state="translated">Vous avez inscrit votre enfant à la garde d'enfants à l'école :</target>
       </trans-unit>
       <trans-unit id="dPThthd" resname="Dies ist eine vorläufige Inforamtion über die Anmeldung Ihres Kindes.&#10;            Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.">
         <source>Dies ist eine vorläufige Inforamtion über die Anmeldung Ihres Kindes.
             Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.</source>
-        <target>__Dies ist eine vorläufige Inforamtion über die Anmeldung Ihres Kindes.
-            Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.</target>
+        <target state="translated">Il s'agit d'une information préliminaire sur l'inscription de votre enfant.
+            Une fois que l'organisation a traité votre demande, vous recevrez un résumé de vos blocs de support acceptés.</target>
       </trans-unit>
       <trans-unit id="OPm7ac2" resname="Buchungsbestätigung für die Ferienbetreuung">
         <source>Buchungsbestätigung für die Ferienbetreuung</source>
-        <target>__Buchungsbestätigung für die Ferienbetreuung</target>
+        <target state="translated">Confirmation de réservation pour les soins de vacances</target>
       </trans-unit>
       <trans-unit id="5LW318O" resname="Hiermit bestägen wir Ihnen die Anmeldung Ihrer Kinder">
         <source>Hiermit bestägen wir Ihnen die Anmeldung Ihrer Kinder</source>
-        <target>__Hiermit bestägen wir Ihnen die Anmeldung Ihrer Kinder</target>
+        <target state="translated">C'est ainsi que nous pouvons enregistrer vos enfants</target>
       </trans-unit>
       <trans-unit id="yB7Ms07" resname="Über diesen Link können Sie ihre Betesllung bearbeiten.">
         <source>Über diesen Link können Sie ihre Betesllung bearbeiten.</source>
-        <target>__Über diesen Link können Sie ihre Betesllung bearbeiten.</target>
+        <target state="translated">Vous pouvez utiliser ce lien pour modifier votre pari.</target>
       </trans-unit>
       <trans-unit id="L3ZouTV" resname="Mit freundlichen Grüßen Ihr">
         <source>Mit freundlichen Grüßen Ihr</source>
-        <target>__Mit freundlichen Grüßen Ihr</target>
+        <target state="translated">Sincèrement, votre</target>
       </trans-unit>
       <trans-unit id="OnhpU4i" resname="Home">
         <source>Home</source>
-        <target>__Home</target>
+        <target state="translated">Accueil</target>
       </trans-unit>
       <trans-unit id="uKYFGSP" resname="Impressum">
         <source>Impressum</source>
-        <target>__Impressum</target>
+        <target state="translated">Mentions légales</target>
       </trans-unit>
       <trans-unit id="9iT88Ny" resname="Datenschutz">
         <source>Datenschutz</source>
-        <target>__Datenschutz</target>
+        <target state="translated">Protection des données</target>
       </trans-unit>
       <trans-unit id="32cAxL4" resname="Nutzungsbedingungen">
         <source>Nutzungsbedingungen</source>
-        <target>__Nutzungsbedingungen</target>
+        <target state="translated">Conditions d’utilisation</target>
       </trans-unit>
       <trans-unit id="UQJHoxY" resname="Bestätigungscode für die Anmeldung zur Schulkindbetreuung">
         <source>Bestätigungscode für die Anmeldung zur Schulkindbetreuung</source>
-        <target>__Bestätigungscode für die Anmeldung zur Schulkindbetreuung</target>
+        <target state="translated">Code de confirmation pour l'inscription pour la garde d'enfants à l'école</target>
       </trans-unit>
       <trans-unit id="d_DCXGs" resname="Sie haben sich gerade für die Schulkindbetreuung angemeldet. &lt;br&gt;Bitte bestätigen Sie Ihre Email Durch die Eingabe des Bestätigungscodes in ihrem Browser.">
         <source>Sie haben sich gerade für die Schulkindbetreuung angemeldet. &lt;br&gt;Bitte bestätigen Sie Ihre Email Durch die Eingabe des Bestätigungscodes in ihrem Browser.</source>
-        <target><![CDATA[__Sie haben sich gerade für die Schulkindbetreuung angemeldet. <br>Bitte bestätigen Sie Ihre Email Durch die Eingabe des Bestätigungscodes in ihrem Browser.]]></target>
+        <target state="translated"><![CDATA[Vous venez de vous inscrire à la garderie scolaire.<br>Veuillez confirmer votre e-mail en entrant le code de vérification dans votre navigateur.]]></target>
       </trans-unit>
       <trans-unit id="e7yUUjO" resname="Bestätigungscode">
         <source>Bestätigungscode</source>
-        <target>__Bestätigungscode</target>
+        <target state="translated">Code de confirmation</target>
       </trans-unit>
       <trans-unit id="kI2dHL_" resname="Elektronische Ranzenpost von">
         <source>Elektronische Ranzenpost von</source>
-        <target>__Elektronische Ranzenpost von</target>
+        <target state="translated">Ranzenpost électronique de</target>
       </trans-unit>
       <trans-unit id="nM3KWWr" resname="Wenn diese E-Mail nicht korrekt angezeigt wird, klicken Sie bitte hier.">
         <source>Wenn diese E-Mail nicht korrekt angezeigt wird, klicken Sie bitte hier.</source>
-        <target>__Wenn diese E-Mail nicht korrekt angezeigt wird, klicken Sie bitte hier.</target>
+        <target state="translated">Si cet e-mail n'est pas affiché correctement, veuillez cliquer ici.</target>
       </trans-unit>
       <trans-unit id="liqkKnk" resname="Rechnung für die Schulkindbetreuung">
         <source>Rechnung für die Schulkindbetreuung</source>
-        <target>__Rechnung für die Schulkindbetreuung</target>
+        <target state="translated">Projet de loi pour la garde d'enfants à l'école</target>
       </trans-unit>
       <trans-unit id="bhzyuO6" resname="Hiermit senden wir Ihnen ihre Rechnung für die Schulkindbetreuung an der Organisation %org% zu.">
         <source>Hiermit senden wir Ihnen ihre Rechnung für die Schulkindbetreuung an der Organisation %org% zu.</source>
-        <target>__Hiermit senden wir Ihnen ihre Rechnung für die Schulkindbetreuung an der Organisation %org% zu.</target>
+        <target state="translated">Nous vous enverrons votre facture pour la garde d'enfants scolaire à l'organisation %org%.</target>
       </trans-unit>
       <trans-unit id="VYDPU5D" resname="Der berechnet Betrag in Höhe von&lt;br&gt;&lt;b&gt;%betrag%€&lt;/b&gt; &lt;br&gt; wird am &lt;br&gt;&lt;b&gt;%einzugsdatum%&lt;/b&gt;&lt;br&gt; eingezogen.">
         <source>Der berechnet Betrag in Höhe von&lt;br&gt;&lt;b&gt;%betrag%€&lt;/b&gt; &lt;br&gt; wird am &lt;br&gt;&lt;b&gt;%einzugsdatum%&lt;/b&gt;&lt;br&gt; eingezogen.</source>
-        <target><![CDATA[__Der berechnet Betrag in Höhe von<br><b>%betrag%€</b> <br> wird am <br><b>%einzugsdatum%</b><br> eingezogen.]]></target>
+        <target state="translated"><![CDATA[Le montant calculé dans le montant de<br><b>%betrag%</b><br>sera<br><b>%einzugsdatum%</b><br>Nourris.]]></target>
       </trans-unit>
       <trans-unit id="eAXuGwF" resname="Der berechnet Betrag in Höhe von %betrag%€ dient zu Ihrer Information.">
         <source>Der berechnet Betrag in Höhe von %betrag%€ dient zu Ihrer Information.</source>
-        <target>__Der berechnet Betrag in Höhe von %betrag%€ dient zu Ihrer Information.</target>
+        <target state="translated">Le montant calculé de %betrag%est pour vos informations.</target>
       </trans-unit>
       <trans-unit id="nWV2IiO" resname="Im Anhang finden Sie die genaue Kostenaufschlüsselung und weitere Informationen zu Ihrem SEPA-Lastschriftmandat.">
         <source>Im Anhang finden Sie die genaue Kostenaufschlüsselung und weitere Informationen zu Ihrem SEPA-Lastschriftmandat.</source>
-        <target>__Im Anhang finden Sie die genaue Kostenaufschlüsselung und weitere Informationen zu Ihrem SEPA-Lastschriftmandat.</target>
+        <target state="translated">L'annexe fournit la ventilation exacte des coûts et plus d'informations sur votre mandat de débit direct SEPA.</target>
       </trans-unit>
       <trans-unit id="q1LKl78" resname="Mitarbeiter der Stadt %stadt%">
         <source>Mitarbeiter der Stadt %stadt%</source>
-        <target>__Mitarbeiter der Stadt %stadt%</target>
+        <target state="translated">Employés de la ville %stadt%</target>
       </trans-unit>
       <trans-unit id="eobplLX" resname="Deaktivieren">
         <source>Deaktivieren</source>
-        <target>__Deaktivieren</target>
+        <target state="translated">Compte désactivé</target>
       </trans-unit>
       <trans-unit id="jjBUF66" resname="Berechtigungen verwalten">
         <source>Berechtigungen verwalten</source>
-        <target>__Berechtigungen verwalten</target>
+        <target state="translated">Gérer les autorisations</target>
       </trans-unit>
       <trans-unit id="RU3Nh0d" resname="Mitarbeiter der Organisationen der Stadt %stadt%">
         <source>Mitarbeiter der Organisationen der Stadt %stadt%</source>
-        <target>__Mitarbeiter der Organisationen der Stadt %stadt%</target>
+        <target state="translated">Employés des organisations de la ville %stadt%</target>
       </trans-unit>
       <trans-unit id="qrKDvng" resname="Mitarbeiter der Organisation %org%">
         <source>Mitarbeiter der Organisation %org%</source>
-        <target>__Mitarbeiter der Organisation %org%</target>
+        <target state="translated">Employés de l'organisation %org%</target>
       </trans-unit>
       <trans-unit id="EfmaxLu" resname="Online Anmeldung">
         <source>Online Anmeldung</source>
-        <target>__Online Anmeldung</target>
+        <target state="translated">Inscription en ligne</target>
       </trans-unit>
       <trans-unit id="g7KT4KD" resname="Vielen Dank für Ihre Anmeldung ...">
         <source>Vielen Dank für Ihre Anmeldung ...</source>
-        <target>__Vielen Dank für Ihre Anmeldung ...</target>
+        <target state="translated">Merci beaucoup pour votre inscription ...</target>
       </trans-unit>
       <trans-unit id="qZFHrCt" resname="Online Anmeldung für Ferienbetreuung">
         <source>Online Anmeldung für Ferienbetreuung</source>
-        <target>__Online Anmeldung für Ferienbetreuung</target>
+        <target state="translated">Inscription en ligne pour les soins de vacances</target>
       </trans-unit>
       <trans-unit id="3prfbHG" resname="Daten eines Erziehungsberechtigten">
         <source>Daten eines Erziehungsberechtigten</source>
-        <target>__Daten eines Erziehungsberechtigten</target>
+        <target state="translated">Données d'un tuteur légal</target>
       </trans-unit>
       <trans-unit id="HLC6El_" resname="Information">
         <source>Information</source>
-        <target>__Information</target>
+        <target state="translated">Informations</target>
       </trans-unit>
       <trans-unit id="OfulcXc" resname="Die E-Mail Adresse ist wichtig, da alle Dokumente, Bestätigungen und Rechnungen automatisch an diese E-Mail geschickt werden.">
         <source>Die E-Mail Adresse ist wichtig, da alle Dokumente, Bestätigungen und Rechnungen automatisch an diese E-Mail geschickt werden.</source>
-        <target>__Die E-Mail Adresse ist wichtig, da alle Dokumente, Bestätigungen und Rechnungen automatisch an diese E-Mail geschickt werden.</target>
+        <target state="translated">L'adresse électronique est importante car tous les documents, confirmations et factures sont automatiquement envoyés à cet e-mail.</target>
       </trans-unit>
       <trans-unit id="mA_UHeC" resname="Daten für Notfälle und weitere Informationen">
         <source>Daten für Notfälle und weitere Informationen</source>
-        <target>__Daten für Notfälle und weitere Informationen</target>
+        <target state="translated">Données pour les situations d'urgence et informations complémentaires</target>
       </trans-unit>
       <trans-unit id="3XpD9nE" resname="Ferienblöcke zum Bestellen anklicken">
         <source>Ferienblöcke zum Bestellen anklicken</source>
-        <target>__Ferienblöcke zum Bestellen anklicken</target>
+        <target state="translated">Cliquez sur les blocs vacances pour commander</target>
       </trans-unit>
       <trans-unit id="nMLlc_B" resname="Zeitraum wählen">
         <source>Zeitraum wählen</source>
-        <target>__Zeitraum wählen</target>
+        <target state="translated">Choisissez la période</target>
       </trans-unit>
       <trans-unit id="Q2ycH6_" resname="Preis für die Ferienbetreuung">
         <source>Preis für die Ferienbetreuung</source>
-        <target>__Preis für die Ferienbetreuung</target>
+        <target state="translated">Prix pour les soins de vacances</target>
       </trans-unit>
       <trans-unit id="Ruov.3p" resname="Heute">
         <source>Heute</source>
-        <target>__Heute</target>
+        <target state="translated">Aujourd'hui</target>
       </trans-unit>
       <trans-unit id="_e9eko6" resname="Diese Woche">
         <source>Diese Woche</source>
-        <target>__Diese Woche</target>
+        <target state="translated">Cette semaine</target>
       </trans-unit>
       <trans-unit id="fkAW731" resname="Dieser Monat">
         <source>Dieser Monat</source>
-        <target>__Dieser Monat</target>
+        <target state="translated">Ce mois-ci</target>
       </trans-unit>
       <trans-unit id="4EGvPuC" resname="Dieses Jahr">
         <source>Dieses Jahr</source>
-        <target>__Dieses Jahr</target>
+        <target state="translated">Cette année,</target>
       </trans-unit>
       <trans-unit id="yC5miz9" resname="Ferienblöcke buchen">
         <source>Ferienblöcke buchen</source>
-        <target>__Ferienblöcke buchen</target>
+        <target state="translated">Réservez des blocs de vacances</target>
       </trans-unit>
       <trans-unit id="ErBwija" resname="Kind/Kinder hinzufügen">
         <source>Kind/Kinder hinzufügen</source>
-        <target>__Kind/Kinder hinzufügen</target>
+        <target state="translated">Ajouter un/des enfant(s)</target>
       </trans-unit>
       <trans-unit id="_uz6lUD" resname="Kind hinzufügen">
         <source>Kind hinzufügen</source>
-        <target>__Kind hinzufügen</target>
+        <target state="translated">Ajouter l'enfant</target>
       </trans-unit>
       <trans-unit id="iO.NVG_" resname="Betreuungsblöcke bearbeiten">
         <source>Betreuungsblöcke bearbeiten</source>
-        <target>__Betreuungsblöcke bearbeiten</target>
+        <target state="translated">Modifier les blocs de soins</target>
       </trans-unit>
       <trans-unit id="smFsjbB" resname="Summe">
         <source>Summe</source>
-        <target>__Summe</target>
+        <target state="translated">Total</target>
       </trans-unit>
       <trans-unit id="bF2_2Vx" resname="Gebuchte Blöcke">
         <source>Gebuchte Blöcke</source>
-        <target>__Gebuchte Blöcke</target>
+        <target state="translated">Blocs publiés</target>
       </trans-unit>
       <trans-unit id="mIMpHmZ" resname="Preis">
         <source>Preis</source>
-        <target>__Preis</target>
+        <target state="translated">Prix</target>
       </trans-unit>
       <trans-unit id="AdJjS9f" resname="Beworbene Blöcke">
         <source>Beworbene Blöcke</source>
-        <target>__Beworbene Blöcke</target>
+        <target state="translated">Blocs annoncés</target>
       </trans-unit>
       <trans-unit id="VIYRzlj" resname="Zurück">
         <source>Zurück</source>
-        <target>__Zurück</target>
+        <target state="translated">Retour</target>
       </trans-unit>
       <trans-unit id="HhS980w" resname="Weiter">
         <source>Weiter</source>
-        <target>__Weiter</target>
+        <target state="translated">Continuer</target>
       </trans-unit>
       <trans-unit id="aL6EEuk" resname="Daten des Kindes eingeben">
         <source>Daten des Kindes eingeben</source>
-        <target>__Daten des Kindes eingeben</target>
+        <target state="translated">Saisir les données de l'enfant</target>
       </trans-unit>
       <trans-unit id="B3DzNHY" resname="Bankverbindung für Lastschrift">
         <source>Bankverbindung für Lastschrift</source>
-        <target>__Bankverbindung für Lastschrift</target>
+        <target state="translated">Détails bancaires pour le débit direct</target>
       </trans-unit>
       <trans-unit id="47DEQpj" resname="">
         <source/>
-        <target>__</target>
+        <target state="needs-translation"/>
       </trans-unit>
       <trans-unit id="bXHPK6K" resname="Daten der Kinder">
         <source>Daten der Kinder</source>
-        <target>__Daten der Kinder</target>
+        <target state="translated">Données sur les enfants</target>
       </trans-unit>
       <trans-unit id="jW61AgO" resname="Summe der gebuchten Ferienprogramme:">
         <source>Summe der gebuchten Ferienprogramme:</source>
-        <target>__Summe der gebuchten Ferienprogramme:</target>
+        <target state="translated">Total des programmes de vacances réservés :</target>
       </trans-unit>
       <trans-unit id="oI2OPQN" resname="Datenschutzhinweis der">
         <source>Datenschutzhinweis der</source>
-        <target>__Datenschutzhinweis der</target>
+        <target state="translated">Avis de protection des données de la</target>
       </trans-unit>
       <trans-unit id="0FAnZmt" resname="Summe für alle Kinder">
         <source>Summe für alle Kinder</source>
-        <target>__Summe für alle Kinder</target>
+        <target state="translated">Total pour tous les enfants</target>
       </trans-unit>
       <trans-unit id="bWFo3SU" resname="Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung">
         <source>Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung</source>
-        <target>__Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung</target>
+        <target state="translated">J'ai lu tous les avis de confidentialité des organisations et j'accepte le traitement</target>
       </trans-unit>
       <trans-unit id="suO3ml1" resname="Ich habe die allgemeinen Geschäftsbedingungen der Stadt  %stadt% zur Ferienbetreuung gelesen und akzeptiere diese">
         <source>Ich habe die allgemeinen Geschäftsbedingungen der Stadt  %stadt% zur Ferienbetreuung gelesen und akzeptiere diese</source>
-        <target>__Ich habe die allgemeinen Geschäftsbedingungen der Stadt  %stadt% zur Ferienbetreuung gelesen und akzeptiere diese</target>
+        <target state="translated">J'ai lu et j'accepte les conditions générales de la ville %stadt% for holiday care</target>
       </trans-unit>
       <trans-unit id="IuHFUTo" resname="Absenden">
         <source>Absenden</source>
-        <target>__Absenden</target>
+        <target state="translated">Soumissionner</target>
       </trans-unit>
       <trans-unit id="x_F92T7" resname="Anmeldung geöffnet">
         <source>Anmeldung geöffnet</source>
-        <target>__Anmeldung geöffnet</target>
+        <target state="translated">Inscription ouverte</target>
       </trans-unit>
       <trans-unit id="h2Mj6UV" resname="Keine freien Plätze mehr vorhanden">
         <source>Keine freien Plätze mehr vorhanden</source>
-        <target>__Keine freien Plätze mehr vorhanden</target>
+        <target state="translated">Plus de places gratuites disponibles</target>
       </trans-unit>
       <trans-unit id="fw1UpPA" resname="Anmeldung geschlossen">
         <source>Anmeldung geschlossen</source>
-        <target>__Anmeldung geschlossen</target>
+        <target state="translated">Inscription fermée</target>
       </trans-unit>
       <trans-unit id="YLMUx7W" resname="Kategrie">
         <source>Kategrie</source>
-        <target>__Kategrie</target>
+        <target state="translated">Catégorie</target>
       </trans-unit>
       <trans-unit id="lhR82.1" resname="bis">
         <source>bis</source>
-        <target>__bis</target>
+        <target state="translated">à</target>
       </trans-unit>
       <trans-unit id="MPslkSn" resname="Ort">
         <source>Ort</source>
-        <target>__Ort</target>
+        <target state="translated">Place</target>
       </trans-unit>
       <trans-unit id="g.B9xuk" resname="Termin">
         <source>Termin</source>
-        <target>__Termin</target>
+        <target state="translated">Date</target>
       </trans-unit>
       <trans-unit id="CbU40dD" resname="Begin">
         <source>Begin</source>
-        <target>__Begin</target>
+        <target state="translated">Commencez par</target>
       </trans-unit>
       <trans-unit id="LdzWBsh" resname="Ende">
         <source>Ende</source>
-        <target>__Ende</target>
+        <target state="translated">Fin</target>
       </trans-unit>
       <trans-unit id="XaAKW1h" resname="Anmeldezeitraum">
         <source>Anmeldezeitraum</source>
-        <target>__Anmeldezeitraum</target>
+        <target state="translated">Période d'inscription</target>
       </trans-unit>
       <trans-unit id="nj8Fryx" resname="Anzahl Plätze">
         <source>Anzahl Plätze</source>
-        <target>__Anzahl Plätze</target>
+        <target state="translated">Nombre de places</target>
       </trans-unit>
       <trans-unit id="NN9_LX_" resname="Für diesen Block gibt es eine Beschschränkung der Betreungsplätzte.">
         <source>Für diesen Block gibt es eine Beschschränkung der Betreungsplätzte.</source>
-        <target>__Für diesen Block gibt es eine Beschschränkung der Betreungsplätzte.</target>
+        <target state="translated">Pour ce module, il y a une restriction du nombre de places disponibles.</target>
       </trans-unit>
       <trans-unit id="aIMZ73R" resname="Maximal">
         <source>Maximal</source>
-        <target>__Maximal</target>
+        <target state="translated">Maximum</target>
       </trans-unit>
       <trans-unit id="1XYcuzr" resname="Freie Plätze">
         <source>Freie Plätze</source>
-        <target>__Freie Plätze</target>
+        <target state="translated">Places gratuites</target>
       </trans-unit>
       <trans-unit id="1Ynj8Tn" resname="Ferienprogramm Verwaltung">
         <source>Ferienprogramm Verwaltung</source>
-        <target>__Ferienprogramm Verwaltung</target>
+        <target state="translated">Administration du programme de vacances</target>
       </trans-unit>
       <trans-unit id="q8r8gtq" resname="Titel">
         <source>Titel</source>
-        <target>__Titel</target>
+        <target state="translated">Sujet</target>
       </trans-unit>
       <trans-unit id="gN5JtvR" resname="Anfangs Datum">
         <source>Anfangs Datum</source>
-        <target>__Anfangs Datum</target>
+        <target state="translated">Date de début</target>
       </trans-unit>
       <trans-unit id="gBirc9T" resname="End Datum">
         <source>End Datum</source>
-        <target>__End Datum</target>
+        <target state="translated">Date de fin</target>
       </trans-unit>
       <trans-unit id="cXTeIrr" resname="Anzahl">
         <source>Anzahl</source>
-        <target>__Anzahl</target>
+        <target state="translated">Numéro</target>
       </trans-unit>
       <trans-unit id="yS3MKGG" resname="Ticket ID">
         <source>Ticket ID</source>
-        <target>__Ticket ID</target>
+        <target state="translated">ID de billet</target>
       </trans-unit>
       <trans-unit id="vSlt7Av" resname="Bezahlung wählen">
         <source>Bezahlung wählen</source>
-        <target>__Bezahlung wählen</target>
+        <target state="translated">Choisissez le paiement</target>
       </trans-unit>
       <trans-unit id="BH_sQYm" resname="Bezahlmethode auswählen">
         <source>Bezahlmethode auswählen</source>
-        <target>__Bezahlmethode auswählen</target>
+        <target state="translated">Sélectionnez la méthode de paiement</target>
       </trans-unit>
       <trans-unit id="_IqP6RQ" resname="Zahlen Sie hier die Summe von %summe%€ an die Organisation %organisation%">
         <source>Zahlen Sie hier die Summe von %summe%€ an die Organisation %organisation%</source>
-        <target>__Zahlen Sie hier die Summe von %summe%€ an die Organisation %organisation%</target>
+        <target state="translated">Verser la somme de %summe%€ à l'organisation %organisation%</target>
       </trans-unit>
       <trans-unit id="leUOeLu" resname="Wichtig, Wichtig">
         <source>Wichtig, Wichtig</source>
-        <target>__Wichtig, Wichtig</target>
+        <target state="translated">Important, Important</target>
       </trans-unit>
       <trans-unit id="JDD3en2" resname="Kreditkarte oder Paypal">
         <source>Kreditkarte oder Paypal</source>
-        <target>__Kreditkarte oder Paypal</target>
+        <target state="translated">Carte de crédit ou Paypal</target>
       </trans-unit>
       <trans-unit id="Vc_Z2WP" resname="Diese Zahlungsart verwenden">
         <source>Diese Zahlungsart verwenden</source>
-        <target>__Diese Zahlungsart verwenden</target>
+        <target state="translated">Utilisez ce mode de paiement</target>
       </trans-unit>
       <trans-unit id="q221mSN" resname="am">
         <source>am</source>
-        <target>__am</target>
+        <target state="translated">sur</target>
       </trans-unit>
       <trans-unit id="zxj5ccL" resname="Email an Eltern senden">
         <source>Email an Eltern senden</source>
-        <target>__Email an Eltern senden</target>
+        <target state="translated">Envoyer un courriel aux parents</target>
       </trans-unit>
       <trans-unit id="fVio9eF" resname="Details der Eltern">
         <source>Details der Eltern</source>
-        <target>__Details der Eltern</target>
+        <target state="translated">Les détails des parents</target>
       </trans-unit>
       <trans-unit id="_K.DxlB" resname="Betrag ist noch offen">
         <source>Betrag ist noch offen</source>
-        <target>__Betrag ist noch offen</target>
+        <target state="translated">Le montant est toujours ouvert</target>
       </trans-unit>
       <trans-unit id="A3uVM3G" resname="Name des Kindes">
         <source>Name des Kindes</source>
-        <target>__Name des Kindes</target>
+        <target state="translated">Nom de l'enfant</target>
       </trans-unit>
       <trans-unit id="V1ci98q" resname="Ticket ausdrucken">
         <source>Ticket ausdrucken</source>
-        <target>__Ticket ausdrucken</target>
+        <target state="translated">Imprimez votre billet</target>
       </trans-unit>
       <trans-unit id="NnArAGY" resname="Zahlungen">
         <source>Zahlungen</source>
-        <target>__Zahlungen</target>
+        <target state="translated">Paiements</target>
       </trans-unit>
       <trans-unit id="wr1RQJk" resname="Bezahlmethode">
         <source>Bezahlmethode</source>
-        <target>__Bezahlmethode</target>
+        <target state="translated">Mode de paiement</target>
       </trans-unit>
       <trans-unit id="kTWILTI" resname="Datum">
         <source>Datum</source>
-        <target>__Datum</target>
+        <target state="translated">Date</target>
       </trans-unit>
       <trans-unit id="UvJ2Yqo" resname="bezahlt">
         <source>bezahlt</source>
-        <target>__bezahlt</target>
+        <target state="translated">Payé</target>
       </trans-unit>
       <trans-unit id="QVYIDc4" resname="IP Adresse">
         <source>IP Adresse</source>
-        <target>__IP Adresse</target>
+        <target state="translated">Adresse IP</target>
       </trans-unit>
       <trans-unit id="WyRpkpJ" resname="Rückerstattungen">
         <source>Rückerstattungen</source>
-        <target>__Rückerstattungen</target>
+        <target state="translated">Restitutions</target>
       </trans-unit>
       <trans-unit id="dfav_8I" resname="Betrag €">
         <source>Betrag €</source>
-        <target>__Betrag €</target>
+        <target state="translated">Montant de l'euro</target>
       </trans-unit>
       <trans-unit id="AAjWma7" resname="Stornogebühr €">
         <source>Stornogebühr €</source>
-        <target>__Stornogebühr €</target>
+        <target state="translated">Frais d'annulation</target>
       </trans-unit>
       <trans-unit id="xuiqa96" resname="Rückzahlungsbetrag €">
         <source>Rückzahlungsbetrag €</source>
-        <target>__Rückzahlungsbetrag €</target>
+        <target state="translated">Montant du remboursement de l'euro</target>
       </trans-unit>
       <trans-unit id="kXUpYJF" resname="Fehlermeldung">
         <source>Fehlermeldung</source>
-        <target>__Fehlermeldung</target>
+        <target state="translated">Message d'erreur</target>
       </trans-unit>
       <trans-unit id="GXIHU23" resname="Zurückzahlung anstoßen">
         <source>Zurückzahlung anstoßen</source>
-        <target>__Zurückzahlung anstoßen</target>
+        <target state="translated">Initier le remboursement</target>
       </trans-unit>
       <trans-unit id="H32dl80" resname="Nicht ausgezahlt">
         <source>Nicht ausgezahlt</source>
-        <target>__Nicht ausgezahlt</target>
+        <target state="translated">Non payé</target>
       </trans-unit>
       <trans-unit id="AuEM1D8" resname="Ferienprogramm">
         <source>Ferienprogramm</source>
-        <target>__Ferienprogramm</target>
+        <target state="translated">Programme de vacances</target>
       </trans-unit>
       <trans-unit id="rcR2WAt" resname="Nicht Bestätigt">
         <source>Nicht Bestätigt</source>
-        <target>__Nicht Bestätigt</target>
+        <target state="translated">Non confirmé</target>
       </trans-unit>
       <trans-unit id="Cqah_jM" resname="Storniert">
         <source>Storniert</source>
-        <target>__Storniert</target>
+        <target state="translated">Annulé</target>
       </trans-unit>
       <trans-unit id="BXsnvbx" resname="Bezahlt">
         <source>Bezahlt</source>
-        <target>__Bezahlt</target>
+        <target state="translated">Payé</target>
       </trans-unit>
       <trans-unit id="qw8v1bJ" resname="Zeitraum">
         <source>Zeitraum</source>
-        <target>__Zeitraum</target>
+        <target state="translated">Période</target>
       </trans-unit>
       <trans-unit id="IlW0tqU" resname="Namensschilder">
         <source>Namensschilder</source>
-        <target>__Namensschilder</target>
+        <target state="translated">Badges personnalisés</target>
       </trans-unit>
       <trans-unit id="ThONI8U" resname="Preise Bearbeiten">
         <source>Preise Bearbeiten</source>
-        <target>__Preise Bearbeiten</target>
+        <target state="translated">Modifier les prix</target>
       </trans-unit>
       <trans-unit id="CvBzQW1" resname="Gutscheine Bearbeiten">
         <source>Gutscheine Bearbeiten</source>
-        <target>__Gutscheine Bearbeiten</target>
+        <target state="translated">Modifier les bons</target>
       </trans-unit>
       <trans-unit id="nUAMPeZ" resname="Duplizieren">
         <source>Duplizieren</source>
-        <target>__Duplizieren</target>
+        <target state="translated">Double</target>
       </trans-unit>
       <trans-unit id="y7lc8Ct" resname="Hinzufügen">
         <source>Hinzufügen</source>
-        <target>__Hinzufügen</target>
+        <target state="translated">Ajouter</target>
       </trans-unit>
       <trans-unit id="_K3AuFq" resname="Anzahl Anmeldungen">
         <source>Anzahl Anmeldungen</source>
-        <target>__Anzahl Anmeldungen</target>
+        <target state="translated">Nombre d'inscriptions</target>
       </trans-unit>
       <trans-unit id="gJ85f5K" resname="Bezahlart">
         <source>Bezahlart</source>
-        <target>__Bezahlart</target>
+        <target state="translated">Méthode de paiement</target>
       </trans-unit>
       <trans-unit id="aTavi9V" resname="Ferienanmeldungen">
         <source>Ferienanmeldungen</source>
-        <target>__Ferienanmeldungen</target>
+        <target state="translated">Inscriptions pour les vacances</target>
       </trans-unit>
       <trans-unit id="02kJ9_e" resname="Anmeldung nicht abgeschlossen">
         <source>Anmeldung nicht abgeschlossen</source>
-        <target>__Anmeldung nicht abgeschlossen</target>
+        <target state="translated">Inscription non terminée</target>
       </trans-unit>
       <trans-unit id="3piyDXZ" resname="Übersicht und Stornieren">
         <source>Übersicht und Stornieren</source>
-        <target>__Übersicht und Stornieren</target>
+        <target state="translated">Aperçu et annulation</target>
       </trans-unit>
       <trans-unit id="CALAH20" resname="Betreuunde Organisation">
         <source>Betreuunde Organisation</source>
-        <target>__Betreuunde Organisation</target>
+        <target state="translated">Organisation supervisée</target>
       </trans-unit>
       <trans-unit id="tjdMNYf" resname="Bereits Storniert">
         <source>Bereits Storniert</source>
-        <target>__Bereits Storniert</target>
+        <target state="translated">Déjà annulé</target>
       </trans-unit>
       <trans-unit id="Q_kvvH6" resname="Stornieren und Wartelistenplatz freigeben">
         <source>Stornieren und Wartelistenplatz freigeben</source>
-        <target>__Stornieren und Wartelistenplatz freigeben</target>
+        <target state="translated">Annuler et libérer l'espace de liste d'attente</target>
       </trans-unit>
       <trans-unit id="6UFsslF" resname="Änderung absenden">
         <source>Änderung absenden</source>
-        <target>__Änderung absenden</target>
+        <target state="translated">Soumettre le changement</target>
       </trans-unit>
       <trans-unit id="7YKxfOj" resname="Betreuungszeit">
         <source>Betreuungszeit</source>
-        <target>__Betreuungszeit</target>
+        <target state="translated">Temps de soins</target>
       </trans-unit>
       <trans-unit id="Ml7s_dM" resname="Kontakt">
         <source>Kontakt</source>
-        <target>__Kontakt</target>
+        <target state="translated">Contact</target>
       </trans-unit>
       <trans-unit id="1TkPaD1" resname="Regelungen für die Teilnahme am Ferienprogram">
         <source>Regelungen für die Teilnahme am Ferienprogram</source>
-        <target>__Regelungen für die Teilnahme am Ferienprogram</target>
+        <target state="translated">Règlement pour la participation au programme des Fêtes</target>
       </trans-unit>
       <trans-unit id="fzPMOmN" resname="Mindest Anzahl">
         <source>Mindest Anzahl</source>
-        <target>__Mindest Anzahl</target>
+        <target state="translated">Nombre minimum</target>
       </trans-unit>
       <trans-unit id="h_V2YUS" resname="Maximal Anzahl">
         <source>Maximal Anzahl</source>
-        <target>__Maximal Anzahl</target>
+        <target state="translated">Nombre maximum</target>
       </trans-unit>
       <trans-unit id="9Nhlrht" resname="Aktuell">
         <source>Aktuell</source>
-        <target>__Aktuell</target>
+        <target state="translated">D'actualité</target>
       </trans-unit>
       <trans-unit id="HzwRRKM" resname="Nicht alleinerziehend">
         <source>Nicht alleinerziehend</source>
-        <target>__Nicht alleinerziehend</target>
+        <target state="translated">Pas de parent isolé</target>
       </trans-unit>
       <trans-unit id="HRjXb3." resname="Infos zu dem Kind">
         <source>Infos zu dem Kind</source>
-        <target>__Infos zu dem Kind</target>
+        <target state="translated">À propos de l'enfant</target>
       </trans-unit>
       <trans-unit id="vYXS4gp" resname="Jahrgangsstufe">
         <source>Jahrgangsstufe</source>
-        <target>__Jahrgangsstufe</target>
+        <target state="translated">Grade</target>
       </trans-unit>
       <trans-unit id="rb9tbUU" resname="Infos zu den Eltern">
         <source>Infos zu den Eltern</source>
-        <target>__Infos zu den Eltern</target>
+        <target state="translated">Informations sur les parents</target>
       </trans-unit>
       <trans-unit id="zSSOSNw" resname="Bildungs- und Teilhabepaket (BUT) Empfänger">
         <source>Bildungs- und Teilhabepaket (BUT) Empfänger</source>
-        <target>__Bildungs- und Teilhabepaket (BUT) Empfänger</target>
+        <target state="translated">Forfait éducation et participation (BUT) Bénéficiaires</target>
       </trans-unit>
       <trans-unit id="n.c95W2" resname="Online Anmeldung und Verwaltung für die Schulkindbetreuung">
         <source>Online Anmeldung und Verwaltung für die Schulkindbetreuung</source>
-        <target>__Online Anmeldung und Verwaltung für die Schulkindbetreuung</target>
+        <target state="translated">Inscription et administration en ligne pour la garde d'enfants à l'école</target>
       </trans-unit>
       <trans-unit id="Dt7wRjx" resname="Die Schulkindbetreuung steht ihnen in folgenden Städten zur Verfügung">
         <source>Die Schulkindbetreuung steht ihnen in folgenden Städten zur Verfügung</source>
-        <target>__Die Schulkindbetreuung steht ihnen in folgenden Städten zur Verfügung</target>
+        <target state="translated">Des services de garde scolaires sont disponibles dans les villes suivantes</target>
       </trans-unit>
       <trans-unit id="pNXxudi" resname="Unsere Kinderbetreuung">
         <source>Unsere Kinderbetreuung</source>
-        <target>__Unsere Kinderbetreuung</target>
+        <target state="translated">Notre garde d'enfants</target>
       </trans-unit>
       <trans-unit id=".ujFIir" resname="Datenschutzhinweise auf Seiten von H2 invent">
         <source>Datenschutzhinweise auf Seiten von H2 invent</source>
-        <target>__Datenschutzhinweise auf Seiten von H2 invent</target>
+        <target state="translated">Avis de confidentialité sur les pages de H2 inventer</target>
       </trans-unit>
       <trans-unit id="y6WjZCk" resname="Alle bei der Anmeldung eingegebenen Daten werden dem Träger der Schulkindbetreuung zur Abwicklung der Schulkindbetreuung mitgeteilt.">
         <source>Alle bei der Anmeldung eingegebenen Daten werden dem Träger der Schulkindbetreuung zur Abwicklung der Schulkindbetreuung mitgeteilt.</source>
-        <target>__Alle bei der Anmeldung eingegebenen Daten werden dem Träger der Schulkindbetreuung zur Abwicklung der Schulkindbetreuung mitgeteilt.</target>
+        <target state="translated">Toutes les données saisies lors de l'inscription seront communiquées à l'organisation de la garde d'enfants scolaire aux fins du traitement de la garde d'enfants scolaire.</target>
       </trans-unit>
       <trans-unit id="Rc7D_JO" resname="Jede Verbindung von Ihrem Rechner zu SKB und zwischen den Servern von der Schulkindbetreuung ist durch Verschlüsselung nach aktuellen Standards geschützt.">
         <source>Jede Verbindung von Ihrem Rechner zu SKB und zwischen den Servern von der Schulkindbetreuung ist durch Verschlüsselung nach aktuellen Standards geschützt.</source>
-        <target>__Jede Verbindung von Ihrem Rechner zu SKB und zwischen den Servern von der Schulkindbetreuung ist durch Verschlüsselung nach aktuellen Standards geschützt.</target>
+        <target state="translated">Chaque connexion de votre ordinateur à la SKB et entre les serveurs de la garderie de l'école est protégée par un cryptage conforme aux normes en vigueur.</target>
       </trans-unit>
       <trans-unit id="0qFVV1v" resname="Beim Anmelden setzen wir Cookies ein, um die Funktionalität bequem zu gewährleisten und um sicherzustellen, welcher Daten Ihnen gehört. Wir speichern keine IP-Adressen, Browserdaten, Referer oder andere unnötige Metadaten.">
         <source>Beim Anmelden setzen wir Cookies ein, um die Funktionalität bequem zu gewährleisten und um sicherzustellen, welcher Daten Ihnen gehört. Wir speichern keine IP-Adressen, Browserdaten, Referer oder andere unnötige Metadaten.</source>
-        <target>__Beim Anmelden setzen wir Cookies ein, um die Funktionalität bequem zu gewährleisten und um sicherzustellen, welcher Daten Ihnen gehört. Wir speichern keine IP-Adressen, Browserdaten, Referer oder andere unnötige Metadaten.</target>
+        <target state="translated">Lorsque vous vous connectez, nous utilisons des cookies pour vous offrir des fonctionnalités pratiques et pour nous assurer que les données vous appartiennent. Nous ne stockons pas d'adresses IP, de données de navigation, de références ou d'autres métadonnées inutiles.</target>
       </trans-unit>
       <trans-unit id="MK3zW3." resname="Alle Server von H2 invent befinden sich in deutschen Rechenzentren und deutsches Datenschutzrecht ist anwendbar. Das Team von SKB hat technisch Zugriff auf Ihre Daten, benutzt diesen aber ausschliesslich im Falle einer Supportanfrage zur Fehleranalyse.">
         <source>Alle Server von H2 invent befinden sich in deutschen Rechenzentren und deutsches Datenschutzrecht ist anwendbar. Das Team von SKB hat technisch Zugriff auf Ihre Daten, benutzt diesen aber ausschliesslich im Falle einer Supportanfrage zur Fehleranalyse.</source>
-        <target>__Alle Server von H2 invent befinden sich in deutschen Rechenzentren und deutsches Datenschutzrecht ist anwendbar. Das Team von SKB hat technisch Zugriff auf Ihre Daten, benutzt diesen aber ausschliesslich im Falle einer Supportanfrage zur Fehleranalyse.</target>
+        <target state="translated">Tous les serveurs H2 invent sont situés dans des centres de données allemands et la loi allemande sur la protection des données est applicable. L'équipe du SKiB a un accès technique à vos données, mais ne les utilise qu'en cas de demande d'assistance pour l'analyse des erreurs.</target>
       </trans-unit>
       <trans-unit id="RWdIZdk" resname="Wenn Sie in einer E-Mail, die wir Ihnen zu einer Anmeldung senden, erstmalig einen Link anklicken, speichern wir die Information, dass Ihre E-Mail-Adresse anscheinend funktioniert und korrekt ist.">
         <source>Wenn Sie in einer E-Mail, die wir Ihnen zu einer Anmeldung senden, erstmalig einen Link anklicken, speichern wir die Information, dass Ihre E-Mail-Adresse anscheinend funktioniert und korrekt ist.</source>
-        <target>__Wenn Sie in einer E-Mail, die wir Ihnen zu einer Anmeldung senden, erstmalig einen Link anklicken, speichern wir die Information, dass Ihre E-Mail-Adresse anscheinend funktioniert und korrekt ist.</target>
+        <target state="translated">Lorsque vous cliquez pour la première fois sur un lien dans un e-mail que nous vous envoyons pour vous inscrire, nous enregistrons les informations selon lesquelles votre adresse e-mail semble fonctionner et est correcte.</target>
       </trans-unit>
       <trans-unit id="MAcU67K" resname="Wenn Sie per Banküberweisung zahlen, werden zahlungsrelevante Metadaten bei Ihrer und der Bank des Trägers anfallen.">
         <source>Wenn Sie per Banküberweisung zahlen, werden zahlungsrelevante Metadaten bei Ihrer und der Bank des Trägers anfallen.</source>
-        <target>__Wenn Sie per Banküberweisung zahlen, werden zahlungsrelevante Metadaten bei Ihrer und der Bank des Trägers anfallen.</target>
+        <target state="translated">Wenn Sie per Banküberweisung zahlen, werden zahlungsrelevante Metadaten bei Ihrer und der Bank des Trägers anfallen.</target>
       </trans-unit>
       <trans-unit id="IH6kyJe" resname="Wenn Sie per SEPA-Bankeinzug zahlen, werden zahlungsrelevante Metadaten bei Ihrer und der Bank des Trägers anfallen.">
         <source>Wenn Sie per SEPA-Bankeinzug zahlen, werden zahlungsrelevante Metadaten bei Ihrer und der Bank des Trägers anfallen.</source>
-        <target>__Wenn Sie per SEPA-Bankeinzug zahlen, werden zahlungsrelevante Metadaten bei Ihrer und der Bank des Trägers anfallen.</target>
+        <target state="translated">Si vous payez via la collecte bancaire SEPA, les métadonnées relatives au paiement seront générées par votre banque et celle de l'organisation.</target>
       </trans-unit>
       <trans-unit id="5jtVyd5" resname="Datenschutzhinweise auf Seiten der Träger">
         <source>Datenschutzhinweise auf Seiten der Träger</source>
-        <target>__Datenschutzhinweise auf Seiten der Träger</target>
+        <target state="translated">Avis de confidentialité sur les sites des organisations</target>
       </trans-unit>
       <trans-unit id="bkH.JRR" resname="Für Informationen zum Datenschutz auf Seiten des Trägers kontaktieren Sie bitte den jeweiligen Träger.">
         <source>Für Informationen zum Datenschutz auf Seiten des Trägers kontaktieren Sie bitte den jeweiligen Träger.</source>
-        <target>__Für Informationen zum Datenschutz auf Seiten des Trägers kontaktieren Sie bitte den jeweiligen Träger.</target>
+        <target state="translated">Pour obtenir des informations sur la protection des données de la part du transporteur, veuillez contacter les organisations respectives</target>
       </trans-unit>
       <trans-unit id="zMfkeh." resname="Anschrift">
         <source>Anschrift</source>
-        <target>__Anschrift</target>
+        <target state="translated">Adresse</target>
       </trans-unit>
       <trans-unit id="l.lgX6v" resname="H2 invent GmbH">
         <source>H2 invent GmbH</source>
-        <target>__H2 invent GmbH</target>
+        <target state="translated">H2 invent GmbH</target>
       </trans-unit>
       <trans-unit id="gHcUFiT" resname="Gewerbestraße 9 (HALLE9)">
         <source>Gewerbestraße 9 (HALLE9)</source>
-        <target>__Gewerbestraße 9 (HALLE9)</target>
+        <target state="translated">Gewerbestraße 9 (HALLE9)</target>
       </trans-unit>
       <trans-unit id="80vNoWF" resname="D-79539 Lörrach">
         <source>D-79539 Lörrach</source>
-        <target>__D-79539 Lörrach</target>
+        <target state="translated">D-79539 Lörrach</target>
       </trans-unit>
       <trans-unit id="Jb6LxTi" resname="Vertretungsberechtige Geschäftsführer: Andreas Holzmann">
         <source>Vertretungsberechtige Geschäftsführer: Andreas Holzmann</source>
-        <target>__Vertretungsberechtige Geschäftsführer: Andreas Holzmann</target>
+        <target state="translated">Directeurs généraux autorisés à représenter : Andreas Holzmann</target>
       </trans-unit>
       <trans-unit id="2A_ureD" resname="Telefon: 07621-7925862">
         <source>Telefon: 07621-7925862</source>
-        <target>__Telefon: 07621-7925862</target>
+        <target state="translated">Téléphone: 07621-7925862</target>
       </trans-unit>
       <trans-unit id="5uxpLF4" resname="EMail: info@h2-invent.com">
         <source>EMail: info@h2-invent.com</source>
-        <target>__EMail: info@h2-invent.com</target>
+        <target state="translated">Courrier électronique : info@h2-invent.com</target>
       </trans-unit>
       <trans-unit id="EL_YDdm" resname="Registergericht: Amtsgericht Freiburg im Breisgau">
         <source>Registergericht: Amtsgericht Freiburg im Breisgau</source>
-        <target>__Registergericht: Amtsgericht Freiburg im Breisgau</target>
+        <target state="translated">Cour d'enregistrement: Tribunal de district de Fribourg im Breisgau</target>
       </trans-unit>
       <trans-unit id="alNQeJi" resname="Registernummer: HRB 720434">
         <source>Registernummer: HRB 720434</source>
-        <target>__Registernummer: HRB 720434</target>
+        <target state="translated">Numéro d'enregistrement: HRB 720434</target>
       </trans-unit>
       <trans-unit id="Gpk1Hk." resname="Umsatzsteuer-Identifikationsnummer gem. § 27a UStG: DE326041099">
         <source>Umsatzsteuer-Identifikationsnummer gem. § 27a UStG: DE326041099</source>
-        <target>__Umsatzsteuer-Identifikationsnummer gem. § 27a UStG: DE326041099</target>
+        <target state="translated">Numéro d'identification de la taxe sur la valeur ajoutée en vertu de l'article 27a UStG : DE326041099</target>
       </trans-unit>
       <trans-unit id="nT0rEIP" resname="Inhaltlich Verantwortlicher gem. § 55 II RStV: H2 invent GmbH">
         <source>Inhaltlich Verantwortlicher gem. § 55 II RStV: H2 invent GmbH</source>
-        <target>__Inhaltlich Verantwortlicher gem. § 55 II RStV: H2 invent GmbH</target>
+        <target state="translated">Responsable du contenu conformément à l'article 55 II RStV: H2 invent GmbH</target>
       </trans-unit>
       <trans-unit id="4MC8jlF" resname="Sichtbar">
         <source>Sichtbar</source>
-        <target>__Sichtbar</target>
+        <target state="translated">Visible</target>
       </trans-unit>
       <trans-unit id="2HY7CCo" resname="News Nachricht">
         <source>News Nachricht</source>
-        <target>__News Nachricht</target>
+        <target state="translated">Message d'information</target>
       </trans-unit>
       <trans-unit id="z8aUKSg" resname="Aktivieren">
         <source>Aktivieren</source>
-        <target>__Aktivieren</target>
+        <target state="translated">Activer</target>
       </trans-unit>
       <trans-unit id="S1Y2CDK" resname="Per Email versenden">
         <source>Per Email versenden</source>
-        <target>__Per Email versenden</target>
+        <target state="translated">Envoyer par e-mail</target>
       </trans-unit>
       <trans-unit id="iuduAb1" resname="Elektronische Benachrichtigung">
         <source>Elektronische Benachrichtigung</source>
-        <target>__Elektronische Benachrichtigung</target>
+        <target state="translated">Notification électronique</target>
       </trans-unit>
       <trans-unit id="GRNh_nN" resname="Anmeldung zur Schulkindbetreuung in %name% geschlossen">
         <source>Anmeldung zur Schulkindbetreuung in %name% geschlossen</source>
-        <target>__Anmeldung zur Schulkindbetreuung in %name% geschlossen</target>
+        <target state="translated">Inscription pour la garde d'enfants à l'école en %name% fermé</target>
       </trans-unit>
       <trans-unit id="FRQs4Qn" resname="Sie befinden sich außerhalb des Anmeldezeitraums für die Schulkindbetreuung in %name%.">
         <source>Sie befinden sich außerhalb des Anmeldezeitraums für die Schulkindbetreuung in %name%.</source>
-        <target>__Sie befinden sich außerhalb des Anmeldezeitraums für die Schulkindbetreuung in %name%.</target>
+        <target state="translated">Vous êtes en dehors de la période d'inscription pour la garde d'enfants à l'école en %name%.</target>
       </trans-unit>
       <trans-unit id="GMVPile" resname="Folgende Träger stehen für weitere Fragen zur Verfügung">
         <source>Folgende Träger stehen für weitere Fragen zur Verfügung</source>
-        <target>__Folgende Träger stehen für weitere Fragen zur Verfügung</target>
+        <target state="translated">Les organisations suivantes sont à votre disposition pour toute question complémentaire</target>
       </trans-unit>
       <trans-unit id="RvZf0p5" resname="Ansprechpartner:">
         <source>Ansprechpartner:</source>
-        <target>__Ansprechpartner:</target>
+        <target state="translated">Contact</target>
       </trans-unit>
       <trans-unit id="_BhYYB3" resname="Telefon:">
         <source>Telefon:</source>
-        <target>__Telefon:</target>
+        <target state="translated">Téléphone:</target>
       </trans-unit>
       <trans-unit id="7zTZPzG" resname="E-Mail:">
         <source>E-Mail:</source>
-        <target>__E-Mail:</target>
+        <target state="translated">E-mail :</target>
       </trans-unit>
       <trans-unit id="_Gkce6M" resname="Webseite">
         <source>Webseite</source>
-        <target>__Webseite</target>
+        <target state="translated">Internet</target>
       </trans-unit>
       <trans-unit id="PJBnK00" resname="Daten der Eltern">
         <source>Daten der Eltern</source>
-        <target>__Daten der Eltern</target>
+        <target state="translated">Données des parents</target>
       </trans-unit>
       <trans-unit id="d1GwbNU" resname="Netto Familieneinkommen pro Monat">
         <source>Netto Familieneinkommen pro Monat</source>
-        <target>__Netto Familieneinkommen pro Monat</target>
+        <target state="translated">Revenu familial net par mois</target>
       </trans-unit>
       <trans-unit id="3MeB11Y" resname="Kinder im Kinderganrten">
         <source>Kinder im Kinderganrten</source>
-        <target>__Kinder im Kinderganrten</target>
+        <target state="translated">Enfants dans l'oie des enfants</target>
       </trans-unit>
       <trans-unit id="wMwQT4W" resname="Monatliche Schulkindbetreuungskosten">
         <source>Monatliche Schulkindbetreuungskosten</source>
-        <target>__Monatliche Schulkindbetreuungskosten</target>
+        <target state="translated">Frais mensuels de garde d'enfants à l'école</target>
       </trans-unit>
       <trans-unit id="f84pDHH" resname="Sicherheitscode (Dieser Code wird bei jeder Kommunikation mit dem Träger abgefragt)">
         <source>Sicherheitscode (Dieser Code wird bei jeder Kommunikation mit dem Träger abgefragt)</source>
-        <target>__Sicherheitscode (Dieser Code wird bei jeder Kommunikation mit dem Träger abgefragt)</target>
+        <target state="translated">Code de sécurité (ce code est demandé pour chaque communication avec l'organisation)</target>
       </trans-unit>
       <trans-unit id="3y3aZcW" resname="Geburtstag:">
         <source>Geburtstag:</source>
-        <target>__Geburtstag:</target>
+        <target state="translated">Anniversaire :</target>
       </trans-unit>
       <trans-unit id="HeLgoYx" resname="Allergie">
         <source>Allergie</source>
-        <target>__Allergie</target>
+        <target state="translated">Allergie</target>
       </trans-unit>
       <trans-unit id="MFEI.wk" resname="Monatliche Kosten">
         <source>Monatliche Kosten</source>
-        <target>__Monatliche Kosten</target>
+        <target state="translated">Coûts mensuels</target>
       </trans-unit>
       <trans-unit id="h4KxQS9" resname="Anwesend">
         <source>Anwesend</source>
-        <target>__Anwesend</target>
+        <target state="translated">Présent</target>
       </trans-unit>
       <trans-unit id="Tb15Jum" resname="Alleine nach Hause">
         <source>Alleine nach Hause</source>
-        <target>__Alleine nach Hause</target>
+        <target state="translated">Rentrer seul chez soi</target>
       </trans-unit>
       <trans-unit id="RXMISON" resname="Daten des Kindes">
         <source>Daten des Kindes</source>
-        <target>__Daten des Kindes</target>
+        <target state="translated">Données de l'enfant</target>
       </trans-unit>
       <trans-unit id="KnjEKsZ" resname="Gluten intolerant">
         <source>Gluten intolerant</source>
-        <target>__Gluten intolerant</target>
+        <target state="translated">Intolérant au gluten</target>
       </trans-unit>
       <trans-unit id="41ruOvg" resname="ist Laktose intolerant">
         <source>ist Laktose intolerant</source>
-        <target>__ist Laktose intolerant</target>
+        <target state="translated">le lactose est intolérant</target>
       </trans-unit>
       <trans-unit id="cU7CKq5" resname="Darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden">
         <source>Darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden</source>
-        <target>__Darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden</target>
+        <target state="translated">Peut être appliqué en été avec une crème solaire standard</target>
       </trans-unit>
       <trans-unit id="RI4s1Py" resname="Fotos, dürfen sowohl in der öffentlichen Presse veröffentlicht werden">
         <source>Fotos, dürfen sowohl in der öffentlichen Presse veröffentlicht werden</source>
-        <target>__Fotos, dürfen sowohl in der öffentlichen Presse veröffentlicht werden</target>
+        <target state="translated">Photos, peuvent être publiées dans la presse publique</target>
       </trans-unit>
       <trans-unit id="IUuwxS5" resname="Leistungsdatum">
         <source>Leistungsdatum</source>
-        <target>__Leistungsdatum</target>
+        <target state="translated">Date de représentation</target>
       </trans-unit>
       <trans-unit id="orv8ey2" resname="Wie mit Ihnen vereinbart ziehen wir unsere Forderungen in Höhe von %betrag%€ mit dem SEPA-Lastschrift Nr. %mandat% zu der Gläubiger-Identitfikationsnummer %glaubigerid%&#10;        von Ihrem Konto: IBAN %iban%, BIC %bic%, zum Fälligkeitsdatum %einzugsdatum% ein. Wir bitten Sie, für Kontodeckung zu sorgen.">
         <source>Wie mit Ihnen vereinbart ziehen wir unsere Forderungen in Höhe von %betrag%€ mit dem SEPA-Lastschrift Nr. %mandat% zu der Gläubiger-Identitfikationsnummer %glaubigerid%
         von Ihrem Konto: IBAN %iban%, BIC %bic%, zum Fälligkeitsdatum %einzugsdatum% ein. Wir bitten Sie, für Kontodeckung zu sorgen.</source>
-        <target>__Wie mit Ihnen vereinbart ziehen wir unsere Forderungen in Höhe von %betrag%€ mit dem SEPA-Lastschrift Nr. %mandat% zu der Gläubiger-Identitfikationsnummer %glaubigerid%
-        von Ihrem Konto: IBAN %iban%, BIC %bic%, zum Fälligkeitsdatum %einzugsdatum% ein. Wir bitten Sie, für Kontodeckung zu sorgen.</target>
+        <target state="translated">Comme convenu avec vous, nous tirons nos créances d'un montant de %betrag%€ avec le prélèvement SEPA n° %mandat% à l'Identifiant du créancier %glaubigerid%
+        de votre compte : IBAN %iban%, BIC %bic%, à la date d'échéance %date de collecte% à la date d'échéance. Nous vous demandons de bien vouloir prévoir une couverture de compte.</target>
       </trans-unit>
       <trans-unit id="R8zmCYu" resname="Schuljahresbeginn">
         <source>Schuljahresbeginn</source>
-        <target>__Schuljahresbeginn</target>
+        <target state="translated">Début de l'année scolaire</target>
       </trans-unit>
       <trans-unit id="q9CL8ss" resname="Schuljahresende">
         <source>Schuljahresende</source>
-        <target>__Schuljahresende</target>
+        <target state="translated">Fin de l'année scolaire</target>
       </trans-unit>
       <trans-unit id="Vyi7P3." resname="Buchhaltung">
         <source>Buchhaltung</source>
-        <target>__Buchhaltung</target>
+        <target state="translated">Comptabilité</target>
       </trans-unit>
       <trans-unit id="X.smPiM" resname="SEPA Lastschrift erstellen">
         <source>SEPA Lastschrift erstellen</source>
-        <target>__SEPA Lastschrift erstellen</target>
+        <target state="translated">Créer un prélèvement automatique SEPA</target>
       </trans-unit>
       <trans-unit id="je_QnBv" resname="Neues SEPA erstellen">
         <source>Neues SEPA erstellen</source>
-        <target>__Neues SEPA erstellen</target>
+        <target state="translated">Créer un nouveau SEPA</target>
       </trans-unit>
       <trans-unit id="jXH9ICs" resname="Einzugsdatum">
         <source>Einzugsdatum</source>
-        <target>__Einzugsdatum</target>
+        <target state="translated">Date de collecte</target>
       </trans-unit>
       <trans-unit id="I_x9fm7" resname="Angelegt">
         <source>Angelegt</source>
-        <target>__Angelegt</target>
+        <target state="translated">Créé</target>
       </trans-unit>
       <trans-unit id="OL3m_PE" resname="Download SEPA-XML">
         <source>Download SEPA-XML</source>
-        <target>__Download SEPA-XML</target>
+        <target state="translated">Télécharger SEPA-XML</target>
       </trans-unit>
       <trans-unit id="eJusolC" resname="Download Excel">
         <source>Download Excel</source>
-        <target>__Download Excel</target>
+        <target state="translated">Télécharger Excel</target>
       </trans-unit>
       <trans-unit id="Lv.eZ61" resname="Betrag/€">
         <source>Betrag/€</source>
-        <target>__Betrag/€</target>
+        <target state="translated">Montant / €</target>
       </trans-unit>
       <trans-unit id="YD1LkWA" resname="Stundenplan">
         <source>Stundenplan</source>
-        <target>__Stundenplan</target>
+        <target state="translated">Calendrier</target>
       </trans-unit>
       <trans-unit id="xw83PtN" resname="Kinder über die Schuljahre">
         <source>Kinder über die Schuljahre</source>
-        <target>__Kinder über die Schuljahre</target>
+        <target state="translated">Les enfants à travers les années scolaires</target>
       </trans-unit>
       <trans-unit id="iuQP_n5" resname="Hier können Sie die Anzahl der Kinder über die verschiedenen Schuljahre grafisch verfolgen">
         <source>Hier können Sie die Anzahl der Kinder über die verschiedenen Schuljahre grafisch verfolgen</source>
-        <target>__Hier können Sie die Anzahl der Kinder über die verschiedenen Schuljahre grafisch verfolgen</target>
+        <target state="translated">Ici, vous pouvez suivre graphiquement le nombre d'enfants au cours des différentes années scolaires</target>
       </trans-unit>
       <trans-unit id="tH2JjBh" resname="Kinder in den Betreuungsblöcken">
         <source>Kinder in den Betreuungsblöcken</source>
-        <target>__Kinder in den Betreuungsblöcken</target>
+        <target state="translated">Enfants dans les blocs de soins</target>
       </trans-unit>
       <trans-unit id="MX8Kaen" resname="Uhrzeit">
         <source>Uhrzeit</source>
-        <target>__Uhrzeit</target>
+        <target state="translated">Heure</target>
       </trans-unit>
       <trans-unit id="EHkHdM." resname="Allgemeine Vertragsbedingungen der Stadt %stadt%">
         <source>Allgemeine Vertragsbedingungen der Stadt %stadt%</source>
-        <target>__Allgemeine Vertragsbedingungen der Stadt %stadt%</target>
+        <target state="translated">Conditions générales de la ville %stadt%</target>
       </trans-unit>
       <trans-unit id=".XUsqZK" resname="Vertragsbedingungen als PDF herunterladen">
         <source>Vertragsbedingungen als PDF herunterladen</source>
-        <target>__Vertragsbedingungen als PDF herunterladen</target>
+        <target state="translated">Télécharger les termes du contrat en pdf</target>
       </trans-unit>
       <trans-unit id="dvbbbZg" resname="Fortsetzen">
         <source>Fortsetzen</source>
-        <target>__Fortsetzen</target>
+        <target state="translated">Poursuivre</target>
       </trans-unit>
       <trans-unit id="9.8ReK8" resname="Abbrechen">
         <source>Abbrechen</source>
-        <target>__Abbrechen</target>
+        <target state="translated">Annuler</target>
       </trans-unit>
       <trans-unit id="1PHCvFG" resname="SchuKiB">
         <source>SchuKiB</source>
-        <target>__SchuKiB</target>
+        <target state="translated">ShukiB</target>
       </trans-unit>
       <trans-unit id="VnQ973X" resname="Unsere online Anmeldung">
         <source>Unsere online Anmeldung</source>
-        <target>__Unsere online Anmeldung</target>
+        <target state="translated">Notre inscription en ligne</target>
       </trans-unit>
       <trans-unit id="1rlQBKQ" resname="Datenschutzhinweis %organisation%">
         <source>Datenschutzhinweis %organisation%</source>
-        <target>__Datenschutzhinweis %organisation%</target>
+        <target state="translated">Politique de confidentialité %organisation%</target>
       </trans-unit>
       <trans-unit id="mkOBsfe" resname="Datenschutzhinweis als PDF herunterladen">
         <source>Datenschutzhinweis als PDF herunterladen</source>
-        <target>__Datenschutzhinweis als PDF herunterladen</target>
+        <target state="translated">Télécharger l'avis de protection des données en PDF</target>
       </trans-unit>
       <trans-unit id="bzl8j1V" resname="Angaben von SKiB">
         <source>Angaben von SKiB</source>
-        <target>__Angaben von SKiB</target>
+        <target state="translated">D'après les informations de SKiB</target>
       </trans-unit>
       <trans-unit id=".lZUEXx" resname="SKiB-Impressum">
         <source>SKiB-Impressum</source>
-        <target>__SKiB-Impressum</target>
+        <target state="translated">Impression SkiB</target>
       </trans-unit>
       <trans-unit id="faE3eLU" resname="SKiB-Datenschutz">
         <source>SKiB-Datenschutz</source>
-        <target>__SKiB-Datenschutz</target>
+        <target state="translated">Confidentialité SKiB</target>
       </trans-unit>
       <trans-unit id="O22bY6Z" resname="SKiB-Nutzungsbedingungen">
         <source>SKiB-Nutzungsbedingungen</source>
-        <target>__SKiB-Nutzungsbedingungen</target>
+        <target state="translated">Conditions d'utilisation de SKiB</target>
       </trans-unit>
       <trans-unit id="s0qt7Oa" resname="Im Auftrag der Stadt %name%">
         <source>Im Auftrag der Stadt %name%</source>
-        <target>__Im Auftrag der Stadt %name%</target>
+        <target state="translated">Au nom de la ville %name%</target>
       </trans-unit>
       <trans-unit id="xTr2ZWP" resname="E-Mail erneut senden">
         <source>E-Mail erneut senden</source>
-        <target>__E-Mail erneut senden</target>
+        <target state="translated">Renvoyer l'e-mail</target>
       </trans-unit>
       <trans-unit id="1C61Lnb" resname="Impressum %stadt%">
         <source>Impressum %stadt%</source>
-        <target>__Impressum %stadt%</target>
+        <target state="translated">Impression %stadt%</target>
       </trans-unit>
       <trans-unit id="blnC7zN" resname="Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).">
         <source>Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).</source>
-        <target>__Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).</target>
+        <target state="translated">Les frais dépendent du revenu. Le revenu familial brut (salaire, allocations familiales, pension alimentaire, allocation de transition, indemnités de remplacement de salaire et tous les autres revenus) est pris en compte.</target>
       </trans-unit>
       <trans-unit id="LtuEWD0" resname="Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Eltern. Ein Rechtsanspruch auf Aufnahme besteht nicht.">
         <source>Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Eltern. Ein Rechtsanspruch auf Aufnahme besteht nicht.</source>
-        <target>__Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Eltern. Ein Rechtsanspruch auf Aufnahme besteht nicht.</target>
+        <target state="translated">La priorité est accordée aux enfants de parents isolés et de parents qui travaillent. Il n'y a pas de droit à l'admission.</target>
       </trans-unit>
       <trans-unit id="NF9yKdJ" resname="Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf die Gebühr des ältesten Kindes">
         <source>Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf die Gebühr des ältesten Kindes</source>
-        <target>__Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf die Gebühr des ältesten Kindes</target>
+        <target state="translated">Les familles ayant des enfants supplémentaires dans un jardin d'enfants public payant bénéficient d'une réduction de 25 % sur le tarif de l'enfant le plus âgé</target>
       </trans-unit>
       <trans-unit id="XGtUMCT" resname="SEPA Lastschrift Mandat">
         <source>SEPA Lastschrift Mandat</source>
-        <target>__SEPA Lastschrift Mandat</target>
+        <target state="translated">Mandat de débit direct SEPA</target>
       </trans-unit>
       <trans-unit id="o7.ve9h" resname="SEPA Lastschrift Mandat erstellen">
         <source>SEPA Lastschrift Mandat erstellen</source>
-        <target>__SEPA Lastschrift Mandat erstellen</target>
+        <target state="translated">SEPA Direct Debit Créer mandat</target>
       </trans-unit>
       <trans-unit id="6zoOWQJ" resname="Ich ermächtige (Wir ermächtigen)">
         <source>Ich ermächtige (Wir ermächtigen)</source>
-        <target>__Ich ermächtige (Wir ermächtigen)</target>
+        <target state="translated">I empower (Nous autonomisons)</target>
       </trans-unit>
       <trans-unit id="qg3fSWS" resname="Zahlungen von meinem (unserem) Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein (weisen wir unser) Kreditinstitut an, die von">
         <source>Zahlungen von meinem (unserem) Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein (weisen wir unser) Kreditinstitut an, die von</source>
-        <target>__Zahlungen von meinem (unserem) Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein (weisen wir unser) Kreditinstitut an, die von</target>
+        <target state="translated">Recueillir les paiements de mon (notre) compte par débit direct. En même temps, j'instruis mon (instruisons notre) institution de crédit, qui</target>
       </trans-unit>
       <trans-unit id="_wVNiHR" resname="auf mein (unser) Konto gezogenen Lastschriften einzulösen">
         <source>auf mein (unser) Konto gezogenen Lastschriften einzulösen</source>
-        <target>__auf mein (unser) Konto gezogenen Lastschriften einzulösen</target>
+        <target state="translated">pour échanger des prélèvements directs prélevés sur mon (notre) compte</target>
       </trans-unit>
       <trans-unit id="N2J48t5" resname="Hinweis: Ich kann (Wir können) innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem (unserem) Kreditinstitut vereinbarten Bedingungen.">
         <source>Hinweis: Ich kann (Wir können) innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem (unserem) Kreditinstitut vereinbarten Bedingungen.</source>
-        <target>__Hinweis: Ich kann (Wir können) innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem (unserem) Kreditinstitut vereinbarten Bedingungen.</target>
+        <target state="translated">Note : Je (nous pouvons) demander le remboursement du montant débité dans un délai de huit semaines à compter de la date du débit. Les conditions convenues avec ma (notre) banque s'appliquent.</target>
       </trans-unit>
       <trans-unit id="4fZLVyw" resname="Betreuungsblöcke zum Auswählen anklicken">
         <source>Betreuungsblöcke zum Auswählen anklicken</source>
-        <target>__Betreuungsblöcke zum Auswählen anklicken</target>
+        <target state="translated">Cliquez sur les blocs de support pour sélectionner</target>
       </trans-unit>
       <trans-unit id="sAJ0ruW" resname="Monatliche Gebühr für die Betreuung (inklusiv Vergünstigungen)">
         <source>Monatliche Gebühr für die Betreuung (inklusiv Vergünstigungen)</source>
-        <target>__Monatliche Gebühr für die Betreuung (inklusiv Vergünstigungen)</target>
+        <target state="translated">Frais mensuels pour les soins (y compris les avantages)</target>
       </trans-unit>
       <trans-unit id="jS73xsH" resname="Mittagessen buchen">
         <source>Mittagessen buchen</source>
-        <target>__Mittagessen buchen</target>
+        <target state="translated">Déjeuner de livre</target>
       </trans-unit>
       <trans-unit id="TFZLrgR" resname="Folgende Caterer für das Mittagessen beliefern die Schulen.">
         <source>Folgende Caterer für das Mittagessen beliefern die Schulen.</source>
-        <target>__Folgende Caterer für das Mittagessen beliefern die Schulen.</target>
+        <target state="translated">Les traiteurs suivants pour le déjeuner fournissent les écoles.</target>
       </trans-unit>
       <trans-unit id="B9Rydv9" resname="Seit diesem Jahr kann das Mittagessen nicht mehr direkt bei der Anmeldung zur Betreuung mitbestellt werden. Bitte Nutzen Sie dafür das System des Caterers.">
         <source>Seit diesem Jahr kann das Mittagessen nicht mehr direkt bei der Anmeldung zur Betreuung mitbestellt werden. Bitte Nutzen Sie dafür das System des Caterers.</source>
-        <target>__Seit diesem Jahr kann das Mittagessen nicht mehr direkt bei der Anmeldung zur Betreuung mitbestellt werden. Bitte Nutzen Sie dafür das System des Caterers.</target>
+        <target state="translated">Depuis cette année, le déjeuner ne peut plus être commandé directement lors de l'inscription à la surveillance. Veuillez utiliser le système du traiteur pour cela.</target>
       </trans-unit>
       <trans-unit id="QMy5xPd" resname="Caterer:">
         <source>Caterer:</source>
-        <target>__Caterer:</target>
+        <target state="translated">Caterer:</target>
       </trans-unit>
       <trans-unit id="6GVaMWt" resname="Homepage Caterer">
         <source>Homepage Caterer</source>
-        <target>__Homepage Caterer</target>
+        <target state="translated">Internet Caterer</target>
       </trans-unit>
       <trans-unit id="_aIQW9a" resname="Email Adresse Caterer">
         <source>Email Adresse Caterer</source>
-        <target>__Email Adresse Caterer</target>
+        <target state="translated">Adresse e-mail Caterer</target>
       </trans-unit>
       <trans-unit id="JHri3xq" resname="Vergessen Sie nicht das Mittagessen für Ihr Kind/Ihre Kinder zu bestellen">
         <source>Vergessen Sie nicht das Mittagessen für Ihr Kind/Ihre Kinder zu bestellen</source>
-        <target>__Vergessen Sie nicht das Mittagessen für Ihr Kind/Ihre Kinder zu bestellen</target>
+        <target state="translated">N'oubliez pas de commander le déjeuner pour votre enfant/enfants</target>
       </trans-unit>
       <trans-unit id="3uL6YMH" resname="Schulen und Kinder">
         <source>Schulen und Kinder</source>
-        <target>__Schulen und Kinder</target>
+        <target state="translated">Écoles et enfants</target>
       </trans-unit>
       <trans-unit id="OFv.Mkv" resname="Daten des Kindes/Kinder">
         <source>Daten des Kindes/Kinder</source>
-        <target>__Daten des Kindes/Kinder</target>
+        <target state="translated">Données de l'enfant/enfant</target>
       </trans-unit>
       <trans-unit id="KQtdYDN" resname="Kind anmelden">
         <source>Kind anmelden</source>
-        <target>__Kind anmelden</target>
+        <target state="translated">Inscrivez-vous pour l'enfant</target>
       </trans-unit>
       <trans-unit id="Kx7RQm8" resname="bearbeiten">
         <source>bearbeiten</source>
-        <target>__bearbeiten</target>
+        <target state="translated">éditer</target>
       </trans-unit>
       <trans-unit id="vTpXgP4" resname="Name der erziehungsberechtigten Person">
         <source>Name der erziehungsberechtigten Person</source>
-        <target>__Name der erziehungsberechtigten Person</target>
+        <target state="translated">Nom de la personne ayant droit à l'éducation</target>
       </trans-unit>
       <trans-unit id="7kzDX6W" resname="Brutto Familieneinkommen pro Monat">
         <source>Brutto Familieneinkommen pro Monat</source>
-        <target>__Brutto Familieneinkommen pro Monat</target>
+        <target state="translated">Revenu familial brut par mois</target>
       </trans-unit>
       <trans-unit id="EXXCuYf" resname="Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergartneeinrichtung">
         <source>Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergartneeinrichtung</source>
-        <target>__Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergartneeinrichtung</target>
+        <target state="translated">J'ai au moins un autre enfant dans une crèche publique payée</target>
       </trans-unit>
       <trans-unit id="5fM56N9" resname="Ich bin alleinerziehend">
         <source>Ich bin alleinerziehend</source>
-        <target>__Ich bin alleinerziehend</target>
+        <target state="translated">Je suis un parent seul</target>
       </trans-unit>
       <trans-unit id="8UH4CtK" resname="Bitte weitere Betreuungsblöcke auswählen">
         <source>Bitte weitere Betreuungsblöcke auswählen</source>
-        <target>__Bitte weitere Betreuungsblöcke auswählen</target>
+        <target state="translated">S'il vous plaît sélectionner des blocs de soins supplémentaires</target>
       </trans-unit>
       <trans-unit id="Q6PiqpI" resname="Gebühr pro Monat für gebuchte Betreuungsblöcke:">
         <source>Gebühr pro Monat für gebuchte Betreuungsblöcke:</source>
-        <target>__Gebühr pro Monat für gebuchte Betreuungsblöcke:</target>
+        <target state="translated">Frais par mois pour les blocs de soins réservés :</target>
       </trans-unit>
       <trans-unit id="2irTgcO" resname="Zuständiger Träger in der Schule">
         <source>Zuständiger Träger in der Schule</source>
-        <target>__Zuständiger Träger in der Schule</target>
+        <target state="translated">Institution responsable à l'école</target>
       </trans-unit>
       <trans-unit id="u0cj95d" resname="Summe pro Monat">
         <source>Summe pro Monat</source>
-        <target>__Summe pro Monat</target>
+        <target state="translated">Total par mois</target>
       </trans-unit>
       <trans-unit id="4t3IU.b" resname="Kontoinhaber">
         <source>Kontoinhaber</source>
-        <target>__Kontoinhaber</target>
+        <target state="translated">Propriétaire du compte</target>
       </trans-unit>
       <trans-unit id="kcLYXn2" resname="Summe für alle Kinder pro Monat">
         <source>Summe für alle Kinder pro Monat</source>
-        <target>__Summe für alle Kinder pro Monat</target>
+        <target state="translated">Total pour tous les enfants par mois</target>
       </trans-unit>
       <trans-unit id="QdJ.tXK" resname="Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung">
         <source>Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung</source>
-        <target>__Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung</target>
+        <target state="translated">Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung</target>
       </trans-unit>
       <trans-unit id="yMfjGAY" resname="Ich habe die Datenschutzhinweise der Stadt Lörrach gelesen und akzeptiere die Verarbeitung">
         <source>Ich habe die Datenschutzhinweise der Stadt Lörrach gelesen und akzeptiere die Verarbeitung</source>
-        <target>__Ich habe die Datenschutzhinweise der Stadt Lörrach gelesen und akzeptiere die Verarbeitung</target>
+        <target state="translated">J'ai lu les informations relatives à la protection des données de la ville de Lörrach et j'accepte le traitement</target>
       </trans-unit>
       <trans-unit id="Ipa8Od5" resname="Ich habe verstanden, dass meine Anmeldung vom Träger wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.">
         <source>Ich habe verstanden, dass meine Anmeldung vom Träger wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.</source>
-        <target>__Ich habe verstanden, dass meine Anmeldung vom Träger wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.</target>
+        <target state="translated">Je comprends que mon inscription peut être révoquée par les organisations si les capacités de soutien sont dépassées. Il n'y a pas de droit à l'admission aux soins.</target>
       </trans-unit>
       <trans-unit id="d0eTC5h" resname="Ich habe die allgemeinen Vertragsbedingungen der Stadt %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese">
         <source>Ich habe die allgemeinen Vertragsbedingungen der Stadt %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese</source>
-        <target>__Ich habe die allgemeinen Vertragsbedingungen der Stadt %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese</target>
+        <target state="translated">J'ai lu et j'accepte les conditions générales du contrat de la ville %stadt% pour la garde d'enfants à l'école</target>
       </trans-unit>
       <trans-unit id="UDY9O9x" resname="Weitere Blöcke hinzufügen">
         <source>Weitere Blöcke hinzufügen</source>
-        <target>__Weitere Blöcke hinzufügen</target>
+        <target state="translated">Ajouter plus de blocs</target>
       </trans-unit>
       <trans-unit id="5LufHs6" resname="Start">
         <source>Start</source>
-        <target>__Start</target>
+        <target state="translated">Démarrer</target>
       </trans-unit>
       <trans-unit id="XNNtx3m" resname="SKiB">
         <source>SKiB</source>
-        <target>__SKiB</target>
+        <target state="translated">SKiB</target>
       </trans-unit>
       <trans-unit id="gkXwaPT" resname="Vertragsbedingungen">
         <source>Vertragsbedingungen</source>
-        <target>__Vertragsbedingungen</target>
+        <target state="translated">Termes</target>
       </trans-unit>
       <trans-unit id="_dSc6FV" resname="Datenschutzhinweis">
         <source>Datenschutzhinweis</source>
-        <target>__Datenschutzhinweis</target>
+        <target state="translated">Politique de confidentialité</target>
       </trans-unit>
       <trans-unit id="F9YwJ19" resname="Sprachen">
         <source>Sprachen</source>
-        <target>__Sprachen</target>
+        <target state="translated">Langues</target>
       </trans-unit>
       <trans-unit id="hGnRlsZ" resname="Mitarbeiterlogin">
         <source>Mitarbeiterlogin</source>
-        <target>__Mitarbeiterlogin</target>
+        <target state="translated">Accès des employés</target>
       </trans-unit>
       <trans-unit id="srYVYBN" resname="Stadt nicht gefünden">
         <source>Stadt nicht gefünden</source>
-        <target>__Stadt nicht gefünden</target>
+        <target state="translated">Ville non fin-fining</target>
       </trans-unit>
       <trans-unit id="JWFPe_0" resname="Wir wachsen ...">
         <source>Wir wachsen ...</source>
-        <target>__Wir wachsen ...</target>
+        <target state="translated">Nous sommes de plus en plus ...</target>
       </trans-unit>
       <trans-unit id="7jfzYiF" resname="Schreiben Sie uns an damit wir Kontakt zu der Stadtverwaltung aufnehmen können und unsere-Schulkindbetreuung bald auch in Ihrer Stadt eingesetzt wird.">
         <source>Schreiben Sie uns an damit wir Kontakt zu der Stadtverwaltung aufnehmen können und unsere-Schulkindbetreuung bald auch in Ihrer Stadt eingesetzt wird.</source>
-        <target>__Schreiben Sie uns an damit wir Kontakt zu der Stadtverwaltung aufnehmen können und unsere-Schulkindbetreuung bald auch in Ihrer Stadt eingesetzt wird.</target>
+        <target state="translated">Écrivez-nous pour que nous puissions contacter l'administration de la ville et notre service de garde d'enfants à l'école sera bientôt utilisé dans votre ville également.</target>
       </trans-unit>
       <trans-unit id="qVVtHT5" resname="Vielen Dank Ihr unsere-Schulkindbetreuung Team">
         <source>Vielen Dank Ihr unsere-Schulkindbetreuung Team</source>
-        <target>__Vielen Dank Ihr unsere-Schulkindbetreuung Team</target>
+        <target state="translated">Merci notre unsere-Schulkindbetreuung Team</target>
       </trans-unit>
       <trans-unit id="U9e4VJt" resname="Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung">
         <source>Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung</source>
-        <target>__Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung</target>
+        <target state="translated">Inscription en ligne pour la garde d'enfants à l'école et la garde de vacances</target>
       </trans-unit>
       <trans-unit id="lpqZrbk" resname="Online Anmeldung zur Schulkindbetreuung">
         <source>Online Anmeldung zur Schulkindbetreuung</source>
-        <target>__Online Anmeldung zur Schulkindbetreuung</target>
+        <target state="translated">Inscription en ligne pour la garde d'enfants à l'école</target>
       </trans-unit>
       <trans-unit id="v3lipSF" resname="Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an">
         <source>Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an</source>
-        <target>__Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an</target>
+        <target state="translated">Ce site web est actuellement en cours de développement. Veuillez ne pas saisir de véritables données personnelles. Inscrivez ici votre/vos enfant(s) à la garderie scolaire de la ville %name%.</target>
       </trans-unit>
       <trans-unit id="WUGHjET" resname="Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an">
         <source>Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an</source>
-        <target>__Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der Stadt %name% an</target>
+        <target state="translated">Inscrivez ici votre/vos enfant(s) à la garderie scolaire de la ville %name%.</target>
       </trans-unit>
       <trans-unit id="tctSSf6" resname="Kind bearbeiten">
         <source>Kind bearbeiten</source>
-        <target>__Kind bearbeiten</target>
+        <target state="translated">Modifier l'enfant</target>
       </trans-unit>
       <trans-unit id="pT3zsRc" resname="Kind/Kinder zur Schulkindbetreuung anmelden">
         <source>Kind/Kinder zur Schulkindbetreuung anmelden</source>
-        <target>__Kind/Kinder zur Schulkindbetreuung anmelden</target>
+        <target state="translated">Inscrire l'enfant/les enfants à la garderie scolaire</target>
       </trans-unit>
       <trans-unit id="fP1P87p" resname="Kind/Kinder zur Ferienbetreuung anmelden">
         <source>Kind/Kinder zur Ferienbetreuung anmelden</source>
-        <target>__Kind/Kinder zur Ferienbetreuung anmelden</target>
+        <target state="translated">Inscrire l'enfant/les enfants à la garderie de vacances</target>
       </trans-unit>
       <trans-unit id="0ddCQ9N" resname="Herzlich Willkommen bei SKiB">
         <source>Herzlich Willkommen bei SKiB</source>
-        <target>__Herzlich Willkommen bei SKiB</target>
+        <target state="translated">Bienvenue à SKiB</target>
       </trans-unit>
       <trans-unit id="aXUvIxO" resname="News">
         <source>News</source>
-        <target>__News</target>
+        <target state="translated">Actualités</target>
       </trans-unit>
       <trans-unit id="FYQ3d9n" resname="Für folgenden Schulen können Sie die Schulkindbetreuung hier online buchen.">
         <source>Für folgenden Schulen können Sie die Schulkindbetreuung hier online buchen.</source>
-        <target>__Für folgenden Schulen können Sie die Schulkindbetreuung hier online buchen.</target>
+        <target state="translated">Pour les écoles suivantes, vous pouvez réserver la garderie scolaire ici en ligne.</target>
       </trans-unit>
       <trans-unit id="6jGKQ7r" resname="Aktuelles Schuljahr">
         <source>Aktuelles Schuljahr</source>
-        <target>__Aktuelles Schuljahr</target>
+        <target state="translated">Année scolaire en cours</target>
       </trans-unit>
       <trans-unit id="yq9OoTM" resname="Anmedezeitraum">
         <source>Anmedezeitraum</source>
-        <target>__Anmedezeitraum</target>
+        <target state="translated">Période Anmede</target>
       </trans-unit>
       <trans-unit id="6iJqptG" resname="Betreuender Träger">
         <source>Betreuender Träger</source>
-        <target>__Betreuender Träger</target>
+        <target state="translated">Organisation de soutien</target>
       </trans-unit>
       <trans-unit id="lvF_Lxx" resname="Von folgenden Trägern kann das Ferienprogramm hier online gebucht werden.">
         <source>Von folgenden Trägern kann das Ferienprogramm hier online gebucht werden.</source>
-        <target>__Von folgenden Trägern kann das Ferienprogramm hier online gebucht werden.</target>
+        <target state="translated">Le programme de vacances peut être réservé en ligne ici par les organisations suivantes.</target>
       </trans-unit>
       <trans-unit id="EKiBP8V" resname="Weitere Informationen">
         <source>Weitere Informationen</source>
-        <target>__Weitere Informationen</target>
+        <target state="translated">Plus d'informations</target>
       </trans-unit>
       <trans-unit id="HH6hiQH" resname="Träger">
         <source>Träger</source>
-        <target>__Träger</target>
+        <target state="translated">Organisation de soutien</target>
       </trans-unit>
       <trans-unit id="r6flZMD" resname="Mehr lesen">
         <source>Mehr lesen</source>
-        <target>__Mehr lesen</target>
+        <target state="translated">Lire la suite</target>
       </trans-unit>
       <trans-unit id="YpJ7UA2" resname="Cookie &amp; Datenschutzhinweis">
         <source>Cookie &amp; Datenschutzhinweis</source>
-        <target><![CDATA[__Cookie & Datenschutzhinweis]]></target>
+        <target state="translated"><![CDATA[Cookie et politique de confidentialité]]></target>
       </trans-unit>
       <trans-unit id="yfU8Biu" resname="Cookies ermöglichen die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden. Weitere Informationen zum Datenschutz erhalten Sie über den folgenden Link">
         <source>Cookies ermöglichen die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden. Weitere Informationen zum Datenschutz erhalten Sie über den folgenden Link</source>
-        <target>__Cookies ermöglichen die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden. Weitere Informationen zum Datenschutz erhalten Sie über den folgenden Link</target>
+        <target state="translated">Les cookies permettent la fourniture de nos services. En utilisant nos services, vous acceptez que nous puissions utiliser des cookies. Pour de plus amples informations sur la protection des données, veuillez cliquer sur le lien suivant</target>
       </trans-unit>
       <trans-unit id="qF4Y0UE" resname="Mehr erfahren">
         <source>Mehr erfahren</source>
-        <target>__Mehr erfahren</target>
+        <target state="translated">En savoir plus</target>
       </trans-unit>
       <trans-unit id="PYZx790" resname="Anmeldeportal Schulkindbetreuung">
         <source>Anmeldeportal Schulkindbetreuung</source>
-        <target>__Anmeldeportal Schulkindbetreuung</target>
+        <target state="translated">Portail d'inscription Garde d'enfants scolaire</target>
       </trans-unit>
       <trans-unit id="CLHBpnG" resname="Rechtlich">
         <source>Rechtlich</source>
-        <target>__Rechtlich</target>
+        <target state="translated">Légalement</target>
       </trans-unit>
       <trans-unit id="e6ZlZKx" resname="SKiB Software - H2 invent">
         <source>SKiB Software - H2 invent</source>
-        <target>__SKiB Software - H2 invent</target>
+        <target state="translated">SKiB Software - H2 invent</target>
       </trans-unit>
     </body>
   </file>
