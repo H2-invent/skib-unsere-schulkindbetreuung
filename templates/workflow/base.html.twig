@@ -67,94 +67,15 @@
 
 </div>
 
-<!-- SCRIPTS -->
-<!-- JQuery -->
-<script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
-<script src="{{ asset('js/jquery.bs.gdpr.cookies.js') }}"></script>
-
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <script>
     {% include 'workflow/_cookiePopup.js.twig' %}
 </script>
 
-<script>
-    $(document).on('click', '.loadContent', function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        $('#loadContentModal').load(url, function () {
-            $('#loadContentModal ').modal('show');
-        });
-
-    });
-</script>
-<script>
-    // popovers Initialization
-    $(function () {
-        $('[data-toggle="popover"]').popover()
-    })
-</script>
-<script>
-
-
-    $(document).on('click', '.deleteBtn', function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        var type = $(this).attr('type');
-        $.confirm({
-            title: '{{ 'Bestätigung'|trans }}',
-            content: '{{ 'Wollen Sie diese Aktion durchführen?'|trans }}',
-            theme: 'modern',
-            buttons: {
-                confirm: {
-                    btnClass: 'btn btn-primary',
-                    text: '{{ 'Fortsetzen'|trans }}',
-                    action: function () {
-                        $.ajax({
-                            url: url,
-                            type: type,
-                            success: function (data) {
-                                if (data.redirect) {
-                                    window.location.href = data.redirect;
-                                }
-                            }
-                        });
-                    }
-                },
-                cancel: {
-                    btnClass: 'btn btn-secondry',
-                    text: '{{ 'Abbrechen'|trans }}',
-                    action: function () {
-
-                    }
-                },
-
-            }
-        });
-    });
-
-</script>
+{% include 'workflow/_scriptfooter.html.twig' %}
 
 {% block jquery %}{% endblock %}
-<script>
-    {% if app.request.query.get("snack") is defined and app.request.query.get("snack") is not null %}
-   var  optionsSnack = {
-        text: "{{ app.request.query.get("snack") }}", // text of the snackbar
-        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
-    };
-    $.snackbar(optionsSnack);
 
-    {% endif %}
-</script>
 
 
 </body>

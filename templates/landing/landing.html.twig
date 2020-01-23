@@ -212,11 +212,8 @@
 
 {% include 'workflow/footer.html.twig' with {'stadt':null} %}
 
-<script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
-<script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
+{% include 'workflow/_scriptfooter.html.twig' %}
+
 <script>
     $(function () {
         $("a[href*=\\#]").on('click', function (e) {

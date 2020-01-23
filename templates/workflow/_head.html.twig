@@ -32,15 +32,16 @@ SKiB ist bisher die einzige Onlinelösung für die Anmeldung und die Verwaltung 
 <meta property="og:site_name" content="SKiB unsere-Schulkindbetreuung.de"/>
 
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet" href="{{ asset('uploads/fontawesome/css/all.min.css') }}">
 <!-- Bootstrap core CSS -->
-<link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('frontpage/css/bootstrap.min.css') }}">
 <!-- Material Design Bootstrap -->
-<link href="{{ asset('frontpage/css/mdb.min.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('frontpage/css/mdb.min.css') }}">
 <!-- Your custom styles (optional) -->
-<link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
-<link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-<link rel="stylesheet" href="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.css">
-<link rel="stylesheet" href="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/themes-css/material.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" href="{{ asset('frontpage/css/style.min.css') }}">
+
+<!-- ADDITIONAL VENDORS -->
+<link rel="stylesheet" href="{{ asset('vendor/confirm/css/jquery-confirm.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendor/snackbar/css/snackbar.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendor/material-vez/css/material.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('vendor/daterangepicker/css/daterangepicker.min.css') }}" />
