@@ -75,7 +75,7 @@
                         <a data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
                             {{ k.vorname }} {{ k.nachname }} <small><i class="fa fa-info-circle" style="color: var(--main-color)"></i><br/>{% if k.tageWithBlocks < 2 %}
                                     <div class="alert alert-danger" role="alert">
-                                    {% trans %}Bitte weitere Betreuungszeitfenster auswählen{% endtrans %} </div>
+                                    {% trans %}Bitte weiteres Betreuungszeitfenster auswählen{% endtrans %} </div>
                             {% else %}{% trans %}Gebühr pro Monat für gebuchte Betreuung{% endtrans %}: {{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %} <a href="{{ path('loerrach_workflow_print_pdf',{'slug':stadt.slug,'id':k.id}) }}"><i class="fa fa-download"></i></a>
                             </small>
                             
@@ -250,7 +250,7 @@
                         {% if error == false %}
                         {{ preis|number_format(2,',','.') }} €
                     {% else %}
-                        {% trans %}Bitte weitere Betreuungszeitfenster auswählen{% endtrans %}
+                        {% trans %}Bitte weiteres Betreuungszeitfenster auswählen{% endtrans %}
                     {% endif %}
                     </h5>
                 </td>

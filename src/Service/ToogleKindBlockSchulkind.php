@@ -92,7 +92,7 @@ class ToogleKindBlockSchulkind
             $blocks2 = $kind->getTageWithBlocks();
 
             if ($blocks2 < 2) {
-                $result['text'] = $this->translator->trans('Bitte weiteren Betreuungszeitfenster auswählen (Mindestens zwei Tage müssen ausgewählt werden)');
+                $result['text'] = $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)');
                 $result['error'] = 2;
             }
         } catch (\Exeption $e) {
