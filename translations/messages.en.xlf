@@ -97,10 +97,6 @@
         <source>Preis erfolgreich berechnet.</source>
         <target state="translated">Price calculated successfully.</target>
       </trans-unit>
-      <trans-unit id="fr3glj3" resname="Bitte weitere Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)">
-        <source>Bitte weitere Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)</source>
-        <target state="translated">Please select additional childcare slots (at least two slots must be selected)</target>
-      </trans-unit>
       <trans-unit id="uTu8sJd" resname="AGB ">
         <source>AGB </source>
         <target state="translated">Terms and Conditions </target>
@@ -1240,8 +1236,8 @@
         <target state="translated">Bank details for direct debit</target>
       </trans-unit>
       <trans-unit id="47DEQpj" resname="">
-        <source/>
-        <target/>
+        <source></source>
+        <target></target>
       </trans-unit>
       <trans-unit id="bXHPK6K" resname="Daten der Kinder">
         <source>Daten der Kinder</source>
@@ -2234,8 +2230,8 @@
         <target state="translated">Online application and administration</target>
       </trans-unit>
       <trans-unit id="zmlkEaD" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;&#10;Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;&#10;">
-        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
-Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
+        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;
+Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;
 </source>
         <target state="translated">SKiB is so far the only online solution for the registration and administration of school childcare and holiday care.
 The web application enables direct networking between parents, external organisations and the municipal administration or school authorities. 
@@ -2255,7 +2251,7 @@ The web application enables direct networking between parents, external organisa
       </trans-unit>
       <trans-unit id="7w.oc7t" resname="AGB">
         <source>AGB</source>
-        <target state="translated">Terms &amp; Conditions</target>
+        <target state="translated"><![CDATA[Terms & Conditions]]></target>
       </trans-unit>
       <trans-unit id="3nw6On8" resname="Content anlegen">
         <source>Content anlegen</source>
@@ -2291,7 +2287,7 @@ The web application enables direct networking between parents, external organisa
       </trans-unit>
       <trans-unit id="9VQ5Tv0" resname="Webanwendung für die  Anmeldung und Verwaltung">
         <source>Webanwendung für die  Anmeldung und Verwaltung</source>
-        <target>__Webanwendung für die  Anmeldung und Verwaltung</target>
+        <target state="translated">Online application for  registration and administration</target>
       </trans-unit>
       <trans-unit id="knbQTEa" resname="Die Schulkindbetreuung ist eine &lt;b&gt;komplexe Dienstleistung&lt;/b&gt;. Viele Menschen&#10;                                                                                              und Institutionen sind bei der Finanzierung, Planung, Verwaltung und&#10;                                                                                              Umsetzung beteiligt.&lt;br&gt;&#10;                                &lt;br&gt;&#10;                                Die &lt;b&gt;gestiegene Komplexität&lt;/b&gt; und die Erwartungshaltungen der Beteiligten&#10;                                                                  machen eine Veränderung notwendig.&lt;br&gt;&lt;br&gt;&#10;                                &lt;b&gt;Vereinbarkeit von Familie und Beruf und die Chancengleichheit für alle Kinder&lt;/b&gt;&#10;                                fordern den Ausbau und die Modernisierung des Betreuungssystems.&lt;br&gt;&lt;br&gt;&#10;                                Der &lt;b&gt;Schulträger von Morgen&lt;/b&gt; stellt eine innovative, moderne und transparente&#10;                                                                  Informationsplattform, Anmeldung und Verwaltung allen Beteiligten zur&#10;                                                                  Verfügung.&lt;br&gt;&lt;br&gt;&#10;                                &lt;b&gt;Digitalisierung und umweltbewusstes Handeln&lt;/b&gt; sind zentrale Themen&#10;                                unserer Zeit.">
         <source>Die Schulkindbetreuung ist eine &lt;b&gt;komplexe Dienstleistung&lt;/b&gt;. Viele Menschen
@@ -2307,19 +2303,19 @@ The web application enables direct networking between parents, external organisa
                                                                   Verfügung.&lt;br&gt;&lt;br&gt;
                                 &lt;b&gt;Digitalisierung und umweltbewusstes Handeln&lt;/b&gt; sind zentrale Themen
                                 unserer Zeit.</source>
-        <target state="translated">School child care is a complex service. Many people
+        <target state="translated"><![CDATA[School child care is a complex service. Many people
                                                                                               and institutions are involved in financing, planning, administration and
-                                                                                              Implementation involved.&lt;br&gt;
-                                &lt;br&gt;
-                                The &lt;b&gt;increased complexity&lt;/b&gt; and the expectations of those involved
-                                                                  make a change necessary. &lt;br&gt;&lt;br&gt;
-                                &lt;b&gt; Compatibility of family and career and equal opportunities for all children&lt;/b&gt;
-                                call for the expansion and modernisation of the care system.&lt;br&gt;&lt;br&gt;
-                                The &lt;b&gt; school carrier of tomorrow&lt;/b&gt; represents an innovative, modern and transparent
+                                                                                              Implementation involved.<br>
+                                <br>
+                                The <b>increased complexity</b> and the expectations of those involved
+                                                                  make a change necessary. <br><br>
+                                <b> Compatibility of family and career and equal opportunities for all children</b>
+                                call for the expansion and modernisation of the care system.<br><br>
+                                The <b> school carrier of tomorrow</b> represents an innovative, modern and transparent
                                                                   information platform, registration and administration for all participants to
                                                                   Order.
-                                &lt;Digitisation and environmental awareness are central themes
-                                of our time.</target>
+                                <Digitisation and environmental awareness are central themes
+                                of our time.]]></target>
       </trans-unit>
       <trans-unit id="HbMpwLI" resname="Die Angebotspalette der Schulkindbetreuung ist sehr groß und unübersichtlich. Ich fühle mich oft überfordert und deshalb wünsche ich mir eine transparente Plattform.">
         <source>Die Angebotspalette der Schulkindbetreuung ist sehr groß und unübersichtlich. Ich fühle mich oft überfordert und deshalb wünsche ich mir eine transparente Plattform.</source>
@@ -2344,6 +2340,28 @@ The web application enables direct networking between parents, external organisa
       <trans-unit id="TbVQzZh" resname="Sitemap">
         <source>Sitemap</source>
         <target state="translated">Sitemap</target>
+      </trans-unit>
+      <trans-unit id="0_77c55" resname="Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)">
+        <source>Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)</source>
+        <target state="translated">Please select another care time slot (At least two days must be selected)</target>
+      </trans-unit>
+      <trans-unit id="dhhPs7h" resname="Bestätigungscode zur Überprüfung der E-Mail Adresse">
+        <source>Bestätigungscode zur Überprüfung der E-Mail Adresse</source>
+        <target state="translated">Confirmation code to verify the e-mail address</target>
+      </trans-unit>
+      <trans-unit id="6kYrCka" resname="Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.&#10;            &lt;br&gt;Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.">
+        <source>Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.
+            &lt;br&gt;Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.</source>
+        <target state="translated"><![CDATA[You have just registered for the online portal for school child care.
+            <br>Please confirm your e-mail by entering the confirmation code in your browser.]]></target>
+      </trans-unit>
+      <trans-unit id="j4EU0Ge" resname="Monatliche Gebühr für die Betreuung (inklusive Vergünstigungen)">
+        <source>Monatliche Gebühr für die Betreuung (inklusive Vergünstigungen)</source>
+        <target state="translated">Monthly fee for support (including allowances)</target>
+      </trans-unit>
+      <trans-unit id="srOAIVX" resname="Bitte weiteres Betreuungszeitfenster auswählen">
+        <source>Bitte weiteres Betreuungszeitfenster auswählen</source>
+        <target state="translated">Please select another care time window</target>
       </trans-unit>
     </body>
   </file>
