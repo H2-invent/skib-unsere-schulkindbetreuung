@@ -79,7 +79,7 @@ class WidgetStadtController extends AbstractController
         $kinder = $result = $query->getResult();
 
 
-        return new JsonResponse(array('title'=>$translator->trans('Kinder dieses Schuljahr'),'small'=>'','anzahl'=>sizeof($kinder),'symbol'=>'emoji_people'));
+        return new JsonResponse(array('title'=>$translator->trans('Kinder dieses Schuljahr'),'small'=>'','anzahl'=>sizeof($kinder),'symbol'=>'people'));
     }
 
     private function cmp($a, $b)

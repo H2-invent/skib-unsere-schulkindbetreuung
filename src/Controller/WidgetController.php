@@ -56,7 +56,7 @@ class WidgetController extends AbstractController
         $kinder = $result = $query->getResult();
 
 
-        return new JsonResponse(array('title' => $translator->trans('Anwesende Kinder heute'), 'small' => '', 'anzahl' => sizeof($kinder), 'symbol' => 'emoji_people'));
+        return new JsonResponse(array('title' => $translator->trans('Anwesende Kinder heute'), 'small' => '', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));
     }
 
     /**
@@ -94,7 +94,7 @@ class WidgetController extends AbstractController
         $kinder = $result = $query->getResult();
 
 
-        return new JsonResponse(array('title' => $translator->trans('Kinder dieses Schuljahr'), 'small' => '', 'anzahl' => sizeof($kinder), 'symbol' => 'emoji_people'));
+        return new JsonResponse(array('title' => $translator->trans('Kinder dieses Schuljahr'), 'small' => '', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));
     }
 
     /**

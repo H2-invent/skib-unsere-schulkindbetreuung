@@ -139,7 +139,7 @@
 
                 {% if is_granted('ROLE_CITY_SCHOOL') %}
                     <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"> <i
-                                    class="material-icons">university</i>{% trans %}Schulen{% endtrans %}</a></li>
+                                    class="material-icons">school</i>{% trans %}Schulen{% endtrans %}</a></li>
                 {% endif %}
 
                 {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
@@ -148,7 +148,7 @@
 
                 {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
                     <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">sports_handball</i> {% trans %}Meine Schulen{% endtrans %}
+                                    class="material-icons">school</i> {% trans %}Meine Schulen{% endtrans %}
                         </a></li>
                     <li><a href="{{ path('child_show',{'id':app.user.organisation.id}) }}"> <i
                                     class="material-icons">people</i> {% trans %}Angemeldete Kinder{% endtrans %}
@@ -187,12 +187,12 @@
                     <li>
                         <a href="{{ path('ferien_admin_edit',{'org_id':app.user.organisation.id}) }}">
                             <i
-                                    class="material-icons">edit</i> {% trans %}Ferien Einstellungen{% endtrans %}</a>
+                                    class="material-icons">build</i> {% trans %}Ferien Einstellungen{% endtrans %}</a>
                     </li>
                     <li>
                         <a href="{{ path('org_ferien_admin_payment_art',{'org_id':app.user.organisation.id}) }}">
                             <i
-                                    class="material-icons">edit</i> {% trans %}Zahlungsarten{% endtrans %}</a>
+                                    class="material-icons">payment</i> {% trans %}Zahlungsarten{% endtrans %}</a>
                     </li>
                 {% endif %}
 
@@ -204,7 +204,7 @@
                     <li><a href="{{ path('accounting_overview',{'id':app.user.organisation.id}) }}"> <i
                                     class="material-icons">money</i> {% trans %}SEPA Übersicht{% endtrans %}</a></li>
                     <li><a href="{{ path('accounting_showdata',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">money</i> {% trans %}Stammdaten{% endtrans %}</a></li>
+                                    class="material-icons">assignment</i> {% trans %}Stammdaten{% endtrans %}</a></li>
                 {% endif %}
 
 
