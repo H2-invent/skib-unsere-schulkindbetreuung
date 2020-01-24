@@ -72,7 +72,8 @@
         <div class="main-menu">
 
             <ul id="side-main-menu" class="side-menu list-unstyled">
-                <li><a href="{{ path('dashboard') }}">{% trans %}Dashboard{% endtrans %}</a></li>
+                <li><a href="{{ path('dashboard') }}"><i
+                                class="material-icons">dashboard</i>{% trans %}Dashboard{% endtrans %}</a></li>
                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                     <li>
                         <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">{% trans %}Original Account{% endtrans %}</a>
@@ -85,7 +86,7 @@
                     <li><a href="{{ path('admin_showAllUser') }}"><i
                                     class="material-icons">people</i>{% trans %}Alle User{% endtrans %}</a></li>
                     <li><a href="{{ path('content_show') }}"><i
-                                    class="material-icons">people</i>{% trans %}Frontpage Content{% endtrans %}</a></li>
+                                    class="material-icons">inbox</i>{% trans %}Frontpage Content{% endtrans %}</a></li>
 
                 {% endif %}
 
@@ -134,7 +135,7 @@
 
                 {% if is_granted('ROLE_CITY_ADMIN') %}
                     <li><a href="{{ path('city_admin_schuljahr_anzeige',{'id':app.user.stadt.id}) }}"> <i
-                                    class="material-icons">home</i>{% trans %}Schuljahre{% endtrans %}</a></li>
+                                    class="material-icons">today</i>{% trans %}Schuljahre{% endtrans %}</a></li>
                 {% endif %}
 
                 {% if is_granted('ROLE_CITY_SCHOOL') %}
@@ -157,7 +158,7 @@
 
                 {% if is_granted('ROLE_CITY_REPORT') %}
                     <li><a href="{{ path('stadt_bericht_index',{'stadt_id':app.user.stadt.id}) }}"> <i
-                                    class="material-icons">table_chart</i> {% trans %}Berichte{% endtrans %}</a></li>
+                                    class="material-icons">note</i> {% trans %}Berichte{% endtrans %}</a></li>
                 {% endif %}
 
 
@@ -202,7 +203,7 @@
                 {% if is_granted('ROLE_ORG_ACCOUNTING') %}
                     <h5 class="sidenav-heading">Buchhaltung</h5>
                     <li><a href="{{ path('accounting_overview',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">money</i> {% trans %}SEPA Übersicht{% endtrans %}</a></li>
+                                    class="material-icons">attach_money</i> {% trans %}SEPA Übersicht{% endtrans %}</a></li>
                     <li><a href="{{ path('accounting_showdata',{'id':app.user.organisation.id}) }}"> <i
                                     class="material-icons">assignment</i> {% trans %}Stammdaten{% endtrans %}</a></li>
                 {% endif %}

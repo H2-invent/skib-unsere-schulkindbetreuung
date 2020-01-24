@@ -121,7 +121,7 @@ class WidgetController extends AbstractController
 
         $query = $qb->getQuery();
         $kinder = $result = $query->getResult();
-        return new JsonResponse(array('title' => $schule->getName(), 'small' => $translator->trans('Kinder angemeldet'), 'anzahl' => sizeof($kinder), 'symbol' => 'sports_handball'));
+        return new JsonResponse(array('title' => $schule->getName(), 'small' => $translator->trans('Kinder angemeldet'), 'anzahl' => sizeof($kinder), 'symbol' => 'school'));
 
     }
 
@@ -183,7 +183,7 @@ class WidgetController extends AbstractController
 
 
         if (sizeof($sepa) == 0 && $active !== null) {
-            return new JsonResponse(array('title' => $translator->trans('SEPA Lastschrift fällig'), 'small' => '', 'anzahl' => 1, 'symbol' => 'money'));
+            return new JsonResponse(array('title' => $translator->trans('SEPA Lastschrift fällig'), 'small' => '', 'anzahl' => 1, 'symbol' => 'attach_money'));
         } else {
             return 0;
         }
