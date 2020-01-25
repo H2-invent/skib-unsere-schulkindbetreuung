@@ -60,80 +60,78 @@ $('table').DataTable({
         ]
     }
 );
-$(window).on('load', function() {
+$(window).on('load', function () {
 
-$('input[type="date"]').daterangepicker({
-    "singleDatePicker": true,
-    autoUpdateInput: false,
-    locale: {
-        "format": "YYYY-MM-DD",
-        "separator": " - ",
-    }
-}, function (chosen_date) {
-    $(this).val(chosen_date.format('YYYY-MM-DD'));
-})
-    .on('apply.daterangepicker', function (ev, picker) {
-        //do something, like clearing an input
-        var ele = $(this);
-        ele.val(picker.startDate.format('YYYY-MM-DD'))
-    });
-
-
-$('input[type="time"]').jqclockpicker({
-    autoclose: true,
-    donetext: "OK"
-});
-
-$(document).on('click', '.loadInTarget', function (e) {
-    e.preventDefault();
-    var ele = $(this);
-    var url = ele.attr('href');
-    var target = ele.attr('data-target');
-    $(target).load(url + ' ' + target);
-    var text = ele.text();
-    var dropdown = ele.closest('.dropdown').find('button');
-    dropdown.text(text);
-});
-
-$(document).on('click', '.loadContent', function (e) {
-    e.preventDefault();
-    var url = $(this).attr('href');
-    $('#loadContentModal').modal('show');
-    $('#loadContentModal .modal-content').load(url);
-});
-if (typeof optionsSnack !== 'undefined') {
-    $.snackbar(optionsSnack);
-}
-
-
-$('.deleteBtn').click(function (e) {
-    e.preventDefault();
-    var url = $(this).attr('href');
-    var type = $(this).attr('type');
-
-    $.confirm({
-        title: confirmTitle,
-        content: confirmText,
-        theme: 'material',
-        buttons: {
-            confirm: function () {
-                $.ajax({
-                    url: url,
-                    type: type,
-                    success: function (data) {
-                        if (data.redirect) {
-                            window.location.href = data.redirect;
-                        }
-                    }
-                });
-            },
-            cancel: function () {
-
-            },
-
+    $('input[type="date"]').daterangepicker({
+        "singleDatePicker": true,
+        autoUpdateInput: false,
+        locale: {
+            "format": "YYYY-MM-DD",
+            "separator": " - ",
         }
+    }, function (chosen_date) {
+        $(this).val(chosen_date.format('YYYY-MM-DD'));
+    })
+        .on('apply.daterangepicker', function (ev, picker) {
+            //do something, like clearing an input
+            var ele = $(this);
+            ele.val(picker.startDate.format('YYYY-MM-DD'))
+        });
+
+
+    $('input[type="time"]').jqclockpicker({
+        autoclose: true,
+        donetext: "OK"
     });
-});
+
+    $(document).on('click', '.loadInTarget', function (e) {
+        e.preventDefault();
+        var ele = $(this);
+        var url = ele.attr('href');
+        var target = ele.attr('data-target');
+        $(target).load(url + ' ' + target);
+        var text = ele.text();
+        var dropdown = ele.closest('.dropdown').find('button');
+        dropdown.text(text);
+    });
+
+    $(document).on('click', '.loadContent', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $('#loadContentModal').modal('show');
+        $('#loadContentModal .modal-content').load(url);
+    });
+    if (typeof optionsSnack !== 'undefined') {
+        $.snackbar(optionsSnack);
+    }
 
 
+    $('.deleteBtn').click(function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        var type = $(this).attr('type');
+
+        $.confirm({
+            title: confirmTitle,
+            content: confirmText,
+            theme: 'material',
+            buttons: {
+                confirm: function () {
+                    $.ajax({
+                        url: url,
+                        type: type,
+                        success: function (data) {
+                            if (data.redirect) {
+                                window.location.href = data.redirect;
+                            }
+                        }
+                    });
+                },
+                cancel: function () {
+
+                },
+
+            }
+        });
+    });
 });

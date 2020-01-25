@@ -21,6 +21,7 @@ import('snackbarjs');
 import('moment');
 import ('morecontent-js/dist/jquery.morecontent');
 import('jquery-confirm');
+import('./jquery.bs.gdpr.cookies');
 
 $(document).on('click', '.loadContent', function (e) {
     e.preventDefault();
@@ -28,10 +29,7 @@ $(document).on('click', '.loadContent', function (e) {
     $('#loadContentModal').load(url, function () {
         $('#loadContentModal ').modal('show');
     });
-
 });
-
-
 
 
 $(document).on('click', '.deleteBtn', function (e) {
@@ -71,9 +69,6 @@ $(document).on('click', '.deleteBtn', function (e) {
 });
 
 
-
-
-
 $('.deleteBtn').click(function (e) {
     e.preventDefault();
     var url = $(this).attr('href');
@@ -103,10 +98,15 @@ $('.deleteBtn').click(function (e) {
     });
 });
 
-$(window).on('load', function() {
+$(window).on('load', function () {
         $(function () {
             $('[data-toggle="popover"]').popover()
-        })
+        });
 
+    $('body').bsgdprcookies(bssettings);
+
+    $('#cookiesBtn').on('click', function () {
+        $('body').bsgdprcookies(settings, 'reinit');
+    });
     }
 );

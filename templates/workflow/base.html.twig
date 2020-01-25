@@ -89,11 +89,27 @@
 
 
 </script>
-
-{{ encore_entry_script_tags('frontend') }}
 <script>
-    {% include 'workflow/_cookiePopup.js.twig' %}
+
+    bssettings = {
+        title: '{% trans %}Cookie & Datenschutzhinweis{% endtrans %}',
+        message: '{% trans %}Cookies ermöglichen die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden. Weitere Informationen zum Datenschutz erhalten Sie über den folgenden Link{% endtrans %}: <b>',
+        moreLinkLabel: '{% trans %}Mehr erfahren{% endtrans %}</b>',
+        messageMaxHeightPercent: 30,
+        moreLink: '/datenschutz/',
+        delay: 1000,
+        allowAdvancedOptions: false,
+        acceptButtonLabel: 'OK',
+        OnAccept: function () {
+            console.log('Yay! User accepted your cookies window!');
+            console.log('User preferences');
+            var preferences = $.fn.bsgdprcookies.GetUserPreferences();
+            console.log(preferences);
+
+        }
+    }
 </script>
+{{ encore_entry_script_tags('frontend') }}
 
 {% block jquery %}{% endblock %}
 
