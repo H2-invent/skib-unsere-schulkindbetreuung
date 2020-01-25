@@ -1,0 +1,137 @@
+/*
+ * Welcome to your app's main JavaScript file!
+ *
+ * We recommend including the built version of this JavaScript file
+ * (and its CSS file) in your base layout (base.html.twig).
+ */
+
+// any CSS you import will output into a single css file (app.css in this case)
+import '../css/app.css';
+
+// Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
+import $ from 'jquery';
+
+global.$ = global.jQuery = $;
+import Popper from 'popper.js';
+
+global.Popper = Popper;
+import('bootstrap-material-design');
+import('moment');
+import('chart.js');
+import('chartjs-color-string');
+import('jquery-clockpicker');
+import('malihu-custom-scrollbar-plugin');
+import('jquery.cookie');
+import('jquery-validation');
+import('jquery-confirm');
+import('material-design-icons');
+import('snackbarjs');
+import('daterangepicker');
+import('datatables.net');
+import 'datatables.net-dt';
+
+
+console.log('Hello Webpack Encore! Edit me in assets/js/app.js!!!');
+
+$('#toggle-btn').on('click', function (e) {
+
+    e.preventDefault();
+
+    if ($(window).outerWidth() > 1194) {
+        $('nav.side-navbar').toggleClass('shrink');
+        $('.page').toggleClass('active');
+    } else {
+        $('nav.side-navbar').toggleClass('show-sm');
+        $('.page').toggleClass('active-sm');
+    }
+});
+
+$('table').DataTable({
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: 'Save current page',
+                exportOptions: {
+                    modifier: {
+                        page: 'current'
+                    }
+                }
+            }
+        ]
+    }
+);
+$(window).on('load', function () {
+
+    $('input[type="date"]').daterangepicker({
+        "singleDatePicker": true,
+        autoUpdateInput: false,
+        locale: {
+            "format": "YYYY-MM-DD",
+            "separator": " - ",
+        }
+    }, function (chosen_date) {
+        $(this).val(chosen_date.format('YYYY-MM-DD'));
+    })
+        .on('apply.daterangepicker', function (ev, picker) {
+            //do something, like clearing an input
+            var ele = $(this);
+            ele.val(picker.startDate.format('YYYY-MM-DD'))
+        });
+
+
+    $('input[type="time"]').jqclockpicker({
+        autoclose: true,
+        donetext: "OK"
+    });
+
+    $(document).on('click', '.loadInTarget', function (e) {
+        e.preventDefault();
+        var ele = $(this);
+        var url = ele.attr('href');
+        var target = ele.attr('data-target');
+        $(target).load(url + ' ' + target);
+        var text = ele.text();
+        var dropdown = ele.closest('.dropdown').find('button');
+        dropdown.text(text);
+    });
+
+    $(document).on('click', '.loadContent', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $('#loadContentModal').modal('show');
+        $('#loadContentModal .modal-content').load(url);
+    });
+    if (typeof optionsSnack !== 'undefined') {
+        $.snackbar(optionsSnack);
+    }
+
+
+    $('.deleteBtn').click(function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        var type = $(this).attr('type');
+
+        $.confirm({
+            title: confirmTitle,
+            content: confirmText,
+            theme: 'material',
+            buttons: {
+                confirm: function () {
+                    $.ajax({
+                        url: url,
+                        type: type,
+                        success: function (data) {
+                            if (data.redirect) {
+                                window.location.href = data.redirect;
+                            }
+                        }
+                    });
+                },
+                cancel: function () {
+
+                },
+
+            }
+        });
+    });
+});
