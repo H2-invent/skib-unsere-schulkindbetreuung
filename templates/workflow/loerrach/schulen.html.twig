@@ -38,14 +38,14 @@
                                         <p class="card-text">{{ s.infoText }}</p>
 
                                         <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id,'slug':stadt.slug}) }}"
-                                           class="loadContent btn btn-outline-primary">{% trans %}Kind anmelden{% endtrans %}</a>
+                                           class="waves-effect loadContent btn btn-outline-primary">{% trans %}Kind anmelden{% endtrans %}</a>
 
                                     </div>
                                     {% if kinder[s.id] is defined and kinder[s.id] is not null %}
                                         {% for k in kinder[s.id] %}
                                             <div class="card-body">
                                                 <div class="btn-group">
-                                                    <button class="btn bmd-btn-icon dropdown-toggle" type="button"
+                                                    <button class="btn bmd-btn-icon dropdown-toggle waves-effect px-3" type="button"
                                                             id="ex2"
                                                             data-toggle="dropdown" aria-haspopup="true"
                                                             aria-expanded="false">
