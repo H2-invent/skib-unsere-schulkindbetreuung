@@ -30,18 +30,4 @@ SKiB ist bisher die einzige Onlinelösung für die Anmeldung und die Verwaltung 
 {% set url =  absolute_url(path(app.request.get('_route'), app.request.get('_route_params'))) %}
 <meta property="og:url" content="{{ url }}"/>
 <meta property="og:site_name" content="SKiB unsere-Schulkindbetreuung.de"/>
-
-<!-- Font Awesome -->
-<link rel="stylesheet" href="{{ asset('uploads/fontawesome/css/all.min.css') }}">
-<!-- Bootstrap core CSS -->
-<link rel="stylesheet" href="{{ asset('frontpage/css/bootstrap.min.css') }}">
-<!-- Material Design Bootstrap -->
-<link rel="stylesheet" href="{{ asset('frontpage/css/mdb.min.css') }}">
-<!-- Your custom styles (optional) -->
-<link rel="stylesheet" href="{{ asset('frontpage/css/style.min.css') }}">
-
-<!-- ADDITIONAL VENDORS -->
-<link rel="stylesheet" href="{{ asset('vendor/confirm/css/jquery-confirm.min.css') }}">
-<link rel="stylesheet" href="{{ asset('vendor/snackbar/css/snackbar.min.css') }}">
-<link rel="stylesheet" href="{{ asset('vendor/material-vez/css/material.min.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('vendor/daterangepicker/css/daterangepicker.min.css') }}" />
+{{ encore_entry_link_tags('frontend') }}

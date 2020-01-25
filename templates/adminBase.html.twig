@@ -8,36 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
 
-    <!-- Bootstrap CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin/fezvrasta/css/bootstrap-material-design.min.css') }}">
-    <!-- Font Awesome CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}">
-    <!-- Fontastic Custom icon font-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/fontastic.css') }}">
-    <!-- jQuery Circle-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/grasp_mobile_progress_circle-1.0.0.min.css') }}">
-    <!-- Custom Scrollbar-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css') }}">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.default.css') }}" id="theme-stylesheet">
 
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('frontpage/css/style.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('uploads/material-design-icons-master/material-design-icons-master/iconfont/material-icons.min.css') }}">
+    {{ encore_entry_link_tags('app') }}
 
-    <!-- Vendor stylesheet-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/jquery.dataTables.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/confirm/css/jquery-confirm.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/daterangepicker/css/daterangepicker.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-clockpicker.min.css') }}" id="theme-stylesheet">
 
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
 
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
-    <script src="{{ asset('vendor/older-js/html5shiv.min.js') }}"></script>
-    <script src="{{ asset('vendor/older-js/respond.min.js') }}"></script><![endif]-->
+
+
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
 
     <style>
         .background {
@@ -258,8 +241,8 @@
         <nav class="navbar">
             <div class="container-fluid">
                 <div class="navbar-holder d-flex align-items-center justify-content-between">
-                    <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i
-                                    class="icon-bars"> </i></a><a href="{{ path('dashboard') }}" class="navbar-brand">
+                    <div class="navbar-header"><a id="toggle-btn" href="#" class="btn menu-btn"><i
+                                    class="material-icons">menu</i></a><a href="{{ path('dashboard') }}" class="navbar-brand">
                             <div class="brand-text d-none d-md-inline-block">
                                 <strong class="text-primary">
                                     unsere-schulkindbetreuung
@@ -866,150 +849,27 @@
     </footer>
 </div>
 
-<!-- JavaScript files-->
-<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('vendor/popper.js/umd/popper.min.js') }}"></script>
-<script src="{{ asset('vendor/momentjs/js/moment.min.js') }}"></script>
-<script src="{{ asset('js/grasp_mobile_progress_circle-1.0.0.min.js') }}"></script>
-<script src="{{ asset('vendor/jquery.cookie/jquery.cookie.js') }}"></script>
-<script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
-<script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
-<script src="{{ asset('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-<script src="{{ asset('vendor/charts-home/js/charts-home.js') }}"></script>
-<!-- Main File-->
-<script type="text/javascript" src="{{ asset('js/front.js') }}"></script>
-<script type="text/javascript" src="{{ asset('admin/fezvrasta/js/popper.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('vendor/snackbar/js/snackbar.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('admin/fezvrasta/js/bootstrap-material-design.js') }}"></script>
-<script type="text/javascript" src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('vendor/confirm/js/jquery-confirm.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('vendor/daterangepicker/js/daterangepicker.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('vendor/clock-picker/jquery-clockpicker.min.js') }}"></script>
+
+
 <script>
-    $(document).ready(function () {
-        $('body').bootstrapMaterialDesign();
-    });
-</script>
-<script>
-    $(document).ready(function () {
+
         {% block table %}
-        $('table').DataTable({
-                buttons: [
-                    {
-                        extend: 'excelHtml5',
-                        text: 'Save current page',
-                        exportOptions: {
-                            modifier: {
-                                page: 'current'
-                            }
-                        }
-                    }
-                ]
-            }
-        );
+
         {% endblock %}
         {% if app.request.query.get("snack") is defined and app.request.query.get("snack") is not null %}
-        var options = {
+        optionsSnack = {
             content: "{{ app.request.query.get("snack") }}", // text of the snackbar
             timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
         };
-        $.snackbar(options);
         {% endif %}
-    });
-</script>
-<script>
-    $(document).on('click', '.loadContent', function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        $('#loadContentModal').modal('show');
-        $('#loadContentModal .modal-content').load(url);
-    });
+
+        confirmTitle = '{{ 'Bestätigung'|trans }}';
+        confirmText = '{{ 'Wollen Sie diese Aktion durchführen?'|trans }}'
 
 </script>
-<script src="{{ asset('js/jquery.bs.gdpr.cookies.js') }}"></script>
-<script type="text/javascript">
-    var settings = {
-        message: 'This is your cookies message. Lorem ipsum dolor sit amet, consectetur adipiscing elit. <b> Read more  ',
-        moreLinkLabel: 'here.</b>',
-        messageMaxHeightPercent: 30,
-        moreLink: '/privacy/',
-        delay: 1000,
-        allowAdvancedOptions: true,
-        OnAccept: function () {
-            console.log('Yay! User accepted your cookies window!');
-            console.log('User preferences');
-            var preferences = $.fn.bsgdprcookies.GetUserPreferences();
-            console.log(preferences);
 
-        }
-    }
+    {{ encore_entry_script_tags('app') }}
 
-    $(document).ready(function () {
-        $('body').bsgdprcookies(settings);
-
-        $('#cookiesBtn').on('click', function () {
-            $('body').bsgdprcookies(settings, 'reinit');
-        });
-    });
-    $('.deleteBtn').click(function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        var type = $(this).attr('type');
-        $.confirm({
-            title: '{{ 'Bestätigung'|trans }}',
-            content: '{{ 'Wollen Sie diese Aktion durchführen?'|trans }}',
-            theme: 'material',
-            buttons: {
-                confirm: function () {
-                    $.ajax({
-                        url: url,
-                        type: type,
-                        success: function (data) {
-                            if (data.redirect) {
-                                window.location.href = data.redirect;
-                            }
-                        }
-                    });
-                },
-                cancel: function () {
-
-                },
-
-            }
-        });
-    });
-    $('input[type="date"]').daterangepicker({
-        "singleDatePicker": true,
-        autoUpdateInput: false,
-        locale: {
-            "format": "YYYY-MM-DD",
-            "separator": " - ",
-        }
-    }, function (chosen_date) {
-        $(this).val(chosen_date.format('YYYY-MM-DD'));
-    })
-        .on('apply.daterangepicker', function (ev, picker) {
-            //do something, like clearing an input
-            var ele = $(this);
-            ele.val(picker.startDate.format('YYYY-MM-DD'))
-        });
-    $('input[type="time"]').clockpicker({
-        autoclose: true,
-        donetext: "{{ 'Fertig'|trans }}"
-    });
-</script>
-<script>
-    $(document).on('click','.loadInTarget',function (e) {
-        e.preventDefault();
-        var ele = $(this);
-        var url = ele.attr('href');
-      var target = ele.attr('data-target');
-      $(target).load(url+' '+target);
-        var text = ele.text();
-        var dropdown = ele.closest('.dropdown').find('button');
-        dropdown.text(text);
-    })
-</script>
 {% block jquery %}
 
 {% endblock %}

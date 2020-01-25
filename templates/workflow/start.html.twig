@@ -86,9 +86,9 @@
                 {% endif %}
             </div>
             <div class="col-md-12 mb-4 white-text text-center align-content-center">
-                <section id="scroll">
+                <section id="scroll" class="scroll">
 
-                    <a href="#start"><span></span></a>
+                    <a href="#start" class="scroller"><span></span></a>
                 </section>
             </div>
         </div>
@@ -295,44 +295,21 @@
 
 </div>
 
+<<<<<<< HEAD
 <script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/snackbar/js/snackbar.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontpage/vendor/hide-reveal-more-content/dist/jquery.morecontent.lite.min.js') }}"></script>
+=======
+>>>>>>> master
 <script>
-    $(function () {
-        $("a[href*=\\#]").on('click', function (e) {
-            e.preventDefault();
-            $('html, body').animate({scrollTop: $($(this).attr('href')).offset().top}, 500, 'linear');
-        });
-    });
-
-    $(document).on('click', '.loadContent', function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        $('#loadContentModal').load(url, function () {
-            $('#loadContentModal ').modal('show');
-        });
-
-    });
-</script>
-<script>
-    $('.more').moreContent(
-        {
-            textClose: '{{ 'Mehr lesen'|trans }}',
-            textOpen: '{{ 'Schließen'|trans }}',
-            tpl: {
-
-                btn: '<button class="btn btn-primary" type="button"></button>',
-
-            },
-        }
-    );
+    mehrLesen = '{{ 'Mehr lesen'|trans }}';
+    wenigerLesen = '{{ 'Schließen'|trans }}'
 
 </script>
-
+{{ encore_entry_script_tags('startpage') }}
 </body>
 
 </html>

@@ -1,0 +1,48 @@
+{
+  "name": "vendor_skib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.12.0",
+    "@popperjs/core": "^2.0.0",
+    "bootstrap": "^4.4.1",
+    "bootstrap-material-design": "^4.1.2",
+    "chart.js": "^2.9.3",
+    "core-js": "^3.6.4",
+    "datatables.net": "^1.10.20",
+    "datatables.net-bs4": "^1.10.20",
+    "datatables.net-dt": "^1.10.20",
+    "daterangepicker": "^3.0.5",
+    "html5shiv": "^3.7.3",
+    "jquery": "^3.4.1",
+    "jquery-clockpicker": "0.0.8",
+    "jquery-confirm": "^3.3.4",
+    "jquery-validation": "^1.19.1",
+    "jquery.cookie": "^1.4.1",
+    "malihu-custom-scrollbar-plugin": "^3.1.5",
+    "material-icons-font": "^2.0.0",
+    "moment": "^2.24.0",
+    "morecontent-js": "^1.0.1",
+    "popper.js": "^1.16.1",
+    "respond.js": "^1.4.2",
+    "snackbarjs": "^1.1.0",
+    "webpack-notifier": "^1.8.0"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.28.2",
+    "font-awesome": "^4.7.0",
+    "node-sass": "^4.13.1",
+    "sass-loader": "^7.3.1",
+    "webpack-material-design-icons": "^0.1.0"
+  }
+}
