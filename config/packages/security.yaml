@@ -58,9 +58,11 @@ security:
         - { path: /org_shool/, role: ROLE_ORG_SHOOL }
         - { path: /org_accept/, role: ROLE_ORG_ACCEPT_CHILD }
         - { path: /org_news/, role: ROLE_ORG_NEWS}
+        - { path: /org_child/delete/, role: ROLE_ORG_CHILD_DELETE}
         - { path: /org_ferien_admin/, role: ROLE_ORG_FERIEN_ADMIN}
         - { path: /org_ferien/edit/, role: ROLE_ORG_FERIEN_EDITOR}
         - { path: /org_ferien/report/, role: ROLE_ORG_FERIEN_REPORT}
         - { path: /org_ferien/orders/, role: ROLE_ORG_FERIEN_ORDERS}
         - { path: /org_ferien/checkin/, role: ROLE_ORG_FERIEN_CHECKIN}
         - { path: /org_ferien/storno/, role: ROLE_ORG_FERIEN_STORNO}
+

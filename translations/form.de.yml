@@ -1,3 +1,4 @@
 ROLE_CITY_DASHBOARD: Darf das Dashboard sehen
 ROLE_CITY_SCHOOL: Darf Schulen sehen und bearbeiten
 ROLE_CITY_REPORT: Darf Report zu den ORganisationen sehen
+ROLE_ORG_CHILD_DELETE: ROLE_ORG_CHILD_DELETE

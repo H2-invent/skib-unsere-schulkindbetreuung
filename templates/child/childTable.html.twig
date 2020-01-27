@@ -31,6 +31,10 @@
                                 <a class="dropdown-item"
                                    href="{{ path('child_change_seccode',{'kind_id':k.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
                             {% endif %}
+                            {% if is_granted('ROLE_ORG_CHILD_DELETE') %}
+                                <a class="dropdown-item deleteBtn" type="DELETE"
+                                   href="{{ path('delete_child_delete',{'kind_id':k.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                            {% endif %}
                         </div>
                     </div>
                 </td>

@@ -121,13 +121,12 @@ class PrintRechnungService
             true
         );
 
-        $table = $this->templating->render('rechnung/tabelle.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
         $pdf->writeHTMLCell(
             0,
             0,
             20,
             100,
-            $table,
+            $rechnung->getPdf(),
             0,
             1,
             0,

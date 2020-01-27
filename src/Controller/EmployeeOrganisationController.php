@@ -18,10 +18,27 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class EmployeeOrganisationController extends AbstractController
 {
     private $manager;
-
+    private $availRole;
     public function __construct(UserManagerInterface $manager)
     {
         $this->manager = $manager;
+        $this->availRole = array(
+            'ROLE_ORG_REPORT' => 'ROLE_ORG_REPORT',
+            'ROLE_ORG_CHILD_CHANGE' => 'ROLE_ORG_CHILD_CHANGE',
+            'ROLE_ORG_CHILD_SHOW' => 'ROLE_ORG_CHILD_SHOW',
+            'ROLE_ORG_ACCOUNTING'=>'ROLE_ORG_ACCOUNTING',
+            'ROLE_ORG_BLOCK_MANAGEMENT'=>'ROLE_ORG_BLOCK_MANAGEMENT',
+            'ROLE_ORG_SHOOL'=>'ROLE_ORG_SHOOL',
+            'ROLE_ORG_NEWS'=>'ROLE_ORG_NEWS',
+            'ROLE_ORG_CHILD_DELETE'=>'ROLE_ORG_CHILD_DELETE',
+            'ROLE_ORG_ACCEPT_CHILD'=>'ROLE_ORG_ACCEPT_CHILD',
+            'ROLE_ORG_FERIEN_EDITOR'=>'ROLE_ORG_FERIEN_EDITOR',
+            'ROLE_ORG_FERIEN_REPORT'=>'ROLE_ORG_FERIEN_REPORT',
+            'ROLE_ORG_FERIEN_ORDERS'=>'ROLE_ORG_FERIEN_ORDERS',
+            'ROLE_ORG_FERIEN_CHECKIN'=>'ROLE_ORG_FERIEN_CHECKIN',
+            'ROLE_ORG_FERIEN_ADMIN'=>'ROLE_ORG_FERIEN_ADMIN',
+            'ROLE_ORG_FERIEN_STORNO'=>'ROLE_ORG_FERIEN_STORNO',
+        );
     }
     /**
      * @Route("/org_edit/mitarbeiter/organisation", name="city_employee_org_show")
@@ -223,25 +240,10 @@ class EmployeeOrganisationController extends AbstractController
             $roles[$data] = true;
         }
 
-        $availRole = array(
-            'ROLE_ORG_REPORT' => 'ROLE_ORG_REPORT',
-            'ROLE_ORG_CHILD_CHANGE' => 'ROLE_ORG_CHILD_CHANGE',
-            'ROLE_ORG_CHILD_SHOW' => 'ROLE_ORG_CHILD_SHOW',
-            'ROLE_ORG_ACCOUNTING'=>'ROLE_ORG_ACCOUNTING',
-            'ROLE_ORG_BLOCK_MANAGEMENT'=>'ROLE_ORG_BLOCK_MANAGEMENT',
-            'ROLE_ORG_SHOOL'=>'ROLE_ORG_SHOOL',
-            'ROLE_ORG_NEWS'=>'ROLE_ORG_NEWS',
-            'ROLE_ORG_ACCEPT_CHILD'=>'ROLE_ORG_ACCEPT_CHILD',
-            'ROLE_ORG_FERIEN_EDITOR'=>'ROLE_ORG_FERIEN_EDITOR',
-            'ROLE_ORG_FERIEN_REPORT'=>'ROLE_ORG_FERIEN_REPORT',
-            'ROLE_ORG_FERIEN_ORDERS'=>'ROLE_ORG_FERIEN_ORDERS',
-            'ROLE_ORG_FERIEN_CHECKIN'=>'ROLE_ORG_FERIEN_CHECKIN',
-            'ROLE_ORG_FERIEN_ADMIN'=>'ROLE_ORG_FERIEN_ADMIN',
-            'ROLE_ORG_FERIEN_STORNO'=>'ROLE_ORG_FERIEN_STORNO',
-        );
+
 
         $form = $this->createFormBuilder($roles);
-        foreach ($availRole as $key => $data) {
+        foreach ($this->availRole as $key => $data) {
             $form->add(
                 $key,
                 CheckboxType::class,
@@ -257,7 +259,7 @@ class EmployeeOrganisationController extends AbstractController
 
             $roles = $formI->getData();
 
-            foreach ($availRole as $item) {
+            foreach ($this->availRole as $item) {
                 $user->removeRole($item);
             }
             $user->addRole('ROLE_USER');
