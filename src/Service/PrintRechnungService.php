@@ -32,7 +32,7 @@ class PrintRechnungService
     private $pdf;
     private $fileSystem;
 
-    public function __construct(FilesystemInterface $publicUploadsFilesystem, TCPDFController $tcpdf, \Swift_Mailer $mailer,  TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(FilesystemInterface $publicUploadsFilesystem, TCPDFController $tcpdf,  TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
 
 
