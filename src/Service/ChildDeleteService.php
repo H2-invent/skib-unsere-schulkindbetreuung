@@ -37,7 +37,7 @@ class ChildDeleteService
     private $templating;
     private $mailer;
 
-    public function __construct(MailerService $mailer, Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager, ParameterBagInterface $params)
+    public function __construct(MailerService $mailer, Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
         $this->translator = $translator;

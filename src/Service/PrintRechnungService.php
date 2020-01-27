@@ -26,16 +26,16 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 class PrintRechnungService
 {
 
-    private $templating;
+
     private $translator;
     protected $parameterBag;
     private $pdf;
     private $fileSystem;
 
-    public function __construct(FilesystemInterface $publicUploadsFilesystem, TCPDFController $tcpdf, \Swift_Mailer $mailer, EngineInterface $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(FilesystemInterface $publicUploadsFilesystem, TCPDFController $tcpdf, \Swift_Mailer $mailer,  TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
 
-        $this->templating = $templating;
+
         $this->translator = $translator;
         $this->parameterBag = $parameterBag;
         $this->pdf = $tcpdf;
