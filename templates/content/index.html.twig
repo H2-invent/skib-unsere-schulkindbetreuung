@@ -20,6 +20,7 @@
                             <tr>
                                 <th></th>
                                 <th>{% trans %}Sichtbar{% endtrans %}</th>
+                                <th>{% trans %}Reihenfolge{% endtrans %}</th>
                                 <th>{% trans %}Titel{% endtrans %}</th>
                                 <th>{% trans %}Icon{% endtrans %}</th>
                                 <th>{% trans %}Datum{% endtrans %}</th>
@@ -52,7 +53,9 @@
                                             </div>
                                         </div>
                                     </td>
+
                                     <td>{{ c.activ?"Ja":'Nein'|trans }}</td>
+                                    <td>{{ c.reihenfolge }}</td>
                                     <td>{{ c.translate.title }}</td>
                                     <td>{{ c.icon }}</td>
                                     <td>{{ c.createdAt|date("d.m.Y G:i") }}</td>

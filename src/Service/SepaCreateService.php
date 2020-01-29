@@ -176,6 +176,7 @@ class SepaCreateService
 
         $rechnung->setCreatedAt(new \DateTime());
         $rechnung->setStammdaten($data);
+        $rechnung->setPdf('');
         $this->em->persist($rechnung);
         $this->em->flush();
         //todo repair the rechnung
@@ -200,7 +201,7 @@ class SepaCreateService
                 $this->sendRechnung($data);
             }
             return true;
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
 

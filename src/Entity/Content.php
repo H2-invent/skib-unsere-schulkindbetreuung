@@ -44,6 +44,11 @@ class Content
      */
     private $date;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $reihenfolge;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -109,6 +114,18 @@ class Content
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getReihenfolge(): ?int
+    {
+        return $this->reihenfolge;
+    }
+
+    public function setReihenfolge(?int $reihenfolge): self
+    {
+        $this->reihenfolge = $reihenfolge;
 
         return $this;
     }

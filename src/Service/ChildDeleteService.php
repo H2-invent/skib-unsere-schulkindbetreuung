@@ -48,12 +48,10 @@ class ChildDeleteService
     public function deleteChild(Kind $kind)
     {
         try {
-            $parent = $kind->getEltern();
-            $parent->removeKind($kind);
-            $this->em->persist($parent);
-            $this->em->remove($kind);
+            $kind->setFin(false);
+            $this->em->persist($kind);
             $this->em->flush();
-            $this->sendEmail($parent, $kind, $kind->getSchule()->getOrganisation());
+            $this->sendEmail($kind->getEltern(), $kind, $kind->getSchule()->getOrganisation());
             return true;
         } catch (\Exception $exception) {
             return false;

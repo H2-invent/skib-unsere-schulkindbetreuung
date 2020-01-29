@@ -22,8 +22,8 @@ class LandingController extends AbstractController
         $metaDescription = $translator->trans('SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
 Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
 ');
-        $contentAll = $this->getDoctrine()->getRepository(Content::class)->findBy(array('activ' => true));
-        $content = $this->getDoctrine()->getRepository(Content::class)->findOneBy(array('activ' => true));
+        $contentAll = $this->getDoctrine()->getRepository(Content::class)->findBy(array('activ' => true),array('reihenfolge'=>'ASC'));
+        $content = $this->getDoctrine()->getRepository(Content::class)->findOneBy(array('activ' => true),array('reihenfolge'=>'ASC'));
 
         return $this->render('landing/landing.html.twig', array('content' => $contentAll, 'contentSelect' => $content, 'metaDescription' => $metaDescription, 'title' => $title, 'stadt' => $stadt));
     }
@@ -38,7 +38,7 @@ Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechti
         $title = $content->translate()->getTitle() . ' | unsere-Schulkindbetreuung.de';
         $metaDescription = $content->translate()->getMeta();
 
-        $contentAll = $this->getDoctrine()->getRepository(Content::class)->findBy(array('activ' => true));
+        $contentAll = $this->getDoctrine()->getRepository(Content::class)->findBy(array('activ' => true),array('reihenfolge'=>'ASC'));
 
         return $this->render('landing/landing.html.twig', array('content' => $contentAll, 'contentSelect' => $content, 'metaDescription' => $metaDescription, 'title' => $title, 'stadt' => $stadt));
     }
