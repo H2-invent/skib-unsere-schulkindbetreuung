@@ -1847,7 +1847,7 @@
       </trans-unit>
       <trans-unit id="Z.kNJwW" resname=" im ausgewählten Betreuungszeitfenster">
         <source> im ausgewählten Betreuungszeitfenster</source>
-        <target>__ im ausgewählten Betreuungszeitfenster</target>
+        <target state="translated"> dans la fenêtre temporelle de soins sélectionnée</target>
       </trans-unit>
       <trans-unit id="0_77c55" resname="Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)">
         <source>Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)</source>
@@ -1947,7 +1947,7 @@ Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechti
       </trans-unit>
       <trans-unit id="L5N7_3u" resname=" Hier anmelden">
         <source> Hier anmelden</source>
-        <target>__ Hier anmelden</target>
+        <target state="translated"> Inscrivez-vous ici</target>
       </trans-unit>
       <trans-unit id="50f_IMp" resname="Die E-Mail konnte nicht erneut vesandt werden">
         <source>Die E-Mail konnte nicht erneut vesandt werden</source>
@@ -2334,6 +2334,18 @@ Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechti
       <trans-unit id="MbFIa5j" resname="Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung.">
         <source>Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung.</source>
         <target>__Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung.</target>
+      </trans-unit>
+      <trans-unit id="aq9j.Xq" resname="Zusammenfassung der Datenschutzhinweise">
+        <source>Zusammenfassung der Datenschutzhinweise</source>
+        <target>__Zusammenfassung der Datenschutzhinweise</target>
+      </trans-unit>
+      <trans-unit id="2RQ.lyp" resname="Datenschutzhinweise der Stadt und betreuenden Organisationen">
+        <source>Datenschutzhinweise der Stadt und betreuenden Organisationen</source>
+        <target>__Datenschutzhinweise der Stadt und betreuenden Organisationen</target>
+      </trans-unit>
+      <trans-unit id="6XA1_hW" resname="Für Informationen zum Datenschutz der Stat und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.">
+        <source>Für Informationen zum Datenschutz der Stat und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.</source>
+        <target>__Für Informationen zum Datenschutz der Stat und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.</target>
       </trans-unit>
     </body>
   </file>

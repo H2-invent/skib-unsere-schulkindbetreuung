@@ -1236,8 +1236,8 @@
         <target state="translated">Bank details for direct debit</target>
       </trans-unit>
       <trans-unit id="47DEQpj" resname="">
-        <source></source>
-        <target></target>
+        <source/>
+        <target/>
       </trans-unit>
       <trans-unit id="bXHPK6K" resname="Daten der Kinder">
         <source>Daten der Kinder</source>
@@ -2230,8 +2230,8 @@
         <target state="translated">Online application and administration</target>
       </trans-unit>
       <trans-unit id="zmlkEaD" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;&#10;Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;&#10;">
-        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;
-Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;
+        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
+Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
 </source>
         <target state="translated">SKiB is so far the only online solution for the registration and administration of school childcare and holiday care.
 The web application enables direct networking between parents, external organisations and the municipal administration or school authorities. 
@@ -2362,6 +2362,18 @@ The web application enables direct networking between parents, external organisa
       <trans-unit id="srOAIVX" resname="Bitte weiteres Betreuungszeitfenster auswählen">
         <source>Bitte weiteres Betreuungszeitfenster auswählen</source>
         <target state="translated">Please select another care time window</target>
+      </trans-unit>
+      <trans-unit id="aq9j.Xq" resname="Zusammenfassung der Datenschutzhinweise">
+        <source>Zusammenfassung der Datenschutzhinweise</source>
+        <target state="translated">Summary of the data protection information</target>
+      </trans-unit>
+      <trans-unit id="2RQ.lyp" resname="Datenschutzhinweise der Stadt und betreuenden Organisationen">
+        <source>Datenschutzhinweise der Stadt und betreuenden Organisationen</source>
+        <target state="translated">Data protection notices of the city and supporting organisations</target>
+      </trans-unit>
+      <trans-unit id="6XA1_hW" resname="Für Informationen zum Datenschutz der Stat und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.">
+        <source>Für Informationen zum Datenschutz der Stat und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.</source>
+        <target state="translated">Please contact the respective administrations for information on data protection at the Stat and the supervising organisations.</target>
       </trans-unit>
     </body>
   </file>
