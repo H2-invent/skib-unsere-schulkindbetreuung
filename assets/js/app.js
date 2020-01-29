@@ -106,7 +106,7 @@ $(window).on('load', function () {
     }
 
 
-    $('.deleteBtn').click(function (e) {
+    $(document).on('click', '.deleteBtn',function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
         var type = $(this).attr('type');
