@@ -1847,19 +1847,19 @@
       </trans-unit>
       <trans-unit id="Z.kNJwW" resname=" im ausgewählten Betreuungszeitfenster">
         <source> im ausgewählten Betreuungszeitfenster</source>
-        <target state="translated"> dans la fenêtre temporelle de soins sélectionnée</target>
+        <target state="translated"> dans la période de soins sélectionnée</target>
       </trans-unit>
       <trans-unit id="0_77c55" resname="Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)">
         <source>Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)</source>
-        <target>__Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)</target>
+        <target state="translated">Veuillez sélectionner une autre période de soins (au moins deux jours doivent être sélectionnés)</target>
       </trans-unit>
       <trans-unit id="UkguW0u" resname="Laktose intolerant">
         <source>Laktose intolerant</source>
-        <target>__Laktose intolerant</target>
+        <target state="translated">Intolérance au lactose</target>
       </trans-unit>
       <trans-unit id="syeYwkW" resname="Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch in Ihrem Spamordner nach.">
         <source>Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch in Ihrem Spamordner nach.</source>
-        <target>__Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch in Ihrem Spamordner nach.</target>
+        <target state="translated">Nous avons envoyé un code de confirmation à votre adresse électronique. Veuillez saisir ici le code figurant dans le courriel. Cela est nécessaire pour protéger au mieux les données de vos enfants. Cela peut prendre quelques minutes. Veuillez également vérifier votre dossier de courrier indésirable.</target>
       </trans-unit>
       <trans-unit id="L65vsws" resname="E-Mail">
         <source>E-Mail</source>
@@ -1883,67 +1883,67 @@
       </trans-unit>
       <trans-unit id="o1.YZuV" resname="Betreuungszeitfenster erfolgreich gespeichert">
         <source>Betreuungszeitfenster erfolgreich gespeichert</source>
-        <target>__Betreuungszeitfenster erfolgreich gespeichert</target>
+        <target state="translated">La période de supervision a été sauvée avec succès</target>
       </trans-unit>
       <trans-unit id="QxDoiI8" resname="Betreuungszeitfenster">
         <source>Betreuungszeitfenster</source>
-        <target>__Betreuungszeitfenster</target>
+        <target state="translated">Période de soins</target>
       </trans-unit>
       <trans-unit id="kkHVaqv" resname="Schuljahr Anfang">
         <source>Schuljahr Anfang</source>
-        <target>__Schuljahr Anfang</target>
+        <target state="translated">Début de l'année scolaire</target>
       </trans-unit>
       <trans-unit id="7.WUGsM" resname="Schuljahr Ende">
         <source>Schuljahr Ende</source>
-        <target>__Schuljahr Ende</target>
+        <target state="translated">Fin de l'année scolaire</target>
       </trans-unit>
       <trans-unit id="FILPio5" resname="Die E-Mail existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse">
         <source>Die E-Mail existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse</source>
-        <target>__Die E-Mail existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse</target>
+        <target state="translated">Le courrier électronique existe déjà. Veuillez utiliser une adresse électronique différente</target>
       </trans-unit>
       <trans-unit id="YnPo7wM" resname="Berechtigungen erfolgreich gesetzt">
         <source>Berechtigungen erfolgreich gesetzt</source>
-        <target>__Berechtigungen erfolgreich gesetzt</target>
+        <target state="translated">Les autorisations sont fixées avec succès</target>
       </trans-unit>
       <trans-unit id="83.HlhJ" resname="Schulkindbetreuung SKiB">
         <source>Schulkindbetreuung SKiB</source>
-        <target>__Schulkindbetreuung SKiB</target>
+        <target state="translated">Garde d'enfants à l'école  SKiB</target>
       </trans-unit>
       <trans-unit id="bedt2uH" resname="Online Anmeldung und Verwaltung">
         <source>Online Anmeldung und Verwaltung</source>
-        <target>__Online Anmeldung und Verwaltung</target>
+        <target state="translated">Enregistrement et administration</target>
       </trans-unit>
       <trans-unit id="zmlkEaD" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;&#10;Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;&#10;">
         <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
 Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
 </source>
-        <target>__SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
-Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
+        <target state="translated">SKiB est jusqu'à présent la seule solution en ligne pour l'inscription et l'administration des services de garde d'enfants et de vacances scolaires.
+L'application web permet une mise en réseau directe entre les parents, les organisations externes et l'administration municipale ou les autorités scolaires.
 </target>
       </trans-unit>
       <trans-unit id="QoyxZn0" resname="Neuigkeit erstellt">
         <source>Neuigkeit erstellt</source>
-        <target>__Neuigkeit erstellt</target>
+        <target state="translated">Nouvelles créées</target>
       </trans-unit>
       <trans-unit id="DZ_fbJY" resname="Neuigkeit bearbeiten">
         <source>Neuigkeit bearbeiten</source>
-        <target>__Neuigkeit bearbeiten</target>
+        <target state="translated">Éditer les nouvelles</target>
       </trans-unit>
       <trans-unit id="fCQ84Uw" resname="Alle Neuigkeiten der Stadt">
         <source>Alle Neuigkeiten der Stadt</source>
-        <target>__Alle Neuigkeiten der Stadt</target>
+        <target state="translated">Toute l'actualité de la ville</target>
       </trans-unit>
       <trans-unit id="gq8j58x" resname="Nachricht konnte nicht versendet werden">
         <source>Nachricht konnte nicht versendet werden</source>
-        <target>__Nachricht konnte nicht versendet werden</target>
+        <target state="translated">Le message n'a pas pu être envoyé</target>
       </trans-unit>
       <trans-unit id=".YdLAc3" resname="SEPA Lastschrift fällig">
         <source>SEPA Lastschrift fällig</source>
-        <target>__SEPA Lastschrift fällig</target>
+        <target state="translated">Débit direct SEPA dû</target>
       </trans-unit>
       <trans-unit id="lYBlt4a" resname="Schulkindbetreuung und Ferienbetreuung von ">
         <source>Schulkindbetreuung und Ferienbetreuung von </source>
-        <target>__Schulkindbetreuung und Ferienbetreuung von </target>
+        <target state="translated">La garde d'enfants à l'école et la garde de vacances de </target>
       </trans-unit>
       <trans-unit id="L5N7_3u" resname=" Hier anmelden">
         <source> Hier anmelden</source>
@@ -1951,63 +1951,63 @@ Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechti
       </trans-unit>
       <trans-unit id="50f_IMp" resname="Die E-Mail konnte nicht erneut vesandt werden">
         <source>Die E-Mail konnte nicht erneut vesandt werden</source>
-        <target>__Die E-Mail konnte nicht erneut vesandt werden</target>
+        <target state="translated">L'e-mail n'a pas pu être ressenti</target>
       </trans-unit>
       <trans-unit id="w4iQcqS" resname="Die E-Mail wurde erfolgreich versandt">
         <source>Die E-Mail wurde erfolgreich versandt</source>
-        <target>__Die E-Mail wurde erfolgreich versandt</target>
+        <target state="translated">L'e-mail a été envoyé avec succès</target>
       </trans-unit>
       <trans-unit id="7w.oc7t" resname="AGB">
         <source>AGB</source>
-        <target>__AGB</target>
+        <target state="translated">Termes</target>
       </trans-unit>
       <trans-unit id="yy5a6sN" resname="Allgemeine Vertragsbedingungen der %stadt%">
         <source>Allgemeine Vertragsbedingungen der %stadt%</source>
-        <target>__Allgemeine Vertragsbedingungen der %stadt%</target>
+        <target state="translated">Conditions générales du %stadt%</target>
       </trans-unit>
       <trans-unit id="3nw6On8" resname="Content anlegen">
         <source>Content anlegen</source>
-        <target>__Content anlegen</target>
+        <target state="translated">Création de contenu</target>
       </trans-unit>
       <trans-unit id="9dAe0Tf" resname="Content bearbeiten">
         <source>Content bearbeiten</source>
-        <target>__Content bearbeiten</target>
+        <target state="translated">Modification du contenu</target>
       </trans-unit>
       <trans-unit id="d8ne8yW" resname="Das Passwort konnte nicht geändert werden">
         <source>Das Passwort konnte nicht geändert werden</source>
-        <target>__Das Passwort konnte nicht geändert werden</target>
+        <target state="translated">Le mot de passe n'a pas pu être changé</target>
       </trans-unit>
       <trans-unit id="Wa.wWgN" resname="Die E-Mail konnte nicht vesandt werden">
         <source>Die E-Mail konnte nicht vesandt werden</source>
-        <target>__Die E-Mail konnte nicht vesandt werden</target>
+        <target state="translated">L'e-mail n'a pas pu être envoyé</target>
       </trans-unit>
       <trans-unit id="Z7aWRoY" resname="Dashboard">
         <source>Dashboard</source>
-        <target>__Dashboard</target>
+        <target state="translated">Tableau de bord</target>
       </trans-unit>
       <trans-unit id="FhZB0Ue" resname="Frontpage Content">
         <source>Frontpage Content</source>
-        <target>__Frontpage Content</target>
+        <target state="translated">Contenu de première page</target>
       </trans-unit>
       <trans-unit id="x4_VmXI" resname="Stammdaten">
         <source>Stammdaten</source>
-        <target>__Stammdaten</target>
+        <target state="translated">Données de base</target>
       </trans-unit>
       <trans-unit id="OxXxCqS" resname="Wollen Sie das Element wirklich löschen?">
         <source>Wollen Sie das Element wirklich löschen?</source>
-        <target>__Wollen Sie das Element wirklich löschen?</target>
+        <target state="translated">Etes-vous sûr que vous voulez supprimer l'élément?</target>
       </trans-unit>
       <trans-unit id="88tsYx0" resname="Benutzer für %stadt%">
         <source>Benutzer für %stadt%</source>
-        <target>__Benutzer für %stadt%</target>
+        <target state="translated">Utilisateur pour %stadt%</target>
       </trans-unit>
       <trans-unit id="8HbTOEk" resname="gelöscht">
         <source>gelöscht</source>
-        <target>__gelöscht</target>
+        <target state="translated">supprimé</target>
       </trans-unit>
       <trans-unit id="EPM_Vi." resname="deaktiviert">
         <source>deaktiviert</source>
-        <target>__deaktiviert</target>
+        <target state="translated">Désactivé (-e/s)</target>
       </trans-unit>
       <trans-unit id="uTIH2Fl" resname="Neues Zeitfenster anlegen am %tag%">
         <source>Neues Zeitfenster anlegen am %tag%</source>
@@ -2023,121 +2023,121 @@ Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechti
       </trans-unit>
       <trans-unit id="R70pB1_" resname="Content">
         <source>Content</source>
-        <target>__Content</target>
+        <target state="translated">Contenu</target>
       </trans-unit>
       <trans-unit id="o1q81tr" resname="Icon">
         <source>Icon</source>
-        <target>__Icon</target>
+        <target state="translated">Icône</target>
       </trans-unit>
       <trans-unit id="9PoCIRF" resname="Last Change">
         <source>Last Change</source>
-        <target>__Last Change</target>
+        <target state="translated">Dernier changement</target>
       </trans-unit>
       <trans-unit id="XAbXtjr" resname="Wichtig: Diesen Bestätigungscode sicher aufbewahren!">
         <source>Wichtig: Diesen Bestätigungscode sicher aufbewahren!</source>
-        <target>__Wichtig: Diesen Bestätigungscode sicher aufbewahren!</target>
+        <target state="translated">Important : Gardez ce code de confirmation en toute sécurité !</target>
       </trans-unit>
       <trans-unit id="TSpfBCd" resname="Über diesen Link können Sie ihre Bestellung bearbeiten.">
         <source>Über diesen Link können Sie ihre Bestellung bearbeiten.</source>
-        <target>__Über diesen Link können Sie ihre Bestellung bearbeiten.</target>
+        <target state="translated">Vous pouvez utiliser ce lien pour traiter votre commande.</target>
       </trans-unit>
       <trans-unit id="dhhPs7h" resname="Bestätigungscode zur Überprüfung der E-Mail Adresse">
         <source>Bestätigungscode zur Überprüfung der E-Mail Adresse</source>
-        <target>__Bestätigungscode zur Überprüfung der E-Mail Adresse</target>
+        <target state="translated">Code de confirmation pour vérifier l'adresse e-mail</target>
       </trans-unit>
       <trans-unit id="6kYrCka" resname="Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.&#10;            &lt;br&gt;Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.">
         <source>Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.
             &lt;br&gt;Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.</source>
-        <target><![CDATA[__Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.
-            <br>Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.]]></target>
+        <target state="translated"><![CDATA[Vous venez de vous inscrire au portail en ligne pour la garde d'enfants à l'école.<br>
+Veuillez confirmer votre e-mail en entrant le code de vérification dans votre navigateur.]]></target>
       </trans-unit>
       <trans-unit id=".vpm3D1" resname="Elektronische Neuigkeit von">
         <source>Elektronische Neuigkeit von</source>
-        <target>__Elektronische Neuigkeit von</target>
+        <target state="translated">Les nouvelles électroniques de</target>
       </trans-unit>
       <trans-unit id="lBFODqf" resname="Erstellt am">
         <source>Erstellt am</source>
-        <target>__Erstellt am</target>
+        <target state="translated">Créé à la date du</target>
       </trans-unit>
       <trans-unit id="RtUA9dY" resname="Mitarbeiter der %stadt%">
         <source>Mitarbeiter der %stadt%</source>
-        <target>__Mitarbeiter der %stadt%</target>
+        <target state="translated">Les employés de %stadt%</target>
       </trans-unit>
       <trans-unit id="Rh4IIyQ" resname="Mitarbeiter der Organisationen der %stadt%">
         <source>Mitarbeiter der Organisationen der %stadt%</source>
-        <target>__Mitarbeiter der Organisationen der %stadt%</target>
+        <target state="translated">Les employés des organisations de %stadt%</target>
       </trans-unit>
       <trans-unit id="OKp3POR" resname="Ferienprogramm zum Bestellen anklicken">
         <source>Ferienprogramm zum Bestellen anklicken</source>
-        <target>__Ferienprogramm zum Bestellen anklicken</target>
+        <target state="translated">Cliquez sur le programme des vacances pour commander</target>
       </trans-unit>
       <trans-unit id="bXmgXds" resname="Nur Ferienprogramme mit freien Plätzen anzeigen">
         <source>Nur Ferienprogramme mit freien Plätzen anzeigen</source>
-        <target>__Nur Ferienprogramme mit freien Plätzen anzeigen</target>
+        <target state="translated">Afficher uniquement les programmes de vacances avec des places gratuites</target>
       </trans-unit>
       <trans-unit id="Uq5i1J." resname="Preis für das Ferienprogramm">
         <source>Preis für das Ferienprogramm</source>
-        <target>__Preis für das Ferienprogramm</target>
+        <target state="translated">Prix pour le programme de vacances</target>
       </trans-unit>
       <trans-unit id="gwJ6WYH" resname="Ferienprogramm buchen">
         <source>Ferienprogramm buchen</source>
-        <target>__Ferienprogramm buchen</target>
+        <target state="translated">Commander un programme de vacances</target>
       </trans-unit>
       <trans-unit id="nYK_s47" resname="Beworbene Betreuungszeitfenster">
         <source>Beworbene Betreuungszeitfenster</source>
-        <target>__Beworbene Betreuungszeitfenster</target>
+        <target state="translated">Périodes de soins applicables</target>
       </trans-unit>
       <trans-unit id="xscHjk7" resname="Gesamtbetrag für die gebuchten Ferienprogramme">
         <source>Gesamtbetrag für die gebuchten Ferienprogramme</source>
-        <target>__Gesamtbetrag für die gebuchten Ferienprogramme</target>
+        <target state="translated">Montant total des programmes de vacances réservés</target>
       </trans-unit>
       <trans-unit id="NPsD8hx" resname="Gebuchte Ferienprogramme">
         <source>Gebuchte Ferienprogramme</source>
-        <target>__Gebuchte Ferienprogramme</target>
+        <target state="translated">Programmes de vacances réservés</target>
       </trans-unit>
       <trans-unit id="6rGQ3A7" resname="Gewählte Summe und Zahlungsart">
         <source>Gewählte Summe und Zahlungsart</source>
-        <target>__Gewählte Summe und Zahlungsart</target>
+        <target state="translated">Montant et mode de paiement sélectionnés</target>
       </trans-unit>
       <trans-unit id="oLKtVd8" resname="Ich habe die allgemeinen Geschäftsbedingungen der %stadt% zur Ferienbetreuung gelesen und akzeptiere diese">
         <source>Ich habe die allgemeinen Geschäftsbedingungen der %stadt% zur Ferienbetreuung gelesen und akzeptiere diese</source>
-        <target>__Ich habe die allgemeinen Geschäftsbedingungen der %stadt% zur Ferienbetreuung gelesen und akzeptiere diese</target>
+        <target state="translated">J'ai lu et j'accepte les conditions générales du %stadt% des programmes de vacances</target>
       </trans-unit>
       <trans-unit id="_vMQt3." resname="Das Kind ist zu jung für dieses Programm">
         <source>Das Kind ist zu jung für dieses Programm</source>
-        <target>__Das Kind ist zu jung für dieses Programm</target>
+        <target state="translated">L'enfant est trop jeune pour ce programme</target>
       </trans-unit>
       <trans-unit id="D0RIaaq" resname="Das Kind ist zu alt für dieses Programm">
         <source>Das Kind ist zu alt für dieses Programm</source>
-        <target>__Das Kind ist zu alt für dieses Programm</target>
+        <target state="translated">L'enfant est trop vieux pour ce programme</target>
       </trans-unit>
       <trans-unit id="XxzYUSG" resname="Der Anmeldezeitraum für dieses Programm ist vorüber">
         <source>Der Anmeldezeitraum für dieses Programm ist vorüber</source>
-        <target>__Der Anmeldezeitraum für dieses Programm ist vorüber</target>
+        <target state="translated">La période d'enregistrement pour ce programme est terminée</target>
       </trans-unit>
       <trans-unit id="5aWrJoo" resname="Empfohlenes Alter">
         <source>Empfohlenes Alter</source>
-        <target>__Empfohlenes Alter</target>
+        <target state="translated">Âge recommandé</target>
       </trans-unit>
       <trans-unit id="ByRWYsS" resname="Maximales Alter">
         <source>Maximales Alter</source>
-        <target>__Maximales Alter</target>
+        <target state="translated">Âge maximum</target>
       </trans-unit>
       <trans-unit id="LuutKbg" resname="Minimal Alter">
         <source>Minimal Alter</source>
-        <target>__Minimal Alter</target>
+        <target state="translated">Âge minimale</target>
       </trans-unit>
       <trans-unit id="PpjzLHY" resname="Hier können Sie Ihre bevorzugte Zahlungsmethode auswählen und für die Zahlung verwenden">
         <source>Hier können Sie Ihre bevorzugte Zahlungsmethode auswählen und für die Zahlung verwenden</source>
-        <target>__Hier können Sie Ihre bevorzugte Zahlungsmethode auswählen und für die Zahlung verwenden</target>
+        <target state="translated">Ici, vous pouvez sélectionner votre mode de paiement préféré et l'utiliser pour le paiement</target>
       </trans-unit>
       <trans-unit id="8ggFF8X" resname="Stornogebühr in €">
         <source>Stornogebühr in €</source>
-        <target>__Stornogebühr in €</target>
+        <target state="translated">Frais d'annulation en é</target>
       </trans-unit>
       <trans-unit id="r9yF4Pi" resname="Rückzahlungsbetrag in €">
         <source>Rückzahlungsbetrag in €</source>
-        <target>__Rückzahlungsbetrag in €</target>
+        <target state="translated">Montant du remboursement de l'euro</target>
       </trans-unit>
       <trans-unit id="9VQ5Tv0" resname="Webanwendung für die  Anmeldung und Verwaltung">
         <source>Webanwendung für die  Anmeldung und Verwaltung</source>
@@ -2189,39 +2189,39 @@ Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechti
       </trans-unit>
       <trans-unit id="YEySstx" resname="Alle Neuigkeiten">
         <source>Alle Neuigkeiten</source>
-        <target>__Alle Neuigkeiten</target>
+        <target state="translated">Toutes les actualités</target>
       </trans-unit>
       <trans-unit id="fTb5ncN" resname="Bearbeitet am">
         <source>Bearbeitet am</source>
-        <target>__Bearbeitet am</target>
+        <target state="translated">Edité le</target>
       </trans-unit>
       <trans-unit id="Oc09MmC" resname="Weiterlesen">
         <source>Weiterlesen</source>
-        <target>__Weiterlesen</target>
+        <target state="translated">Lire la suite</target>
       </trans-unit>
       <trans-unit id="EyEb.q5" resname="Neuigkeit">
         <source>Neuigkeit</source>
-        <target>__Neuigkeit</target>
+        <target state="translated">Nouvelles</target>
       </trans-unit>
       <trans-unit id="Ir.e87L" resname="Zur Übersicht">
         <source>Zur Übersicht</source>
-        <target>__Zur Übersicht</target>
+        <target state="translated">Pour la vue d'ensemble</target>
       </trans-unit>
       <trans-unit id="8CTTveK" resname="Kreditkarte">
         <source>Kreditkarte</source>
-        <target>__Kreditkarte</target>
+        <target state="translated">Carte de crédit</target>
       </trans-unit>
       <trans-unit id="7c6_B49" resname="Daten des Erziehungsberechtigten">
         <source>Daten des Erziehungsberechtigten</source>
-        <target>__Daten des Erziehungsberechtigten</target>
+        <target state="translated">Données du tuteur légal</target>
       </trans-unit>
       <trans-unit id="WRWEIEO" resname="Name des Notfallkontakt">
         <source>Name des Notfallkontakt</source>
-        <target>__Name des Notfallkontakt</target>
+        <target state="translated">Nom du contact d'urgence</target>
       </trans-unit>
       <trans-unit id="sHZuk.." resname="Fotos, dürfen in der öffentlichen Presse veröffentlicht werden">
         <source>Fotos, dürfen in der öffentlichen Presse veröffentlicht werden</source>
-        <target>__Fotos, dürfen in der öffentlichen Presse veröffentlicht werden</target>
+        <target state="translated">Photos, peuvent être publiées dans la presse publique</target>
       </trans-unit>
       <trans-unit id="6Igo5UD" resname="Angemeldete Betreuungszeitfenster">
         <source>Angemeldete Betreuungszeitfenster</source>
@@ -2229,51 +2229,51 @@ Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechti
       </trans-unit>
       <trans-unit id="t5z8i19" resname="Kundennummer hinzufügen/ändern für %v% %n%">
         <source>Kundennummer hinzufügen/ändern für %v% %n%</source>
-        <target>__Kundennummer hinzufügen/ändern für %v% %n%</target>
+        <target state="translated">Ajouter/changer le nombre de clients pour %v% %n%</target>
       </trans-unit>
       <trans-unit id="X7eX6r3" resname="Rechnung an alle Eltern versenden">
         <source>Rechnung an alle Eltern versenden</source>
-        <target>__Rechnung an alle Eltern versenden</target>
+        <target state="translated">Envoyer la facture à tous les parents</target>
       </trans-unit>
       <trans-unit id="XE9zHIP" resname="Stammdaten für die Buchhhaltung">
         <source>Stammdaten für die Buchhhaltung</source>
-        <target>__Stammdaten für die Buchhhaltung</target>
+        <target state="translated">Données maîtresses pour la comptabilité</target>
       </trans-unit>
       <trans-unit id="zK7_4jn" resname="Alle Jahre">
         <source>Alle Jahre</source>
-        <target>__Alle Jahre</target>
+        <target state="translated">Chaque année</target>
       </trans-unit>
       <trans-unit id="O0jRfpX" resname="Postleitzahl">
         <source>Postleitzahl</source>
-        <target>__Postleitzahl</target>
+        <target state="translated">Code Postal</target>
       </trans-unit>
       <trans-unit id="c59QNGQ" resname="Kundennummer zuweisen/ändern">
         <source>Kundennummer zuweisen/ändern</source>
-        <target>__Kundennummer zuweisen/ändern</target>
+        <target state="translated">Numéro de client d'assign/changement</target>
       </trans-unit>
       <trans-unit id="TbVQzZh" resname="Sitemap">
         <source>Sitemap</source>
-        <target>__Sitemap</target>
+        <target state="translated">Sitemap</target>
       </trans-unit>
       <trans-unit id="sDA_e86" resname="Im Auftrag der %name%">
         <source>Im Auftrag der %name%</source>
-        <target>__Im Auftrag der %name%</target>
+        <target state="translated">Au nom de %name%</target>
       </trans-unit>
       <trans-unit id="8ryOB15" resname="Betreuungszeitfenster zum Auswählen anklicken">
         <source>Betreuungszeitfenster zum Auswählen anklicken</source>
-        <target>__Betreuungszeitfenster zum Auswählen anklicken</target>
+        <target state="needs-translation"/>
       </trans-unit>
       <trans-unit id="j4EU0Ge" resname="Monatliche Gebühr für die Betreuung (inklusive Vergünstigungen)">
         <source>Monatliche Gebühr für die Betreuung (inklusive Vergünstigungen)</source>
-        <target>__Monatliche Gebühr für die Betreuung (inklusive Vergünstigungen)</target>
+        <target state="translated">Frais mensuels pour les soins (y compris les prestations)</target>
       </trans-unit>
       <trans-unit id="8gNtVnI" resname="Caterer">
         <source>Caterer</source>
-        <target>__Caterer</target>
+        <target state="translated">Restaurateur</target>
       </trans-unit>
       <trans-unit id="njOR6b8" resname="Homepage">
         <source>Homepage</source>
-        <target>__Homepage</target>
+        <target state="translated">Site Internet</target>
       </trans-unit>
       <trans-unit id="byeUnS6" resname="Betreuungszeitfenster bearbeiten">
         <source>Betreuungszeitfenster bearbeiten</source>
@@ -2281,19 +2281,19 @@ Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechti
       </trans-unit>
       <trans-unit id="eOWQG8T" resname="Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung">
         <source>Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung</source>
-        <target>__Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung</target>
+        <target state="translated">J'ai au moins un autre enfant dans un jardin d'enfants public payé</target>
       </trans-unit>
       <trans-unit id="srOAIVX" resname="Bitte weiteres Betreuungszeitfenster auswählen">
         <source>Bitte weiteres Betreuungszeitfenster auswählen</source>
-        <target>__Bitte weiteres Betreuungszeitfenster auswählen</target>
+        <target state="needs-translation"/>
       </trans-unit>
       <trans-unit id="oi8sSYn" resname="Gebühr pro Monat für gebuchte Betreuung">
         <source>Gebühr pro Monat für gebuchte Betreuung</source>
-        <target>__Gebühr pro Monat für gebuchte Betreuung</target>
+        <target state="translated">Frais par mois pour les soins réservés</target>
       </trans-unit>
       <trans-unit id=".VUI38S" resname="Gebühren pro Monat">
         <source>Gebühren pro Monat</source>
-        <target>__Gebühren pro Monat</target>
+        <target state="translated">Frais par mois</target>
       </trans-unit>
       <trans-unit id="RHsiiFr" resname="Bitte weitere Betreuungszeitfenster auswählen">
         <source>Bitte weitere Betreuungszeitfenster auswählen</source>
@@ -2301,11 +2301,11 @@ Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechti
       </trans-unit>
       <trans-unit id="j1eycUf" resname="Ich habe die Datenschutzhinweise der %stadt% gelesen und akzeptiere die Verarbeitung.">
         <source>Ich habe die Datenschutzhinweise der %stadt% gelesen und akzeptiere die Verarbeitung.</source>
-        <target>__Ich habe die Datenschutzhinweise der %stadt% gelesen und akzeptiere die Verarbeitung.</target>
+        <target state="translated">J'ai lu la politique de confidentialité de %stadt% et d'accepter le traitement.</target>
       </trans-unit>
       <trans-unit id="QcRXpns" resname="Ich habe die allgemeinen Vertragsbedingungen der %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese.">
         <source>Ich habe die allgemeinen Vertragsbedingungen der %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese.</source>
-        <target>__Ich habe die allgemeinen Vertragsbedingungen der %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese.</target>
+        <target state="translated">J'ai lu et accepté les modalités générales du %stadt% pour la garde d'enfants à l'école.</target>
       </trans-unit>
       <trans-unit id="Lbf9D9p" resname="Weitere Betreuungszeitfenster hinzufügen">
         <source>Weitere Betreuungszeitfenster hinzufügen</source>
@@ -2313,39 +2313,55 @@ Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechti
       </trans-unit>
       <trans-unit id="TRv6.2W" resname="Stadt nicht gefunden">
         <source>Stadt nicht gefunden</source>
-        <target>__Stadt nicht gefunden</target>
+        <target state="translated">Ville introuvable</target>
       </trans-unit>
       <trans-unit id="AogfjhA" resname="Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an">
         <source>Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an</source>
-        <target>__Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an</target>
+        <target state="translated">Ce site est actuellement en cours de développement. S'il vous plaît ne pas entrer de données personnelles réelles. Inscrivez votre enfant/enfant pour la garde d'enfants de l'école %name% ici</target>
       </trans-unit>
       <trans-unit id="EAtUQdw" resname="Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an">
         <source>Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an</source>
-        <target>__Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an</target>
+        <target state="translated">Inscrivez votre enfant/enfant pour la garde d'enfants de l'école %name% ici</target>
       </trans-unit>
       <trans-unit id="Amd66T6" resname="Sie befinden sich aktuell außerhalb des Anmeldezeitraums und können die Anmeldung nicht starten.">
         <source>Sie befinden sich aktuell außerhalb des Anmeldezeitraums und können die Anmeldung nicht starten.</source>
-        <target>__Sie befinden sich aktuell außerhalb des Anmeldezeitraums und können die Anmeldung nicht starten.</target>
+        <target state="translated">Vous êtes actuellement en dehors de la période d'inscription et ne pouvez pas commencer la connexion.</target>
       </trans-unit>
       <trans-unit id="2HY7CCo" resname="News Nachricht">
         <source>News Nachricht</source>
-        <target>__News Nachricht</target>
+        <target state="translated">Message d'information</target>
       </trans-unit>
       <trans-unit id="MbFIa5j" resname="Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung.">
         <source>Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung.</source>
-        <target>__Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung.</target>
+        <target state="translated">J'ai lu tous les avis de confidentialité des transporteurs et j'accepte le traitement.</target>
       </trans-unit>
       <trans-unit id="aq9j.Xq" resname="Zusammenfassung der Datenschutzhinweise">
         <source>Zusammenfassung der Datenschutzhinweise</source>
-        <target>__Zusammenfassung der Datenschutzhinweise</target>
+        <target state="translated">Sommaire de l'avis de protection des données</target>
       </trans-unit>
       <trans-unit id="2RQ.lyp" resname="Datenschutzhinweise der Stadt und betreuenden Organisationen">
         <source>Datenschutzhinweise der Stadt und betreuenden Organisationen</source>
-        <target>__Datenschutzhinweise der Stadt und betreuenden Organisationen</target>
+        <target state="translated">Informations sur la protection des données de la ville et des organisations de surveillance</target>
       </trans-unit>
       <trans-unit id="6XA1_hW" resname="Für Informationen zum Datenschutz der Stat und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.">
         <source>Für Informationen zum Datenschutz der Stat und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.</source>
-        <target>__Für Informationen zum Datenschutz der Stat und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.</target>
+        <target state="translated">Pour obtenir des informations sur la protection des données au sein du Stat et des organismes de contrôle, veuillez contacter les administrations respectives.</target>
+      </trans-unit>
+      <trans-unit id="_70lqNS" resname="Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.">
+        <source>Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.</source>
+        <target state="translated">Veuillez vérifier les détails ci-dessous et envoyer votre contrat de soins contre rémunération.</target>
+      </trans-unit>
+      <trans-unit id="uX3tJWT" resname="Gebühren für alle Kinder pro Monat">
+        <source>Gebühren für alle Kinder pro Monat</source>
+        <target state="translated">Prix pour tous les enfants par mois</target>
+      </trans-unit>
+      <trans-unit id="8io7VGQ" resname="Zum Datenschutzhinweis">
+        <source>Zum Datenschutzhinweis</source>
+        <target state="translated">Vers l'avis sur la protection des données</target>
+      </trans-unit>
+      <trans-unit id="s3dEeFQ" resname="Zahlungspflichtigen Vertrag abschließen">
+        <source>Zahlungspflichtigen Vertrag abschließen</source>
+        <target state="translated">Conclure un contrat assorti d'une obligation de paiement</target>
       </trans-unit>
     </body>
   </file>

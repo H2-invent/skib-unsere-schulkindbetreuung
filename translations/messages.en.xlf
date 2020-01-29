@@ -2375,6 +2375,22 @@ The web application enables direct networking between parents, external organisa
         <source>Für Informationen zum Datenschutz der Stat und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.</source>
         <target state="translated">Please contact the respective administrations for information on data protection at the Stat and the supervising organisations.</target>
       </trans-unit>
+      <trans-unit id="_70lqNS" resname="Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.">
+        <source>Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.</source>
+        <target state="translated">Please check the details below and submit your childcare contract.</target>
+      </trans-unit>
+      <trans-unit id="uX3tJWT" resname="Gebühren für alle Kinder pro Monat">
+        <source>Gebühren für alle Kinder pro Monat</source>
+        <target state="translated">Fees for all children per month</target>
+      </trans-unit>
+      <trans-unit id="8io7VGQ" resname="Zum Datenschutzhinweis">
+        <source>Zum Datenschutzhinweis</source>
+        <target state="translated">To the data protection notice</target>
+      </trans-unit>
+      <trans-unit id="s3dEeFQ" resname="Zahlungspflichtigen Vertrag abschließen">
+        <source>Zahlungspflichtigen Vertrag abschließen</source>
+        <target state="translated">Conclude the contract with a payment obligation</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
