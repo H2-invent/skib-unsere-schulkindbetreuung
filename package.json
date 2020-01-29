@@ -28,6 +28,7 @@
     "jquery": "^3.4.1",
     "jquery-clockpicker": "0.0.8",
     "jquery-confirm": "^3.3.4",
+    "jquery-lazy": "^1.7.10",
     "jquery-validation": "^1.19.1",
     "jquery.cookie": "^1.4.1",
     "malihu-custom-scrollbar-plugin": "^3.1.5",

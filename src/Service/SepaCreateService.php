@@ -174,11 +174,15 @@ class SepaCreateService
         $rechnung->setBis($sepa->getBis());
         $rechnung->setSumme($summe);
 
-        $rechnung->setPdf('');
         $rechnung->setCreatedAt(new \DateTime());
         $rechnung->setStammdaten($data);
+        $rechnung->setPdf('');
         $this->em->persist($rechnung);
         $this->em->flush();
+        //todo repair the rechnung
+        $table = $this->environment->render('rechnung/tabelle.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
+        $rechnung->setPdf($table);
+        //todo end todo
         $rechnung->setRechnungsnummer('RE' . (new \DateTime())->format('Ymd') . $rechnung->getId());
         $rechnung->setSepa($sepa);
         if ($summe > 0) {
@@ -197,7 +201,7 @@ class SepaCreateService
                 $this->sendRechnung($data);
             }
             return true;
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
 
@@ -207,6 +211,7 @@ class SepaCreateService
     {
         $organisation = $rechnung->getSepa()->getOrganisation();
         $filename = $this->translator->trans('Rechnung') . ' ' . $rechnung->getRechnungsnummer();
+
         $pdf = $this->printRechnungService->printRechnung($filename, $organisation, $rechnung, 'S');
         $attachment = array();
         $attachment[] = array('type' => 'application/pdf', 'filename' => $filename . '.pdf', 'body' => $pdf);

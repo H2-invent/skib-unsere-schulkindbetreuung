@@ -175,7 +175,6 @@ class NewsController extends AbstractController
     public function orgIndex(Request $request)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
-        $stadt = $organisation->getStadt();
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -196,7 +195,6 @@ class NewsController extends AbstractController
     public function orgNewsNeu(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
-        $stadt = $organisation->getStadt();
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }

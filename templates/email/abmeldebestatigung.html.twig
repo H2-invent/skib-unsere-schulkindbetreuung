@@ -1,0 +1,24 @@
+{% extends 'email/base.html.twig' %}
+{% block header %}
+    {% trans %}Abmeldebestätigung für die Schulkindbetreuung{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <p class="text-center">{% trans %}Hiermit informieren wir Sie über die <b>Abmeldung</b> Ihrers Kindes{% endtrans %}:<br>
+
+        <b>{{ kind.vorname }} {{ kind.nachname }}</b></p>
+    <p class="text-center">{% trans %}Bei Fragen zu diesem Vorgang, setzen Sie sich bitte mit Ihrer betreuenden Organisation in Verbindung.{% endtrans %}</p>
+<center>{{'Name'|trans}}: {{ org.name }}<br>
+    {{'Telefon'|trans}}: {{ org.telefon }}<br>
+    {{'E-Mail'|trans}}: {{ org.email }}<br></center>
+
+    <br>
+    <br>
+    <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}<br>
+        <b>{{ org.name }}</b></p>
+    </div>
+
+
+{% endblock %}
+
+

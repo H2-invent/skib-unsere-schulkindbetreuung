@@ -26,16 +26,16 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 class PrintRechnungService
 {
 
-    private $templating;
+
     private $translator;
     protected $parameterBag;
     private $pdf;
     private $fileSystem;
 
-    public function __construct(FilesystemInterface $publicUploadsFilesystem, TCPDFController $tcpdf, \Swift_Mailer $mailer, EngineInterface $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(FilesystemInterface $publicUploadsFilesystem, TCPDFController $tcpdf,  TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
 
-        $this->templating = $templating;
+
         $this->translator = $translator;
         $this->parameterBag = $parameterBag;
         $this->pdf = $tcpdf;
@@ -121,13 +121,12 @@ class PrintRechnungService
             true
         );
 
-        $table = $this->templating->render('rechnung/tabelle.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
         $pdf->writeHTMLCell(
             0,
             0,
             20,
             100,
-            $table,
+            $rechnung->getPdf(),
             0,
             1,
             0,

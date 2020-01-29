@@ -19,6 +19,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -59,6 +60,7 @@ class ContentType extends AbstractType
             ->add('icon', TextType::class,array('label'=>'Icon (Fontawesome)','required'=>true,'translation_domain' => 'form'))
 
             ->add('activ', CheckboxType::class,array('label'=>'Content öffentlich','translation_domain' => 'form'))
+            ->add('reihenfolge', NumberType::class,array('label'=>'Reihenfolge','translation_domain' => 'form'))
 
             ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
