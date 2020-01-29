@@ -7,9 +7,13 @@
                 <!-- Count item widget-->
                 {% for s in schule %}
                     <div class="card" style="width: 18rem; margin-right: 8px ">
+                        {% if not s.image is empty %}
                         <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}" alt="{{ s.name }}"
                              style="max-height: 300px">
-
+                            {% else %}
+                            <img class="card-img-top" src="{{ asset('images/logo-breit-mittig.png') }}" alt="SKiB"
+                                 style="max-height: 300px">
+                        {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">{{ s.name }}</h5>
                             <p class="card-text">{{ s.infoText }}</p>

@@ -1,10 +1,12 @@
+@import 'mdb.css';
 @import '~bootstrap';
 @import '~font-awesome';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
-@import 'mdb.css';
 @import '~daterangepicker';
 @import '~snackbarjs/dist/snackbar.css';
 @import '~snackbarjs/themes-css/material.css';
 @import '~jquery-confirm/css/jquery-confirm.css';
 @import 'frontPage_style.css';
+@import '~animate.css/animate.css';
+
 

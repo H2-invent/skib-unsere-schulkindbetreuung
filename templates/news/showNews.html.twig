@@ -14,7 +14,7 @@
                 {{ news.message|nl2br }}
             </a>
             <div class="modal-footer">
-                {% trans %}Datum{% endtrans %}: {{ news.createdDate|date("d.m.Y G:i") }} {% if news.date %}| {% trans %}Bearbeitet am{% endtrans %}: {{ news.date|date('d.m.Y') }}{% endif %}
+                {% trans %}Datum{% endtrans %}: {{ news.createdDate|date("d.m.Y") }} {% if news.date %}| {% trans %}Bearbeitet am{% endtrans %}: {{ news.date|date('d.m.Y') }}{% endif %}
             </div>
         </div>
     </div>
