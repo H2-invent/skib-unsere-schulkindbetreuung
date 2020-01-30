@@ -187,13 +187,27 @@ class LoerrachWorkflowController extends AbstractController
             'schule' => $schule,
             'ganztag' => 1
         );
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
+        $ganztag = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
+
+        $req = array(
+            'deleted' => false,
+            'active' => $schuljahr,
+            'schule' => $schule,
+            'ganztag' => 2
+        );
+        $halbtag = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
 
         $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug'=>$stadt->getSlug(),'schule_id' => $schule->getId()))));
-        if (empty($block)){
+        if (empty($ganztag) && empty($halbtag)){
+
+        } elseif (empty($ganztag)){
             $kind->setArt(2);
             $form->remove('art');
+        } elseif (empty($halbtag)){
+            $kind->setArt(1);
+            $form->remove('art');
         }
+
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
