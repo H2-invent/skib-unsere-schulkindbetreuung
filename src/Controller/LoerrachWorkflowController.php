@@ -164,7 +164,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/schulen/kind/neu",name="loerrach_workflow_schulen_kind_neu",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function neukindAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
+    public function neukindAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
         $adresse = new Stammdaten;
 
@@ -178,8 +178,22 @@ class LoerrachWorkflowController extends AbstractController
         $kind = new Kind();
         $kind->setEltern($adresse);
         $kind->setSchule($schule);
-        $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug'=>$stadt->getSlug(),'schule_id' => $schule->getId()))));
 
+        // Load the data from the city into the controller as $stadt
+        $schuljahr = $schuljahrService->getSchuljahr($stadt);
+        $req = array(
+            'deleted' => false,
+            'active' => $schuljahr,
+            'schule' => $schule,
+            'ganztag' => 1
+        );
+        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
+
+        $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug'=>$stadt->getSlug(),'schule_id' => $schule->getId()))));
+        if (empty($block)){
+            $kind->setArt(2);
+            $form->remove('art');
+        }
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
@@ -282,7 +296,6 @@ class LoerrachWorkflowController extends AbstractController
         $schule = $kind->getSchule();
 
         // Load the data from the city into the controller as $stadt
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => 'loerrach'));
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
         $req = array(
             'deleted' => false,

@@ -11,6 +11,12 @@
                     <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
                     {% if blocks[0] is defined %}
                         {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[0]} %}
+                    {% else %}
+                        <div class="note note-warning">
+                            {% trans %}
+                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.
+                            {% endtrans %}
+                        </div>
                     {% endif %}
                 </div>
                 <div class="col-md-2 text-center">
@@ -20,7 +26,7 @@
                     {% else %}
                         <div class="note note-warning">
                             {% trans %}
-                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden. Haben Sie die falsche Schulform ausgewählt?
+                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.
                             {% endtrans %}
                         </div>
                     {% endif %}
@@ -32,7 +38,7 @@
                     {% else %}
                         <div class="note note-warning">
                             {% trans %}
-                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden. Haben Sie die falsche Schulform ausgewählt?
+                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.
                             {% endtrans %}
                         </div>
                     {% endif %}
@@ -44,7 +50,7 @@
                     {% else %}
                         <div class="note note-warning">
                             {% trans %}
-                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden. Haben Sie die falsche Schulform ausgewählt?
+                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.
                             {% endtrans %}
                         </div>
                     {% endif %}
@@ -56,7 +62,7 @@
                     {% else %}
                         <div class="note note-warning">
                             {% trans %}
-                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden. Haben Sie die falsche Schulform ausgewählt?
+                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.
                             {% endtrans %}
                         </div>
                     {% endif %}
