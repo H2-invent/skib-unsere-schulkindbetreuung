@@ -1,67 +1,99 @@
 <div class="modal-dialog modal-dialog-scrollable modal-fluid">
     <div class="modal-content">
 
-<div class="modal-header">
-    <h5 class="modal-title">{% trans %}Betreuungszeitfenster zum Auswählen anklicken{% endtrans %}</h5>
-
-</div>
-<div class="modal-body">
-<div class="row">
-    <div class="{% if blocks[6] is not defined and blocks[5] is not defined %} offset-1 {% endif %}col-md-2 text-center">
-        <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
-        {% if blocks[0] is defined %}
-            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[0]} %}
-        {% endif %}
-    </div>
-    <div class="col-md-2 text-center">
-        <h5 class="card-title">{% trans %}Dienstag{% endtrans %}</h5>
-        {% if blocks[1] is defined %}
-            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[1]} %}
-        {% endif %}
-    </div>
-    <div class="col-md-2 text-center">
-        <h5 class="card-title">{% trans %}Mittwoch{% endtrans %}</h5>
-        {% if blocks[2] is defined %}
-            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[2]} %}
-        {% endif %}
-    </div>
-    <div class="col-md-2 text-center">
-        <h5 class="card-title">{% trans %}Donnerstag{% endtrans %}</h5>
-        {% if blocks[3] is defined %}
-            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[3]} %}
-        {% endif %}
-    </div>
-    <div class="col-md-2 text-center">
-        <h5 class="card-title">{% trans %}Freitag{% endtrans %}</h5>
-        {% if blocks[4] is defined %}
-            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[4]} %}
-        {% endif %}
-    </div>
-    {% if blocks[5] is defined %}
-    <div class="{% if blocks[6] is not defined %} col-md-2 {% else %}col-md-1{% endif %} text-center">
-        <h5 class="card-title">{% trans %}Samstag{% endtrans %}</h5>
-            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[5]} %}
-    </div>
-    {% endif %}
-    {% if blocks[6] is defined %}
-    <div class="{% if blocks[5] is not defined %} col-md-2 {% else %}col-md-1{% endif %} text-center">
-        <h5 class="card-title">{% trans %}Sonntag{% endtrans %}</h5>
-            {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[6]} %}
-    </div>
-    {% endif %}
-</div>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>{% trans %}Monatliche Gebühr für die Betreuung (inklusive Vergünstigungen){% endtrans %}: <span class="price">{% if kind.tageWithBlocks>=2 %}{{ kind.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></p>
+        <div class="modal-header">
+            <h5 class="modal-title">{% trans %}Betreuungszeitfenster zum Auswählen anklicken{% endtrans %}</h5>
 
         </div>
-    </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="{% if blocks[6] is not defined and blocks[5] is not defined %} offset-1 {% endif %}col-md-2 text-center">
+                    <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
+                    {% if blocks[0] is defined %}
+                        {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[0]} %}
+                    {% else %}
+                        <div class="note note-warning">
+                            {% trans %}
+                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.
+                            {% endtrans %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-2 text-center">
+                    <h5 class="card-title">{% trans %}Dienstag{% endtrans %}</h5>
+                    {% if blocks[1] is defined %}
+                        {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[1]} %}
+                    {% else %}
+                        <div class="note note-warning">
+                            {% trans %}
+                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.
+                            {% endtrans %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-2 text-center">
+                    <h5 class="card-title">{% trans %}Mittwoch{% endtrans %}</h5>
+                    {% if blocks[2] is defined %}
+                        {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[2]} %}
+                    {% else %}
+                        <div class="note note-warning">
+                            {% trans %}
+                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.
+                            {% endtrans %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-2 text-center">
+                    <h5 class="card-title">{% trans %}Donnerstag{% endtrans %}</h5>
+                    {% if blocks[3] is defined %}
+                        {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[3]} %}
+                    {% else %}
+                        <div class="note note-warning">
+                            {% trans %}
+                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.
+                            {% endtrans %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-2 text-center">
+                    <h5 class="card-title">{% trans %}Freitag{% endtrans %}</h5>
+                    {% if blocks[4] is defined %}
+                        {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[4]} %}
+                    {% else %}
+                        <div class="note note-warning">
+                            {% trans %}
+                                An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.
+                            {% endtrans %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% if blocks[5] is defined %}
+                    <div class="{% if blocks[6] is not defined %} col-md-2 {% else %}col-md-1{% endif %} text-center">
+                        <h5 class="card-title">{% trans %}Samstag{% endtrans %}</h5>
+                        {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[5]} %}
+                    </div>
+                {% endif %}
+                {% if blocks[6] is defined %}
+                    <div class="{% if blocks[5] is not defined %} col-md-2 {% else %}col-md-1{% endif %} text-center">
+                        <h5 class="card-title">{% trans %}Sonntag{% endtrans %}</h5>
+                        {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[6]} %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>{% trans %}Monatliche Gebühr für die Betreuung (inklusive Vergünstigungen){% endtrans %}: <span
+                                class="price">{% if kind.tageWithBlocks>=2 %}{{ kind.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span>
+                    </p>
+
+                </div>
+            </div>
 
 
-
-</div>
+        </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-outline-primary " data-dismiss="modal">{% trans %}Speichern{% endtrans %}</button>
+            <button type="button" class="btn btn-outline-primary "
+                    data-dismiss="modal">{% trans %}Speichern{% endtrans %}</button>
 
         </div>
 
