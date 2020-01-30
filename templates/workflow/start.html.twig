@@ -11,85 +11,86 @@
 {% include 'workflow/navbar.html.twig' %}
 <!-- Navbar -->
 
-<div class="view full-page-intro "
-     {% if stadt.image is empty %}style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;"
-     {% else %}style="background-image: url({{ vich_uploader_asset(stadt,'imageFile') }}); background-repeat: no-repeat; background-size: cover;"
-        {% endif %}>
+<div class="view full-page-intro ">
+    <div class="jarallax">
+        <img class="jarallax-img" src="{{ vich_uploader_asset(stadt,'imageFile') }}" alt="">
 
-    <div class="mask d-flex justify-content-center align-items-end rgba-black-light">
+        <div class="mask d-flex justify-content-center align-items-end rgba-black-light">
 
-        <div class="container ">
+            <div class="container ">
 
-            <div class="row wow fadeIn">
+                <div class="row wow fadeIn">
 
-                <div class="col-md-12 mb-6 white-text text-center">
-                    {% if stadt.ferienprogramm %}
-                        <h1 class="font-weight-bold h1-responsive maincolor">{% trans %}Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung{% endtrans %}</h1>
-                    {% else %}
-                        <h1 class="font-weight-bold h1-responsive maincolor">{% trans %}Online Anmeldung zur Schulkindbetreuung{% endtrans %}</h1>
+                    <div class="col-md-12 mb-6 white-text text-center">
+                        {% if stadt.ferienprogramm %}
+                            <h1 class="font-weight-bold h1-responsive maincolor">{% trans %}Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung{% endtrans %}</h1>
+                        {% else %}
+                            <h1 class="font-weight-bold h1-responsive maincolor">{% trans %}Online Anmeldung zur Schulkindbetreuung{% endtrans %}</h1>
+                        {% endif %}
+                        <hr class="hr-light ">
+                    </div>
+
+                    <div class="col-md-12 mb-4 white-text text-center lead">
+
+                        <p class="lead d-none d-sm-block">
+                            {% if not stadt.active %}
+                                {% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an{% endtrans %}
+                            {% else %}
+                                {% trans with {"%name%":stadt.name} %}Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an{% endtrans %}
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    {% if stadt.ferienprogramm and stadt.schulkindBetreung %}
+                        <div class="col-md-6 mb-4 white-text text-center">
+                            <p class="lead align-content-center">
+                                <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"
+                                   class="btn btn-primary btn-lg">
+                                    {% if app.request.cookies.has('SecID') %}
+                                        {% trans %}Kind bearbeiten{% endtrans %}
+                                    {% else %}
+                                        {% trans %}Kind/Kinder zur Schulkindbetreuung anmelden{% endtrans %}
+                                    {% endif %}
+                                </a>
+                            </p>
+                        </div>
+                        <div class="col-md-6 mb-4 white-text text-center">
+                            <p class="lead align-content-center">
+                                <a href="{{ path('ferien_adresse', {'slug': stadt.slug }) }}"
+                                   class="btn btn-primary btn-lg">
+                                    {% trans %}Kind/Kinder zur Ferienbetreuung anmelden{% endtrans %}
+                                </a>
+                            </p>
+                        </div>
+                    {% elseif stadt.schulkindBetreung %}
+                        <div class="col-md-12 mb-4 white-text text-center">
+                            <p class="lead align-content-center">
+                                <a href="{{ url }}" class="btn btn-primary btn-lg">
+                                    {% if app.request.cookies.has('SecID') %}
+                                        {% trans %}Kind bearbeiten{% endtrans %}
+                                    {% else %}
+                                        {% trans %}Kind/Kinder zur Schulkindbetreuung anmelden{% endtrans %}
+                                    {% endif %}
+                                </a>
+                            </p>
+                        </div>
+                    {% elseif stadt.ferienprogramm %}
+                        <div class="col-md-12 mb-4 white-text text-center">
+                            <p class="lead align-content-center">
+                                <a href="{{ path('ferien_adresse', {'slug': stadt.slug }) }}"
+                                   class="btn btn-primary btn-lg">
+                                    {% trans %}Kind/Kinder zur Ferienbetreuung anmelden{% endtrans %}
+                                </a>
+                            </p>
+                        </div>
                     {% endif %}
-                    <hr class="hr-light ">
                 </div>
+                <div class="col-md-12 mb-4 white-text text-center align-content-center">
+                    <section id="scroll" class="scroll">
 
-                <div class="col-md-12 mb-4 white-text text-center lead">
-
-                    <p class="lead d-none d-sm-block">
-                        {% if not stadt.active %}
-                        {% trans with {"%name%":stadt.name} %}Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an{% endtrans %}
-                    {% else %}
-                        {% trans with {"%name%":stadt.name} %}Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an{% endtrans %}
-                    {% endif %}
-                    </p>
+                        <a href="#start" class="scroller"><span></span></a>
+                    </section>
                 </div>
-
-                {% if stadt.ferienprogramm and stadt.schulkindBetreung %}
-                    <div class="col-md-6 mb-4 white-text text-center">
-                        <p class="lead align-content-center">
-                            <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}" class="btn btn-primary btn-lg">
-                                {% if app.request.cookies.has('SecID') %}
-                                    {% trans %}Kind bearbeiten{% endtrans %}
-                                {% else %}
-                                    {% trans %}Kind/Kinder zur Schulkindbetreuung anmelden{% endtrans %}
-                                {% endif %}
-                            </a>
-                        </p>
-                    </div>
-                    <div class="col-md-6 mb-4 white-text text-center">
-                        <p class="lead align-content-center">
-                            <a href="{{ path('ferien_adresse', {'slug': stadt.slug }) }}"
-                               class="btn btn-primary btn-lg">
-                                {% trans %}Kind/Kinder zur Ferienbetreuung anmelden{% endtrans %}
-                            </a>
-                        </p>
-                    </div>
-                {% elseif stadt.schulkindBetreung %}
-                    <div class="col-md-12 mb-4 white-text text-center">
-                        <p class="lead align-content-center">
-                            <a href="{{ url }}" class="btn btn-primary btn-lg">
-                                {% if app.request.cookies.has('SecID') %}
-                                    {% trans %}Kind bearbeiten{% endtrans %}
-                                {% else %}
-                                    {% trans %}Kind/Kinder zur Schulkindbetreuung anmelden{% endtrans %}
-                                {% endif %}
-                            </a>
-                        </p>
-                    </div>
-                {% elseif stadt.ferienprogramm %}
-                    <div class="col-md-12 mb-4 white-text text-center">
-                        <p class="lead align-content-center">
-                            <a href="{{ path('ferien_adresse', {'slug': stadt.slug }) }}"
-                               class="btn btn-primary btn-lg">
-                                {% trans %}Kind/Kinder zur Ferienbetreuung anmelden{% endtrans %}
-                            </a>
-                        </p>
-                    </div>
-                {% endif %}
-            </div>
-            <div class="col-md-12 mb-4 white-text text-center align-content-center">
-                <section id="scroll" class="scroll">
-
-                    <a href="#start" class="scroller"><span></span></a>
-                </section>
             </div>
         </div>
     </div>

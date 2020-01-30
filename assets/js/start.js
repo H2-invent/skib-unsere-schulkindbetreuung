@@ -21,8 +21,17 @@ import('snackbarjs');
 import('moment');
 import ('morecontent-js/dist/jquery.morecontent');
 import('jquery-confirm');
+import {
+    jarallax,
+    jarallaxElement,
+    jarallaxVideo
+} from 'jarallax';
 
-
+jarallaxVideo();
+jarallaxElement();
+jarallax(document.querySelectorAll('.jarallax'), {
+    speed: 0.2
+});
 $(function () {
     $(function () {
         $(".scroller").on('click', function (e) {
@@ -43,6 +52,7 @@ $(document).on('click', '.loadContent', function (e) {
 
 
 $(window).on('load', function() {
+
     $('.more').moreContent(
         {
             textClose: mehrLesen,
