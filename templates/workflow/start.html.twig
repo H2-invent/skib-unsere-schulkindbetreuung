@@ -13,7 +13,12 @@
 
 <div class="view full-page-intro ">
     <div class="jarallax">
-        <img class="jarallax-img" src="{{ vich_uploader_asset(stadt,'imageFile') }}" alt="">
+        <img class="jarallax-img" src="
+   {% if stadt.image is empty %}{{ asset('images/background.jpg') }}
+        {% else %}{{ vich_uploader_asset(stadt,'imageFile') }}
+        {% endif %}
+
+" alt="">
 
         <div class="mask d-flex justify-content-center align-items-end rgba-black-light">
 
