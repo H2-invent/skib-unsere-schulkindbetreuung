@@ -10,11 +10,18 @@
 {% endblock %}
 
 {% block content %}
-    <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
+
+        <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
+
     {% trans %}
         Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.
     {% endtrans %}
     <div class="card mb-3">
+
+        <div>
+
+        </div>
+
         <div class="card-header">
             <h3 class="cover-heading">{% trans %}Daten des Erziehungsberechtigten{% endtrans %} <a
                         href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"> <i
