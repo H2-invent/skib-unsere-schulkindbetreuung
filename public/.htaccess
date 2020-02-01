@@ -67,10 +67,14 @@ DirectoryIndex index.php
     </IfModule>
 </IfModule>
 
-<IfModule mod_headers.c> <FilesMatch „\.(gif|jpg|jpeg|png)$“>
-Header set Cache-Control „max-age=604800, public“
-</FilesMatch>
-<FilesMatch „\.(css|js)$“>
-Header set Cache-Control „max-age=2592000, public“
-</FilesMatch>
+
+<IfModule mod_expires.c>
+    <FilesMatch "\.(js|css)$">
+        ExpiresActive On
+        ExpiresDefault "access plus 1 month"
+    </FilesMatch>
+        <FilesMatch "\.(jpe?g|png|gif|ico)$">
+            ExpiresActive On
+            ExpiresDefault "access plus 1 week"
+        </FilesMatch>
 </IfModule>
