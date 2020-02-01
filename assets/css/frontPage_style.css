@@ -289,3 +289,10 @@ img.lazy {
 .row-eq-height > [class*='col-'] {
   display: flex;
 }
+@media (min-width:768px) {
+  .card-deck > .card
+  {
+    width: 29%;
+
+  }
+}

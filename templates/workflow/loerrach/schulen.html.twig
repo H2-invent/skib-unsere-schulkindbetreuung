@@ -18,12 +18,12 @@
         <div class="card-body">
             <section class="dashboard-counts section-padding" id="schulenShow">
                 <div class="container-fluid ">
-                    <div class="row row-eq-height">
+                    <div class="row">
                         <!-- Count item widget-->
                         {% for s in schule %}
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="cardhoverable card">
-                                    <div class="view overlay skib-card-image">
+                            <div class="col-md-6 col-lg-4 mb-4">
+                                <div class="cardhoverable h-100 card  ">
+                                    <div class=" overlay skib-card-image">
                                         <img class="card-img-top lazy"
                                         {% if s.image %}
                                                 data-src="{{ vich_uploader_asset(s,'imageFile') }}"
