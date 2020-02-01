@@ -24,13 +24,23 @@
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="card h-100 hoverable">
                                     <div class="view overlay skib-card-image">
+                                        <img class="card-img-top lazy"
                                         {% if s.image %}
-                                            <img class="card-img-top"
-                                            src="{{ vich_uploader_asset(s,'imageFile') }}"
-                                            alt="{{ s.name }}" style="max-height: 300px">
+                                                data-src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                alt="{{ s.name }}" style="max-height: 300px"
                                         {% else %}
-                                            <img class="card-img-top" src="{{ asset('images/logo-breit-mittig.png') }}">
+                                            data-src="{{ asset('images/logo-breit-mittig.png') }}"
                                         {% endif %}
+                                        />
+                                        <noscript>   <img class="card-img-top lazy"
+                                                    {% if s.image %}
+                                                        src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                        alt="{{ s.name }}" style="max-height: 300px"
+                                                    {% else %}
+                                                        src="{{ asset('images/logo-breit-mittig.png') }}"
+                                                    {% endif %}
+                                            />
+                                        </noscript>
                                     </div>
 
                                     <div class="card-body ">

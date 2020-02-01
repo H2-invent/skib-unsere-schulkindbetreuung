@@ -167,14 +167,24 @@
                                         <div class="col-md-4 mb-4">
                                             <div class="card hoverable h-100">
                                                 <div class="view overlay skib-card-image">
-                                                    {% if s.image %}
+                                                    <img class="card-img-top lazy"
+                                                            {% if s.image %}
+                                                                data-src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                                alt="{{ s.name }}" style="max-height: 300px"
+                                                            {% else %}
+                                                                data-src="{{ asset('images/logo-breit-mittig.png') }}"
+                                                            {% endif %}
+                                                    />
+                                                    <noscript>
                                                         <img class="card-img-top"
-                                                             src="{{ vich_uploader_asset(s,'imageFile') }}"
-                                                             alt="{{ s.name }}" style="max-height: 300px">
-                                                    {% else %}
-                                                        <img class="card-img-top"
-                                                             src="{{ asset('images/logo-breit-mittig.png') }}">
-                                                    {% endif %}
+                                                                {% if s.image %}
+                                                                    src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                                    alt="{{ s.name }}" style="max-height: 300px"
+                                                                {% else %}
+                                                                    src="{{ asset('images/logo-breit-mittig.png') }}"
+                                                                {% endif %}
+                                                        />
+                                                    </noscript>
                                                     <a href="adresse">
                                                         <div class="mask rgba-white-slight"></div>
                                                     </a>
@@ -207,9 +217,22 @@
                                         <div class="col-md-4 col-sm-6">
                                             <div class="card hoverable">
                                                 <div class="view overlay">
-                                                    <img class="card-img-top"
-                                                         src="{{ vich_uploader_asset(o,'imageFile') }}"
-                                                         alt="{{ o.name }}" style="max-height: 300px">
+
+                                                    <img class="card-img-top lazy" style="max-height: 300px"
+
+                                                                data-src="{{ vich_uploader_asset(o,'imageFile') }}"
+                                                                alt="{{ o.name }}" style="max-height: 300px"
+
+                                                    />
+                                                    <noscript>
+                                                        <img class="card-img-top lazy" style="max-height: 300px"
+                                                                    src="{{ vich_uploader_asset(o,'imageFile') }}"
+                                                                    alt="{{ o.name }}" style="max-height: 300px"
+
+                                                        />
+                                                    </noscript>
+
+
                                                     <a href="{{ path('ferien_adresse', {'slug': stadt.slug}) }}">
                                                         <div class="mask rgba-white-slight"></div>
                                                     </a>

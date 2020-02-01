@@ -27,11 +27,14 @@ import('jquery-confirm');
 import('./jquery.bs.gdpr.cookies');
 import('jquery-clockpicker');
 import('daterangepicker');
+import ('jquery-lazy');
+
 import {
     jarallax,
     jarallaxElement,
     jarallaxVideo
 } from 'jarallax';
+
 
 jarallaxVideo();
 jarallaxElement();
@@ -115,6 +118,22 @@ $('.deleteBtn').click(function (e) {
 });
 
 $(window).on('load', function () {
+
+
+
+        $(function() {
+            $('.lazy').show().Lazy({
+                // your configuration goes here
+                scrollDirection: 'vertical',
+                effect: 'fadeIn',
+                visibleOnly: true,
+                onError: function(element) {
+                    console.log('error loading ' + element.data('src'));
+                }
+            });
+        });
+
+
         $(function () {
             $('[data-toggle="popover"]').popover()
         });
