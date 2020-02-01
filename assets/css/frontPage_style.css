@@ -271,3 +271,6 @@ nav.navbar a.menu-btn:hover {
 .jarallax{
   height: 100%;
 }
+img.lazy {
+  display: none;
+}

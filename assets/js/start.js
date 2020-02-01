@@ -21,6 +21,7 @@ import('snackbarjs');
 import('moment');
 import ('morecontent-js/dist/jquery.morecontent');
 import('jquery-confirm');
+import ('jquery-lazy');
 import {
     jarallax,
     jarallaxElement,
@@ -53,6 +54,17 @@ $(document).on('click', '.loadContent', function (e) {
 
 $(window).on('load', function() {
 
+    $(function() {
+        $('.lazy').show().Lazy({
+            // your configuration goes here
+            scrollDirection: 'vertical',
+            effect: 'fadeIn',
+            visibleOnly: true,
+            onError: function(element) {
+                console.log('error loading ' + element.data('src'));
+            }
+        });
+    });
     $('.more').moreContent(
         {
             textClose: mehrLesen,
