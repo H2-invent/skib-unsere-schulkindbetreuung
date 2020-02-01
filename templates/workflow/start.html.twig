@@ -170,19 +170,23 @@
                                                     <img class="card-img-top lazy"
                                                             {% if s.image %}
                                                                 data-src="{{ vich_uploader_asset(s,'imageFile') }}"
-                                                                alt="{{ s.name }}" style="max-height: 300px"
+                                                                alt="{{ s.name }} Logo"
                                                             {% else %}
                                                                 data-src="{{ asset('images/logo-breit-mittig.png') }}"
+                                                                alt="SKiB Logo"
                                                             {% endif %}
+                                                          style="max-height: 300px"
                                                     />
                                                     <noscript>
                                                         <img class="card-img-top"
                                                                 {% if s.image %}
                                                                     src="{{ vich_uploader_asset(s,'imageFile') }}"
-                                                                    alt="{{ s.name }}" style="max-height: 300px"
+                                                                    alt="{{ s.name }} Logo"
                                                                 {% else %}
                                                                     src="{{ asset('images/logo-breit-mittig.png') }}"
+                                                                    alt="SKiB Logo"
                                                                 {% endif %}
+                                                             style="max-height: 300px"
                                                         />
                                                     </noscript>
                                                     <a href="adresse">

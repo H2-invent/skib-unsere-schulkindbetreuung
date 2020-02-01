@@ -205,13 +205,15 @@ class workflowController extends AbstractController
         $count = 0;
         $res = '';
         foreach ($sentenceArray as $data) {
-            $count += strlen($data);
+
             if ($count <= 160) {
                 $res .= $data . '. ';
             } else {
                 break;
             }
+            $count += strlen($data);
         }
+
         return $res;
     }
 }
