@@ -27,7 +27,17 @@ import('jquery-confirm');
 import('./jquery.bs.gdpr.cookies');
 import('jquery-clockpicker');
 import('daterangepicker');
+import {
+    jarallax,
+    jarallaxElement,
+    jarallaxVideo
+} from 'jarallax';
 
+jarallaxVideo();
+jarallaxElement();
+jarallax(document.querySelectorAll('.jarallax'), {
+    speed: 0.2
+});
 
 $(document).on('click', '.loadContent', function (e) {
     e.preventDefault();
