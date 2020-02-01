@@ -21,9 +21,9 @@
                     <div class="row">
                         <!-- Count item widget-->
                         {% for s in schule %}
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="card h-100 hoverable">
-                                    <div class="view overlay skib-card-image">
+                            <div class="col-md-6 col-lg-4 mb-4">
+                                <div class="cardhoverable h-100 card  ">
+                                    <div class=" overlay skib-card-image">
                                         <img class="card-img-top lazy"
                                         {% if s.image %}
                                                 data-src="{{ vich_uploader_asset(s,'imageFile') }}"
@@ -144,7 +144,18 @@
         })
 
         $("#loadContentModal").on('hide.bs.modal', function () {
-            $('#schulenShow').load('{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #schulenShow');
+            $('#schulenShow').load('{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #schulenShow',function() {
+                $('.lazy').show().Lazy({
+                    // your configuration goes here
+                    scrollDirection: 'vertical',
+                    effect: 'fadeIn',
+                    visibleOnly: true,
+                    onError: function(element) {
+                        console.log('error loading ' + element.data('src'));
+                    }
+                });
+            });
+
         });
     </script>
 

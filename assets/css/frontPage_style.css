@@ -274,3 +274,25 @@ nav.navbar a.menu-btn:hover {
 img.lazy {
   display: none;
 }
+/*
+ * Row with equal height columns
+ * --------------------------------------------------
+ */
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+  flex-wrap: wrap;
+}
+.row-eq-height > [class*='col-'] {
+  display: flex;
+}
+@media (min-width:768px) {
+  .card-deck > .card
+  {
+    width: 29%;
+
+  }
+}
