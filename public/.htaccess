@@ -66,3 +66,11 @@ DirectoryIndex index.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+<IfModule mod_headers.c> <FilesMatch „\.(gif|jpg|jpeg|png)$“>
+Header set Cache-Control „max-age=604800, public“
+</FilesMatch>
+<FilesMatch „\.(css|js)$“>
+Header set Cache-Control „max-age=2592000, public“
+</FilesMatch>
+</IfModule>
