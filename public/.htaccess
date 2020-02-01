@@ -69,7 +69,7 @@ DirectoryIndex index.php
 
 
 <IfModule mod_expires.c>
-    <FilesMatch "\.(js|css)$">
+    <FilesMatch "\.(js|css|ttf|woff2)$">
         ExpiresActive On
         ExpiresDefault "access plus 1 month"
     </FilesMatch>
