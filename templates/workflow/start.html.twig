@@ -167,6 +167,7 @@
                                         <div class="col-md-6 col-lg-4 mb-4">
                                             <div class="cardhoverable h-100 card  ">
                                                 <div class=" overlay skib-card-image">
+                                                    <a href="{{path('loerrach_workflow_adresse',{'slug':stadt.slug})}}">
                                                     <img class="card-img-top lazy"
                                                             {% if s.image %}
                                                                 data-src="{{ vich_uploader_asset(s,'imageFile') }}"
@@ -189,7 +190,7 @@
                                                              style="max-height: 300px"
                                                         />
                                                     </noscript>
-                                                    <a href="adresse">
+
                                                         <div class="mask rgba-white-slight"></div>
                                                     </a>
                                                 </div>

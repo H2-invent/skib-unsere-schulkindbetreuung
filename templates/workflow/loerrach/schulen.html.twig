@@ -144,7 +144,18 @@
         })
 
         $("#loadContentModal").on('hide.bs.modal', function () {
-            $('#schulenShow').load('{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #schulenShow');
+            $('#schulenShow').load('{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #schulenShow',function() {
+                $('.lazy').show().Lazy({
+                    // your configuration goes here
+                    scrollDirection: 'vertical',
+                    effect: 'fadeIn',
+                    visibleOnly: true,
+                    onError: function(element) {
+                        console.log('error loading ' + element.data('src'));
+                    }
+                });
+            });
+
         });
     </script>
 
