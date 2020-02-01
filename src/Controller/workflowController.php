@@ -213,7 +213,7 @@ class workflowController extends AbstractController
             }
             $count += strlen($data);
         }
-        
+
         return $res;
     }
 }
