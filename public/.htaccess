@@ -66,3 +66,15 @@ DirectoryIndex index.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+
+<IfModule mod_expires.c>
+    <FilesMatch "\.(js|css|ttf|woff2)$">
+        ExpiresActive On
+        ExpiresDefault "access plus 1 month"
+    </FilesMatch>
+        <FilesMatch "\.(jpe?g|png|gif|ico)$">
+            ExpiresActive On
+            ExpiresDefault "access plus 1 week"
+        </FilesMatch>
+</IfModule>
