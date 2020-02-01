@@ -12,7 +12,7 @@
         }
     }
 
-    {% if stadt is defined and stadt is not null %}
+    {% if stadt is defined and stadt is not null and stadt.hauptfarbe is not null %}
     .btn-primary {
         background-color: {{ stadt.hauptfarbe }} !important;
         border-color: {{ stadt.hauptfarbe }} !important;
