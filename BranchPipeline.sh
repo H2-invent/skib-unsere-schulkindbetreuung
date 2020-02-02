@@ -5,7 +5,6 @@ echo ---------------Git pull--------------------------------------------------
 echo --------------------------------------------------------------------------
 git add .
 git stash
-git fetch
 git pull
 
 echo ------------Update parameter.yml and install latest packages-------------
