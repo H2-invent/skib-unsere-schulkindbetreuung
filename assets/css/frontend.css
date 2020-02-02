@@ -1,5 +1,6 @@
-@import 'mdb.css';
+
 @import '~bootstrap';
+@import 'mdb.css';
 @import '~font-awesome';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 @import '~daterangepicker';
