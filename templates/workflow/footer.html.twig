@@ -24,7 +24,10 @@
                             <a href={{ path('workflow_agb',{'slug':stadt.slug}) }}>{% trans %}Vertragsbedingungen{% endtrans %}</a>
                         </li>
                         <li>
-                            <a href={{ path('welcome_landing') }}>{% trans %}SKiB Software - H2 invent{% endtrans %}</a>
+                            <a href="https://unsere-schulkindbetreuung.de">{% trans %}SKiB Software - H2 invent{% endtrans %}</a>
+                        </li>
+                        <li >
+                            <a href={{ path('sitemap') }}>{% trans %}Sitemap{% endtrans %}</a>
                         </li>
                     </ul>
                 </div>
@@ -55,6 +58,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href={{ path('nutzungsbedingungen') }}>{% trans %}Nutzungsbedingungen{% endtrans %}</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href={{ path('sitemap') }}>{% trans %}Sitemap{% endtrans %}</a>
+                                </li>
                             </ul>
                         </div>
                 {% endif %}
@@ -63,7 +69,7 @@
         </div>
     </div>
     <div class="footer-copyright text-center py-2">
-        © {{ 'now'|date('Y') }} H2 invent | v{{ shivas_app_version }}
+        Made with ❤ in Lörrach by H2 invent GmbH • {{ 'now'|date('Y') }} • v{{ shivas_app_version }}
     </div>
 </footer>
 <!-- Footer -->

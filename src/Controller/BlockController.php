@@ -118,6 +118,7 @@ class BlockController extends AbstractController
     public function deleteBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator,AnmeldeEmailService $anmeldeEmailService)
     {
        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('id'));
+       $stadt = $block->getSchule()->getStadt();
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
             return new JsonResponse(array('error'=>1,'snack'=>$text));
@@ -130,7 +131,9 @@ class BlockController extends AbstractController
         $em->flush();
         $kinder = $block->getKindwithFin();
         foreach ($kinder as $data){
+
             $anmeldeEmailService->sendEmail($data,$data->getEltern(),$block->getSchule()->getStadt(),$block->getSchule()->getStadt()->getGehaltsklassen());
+
         }
 
         $text = $translator->trans('Erfolgreich gelöscht');

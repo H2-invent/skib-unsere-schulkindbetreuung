@@ -28,7 +28,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            {{ stadt.name }}
+                            Informationen
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item"
@@ -66,7 +66,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('dashboard') }}">{% trans %}Mitarbeiterlogin{% endtrans %}</a>
+                    <a class="nav-link" href="{{ path('dashboard') }}">{% if is_granted('IS_AUTHENTICATED_FULLY') %}<i class="fa fa-user "></i> {{ app.user.username }}{% else %}{% trans %}Mitarbeiterlogin{% endtrans %}{% endif %}</a>
                 </li>
             </ul>
 

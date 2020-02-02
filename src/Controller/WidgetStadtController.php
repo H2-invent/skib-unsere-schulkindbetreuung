@@ -41,7 +41,7 @@ class WidgetStadtController extends AbstractController
 
         $query = $qb->getQuery();
         $kinder = $result = $query->getResult();
-        return new JsonResponse(array('title'=>$schule->getName(),'small'=>$translator->trans('Kinder angemeldet'),'anzahl'=>sizeof($kinder),'symbol'=>'sports_handball'));
+        return new JsonResponse(array('title'=>$schule->getName(),'small'=>$translator->trans('Kinder angemeldet'),'anzahl'=>sizeof($kinder),'symbol'=>'school'));
 
     }
     /**
@@ -79,7 +79,7 @@ class WidgetStadtController extends AbstractController
         $kinder = $result = $query->getResult();
 
 
-        return new JsonResponse(array('title'=>$translator->trans('Kinder dieses Schuljahr'),'small'=>'','anzahl'=>sizeof($kinder),'symbol'=>'emoji_people'));
+        return new JsonResponse(array('title'=>$translator->trans('Kinder dieses Schuljahr'),'small'=>'','anzahl'=>sizeof($kinder),'symbol'=>'people'));
     }
 
     private function cmp($a, $b)

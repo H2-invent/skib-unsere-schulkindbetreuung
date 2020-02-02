@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="{{absolute_url(path('sitemap'))}}"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+    http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd"
+        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
+    <url>
+        <loc>{{ absolute_url(path('welcome_landing')) }}</loc>
+        <xhtml:link rel="alternate" hreflang="de"
+                    href="{{ absolute_url(path('welcome_landing',{} | merge({'_locale':'de'}))) }}"/>
+        <xhtml:link rel="alternate" hreflang="en"
+                    href="{{ absolute_url(path('welcome_landing',{} | merge({'_locale':'en'}))) }}"/>
+        <xhtml:link rel="alternate" hreflang="fr"
+                    href="{{ absolute_url(path('welcome_landing',{} | merge({'_locale':'fr'}))) }}"/>
+        <lastmod>2020-01-13T16:27:45+00:00</lastmod>
+        <priority>1</priority>
+    </url>
+    <!--Features of SKiB -->
+{% for c in content %}
+
+    <url>
+        <loc>{{ absolute_url(path('welcome_landing_slug',{'content':c.slug})) }}</loc>
+        <xhtml:link rel="alternate" hreflang="de"
+                    href="{{ absolute_url(path('welcome_landing_slug',{'content':c.slug} | merge({'_locale':'de'}))) }}"/>
+        <xhtml:link rel="alternate" hreflang="en"
+                    href="{{ absolute_url(path('welcome_landing_slug',{'content':c.slug} | merge({'_locale':'en'}))) }}"/>
+        <xhtml:link rel="alternate" hreflang="fr"
+                    href="{{ absolute_url(path('welcome_landing_slug',{'content':c.slug}  | merge({'_locale':'fr'}))) }}"/>
+        <lastmod>2020-01-13T16:27:45+00:00</lastmod>
+        <priority>0.9</priority>
+    </url>
+    {% endfor %}
+    {% for s in stadt %}
+        <!-- City: {{ s.name }} News -->
+
+        {% if s.news|length>0 %}
+            {% set date = s.news[0].date %}
+        {% else %}
+            {% set date = s.createdAt %}
+        {% endif %}
+        <url>
+            <loc>{{ absolute_url(path('workflow_start',{'slug':s.slug})) }}</loc>
+            <xhtml:link rel="alternate" hreflang="de"
+                        href="{{ absolute_url(path('workflow_start',{'slug':s.slug}| merge({'_locale':'de'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="en"
+                        href="{{ absolute_url(path('workflow_start',{'slug':s.slug}| merge({'_locale':'en'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="fr"
+                        href="{{ absolute_url(path('workflow_start',{'slug':s.slug}| merge({'_locale':'fr'}))) }}"/>
+            <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+            <priority>0.8</priority>
+        </url>
+
+        {% if s.schulkindBetreung == true %}
+            <url>
+                <loc>{{ absolute_url(path('loerrach_workflow_adresse',{'slug':s.slug})) }}</loc>
+                <xhtml:link rel="alternate" hreflang="de"
+                            href="{{ absolute_url(path('loerrach_workflow_adresse',{'slug':s.slug}| merge({'_locale':'de'}))) }}"/>
+                <xhtml:link rel="alternate" hreflang="en"
+                            href="{{ absolute_url(path('loerrach_workflow_adresse',{'slug':s.slug}| merge({'_locale':'en'}))) }}"/>
+                <xhtml:link rel="alternate" hreflang="fr"
+                            href="{{ absolute_url(path('loerrach_workflow_adresse',{'slug':s.slug}| merge({'_locale':'fr'}))) }}"/>
+                <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+                <priority>0.5</priority>
+            </url>
+        {% endif %}
+        {% if s.ferienprogramm == true %}
+            <url>
+                <loc>{{ absolute_url(path('ferien_adresse',{'slug':s.slug})) }}</loc>
+                <xhtml:link rel="alternate" hreflang="de"
+                            href="{{ absolute_url(path('ferien_adresse',{'slug':s.slug}| merge({'_locale':'de'}))) }}"/>
+                <xhtml:link rel="alternate" hreflang="en"
+                            href="{{ absolute_url(path('ferien_adresse',{'slug':s.slug}| merge({'_locale':'en'}))) }}"/>
+                <xhtml:link rel="alternate" hreflang="fr"
+                            href="{{ absolute_url(path('ferien_adresse',{'slug':s.slug}| merge({'_locale':'fr'}))) }}"/>
+                <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+                <priority>0.5</priority>
+            </url>
+        {% endif %}
+        <url>
+            <loc>{{ absolute_url(path('workflow_imprint',{'slug':s.slug})) }}</loc>
+            <xhtml:link rel="alternate" hreflang="de"
+                        href="{{ absolute_url(path('workflow_imprint',{'slug':s.slug}| merge({'_locale':'de'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="en"
+                        href="{{ absolute_url(path('workflow_imprint',{'slug':s.slug}| merge({'_locale':'en'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="fr"
+                        href="{{ absolute_url(path('workflow_imprint',{'slug':s.slug}| merge({'_locale':'fr'}))) }}"/>
+            <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+            <priority>0.2</priority>
+        </url>
+        <url>
+            <loc>{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':'city'})) }}</loc>
+            <xhtml:link rel="alternate" hreflang="de"
+                        href="{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':'city'}| merge({'_locale':'de'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="en"
+                        href="{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':'city'}| merge({'_locale':'en'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="fr"
+                        href="{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':'city'}| merge({'_locale':'fr'}))) }}"/>
+            <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+            <priority>0.2</priority>
+        </url>
+        <url>
+            <loc>{{ absolute_url(path('workflow_agb',{'slug':s.slug})) }}</loc>
+            <xhtml:link rel="alternate" hreflang="de"
+                        href="{{ absolute_url(path('workflow_agb',{'slug':s.slug}| merge({'_locale':'de'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="en"
+                        href="{{ absolute_url(path('workflow_agb',{'slug':s.slug}| merge({'_locale':'en'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="fr"
+                        href="{{ absolute_url(path('workflow_agb',{'slug':s.slug}| merge({'_locale':'fr'}))) }}"/>
+            <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+            <priority>0.2</priority>
+        </url>
+
+        {% for o in s.organisations %}
+            <!-- City: {{ s.name }} Organisation: {{ o.name }} -->
+
+            <url>
+                <loc>{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':o.id})) }}</loc>
+                <xhtml:link rel="alternate" hreflang="de"
+                            href="{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':o.id}| merge({'_locale':'de'}))) }}"/>
+                <xhtml:link rel="alternate" hreflang="en"
+                            href="{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':o.id}| merge({'_locale':'en'}))) }}"/>
+                <xhtml:link rel="alternate" hreflang="fr"
+                            href="{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':o.id}| merge({'_locale':'fr'}))) }}"/>
+                <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+                <priority>0.2</priority>
+            </url>
+
+        {% endfor %}
+        <!-- City: Newsuebersicht {{ s.name }} News -->
+        <url>
+            <loc>{{ absolute_url(path('news_show_page',{'slug':s.slug})) }}</loc>
+            <xhtml:link rel="alternate" hreflang="de"
+                        href="{{ absolute_url(path('news_show_page',{'slug':s.slug}| merge({'_locale':'de'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="en"
+                        href="{{ absolute_url(path('news_show_page',{'slug':s.slug}| merge({'_locale':'en'}))) }}"/>
+            <xhtml:link rel="alternate" hreflang="fr"
+                        href="{{ absolute_url(path('news_show_page',{'slug':s.slug}| merge({'_locale':'fr'}))) }}"/>
+            <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+            <priority>0.5</priority>
+        </url>
+        {% for n in s.news %}
+            <!-- City: {{ s.name }} News -->
+            {% if n.date is null %}
+                {% set date = n.createdDate %}
+            {% else %}
+                {% set date = n.date %}
+            {% endif %}
+            <url>
+                <loc>{{ absolute_url(path('news_show_all',{'slug':s.slug,'id':n.id})) }}</loc>
+                <xhtml:link rel="alternate" hreflang="de"
+                            href="{{ absolute_url(path('news_show_all',{'slug':s.slug,'id':n.id}| merge({'_locale':'de'}))) }}"/>
+                <xhtml:link rel="alternate" hreflang="en"
+                            href="{{ absolute_url(path('news_show_all',{'slug':s.slug,'id':n.id}| merge({'_locale':'en'}))) }}"/>
+                <xhtml:link rel="alternate" hreflang="fr"
+                            href="{{ absolute_url(path('news_show_all',{'slug':s.slug,'id':n.id}| merge({'_locale':'fr'}))) }}"/>
+                <lastmod>{{ date|date('Y-m-d') }}</lastmod>
+                <priority>0.5</priority>
+            </url>
+
+        {% endfor %}
+    {% endfor %}
+
+</urlset>

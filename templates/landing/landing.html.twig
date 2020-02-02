@@ -10,8 +10,10 @@
 <!-- Navbar -->
 
 <!-- Full Page Intro -->
-<div class="view full-page-intro"
-     style="background-image: url('{{ asset('images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+<div class="view full-page-intro">
+    <div class="jarallax">
+        <img class="jarallax-img" src="{{ asset('images/background.jpg') }}" alt="">
+    </div>
     <style>
         .svg {
             height: 100px;
@@ -58,8 +60,7 @@
             </div>
             <div class="col-md-12 mb-4 white-text text-center align-content-center">
                 <section id="scroll">
-
-                    <a href="#stadtliste"><span></span></a>
+                    <a class="scroller" href="#feature"><span></span></a>
                 </section>
             </div>
         </div>
@@ -68,52 +69,35 @@
 </div>
 
 <main>
-    <div class="container anchor" id="stadtliste">
+    {% if contentSelect is defined and contentSelect is not null  %}
+    <div class="container anchor" id="feature">
         <section class="mt-5 wow fadeIn">
-        <div class="row">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        {% for c in content %}
+                            <li class="nav-item text-center">
+                                <a class="nav-link active" id="{{ c.id }}-tab" href="{{ path('welcome_landing_slug',{'content':c.slug}) }}#feature"
+                                   aria-controls="{{ c.slug }}"
+                                   aria-selected="true"><i class="fa fa-3x {{c.icon}}"></i><br> {{ c.translate.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
 
-            <!--Grid column-->
-            <div class="col-lg-8">
-
-                <h2> {% trans %}Webanwendung für die  Anmeldung und Verwaltung{% endtrans %}</h2>
-                <section class="dashboard-counts section-padding" id="schulenShow">
-                    <div class="container-fluid ">
-
-
-                                {% trans %}
-                                Die Schulkindbetreuung ist eine <b>komplexe Dienstleistung</b>. Viele Menschen
-                                und Institutionen sind bei der Finanzierung, Planung, Verwaltung und
-                                Umsetzung beteiligt.<br>
-                                <br>
-                                Die <b>gestiegene Komplexität</b> und die Erwartungshaltungen der Beteiligten
-                                machen eine Veränderung notwendig.<br><br>
-                               <b>Vereinbarkeit von Familie und Beruf und die Chancengleichheit für alle Kinder</b>
-                                    fordern den Ausbau und die Modernisierung des Betreuungssystems.<br><br>
-                                    Der <b>Schulträger von Morgen</b> stellt eine innovative, moderne und transparente
-                                Informationsplattform, Anmeldung und Verwaltung allen Beteiligten zur
-                                Verfügung.<br><br>
-                                    <b>Digitalisierung und umweltbewusstes Handeln</b> sind zentrale Themen
-                                unserer Zeit.
-                                {% endtrans %}
-
+                    <div class="tab-content mt-3" id="myTabContent">
+                            <div class="tab-pane fade show active"
+                                 role="tabpanel" aria-labelledby="{{ contentSelect.slug }}">
+                                {{ contentSelect.translate.content|markdown_to_html}}
+                            </div>
 
                     </div>
-                </section>
+                </div>
             </div>
-            <div class="col-lg-4">
-
-                <blockquote class="blockquote">
-                    <p class="mb-0">{% trans %}Die Angebotspalette der Schulkindbetreuung ist sehr groß und unübersichtlich. Ich fühle mich oft überfordert und deshalb wünsche ich mir eine transparente Plattform.{% endtrans %}</p>
-                    <footer class="blockquote-footer">by <cite>{% trans %}Beatrice (Mutter von drei Söhnen){% endtrans %}</cite></footer>
-                </blockquote>
-                <blockquote class="blockquote">
-                    <p class="mb-0">{% trans %}Ich möchte mehr Zeit mit den Kindern verbringen und nicht ständig Listen führen.{% endtrans %}</p>
-                    <footer class="blockquote-footer">by <cite>{% trans %}Katharina (Sozialpädagogin){% endtrans %}</cite></footer>
-                </blockquote>
-            </div>
-
-        </div>
         </section>
+    </div>
+    {% endif %}
+    <div class="container anchor" id="stadtliste">
+
         <!--Section: Main info-->
         <section class="mt-5 wow fadeIn">
 
@@ -169,11 +153,11 @@
 
                 <!--Grid column-->
                 <div class="col-lg-8 offset-lg-2 text-center">
-        <h2>
-            Wir beraten Sie gerne individuell:
-        </h2>
-        <h3><a href="mailto:info@unsere-schulkindbetreuung.de">info@unsere-schulkindbetreuung.de</a> </h3>
-        <h3><a href="tel:+49 7621-7925862"> +49 07621-7925862</a></h3>
+                    <h2>
+                        {% trans %}Wir beraten Sie gerne individuell:{% endtrans %}
+                    </h2>
+                    <h3><a href="mailto:info@unsere-schulkindbetreuung.de">info@unsere-schulkindbetreuung.de</a></h3>
+                    <h3><a href="tel:+49 7621-7925862"> +49 07621-7925862</a></h3>
                 </div>
             </div>
         </section>
@@ -183,19 +167,13 @@
 
 {% include 'workflow/footer.html.twig' with {'stadt':null} %}
 
-<script type="text/javascript" src="{{ asset('frontpage/js/jquery-3.4.1.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('frontpage/js/popper.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('frontpage/js/bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('frontpage/js/mdb.min.js') }}"></script>
-<script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
 <script>
-    $(function () {
-        $("a[href*=\\#]").on('click', function (e) {
-            e.preventDefault();
-            $('html, body').animate({scrollTop: $($(this).attr('href')).offset().top}, 500, 'linear');
-        });
-    });
+    mehrLesen = '{{ 'Mehr lesen'|trans }}';
+    wenigerLesen = '{{ 'Schließen'|trans }}'
+
 </script>
+{{ encore_entry_script_tags('startpage') }}
+
 </body>
 
 </html>

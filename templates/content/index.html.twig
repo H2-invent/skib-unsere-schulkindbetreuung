@@ -1,0 +1,74 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <!-- Count item widget-->
+                <div class=" col-12 card">
+                    <div class="card-header">
+                        <h1> {% trans %}Content{% endtrans %} <a
+                                    href="{{ path('content_new') }}">
+                                <button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                                    <i class="material-icons">add</i>
+                                </button>
+                            </a></h1>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>{% trans %}Sichtbar{% endtrans %}</th>
+                                <th>{% trans %}Reihenfolge{% endtrans %}</th>
+                                <th>{% trans %}Titel{% endtrans %}</th>
+                                <th>{% trans %}Icon{% endtrans %}</th>
+                                <th>{% trans %}Datum{% endtrans %}</th>
+                                <th>{% trans %}Last Change{% endtrans %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for c in content %}
+                                <tr>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="material-icons">more_vert</i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                                <a class="dropdown-item"
+                                                   href="{{ path('content_edit',{'content_id':c.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                <a class="dropdown-item"
+
+                                                {% if c.activ == true %}
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('content_activate',{'content_id':c.id}) }}">{% trans %}Deaktivieren{% endtrans %}</a>
+                                                {% else %}
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('content_activate',{'content_id':c.id}) }}">{% trans %}Aktivieren{% endtrans %}</a>
+                                                {% endif %}
+                                                <a class="dropdown-item"
+                                                   href="{{ path('content_delete',{'content_id':c.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>{{ c.activ?"Ja":'Nein'|trans }}</td>
+                                    <td>{{ c.reihenfolge }}</td>
+                                    <td>{{ c.translate.title }}</td>
+                                    <td>{{ c.icon }}</td>
+                                    <td>{{ c.createdAt|date("d.m.Y G:i") }}</td>
+                                    <td>{{ c.date|date("d.m.Y G:i") }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

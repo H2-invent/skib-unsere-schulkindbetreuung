@@ -48,7 +48,10 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Typ'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Schule'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Eltern'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Straße'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Adresse'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('PLZ'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Ort'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Notfallnummer'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Notfallkontakt'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Abholung durch'));
@@ -74,7 +77,10 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getArtString());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getName());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getVorname().' '.$data->getEltern()->getName());
-            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getStrasse().' '.$data->getEltern()->getAdresszusatz(). ' ,'.$data->getEltern()->getPlz().' '.$data->getEltern()->getStadt());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getStrasse());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getAdresszusatz());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getPlz());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getStadt());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getNotfallkontakt());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getNotfallName());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getAbholberechtigter());

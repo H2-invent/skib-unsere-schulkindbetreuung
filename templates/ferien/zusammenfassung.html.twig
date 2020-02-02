@@ -70,7 +70,7 @@
                                 {{ k.vorname }} {{ k.nachname }} <br/>
                                 <small>
                                     {% trans %}Gesamtbetrag für die gebuchten Ferienprogramme{% endtrans %}: <a
-                                            href="{{ path('loerrach_workflow_print_pdf',{'id':k.id}) }}"><i
+                                            href="{{ path('loerrach_workflow_print_pdf',{'slug':stadt.slug,'id':k.id}) }}"><i
                                                 class="fa fa-download"></i></a>
                                 </small>
                             </a>

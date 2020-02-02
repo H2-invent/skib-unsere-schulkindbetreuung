@@ -11,6 +11,7 @@ parameters:
     locale: 'de'
     mailprovider: '%env(MAILPROVIDER)%'
 
+
 services:
     # default configuration for services in *this* file
     _defaults:

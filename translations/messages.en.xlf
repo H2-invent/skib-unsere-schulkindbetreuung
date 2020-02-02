@@ -97,10 +97,6 @@
         <source>Preis erfolgreich berechnet.</source>
         <target state="translated">Price calculated successfully.</target>
       </trans-unit>
-      <trans-unit id="fr3glj3" resname="Bitte weitere Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)">
-        <source>Bitte weitere Betreuungszeitfenster auswählen (Mindestens zwei Blöcke müssen ausgewählt werden)</source>
-        <target state="translated">Please select additional childcare slots (at least two slots must be selected)</target>
-      </trans-unit>
       <trans-unit id="uTu8sJd" resname="AGB ">
         <source>AGB </source>
         <target state="translated">Terms and Conditions </target>
@@ -2221,9 +2217,243 @@
         <source>Weiterlesen</source>
         <target state="translated">Read more</target>
       </trans-unit>
-      <trans-unit id="j4mueG7" resname="Zur Übersicht">
+      <trans-unit id="Ir.e87L" resname="Zur Übersicht">
         <source>Zur Übersicht</source>
         <target state="translated">To the overview</target>
+      </trans-unit>
+      <trans-unit id="83.HlhJ" resname="Schulkindbetreuung SKiB">
+        <source>Schulkindbetreuung SKiB</source>
+        <target state="translated">School child care SKiB</target>
+      </trans-unit>
+      <trans-unit id="bedt2uH" resname="Online Anmeldung und Verwaltung">
+        <source>Online Anmeldung und Verwaltung</source>
+        <target state="translated">Online application and administration</target>
+      </trans-unit>
+      <trans-unit id="zmlkEaD" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;&#10;Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;&#10;">
+        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
+Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
+</source>
+        <target state="translated">SKiB is so far the only online solution for the registration and administration of school childcare and holiday care.
+The web application enables direct networking between parents, external organisations and the municipal administration or school authorities. 
+</target>
+      </trans-unit>
+      <trans-unit id="gq8j58x" resname="Nachricht konnte nicht versendet werden">
+        <source>Nachricht konnte nicht versendet werden</source>
+        <target state="translated">The message could not be sent</target>
+      </trans-unit>
+      <trans-unit id="lYBlt4a" resname="Schulkindbetreuung und Ferienbetreuung von ">
+        <source>Schulkindbetreuung und Ferienbetreuung von </source>
+        <target state="translated">School child care and holiday care of </target>
+      </trans-unit>
+      <trans-unit id="L5N7_3u" resname=" Hier anmelden">
+        <source> Hier anmelden</source>
+        <target state="translated"> Register here</target>
+      </trans-unit>
+      <trans-unit id="7w.oc7t" resname="AGB">
+        <source>AGB</source>
+        <target state="translated"><![CDATA[Terms & Conditions]]></target>
+      </trans-unit>
+      <trans-unit id="3nw6On8" resname="Content anlegen">
+        <source>Content anlegen</source>
+        <target state="translated">Creating content</target>
+      </trans-unit>
+      <trans-unit id="9dAe0Tf" resname="Content bearbeiten">
+        <source>Content bearbeiten</source>
+        <target state="translated">Editing Content</target>
+      </trans-unit>
+      <trans-unit id="KkPR.LQ" resname="Die Email wurde erfolgreich versandt">
+        <source>Die Email wurde erfolgreich versandt</source>
+        <target state="translated">The email was sent successfully</target>
+      </trans-unit>
+      <trans-unit id="Wa.wWgN" resname="Die E-Mail konnte nicht vesandt werden">
+        <source>Die E-Mail konnte nicht vesandt werden</source>
+        <target state="translated">The e-mail could not be sent</target>
+      </trans-unit>
+      <trans-unit id="FhZB0Ue" resname="Frontpage Content">
+        <source>Frontpage Content</source>
+        <target state="translated">Frontpage Content</target>
+      </trans-unit>
+      <trans-unit id="R70pB1_" resname="Content">
+        <source>Content</source>
+        <target state="translated">Content</target>
+      </trans-unit>
+      <trans-unit id="o1q81tr" resname="Icon">
+        <source>Icon</source>
+        <target state="translated">Icon</target>
+      </trans-unit>
+      <trans-unit id="9PoCIRF" resname="Last Change">
+        <source>Last Change</source>
+        <target state="translated">Last Change</target>
+      </trans-unit>
+      <trans-unit id="9VQ5Tv0" resname="Webanwendung für die  Anmeldung und Verwaltung">
+        <source>Webanwendung für die  Anmeldung und Verwaltung</source>
+        <target state="translated">Online application for  registration and administration</target>
+      </trans-unit>
+      <trans-unit id="knbQTEa" resname="Die Schulkindbetreuung ist eine &lt;b&gt;komplexe Dienstleistung&lt;/b&gt;. Viele Menschen&#10;                                                                                              und Institutionen sind bei der Finanzierung, Planung, Verwaltung und&#10;                                                                                              Umsetzung beteiligt.&lt;br&gt;&#10;                                &lt;br&gt;&#10;                                Die &lt;b&gt;gestiegene Komplexität&lt;/b&gt; und die Erwartungshaltungen der Beteiligten&#10;                                                                  machen eine Veränderung notwendig.&lt;br&gt;&lt;br&gt;&#10;                                &lt;b&gt;Vereinbarkeit von Familie und Beruf und die Chancengleichheit für alle Kinder&lt;/b&gt;&#10;                                fordern den Ausbau und die Modernisierung des Betreuungssystems.&lt;br&gt;&lt;br&gt;&#10;                                Der &lt;b&gt;Schulträger von Morgen&lt;/b&gt; stellt eine innovative, moderne und transparente&#10;                                                                  Informationsplattform, Anmeldung und Verwaltung allen Beteiligten zur&#10;                                                                  Verfügung.&lt;br&gt;&lt;br&gt;&#10;                                &lt;b&gt;Digitalisierung und umweltbewusstes Handeln&lt;/b&gt; sind zentrale Themen&#10;                                unserer Zeit.">
+        <source>Die Schulkindbetreuung ist eine &lt;b&gt;komplexe Dienstleistung&lt;/b&gt;. Viele Menschen
+                                                                                              und Institutionen sind bei der Finanzierung, Planung, Verwaltung und
+                                                                                              Umsetzung beteiligt.&lt;br&gt;
+                                &lt;br&gt;
+                                Die &lt;b&gt;gestiegene Komplexität&lt;/b&gt; und die Erwartungshaltungen der Beteiligten
+                                                                  machen eine Veränderung notwendig.&lt;br&gt;&lt;br&gt;
+                                &lt;b&gt;Vereinbarkeit von Familie und Beruf und die Chancengleichheit für alle Kinder&lt;/b&gt;
+                                fordern den Ausbau und die Modernisierung des Betreuungssystems.&lt;br&gt;&lt;br&gt;
+                                Der &lt;b&gt;Schulträger von Morgen&lt;/b&gt; stellt eine innovative, moderne und transparente
+                                                                  Informationsplattform, Anmeldung und Verwaltung allen Beteiligten zur
+                                                                  Verfügung.&lt;br&gt;&lt;br&gt;
+                                &lt;b&gt;Digitalisierung und umweltbewusstes Handeln&lt;/b&gt; sind zentrale Themen
+                                unserer Zeit.</source>
+        <target state="translated"><![CDATA[School child care is a complex service. Many people
+                                                                                              and institutions are involved in financing, planning, administration and
+                                                                                              Implementation involved.<br>
+                                <br>
+                                The <b>increased complexity</b> and the expectations of those involved
+                                                                  make a change necessary. <br><br>
+                                <b> Compatibility of family and career and equal opportunities for all children</b>
+                                call for the expansion and modernisation of the care system.<br><br>
+                                The <b> school carrier of tomorrow</b> represents an innovative, modern and transparent
+                                                                  information platform, registration and administration for all participants to
+                                                                  Order.
+                                <Digitisation and environmental awareness are central themes
+                                of our time.]]></target>
+      </trans-unit>
+      <trans-unit id="HbMpwLI" resname="Die Angebotspalette der Schulkindbetreuung ist sehr groß und unübersichtlich. Ich fühle mich oft überfordert und deshalb wünsche ich mir eine transparente Plattform.">
+        <source>Die Angebotspalette der Schulkindbetreuung ist sehr groß und unübersichtlich. Ich fühle mich oft überfordert und deshalb wünsche ich mir eine transparente Plattform.</source>
+        <target state="translated">The range of school childcare services is very large and confusing. I often feel overwhelmed and therefore I would like a transparent platform.</target>
+      </trans-unit>
+      <trans-unit id="xgVxdz_" resname="Beatrice (Mutter von drei Söhnen)">
+        <source>Beatrice (Mutter von drei Söhnen)</source>
+        <target state="translated">Beatrice (Mother of three sons)</target>
+      </trans-unit>
+      <trans-unit id="UYivmMb" resname="Ich möchte mehr Zeit mit den Kindern verbringen und nicht ständig Listen führen.">
+        <source>Ich möchte mehr Zeit mit den Kindern verbringen und nicht ständig Listen führen.</source>
+        <target state="translated">I want to spend more time with the children and not constantly keep lists.</target>
+      </trans-unit>
+      <trans-unit id="lWmL25C" resname="Catarina (Sozialpädagogin)">
+        <source>Catarina (Sozialpädagogin)</source>
+        <target state="translated">Catarina (Social worker)</target>
+      </trans-unit>
+      <trans-unit id="X7eX6r3" resname="Rechnung an alle Eltern versenden">
+        <source>Rechnung an alle Eltern versenden</source>
+        <target state="translated">Send invoice to all parents</target>
+      </trans-unit>
+      <trans-unit id="TbVQzZh" resname="Sitemap">
+        <source>Sitemap</source>
+        <target state="translated">Sitemap</target>
+      </trans-unit>
+      <trans-unit id="0_77c55" resname="Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)">
+        <source>Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)</source>
+        <target state="translated">Please select another care time slot (At least two days must be selected)</target>
+      </trans-unit>
+      <trans-unit id="dhhPs7h" resname="Bestätigungscode zur Überprüfung der E-Mail Adresse">
+        <source>Bestätigungscode zur Überprüfung der E-Mail Adresse</source>
+        <target state="translated">Confirmation code to verify the e-mail address</target>
+      </trans-unit>
+      <trans-unit id="6kYrCka" resname="Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.&#10;            &lt;br&gt;Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.">
+        <source>Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.
+            &lt;br&gt;Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.</source>
+        <target state="translated"><![CDATA[You have just registered for the online portal for school child care.
+            <br>Please confirm your e-mail by entering the confirmation code in your browser.]]></target>
+      </trans-unit>
+      <trans-unit id="j4EU0Ge" resname="Monatliche Gebühr für die Betreuung (inklusive Vergünstigungen)">
+        <source>Monatliche Gebühr für die Betreuung (inklusive Vergünstigungen)</source>
+        <target state="translated">Monthly fee for support (including allowances)</target>
+      </trans-unit>
+      <trans-unit id="srOAIVX" resname="Bitte weiteres Betreuungszeitfenster auswählen">
+        <source>Bitte weiteres Betreuungszeitfenster auswählen</source>
+        <target state="translated">Please select another care time window</target>
+      </trans-unit>
+      <trans-unit id="aq9j.Xq" resname="Zusammenfassung der Datenschutzhinweise">
+        <source>Zusammenfassung der Datenschutzhinweise</source>
+        <target state="translated">Summary of the data protection information</target>
+      </trans-unit>
+      <trans-unit id="2RQ.lyp" resname="Datenschutzhinweise der Stadt und betreuenden Organisationen">
+        <source>Datenschutzhinweise der Stadt und betreuenden Organisationen</source>
+        <target state="translated">Data protection notices of the city and supporting organisations</target>
+      </trans-unit>
+      <trans-unit id="6XA1_hW" resname="Für Informationen zum Datenschutz der Stat und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.">
+        <source>Für Informationen zum Datenschutz der Stat und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.</source>
+        <target state="translated">Please contact the respective administrations for information on data protection at the Stat and the supervising organisations.</target>
+      </trans-unit>
+      <trans-unit id="_70lqNS" resname="Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.">
+        <source>Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.</source>
+        <target state="translated">Please check the details below and submit your childcare contract.</target>
+      </trans-unit>
+      <trans-unit id="uX3tJWT" resname="Gebühren für alle Kinder pro Monat">
+        <source>Gebühren für alle Kinder pro Monat</source>
+        <target state="translated">Fees for all children per month</target>
+      </trans-unit>
+      <trans-unit id="8io7VGQ" resname="Zum Datenschutzhinweis">
+        <source>Zum Datenschutzhinweis</source>
+        <target state="translated">To the data protection notice</target>
+      </trans-unit>
+      <trans-unit id="s3dEeFQ" resname="Zahlungspflichtigen Vertrag abschließen">
+        <source>Zahlungspflichtigen Vertrag abschließen</source>
+        <target state="translated">Conclude the contract with a payment obligation</target>
+      </trans-unit>
+      <trans-unit id="mAer7Ut" resname="Abmeldung der Schulkindbetreuung für ">
+        <source>Abmeldung der Schulkindbetreuung für </source>
+        <target state="translated">Deregistration of school childcare for</target>
+      </trans-unit>
+      <trans-unit id="ZnpVTxa" resname="Reihenfolge">
+        <source>Reihenfolge</source>
+        <target state="translated">Chronology</target>
+      </trans-unit>
+      <trans-unit id="TzUkMGv" resname="Abmeldebestätigung für die Schulkindbetreuung">
+        <source>Abmeldebestätigung für die Schulkindbetreuung</source>
+        <target state="translated">Confirmation of deregistration for school childcare</target>
+      </trans-unit>
+      <trans-unit id="mEd9iOh" resname="Hiermit informieren wir Sie über die &lt;b&gt;Abmeldung&lt;/b&gt; Ihrers Kindes">
+        <source>Hiermit informieren wir Sie über die &lt;b&gt;Abmeldung&lt;/b&gt; Ihrers Kindes</source>
+        <target state="translated"><![CDATA[We hereby inform you about the <b>cancellation</b> of your child]]></target>
+      </trans-unit>
+      <trans-unit id="2NwgjlF" resname="Bei Fragen zu diesem Vorgang, setzen Sie sich bitte mit Ihrer betreuenden Organisation in Verbindung.">
+        <source>Bei Fragen zu diesem Vorgang, setzen Sie sich bitte mit Ihrer betreuenden Organisation in Verbindung.</source>
+        <target state="translated">If you have any questions about this process, please contact your supervising organization.</target>
+      </trans-unit>
+      <trans-unit id="LLPa0to" resname="Für Informationen zum Datenschutz der Stadt und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.">
+        <source>Für Informationen zum Datenschutz der Stadt und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.</source>
+        <target state="translated">Please contact the respective administrations for information on data protection at the city and the supervising organisations.</target>
+      </trans-unit>
+      <trans-unit id="SCjqXLr" resname="#### Anschrift&#10;                        H2 invent GmbH&lt;br&gt;&#10;                        Gewerbestraße 9 (HALLE9)&lt;br&gt;&#10;                        D-79539 Lörrach&lt;br&gt;&#10;&#10;                        Vertretungsberechtiger Geschäftsführer: Andreas Holzmann&lt;br&gt;&#10;                        Telefon: 07621-7925862&lt;br&gt;&#10;                        EMail: info@h2-invent.com&lt;br&gt;&#10;                        Registergericht: Amtsgericht Freiburg im Breisgau&lt;br&gt;&#10;                        Registernummer: HRB 720434&lt;br&gt;&#10;                        Umsatzsteuer-Identifikationsnummer gem. § 27a UStG: DE326041099&lt;br&gt;&#10;                        Inhaltlich Verantwortlicher gem. § 55 II RStV: H2 invent GmbH&lt;br&gt;&#10;&#10;                        #### Urheberecht / Nutzungsbedingungen&#10;                        Die auf unseren Seiten veröffentlichten Inhalte sind urheberrechtlich geschützt. Alle Rechte der hier veröffentlichten Bilder und Dokumente, insbesondere Projektfotografien und -beschreibungen liegen bei der H2 Invent GmbH oder den jeweiligen Rechtegebern.&#10;&#10;                        #### Haftung für Inhalte&#10;                        Die Inhalte unserer Seiten werden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend sperren oder entfernen.&#10;&#10;                        #### Haftung für Links&#10;                        Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.">
+        <source>#### Anschrift
+                        H2 invent GmbH&lt;br&gt;
+                        Gewerbestraße 9 (HALLE9)&lt;br&gt;
+                        D-79539 Lörrach&lt;br&gt;
+
+                        Vertretungsberechtiger Geschäftsführer: Andreas Holzmann&lt;br&gt;
+                        Telefon: 07621-7925862&lt;br&gt;
+                        EMail: info@h2-invent.com&lt;br&gt;
+                        Registergericht: Amtsgericht Freiburg im Breisgau&lt;br&gt;
+                        Registernummer: HRB 720434&lt;br&gt;
+                        Umsatzsteuer-Identifikationsnummer gem. § 27a UStG: DE326041099&lt;br&gt;
+                        Inhaltlich Verantwortlicher gem. § 55 II RStV: H2 invent GmbH&lt;br&gt;
+
+                        #### Urheberecht / Nutzungsbedingungen
+                        Die auf unseren Seiten veröffentlichten Inhalte sind urheberrechtlich geschützt. Alle Rechte der hier veröffentlichten Bilder und Dokumente, insbesondere Projektfotografien und -beschreibungen liegen bei der H2 Invent GmbH oder den jeweiligen Rechtegebern.
+
+                        #### Haftung für Inhalte
+                        Die Inhalte unserer Seiten werden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend sperren oder entfernen.
+
+                        #### Haftung für Links
+                        Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</source>
+        <target state="translated"><![CDATA[Address
+                        H2 invent GmbH<br>Gewerbestraße 9 (HALLE9)<br>D-79539 Lörrach<br>Managing Director: Andreas Holzmann<br>Phone: 07621-7925862<br>Email: info@h2-invent.com<br>Register court: District Court of Freiburg im Breisgau<br>Register number: HRB 720434<br>Value Added Tax Identification Number pursuant to Section 27a UStG: DE326041099<br>Responsible for content in accordance with Section 55 II RStV: H2 invent GmbH<br>Copyright / Terms of Use
+                        The content published on our pages is protected by copyright. All rights of the images and documents published here, in particular project photographs and descriptions, are the property of H2 Invent GmbH or the respective rights providers.
+
+• Liability for content
+                        The contents of our pages are created with the utmost care. However, we cannot assume any liability for the correctness, completeness and topicality of the contents. As a service provider, we are responsible for our own content on these pages in accordance with the general laws in accordance with Section 7 (1) TMG. Pursuant to Sections 8 to 10 of the TMG, however, we as a service provider are not obliged to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information in accordance with the general laws remain unaffected. However, liability in this respect is only possible from the moment of knowledge of a specific infringement. We will immediately block or remove this content if we become aware of such infringements.
+
+• Liability for links
+                        Our offer contains links to external websites of third parties, on whose contents we have no influence. Therefore, we cannot assume any liability for these third-party contents. The respective provider or operator of the pages is always responsible for the contents of the linked pages. The linked pages were checked for possible legal violations at the time of linking. Illegal contents were not recognizable at the time of linking. However, a permanent control of the content of the linked pages is not reasonable without concrete indications of a violation of the law. We will remove such links immediately upon becoming aware of any infringements of the law.]]></target>
+      </trans-unit>
+      <trans-unit id="vxlqVVM" resname="An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.">
+        <source>An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.</source>
+        <target state="translated">On this day, no supervision can be booked in the chosen school form.</target>
+      </trans-unit>
+      <trans-unit id="T0AZQuJ" resname="Wir beraten Sie gerne individuell:">
+        <source>Wir beraten Sie gerne individuell:</source>
+        <target state="translated">We are happy to advise you individually:</target>
       </trans-unit>
     </body>
   </file>

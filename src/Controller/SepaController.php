@@ -54,12 +54,29 @@ class SepaController extends AbstractController
 
                 return $this->redirectToRoute('accounting_overview', array('id' => $organisation->getId(), 'snack' => $result));
             }
-
         }
+
 
         $sepaData = $this->getDoctrine()->getRepository(Sepa::class)->findBy(array('organisation' => $organisation));
 
         return $this->render('sepa/show.html.twig', array('form' => $form->createView(), 'sepa' => $sepaData));
+    }
+
+
+    /**
+     * @Route("/org_accounting/sendBill", name="accounting_send_bill",methods={"GET"})
+     */
+    public function sendBill(TranslatorInterface $translator, Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator)
+    {
+        set_time_limit(600);
+        $sepa = $this->getDoctrine()->getRepository(Sepa::class)->find($request->get('sepa_id'));
+        if ($sepa->getOrganisation() != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        $result = $sepaCreateService->collectallFromSepa($sepa)?$translator->trans('Die Email wurde erfolgreich versandt'):$translator->trans('Die E-Mail konnte nicht vesandt werden');
+
+        return $this->redirectToRoute('accounting_overview', array('id' => $sepa->getOrganisation()->getId(), 'snack' => $result));
+
     }
 
     /**
@@ -115,7 +132,7 @@ class SepaController extends AbstractController
             return $response;
         }
         return $this->render('sepa/customerID.html.twig', array('form' => $form->createView(), 'stammdaten' => $stammdaten));
-    }
 
+    }
 
 }

@@ -56,7 +56,7 @@ class ToogleKindBlockSchulkind
     }
 
     public
-    function toggleKind(Kind $kind, Zeitblock $block)
+    function toggleKind(Stadt $stadt, Kind $kind, Zeitblock $block)
     {
         $result = array(
             'text' => $this->translator->trans('Betreuungszeitfenster erfolgreich gespeichert'),
@@ -65,7 +65,7 @@ class ToogleKindBlockSchulkind
             'cardText' => $this->translator->trans('Gebucht')
         );
         try {
-            $result['preisUrl'] = $this->router->generate('loerrach_workflow_preis_einKind', array('kind_id' => $kind->getId()));
+            $result['preisUrl'] = $this->router->generate('loerrach_workflow_preis_einKind', array('slug'=>$stadt->getSlug(),'kind_id' => $kind->getId()));
 
             if ($block->getMin() || $block->getMax()) {
                 $result['kontingent'] = true;
@@ -92,7 +92,7 @@ class ToogleKindBlockSchulkind
             $blocks2 = $kind->getTageWithBlocks();
 
             if ($blocks2 < 2) {
-                $result['text'] = $this->translator->trans('Bitte weiteren Betreuungszeitfenster auswählen (Mindestens zwei Tage müssen ausgewählt werden)');
+                $result['text'] = $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)');
                 $result['error'] = 2;
             }
         } catch (\Exeption $e) {

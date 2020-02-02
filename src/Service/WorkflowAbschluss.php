@@ -33,7 +33,7 @@ class WorkflowAbschluss
 
 
     private $em;
-   public function __construct(Security $security,EntityManagerInterface $entityManager,ParameterBagInterface $params)
+   public function __construct(Security $security,EntityManagerInterface $entityManager)
    {
        $this->em = $entityManager;
        $this->user = $security;

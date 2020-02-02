@@ -29,7 +29,7 @@ class KontingentController extends AbstractController
         if($this->getUser()->getOrganisation()!= $block->getSchule()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
         }
-       // try {
+        try {
             $kind = $block->getKinderBeworben();
             $em = $this->getDoctrine()->getManager();
             foreach ($kind as $data) {
@@ -39,9 +39,9 @@ class KontingentController extends AbstractController
             }
            $em->flush();
             return new JsonResponse(array('error'=>0,'snack'=>$translator->trans('Erfolgreich gespeichert')));
-      //  }catch (\Exception $e){
-        //    return new JsonResponse(array('error'=>1,'snack'=>$translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
-       // }
+        }catch (\Exception $e){
+            return new JsonResponse(array('error'=>1,'snack'=>$translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
+        }
     }
     /**
      * @Route("/org_accept/show_kids", name="kontingent_show_kids",methods={"GET"})

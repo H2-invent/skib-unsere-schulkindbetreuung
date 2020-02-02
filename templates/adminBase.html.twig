@@ -7,35 +7,20 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
-    <!-- Bootstrap CSS-->
-    <link rel="stylesheet"
-          href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
-          integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
 
-    <!-- Font Awesome CSS-->
-    <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}">
-    <!-- Fontastic Custom icon font-->
-    <link rel="stylesheet" href="{{ asset('css/fontastic.css') }}">
-    <!-- Google fonts - Roboto -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- jQuery Circle-->
-    <link rel="stylesheet" href="{{ asset('css/grasp_mobile_progress_circle-1.0.0.min.css') }}">
-    <!-- Custom Scrollbar-->
-    <link rel="stylesheet" href="{{ asset('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css') }}">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="{{ asset('css/style.default.css') }}" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-    <link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
-    <link rel="stylesheet" href="{{ asset('css/jquery-clockpicker.min.css') }}" id="theme-stylesheet">
+
+    {{ encore_entry_link_tags('app') }}
+
+
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
+
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+
+
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
 
     <style>
         .background {
@@ -70,7 +55,8 @@
         <div class="main-menu">
 
             <ul id="side-main-menu" class="side-menu list-unstyled">
-                <li><a href="{{ path('dashboard') }}">{% trans %}Dashboard{% endtrans %}</a></li>
+                <li><a href="{{ path('dashboard') }}"><i
+                                class="material-icons">dashboard</i>{% trans %}Dashboard{% endtrans %}</a></li>
                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                     <li>
                         <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">{% trans %}Original Account{% endtrans %}</a>
@@ -82,6 +68,9 @@
                                     class="material-icons">home</i>{% trans %}Städte{% endtrans %}</a></li>
                     <li><a href="{{ path('admin_showAllUser') }}"><i
                                     class="material-icons">people</i>{% trans %}Alle User{% endtrans %}</a></li>
+                    <li><a href="{{ path('content_show') }}"><i
+                                    class="material-icons">inbox</i>{% trans %}Frontpage Content{% endtrans %}</a></li>
+
                 {% endif %}
 
 
@@ -129,12 +118,12 @@
 
                 {% if is_granted('ROLE_CITY_ADMIN') %}
                     <li><a href="{{ path('city_admin_schuljahr_anzeige',{'id':app.user.stadt.id}) }}"> <i
-                                    class="material-icons">home</i>{% trans %}Schuljahre{% endtrans %}</a></li>
+                                    class="material-icons">today</i>{% trans %}Schuljahre{% endtrans %}</a></li>
                 {% endif %}
 
                 {% if is_granted('ROLE_CITY_SCHOOL') %}
                     <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"> <i
-                                    class="material-icons">sports_handball</i>{% trans %}Schulen{% endtrans %}</a></li>
+                                    class="material-icons">school</i>{% trans %}Schulen{% endtrans %}</a></li>
                 {% endif %}
 
                 {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
@@ -143,16 +132,16 @@
 
                 {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
                     <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">sports_handball</i> {% trans %}Meine Schulen{% endtrans %}
+                                    class="material-icons">school</i> {% trans %}Meine Schulen{% endtrans %}
                         </a></li>
                     <li><a href="{{ path('child_show',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">emoji_people</i> {% trans %}Angemeldete Kinder{% endtrans %}
+                                    class="material-icons">people</i> {% trans %}Angemeldete Kinder{% endtrans %}
                         </a></li>
                 {% endif %}
 
                 {% if is_granted('ROLE_CITY_REPORT') %}
                     <li><a href="{{ path('stadt_bericht_index',{'stadt_id':app.user.stadt.id}) }}"> <i
-                                    class="material-icons">table_chart</i> {% trans %}Berichte{% endtrans %}</a></li>
+                                    class="material-icons">note</i> {% trans %}Berichte{% endtrans %}</a></li>
                 {% endif %}
 
 
@@ -182,12 +171,12 @@
                     <li>
                         <a href="{{ path('ferien_admin_edit',{'org_id':app.user.organisation.id}) }}">
                             <i
-                                    class="material-icons">edit</i> {% trans %}Ferien Einstellungen{% endtrans %}</a>
+                                    class="material-icons">build</i> {% trans %}Ferien Einstellungen{% endtrans %}</a>
                     </li>
                     <li>
                         <a href="{{ path('org_ferien_admin_payment_art',{'org_id':app.user.organisation.id}) }}">
                             <i
-                                    class="material-icons">edit</i> {% trans %}Zahlungsarten{% endtrans %}</a>
+                                    class="material-icons">payment</i> {% trans %}Zahlungsarten{% endtrans %}</a>
                     </li>
                 {% endif %}
 
@@ -197,9 +186,9 @@
                 {% if is_granted('ROLE_ORG_ACCOUNTING') %}
                     <h5 class="sidenav-heading">Buchhaltung</h5>
                     <li><a href="{{ path('accounting_overview',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">money</i> {% trans %}SEPA Übersicht{% endtrans %}</a></li>
+                                    class="material-icons">attach_money</i> {% trans %}SEPA Übersicht{% endtrans %}</a></li>
                     <li><a href="{{ path('accounting_showdata',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">money</i> {% trans %}Stammdaten{% endtrans %}</a></li>
+                                    class="material-icons">assignment</i> {% trans %}Stammdaten{% endtrans %}</a></li>
                 {% endif %}
 
 
@@ -252,8 +241,8 @@
         <nav class="navbar">
             <div class="container-fluid">
                 <div class="navbar-holder d-flex align-items-center justify-content-between">
-                    <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i
-                                    class="icon-bars"> </i></a><a href="{{ path('dashboard') }}" class="navbar-brand">
+                    <div class="navbar-header"><a id="toggle-btn" href="#" class="btn menu-btn"><i
+                                    class="material-icons">menu</i></a><a href="{{ path('dashboard') }}" class="navbar-brand">
                             <div class="brand-text d-none d-md-inline-block">
                                 <strong class="text-primary">
                                     unsere-schulkindbetreuung
@@ -860,154 +849,27 @@
     </footer>
 </div>
 
-<!-- JavaScript files-->
-<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('vendor/popper.js/umd/popper.min.js') }}"></script>
-<script src="{{ asset('js/moment.js') }}"></script>
-<script src="{{ asset('js/grasp_mobile_progress_circle-1.0.0.min.js') }}"></script>
-<script src="{{ asset('vendor/jquery.cookie/jquery.cookie.js') }}"></script>
-<script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
-<script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
-<script src="{{ asset('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-<script src="{{ asset('js/charts-home.js') }}"></script>
-<!-- Main File-->
-<script src="{{ asset('js/front.js') }}"></script>
-<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
-        integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
-<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
-        integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
-        crossorigin="anonymous"></script>
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script type="text/javascript" src="{{ asset('js/jquery-clockpicker.min.js') }}"></script>
+
+
 <script>
-    $(document).ready(function () {
-        $('body').bootstrapMaterialDesign();
-    });
-</script>
-<script>
-    $(document).ready(function () {
+
         {% block table %}
-        $('table').DataTable({
-                buttons: [
-                    {
-                        extend: 'excelHtml5',
-                        text: 'Save current page',
-                        exportOptions: {
-                            modifier: {
-                                page: 'current'
-                            }
-                        }
-                    }
-                ]
-            }
-        );
+
         {% endblock %}
         {% if app.request.query.get("snack") is defined and app.request.query.get("snack") is not null %}
-        var options = {
+        optionsSnack = {
             content: "{{ app.request.query.get("snack") }}", // text of the snackbar
             timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
         };
-        $.snackbar(options);
         {% endif %}
-    });
-</script>
-<script>
-    $(document).on('click', '.loadContent', function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        $('#loadContentModal').modal('show');
-        $('#loadContentModal .modal-content').load(url);
-    });
+
+        confirmTitle = '{{ 'Bestätigung'|trans }}';
+        confirmText = '{{ 'Wollen Sie diese Aktion durchführen?'|trans }}'
 
 </script>
-<script src="{{ asset('js/jquery.bs.gdpr.cookies.js') }}"></script>
-<script type="text/javascript">
-    var settings = {
-        message: 'This is your cookies message. Lorem ipsum dolor sit amet, consectetur adipiscing elit. <b> Read more  ',
-        moreLinkLabel: 'here.</b>',
-        messageMaxHeightPercent: 30,
-        moreLink: '/privacy/',
-        delay: 1000,
-        allowAdvancedOptions: true,
-        OnAccept: function () {
-            console.log('Yay! User accepted your cookies window!');
-            console.log('User preferences');
-            var preferences = $.fn.bsgdprcookies.GetUserPreferences();
-            console.log(preferences);
 
-        }
-    }
+    {{ encore_entry_script_tags('app') }}
 
-    $(document).ready(function () {
-        $('body').bsgdprcookies(settings);
-
-        $('#cookiesBtn').on('click', function () {
-            $('body').bsgdprcookies(settings, 'reinit');
-        });
-    });
-    $('.deleteBtn').click(function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        var type = $(this).attr('type');
-        $.confirm({
-            title: '{{ 'Bestätigung'|trans }}',
-            content: '{{ 'Wollen Sie diese Aktion durchführen?'|trans }}',
-            theme: 'material',
-            buttons: {
-                confirm: function () {
-                    $.ajax({
-                        url: url,
-                        type: type,
-                        success: function (data) {
-                            if (data.redirect) {
-                                window.location.href = data.redirect;
-                            }
-                        }
-                    });
-                },
-                cancel: function () {
-
-                },
-
-            }
-        });
-    });
-    $('input[type="date"]').daterangepicker({
-        "singleDatePicker": true,
-        autoUpdateInput: false,
-        locale: {
-            "format": "YYYY-MM-DD",
-            "separator": " - ",
-        }
-    }, function (chosen_date) {
-        $(this).val(chosen_date.format('YYYY-MM-DD'));
-    })
-        .on('apply.daterangepicker', function (ev, picker) {
-            //do something, like clearing an input
-            var ele = $(this);
-            ele.val(picker.startDate.format('YYYY-MM-DD'))
-        });
-    $('input[type="time"]').clockpicker({
-        autoclose: true,
-        donetext: "{{ 'Fertig'|trans }}"
-    });
-</script>
-<script>
-    $(document).on('click','.loadInTarget',function (e) {
-        e.preventDefault();
-        var ele = $(this);
-        var url = ele.attr('href');
-      var target = ele.attr('data-target');
-      $(target).load(url+' '+target);
-        var text = ele.text();
-        var dropdown = ele.closest('.dropdown').find('button');
-        dropdown.text(text);
-    })
-</script>
 {% block jquery %}
 
 {% endblock %}

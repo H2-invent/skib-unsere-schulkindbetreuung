@@ -175,7 +175,6 @@ class NewsController extends AbstractController
     public function orgIndex(Request $request)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
-        $stadt = $organisation->getStadt();
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -196,7 +195,6 @@ class NewsController extends AbstractController
     public function orgNewsNeu(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
-        $stadt = $organisation->getStadt();
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -327,11 +325,15 @@ class NewsController extends AbstractController
     /**
      * @Route("/news/city/{slug}",name="news_show_page",methods={"GET"})
      */
-    public function newsPageAction($slug, Request $request)
+    public function newsPageAction($slug, Request $request,TranslatorInterface $translator)
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
         $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true));
-        return $this->render('news/newsPage.html.twig', array('stadt' => $stadt, 'news' => $news));
+
+        $title= $translator->trans('Alle Neuigkeiten der Stadt').' '.$stadt->getName().' | '.$stadt->getName();
+
+        return $this->render('news/newsPage.html.twig', array('title'=>$title,'stadt' => $stadt, 'news' => $news));
+
 
     }
 
@@ -339,15 +341,22 @@ class NewsController extends AbstractController
     /**
      * @Route("/news/city/{slug}/{id}",name="news_show_all",methods={"GET"})
      */
-    public function showNewsAction(Request $request)
+    public function showNewsAction(Request $request,TranslatorInterface $translator)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('slug'));
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug'=>$request->get('slug')));
         $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+
+        $title = $news->getTitle().' | '.$news->getStadt()->getName();
+        $metaDescription = $news->getMessage();
+
         if ($request->isXmlHttpRequest()) {
             return $this->render('news/showNews.html.twig', array('stadt' => $stadt, 'news' => $news));
         } else {
-            return $this->render('news/showNewsPage.html.twig', array('stadt' => $stadt, 'news' => $news));
+
+            return $this->render('news/showNewsPage.html.twig', array('title'=>$title, 'metaDescription'=>$metaDescription,'stadt' => $stadt, 'news' => $news));
+
         }
+
     }
 
 

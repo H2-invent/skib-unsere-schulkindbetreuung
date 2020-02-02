@@ -35,16 +35,20 @@ class MailerService
         $this->smtp = $smtp;
         $this->mailgun =$mailerInterface;
         $this->swift = $swift_Mailer;
+
         $this->parameter = $parameterBag;
+
     }
 
     public function sendEmail($sender, $from, $to, $betreff,$content,$attachment = array())
     {
 
+
         if($this->parameter->get('mailprovider') == 'MAILGUN'){
             $this->sendViaMailgun($sender,$from,$to,$betreff,$content,$attachment);
         }elseif ($this->parameter->get('mailprovider')=='SWIFTMAILER'){
             $this->sendViaSwiftMailer($sender,$to,$betreff,$content,$attachment);
+
         }
 
     }

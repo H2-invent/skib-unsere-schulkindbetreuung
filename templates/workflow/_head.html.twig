@@ -1,17 +1,33 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+{% if app.request.getSchemeAndHttpHost() != 'https://unsere-schulkindbetreuung.de' %}
+    <link href="https://unsere-schulkindbetreuung.de{{ path(app.request.get('_route'), app.request.get('_route_params')) }}" rel="canonical" />
+{% endif %}
+
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>{% trans %}Anmeldeportal Schulkindbetreuung{% endtrans %} {% if stadt is defined and stadt is not null %}{{ stadt.name }}{% endif %}</title>
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-<!-- Bootstrap core CSS -->
-<link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
-<!-- Material Design Bootstrap -->
-<link href="{{ asset('frontpage/css/mdb.min.css') }}" rel="stylesheet">
-<!-- Your custom styles (optional) -->
-<link href="{{ asset('frontpage/css/bootstrap.min.css') }}" rel="stylesheet">
-<link href="{{ asset('frontpage/css/style.min.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-<link rel="stylesheet" href="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.css">
-<link rel="stylesheet" href="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/themes-css/material.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<title>{% if title is defined and title is not null %}{{ title }}{% else %}{% trans %}Anmeldeportal Schulkindbetreuung{% endtrans %} | {% if stadt is defined and stadt is not null %}{{ stadt.name }}{% endif %}{% endif %} | {{ app.request.locale|language_name(app.request.locale) }}</title>
+{% if metaDescription is defined and metaDescription is not null %}
+<meta name="description" content="{{ metaDescription }}"/>
+{% endif %}
+
+
+
+<meta property="og:image" content="
+{% if stadt is defined and stadt is not null %}
+{{ absolute_url( vich_uploader_asset(stadt.image)) }}
+{% else %}
+{{ absolute_url(asset('images/logo-breit-mittig.png')) }}
+{% endif %}"/>
+<meta property="og:title" content="{% if title is defined and title is not null %}{{ title }}{% else %}{% trans %}Anmeldeportal Schulkindbetreuung{% endtrans %} | {% if stadt is defined and stadt is not null %}{{ stadt.name }}{% endif %}{% endif %}"/>
+<meta property="og:description" content="
+{% if metaDescription is defined and metaDescription is not null %}
+{{ metaDescription }}
+{% else %}
+SKiB ist bisher die einzige Onlinelösung für die Anmeldung und die Verwaltung der Schulkindbetreuung und Ferienbetreuung.
+{% endif %}"/>
+<meta property="og:type" content="website"/>
+{% set url =  absolute_url(path(app.request.get('_route'), app.request.get('_route_params'))) %}
+<meta property="og:url" content="{{ url }}"/>
+<meta property="og:site_name" content="SKiB unsere-Schulkindbetreuung.de"/>
+{{ encore_entry_link_tags('frontend') }}
