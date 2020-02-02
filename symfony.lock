@@ -204,6 +204,9 @@
     "paragonie/sodium_compat": {
         "version": "v1.12.1"
     },
+    "php": {
+        "version": "7.3"
+    },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
     },
