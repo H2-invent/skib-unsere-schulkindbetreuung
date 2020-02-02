@@ -161,8 +161,7 @@ body {
   margin-top: -10px;
   padding-bottom: 8px;
   padding-left: 5px;
-  height: 150px;
-  object-fit: cover;
+
 }
 .skib-card-image .card-img-top{
   webkit-filter: drop-shadow(2px 2px 3px #222);
@@ -171,6 +170,8 @@ body {
   border-top-right-radius: calc(0.25rem - 1px);
   border-bottom-left-radius: calc(0.25rem - 1px);
   border-bottom-right-radius: calc(0.25rem - 1px);
+  height: 150px;
+  object-fit: cover;
 }
 h1,
 h2 {
