@@ -155,7 +155,7 @@
         $("#loadContentModal").on('hide.bs.modal', function () {
 
             $('#'+lastElement).load('{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #'+lastElement+'Content', function () {
-             
+
                 $('.lazy').show().Lazy({
                     // your configuration goes here
                     scrollDirection: 'vertical',
