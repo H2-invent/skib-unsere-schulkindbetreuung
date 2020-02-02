@@ -17,73 +17,79 @@
         </div>
         <div class="card-body">
             <section class="dashboard-counts section-padding" id="schulenShow">
-                <div class="container-fluid ">
-                    <div class="row">
-                        <!-- Count item widget-->
-                        {% for s in schule %}
-                            <div class="col-md-6 col-lg-4 mb-4">
-                                <div class="cardhoverable h-100 card  ">
-                                    <div class=" overlay skib-card-image">
-                                        <img class="card-img-top lazy"
-                                        {% if s.image %}
-                                                data-src="{{ vich_uploader_asset(s,'imageFile') }}"
-                                                alt="{{ s.name }}" style="max-height: 300px"
-                                        {% else %}
-                                            data-src="{{ asset('images/logo-breit-mittig.png') }}"
-                                        {% endif %}
-                                        />
-                                        <noscript>   <img class="card-img-top lazy"
-                                                    {% if s.image %}
-                                                        src="{{ vich_uploader_asset(s,'imageFile') }}"
-                                                        alt="{{ s.name }}" style="max-height: 300px"
-                                                    {% else %}
-                                                        src="{{ asset('images/logo-breit-mittig.png') }}"
-                                                    {% endif %}
-                                            />
-                                        </noscript>
-                                    </div>
-
-                                    <div class="card-body ">
-                                        <h5 class="card-title">{{ s.name }}</h5>
-                                        <p class="card-text">{{ s.infoText }}</p>
-
-                                        <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id,'slug':stadt.slug}) }}"
-                                           class="waves-effect loadContent btn btn-outline-primary">{% trans %}Kind anmelden{% endtrans %}</a>
-
-                                    </div>
-                                    {% if kinder[s.id] is defined and kinder[s.id] is not null %}
-                                        {% for k in kinder[s.id] %}
-                                            <div class="card-body">
-                                                <div class="btn-group">
-                                                    <button class="btn bmd-btn-icon dropdown-toggle waves-effect px-3" type="button"
-                                                            id="ex2"
-                                                            data-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-                                                        <a href="{{ path('loerrach_workflow_schulen_kind_edit', {'kind_id':k.id,'slug':stadt.slug}) }}"
-                                                           class=" loadContent dropdown-item">{% trans %}Bearbeiten{% endtrans %}</a>
-                                                        <a href="{{ path('loerrach_workflow_schulen_kind_zeitblock', {'kind_id':k.id,'slug':stadt.slug}) }}"
-                                                           class=" loadContent dropdown-item">{% trans %}Betreuungszeitfenster bearbeiten{% endtrans %}</a>
-                                                        <a type="DELETE"
-                                                           href="{{ path('loerrach_workflow_kind_delete', {'kind_id':k.id,'slug':stadt.slug}) }}"
-                                                           class="dropdown-item deleteBtn">{% trans %}Löschen{% endtrans %}</a>
-
-                                                    </div>
-                                                </div>
-                                                {{ k.vorname }} {{ k.nachname }}
-                                                <b><span class="price">{% if k.tageWithBlocks>=2 %}{{ k.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></b>
+                <div id="schulenShowContent">
+                    <div class="container-fluid ">
+                        <div class="row">
+                            <!-- Count item widget-->
+                            {% for s in schule %}
+                                <div class="col-md-6 col-lg-4 mb-4 schulCard" id="schule{{ s.id }}">
+                                    <div id="schule{{ s.id }}Content">
+                                        <div class="cardhoverable h-100 card  ">
+                                            <div class=" overlay skib-card-image">
+                                                <img class="card-img-top lazy"
+                                                        {% if s.image %}
+                                                            data-src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                            alt="{{ s.name }}" style="max-height: 300px"
+                                                        {% else %}
+                                                            data-src="{{ asset('images/logo-breit-mittig.png') }}"
+                                                        {% endif %}
+                                                />
+                                                <noscript><img class="card-img-top lazy"
+                                                            {% if s.image %}
+                                                                src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                                alt="{{ s.name }}" style="max-height: 300px"
+                                                            {% else %}
+                                                                src="{{ asset('images/logo-breit-mittig.png') }}"
+                                                            {% endif %}
+                                                    />
+                                                </noscript>
                                             </div>
 
-                                        {% endfor %}
-                                    {% endif %}
+                                            <div class="card-body ">
+                                                <h5 class="card-title">{{ s.name }}</h5>
+                                                <p class="card-text">{{ s.infoText }}</p>
 
+                                                <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id,'slug':stadt.slug}) }}"
+                                                   class="waves-effect loadContent btn btn-outline-primary">{% trans %}Kind anmelden{% endtrans %}</a>
+
+                                            </div>
+                                            {% if kinder[s.id] is defined and kinder[s.id] is not null %}
+                                                {% for k in kinder[s.id] %}
+                                                    <div class="card-body">
+                                                        <div class="btn-group">
+                                                            <button class="btn bmd-btn-icon dropdown-toggle waves-effect px-3"
+                                                                    type="button"
+                                                                    id="ex2"
+                                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                                    aria-expanded="false">
+
+                                                            </button>
+                                                            <div class="dropdown-menu dropdown-menu-left"
+                                                                 aria-labelledby="ex2">
+                                                                <a href="{{ path('loerrach_workflow_schulen_kind_edit', {'kind_id':k.id,'slug':stadt.slug}) }}"
+                                                                   class=" loadContent dropdown-item">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                                <a href="{{ path('loerrach_workflow_schulen_kind_zeitblock', {'kind_id':k.id,'slug':stadt.slug}) }}"
+                                                                   class=" loadContent dropdown-item">{% trans %}Betreuungszeitfenster bearbeiten{% endtrans %}</a>
+                                                                <a type="DELETE"
+                                                                   href="{{ path('loerrach_workflow_kind_delete', {'kind_id':k.id,'slug':stadt.slug}) }}"
+                                                                   class="dropdown-item deleteBtn">{% trans %}Löschen{% endtrans %}</a>
+
+                                                            </div>
+                                                        </div>
+                                                        {{ k.vorname }} {{ k.nachname }}
+                                                        <b><span class="price">{% if k.tageWithBlocks>=2 %}{{ k.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></b>
+                                                    </div>
+
+                                                {% endfor %}
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endfor %}
-                    </div>
+                            {% endfor %}
+                        </div>
 
+                    </div>
                 </div>
             </section>
             <div class="text-center">
@@ -142,15 +148,20 @@
                 }
             })
         })
-
+        var lastElement = null;
+        $('.loadContent').click(function () {
+            lastElement = $(this).closest('.schulCard').attr('id');
+        });
         $("#loadContentModal").on('hide.bs.modal', function () {
-            $('#schulenShow').load('{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #schulenShow',function() {
+
+            $('#'+lastElement).load('{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #'+lastElement+'Content', function () {
+             
                 $('.lazy').show().Lazy({
                     // your configuration goes here
                     scrollDirection: 'vertical',
                     effect: 'fadeIn',
                     visibleOnly: true,
-                    onError: function(element) {
+                    onError: function (element) {
                         console.log('error loading ' + element.data('src'));
                     }
                 });
