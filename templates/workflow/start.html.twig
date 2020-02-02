@@ -70,7 +70,8 @@
                     {% elseif stadt.schulkindBetreung %}
                         <div class="col-md-12 mb-4 white-text text-center">
                             <p class="lead align-content-center">
-                                <a href="{{ url }}" class="btn btn-primary btn-lg">
+                                <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"
+                                class="btn btn-primary btn-lg">
                                     {% if app.request.cookies.has('SecID') %}
                                         {% trans %}Kind bearbeiten{% endtrans %}
                                     {% else %}
