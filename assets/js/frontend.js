@@ -120,7 +120,6 @@ $('.deleteBtn').click(function (e) {
 $(window).on('load', function () {
 
 
-
         $(function() {
             $('.lazy').show().Lazy({
                 // your configuration goes here
