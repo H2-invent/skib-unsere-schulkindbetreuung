@@ -32,6 +32,7 @@
     "jquery-lazy": "^1.7.10",
     "jquery-validation": "^1.19.1",
     "jquery.cookie": "^1.4.1",
+    "jquery.nicescroll": "^3.7.6",
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "material-icons-font": "^2.0.0",
     "moment": "^2.24.0",

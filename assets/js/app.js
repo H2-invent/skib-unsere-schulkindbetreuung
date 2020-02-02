@@ -29,9 +29,10 @@ import('snackbarjs');
 import('daterangepicker');
 import('datatables.net');
 import 'datatables.net-dt';
+import niceScroll from 'jquery.nicescroll';
 
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js!!!');
+$(".side-navbar").niceScroll({cursorcolor:'#0058B0'});
 
 $('#toggle-btn').on('click', function (e) {
 
