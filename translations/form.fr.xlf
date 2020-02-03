@@ -25,9 +25,9 @@
         <source>Adresszusatz</source>
         <target>Adress additional</target>
       </trans-unit>
-      <trans-unit id="mgry4nw" resname="NBrutto Familieneinkommen pro Monat">
-        <source>NBrutto Familieneinkommen pro Monat</source>
-        <target>__Brutto Familieneinkommen pro Monat</target>
+      <trans-unit id="FjoGHqk" resname="NBrutto Haushaltseinkommen pro Monat">
+        <source>NBrutto Haushaltseinkommen pro Monat</source>
+        <target>__Brutto Haushaltseinkommen pro Monat</target>
       </trans-unit>
       <trans-unit id="9rL.OfV" resname="Speichern">
         <source>Speichern</source>
@@ -41,8 +41,8 @@
         <source>Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger</source>
         <target>__Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger</target>
       </trans-unit>
-      <trans-unit id="U5zZGkQ" resname="Berufliche Situation der Eltern">
-        <source>Berufliche Situation der Eltern</source>
+      <trans-unit id="U5zZGkQ" resname="Berufliche Situation des Erziehungsberechtigten">
+        <source>Berufliche Situation des Erziehungsberechtigten</source>
         <target>Profession of the parents</target>
       </trans-unit>
       <trans-unit id="vFumzvS" resname="Notfalltelefonnummer">
@@ -289,7 +289,7 @@
         <source>Anzahl der Preiskategorien</source>
         <target>__Anzahl der Preiskategorien</target>
       </trans-unit>
-      <trans-unit id="awhtVjc" resname="Sicherheitscode der Eltern">
+      <trans-unit id="awhtVjc" resname="Sicherheitscode des Erziehungsberechtigten">
         <source>Sicherheitscode der Eltern</source>
         <target>__Sicherheitscode der Eltern</target>
       </trans-unit>
@@ -329,13 +329,13 @@
         <source>Mein Kind isst kein Schweinefleich</source>
         <target>__Mein Kind isst kein Schweinefleich</target>
       </trans-unit>
-      <trans-unit id=".a8vgi5" resname="Mein Kind ist Gluten intolerant">
-        <source>Mein Kind ist Gluten intolerant</source>
-        <target>__Mein Kind ist Gluten intolerant</target>
+      <trans-unit id="pwh_plI" resname="Mein Kind ist glutenintolerant">
+        <source>Mein Kind ist glutenintolerant</source>
+        <target>__Mein Kind ist glutenintolerant</target>
       </trans-unit>
-      <trans-unit id="Jj8dWM7" resname="Mein Kind ist Laktose intolerant">
-        <source>Mein Kind ist Laktose intolerant</source>
-        <target>__Mein Kind ist Laktose intolerant</target>
+      <trans-unit id="JKQvLH_" resname="Mein Kind ist laktoseintolerant">
+        <source>Mein Kind ist laktoseintolerant</source>
+        <target>__Mein Kind ist laktoseintolerant</target>
       </trans-unit>
       <trans-unit id="jkE7jK9" resname="Tag des Lastschrifteinzugs">
         <source>Tag des Lastschrifteinzugs</source>
@@ -505,9 +505,9 @@
         <source>Straße Nr.</source>
         <target>__Straße Nr.</target>
       </trans-unit>
-      <trans-unit id="7kzDX6W" resname="Brutto Familieneinkommen pro Monat">
-        <source>Brutto Familieneinkommen pro Monat</source>
-        <target>__Brutto Familieneinkommen pro Monat</target>
+      <trans-unit id="j6OVtHv" resname="Brutto Haushaltseinkommen pro Monat">
+        <source>Brutto Haushaltseinkommen pro Monat</source>
+        <target>__Brutto Haushaltseinkommen pro Monat</target>
       </trans-unit>
       <trans-unit id="7KMrC1e" resname="Kategorie (strg halten für Mehrfachauswahl)">
         <source>Kategorie (strg halten für Mehrfachauswahl)</source>

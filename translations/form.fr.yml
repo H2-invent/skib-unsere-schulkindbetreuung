@@ -3,7 +3,7 @@ Nachname: __Nachname
 Vorname: First name
 Straße: Street
 Adresszusatz: Adress additional
-NBrutto Familieneinkommen pro Monat: __Brutto Familieneinkommen pro Monat
+NBrutto Haushaltseinkommen pro Monat: __Brutto Haushaltseinkommen pro Monat
 Speichern: Save
 Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung: __Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung
 Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger: __Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger
@@ -79,8 +79,8 @@ Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden: __M
 Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.: __Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.
 Mein Kind ernährt sich vegetarisch: __Mein Kind ernährt sich vegetarisch
 Mein Kind isst kein Schweinefleich: __Mein Kind isst kein Schweinefleich
-Mein Kind ist Gluten intolerant: __Mein Kind ist Gluten intolerant
-Mein Kind ist Laktose intolerant: __Mein Kind ist Laktose intolerant
+Mein Kind ist glutenintolerant: __Mein Kind ist glutenintolerant
+Mein Kind ist laktoseintolerant: __Mein Kind ist laktoseintolerant
 Tag des Lastschrifteinzugs: __Tag des Lastschrifteinzugs
 Beginn des Abrechnungszeitraums: __Beginn des Abrechnungszeitraums
 Datenschutzhinweis Deutsch (Markdown): __Datenschutzhinweis Deutsch (Markdown)
@@ -123,6 +123,6 @@ Braintree Public Key: __Braintree Public Key
 Braintree in der Sandbox: __Braintree in der Sandbox
 Impressum der Stadt (Markdown): __Impressum der Stadt (Markdown)
 Straße Nr.: __Straße Nr.
-Brutto Familieneinkommen pro Monat: __Brutto Familieneinkommen pro Monat
+Brutto Haushaltseinkommen pro Monat: __Brutto Haushaltseinkommen pro Monat
 Kategorie (strg halten für Mehrfachauswahl): __Kategorie (strg halten für Mehrfachauswahl)
 Stadt aktiv: __Stadt aktiv

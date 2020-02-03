@@ -21,18 +21,18 @@
                         <a href="{{ path('ferien_management_orders_storno', {'org_id': org.id, 'parent_id': stammdaten.uid}) }}"
                            target="_blank" class="btn btn-primary">{% trans %}Stornieren{% endtrans %}</a>
                         <a href="mailto: {{ stammdaten.email }}" target="_blank"
-                           class="btn btn-primary">{% trans %}Email an Eltern senden{% endtrans %}</a>
+                           class="btn btn-primary">{% trans %}Email an Erziehungsberechtigten senden{% endtrans %}</a>
 
                         <div class="card-body">
-                            <h3 class="card-title">{% trans %}Details der Eltern{% endtrans %}</h3>
+                            <h3 class="card-title">{% trans %}Details des Erziehungsberechtigten{% endtrans %}</h3>
 
 
                             <div class="row">
                                 <div class="col-lg-6">
                                     <dl class="dl-horizontal">
-                                        <dt>{% trans %}Name der Eltern{% endtrans %}</dt>
+                                        <dt>{% trans %}Name des Erziehungsberechtigten{% endtrans %}</dt>
                                         <dd>{{ stammdaten.vorname }} {{ stammdaten.name }}</dd>
-                                        <dt>{% trans %} Adresse der Eltern {% endtrans %}</dt>
+                                        <dt>{% trans %} Adresse des Erziehungsberechtigten{% endtrans %}</dt>
                                         <dd>{{ stammdaten.strasse }}<br>{{ stammdaten.plz }} {{ stammdaten.stadt }}</dd>
 
                                         <dt>Anmeldedatum</dt>
@@ -42,11 +42,11 @@
                                 <div class="col-lg-6">
 
                                     <dl>
-                                        <dt>{% trans %} Name und Beziehung des Notfallkontakt {% endtrans %}</dt>
+                                        <dt>{% trans %}Name des Notfallkontakt{% endtrans %}</dt>
                                         <dd>{{ stammdaten.notfallName }}</dd>
-                                        <dt>{% trans %} Notfallkontakt der Eltern {% endtrans %}</dt>
+                                        <dt>{% trans %}Notfallkontakt des Erziehungsberechtigten{% endtrans %}</dt>
                                         <dd>{{ stammdaten.notfallkontakt }}</dd>
-                                        <dt>{% trans %} Weitere abholberechtigte Personen {% endtrans %}</dt>
+                                        <dt>{% trans %}Weitere abholberechtigte Personen{% endtrans %}</dt>
                                         <dd>{{ stammdaten.abholberechtigter }}</dd>
 
                                         <dt>Email</dt>
@@ -97,9 +97,9 @@
                                                             <dd>{{ k.allergie }}</dd>
                                                             <dt>{% trans %} Medikamente {% endtrans %}</dt>
                                                             <dd>{{ k.medikamente }}</dd>
-                                                            <dt>{% trans %} Mein Kind ist Gluten intolerant {% endtrans %}</dt>
+                                                            <dt>{% trans %}Mein Kind ist glutenintolerant{% endtrans %}</dt>
                                                             <dd>{{ k.gluten?"Ja":'Nein'|trans }}</dd>
-                                                            <dt>{% trans %} Mein Kind ist Laktose intolerant {% endtrans %}</dt>
+                                                            <dt>{% trans %}Mein Kind ist laktoseintolerant{% endtrans %}</dt>
                                                             <dd>{{ k.laktose?"Ja":'Nein'|trans }}</dd>
                                                         </dl>
                                                     </div>

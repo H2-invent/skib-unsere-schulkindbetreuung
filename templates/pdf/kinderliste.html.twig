@@ -34,7 +34,7 @@
             <td>{{ k.eltern.notfallkontakt }}</td>
             <td>{{ k.schule.name }}</td>
             <td>{{ k.klasse }}. {{ 'Klasse'|trans }}</td>
-            <td>{{ k.alleineHause?'Ja':'Nein'|trans }}</td>
+            <td>{{ k.alleineHause?'Ja'|trans:'Nein'|trans }}</td>
         </tr>
     {% endfor %}
     </tbody>

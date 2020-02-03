@@ -144,7 +144,7 @@ class BerichtController extends AbstractController
         $kindSheet->setCellValue('D1', $translator->trans('Typ Numerisch'));
         $kindSheet->setCellValue('E1', $translator->trans('Typ'));
         $kindSheet->setCellValue('F1', $translator->trans('Schule'));
-        $kindSheet->setCellValue('G1', $translator->trans('Eltern'));
+        $kindSheet->setCellValue('G1', $translator->trans('Erziehungsberechtigter'));
         $counter = 2;
         foreach ($kinder as $data) {
             $count = 0;
@@ -159,7 +159,7 @@ class BerichtController extends AbstractController
             $counter++;
         }
         $elternSheet = $spreadsheeet->createSheet();
-        $elternSheet->setTitle($translator->trans('Eltern'));
+        $elternSheet->setTitle($translator->trans('Erziehungsberechtigter'));
         $count = 0;
         $elternSheet->setCellValue($alphas[$count++] . '1', 'ID');
         $elternSheet->setCellValue($alphas[$count++] . '1', $translator->trans('Kinder im KiGa'));

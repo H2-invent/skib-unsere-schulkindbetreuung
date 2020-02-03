@@ -22,7 +22,7 @@
                                     <td>{{ eltern.createdAt|date('d.m.Y') }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Name der Eltern {% endtrans %}</td>
+                                    <td>{% trans %} Name des Erziehungsberechtigten {% endtrans %}</td>
                                     <td>{{ eltern.vorname }} {{ eltern.name }}</td>
                                 </tr>
                                 <tr>
@@ -30,13 +30,13 @@
                                     <td>{{ eltern.email }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Adresse der Eltern {% endtrans %}</td>
+                                    <td>{% trans %} Adresse des Erziehungsberechtigten {% endtrans %}</td>
                                     <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
                                 </tr>
 
                                 <tr>
 
-                                    <td>{% trans %} Berufliche Situation der Eltern {% endtrans %}</td>
+                                    <td>{% trans %} Berufliche Situation des Erziehungsberechtigten {% endtrans %}</td>
                                     <td>{{ eltern.beruflicheSituation }}</td>
                                 </tr>
                                 <tr>
@@ -44,7 +44,7 @@
                                     <td>{{ eltern.notfallName }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Notfallkontakt der Eltern {% endtrans %}</td>
+                                    <td>{% trans %} Notfallkontakt des Erziehungsberechtigten {% endtrans %}</td>
                                     <td>{{ eltern.notfallkontakt }}</td>
                                 </tr>
                                 <tr>
@@ -109,11 +109,11 @@
                                             </tr>
 
                                             <tr>
-                                                <td>{% trans %} Mein Kind ist Gluten intolerant {% endtrans %}</td>
+                                                <td>{% trans %} Mein Kind ist glutenintolerant {% endtrans %}</td>
                                                 <td>{{ k.gluten?"Ja":'Nein'|trans }}</td>
                                             </tr>
                                             <tr>
-                                                <td>{% trans %} Mein Kind ist Laktose intolerant {% endtrans %}</td>
+                                                <td>{% trans %} Mein Kind ist laktoseintolerant {% endtrans %}</td>
                                                 <td>{{ k.laktose?"Ja":'Nein'|trans }}</td>
                                             </tr>
                                             <tr>

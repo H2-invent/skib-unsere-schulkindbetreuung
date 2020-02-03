@@ -173,8 +173,8 @@
         <source>Schule</source>
         <target state="translated">School</target>
       </trans-unit>
-      <trans-unit id="XQnUg8G" resname="Eltern">
-        <source>Eltern</source>
+      <trans-unit id="G12aiJf" resname="Erziehungsberechtigter">
+        <source>Erziehungsberechtigter</source>
         <target state="translated">Parents</target>
       </trans-unit>
       <trans-unit id="eeXPIN4" resname="Adresse">
@@ -240,10 +240,6 @@
       <trans-unit id="alwRvHE" resname="Bestätigung der E-Mail-Adresse">
         <source>Bestätigung der E-Mail-Adresse</source>
         <target state="translated">Confirmation of the e-mail address</target>
-      </trans-unit>
-      <trans-unit id="O9ca35K" resname="Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen.">
-        <source>Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen.</source>
-        <target state="translated">We have sent you a confirmation code to your e-mail address. Please enter this code from the email here. This is necessary to protect your children's data in the best possible way.</target>
       </trans-unit>
       <trans-unit id="yuOujiA" resname="Als Storniert vorgemerkt">
         <source>Als Storniert vorgemerkt</source>
@@ -889,29 +885,17 @@
         <source>Letzte Speicherung</source>
         <target state="translated">Last saving</target>
       </trans-unit>
-      <trans-unit id="8wY3ckc" resname="Name der Eltern">
-        <source>Name der Eltern</source>
-        <target state="translated">Name of parents</target>
-      </trans-unit>
       <trans-unit id="Up_TjZv" resname="E-Mail Adresse">
         <source>E-Mail Adresse</source>
         <target state="translated">E-mail address</target>
       </trans-unit>
-      <trans-unit id="ppTWbud" resname="Adresse der Eltern">
-        <source>Adresse der Eltern</source>
+      <trans-unit id="PTASbC2" resname="Adresse des Erziehungsberechtigten">
+        <source>Adresse des Erziehungsberechtigten</source>
         <target state="translated">Address of parents</target>
-      </trans-unit>
-      <trans-unit id="U5zZGkQ" resname="Berufliche Situation der Eltern">
-        <source>Berufliche Situation der Eltern</source>
-        <target state="translated">Employment situation of parents</target>
       </trans-unit>
       <trans-unit id="ite8DQ9" resname="Name und Beziehung des Notfallkontakt">
         <source>Name und Beziehung des Notfallkontakt</source>
         <target state="translated">Name and relationship of emergency contact</target>
-      </trans-unit>
-      <trans-unit id="dnQ5L6a" resname="Notfallkontakt der Eltern">
-        <source>Notfallkontakt der Eltern</source>
-        <target state="translated">Emergency contact of parents</target>
       </trans-unit>
       <trans-unit id="RS4UXgU" resname="Weitere abholberechtigte Personen">
         <source>Weitere abholberechtigte Personen</source>
@@ -921,16 +905,16 @@
         <source>Daten des Kinds</source>
         <target state="translated">Data of the child</target>
       </trans-unit>
-      <trans-unit id=".a8vgi5" resname="Mein Kind ist Gluten intolerant">
-        <source>Mein Kind ist Gluten intolerant</source>
+      <trans-unit id="pwh_plI" resname="Mein Kind ist glutenintolerant">
+        <source>Mein Kind ist glutenintolerant</source>
         <target state="translated">My child is gluten intolerant</target>
       </trans-unit>
       <trans-unit id="kOvBveb" resname="Nein">
         <source>Nein</source>
         <target state="translated">No</target>
       </trans-unit>
-      <trans-unit id="Jj8dWM7" resname="Mein Kind ist Laktose intolerant">
-        <source>Mein Kind ist Laktose intolerant</source>
+      <trans-unit id="JKQvLH_" resname="Mein Kind ist laktoseintolerant">
+        <source>Mein Kind ist laktoseintolerant</source>
         <target state="translated">My child is lactose intolerant</target>
       </trans-unit>
       <trans-unit id="qDVRxRS" resname="Mein Kind isst kein Schweinefleisch">
@@ -952,10 +936,6 @@
       <trans-unit id="Qco3..e" resname="Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden">
         <source>Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden</source>
         <target state="translated">My child can be creamed in the summer with commercially available sunscreen</target>
-      </trans-unit>
-      <trans-unit id="dyZZc9x" resname="Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden">
-        <source>Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden</source>
-        <target state="translated">Photos of my child may be published in the public press</target>
       </trans-unit>
       <trans-unit id="Ur4RCNQ" resname="Gebuchte Betreuungszeitfenster">
         <source>Gebuchte Betreuungszeitfenster</source>
@@ -1403,12 +1383,12 @@
         <source>am</source>
         <target state="translated">on</target>
       </trans-unit>
-      <trans-unit id="zxj5ccL" resname="Email an Eltern senden">
-        <source>Email an Eltern senden</source>
+      <trans-unit id="DOdiB4C" resname="Email an Erziehungsberechtigte senden">
+        <source>Email an Erziehungsberechtigte senden</source>
         <target state="translated">Send email to parents</target>
       </trans-unit>
-      <trans-unit id="fVio9eF" resname="Details der Eltern">
-        <source>Details der Eltern</source>
+      <trans-unit id="3ce8rRB" resname="Details der Erziehungsberechtigten">
+        <source>Details der Erziehungsberechtigten</source>
         <target state="translated">Parents' details</target>
       </trans-unit>
       <trans-unit id="_K.DxlB" resname="Betrag ist noch offen">
@@ -1539,10 +1519,6 @@
         <source>Stornieren und Wartelistenplatz freigeben</source>
         <target state="translated">Cancel and release waiting list space</target>
       </trans-unit>
-      <trans-unit id="0FAnZmt" resname="Summe für alle Kinder">
-        <source>Summe für alle Kinder</source>
-        <target state="translated">Sum for all children</target>
-      </trans-unit>
       <trans-unit id="6UFsslF" resname="Änderung absenden">
         <source>Änderung absenden</source>
         <target state="translated">Submit change</target>
@@ -1583,10 +1559,6 @@
         <source>Jahrgangsstufe</source>
         <target state="translated">Year</target>
       </trans-unit>
-      <trans-unit id="rb9tbUU" resname="Infos zu den Eltern">
-        <source>Infos zu den Eltern</source>
-        <target state="translated">Information about parents</target>
-      </trans-unit>
       <trans-unit id="zSSOSNw" resname="Bildungs- und Teilhabepaket (BUT) Empfänger">
         <source>Bildungs- und Teilhabepaket (BUT) Empfänger</source>
         <target state="translated">Education and Participation Package (BUT) Recipients</target>
@@ -1598,10 +1570,6 @@
       <trans-unit id="Dt7wRjx" resname="Die Schulkindbetreuung steht ihnen in folgenden Städten zur Verfügung">
         <source>Die Schulkindbetreuung steht ihnen in folgenden Städten zur Verfügung</source>
         <target state="translated">School childcare is available in the following cities</target>
-      </trans-unit>
-      <trans-unit id=".ujFIir" resname="Datenschutzhinweise auf Seiten von H2 invent">
-        <source>Datenschutzhinweise auf Seiten von H2 invent</source>
-        <target state="translated">Privacy notices on the pages of H2 invent</target>
       </trans-unit>
       <trans-unit id="y6WjZCk" resname="Alle bei der Anmeldung eingegebenen Daten werden dem Träger der Schulkindbetreuung zur Abwicklung der Schulkindbetreuung mitgeteilt.">
         <source>Alle bei der Anmeldung eingegebenen Daten werden dem Träger der Schulkindbetreuung zur Abwicklung der Schulkindbetreuung mitgeteilt.</source>
@@ -1631,61 +1599,9 @@
         <source>Wenn Sie per SEPA-Bankeinzug zahlen, werden zahlungsrelevante Metadaten bei Ihrer und der Bank des Trägers anfallen.</source>
         <target state="translated">If you pay by SEPA bank note, payment-related metadata will be generated by your and the bank of the institution.</target>
       </trans-unit>
-      <trans-unit id="5jtVyd5" resname="Datenschutzhinweise auf Seiten der Träger">
-        <source>Datenschutzhinweise auf Seiten der Träger</source>
-        <target state="translated">Data protection notices on the part of the organization</target>
-      </trans-unit>
-      <trans-unit id="bkH.JRR" resname="Für Informationen zum Datenschutz auf Seiten des Trägers kontaktieren Sie bitte den jeweiligen Träger.">
-        <source>Für Informationen zum Datenschutz auf Seiten des Trägers kontaktieren Sie bitte den jeweiligen Träger.</source>
-        <target state="translated">For information on data protection on the institution's website, please contact the respective institution.</target>
-      </trans-unit>
       <trans-unit id="XNNtx3m" resname="SKiB">
         <source>SKiB</source>
         <target state="translated">SKiB</target>
-      </trans-unit>
-      <trans-unit id="zMfkeh." resname="Anschrift">
-        <source>Anschrift</source>
-        <target state="translated">Postal address</target>
-      </trans-unit>
-      <trans-unit id="l.lgX6v" resname="H2 invent GmbH">
-        <source>H2 invent GmbH</source>
-        <target state="translated">H2 invent GmbH</target>
-      </trans-unit>
-      <trans-unit id="gHcUFiT" resname="Gewerbestraße 9 (HALLE9)">
-        <source>Gewerbestraße 9 (HALLE9)</source>
-        <target state="translated">Gewerbestraße 9 (HALLE9)</target>
-      </trans-unit>
-      <trans-unit id="80vNoWF" resname="D-79539 Lörrach">
-        <source>D-79539 Lörrach</source>
-        <target state="translated">Germany-79539 Lörrach</target>
-      </trans-unit>
-      <trans-unit id="Jb6LxTi" resname="Vertretungsberechtige Geschäftsführer: Andreas Holzmann">
-        <source>Vertretungsberechtige Geschäftsführer: Andreas Holzmann</source>
-        <target state="translated">Managing Directors authorized to represent: Andreas Holzmann</target>
-      </trans-unit>
-      <trans-unit id="2A_ureD" resname="Telefon: 07621-7925862">
-        <source>Telefon: 07621-7925862</source>
-        <target state="translated">Phone: 07621-7925862</target>
-      </trans-unit>
-      <trans-unit id="5uxpLF4" resname="EMail: info@h2-invent.com">
-        <source>EMail: info@h2-invent.com</source>
-        <target state="translated">Email: info@h2-invent.com</target>
-      </trans-unit>
-      <trans-unit id="EL_YDdm" resname="Registergericht: Amtsgericht Freiburg im Breisgau">
-        <source>Registergericht: Amtsgericht Freiburg im Breisgau</source>
-        <target state="translated">Register court: District Court of Freiburg im Breisgau</target>
-      </trans-unit>
-      <trans-unit id="alNQeJi" resname="Registernummer: HRB 720434">
-        <source>Registernummer: HRB 720434</source>
-        <target state="translated">Register number: HRB 720434</target>
-      </trans-unit>
-      <trans-unit id="Gpk1Hk." resname="Umsatzsteuer-Identifikationsnummer gem. § 27a UStG: DE326041099">
-        <source>Umsatzsteuer-Identifikationsnummer gem. § 27a UStG: DE326041099</source>
-        <target state="translated">Value Added Tax Identification Number pursuant to Section 27a UStG: DE326041099</target>
-      </trans-unit>
-      <trans-unit id="nT0rEIP" resname="Inhaltlich Verantwortlicher gem. § 55 II RStV: H2 invent GmbH">
-        <source>Inhaltlich Verantwortlicher gem. § 55 II RStV: H2 invent GmbH</source>
-        <target state="translated">Responsible for content in accordance with Section 55 II RStV: H2 invent GmbH</target>
       </trans-unit>
       <trans-unit id="4MC8jlF" resname="Sichtbar">
         <source>Sichtbar</source>
@@ -1731,17 +1647,9 @@
         <source>Daten des Erziehungsberechtigten</source>
         <target state="translated">Data of the parents</target>
       </trans-unit>
-      <trans-unit id="7kzDX6W" resname="Brutto Familieneinkommen pro Monat">
-        <source>Brutto Familieneinkommen pro Monat</source>
+      <trans-unit id="j6OVtHv" resname="Brutto Haushaltseinkommen pro Monat">
+        <source>Brutto Haushaltseinkommen pro Monat</source>
         <target state="translated">Gross family income per month</target>
-      </trans-unit>
-      <trans-unit id="3MeB11Y" resname="Kinder im Kinderganrten">
-        <source>Kinder im Kinderganrten</source>
-        <target state="translated">Children in the Children's Goose</target>
-      </trans-unit>
-      <trans-unit id="wMwQT4W" resname="Monatliche Schulkindbetreuungskosten">
-        <source>Monatliche Schulkindbetreuungskosten</source>
-        <target state="translated">Monthly school childcare costs</target>
       </trans-unit>
       <trans-unit id="f84pDHH" resname="Sicherheitscode (Dieser Code wird bei jeder Kommunikation mit dem Träger abgefragt)">
         <source>Sicherheitscode (Dieser Code wird bei jeder Kommunikation mit dem Träger abgefragt)</source>
@@ -1754,10 +1662,6 @@
       <trans-unit id="HeLgoYx" resname="Allergie">
         <source>Allergie</source>
         <target state="translated">Allergy</target>
-      </trans-unit>
-      <trans-unit id="MFEI.wk" resname="Monatliche Kosten">
-        <source>Monatliche Kosten</source>
-        <target state="translated">Monthly costs</target>
       </trans-unit>
       <trans-unit id="h4KxQS9" resname="Anwesend">
         <source>Anwesend</source>
@@ -1893,8 +1797,8 @@
         <source>Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).</source>
         <target state="translated">The fees are income-dependent. The gross family income (salary, salary, child benefit, maintenance, bridging allowance, wage replacement and all other income) is taken into account.</target>
       </trans-unit>
-      <trans-unit id="LtuEWD0" resname="Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Eltern. Ein Rechtsanspruch auf Aufnahme besteht nicht.">
-        <source>Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Eltern. Ein Rechtsanspruch auf Aufnahme besteht nicht.</source>
+      <trans-unit id="23I8_2R" resname="Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Erziehungsberechtigte. Ein Rechtsanspruch auf Aufnahme besteht nicht.">
+        <source>Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Erziehungsberechtigte. Ein Rechtsanspruch auf Aufnahme besteht nicht.</source>
         <target state="translated">Priority is given to children of single and working parents. There is no legal right to admission.</target>
       </trans-unit>
       <trans-unit id="NF9yKdJ" resname="Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf die Gebühr des ältesten Kindes">
@@ -1909,37 +1813,9 @@
         <source>SEPA Lastschrift Mandat erstellen</source>
         <target state="translated">Create SEPA Direct Debit Mandate</target>
       </trans-unit>
-      <trans-unit id="6zoOWQJ" resname="Ich ermächtige (Wir ermächtigen)">
-        <source>Ich ermächtige (Wir ermächtigen)</source>
-        <target state="translated">I empower (We empower)</target>
-      </trans-unit>
-      <trans-unit id="qg3fSWS" resname="Zahlungen von meinem (unserem) Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein (weisen wir unser) Kreditinstitut an, die von">
-        <source>Zahlungen von meinem (unserem) Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein (weisen wir unser) Kreditinstitut an, die von</source>
-        <target state="translated">collect payments from my (our) account by direct debit. At the same time, I am instructing my (let us instruct our) credit institution, which</target>
-      </trans-unit>
-      <trans-unit id="_wVNiHR" resname="auf mein (unser) Konto gezogenen Lastschriften einzulösen">
-        <source>auf mein (unser) Konto gezogenen Lastschriften einzulösen</source>
-        <target state="translated">to redeem direct debits drawn to my (our) account</target>
-      </trans-unit>
-      <trans-unit id="N2J48t5" resname="Hinweis: Ich kann (Wir können) innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem (unserem) Kreditinstitut vereinbarten Bedingungen.">
-        <source>Hinweis: Ich kann (Wir können) innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem (unserem) Kreditinstitut vereinbarten Bedingungen.</source>
-        <target state="translated">Note: I can (we can) request a refund of the debited amount within eight weeks, starting with the debit date. The terms and conditions agreed with my (our) credit institution apply.</target>
-      </trans-unit>
       <trans-unit id="8ryOB15" resname="Betreuungszeitfenster zum Auswählen anklicken">
         <source>Betreuungszeitfenster zum Auswählen anklicken</source>
         <target state="translated">Click on the care time slot to select</target>
-      </trans-unit>
-      <trans-unit id="sAJ0ruW" resname="Monatliche Gebühr für die Betreuung (inklusiv Vergünstigungen)">
-        <source>Monatliche Gebühr für die Betreuung (inklusiv Vergünstigungen)</source>
-        <target state="translated">Monthly fee for care</target>
-      </trans-unit>
-      <trans-unit id="jS73xsH" resname="Mittagessen buchen">
-        <source>Mittagessen buchen</source>
-        <target state="translated">Book lunch</target>
-      </trans-unit>
-      <trans-unit id="TFZLrgR" resname="Folgende Caterer für das Mittagessen beliefern die Schulen.">
-        <source>Folgende Caterer für das Mittagessen beliefern die Schulen.</source>
-        <target state="translated">The following caterers for lunch supply the schools.</target>
       </trans-unit>
       <trans-unit id="B9Rydv9" resname="Seit diesem Jahr kann das Mittagessen nicht mehr direkt bei der Anmeldung zur Betreuung mitbestellt werden. Bitte Nutzen Sie dafür das System des Caterers.">
         <source>Seit diesem Jahr kann das Mittagessen nicht mehr direkt bei der Anmeldung zur Betreuung mitbestellt werden. Bitte Nutzen Sie dafür das System des Caterers.</source>
@@ -1969,10 +1845,6 @@
         <source>Betreuungszeitfenster bearbeiten</source>
         <target state="translated">Edit time slots</target>
       </trans-unit>
-      <trans-unit id="vTpXgP4" resname="Name der erziehungsberechtigten Person">
-        <source>Name der erziehungsberechtigten Person</source>
-        <target state="translated">Name of the parent or guardian</target>
-      </trans-unit>
       <trans-unit id="eOWQG8T" resname="Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung">
         <source>Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung</source>
         <target state="translated">I have at least one other child in a paid public kindergarten</target>
@@ -1988,10 +1860,6 @@
       <trans-unit id="oi8sSYn" resname="Gebühr pro Monat für gebuchte Betreuung">
         <source>Gebühr pro Monat für gebuchte Betreuung</source>
         <target state="translated">Fee per month for booked care</target>
-      </trans-unit>
-      <trans-unit id="2irTgcO" resname="Zuständiger Träger in der Schule">
-        <source>Zuständiger Träger in der Schule</source>
-        <target state="translated">Responsible institution in the school</target>
       </trans-unit>
       <trans-unit id=".VUI38S" resname="Gebühren pro Monat">
         <source>Gebühren pro Monat</source>
@@ -2189,10 +2057,6 @@
         <source>Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch in Ihrem Spamordner nach.</source>
         <target state="translated">We have sent a confirmation code to your e-mail address. Please enter this code from the e-mail here. This is necessary to protect your children's data in the best possible way. This may take a few minutes. Please also check your spam folder.</target>
       </trans-unit>
-      <trans-unit id="XAbXtjr" resname="Wichtig: Diesen Bestätigungscode sicher aufbewahren!">
-        <source>Wichtig: Diesen Bestätigungscode sicher aufbewahren!</source>
-        <target state="translated">Important: Keep this confirmation code safe!</target>
-      </trans-unit>
       <trans-unit id="YEySstx" resname="Alle Neuigkeiten">
         <source>Alle Neuigkeiten</source>
         <target state="translated">All News</target>
@@ -2285,58 +2149,6 @@ The web application enables direct networking between parents, external organisa
         <source>Last Change</source>
         <target state="translated">Last Change</target>
       </trans-unit>
-      <trans-unit id="9VQ5Tv0" resname="Webanwendung für die  Anmeldung und Verwaltung">
-        <source>Webanwendung für die  Anmeldung und Verwaltung</source>
-        <target state="translated">Online application for  registration and administration</target>
-      </trans-unit>
-      <trans-unit id="knbQTEa" resname="Die Schulkindbetreuung ist eine &lt;b&gt;komplexe Dienstleistung&lt;/b&gt;. Viele Menschen&#10;                                                                                              und Institutionen sind bei der Finanzierung, Planung, Verwaltung und&#10;                                                                                              Umsetzung beteiligt.&lt;br&gt;&#10;                                &lt;br&gt;&#10;                                Die &lt;b&gt;gestiegene Komplexität&lt;/b&gt; und die Erwartungshaltungen der Beteiligten&#10;                                                                  machen eine Veränderung notwendig.&lt;br&gt;&lt;br&gt;&#10;                                &lt;b&gt;Vereinbarkeit von Familie und Beruf und die Chancengleichheit für alle Kinder&lt;/b&gt;&#10;                                fordern den Ausbau und die Modernisierung des Betreuungssystems.&lt;br&gt;&lt;br&gt;&#10;                                Der &lt;b&gt;Schulträger von Morgen&lt;/b&gt; stellt eine innovative, moderne und transparente&#10;                                                                  Informationsplattform, Anmeldung und Verwaltung allen Beteiligten zur&#10;                                                                  Verfügung.&lt;br&gt;&lt;br&gt;&#10;                                &lt;b&gt;Digitalisierung und umweltbewusstes Handeln&lt;/b&gt; sind zentrale Themen&#10;                                unserer Zeit.">
-        <source>Die Schulkindbetreuung ist eine &lt;b&gt;komplexe Dienstleistung&lt;/b&gt;. Viele Menschen
-                                                                                              und Institutionen sind bei der Finanzierung, Planung, Verwaltung und
-                                                                                              Umsetzung beteiligt.&lt;br&gt;
-                                &lt;br&gt;
-                                Die &lt;b&gt;gestiegene Komplexität&lt;/b&gt; und die Erwartungshaltungen der Beteiligten
-                                                                  machen eine Veränderung notwendig.&lt;br&gt;&lt;br&gt;
-                                &lt;b&gt;Vereinbarkeit von Familie und Beruf und die Chancengleichheit für alle Kinder&lt;/b&gt;
-                                fordern den Ausbau und die Modernisierung des Betreuungssystems.&lt;br&gt;&lt;br&gt;
-                                Der &lt;b&gt;Schulträger von Morgen&lt;/b&gt; stellt eine innovative, moderne und transparente
-                                                                  Informationsplattform, Anmeldung und Verwaltung allen Beteiligten zur
-                                                                  Verfügung.&lt;br&gt;&lt;br&gt;
-                                &lt;b&gt;Digitalisierung und umweltbewusstes Handeln&lt;/b&gt; sind zentrale Themen
-                                unserer Zeit.</source>
-        <target state="translated"><![CDATA[School child care is a complex service. Many people
-                                                                                              and institutions are involved in financing, planning, administration and
-                                                                                              Implementation involved.<br>
-                                <br>
-                                The <b>increased complexity</b> and the expectations of those involved
-                                                                  make a change necessary. <br><br>
-                                <b> Compatibility of family and career and equal opportunities for all children</b>
-                                call for the expansion and modernisation of the care system.<br><br>
-                                The <b> school carrier of tomorrow</b> represents an innovative, modern and transparent
-                                                                  information platform, registration and administration for all participants to
-                                                                  Order.
-                                <Digitisation and environmental awareness are central themes
-                                of our time.]]></target>
-      </trans-unit>
-      <trans-unit id="HbMpwLI" resname="Die Angebotspalette der Schulkindbetreuung ist sehr groß und unübersichtlich. Ich fühle mich oft überfordert und deshalb wünsche ich mir eine transparente Plattform.">
-        <source>Die Angebotspalette der Schulkindbetreuung ist sehr groß und unübersichtlich. Ich fühle mich oft überfordert und deshalb wünsche ich mir eine transparente Plattform.</source>
-        <target state="translated">The range of school childcare services is very large and confusing. I often feel overwhelmed and therefore I would like a transparent platform.</target>
-      </trans-unit>
-      <trans-unit id="xgVxdz_" resname="Beatrice (Mutter von drei Söhnen)">
-        <source>Beatrice (Mutter von drei Söhnen)</source>
-        <target state="translated">Beatrice (Mother of three sons)</target>
-      </trans-unit>
-      <trans-unit id="UYivmMb" resname="Ich möchte mehr Zeit mit den Kindern verbringen und nicht ständig Listen führen.">
-        <source>Ich möchte mehr Zeit mit den Kindern verbringen und nicht ständig Listen führen.</source>
-        <target state="translated">I want to spend more time with the children and not constantly keep lists.</target>
-      </trans-unit>
-      <trans-unit id="lWmL25C" resname="Catarina (Sozialpädagogin)">
-        <source>Catarina (Sozialpädagogin)</source>
-        <target state="translated">Catarina (Social worker)</target>
-      </trans-unit>
-      <trans-unit id="X7eX6r3" resname="Rechnung an alle Eltern versenden">
-        <source>Rechnung an alle Eltern versenden</source>
-        <target state="translated">Send invoice to all parents</target>
-      </trans-unit>
       <trans-unit id="TbVQzZh" resname="Sitemap">
         <source>Sitemap</source>
         <target state="translated">Sitemap</target>
@@ -2348,12 +2160,6 @@ The web application enables direct networking between parents, external organisa
       <trans-unit id="dhhPs7h" resname="Bestätigungscode zur Überprüfung der E-Mail Adresse">
         <source>Bestätigungscode zur Überprüfung der E-Mail Adresse</source>
         <target state="translated">Confirmation code to verify the e-mail address</target>
-      </trans-unit>
-      <trans-unit id="6kYrCka" resname="Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.&#10;            &lt;br&gt;Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.">
-        <source>Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.
-            &lt;br&gt;Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.</source>
-        <target state="translated"><![CDATA[You have just registered for the online portal for school child care.
-            <br>Please confirm your e-mail by entering the confirmation code in your browser.]]></target>
       </trans-unit>
       <trans-unit id="j4EU0Ge" resname="Monatliche Gebühr für die Betreuung (inklusive Vergünstigungen)">
         <source>Monatliche Gebühr für die Betreuung (inklusive Vergünstigungen)</source>
@@ -2370,10 +2176,6 @@ The web application enables direct networking between parents, external organisa
       <trans-unit id="2RQ.lyp" resname="Datenschutzhinweise der Stadt und betreuenden Organisationen">
         <source>Datenschutzhinweise der Stadt und betreuenden Organisationen</source>
         <target state="translated">Data protection notices of the city and supporting organisations</target>
-      </trans-unit>
-      <trans-unit id="6XA1_hW" resname="Für Informationen zum Datenschutz der Stat und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.">
-        <source>Für Informationen zum Datenschutz der Stat und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.</source>
-        <target state="translated">Please contact the respective administrations for information on data protection at the Stat and the supervising organisations.</target>
       </trans-unit>
       <trans-unit id="_70lqNS" resname="Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.">
         <source>Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.</source>
@@ -2454,6 +2256,118 @@ The web application enables direct networking between parents, external organisa
       <trans-unit id="T0AZQuJ" resname="Wir beraten Sie gerne individuell:">
         <source>Wir beraten Sie gerne individuell:</source>
         <target state="translated">We are happy to advise you individually:</target>
+      </trans-unit>
+      <trans-unit id="lxPd.CQ" resname="Name des Erziehungsberechtigten">
+        <source>Name des Erziehungsberechtigten</source>
+        <target state="translated">Name of the legal guardian</target>
+      </trans-unit>
+      <trans-unit id="xDGIr0c" resname="Adresse des Erziehungsberechtigten">
+        <source>Adresse des Erziehungsberechtigten</source>
+        <target state="translated">Address of the legal guardian</target>
+      </trans-unit>
+      <trans-unit id="YVJL_Cl" resname="Berufliche Situation des Erziehungsberechtigten">
+        <source>Berufliche Situation des Erziehungsberechtigten</source>
+        <target state="translated">Employment situation of the legal guardian</target>
+      </trans-unit>
+      <trans-unit id="p2JRSsO" resname="Notfallkontakt des Erziehungsberechtigten">
+        <source>Notfallkontakt des Erziehungsberechtigten</source>
+        <target state="translated">Emergency contact of the legal guardian</target>
+      </trans-unit>
+      <trans-unit id="0.8fMYp" resname="Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch der betreuenden Organisation müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.&#10;            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.">
+        <source>Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch der betreuenden Organisation müssen Sie diesen Sicherheitscode angeben.
+            Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.
+            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.</source>
+        <target state="translated">For communication with the supervising organisation and for changes to your data by the supervising organisation, you must provide this security code.
+            This code is only valid once and will be sent to you again after each change.
+            This mechanism prevents unauthorized access to your children's data by third parties.</target>
+      </trans-unit>
+      <trans-unit id=".SYQTel" resname="Wichtig: Diesen Sicherheitscode gut aufbewahren!">
+        <source>Wichtig: Diesen Sicherheitscode gut aufbewahren!</source>
+        <target state="translated">Important: Keep this security code in a safe place!</target>
+      </trans-unit>
+      <trans-unit id="Nzh6gMX" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.&#10;            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.&#10;            Die Kontaktdaten sind in dem PDF angehängten angegeben.">
+        <source>Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
+            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
+            Die Kontaktdaten sind in dem PDF angehängten angegeben.</source>
+        <target state="translated">In the attachment you will find your data and those of your children as PDF files for checking purposes.
+            Please check the data and contact your supervising organisation if you have any questions.
+            The contact details are given in the attached PDF.</target>
+      </trans-unit>
+      <trans-unit id="L3eVbkh" resname="Infos des Erziehungsberechtigten">
+        <source>Infos des Erziehungsberechtigten</source>
+        <target state="translated">Data of the legal guardian</target>
+      </trans-unit>
+      <trans-unit id="zenlipp" resname="Ja">
+        <source>Ja</source>
+        <target state="translated">Yes</target>
+      </trans-unit>
+      <trans-unit id="Fs_Jeg3" resname="Kontakt für evtl. Notfälle">
+        <source>Kontakt für evtl. Notfälle</source>
+        <target state="translated">Contact for possible emergencies</target>
+      </trans-unit>
+      <trans-unit id="lNehMz2" resname="Telefonnummer für evtl. Notfälle">
+        <source>Telefonnummer für evtl. Notfälle</source>
+        <target state="translated">Telephone number for possible emergencies</target>
+      </trans-unit>
+      <trans-unit id="ausasC2" resname="Ich erteile der betreuenden Organisation (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags">
+        <source>Ich erteile der betreuenden Organisation (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags</source>
+        <target state="translated">I issue a SEPA Direct Debit Client to the supervising organisation(s) for the duration of this contract</target>
+      </trans-unit>
+      <trans-unit id="FwUqcSR" resname="Monatliche Gebühren">
+        <source>Monatliche Gebühren</source>
+        <target state="translated">Monthly fees</target>
+      </trans-unit>
+      <trans-unit id="o4wVfLm" resname="Fotos auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden">
+        <source>Fotos auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden</source>
+        <target state="translated">Photos in which my child can be seen may be published in the public press</target>
+      </trans-unit>
+      <trans-unit id="rRfczkt" resname="Rechnung an alle Erziehungsberechtigten versenden">
+        <source>Rechnung an alle Erziehungsberechtigten versenden</source>
+        <target state="translated">Send an invoice to all legal guardians</target>
+      </trans-unit>
+      <trans-unit id="UBv7tp9" resname="Erziehungsberechtigte">
+        <source>Erziehungsberechtigte</source>
+        <target state="translated">Legal guardian</target>
+      </trans-unit>
+      <trans-unit id="YzemdqB" resname="Ich ermächtige die betreuende Organisation">
+        <source>Ich ermächtige die betreuende Organisation</source>
+        <target state="translated">I authorize the supervising organization</target>
+      </trans-unit>
+      <trans-unit id="CH5yVra" resname="Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der betreuenden Organisation">
+        <source>Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der betreuenden Organisation</source>
+        <target state="translated">to collect payments from my account by direct debit. At the same time, I instruct my credit institution, which will be</target>
+      </trans-unit>
+      <trans-unit id="UXP8EtA" resname="auf mein Konto gezogenen Lastschriften einzulösen">
+        <source>auf mein Konto gezogenen Lastschriften einzulösen</source>
+        <target state="translated">pay debits drawn on my account</target>
+      </trans-unit>
+      <trans-unit id="5fkQY9w" resname="Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.">
+        <source>Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.</source>
+        <target state="translated">Note: I can request a refund of the amount debited within eight weeks, starting from the date of the debit. The conditions agreed with my bank apply.</target>
+      </trans-unit>
+      <trans-unit id="aKf0Tnn" resname="Weitere Informationen zum Mittagessen an den Schulen">
+        <source>Weitere Informationen zum Mittagessen an den Schulen</source>
+        <target state="translated">Further information about lunch at schools</target>
+      </trans-unit>
+      <trans-unit id="..AY7PQ" resname="Kinderdaten bearbeiten">
+        <source>Kinderdaten bearbeiten</source>
+        <target state="translated">Edit child data</target>
+      </trans-unit>
+      <trans-unit id="pfhPhND" resname="Kind entfernen">
+        <source>Kind entfernen</source>
+        <target state="translated">Remove child</target>
+      </trans-unit>
+      <trans-unit id="ggfHHLm" resname="Ich erteile dem betreuenden Organisationen (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags">
+        <source>Ich erteile dem betreuenden Organisationen (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags</source>
+        <target state="translated">I issue a SEPA Direct Debit Client to the supervising organisation(s) for the duration of this contract</target>
+      </trans-unit>
+      <trans-unit id="2f45s_g" resname="Email an Erziehungsberechtigten senden">
+        <source>Email an Erziehungsberechtigten senden</source>
+        <target state="translated">Send an email to legal guardian</target>
+      </trans-unit>
+      <trans-unit id="ewI9bbC" resname="Details des Erziehungsberechtigten">
+        <source>Details des Erziehungsberechtigten</source>
+        <target state="translated">Details of the legal guardian</target>
       </trans-unit>
     </body>
   </file>

@@ -169,8 +169,8 @@
         <source>Schule</source>
         <target state="translated">École</target>
       </trans-unit>
-      <trans-unit id="XQnUg8G" resname="Eltern">
-        <source>Eltern</source>
+      <trans-unit id=".WIlETh" resname="Erziehungsberechtigten">
+        <source>Erziehungsberechtigten</source>
         <target state="translated">Parents</target>
       </trans-unit>
       <trans-unit id="eeXPIN4" resname="Adresse">
@@ -825,16 +825,16 @@
         <source>Daten des Kinds</source>
         <target state="translated">Données de l'enfant</target>
       </trans-unit>
-      <trans-unit id=".a8vgi5" resname="Mein Kind ist Gluten intolerant">
-        <source>Mein Kind ist Gluten intolerant</source>
+      <trans-unit id="pwh_plI" resname="Mein Kind ist glutenintolerant">
+        <source>Mein Kind ist glutenintolerant</source>
         <target state="translated">Mon enfant est intolérant au gluten</target>
       </trans-unit>
       <trans-unit id="kOvBveb" resname="Nein">
         <source>Nein</source>
         <target state="translated">Non</target>
       </trans-unit>
-      <trans-unit id="Jj8dWM7" resname="Mein Kind ist Laktose intolerant">
-        <source>Mein Kind ist Laktose intolerant</source>
+      <trans-unit id="JKQvLH_" resname="Mein Kind ist laktoseintolerant">
+        <source>Mein Kind ist laktoseintolerant</source>
         <target state="translated">Mon enfant est intolérant au lactose</target>
       </trans-unit>
       <trans-unit id="qDVRxRS" resname="Mein Kind isst kein Schweinefleisch">
@@ -1092,8 +1092,8 @@
         <target state="translated">Détails bancaires pour le débit direct</target>
       </trans-unit>
       <trans-unit id="47DEQpj" resname="">
-        <source/>
-        <target/>
+        <source></source>
+        <target></target>
       </trans-unit>
       <trans-unit id="bXHPK6K" resname="Daten der Kinder">
         <source>Daten der Kinder</source>
@@ -1705,8 +1705,8 @@
         <source>Name der erziehungsberechtigten Person</source>
         <target state="translated">Nom de la personne ayant droit à l'éducation</target>
       </trans-unit>
-      <trans-unit id="7kzDX6W" resname="Brutto Familieneinkommen pro Monat">
-        <source>Brutto Familieneinkommen pro Monat</source>
+      <trans-unit id="j6OVtHv" resname="Brutto Haushaltseinkommen pro Monat">
+        <source>Brutto Haushaltseinkommen pro Monat</source>
         <target state="translated">Revenu familial brut par mois</target>
       </trans-unit>
       <trans-unit id="5fM56N9" resname="Ich bin alleinerziehend">
@@ -1914,8 +1914,8 @@
         <target state="translated">Enregistrement et administration</target>
       </trans-unit>
       <trans-unit id="zmlkEaD" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;&#10;Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;&#10;">
-        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
-Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
+        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;
+Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;
 </source>
         <target state="translated">SKiB est jusqu'à présent la seule solution en ligne pour l'inscription et l'administration des services de garde d'enfants et de vacances scolaires.
 L'application web permet une mise en réseau directe entre les parents, les organisations externes et l'administration municipale ou les autorités scolaires.
@@ -2426,6 +2426,122 @@ Responsabilité pour les liens
       <trans-unit id="T0AZQuJ" resname="Wir beraten Sie gerne individuell:">
         <source>Wir beraten Sie gerne individuell:</source>
         <target state="translated">Nous sommes heureux de vous conseiller individuellement :</target>
+      </trans-unit>
+      <trans-unit id="XQnUg8G" resname="Eltern">
+        <source>Eltern</source>
+        <target>__Eltern</target>
+      </trans-unit>
+      <trans-unit id="G12aiJf" resname="Erziehungsberechtigter">
+        <source>Erziehungsberechtigter</source>
+        <target>__Erziehungsberechtigter</target>
+      </trans-unit>
+      <trans-unit id="lxPd.CQ" resname="Name des Erziehungsberechtigten">
+        <source>Name des Erziehungsberechtigten</source>
+        <target>__Name des Erziehungsberechtigten</target>
+      </trans-unit>
+      <trans-unit id="xDGIr0c" resname="Adresse des Erziehungsberechtigten">
+        <source>Adresse des Erziehungsberechtigten</source>
+        <target>__Adresse des Erziehungsberechtigten</target>
+      </trans-unit>
+      <trans-unit id="YVJL_Cl" resname="Berufliche Situation des Erziehungsberechtigten">
+        <source>Berufliche Situation des Erziehungsberechtigten</source>
+        <target>__Berufliche Situation des Erziehungsberechtigten</target>
+      </trans-unit>
+      <trans-unit id="p2JRSsO" resname="Notfallkontakt des Erziehungsberechtigten">
+        <source>Notfallkontakt des Erziehungsberechtigten</source>
+        <target>__Notfallkontakt des Erziehungsberechtigten</target>
+      </trans-unit>
+      <trans-unit id="0.8fMYp" resname="Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch der betreuenden Organisation müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.&#10;            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.">
+        <source>Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch der betreuenden Organisation müssen Sie diesen Sicherheitscode angeben.
+            Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.
+            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.</source>
+        <target>__Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch der betreuenden Organisation müssen Sie diesen Sicherheitscode angeben.
+            Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.
+            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.</target>
+      </trans-unit>
+      <trans-unit id=".SYQTel" resname="Wichtig: Diesen Sicherheitscode gut aufbewahren!">
+        <source>Wichtig: Diesen Sicherheitscode gut aufbewahren!</source>
+        <target>__Wichtig: Diesen Sicherheitscode gut aufbewahren!</target>
+      </trans-unit>
+      <trans-unit id="Nzh6gMX" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.&#10;            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.&#10;            Die Kontaktdaten sind in dem PDF angehängten angegeben.">
+        <source>Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
+            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
+            Die Kontaktdaten sind in dem PDF angehängten angegeben.</source>
+        <target>__Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
+            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
+            Die Kontaktdaten sind in dem PDF angehängten angegeben.</target>
+      </trans-unit>
+      <trans-unit id="L3eVbkh" resname="Infos des Erziehungsberechtigten">
+        <source>Infos des Erziehungsberechtigten</source>
+        <target>__Infos des Erziehungsberechtigten</target>
+      </trans-unit>
+      <trans-unit id="zenlipp" resname="Ja">
+        <source>Ja</source>
+        <target>__Ja</target>
+      </trans-unit>
+      <trans-unit id="Fs_Jeg3" resname="Kontakt für evtl. Notfälle">
+        <source>Kontakt für evtl. Notfälle</source>
+        <target>__Kontakt für evtl. Notfälle</target>
+      </trans-unit>
+      <trans-unit id="lNehMz2" resname="Telefonnummer für evtl. Notfälle">
+        <source>Telefonnummer für evtl. Notfälle</source>
+        <target>__Telefonnummer für evtl. Notfälle</target>
+      </trans-unit>
+      <trans-unit id="ausasC2" resname="Ich erteile der betreuenden Organisation (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags">
+        <source>Ich erteile der betreuenden Organisation (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags</source>
+        <target>__Ich erteile der betreuenden Organisation (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags</target>
+      </trans-unit>
+      <trans-unit id="FwUqcSR" resname="Monatliche Gebühren">
+        <source>Monatliche Gebühren</source>
+        <target>__Monatliche Gebühren</target>
+      </trans-unit>
+      <trans-unit id="o4wVfLm" resname="Fotos auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden">
+        <source>Fotos auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden</source>
+        <target>__Fotos auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden</target>
+      </trans-unit>
+      <trans-unit id="rRfczkt" resname="Rechnung an alle Erziehungsberechtigten versenden">
+        <source>Rechnung an alle Erziehungsberechtigten versenden</source>
+        <target>__Rechnung an alle Erziehungsberechtigten versenden</target>
+      </trans-unit>
+      <trans-unit id="UBv7tp9" resname="Erziehungsberechtigte">
+        <source>Erziehungsberechtigte</source>
+        <target>__Erziehungsberechtigte</target>
+      </trans-unit>
+      <trans-unit id="23I8_2R" resname="Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Erziehungsberechtigte. Ein Rechtsanspruch auf Aufnahme besteht nicht.">
+        <source>Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Erziehungsberechtigte. Ein Rechtsanspruch auf Aufnahme besteht nicht.</source>
+        <target>__Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Erziehungsberechtigte. Ein Rechtsanspruch auf Aufnahme besteht nicht.</target>
+      </trans-unit>
+      <trans-unit id="YzemdqB" resname="Ich ermächtige die betreuende Organisation">
+        <source>Ich ermächtige die betreuende Organisation</source>
+        <target>__Ich ermächtige die betreuende Organisation</target>
+      </trans-unit>
+      <trans-unit id="CH5yVra" resname="Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der betreuenden Organisation">
+        <source>Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der betreuenden Organisation</source>
+        <target>__Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der betreuenden Organisation</target>
+      </trans-unit>
+      <trans-unit id="UXP8EtA" resname="auf mein Konto gezogenen Lastschriften einzulösen">
+        <source>auf mein Konto gezogenen Lastschriften einzulösen</source>
+        <target>__auf mein Konto gezogenen Lastschriften einzulösen</target>
+      </trans-unit>
+      <trans-unit id="5fkQY9w" resname="Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.">
+        <source>Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.</source>
+        <target>__Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.</target>
+      </trans-unit>
+      <trans-unit id="aKf0Tnn" resname="Weitere Informationen zum Mittagessen an den Schulen">
+        <source>Weitere Informationen zum Mittagessen an den Schulen</source>
+        <target>__Weitere Informationen zum Mittagessen an den Schulen</target>
+      </trans-unit>
+      <trans-unit id="..AY7PQ" resname="Kinderdaten bearbeiten">
+        <source>Kinderdaten bearbeiten</source>
+        <target>__Kinderdaten bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="pfhPhND" resname="Kind entfernen">
+        <source>Kind entfernen</source>
+        <target>__Kind entfernen</target>
+      </trans-unit>
+      <trans-unit id="ggfHHLm" resname="Ich erteile dem betreuenden Organisationen (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags">
+        <source>Ich erteile dem betreuenden Organisationen (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags</source>
+        <target>__Ich erteile dem betreuenden Organisationen (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags</target>
       </trans-unit>
     </body>
   </file>

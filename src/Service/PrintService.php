@@ -37,7 +37,7 @@ class PrintService
         $this->fileSystem = $publicUploadsFilesystem;
     }
 
-    public function printAnmeldebestaetigung(Kind $kind, Stammdaten $elter, Stadt $stadt, TCPDFController $tcpdf, $fileName, $einkommmensgruppen, Organisation $organisation, $type = 'D')
+    public function printAnmeldebestaetigung(Kind $kind, Stammdaten $elter, Stadt $stadt, TCPDFController $tcpdf, $fileName, $beruflicheSituation , Organisation $organisation, $type = 'D')
     {
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
@@ -98,7 +98,7 @@ class PrintService
             true
         );
 
-        $elternDaten = $this->templating->render('pdf/eltern.html.twig', array('kind'=>$kind,'eltern' => $elter, 'einkommen' => $einkommmensgruppen));
+        $elternDaten = $this->templating->render('pdf/eltern.html.twig', array('kind'=>$kind,'eltern' => $elter, 'einkommen' => $stadt->getGehaltsklassen(), 'beruflicheSituation' => array_flip($beruflicheSituation)));
         $pdf->writeHTMLCell(
             0,
             0,
@@ -148,11 +148,11 @@ class PrintService
                     $table .= '<p>' . ($block->getGanztag() == 0 ? $this->translator->trans('Mittagessen') : '') . '</p>';
                     $table .= '<p>' . (($block->getMin() || $block->getMax()) ? $this->translator->trans('Warten auf Bestätigung') : '') . '</p>';
                     $table .= $block->getVon()->format('H:i');
-                    $table .= ' - ' . $block->getVon()->format('H:i');
+                    $table .= ' - ' . $block->getBis()->format('H:i');
 
                     \array_splice($render[$i], 0, 1);
 
-                    if (sizeof($render[$i]) == 0) {
+                    if (count($render[$i]) == 0) {
                         unset($render[$i]);
 
                     }
@@ -163,7 +163,7 @@ class PrintService
 
             $table .= '</tr>';
 
-            if (sizeof($render) == 0) {
+            if (count($render) == 0) {
                 break;
             }
             $t++;
@@ -185,7 +185,7 @@ class PrintService
         );
 
 
-
+dump($pdf);
 
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }

@@ -34,9 +34,9 @@
                     {{ form_label(form.sepaInfo) }}
                     {{ form_widget(form.sepaInfo) }}
                     <p>
-                        {% trans %}Ich ermächtige (Wir ermächtigen){% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>, {% endfor %}{% trans %}Zahlungen von meinem (unserem) Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein (weisen wir unser) Kreditinstitut an, die von{% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>, {% endfor %}{% trans %}auf mein (unser) Konto gezogenen Lastschriften einzulösen{% endtrans %}.
+                        {% trans %}Ich ermächtige die betreuende Organisation{% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>, {% endfor %}{% trans %}Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der betreuenden Organisation{% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>, {% endfor %}{% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
                     </p>
-                    {% trans %}Hinweis: Ich kann (Wir können) innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem (unserem) Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
+                    {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
 
                 </div>
             </div>
