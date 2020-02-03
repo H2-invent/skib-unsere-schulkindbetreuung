@@ -27,7 +27,7 @@
       </trans-unit>
       <trans-unit id="j6OVtHv" resname="Brutto Haushaltseinkommen pro Monat">
         <source>Brutto Haushaltseinkommen pro Monat</source>
-        <target state="translated">Gross family income per month</target>
+        <target state="translated">Gross household income per monthh</target>
       </trans-unit>
       <trans-unit id="9rL.OfV" resname="Speichern">
         <source>Speichern</source>

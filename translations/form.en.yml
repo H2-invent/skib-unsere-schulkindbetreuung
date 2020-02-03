@@ -2,12 +2,12 @@ Name: Last name
 Nachname: Last name
 Vorname: First name
 Straße: Street
-Adresszusatz: Adress additional
-Brutto Haushaltseinkommen pro Monat: Gross family income per month
+Adresszusatz: Address extension
+Brutto Haushaltseinkommen pro Monat: Gross household income per month
 Speichern: Save
-Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung: I have at least one additional child in a public kindergarten that is subject to a fee
+Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung: I have at least one additional child in a public kindergarten
 Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger: I am an education and participation package (BUT) recipient
-Berufliche Situation des Erziehungsberechtigten: Profession of the parents
+Berufliche Situation des Erziehungsberechtigten: Employment situation of the legal guardian
 Name des Notfallkontakts: Name of the emergency contact
 Notfalltelefonnummer: Emergency telephone number
 Name der Stadt: Name of the city
@@ -15,7 +15,7 @@ Slug der Stadt: Slug of the city
 Username: Username
 E-Mail: E-Mail
 Passwort: Password
-Geburtstag: Birthday
+Geburtstag: Date of Birth
 Name der Schule: Name of the School
 Postleitzahl: Postcode
 Stadt: City

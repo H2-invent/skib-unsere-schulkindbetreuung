@@ -98,26 +98,26 @@
                                                             <dt>{% trans %} Medikamente {% endtrans %}</dt>
                                                             <dd>{{ k.medikamente }}</dd>
                                                             <dt>{% trans %}Mein Kind ist glutenintolerant{% endtrans %}</dt>
-                                                            <dd>{{ k.gluten?"Ja":'Nein'|trans }}</dd>
+                                                            <dd>{{ k.gluten?"Ja"|trans:'Nein'|trans }}</dd>
                                                             <dt>{% trans %}Mein Kind ist laktoseintolerant{% endtrans %}</dt>
-                                                            <dd>{{ k.laktose?"Ja":'Nein'|trans }}</dd>
+                                                            <dd>{{ k.laktose?"Ja"|trans:'Nein'|trans }}</dd>
                                                         </dl>
                                                     </div>
                                                     <div class="col-lg-6">
 
                                                         <dl>
                                                             <dt>{% trans %} Mein Kind isst kein Schweinefleisch {% endtrans %}</dt>
-                                                            <dd>{{ k.schweinefleisch?"Ja":'Nein'|trans }}</dd>
+                                                            <dd>{{ k.schweinefleisch?"Ja"|trans:'Nein'|trans }}</dd>
                                                             <dt>{% trans %} Vegetrarisch {% endtrans %}</dt>
-                                                            <dd>{{ k.vegetarisch?"Ja":'Nein'|trans }}</dd>
+                                                            <dd>{{ k.vegetarisch?"Ja"|trans:'Nein'|trans }}</dd>
                                                             <dt>{% trans %} Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause {% endtrans %}</dt>
-                                                            <dd>{{ k.alleineHause?"Ja":'Nein'|trans }}</dd>
+                                                            <dd>{{ k.alleineHause?"Ja"|trans:'Nein'|trans }}</dd>
                                                             <dt>{% trans %} Mein Kind darf an Ausflügen teilnehmen {% endtrans %}</dt>
                                                             <dd>{{ k.ausfluege?"Ja":'Nein'|trans }}</dd>
                                                             <dt>{% trans %} Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden {% endtrans %}</dt>
-                                                            <dd>{{ k.sonnencreme?"Ja":'Nein'|trans }}</dd>
-                                                            <dt>{% trans %} Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden {% endtrans %}</dt>
-                                                            <dd>{{ k.fotos?"Ja":'Nein'|trans }}</dd>
+                                                            <dd>{{ k.sonnencreme?"Ja"|trans:'Nein'|trans }}</dd>
+                                                            <dt>{% trans %} Fotos auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden {% endtrans %}</dt>
+                                                            <dd>{{ k.fotos?"Ja"|trans:'Nein'|trans }}</dd>
                                                         </dl>
                                                     </div>
                                                 </div>

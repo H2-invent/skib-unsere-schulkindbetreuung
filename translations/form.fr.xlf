@@ -25,8 +25,8 @@
         <source>Adresszusatz</source>
         <target>Adress additional</target>
       </trans-unit>
-      <trans-unit id="FjoGHqk" resname="NBrutto Haushaltseinkommen pro Monat">
-        <source>NBrutto Haushaltseinkommen pro Monat</source>
+      <trans-unit id="j6OVtHv" resname="Brutto Haushaltseinkommen pro Monat">
+        <source>Brutto Haushaltseinkommen pro Monat</source>
         <target>__Brutto Haushaltseinkommen pro Monat</target>
       </trans-unit>
       <trans-unit id="9rL.OfV" resname="Speichern">
@@ -41,21 +41,17 @@
         <source>Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger</source>
         <target>__Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger</target>
       </trans-unit>
-      <trans-unit id="U5zZGkQ" resname="Berufliche Situation des Erziehungsberechtigten">
+      <trans-unit id="YVJL_Cl" resname="Berufliche Situation des Erziehungsberechtigten">
         <source>Berufliche Situation des Erziehungsberechtigten</source>
         <target>Profession of the parents</target>
+      </trans-unit>
+      <trans-unit id="qhLfgH2" resname="Name des Notfallkontakts">
+        <source>Name des Notfallkontakts</source>
+        <target>Nom de la personne à contacter en cas d'urgence</target>
       </trans-unit>
       <trans-unit id="vFumzvS" resname="Notfalltelefonnummer">
         <source>Notfalltelefonnummer</source>
         <target>__Notfalltelefonnummer</target>
-      </trans-unit>
-      <trans-unit id="ap89FH4" resname="IBAN für das Lastschriftmandat">
-        <source>IBAN für das Lastschriftmandat</source>
-        <target>IBAN for SEPA</target>
-      </trans-unit>
-      <trans-unit id="g0ZIpDI" resname="SEPA-LAstschrift Mandat wird elektromisch erteilt">
-        <source>SEPA-LAstschrift Mandat wird elektromisch erteilt</source>
-        <target>SEPA electronic</target>
       </trans-unit>
       <trans-unit id="KAAmbDC" resname="Name der Stadt">
         <source>Name der Stadt</source>
@@ -69,9 +65,9 @@
         <source>Username</source>
         <target>Username</target>
       </trans-unit>
-      <trans-unit id="lpzL089" resname="Email">
-        <source>Email</source>
-        <target>Email</target>
+      <trans-unit id="L65vsws" resname="E-Mail">
+        <source>E-Mail</source>
+        <target>L'adresse électronique</target>
       </trans-unit>
       <trans-unit id="o2wQFXD" resname="Passwort">
         <source>Passwort</source>
@@ -85,9 +81,9 @@
         <source>Name der Schule</source>
         <target>Name of the School</target>
       </trans-unit>
-      <trans-unit id="xhJ.1EZ" resname="PLZ">
-        <source>PLZ</source>
-        <target>__PLZ</target>
+      <trans-unit id="O0jRfpX" resname="Postleitzahl">
+        <source>Postleitzahl</source>
+        <target>Code postal</target>
       </trans-unit>
       <trans-unit id="Inm9E03" resname="Stadt">
         <source>Stadt</source>
@@ -96,10 +92,6 @@
       <trans-unit id="wyhu2rk" resname="Name der Organisation">
         <source>Name der Organisation</source>
         <target>Name of the organisation</target>
-      </trans-unit>
-      <trans-unit id="2Bz6Sw." resname="BIC">
-        <source>BIC</source>
-        <target>BIC</target>
       </trans-unit>
       <trans-unit id="e1gvFKc" resname="Name der Bank">
         <source>Name der Bank</source>
@@ -213,13 +205,25 @@
         <source>Preis</source>
         <target>__Preis</target>
       </trans-unit>
+      <trans-unit id="ap89FH4" resname="IBAN für das Lastschriftmandat">
+        <source>IBAN für das Lastschriftmandat</source>
+        <target>IBAN for SEPA</target>
+      </trans-unit>
       <trans-unit id="wA6PJA_" resname="BIC für das Lastschriftmandat">
         <source>BIC für das Lastschriftmandat</source>
         <target>__BIC für das Lastschriftmandat</target>
       </trans-unit>
+      <trans-unit id="2Bz6Sw." resname="BIC">
+        <source>BIC</source>
+        <target>BIC</target>
+      </trans-unit>
       <trans-unit id="ebXHZwy" resname="Kontoinhaber für das Lastschriftmandat">
         <source>Kontoinhaber für das Lastschriftmandat</source>
         <target>__Kontoinhaber für das Lastschriftmandat</target>
+      </trans-unit>
+      <trans-unit id="HgVt5xU" resname="SEPA-Lastschrift Mandat wird elektronisch erteilt">
+        <source>SEPA-Lastschrift Mandat wird elektronisch erteilt</source>
+        <target>Le mandat de prélèvement SEPA est émis par voie électronique</target>
       </trans-unit>
       <trans-unit id="wgwDdOh" resname="Schulform">
         <source>Schulform</source>
@@ -289,8 +293,8 @@
         <source>Anzahl der Preiskategorien</source>
         <target>__Anzahl der Preiskategorien</target>
       </trans-unit>
-      <trans-unit id="awhtVjc" resname="Sicherheitscode des Erziehungsberechtigten">
-        <source>Sicherheitscode der Eltern</source>
+      <trans-unit id="eltKSgI" resname="Sicherheitscode des Erziehungsberechtigten">
+        <source>Sicherheitscode des Erziehungsberechtigten</source>
         <target>__Sicherheitscode der Eltern</target>
       </trans-unit>
       <trans-unit id="_WwsV.4" resname="Name und Beziehung des Notfallkontakts">
@@ -356,10 +360,6 @@
       <trans-unit id="RASD4xH" resname="Datenschutzhinweis Französisch (Markdown)">
         <source>Datenschutzhinweis Französisch (Markdown)</source>
         <target>__Datenschutzhinweis Französisch (Markdown)</target>
-      </trans-unit>
-      <trans-unit id="Egy_4e5" resname="AGB hochladen. Diese wird an die Bestätigungsemail angehängt">
-        <source>AGB hochladen. Diese wird an die Bestätigungsemail angehängt</source>
-        <target>__AGB hochladen. Diese wird an die Bestätigungsemail angehängt</target>
       </trans-unit>
       <trans-unit id="7TAbULa" resname="URL für Logo">
         <source>URL für Logo</source>
@@ -505,10 +505,6 @@
         <source>Straße Nr.</source>
         <target>__Straße Nr.</target>
       </trans-unit>
-      <trans-unit id="j6OVtHv" resname="Brutto Haushaltseinkommen pro Monat">
-        <source>Brutto Haushaltseinkommen pro Monat</source>
-        <target>__Brutto Haushaltseinkommen pro Monat</target>
-      </trans-unit>
       <trans-unit id="7KMrC1e" resname="Kategorie (strg halten für Mehrfachauswahl)">
         <source>Kategorie (strg halten für Mehrfachauswahl)</source>
         <target>__Kategorie (strg halten für Mehrfachauswahl)</target>
@@ -516,6 +512,58 @@
       <trans-unit id="UJyyKYg" resname="Stadt aktiv">
         <source>Stadt aktiv</source>
         <target>__Stadt aktiv</target>
+      </trans-unit>
+      <trans-unit id="lRv6Lh5" resname="Stripe Public Key">
+        <source>Stripe Public Key</source>
+        <target>Stripe Public Key</target>
+      </trans-unit>
+      <trans-unit id="NYASOpU" resname="Stripe Private Key">
+        <source>Stripe Private Key</source>
+        <target>Stripe Public Key</target>
+      </trans-unit>
+      <trans-unit id="D2p5JXQ" resname="Stripe akzeptieren">
+        <source>Stripe akzeptieren</source>
+        <target>Accept Stripe</target>
+      </trans-unit>
+      <trans-unit id="W7pZS56" resname="Caterer Info Deutsch (Markdown)">
+        <source>Caterer Info Deutsch (Markdown)</source>
+        <target>Informations sur le restaurant en alemand (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="GmaCtFS" resname="Caterer Info Englisch (Markdown)">
+        <source>Caterer Info Englisch (Markdown)</source>
+        <target>Informations sur le restaurant en anglais (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="yt7GnqI" resname="Caterer Info Französisch (Markdown)">
+        <source>Caterer Info Französisch (Markdown)</source>
+        <target>Informations sur le restaurant en français  (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="FjoGHqk" resname="NBrutto Haushaltseinkommen pro Monat">
+        <source>NBrutto Haushaltseinkommen pro Monat</source>
+        <target>__Brutto Haushaltseinkommen pro Monat</target>
+      </trans-unit>
+      <trans-unit id="U5zZGkQ" resname="Berufliche Situation der Eltern">
+        <source>Berufliche Situation der Eltern</source>
+        <target>Profession of the parents</target>
+      </trans-unit>
+      <trans-unit id="g0ZIpDI" resname="SEPA-LAstschrift Mandat wird elektromisch erteilt">
+        <source>SEPA-LAstschrift Mandat wird elektromisch erteilt</source>
+        <target>SEPA electronic</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="xhJ.1EZ" resname="PLZ">
+        <source>PLZ</source>
+        <target>__PLZ</target>
+      </trans-unit>
+      <trans-unit id="awhtVjc" resname="Sicherheitscode der Eltern">
+        <source>Sicherheitscode der Eltern</source>
+        <target>__Sicherheitscode der Eltern</target>
+      </trans-unit>
+      <trans-unit id="Egy_4e5" resname="AGB hochladen. Diese wird an die Bestätigungsemail angehängt">
+        <source>AGB hochladen. Diese wird an die Bestätigungsemail angehängt</source>
+        <target>__AGB hochladen. Diese wird an die Bestätigungsemail angehängt</target>
       </trans-unit>
     </body>
   </file>
