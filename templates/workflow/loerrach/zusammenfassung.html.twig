@@ -14,7 +14,7 @@
     {% trans %}
         Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.
     {% endtrans %}
-    <div class="card mb-3">
+    <div class="card mb-3 mt-3">
         <div class="card-header">
             <h3 class="cover-heading">{% trans %}Daten des Erziehungsberechtigten{% endtrans %} <a
                         href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"> <i
@@ -23,7 +23,7 @@
         <div class="card-body">
             <table class="table table-responsive">
                 <tbody>
-                <td style="width: 50%">{% trans %}Name der erziehungsberechtigten Person{% endtrans %}</td>
+                <td style="width: 50%">{% trans %}Name des Erziehungsberechtigten{% endtrans %}</td>
                 <td>{{ eltern.vorname }} {{ eltern.name }}</td>
                 </tr>
                 <tr>
@@ -31,32 +31,32 @@
                     <td>{{ eltern.email }}</td>
                 </tr>
                 <tr>
-                    <td>{% trans %}Adresse{% endtrans %}</td>
+                    <td>{% trans %}Adresse des Erziehungsberechtigten{% endtrans %}</td>
                     <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
                 </tr>
                 <tr>
-                    <td>{% trans %}Brutto Familieneinkommen pro Monat{% endtrans %}</td>
+                    <td>{% trans %}Brutto Haushaltseinkommen pro Monat{% endtrans %}</td>
                     <td>{{ stadt.gehaltsklassen[eltern.einkommen] }} €</td>
                 </tr>
                 <tr>
                     <td>{% trans %}Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung{% endtrans %}</td>
-                    <td>{{ eltern.kinderImKiga?"Ja":'Nein'|trans }}</td>
+                    <td>{{ eltern.kinderImKiga?"Ja"|trans:'Nein'|trans }}</td>
                 </tr>
 
                 <tr>
                     <td>{% trans %}Ich bin alleinerziehend{% endtrans %}</td>
-                    <td>{{ eltern.alleinerziehend?"Ja":'Nein'|trans }}</td>
+                    <td>{{ eltern.alleinerziehend?"Ja"|trans:'Nein'|trans }}</td>
                 </tr>
                 <tr>
-                    <td>{% trans %}Berufliche Situation der Eltern{% endtrans %}</td>
+                    <td>{% trans %}Berufliche Situation des Erziehungsberechtigten{% endtrans %}</td>
                     <td>{{ beruflicheSituation[eltern.beruflicheSituation] }}</td>
                 </tr>
                 <tr>
-                    <td>{% trans %}Name und Beziehung des Notfallkontakt{% endtrans %}</td>
+                    <td>{% trans %}Kontakt für evtl. Notfälle{% endtrans %}</td>
                     <td>{{ eltern.notfallName }}</td>
                 </tr>
                 <tr>
-                    <td>{% trans %}Notfallkontakt der Eltern{% endtrans %}</td>
+                    <td>{% trans %}Telefonnummer für evtl. Notfälle{% endtrans %}</td>
                     <td>{{ eltern.notfallkontakt }}</td>
                 </tr>
                 <tr>
@@ -120,7 +120,7 @@
                                 </tr>
                                 <tr>
                                     <td>{% trans %}Klasse{% endtrans %}</td>
-                                    <td>{{ k.klasse }}</td>
+                                    <td>{{ k.klasse }}. {{ 'Klasse'|trans }}</td>
                                 </tr>
                                 <tr>
                                     <td>{% trans %}Allergien{% endtrans %}</td>
@@ -132,40 +132,40 @@
                                 </tr>
 
                                 <tr>
-                                    <td>{% trans %}Mein Kind ist Gluten intolerant{% endtrans %}</td>
-                                    <td>{{ k.gluten?"Ja":'Nein'|trans }}</td>
+                                    <td>{% trans %}Mein Kind ist glutenintolerant{% endtrans %}</td>
+                                    <td>{{ k.gluten?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %}Mein Kind ist Laktose intolerant{% endtrans %}</td>
-                                    <td>{{ k.laktose?"Ja":'Nein'|trans }}</td>
+                                    <td>{% trans %}Mein Kind ist laktoseintolerant{% endtrans %}</td>
+                                    <td>{{ k.laktose?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
                                     <td>{% trans %}Mein Kind isst kein Schweinefleisch{% endtrans %}</td>
-                                    <td>{{ k.schweinefleisch?"Ja":'Nein'|trans }}</td>
+                                    <td>{{ k.schweinefleisch?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
                                     <td>{% trans %}Vegetrarisch{% endtrans %}</td>
-                                    <td>{{ k.vegetarisch?"Ja":'Nein'|trans }}</td>
+                                    <td>{{ k.vegetarisch?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
                                     <td>{% trans %}Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause{% endtrans %}</td>
-                                    <td>{{ k.alleineHause?"Ja":'Nein'|trans }}</td>
+                                    <td>{{ k.alleineHause?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
                                     <td>{% trans %}Mein Kind darf an Ausflügen teilnehmen{% endtrans %}</td>
-                                    <td>{{ k.ausfluege?"Ja":'Nein'|trans }}</td>
+                                    <td>{{ k.ausfluege?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
                                     <td>{% trans %}Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden{% endtrans %}</td>
-                                    <td>{{ k.sonnencreme?"Ja":'Nein'|trans }}</td>
+                                    <td>{{ k.sonnencreme?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %}Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden{% endtrans %}</td>
-                                    <td>{{ k.fotos?"Ja":'Nein'|trans }}</td>
+                                    <td>{% trans %}Fotos auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden{% endtrans %}</td>
+                                    <td>{{ k.fotos?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
 
                                 <tr>
-                                    <td>{% trans %}Zuständiger Träger in der Schule{% endtrans %}</td>
+                                    <td>{% trans %}Betreuende Organisation{% endtrans %}</td>
                                     <td>{{ k.schule.organisation.name }}</td>
                                 </tr>
                                 {% if k.betreungsblocksReal|length > 0 %}
@@ -252,8 +252,8 @@
             {% trans %}Kontoinhaber{% endtrans %}: {{ eltern.kontoinhaber }}<br/>
             {% trans %}IBAN{% endtrans %}: {{ eltern.iban }}<br/>
             {% trans %}BIC{% endtrans %}: {{ eltern.bic }}<br/>
-            {{ eltern.sepaInfo?"Ich (Wir) erteile dem betreuenden Träger (den betreuenden Trägern) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags":""|trans }} </br>
-            {% trans %}Hinweis: Ich kann (Wir können) innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem (unserem) Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
+            {{ eltern.sepaInfo?"Ich erteile dem betreuenden Organisationen (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags"|trans:""|trans }} </br>
+            {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
 
         </div>
     </div>

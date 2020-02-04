@@ -2,12 +2,12 @@ Name: Last name
 Nachname: Last name
 Vorname: First name
 Straße: Street
-Adresszusatz: Adress additional
-Brutto Familieneinkommen pro Monat: Gross family income per month
+Adresszusatz: Address extension
+Brutto Haushaltseinkommen pro Monat: Gross household income per month
 Speichern: Save
-Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung: I have at least one additional child in a public kindergarten that is subject to a fee
+Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung: I have at least one additional child in a public kindergarten
 Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger: I am an education and participation package (BUT) recipient
-Berufliche Situation der Eltern: Profession of the parents
+Berufliche Situation des Erziehungsberechtigten: Employment situation of the legal guardian
 Name des Notfallkontakts: Name of the emergency contact
 Notfalltelefonnummer: Emergency telephone number
 Name der Stadt: Name of the city
@@ -15,7 +15,7 @@ Slug der Stadt: Slug of the city
 Username: Username
 E-Mail: E-Mail
 Passwort: Password
-Geburtstag: Birthday
+Geburtstag: Date of Birth
 Name der Schule: Name of the School
 Postleitzahl: Postcode
 Stadt: City
@@ -71,7 +71,7 @@ Klasse 6: Class 6
 Bemerkung: Notes
 weiter: next
 Anzahl der Preiskategorien: Number of price categories
-Sicherheitscode der Eltern: Security code of the parents
+Sicherheitscode des Erziehungsberechtigten: Security code of the parents
 Name und Beziehung des Notfallkontakts: Name and relationship of the emergency contact
 Ich bin alleinerziehend: I am a single parent
 Weitere abholberechtigte Personen: Other persons authorised to collect
@@ -81,8 +81,8 @@ Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden: My 
 Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.: Photos showing my child may be published in the public press as well as used for the public relations work of the sponsors.
 Mein Kind ernährt sich vegetarisch: My child is a vegetarian
 Mein Kind isst kein Schweinefleich: My child does not eat pork
-Mein Kind ist Gluten intolerant: My child is gluten intolerant
-Mein Kind ist Laktose intolerant: My child is lactose intolerant
+Mein Kind ist glutenintolerant: My child is gluten intolerant
+Mein Kind ist laktoseintolerant: My child is lactose intolerant
 Tag des Lastschrifteinzugs: Date of debit entry
 Beginn des Abrechnungszeitraums: Start of the accounting period
 Datenschutzhinweis Deutsch (Markdown): Data privacy German (Markdown)

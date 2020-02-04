@@ -37,8 +37,8 @@ class LoerrachEltern extends AbstractType
             ->add('plz', TextType::class, ['label' => 'Postleitzahl', 'translation_domain' => 'form'])
             ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form', 'help' => 'Das ist eine Hilfe für diese Frage im Form'])
             ->add('einkommen', ChoiceType::class, [
-                'choices' => $options['einkommen'], 'label' => 'Brutto Familieneinkommen pro Monat', 'translation_domain' => 'form'])
-            ->add('beruflicheSituation', ChoiceType::class, ['choices' => $options['beruflicheSituation'], 'required' => true, 'label' => 'Berufliche Situation der Eltern', 'translation_domain' => 'form'])
+                'choices' => $options['einkommen'], 'label' => 'Brutto Haushaltseinkommen pro Monat', 'translation_domain' => 'form'])
+            ->add('beruflicheSituation', ChoiceType::class, ['choices' => $options['beruflicheSituation'], 'required' => true, 'label' => 'Berufliche Situation des Erziehungsberechtigten', 'translation_domain' => 'form'])
             ->add('kinderImKiga', CheckboxType::class, ['required' => false, 'label' => 'Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung', 'translation_domain' => 'form'])
             ->add('alleinerziehend', CheckboxType::class, ['required' => false, 'label' => 'Ich bin alleinerziehend', 'translation_domain' => 'form'])
             ->add('notfallName', TextType::class, ['required' => true, 'label' => 'Name des Notfallkontakts', 'translation_domain' => 'form'])

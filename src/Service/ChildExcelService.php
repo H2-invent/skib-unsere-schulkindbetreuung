@@ -47,7 +47,7 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Typ Numerisch'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Typ'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Schule'));
-        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Eltern'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Erziehungsberechtigter'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Straße'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Adresse'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('PLZ'));

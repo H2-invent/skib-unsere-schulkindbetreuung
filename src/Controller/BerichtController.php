@@ -102,7 +102,7 @@ class BerichtController extends AbstractController
         $blocksheet = $spreadsheeet->createSheet();
         $blocksheet->setTitle($translator->trans('Betreuungszeitfenster'));
         $count = 0;
-        $blocksheet->setCellValue($alphas[$count++] . '1', 'ID');
+        $blocksheet->setCellValue($alphas[$count++] . '1', 'Block_ID');
         $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Von'));
         $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Bis'));
         $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Wochentag'));
@@ -113,8 +113,8 @@ class BerichtController extends AbstractController
         $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Schuljahr Anfang'));
         $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Schuljahr Ende'));
         $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Anzahl Kinder'));
-        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Schule'));
         $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Organisation'));
+        $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Schule'));
         $blocksheet->setCellValue($alphas[$count++] . '1', $translator->trans('Deaktiviert'));
         $counter = 2;
         foreach ($blocks as $data) {
@@ -138,13 +138,13 @@ class BerichtController extends AbstractController
         }
         $kindSheet = $spreadsheeet->createSheet();
         $kindSheet->setTitle($translator->trans('Kinder'));
-        $kindSheet->setCellValue('A1', 'ID');
+        $kindSheet->setCellValue('A1', 'Kind_ID');
         $kindSheet->setCellValue('B1', $translator->trans('Alter'));
         $kindSheet->setCellValue('C1', $translator->trans('Klasse'));
         $kindSheet->setCellValue('D1', $translator->trans('Typ Numerisch'));
         $kindSheet->setCellValue('E1', $translator->trans('Typ'));
         $kindSheet->setCellValue('F1', $translator->trans('Schule'));
-        $kindSheet->setCellValue('G1', $translator->trans('Eltern'));
+        $kindSheet->setCellValue('G1', $translator->trans('Erziehungsberechtigter'));
         $counter = 2;
         foreach ($kinder as $data) {
             $count = 0;
@@ -159,13 +159,14 @@ class BerichtController extends AbstractController
             $counter++;
         }
         $elternSheet = $spreadsheeet->createSheet();
-        $elternSheet->setTitle($translator->trans('Eltern'));
+        $elternSheet->setTitle($translator->trans('Erziehungsberechtigter'));
         $count = 0;
-        $elternSheet->setCellValue($alphas[$count++] . '1', 'ID');
+        $elternSheet->setCellValue($alphas[$count++] . '1', 'Erziehungsberechtigter_ID');
         $elternSheet->setCellValue($alphas[$count++] . '1', $translator->trans('Kinder im KiGa'));
         $elternSheet->setCellValue($alphas[$count++] . '1', $translator->trans('Berufliche Situation'));
         $elternSheet->setCellValue($alphas[$count++] . '1', $translator->trans('Berufliche Situation numerisch'));
         $elternSheet->setCellValue($alphas[$count++] . '1', $translator->trans('Alleinerziehend'));
+        $elternSheet->setCellValue($alphas[$count++] . '1', $translator->trans('Einkommensgruppe numerisch'));
         $elternSheet->setCellValue($alphas[$count++] . '1', $translator->trans('Einkommensgruppe'));
         $elternSheet->setCellValue($alphas[$count++] . '1', $translator->trans('Anzahl an Kindern'));
         $counter = 2;
@@ -179,6 +180,7 @@ class BerichtController extends AbstractController
             $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getBeruflicheSituation());
             $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getAlleinerziehend());
             $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getEinkommen());
+            $elternSheet->setCellValue($alphas[$count++] . $counter, $stadt->getGehaltsklassen()[$data->getEinkommen()]);
             $elternSheet->setCellValue($alphas[$count++] . $counter, sizeof($data->getKinds()));
             $counter++;
         }

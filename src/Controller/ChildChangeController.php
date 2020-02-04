@@ -33,7 +33,7 @@ class ChildChangeController extends AbstractController
         $input = array('seccode'=>'');
 
         $form = $this->createFormBuilder($input)
-            ->add('seccode', TextType::class, ['label' => 'Sicherheitscode der Eltern', 'translation_domain' => 'form'])
+            ->add('seccode', TextType::class, ['label' => 'Sicherheitscode des Erziehungsberechtigten', 'translation_domain' => 'form'])
            ->add('submit', SubmitType::class, ['attr'=> array('class'=> 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form'])
             ->getForm();
 
