@@ -1,128 +1,133 @@
-Name: Last name
-Nachname: __Nachname
-Vorname: First name
-Straße: Street
-Adresszusatz: Adress additional
-NBrutto Familieneinkommen pro Monat: __Brutto Familieneinkommen pro Monat
-Speichern: Save
-Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung: __Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung
-Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger: __Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger
-Berufliche Situation der Eltern: Profession of the parents
-Notfalltelefonnummer: __Notfalltelefonnummer
-IBAN für das Lastschriftmandat: IBAN for SEPA
-SEPA-LAstschrift Mandat wird elektromisch erteilt: SEPA electronic
-Name der Stadt: Name of the city
-Slug der Stadt: Slug of the city
-Username: Username
-Email: Email
-Passwort: Password
-Geburtstag: Birthday
-Name der Schule: Name of the School
-PLZ: __PLZ
-Stadt: City
-Name der Organisation: Name of the organisation
-BIC: BIC
-Name der Bank: Name of the Bank
-Gläubiger ID: __Gläubiger ID
-Info Text Deutsch: __Info text Deutsch
-Info Text Englisch: __Info text Englisch
-Info Text Französisch: __Info text Französisch
-AGB Deutsch (Markdown): __AGB Deutsch (Markdown)
-AGB Englisch (Markdown): __AGB Englisch (Markdown)
-AGB Französisch (Markdown): __AGB Französisch (Markdown)
-Telefonnummer: Phone
+Name: Nom de famille
+Nachname: Nom de famille
+Vorname: Prénom
+Straße: Rue
+Adresszusatz: Adresse supplémentaire
+Brutto Haushaltseinkommen pro Monat: Revenu brut des ménages par mois
+Speichern: Enregistrer
+Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung: J'ai au moins un enfant supplémentaire dans un jardin d'enfants public payant
+Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger: Je suis un bénéficiaire du paquet éducation et participation (MAIS)
+Berufliche Situation des Erziehungsberechtigten: Situation en matière professionnelle du représentant légal
+Name des Notfallkontakts: Nom de la personne à contacter en cas d'urgence
+Notfalltelefonnummer: Numéro de téléphone d'urgence
+Name der Stadt: Nom de la ville
+Slug der Stadt: La limace de la ville
+Username: Nom d'utilisateur
+E-Mail: L'adresse électronique
+Passwort: Mot de passe
+Geburtstag: Date de naissance
+Name der Schule: Nom de l'école
+Postleitzahl: Code postal
+Stadt: Ville
+Name der Organisation: Nom de l'organisation
+Name der Bank: Nom de la banque
+Gläubiger ID: Identification du créancier
+Info Text Deutsch: Texte d'information en allemand
+Info Text Englisch: Texte d'information en anglais
+Info Text Französisch: Texte d'information en français
+AGB Deutsch (Markdown): Termes allemands (Markdown)
+AGB Englisch (Markdown): Termes anglais (Markdown)
+AGB Französisch (Markdown): Termes français (Markdown)
+Telefonnummer: Téléphone
 SMTP Server: SMTP Server
 SMTP Port: SMTP Port
 SMTP Username: SMTP Username
 SMTP Passwort: SMTP Password
-Ansprechpartner: __Ansprechpartner
-Hauptfarbe(HTML Code): __Hauptfarbe(HTML Code)
-Akzentfarbe (HTML Code): __Akzentfarbe (HTML Code)
-Akzentfarbe Fehler (HTML Code): __Akzentfarbe Fehler (HTML Code)
-Logo hochladen: Upload logo
-ROLE_CITY_DASHBOARD: __Darf das Dashboard sehen
-ROLE_CITY_SCHOOL: __Darf Schulen sehen und bearbeiten
-ROLE_CITY_REPORT: __Darf Report zu den ORganisationen sehen
-Schuljahresbegin: __Schuljahresbegin
-Schuljahresende: __Schuljahresende
-Beginn der Anmeldung: __Beginn der Anmeldung
-Ende der Anmeldung: __Ende der Anmeldung
-Betreuungsbeginn: __Betreuungsbeginn
-Betreuungsende: __Betreuungsende
-Preis: __Preis
-BIC für das Lastschriftmandat: __BIC für das Lastschriftmandat
-Kontoinhaber für das Lastschriftmandat: __Kontoinhaber für das Lastschriftmandat
-Schulform: __Schulform
-Jahrgangsstufe: __Jahrgangsstufe
-Ganztagsbetreuung: __Ganztagsbetreuung
-Halbtagsbetreuung: __Halbtagsbetreuung
-Mein Kind benötig folgende Medikamente: __Kind benötig folgende Medikamente
-Mein Kind hat folgende Allergien: __Kind hat folgende Allergien
-Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden.: __Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden
-Zum Newsletter anmelden: __Zum Newsletter anmelden
-Klasse 1: __Klasse 1
-Klasse 2: __Klasse 2
-Klasse 3: __Klasse 3
-Klasse 4: __Klasse 4
-Klasse 5: __Klasse 5
-Klasse 6: __Klasse 6
-Bemerkung: __Bemerkung
+Ansprechpartner: Personne de contact
+Hauptfarbe(HTML Code): Couleur principale (code HTML)
+Akzentfarbe (HTML Code): Couleur d'accent (code HTML)
+Akzentfarbe Fehler (HTML Code): Erreur de couleur d'accent (code HTML)
+Logo hochladen: Télécharger le logo
+ROLE_CITY_DASHBOARD: Voir le tableau de bord
+ROLE_CITY_SCHOOL: Peut visualiser et éditer les écoles
+ROLE_CITY_REPORT: Peut voir le rapport aux organisations
+Schuljahresbegin: Début de l'année scolaire
+Schuljahresende: Fin de l'année scolaire
+Beginn der Anmeldung: Début de l'enregistrement
+Ende der Anmeldung: Fin de l'enregistrement
+Betreuungsbeginn: Début de la supervision
+Betreuungsende: Fin de la supervision
+Preis: Prix
+IBAN für das Lastschriftmandat: IBAN pour le mandat de domiciliation
+BIC für das Lastschriftmandat: BIC pour le mandat de domiciliation
+BIC: BIC
+Kontoinhaber für das Lastschriftmandat: Titulaire du compte pour le mandat de domiciliation
+SEPA-Lastschrift Mandat wird elektronisch erteilt: Le mandat de prélèvement SEPA est émis par voie électronique
+Schulform: Forme scolaire
+Jahrgangsstufe: Classe
+Ganztagsbetreuung: Journée entière
+Halbtagsbetreuung: Demi-journée
+Mein Kind benötig folgende Medikamente: L'enfant a besoin des médicaments suivants
+Mein Kind hat folgende Allergien: L'enfant présente les allergies suivantes
+Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden.: Je reconnais que mes données seront traitées électroniquement
+Zum Newsletter anmelden: S'abonner à la newsletter
+Klasse 1: Classe 1
+Klasse 2: Classe 2
+Klasse 3: Classe 3
+Klasse 4: Classe 4
+Klasse 5: Classe 5
+Klasse 6: Classe 6
+Bemerkung: Notes
 weiter: next
-Anzahl der Preiskategorien: __Anzahl der Preiskategorien
-Sicherheitscode der Eltern: __Sicherheitscode der Eltern
-Name und Beziehung des Notfallkontakts: __Name und Beziehung des Notfallkontakts
-Ich bin alleinerziehend: __Ich bin alleinerziehend
-Weitere abholberechtigte Personen: __Weitere abholberechtigte Personen
-Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause: __Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause
-Mein Kind darf an Ausflügen teilnehmen: __Mein Kind darf an Ausflügen teilnehmen
-Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden: __Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden
-Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.: __Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.
-Mein Kind ernährt sich vegetarisch: __Mein Kind ernährt sich vegetarisch
-Mein Kind isst kein Schweinefleich: __Mein Kind isst kein Schweinefleich
-Mein Kind ist Gluten intolerant: __Mein Kind ist Gluten intolerant
-Mein Kind ist Laktose intolerant: __Mein Kind ist Laktose intolerant
-Tag des Lastschrifteinzugs: __Tag des Lastschrifteinzugs
-Beginn des Abrechnungszeitraums: __Beginn des Abrechnungszeitraums
-Datenschutzhinweis Deutsch (Markdown): __Datenschutzhinweis Deutsch (Markdown)
-Datenschutzhinweis Englisch (Markdown): __Datenschutzhinweis Englisch (Markdown)
-Datenschutzhinweis Französisch (Markdown): __Datenschutzhinweis Französisch (Markdown)
-AGB hochladen. Diese wird an die Bestätigungsemail angehängt: __AGB hochladen. Diese wird an die Bestätigungsemail angehängt
-URL für Logo: __URL für Logo
-Steuernummer: __Steuernummer
-UmSt. Identnummer: __UmSt. Identnummer
-Homepage URL: __Homepage URL
-Neuigkeit auf der Startseite sichtbar: __Neuigkeit auf der Startseite sichtbar
-Nachricht: __Nachricht
-Titel: __Titel
-Wir bieten eine Ferienbetreuung über dieses Portal an: __Wir bieten eine Ferienbetreuung über dieses Portal an
-Wir bieten eine Schulkindbetreuung über dieses Portal an: __Wir bieten eine Schulkindbetreuung über dieses Portal an
-Anzahl Preise: __Anzahl Preise
-Maximum Anzahl: __Maximum Anzahl
-Minimum Anzahl: __Minimum Anzahl
-End Vorverkauf: __End Vorverkauf
-Start Vorverkauf: __Start Vorverkauf
-Uhrzeit Ende: __Uhrzeit Ende
-Uhrzeit Anfang: __Uhrzeit Anfang
-Datum Ende: __Datum Ende
-Datum Start: __Datum Start
-Maximum Alter: __Maximum Alter
-Mindest Alter: __Mindest Alter
-Bezeichnung der Gehaltsklassen: __Bezeichnung der Gehaltsklassen
-Ferienblock mit Warteliste: __Ferienblock mit Warteliste
-Manuelle Bestätigung der Teilnehmer: __Alle Kinder im Kontingent automatisch annehmen, dannach auf Warteliste
-Stornogebühr für das Ferienprogramm: __Stornogebühr für das Ferienprogramm
-Regelungen Ferienprogram (Markdown): __Regelungen Ferienprogram (Markdown)
-Ansprechpartner Email: __Ansprechpartner Email
-Ansprechpartner Telefon: __Ansprechpartner Telefon
-Ansprechpartner Ferien: __Ansprechpartner Ferien
-Name der Schule für den Versand der Nachricht: __Name der Schule für den Versand der Nachricht
-Braintree akzeptieren: __Braintree akzeptieren
-Braintree Merchant ID: __Braintree Merchant ID
-Braintree Private Key: __Braintree Private Key
-Braintree Public Key: __Braintree Public Key
-Braintree in der Sandbox: __Braintree in der Sandbox
-Impressum der Stadt (Markdown): __Impressum der Stadt (Markdown)
-Straße Nr.: __Straße Nr.
-Brutto Familieneinkommen pro Monat: __Brutto Familieneinkommen pro Monat
-Kategorie (strg halten für Mehrfachauswahl): __Kategorie (strg halten für Mehrfachauswahl)
-Stadt aktiv: __Stadt aktiv
+Anzahl der Preiskategorien: Nombre de catégories de prix
+Sicherheitscode des Erziehungsberechtigten: Code de sécurité des parents
+Name und Beziehung des Notfallkontakts: Nom de la personne à contacter en cas d'urgence
+Ich bin alleinerziehend: Je suis un parent seul.
+Weitere abholberechtigte Personen: Autres personnes autorisées à collecter
+Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause: Mon enfant peut rentrer seul à la maison après la fin de la garde réservée
+Mein Kind darf an Ausflügen teilnehmen: Mon enfant peut participer à des excursions
+Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden: Mon enfant peut être traité avec un écran solaire standard en été
+Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.: Les photos montrant mon enfant peuvent être publiées dans la presse publique ainsi qu'utilisées pour le travail de relations publiques des organisations.
+Mein Kind ernährt sich vegetarisch: Mon enfant est végétarien
+Mein Kind isst kein Schweinefleich: Mon enfant ne mange pas de porc
+Mein Kind ist glutenintolerant: Mon enfant est intolérant au gluten
+Mein Kind ist laktoseintolerant: Mon enfant est intolérant au lactose
+Tag des Lastschrifteinzugs: Date de l'inscription au débit
+Beginn des Abrechnungszeitraums: Début de l'exercice financier
+Datenschutzhinweis Deutsch (Markdown): Protection des données en allemand (Markdown)
+Datenschutzhinweis Englisch (Markdown): Confidentialité des données Anglais (Markdown)
+Datenschutzhinweis Französisch (Markdown): Confidentialité des données Français (Markdown)
+URL für Logo: URL for Logo
+Steuernummer: Vat number
+UmSt. Identnummer: UmSt. Id
+Homepage URL: Homepage URL
+Neuigkeit auf der Startseite sichtbar: News visible on the homepage
+Nachricht: Message
+Titel: Title
+Wir bieten eine Ferienbetreuung über dieses Portal an: We offer holiday care through this portal
+Wir bieten eine Schulkindbetreuung über dieses Portal an: We offer school child care via this portal
+Anzahl Preise: Number prices
+Maximum Anzahl: Maximum Capacity
+Minimum Anzahl: Minimum Capacity
+End Vorverkauf: End presale
+Start Vorverkauf: Start presale
+Uhrzeit Ende: End time
+Uhrzeit Anfang: Start time
+Datum Ende: End date
+Datum Start: Start date
+Maximum Alter: Maximum age
+Mindest Alter: Minimum age
+Bezeichnung der Gehaltsklassen: Designation of the salary grades
+Ferienblock mit Warteliste: Holiday block with waiting list
+Manuelle Bestätigung der Teilnehmer: Accept all children in the contingent automatically, then on waiting list
+Stornogebühr für das Ferienprogramm: Cancellation fee for the holiday program
+Regelungen Ferienprogram (Markdown): Regulations holiday program (Markdown)
+Ansprechpartner Email: Contact person Email
+Ansprechpartner Telefon: Contact person Telephon
+Ansprechpartner Ferien: Contact person Holiday program
+Name der Schule für den Versand der Nachricht: Name of the school for sending the message
+Braintree akzeptieren: Accept Braintree
+Braintree Merchant ID: Braintree Merchant ID
+Braintree Private Key: Braintree Private Key
+Braintree Public Key: Braintree Public Key
+Braintree in der Sandbox: Braintree in Sandbox
+Impressum der Stadt (Markdown): Imprint of the city (Markdown)
+Straße Nr.: Street No.
+Kategorie (strg halten für Mehrfachauswahl): Category (hold strg for multiple selection)
+Stadt aktiv: City activ
+Stripe Public Key: Stripe Public Key
+Stripe Private Key: Stripe Public Key
+Stripe akzeptieren: Accept Stripe
+Caterer Info Deutsch (Markdown): Informations sur le restaurant en alemand (Markdown)
+Caterer Info Englisch (Markdown): Informations sur le restaurant en anglais (Markdown)
+Caterer Info Französisch (Markdown): Informations sur le restaurant en français  (Markdown)

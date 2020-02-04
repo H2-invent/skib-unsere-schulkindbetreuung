@@ -18,33 +18,41 @@
         <table cellpadding="5px" >
             <tbody>
             <tr>
-                <td>{% trans %}Name der Eltern{% endtrans %}</td>
+                <td>{% trans %}Name des Erziehungsberechtigten{% endtrans %}</td>
                 <td>{{ eltern.vorname }} {{ eltern.name }}</td>
             </tr>
             <tr>
-                <td>{% trans %}Adresse der Eltern{% endtrans %}</td>
+                <td>{% trans %}Adresse des Erziehungsberechtigten{% endtrans %}</td>
                 <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
             </tr>
             <tr>
-                <td>{% trans %}Brutto Familieneinkommen pro Monat{% endtrans %}</td>
-                <td>{{ einkommen[eltern.einkommen] }}</td>
+                <td>{% trans %}Brutto Haushaltseinkommen pro Monat{% endtrans %}</td>
+                <td>{{ einkommen[eltern.einkommen] }} €</td>
             </tr>
             <tr>
-                <td>{% trans %}Kinder im Kinderganrten{% endtrans %}</td>
-                <td>{{ eltern.kinderImKiga?"Ja":'Nein'|trans }}</td>
+                <td>{% trans %}Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung{% endtrans %}</td>
+                <td>{{ eltern.kinderImKiga?"Ja"|trans:'Nein'|trans }}</td>
             </tr>
 
             <tr>
-                <td>{% trans %}Berufliche Situation der Eltern{% endtrans %}</td>
-                <td>{{ eltern.beruflicheSituation }}</td>
+                <td>{% trans %}Berufliche Situation des Erziehungsberechtigten{% endtrans %}</td>
+                <td>{{ beruflicheSituation[eltern.beruflicheSituation] }}</td>
             </tr>
             <tr>
-                <td>{% trans %}Notfallkontakt der Eltern{% endtrans %}</td>
+                <td>{% trans %}Kontakt für evtl. Notfälle{% endtrans %}</td>
+                <td>{{ eltern.notfallName }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Telefonnummer für evtl. Notfälle{% endtrans %}</td>
                 <td>{{ eltern.notfallkontakt }}</td>
             </tr>
             <tr>
+                <td>{% trans %}Weitere abholberechtigte Personen{% endtrans %}</td>
+                <td>{{ eltern.abholberechtigter }}</td>
+            </tr>
+            <tr>
                 <td>{% trans %}Bankverbindung für Lastschrift{% endtrans %}</td>
-                <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}<br/>{{ eltern.sepaInfo?"Ich (Wir) erteile dem betreuenden Träger (den betreuenden Trägern) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags":""|trans }} </td>
+                <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}<br/>{{ eltern.sepaInfo?"Ich erteile der betreuenden Organisation (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags"|trans:""|trans }} </td>
             </tr>
             <tr>
                 <td>{% trans %}E-Mail Adresse{% endtrans %}</td>
@@ -52,7 +60,7 @@
             </tr>
             {% if kind is defined and kind is not null %}
             <tr>
-                <td>{% trans %}Monatliche Schulkindbetreuungskosten{% endtrans %}</td>
+                <td>{% trans %}Monatliche Gebühren{% endtrans %}</td>
                 <td>{{ kind.preisforBetreuung|number_format(2,',','.') }} €</td>
             </tr>
             {% endif %}

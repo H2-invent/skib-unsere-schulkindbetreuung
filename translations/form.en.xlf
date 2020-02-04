@@ -25,9 +25,9 @@
         <source>Adresszusatz</source>
         <target state="translated">Address (additional)</target>
       </trans-unit>
-      <trans-unit id="7kzDX6W" resname="Brutto Familieneinkommen pro Monat">
-        <source>Brutto Familieneinkommen pro Monat</source>
-        <target state="translated">Gross family income per month</target>
+      <trans-unit id="j6OVtHv" resname="Brutto Haushaltseinkommen pro Monat">
+        <source>Brutto Haushaltseinkommen pro Monat</source>
+        <target state="translated">Gross household income per monthh</target>
       </trans-unit>
       <trans-unit id="9rL.OfV" resname="Speichern">
         <source>Speichern</source>
@@ -41,8 +41,8 @@
         <source>Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger</source>
         <target state="translated">I am an Education and Participation Package (BUT) Recipient</target>
       </trans-unit>
-      <trans-unit id="U5zZGkQ" resname="Berufliche Situation der Eltern">
-        <source>Berufliche Situation der Eltern</source>
+      <trans-unit id="YVJL_Cl" resname="Berufliche Situation des Erziehungsberechtigten">
+        <source>Berufliche Situation des Erziehungsberechtigten</source>
         <target state="translated">Employment situation of parents</target>
       </trans-unit>
       <trans-unit id="qhLfgH2" resname="Name des Notfallkontakts">
@@ -297,8 +297,8 @@
         <source>Anzahl der Preiskategorien</source>
         <target state="translated">Number of price categories</target>
       </trans-unit>
-      <trans-unit id="awhtVjc" resname="Sicherheitscode der Eltern">
-        <source>Sicherheitscode der Eltern</source>
+      <trans-unit id="eltKSgI" resname="Sicherheitscode des Erziehungsberechtigten">
+        <source>Sicherheitscode des Erziehungsberechtigten</source>
         <target state="translated">Parents' security code</target>
       </trans-unit>
       <trans-unit id="_WwsV.4" resname="Name und Beziehung des Notfallkontakts">
@@ -337,12 +337,12 @@
         <source>Mein Kind isst kein Schweinefleich</source>
         <target state="translated">My child doesn't eat pork</target>
       </trans-unit>
-      <trans-unit id=".a8vgi5" resname="Mein Kind ist Gluten intolerant">
-        <source>Mein Kind ist Gluten intolerant</source>
+      <trans-unit id="pwh_plI" resname="Mein Kind ist glutenintolerant">
+        <source>Mein Kind ist glutenintolerant</source>
         <target state="translated">My child is gluten intolerant</target>
       </trans-unit>
-      <trans-unit id="Jj8dWM7" resname="Mein Kind ist Laktose intolerant">
-        <source>Mein Kind ist Laktose intolerant</source>
+      <trans-unit id="JKQvLH_" resname="Mein Kind ist laktoseintolerant">
+        <source>Mein Kind ist laktoseintolerant</source>
         <target state="translated">My child is lactose intolerant</target>
       </trans-unit>
       <trans-unit id="jkE7jK9" resname="Tag des Lastschrifteinzugs">
@@ -545,8 +545,8 @@
         <source>AGB hochladen. Diese wird an die Bestätigungsemail angehängt</source>
         <target state="translated">ETUC. This is attached to the confirmation email</target>
       </trans-unit>
-      <trans-unit id="mgry4nw" resname="NBrutto Familieneinkommen pro Monat">
-        <source>NBrutto Familieneinkommen pro Monat</source>
+      <trans-unit id="FjoGHqk" resname="NBrutto Haushaltseinkommen pro Monat">
+        <source>NBrutto Haushaltseinkommen pro Monat</source>
         <target state="translated">Brutto Family income per month</target>
       </trans-unit>
     </body>

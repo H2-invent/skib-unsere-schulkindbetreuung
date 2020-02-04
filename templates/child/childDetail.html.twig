@@ -22,7 +22,7 @@
                                     <td>{{ eltern.createdAt|date('d.m.Y') }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Name der Eltern {% endtrans %}</td>
+                                    <td>{% trans %} Name des Erziehungsberechtigten {% endtrans %}</td>
                                     <td>{{ eltern.vorname }} {{ eltern.name }}</td>
                                 </tr>
                                 <tr>
@@ -30,13 +30,13 @@
                                     <td>{{ eltern.email }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Adresse der Eltern {% endtrans %}</td>
+                                    <td>{% trans %} Adresse des Erziehungsberechtigten {% endtrans %}</td>
                                     <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
                                 </tr>
 
                                 <tr>
 
-                                    <td>{% trans %} Berufliche Situation der Eltern {% endtrans %}</td>
+                                    <td>{% trans %} Berufliche Situation des Erziehungsberechtigten {% endtrans %}</td>
                                     <td>{{ eltern.beruflicheSituation }}</td>
                                 </tr>
                                 <tr>
@@ -44,7 +44,7 @@
                                     <td>{{ eltern.notfallName }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %} Notfallkontakt der Eltern {% endtrans %}</td>
+                                    <td>{% trans %} Notfallkontakt des Erziehungsberechtigten {% endtrans %}</td>
                                     <td>{{ eltern.notfallkontakt }}</td>
                                 </tr>
                                 <tr>
@@ -97,7 +97,7 @@
                                             </tr>
                                             <tr>
                                                 <td>{% trans %} Klasse {% endtrans %}</td>
-                                                <td>{{ k.klasse }}</td>
+                                                <td>{{ k.klasse }}. {{ 'Klasse'|trans }}</td>
                                             </tr>
                                             <tr>
                                                 <td>{% trans %} Allergien {% endtrans %}</td>
@@ -109,36 +109,36 @@
                                             </tr>
 
                                             <tr>
-                                                <td>{% trans %} Mein Kind ist Gluten intolerant {% endtrans %}</td>
-                                                <td>{{ k.gluten?"Ja":'Nein'|trans }}</td>
+                                                <td>{% trans %} Mein Kind ist glutenintolerant {% endtrans %}</td>
+                                                <td>{{ k.gluten?"Ja"|trans:'Nein'|trans }}</td>
                                             </tr>
                                             <tr>
-                                                <td>{% trans %} Mein Kind ist Laktose intolerant {% endtrans %}</td>
-                                                <td>{{ k.laktose?"Ja":'Nein'|trans }}</td>
+                                                <td>{% trans %} Mein Kind ist laktoseintolerant {% endtrans %}</td>
+                                                <td>{{ k.laktose?"Ja"|trans:'Nein'|trans }}</td>
                                             </tr>
                                             <tr>
                                                 <td>{% trans %} Mein Kind isst kein Schweinefleisch {% endtrans %}</td>
-                                                <td>{{ k.schweinefleisch?"Ja":'Nein'|trans }}</td>
+                                                <td>{{ k.schweinefleisch?"Ja"|trans:'Nein'|trans }}</td>
                                             </tr>
                                             <tr>
                                                 <td>{% trans %} Vegetrarisch {% endtrans %}</td>
-                                                <td>{{ k.vegetarisch?"Ja":'Nein'|trans }}</td>
+                                                <td>{{ k.vegetarisch?"Ja"|trans:'Nein'|trans }}</td>
                                             </tr>
                                             <tr>
                                                 <td>{% trans %} Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause {% endtrans %}</td>
-                                                <td>{{ k.alleineHause?"Ja":'Nein'|trans }}</td>
+                                                <td>{{ k.alleineHause?"Ja"|trans:'Nein'|trans }}</td>
                                             </tr>
                                             <tr>
                                                 <td>{% trans %} Mein Kind darf an Ausflügen teilnehmen {% endtrans %}</td>
-                                                <td>{{ k.ausfluege?"Ja":'Nein'|trans }}</td>
+                                                <td>{{ k.ausfluege?"Ja"|trans:'Nein'|trans }}</td>
                                             </tr>
                                             <tr>
                                                 <td>{% trans %} Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden {% endtrans %}</td>
-                                                <td>{{ k.sonnencreme?"Ja":'Nein'|trans }}</td>
+                                                <td>{{ k.sonnencreme?"Ja"|trans:'Nein'|trans }}</td>
                                             </tr>
                                             <tr>
-                                                <td>{% trans %} Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden {% endtrans %}</td>
-                                                <td>{{ k.fotos?"Ja":'Nein'|trans }}</td>
+                                                <td>{% trans %} Fotos auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden {% endtrans %}</td>
+                                                <td>{{ k.fotos?"Ja"|trans:'Nein'|trans }}</td>
                                             </tr>
 
                                             {% if k.betreungsblocksReal|length > 0 %}

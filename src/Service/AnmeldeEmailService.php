@@ -42,10 +42,10 @@ class AnmeldeEmailService
         $this->abgService = $printAGBService;
     }
 
-    public  function sendEmail(Kind $kind,Stammdaten $adresse,Stadt $stadt,$einkommensgruppen){
+    public  function sendEmail(Kind $kind,Stammdaten $adresse,Stadt $stadt, $beruflicheSituation){
         $attachment = array();
-        if (sizeof($kind->getBeworben()->toArray()) == 0) {//Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
-            $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName() . '.pdf';
+        if (count($kind->getBeworben()->toArray()) == 0) {//Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
+            $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName();
 
             $pdf = $this->print->printAnmeldebestaetigung(
                 $kind,
@@ -53,7 +53,7 @@ class AnmeldeEmailService
                 $stadt,
                 $this->tcpdf,
                 $fileName,
-                $einkommensgruppen,
+                $beruflicheSituation,
                 $kind->getZeitblocks()[0]->getSchule()->getOrganisation(),
                 'S'
             );

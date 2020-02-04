@@ -26,12 +26,12 @@
                                     <div id="schule{{ s.id }}Content" class="h-100">
                                         <div class="cardhoverable  card h-100 ">
                                             <div class=" overlay skib-card-image">
-                                                <img class="card-img-top lazy"
+                                                <img class="card-img-top"
                                                         {% if s.image %}
-                                                            data-src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                            src="{{ vich_uploader_asset(s,'imageFile') }}"
                                                             alt="{{ s.name }}" style="max-height: 300px"
                                                         {% else %}
-                                                            data-src="{{ asset('images/logo-breit-mittig.png') }}"
+                                                            src="{{ asset('images/logo-breit-mittig.png') }}"
                                                         {% endif %}
                                                 />
                                                 <noscript><img class="card-img-top lazy"
@@ -67,12 +67,12 @@
                                                             <div class="dropdown-menu dropdown-menu-left"
                                                                  aria-labelledby="ex2">
                                                                 <a href="{{ path('loerrach_workflow_schulen_kind_edit', {'kind_id':k.id,'slug':stadt.slug}) }}"
-                                                                   class=" loadContent dropdown-item">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                                   class=" loadContent dropdown-item">{% trans %}Kinderdaten bearbeiten{% endtrans %}</a>
                                                                 <a href="{{ path('loerrach_workflow_schulen_kind_zeitblock', {'kind_id':k.id,'slug':stadt.slug}) }}"
                                                                    class=" loadContent dropdown-item">{% trans %}Betreuungszeitfenster bearbeiten{% endtrans %}</a>
                                                                 <a type="DELETE"
                                                                    href="{{ path('loerrach_workflow_kind_delete', {'kind_id':k.id,'slug':stadt.slug}) }}"
-                                                                   class="dropdown-item deleteBtn">{% trans %}Löschen{% endtrans %}</a>
+                                                                   class="dropdown-item deleteBtn">{% trans %}Kind entfernen{% endtrans %}</a>
 
                                                             </div>
                                                         </div>
@@ -154,18 +154,7 @@
         });
         $("#loadContentModal").on('hide.bs.modal', function () {
 
-            $('#'+lastElement).load('{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #'+lastElement+'Content', function () {
-
-                $('.lazy').show().Lazy({
-                    // your configuration goes here
-                    scrollDirection: 'vertical',
-                    effect: 'fadeIn',
-                    visibleOnly: true,
-                    onError: function (element) {
-                        console.log('error loading ' + element.data('src'));
-                    }
-                });
-            });
+            $('#schulenShow').load('{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #schulenShowContent');
 
         });
     </script>

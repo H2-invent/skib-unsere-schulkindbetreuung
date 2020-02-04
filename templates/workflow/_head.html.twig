@@ -4,7 +4,9 @@
 {% if app.request.getSchemeAndHttpHost() != 'https://unsere-schulkindbetreuung.de' %}
     <link href="https://unsere-schulkindbetreuung.de{{ path(app.request.get('_route'), app.request.get('_route_params')) }}" rel="canonical" />
 {% endif %}
-
+<script>
+    console.log('{{app.request.getSchemeAndHttpHost()}} ');
+</script>
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>{% if title is defined and title is not null %}{{ title }}{% else %}{% trans %}Anmeldeportal Schulkindbetreuung{% endtrans %} | {% if stadt is defined and stadt is not null %}{{ stadt.name }}{% endif %}{% endif %} | {{ app.request.locale|language_name(app.request.locale) }}</title>
 {% if metaDescription is defined and metaDescription is not null %}

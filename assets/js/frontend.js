@@ -88,34 +88,6 @@ $(document).on('click', '.deleteBtn', function (e) {
 });
 
 
-$('.deleteBtn').click(function (e) {
-    e.preventDefault();
-    var url = $(this).attr('href');
-    var type = $(this).attr('type');
-
-    $.confirm({
-        title: confirmTitle,
-        content: confirmText,
-        theme: 'material',
-        buttons: {
-            confirm: function () {
-                $.ajax({
-                    url: url,
-                    type: type,
-                    success: function (data) {
-                        if (data.redirect) {
-                            window.location.href = data.redirect;
-                        }
-                    }
-                });
-            },
-            cancel: function () {
-
-            },
-
-        }
-    });
-});
 
 $(window).on('load', function () {
 
