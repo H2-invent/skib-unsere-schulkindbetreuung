@@ -570,7 +570,7 @@ class LoerrachWorkflowController extends AbstractController
             'id')));
         $organisation = $kind->getAllBlocks()[0]->getSchule()->getOrganisation();
 
-        $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName() . '.pdf';
+        $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName();
 
 
         return $print->printAnmeldebestaetigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->beruflicheSituation, $organisation, 'D');

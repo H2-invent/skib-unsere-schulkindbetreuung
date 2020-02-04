@@ -17,16 +17,40 @@
 
         <div class="col-lg-4">
             <div class="card">
-            <div class="card-header">
-                Software & technische Umsetzung
-            </div>
+                <div class="card-header">
+                    {{ 'Weitere Informationen'|trans }}
+                </div>
                 <div class="card-body">
-                    <a href="https://h2-invent.com"><img style="width: 100%" src="https://h2-invent.com/wp-content/uploads/2019/04/H2-invent-2.png"></a>
+                    <p>
+                        <a href="{{ path('workflow_agb',{'slug':stadt.slug}) }}">{{ 'Vertragsbedingungen'|trans }}</a><br>
+                    </p>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-header">
+                    {{ 'Datenschutzhinweis'|trans }}
+                </div>
+                <div class="card-body">
+                    <p>
+                        <a href="{{ path('workflow_datenschutz',{'slug':stadt.slug,'org_id':'city'}) }}">{{ 'Datenschutzhinweis'|trans }} {{ stadt.name }}</a><br>
+                        {% for o in stadt.organisations %}
+                        <a href="{{ path('workflow_datenschutz',{'slug':stadt.slug,'org_id':o.id}) }}">{{ 'Datenschutzhinweis'|trans }} {{ o.name }}</a><br>
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-header">
+                    {{ 'Software & technische Umsetzung'|trans }}
+                </div>
+                <div class="card-body">
+                    <a href="https://h2-invent.com"><img style="width: 100%"
+                                                         src="https://h2-invent.com/wp-content/uploads/2019/04/H2-invent-2.png"></a>
                     <p class="mt-5">
                         H2 invent GmbH<br>
                         Gewerbestraße 9<br>
                         79539 Lörrach
-            </p>
+                    </p>
                 </div>
             </div>
         </div>

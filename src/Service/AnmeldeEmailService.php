@@ -45,7 +45,7 @@ class AnmeldeEmailService
     public  function sendEmail(Kind $kind,Stammdaten $adresse,Stadt $stadt, $beruflicheSituation){
         $attachment = array();
         if (count($kind->getBeworben()->toArray()) == 0) {//Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
-            $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName() . '.pdf';
+            $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName();
 
             $pdf = $this->print->printAnmeldebestaetigung(
                 $kind,

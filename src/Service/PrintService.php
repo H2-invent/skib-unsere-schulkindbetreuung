@@ -185,8 +185,6 @@ class PrintService
         );
 
 
-dump($pdf);
-
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }
 
