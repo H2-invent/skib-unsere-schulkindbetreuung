@@ -107,7 +107,7 @@
             e.preventDefault();
             var ele = $(this);
             var url = ele.attr('href');
-            ele.find('.loader').removeClass('d-none');
+            ele.closest('.card').find('.loader').removeClass('d-none');
             $.ajax({
                 url: url,
                 method: 'PATCH',
@@ -142,8 +142,8 @@
                         });
                     }
                     // $.snackbar(options);
-                    ele.find('.loader').addClass('d-none');
-
+          
+                    ele.closest('.card').find('.loader').addClass('d-none');
 
                 }
             })
