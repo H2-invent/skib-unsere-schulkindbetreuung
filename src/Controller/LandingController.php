@@ -29,7 +29,7 @@ Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechti
     }
 
     /**
-     * @Route("/feature/{content}", name="welcome_landing_slug")
+     * @Route("/feature/{content}", name="welcome_landing_slug" )
      * @ParamConverter("content", options={"mapping"={"content"="slug"}})
      */
     public function welcomeFeatureAction(Content $content, TranslatorInterface $translator, Request $request)
