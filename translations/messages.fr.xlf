@@ -1761,7 +1761,7 @@
         <source>SEPA Lastschrift fällig</source>
         <target state="translated">Débit direct SEPA dû</target>
       </trans-unit>
-      <trans-unit id="lYBlt4a" resname="Schulkindbetreuung und Ferienbetreuung von ">
+      <trans-unit id="lYBlt4a" resname="Schulkindbetreuung und Ferienbetreuung der ">
         <source>Schulkindbetreuung und Ferienbetreuung von </source>
         <target state="translated">La garde d'enfants à l'école et la garde de vacances de </target>
       </trans-unit>
