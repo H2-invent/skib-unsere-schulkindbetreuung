@@ -2057,7 +2057,7 @@ The web application enables direct networking between parents, external organisa
         <source>Nachricht konnte nicht versendet werden</source>
         <target state="translated">The message could not be sent</target>
       </trans-unit>
-      <trans-unit id="lYBlt4a" resname="Schulkindbetreuung und Ferienbetreuung von ">
+      <trans-unit id="lYBlt4a" resname="Schulkindbetreuung und Ferienbetreuung der ">
         <source>Schulkindbetreuung und Ferienbetreuung von </source>
         <target state="translated">School child care and holiday care of </target>
       </trans-unit>
