@@ -175,7 +175,7 @@
       </trans-unit>
       <trans-unit id="G12aiJf" resname="Erziehungsberechtigter">
         <source>Erziehungsberechtigter</source>
-        <target state="translated">Parents</target>
+        <target state="translated">Parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="eeXPIN4" resname="Adresse">
         <source>Adresse</source>
@@ -403,15 +403,15 @@
       </trans-unit>
       <trans-unit id="ULFUhQH" resname="Berufliche Situation">
         <source>Berufliche Situation</source>
-        <target state="translated">Employment situation of parents</target>
+        <target state="translated">Employment situation of parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="QX8pkQf" resname="Berufliche Situation numerisch">
         <source>Berufliche Situation numerisch</source>
-        <target state="translated">Employment situation of parents numerical</target>
+        <target state="translated">Employment situation of parent or legal guardian numerical</target>
       </trans-unit>
       <trans-unit id="38XalC7" resname="Alleinerziehend">
         <source>Alleinerziehend</source>
-        <target state="translated">Single parent</target>
+        <target state="translated">Single parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="3xj0_s4" resname="Einkommensgruppe">
         <source>Einkommensgruppe</source>
@@ -875,7 +875,7 @@
       </trans-unit>
       <trans-unit id="ARvy7Hz" resname="Daten der erziehungsberechtigten Person">
         <source>Daten der erziehungsberechtigten Person</source>
-        <target state="translated">Data of the parent or guardian</target>
+        <target state="translated">Data of the parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="P2jt0rc" resname="Letzte Speicherung">
         <source>Letzte Speicherung</source>
@@ -887,7 +887,7 @@
       </trans-unit>
       <trans-unit id="xDGIr0c" resname="Adresse des Erziehungsberechtigten">
         <source>Adresse des Erziehungsberechtigten</source>
-        <target state="translated">Address of the legal guardian</target>
+        <target state="translated">Address of the parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="ite8DQ9" resname="Name und Beziehung des Notfallkontakt">
         <source>Name und Beziehung des Notfallkontakt</source>
@@ -1121,7 +1121,7 @@
       </trans-unit>
       <trans-unit id="3prfbHG" resname="Daten eines Erziehungsberechtigten">
         <source>Daten eines Erziehungsberechtigten</source>
-        <target state="translated">Data of a legal guardian</target>
+        <target state="translated">Data of a parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="HLC6El_" resname="Information">
         <source>Information</source>
@@ -1529,7 +1529,7 @@
       </trans-unit>
       <trans-unit id="HzwRRKM" resname="Nicht alleinerziehend">
         <source>Nicht alleinerziehend</source>
-        <target state="translated">Not single parent</target>
+        <target state="translated">Not single parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="HRjXb3." resname="Infos zu dem Kind">
         <source>Infos zu dem Kind</source>
@@ -1625,7 +1625,7 @@
       </trans-unit>
       <trans-unit id="7c6_B49" resname="Daten des Erziehungsberechtigten">
         <source>Daten des Erziehungsberechtigten</source>
-        <target state="translated">Data of the parents</target>
+        <target state="translated">Data of the parents or legal guardian</target>
       </trans-unit>
       <trans-unit id="j6OVtHv" resname="Brutto Haushaltseinkommen pro Monat">
         <source>Brutto Haushaltseinkommen pro Monat</source>
@@ -1771,7 +1771,7 @@
       </trans-unit>
       <trans-unit id="N3M75.G" resname="Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Erziehungsberechtigten. Ein Rechtsanspruch auf Aufnahme besteht nicht.">
         <source>Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Erziehungsberechtigten. Ein Rechtsanspruch auf Aufnahme besteht nicht.</source>
-        <target state="translated">Priority is given to children of single and working parents. There is no legal right to admission.</target>
+        <target state="translated">Priority is given to children of single and working parent or legal guardian. There is no legal right to admission.</target>
       </trans-unit>
       <trans-unit id="NF9yKdJ" resname="Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf die Gebühr des ältesten Kindes">
         <source>Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf die Gebühr des ältesten Kindes</source>
@@ -1819,7 +1819,7 @@
       </trans-unit>
       <trans-unit id="5fM56N9" resname="Ich bin alleinerziehend">
         <source>Ich bin alleinerziehend</source>
-        <target state="translated">I am a single parent</target>
+        <target state="translated">I am a single parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="RHsiiFr" resname="Bitte weitere Betreuungszeitfenster auswählen">
         <source>Bitte weitere Betreuungszeitfenster auswählen</source>
@@ -2050,7 +2050,7 @@
 Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
 </source>
         <target state="translated">SKiB is so far the only online solution for the registration and administration of school childcare and holiday care.
-The web application enables direct networking between parents, external organisations and the municipal administration or school authorities. 
+The web application enables direct networking between parent or legal guardian, external organisations and the municipal administration or school authorities.
 </target>
       </trans-unit>
       <trans-unit id="gq8j58x" resname="Nachricht konnte nicht versendet werden">
@@ -2211,15 +2211,15 @@ The web application enables direct networking between parents, external organisa
       </trans-unit>
       <trans-unit id="lxPd.CQ" resname="Name des Erziehungsberechtigten">
         <source>Name des Erziehungsberechtigten</source>
-        <target state="translated">Name of the legal guardian</target>
+        <target state="translated">Name of the parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="YVJL_Cl" resname="Berufliche Situation des Erziehungsberechtigten">
         <source>Berufliche Situation des Erziehungsberechtigten</source>
-        <target state="translated">Employment situation of the legal guardian</target>
+        <target state="translated">Employment situation of the parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="p2JRSsO" resname="Notfallkontakt des Erziehungsberechtigten">
         <source>Notfallkontakt des Erziehungsberechtigten</source>
-        <target state="translated">Emergency contact of the legal guardian</target>
+        <target state="translated">Emergency contact of the parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="0.8fMYp" resname="Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch der betreuenden Organisation müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.&#10;            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.">
         <source>Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch der betreuenden Organisation müssen Sie diesen Sicherheitscode angeben.
@@ -2243,7 +2243,7 @@ The web application enables direct networking between parents, external organisa
       </trans-unit>
       <trans-unit id="L3eVbkh" resname="Infos des Erziehungsberechtigten">
         <source>Infos des Erziehungsberechtigten</source>
-        <target state="translated">Data of the legal guardian</target>
+        <target state="translated">Data of the parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="zenlipp" resname="Ja">
         <source>Ja</source>
@@ -2275,7 +2275,7 @@ The web application enables direct networking between parents, external organisa
       </trans-unit>
       <trans-unit id="UBv7tp9" resname="Erziehungsberechtigte">
         <source>Erziehungsberechtigte</source>
-        <target state="translated">Legal guardian</target>
+        <target state="translated">Parent or Legal guardian</target>
       </trans-unit>
       <trans-unit id="YzemdqB" resname="Ich ermächtige die betreuende Organisation">
         <source>Ich ermächtige die betreuende Organisation</source>
@@ -2311,11 +2311,11 @@ The web application enables direct networking between parents, external organisa
       </trans-unit>
       <trans-unit id="2f45s_g" resname="Email an Erziehungsberechtigten senden">
         <source>Email an Erziehungsberechtigten senden</source>
-        <target state="translated">Send an email to legal guardian</target>
+        <target state="translated">Send an email to parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="ewI9bbC" resname="Details des Erziehungsberechtigten">
         <source>Details des Erziehungsberechtigten</source>
-        <target state="translated">Details of the legal guardian</target>
+        <target state="translated">Details of the parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="6kYrCka" resname="Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.&#10;            &lt;br&gt;Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.">
         <source>Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.
