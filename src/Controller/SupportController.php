@@ -20,7 +20,6 @@ class SupportController extends AbstractController
      */
     public function index(Request $request, ParameterBagInterface $parameterBag)
     {
-        // todo create form for support
         $arr = array(
             'name' => $this->getUser()->getVorname() . '-' . $this->getUser()->getNachname(),
             'email' => $this->getUser()->getEmail(),
