@@ -25,7 +25,7 @@ import('jquery.cookie');
 import('jquery-validation');
 import('jquery-confirm');
 import('material-design-icons');
-import('snackbarjs');
+import  snackbar from 'snackbarjs';
 import('daterangepicker');
 import('datatables.net');
 import 'datatables.net-dt';
@@ -61,6 +61,12 @@ $('table').DataTable({
         ]
     }
 );
+
+$(document).ready(function () {
+    if (typeof optionsSnack !== 'undefined') {
+        $.snackbar(optionsSnack);
+    }
+})
 $(window).on('load', function () {
 
     $('input[type="date"]').daterangepicker({
@@ -102,9 +108,6 @@ $(window).on('load', function () {
         $('#loadContentModal').modal('show');
         $('#loadContentModal .modal-content').load(url);
     });
-    if (typeof optionsSnack !== 'undefined') {
-        $.snackbar(optionsSnack);
-    }
 
 
     $(document).on('click', '.deleteBtn',function (e) {
