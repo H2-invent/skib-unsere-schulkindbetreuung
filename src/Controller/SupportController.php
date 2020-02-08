@@ -37,7 +37,6 @@ class SupportController extends AbstractController
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $arr = $form->getData();
-            dump($arr);
             $support = new OsticketPhpClient($parameterBag->get('osTicketUrl'), $parameterBag->get('osTicketApi'));
              try{
             $support->request('api/tickets.json', $arr);
