@@ -43,6 +43,7 @@
         "symfony/web-link": "4.3.*",
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/yaml": "4.3.*",
+        "thecsea/osticket-php-client": "^0.1.6",
         "twig/cssinliner-extra": "^3.0",
         "twig/extra-bundle": "^3.0",
         "twig/inky-extra": "^3.0",

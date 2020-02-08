@@ -10,7 +10,8 @@ parameters:
     secret: '%env(APP_SECRET)%'
     locale: 'de'
     mailprovider: '%env(MAILPROVIDER)%'
-
+    osTicketUrl: '%env(osTicketUrl)%'
+    osTicketApi: '%env(osTicketApi)%'
 
 services:
     # default configuration for services in *this* file
