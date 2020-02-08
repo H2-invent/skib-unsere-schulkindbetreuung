@@ -1,6 +1,35 @@
 {% extends 'workflow/base.html.twig' %}
 {% block header %}
-
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "NewsArticle",
+            "headline": "{{ news.title }}",
+            "image": "{{ absolute_url( vich_uploader_asset(news.stadt,'imageFile')) }}",
+            "author": {
+                "@type": "Organization",
+                "name": "{{ news.stadt.name }}"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "SkiB unsere-schulkindbetreuung.de",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "{{ absolute_url(asset('images/logo-breit-mittig.png')) }}",
+                    "width":300 ,
+                    "height": "auto"
+                }
+            },
+                  "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "{{absolute_url(path('news_show_page',{'slug':news.stadt.slug}))}}"
+      },
+            "datePublished": "{{ news.createdDate|date('Y-m-d') }}"
+            {% if news.date is defined and news.date is not null %},
+            "dateModified": "{{ news.date|date('Y-m-d') }}"
+            {% endif %}
+        }
+    </script>
     <div class="col-md-12 mb-6 white-text text-centerm text-md-left align-items-md-center">
 
         <h1 class="hauptfarbe font-weight-bold">{% trans %}Neuigkeit{% endtrans %}</h1>
