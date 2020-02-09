@@ -101,62 +101,12 @@
         </div>
     </div>
 {% endblock %}
+{% block webpack %}
+    {{ encore_entry_script_tags('schulen') }}
+{% endblock %}
 {% block jquery %}
     <script>
-        $(document).on('click', '.chooseBlock', function (e) {
-            e.preventDefault();
-            var ele = $(this);
-            var url = ele.attr('href');
-            ele.closest('.card').find('.loader').removeClass('d-none');
-            $.ajax({
-                url: url,
-                method: 'PATCH',
-                success: function (data) {
-
-                    if (data.error == 0 || data.error == 2) {
-                        var klasse = 'bg-warning';
-
-                        if (data.kontingent == false) {
-                            klasse = 'bg-success';
-                        }
-                        ele.toggleClass(klasse);
-                        if (ele.hasClass(klasse)) {
-
-                            ele.find('.gebucht-text').text(data.cardText);
-                        } else {
-                            ele.find('.gebucht-text').text('{{ 'Hier buchen'|trans }}');
-                        }
-                    } else {
-
-
-                    }
-                    ele.closest('.modal-body').find('.price').text(data.text);
-                    if (data.error == 0) {
-                        $.ajax({
-                            url: data.preisUrl,
-                            method: 'GET',
-                            success: function (data) {
-                                ele.closest('.modal-body').find('.price').text(data.betrag + '€')
-                            }
-
-                        });
-                    }
-                    // $.snackbar(options);
-
-                    ele.closest('.card').find('.loader').addClass('d-none');
-
-                }
-            })
-        })
-        var lastElement = null;
-        $('.loadContent').click(function () {
-            lastElement = $(this).closest('.schulCard').attr('id');
-        });
-        $("#loadContentModal").on('hide.bs.modal', function () {
-
-            $('#schulenShow').load('{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #schulenShowContent');
-
-        });
+       urlShool = '{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #schulenShowContent';
     </script>
 
 {% endblock %}
