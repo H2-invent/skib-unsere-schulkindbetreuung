@@ -18,6 +18,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('frontend', './assets/js/frontend.js')
     .addEntry('startpage', './assets/js/start.js')
+    .addEntry('schulen', './assets/js/schulen.js')
     // empty the outputPath dir before each build
     .cleanupOutputBeforeBuild()
 

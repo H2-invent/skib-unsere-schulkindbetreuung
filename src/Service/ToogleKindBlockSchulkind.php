@@ -40,19 +40,16 @@ class ToogleKindBlockSchulkind
     private $em;
     private $translator;
     private $router;
-    private $formBuilder;
-    private $twig;
-    private $mailer;
 
-    public function __construct(MailerService $mailerService, Environment $twig, FormFactoryInterface $formBuilder, RouterInterface $router, TranslatorInterface $translator, Security $security, EntityManagerInterface $entityManager)
+
+    public function __construct(RouterInterface $router, TranslatorInterface $translator, Security $security, EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
         $this->user = $security;
         $this->translator = $translator;
         $this->router = $router;
-        $this->formBuilder = $formBuilder;
-        $this->twig = $twig;
-        $this->mailer = $mailerService;
+
+
     }
 
     public
@@ -61,36 +58,48 @@ class ToogleKindBlockSchulkind
         $result = array(
             'text' => $this->translator->trans('Betreuungszeitfenster erfolgreich gespeichert'),
             'error' => 0,
-            'kontingent' => false,
-            'cardText' => $this->translator->trans('Gebucht')
+            'blocks' => array(),
         );
-        try {
-            $result['preisUrl'] = $this->router->generate('loerrach_workflow_preis_einKind', array('slug'=>$stadt->getSlug(),'kind_id' => $kind->getId()));
+        $blockRes = array(
+            'id' => $block->getId(),
+            'cardText' => $this->translator->trans('Gebucht'),
+        );
 
+        try {
+            $result['preisUrl'] = $this->router->generate('loerrach_workflow_preis_einKind', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()));
             if ($block->getMin() || $block->getMax()) {
-                $result['kontingent'] = true;
-                $result['cardText'] = $this->translator->trans('Angemeldet');
+                $blockRes['kontingent'] = true;
             }
+
             if ($block->getMin() || $block->getMax()) {
                 if (in_array($block, $kind->getBeworben()->toArray())) {
                     $kind->removeBeworben($block);
+                    $blockRes['state'] = 2;
+                    $blockRes['cardText'] = $this->translator->trans('Hier buchen');
                 } else {
                     $kind->addBeworben($block);
+                    $blockRes['state'] = 0;
+                    $blockRes['cardText'] = $this->translator->trans('Angemeldet');
                 }
+
             } else {
                 if (in_array($block, $kind->getZeitblocks()->toArray())) {
                     $kind->removeZeitblock($block);
+                    $blockRes['state'] = 2;
+                    $blockRes['cardText'] = $this->translator->trans('Hier buchen');
                 } else {
                     $kind->addZeitblock($block);
+                    $blockRes['state'] = 1;
+                    $blockRes['cardText'] = $this->translator->trans('Gebucht');
                 }
-            }
 
+            }
 
             $this->em->persist($kind);
             $this->em->flush();
 
             $blocks2 = $kind->getTageWithBlocks();
-
+            $result['blocks'][] = $blockRes;
             if ($blocks2 < 2) {
                 $result['text'] = $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)');
                 $result['error'] = 2;
