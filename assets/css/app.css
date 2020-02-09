@@ -4,14 +4,12 @@
 @import '~tinymce/skins/ui/oxide-dark/skin.min.css';
 @import '~material-icons-font/material-icons-font.css';
 @import '~datatables.net-dt/css/jquery.dataTables.css';
-@import '~jquery-clockpicker/dist/jquery-clockpicker.css';
 @import '~daterangepicker';
+@import '~jquery-clockpicker/dist/jquery-clockpicker.css';
 @import '~snackbarjs/dist/snackbar.css';
 @import '~snackbarjs/themes-css/material.css';
 @import '~jquery-confirm/css/jquery-confirm.css';
 @import 'style.default.css';
 @import 'custom.css';
 @import 'frontPage_style.css';
-@import '~froala-editor/css/froala_editor.css';
-@import '~froala-editor/css/plugins/code_view.css';
-@import '~froala-editor/css/plugins/colors.css';
+@import '~trumbowyg/dist/ui/trumbowyg.css';

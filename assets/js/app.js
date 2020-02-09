@@ -33,16 +33,9 @@ import 'datatables.net-dt';
 import niceScroll from 'jquery.nicescroll';
 // Import TinyMCE
 import tinymce from 'tinymce/tinymce';
-
-
-import FroalaEditor from 'froala-editor';
-import ('froala-editor/js/plugins/align.min');
-import ('froala-editor/js/plugins/paragraph_style.min');
-import ('froala-editor/js/plugins/link.min');
-import ('froala-editor/js/plugins/paragraph_style.min');
-import ('froala-editor/js/plugins/paragraph_format.min');
-import ('froala-editor/js/plugins/code_view.min');
-import ('froala-editor/js/plugins/colors.min');
+import trumbowgy from 'trumbowyg';
+import icon from 'trumbowyg/dist/ui/icons.svg'
+import ('trumbowyg/dist/plugins/colors/trumbowyg.colors')
 
 $(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
 
@@ -83,24 +76,13 @@ $(window).on('load', function () {
 
 
 // Load a plugin.
-
-
-// Initialize editor.7
-    FroalaEditor.DefineIcon('insert', {NAME: 'plus', SVG_KEY: 'add'});
-    FroalaEditor.RegisterCommand('insert', {
-        title: 'BS Row',
-        focus: true,
-        undo: true,
-        refreshAfterCallback: true,
-        callback: function () {
-            this.html.insert('<div class="row"><div class="col-lg-6"><p>6/12</p></div><div class="col-lg-6"><p>6/12</p></div></div>');
-        }
+    $.trumbowyg.svgPath = icon;
+    $('textarea').trumbowyg({
+        autogrow: true,
+        semantic: false,
     });
-    new FroalaEditor('textarea', {
-          //  toolbarButtons: ['fontFamily','more_text', '|', 'fontSize', '|', 'paragraphFormat', '|', 'bold', 'italic', 'underline', 'undo', 'redo', 'more_misc','|','insert'],
 
-        }
-    );
+
 
 
 
