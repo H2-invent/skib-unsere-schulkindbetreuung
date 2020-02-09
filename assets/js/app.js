@@ -32,7 +32,6 @@ import('datatables.net');
 import 'datatables.net-dt';
 import niceScroll from 'jquery.nicescroll';
 // Import TinyMCE
-import tinymce from 'tinymce/tinymce';
 import trumbowgy from 'trumbowyg';
 import icon from 'trumbowyg/dist/ui/icons.svg'
 import ('trumbowyg/dist/plugins/colors/trumbowyg.colors')
