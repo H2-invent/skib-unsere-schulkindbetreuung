@@ -71,7 +71,7 @@ class ContentController extends AbstractController
                 $em->persist($content);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('content_show', array('snack' => $text));
+                return $this->redirectToRoute('content_edit', array('content_id'=>$content->getId(),'snack' => $text));
             }
         }
         $title = $translator->trans('Content bearbeiten');

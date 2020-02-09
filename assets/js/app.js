@@ -25,14 +25,19 @@ import('jquery.cookie');
 import('jquery-validation');
 import('jquery-confirm');
 import('material-design-icons');
-import  snackbar from 'snackbarjs';
+import snackbar from 'snackbarjs';
+
 import('daterangepicker');
 import('datatables.net');
 import 'datatables.net-dt';
 import niceScroll from 'jquery.nicescroll';
+// Import TinyMCE
+import tinymce from 'tinymce/tinymce';
+import trumbowgy from 'trumbowyg';
+import icon from 'trumbowyg/dist/ui/icons.svg'
+import ('trumbowyg/dist/plugins/colors/trumbowyg.colors')
 
-
-$(".side-navbar").niceScroll({cursorcolor:'#0058B0'});
+$(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
 
 $('#toggle-btn').on('click', function (e) {
 
@@ -68,6 +73,18 @@ $(document).ready(function () {
     }
 })
 $(window).on('load', function () {
+
+
+// Load a plugin.
+    $.trumbowyg.svgPath = icon;
+    $('textarea').trumbowyg({
+        autogrow: true,
+        semantic: false,
+    });
+
+
+
+
 
     $('input[type="date"]').daterangepicker({
         "singleDatePicker": true,
@@ -110,7 +127,7 @@ $(window).on('load', function () {
     });
 
 
-    $(document).on('click', '.deleteBtn',function (e) {
+    $(document).on('click', '.deleteBtn', function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
         var type = $(this).attr('type');

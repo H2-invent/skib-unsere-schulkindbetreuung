@@ -307,3 +307,15 @@ img.lazy {
 .loader.mask>.spinner-border{
   color: white;
 }
+.trumbowyg-button-pane{
+  border-radius: 20px 20px 0 0;
+  border: 1px lightgray solid;
+  background-color: white;
+
+}
+.trumbowyg-editor, .trumbowyg-textare{
+  border: 1px lightgray solid;
+}
+.trumbowyg-box {
+  border: none;
+}
