@@ -7,7 +7,7 @@
         </div>
         <div class="modal-body">
             <div class="row">
-                <div class="{% if blocks[6] is not defined and blocks[5] is not defined %} offset-1 {% endif %}col-md-2 text-center">
+                <div class="{% if blocks[6] is not defined and blocks[5] is not defined %} offset-md-1 {% endif %}col-md-2 text-center">
                     <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
                     {% if blocks[0] is defined %}
                         {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[0]} %}

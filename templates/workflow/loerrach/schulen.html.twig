@@ -112,43 +112,54 @@
                 url: url,
                 method: 'PATCH',
                 success: function (data) {
-
-                    if (data.error == 0 || data.error == 2) {
-                        var klasse = 'bg-warning';
-
-                        if (data.kontingent == false) {
-                            klasse = 'bg-success';
-                        }
-                        ele.toggleClass(klasse);
-                        if (ele.hasClass(klasse)) {
-
-                            ele.find('.gebucht-text').text(data.cardText);
-                        } else {
-                            ele.find('.gebucht-text').text('{{ 'Hier buchen'|trans }}');
-                        }
-                    } else {
-
-
+                    for(c in data.blocks){
+                        console.log(data.blocks[c]);
+                        changeState(data.blocks[c].id,data.blocks[c].state,data.blocks[c]);
                     }
                     ele.closest('.modal-body').find('.price').text(data.text);
-                    if (data.error == 0) {
-                        $.ajax({
-                            url: data.preisUrl,
-                            method: 'GET',
-                            success: function (data) {
-                                ele.closest('.modal-body').find('.price').text(data.betrag + '€')
-                            }
-
-                        });
-                    }
-                    // $.snackbar(options);
-
                     ele.closest('.card').find('.loader').addClass('d-none');
+                    if(data.error == 0){
+                        fetchPrice(ele,data.preisUrl);
+                    }
+
+
 
                 }
             })
-        })
-        var lastElement = null;
+        });
+
+        function changeState(id, state, data) {
+            var ele = $('#block-' + id);
+            if (state == 0) {
+                ele.addClass('bg-warning');
+                ele.find('.gebucht-text').text(data.cardText);
+            } else if (state == 1) {
+                ele.addClass('bg-success');
+                ele.find('.gebucht-text').text(data.cardText);
+            } else if (state == 2) {
+                ele.removeClass('bg-success');
+                ele.removeClass('bg-warning');
+                ele.find('.gebucht-text').text(data.cardText);
+            }
+
+        }
+
+        function fetchPrice(ele,url) {
+
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function (data) {
+                    ele.closest('.modal-body').find('.price').text(data.betrag + '€')
+                }
+
+            });
+
+        }
+
+
+
         $('.loadContent').click(function () {
             lastElement = $(this).closest('.schulCard').attr('id');
         });
