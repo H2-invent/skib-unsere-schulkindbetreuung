@@ -34,14 +34,7 @@ import niceScroll from 'jquery.nicescroll';
 // Import TinyMCE
 import tinymce from 'tinymce/tinymce';
 
-// A theme is also required
-import 'tinymce/themes/silver/theme';
 
-// Any plugins you want to use has to be imported
-import 'tinymce/plugins/paste';
-import 'tinymce/plugins/link';
-import 'tinymce/plugins/table';
-import 'tinymce/plugins/code';
 import FroalaEditor from 'froala-editor';
 import ('froala-editor/js/plugins/align.min');
 import ('froala-editor/js/plugins/paragraph_style.min');
@@ -95,7 +88,7 @@ $(window).on('load', function () {
 // Initialize editor.7
     FroalaEditor.DefineIcon('insert', {NAME: 'plus', SVG_KEY: 'add'});
     FroalaEditor.RegisterCommand('insert', {
-        title: 'Insert HTML',
+        title: 'BS Row',
         focus: true,
         undo: true,
         refreshAfterCallback: true,
@@ -110,66 +103,6 @@ $(window).on('load', function () {
     );
 
 
-    tinymce.init({
-        selector: 'text',
-        plugins: ['paste', 'link', 'table','code',''],
-        toolbar: ' undo redo|bootrapRow bsCollum | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image|code',
-        height: 500,
-        content_css : '/myLayout.css',
-        setup: function (editor) {
-
-            editor.ui.registry.addButton('bootrapRow', {
-                text: 'BS Row',
-                onAction: function (_) {
-                    editor.insertContent('<div class="row"><div class="col-lg-6"><p>6/12</p></div><div class="col-lg-6"><p>6/12</p></div></div>');
-                }
-            });
-            editor.ui.registry.addMenuButton('bsCollum', {
-                text: 'BS Col',
-                fetch: function (callback) {
-                    var item = [
-
-                        {
-                            type: 'menuitem',
-                            text: 'col-lg-' + 1,
-                            onAction: function () {
-                                editor.insertContent('<div class="col-lg-1"><p>Here is the col-1 Collum</p></div>');
-                            }
-                        },
-                        {
-                            type: 'menuitem',
-                            text: 'col-lg-6',
-                            onAction: function () {
-                                editor.insertContent('<div class="col-lg-6"><p>Here is the col-6 Collum</p></div>');
-                            }
-                        },
-                        {
-                            type: 'menuitem',
-                            text: 'col-lg-12',
-                            onAction: function () {
-                                editor.insertContent('<div class="col-lg-12"><p>Here is the col-12 Collum</p></div>');
-                            }
-                        }
-
-
-                    ];
-
-
-                    var items = [
-                        {
-                            type: 'menuitem',
-                            text: 'col-lg-1',
-                            onAction: function () {
-                                editor.insertContent('<div class="col-lg-1">You clicked menu item 1!</div>');
-                            }
-                        }
-
-                    ];
-                    callback(item);
-                }
-            });
-        }
-    });
 
     $('input[type="date"]').daterangepicker({
         "singleDatePicker": true,
