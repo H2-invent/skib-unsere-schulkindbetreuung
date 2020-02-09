@@ -1,7 +1,5 @@
 @import '~bootstrap-material-design';
 @import '~font-awesome';
-@import '~tinymce/skins/ui/oxide-dark/content.min.css';
-@import '~tinymce/skins/ui/oxide-dark/skin.min.css';
 @import '~material-icons-font/material-icons-font.css';
 @import '~datatables.net-dt/css/jquery.dataTables.css';
 @import '~daterangepicker';
@@ -11,5 +9,5 @@
 @import '~jquery-confirm/css/jquery-confirm.css';
 @import 'style.default.css';
 @import 'custom.css';
-@import 'frontPage_style.css';
 @import '~trumbowyg/dist/ui/trumbowyg.css';
+@import 'frontPage_style.css';
