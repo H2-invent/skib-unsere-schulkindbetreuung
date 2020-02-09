@@ -1,0 +1,27 @@
+.glyphicon.active, .btn.active {
+    position: relative;
+}
+
+.glyphicon.active:after, .btn.active:after {
+    content: ' ';
+    display: block;
+    border: 1px dashed #aaa;
+    width: 120%;
+    height: 140%;
+    position: absolute;
+    top: -20%;
+    left: -10%;
+}
+
+#tinymce {
+    direction: ltr !important;
+}
+
+#tinymce .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+[class^="col-"] {
+    border: 1px dashed #ccc;
+}

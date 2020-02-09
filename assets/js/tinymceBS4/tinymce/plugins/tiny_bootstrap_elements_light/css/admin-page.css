@@ -1,0 +1,111 @@
+@font-face {
+    font-family: 'icomoon-tbp';
+    src:url('../fonts/icomoon-tbp.eot?-4dulds');
+    src:url('../fonts/icomoon-tbp.eot?#iefix-4dulds') format('embedded-opentype'),
+        url('../fonts/icomoon-tbp.woff?-4dulds') format('woff'),
+        url('../fonts/icomoon-tbp.ttf?-4dulds') format('truetype'),
+        url('../fonts/icomoon-tbp.svg?-4dulds#icomoon-tbp') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="mce-bs-icon-btn"] i, [class*=" mce-bs-icon-btn"] i {
+    font-family: 'icomoon-tbp';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+#3276B1
+#47A447
+#39B3D7
+#ED9C28
+*/
+
+/* admin panel */
+
+.form-table.mce-bs-icon-btn {
+    max-width: 810px;
+    border:none !important;
+}
+
+.form-table.mce-bs-icon-btn th {
+    width: 120px !important;
+}
+
+#colorpicker {
+    position: relative;
+}
+
+/* admin panel icons */
+
+.form-table.mce-bs-icon-btn i {
+    margin-right: 20px;
+}
+
+.mce-i-icon-btn:before {
+    content: "\e605";
+    color: #39B3D7;
+}
+
+.mce-i-icon-icon:before {
+    content: "\e606";
+    color: #ED9C28;
+}
+
+.mce-i-icon-table:before {
+    content: "\e60e";
+    color: #3276B1;
+}
+
+.mce-i-icon-template:before {
+    content: "\e60d";
+    color: #47A447;
+}
+
+.mce-i-icon-breadcrumb:before {
+    content: "\e60c";
+    color: #39B3D7;
+}
+
+.mce-i-icon-pagination:before {
+    content: "\e60b";
+    color: #333;
+}
+
+.mce-i-icon-pager:before {
+    content: "\e60a";
+    color: #3276B1;
+}
+
+.mce-i-icon-label:before {
+    content: "\e60f";
+    color: #47A447;
+}
+
+.mce-i-icon-badge:before {
+    content: "\e609";
+    color: #39B3D7;
+}
+
+.mce-i-icon-alert:before {
+    content: "\e608";
+    color: #ED9C28;
+}
+
+.mce-i-icon-panel:before {
+    content: "\e607";
+    color: #3276B1;
+}
+
+.mce-i-bootstrap-icon:before {
+    content: "\e600";
+}
