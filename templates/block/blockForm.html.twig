@@ -25,6 +25,7 @@
 {% if form.preise is defined %}
        {{ form_row(form.preise) }}
 {% endif %}
+    {{ form_row(form.vorganger) }}
     <button type="submit" class="btn btn-primary">{% trans %}Speichern{% endtrans %}</button>
     {{ form_end(form) }}
 </div>
