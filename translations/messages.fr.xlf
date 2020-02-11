@@ -817,8 +817,8 @@
         <source>Mein Kind isst kein Schweinefleisch</source>
         <target state="translated">Mon enfant ne mange pas de porc</target>
       </trans-unit>
-      <trans-unit id="BiOCtbE" resname="Vegetrarisch">
-        <source>Vegetrarisch</source>
+      <trans-unit id="BiOCtbE" resname="Vegetarisch">
+        <source>Vegetarisch</source>
         <target state="translated">Végétarien</target>
       </trans-unit>
       <trans-unit id="oc2paVv" resname="Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause">
