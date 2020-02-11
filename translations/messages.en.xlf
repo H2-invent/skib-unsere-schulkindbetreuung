@@ -917,7 +917,7 @@
         <source>Mein Kind isst kein Schweinefleisch</source>
         <target state="translated">My child doesn't eat pork</target>
       </trans-unit>
-      <trans-unit id="BiOCtbE" resname="Vegetarisch">
+      <trans-unit id="Rx43KOx" resname="Vegetarisch">
         <source>Vegetarisch</source>
         <target state="translated">Vegetarian</target>
       </trans-unit>
@@ -1208,8 +1208,8 @@
         <target state="translated">Bank details for direct debit</target>
       </trans-unit>
       <trans-unit id="47DEQpj" resname="">
-        <source/>
-        <target/>
+        <source></source>
+        <target></target>
       </trans-unit>
       <trans-unit id="bXHPK6K" resname="Daten der Kinder">
         <source>Daten der Kinder</source>
@@ -2046,8 +2046,8 @@
         <target state="translated">Online application and administration</target>
       </trans-unit>
       <trans-unit id="zmlkEaD" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;&#10;Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;&#10;">
-        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
-Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
+        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;
+Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;
 </source>
         <target state="translated">SKiB is so far the only online solution for the registration and administration of school childcare and holiday care.
 The web application enables direct networking between parent or legal guardian, external organisations and the municipal administration or school authorities.
@@ -2057,8 +2057,8 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Nachricht konnte nicht versendet werden</source>
         <target state="translated">The message could not be sent</target>
       </trans-unit>
-      <trans-unit id="lYBlt4a" resname="Schulkindbetreuung und Ferienbetreuung der ">
-        <source>Schulkindbetreuung und Ferienbetreuung von </source>
+      <trans-unit id="KfMBjdl" resname="Schulkindbetreuung und Ferienbetreuung der ">
+        <source>Schulkindbetreuung und Ferienbetreuung der </source>
         <target state="translated">School child care and holiday care of </target>
       </trans-unit>
       <trans-unit id="L5N7_3u" resname=" Hier anmelden">
@@ -2338,6 +2338,10 @@ The web application enables direct networking between parent or legal guardian, 
       <trans-unit id="04fyUjD" resname="Einkommensgruppe numerisch">
         <source>Einkommensgruppe numerisch</source>
         <target state="translated">Income group numerical</target>
+      </trans-unit>
+      <trans-unit id="Uuif66_" resname="Weitere Hinweise zum Datenschutz von SKiB finden Sie in unserem">
+        <source>Weitere Hinweise zum Datenschutz von SKiB finden Sie in unserem</source>
+        <target>Further information on data protection at SKiB can be found in our</target>
       </trans-unit>
     </body>
   </file>
