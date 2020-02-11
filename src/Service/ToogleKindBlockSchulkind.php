@@ -73,13 +73,16 @@ class ToogleKindBlockSchulkind
 
             $blocks2 = $kind->getTageWithBlocks();
 
-            if ($blocks2 < 2) {
+            if ($blocks2 < $stadt->getMinDaysperWeek()) {
                 $result['text'] = $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)');
                 $result['error'] = 2;
             }
         } catch (\Exeption $e) {
             $result['text'] = $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.');
             $result['error'] = 1;
+        }
+        if(sizeof($result['blocks'])>1){
+            $result['hinweis']=$this->translator->trans('Es wurden weitere Blöcke bearbeitet, da keine unbetreuten Zeiten in der Tagesbetreuung vorhanden sein dürfen');
         }
         return $result;
     }

@@ -3077,3 +3077,6 @@ a > code {
     margin-left: 15px;
   }
 }
+.trumbowyg-button-pane button:not(.trumbowyg-disable):hover{
+  background:none;
+}
