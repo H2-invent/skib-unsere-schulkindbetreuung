@@ -49,11 +49,8 @@ class BlockAbhangigkeitType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        dump($options['data']);
-        $schule = $options['data']->getSchule();
-        $active = $options['data']->getActive();
-        $blocks =
-            dump($active);
+
+
         $builder
             ->add('vorganger', EntityType::class, [
                 'class' => Zeitblock::class,
