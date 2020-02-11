@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Yaml\Tests\A;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ZeitblockRepository")
@@ -91,12 +92,23 @@ class Zeitblock
      */
     private $rechnungen;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Zeitblock", mappedBy="vorganger")
+     */
+    private $nachfolger;
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Zeitblock", inversedBy="nachfolger")
+     */
+    private $vorganger;
+
     public function __construct()
     {
         $this->kind = new ArrayCollection();
         $this->abwesenheit = new ArrayCollection();
         $this->kinderBeworben = new ArrayCollection();
         $this->rechnungen = new ArrayCollection();
+        $this->nachfolger = new ArrayCollection();
+        $this->vorganger = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -432,6 +444,61 @@ class Zeitblock
         if ($this->rechnungen->contains($rechnungen)) {
             $this->rechnungen->removeElement($rechnungen);
             $rechnungen->removeZeitblock($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Zeitblock[]
+     */
+    public function getNachfolger(): Collection
+    {
+        return $this->nachfolger;
+    }
+
+    public function addNachfolger(Zeitblock $nachfolger): self
+    {
+        if (!$this->nachfolger->contains($nachfolger)) {
+            $this->nachfolger[] = $nachfolger;
+            $nachfolger->addVorganger($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNachfolger(Zeitblock $nachfolger): self
+    {
+        if ($this->nachfolger->contains($nachfolger)) {
+            $this->nachfolger->removeElement($nachfolger);
+            $nachfolger->removeVorganger($this);
+        }
+
+        return $this;
+    }
+    /**
+     * @return Collection|Zeitblock[]
+     */
+    public function getVorganger(): Collection
+    {
+        return $this->vorganger;
+    }
+
+    public function addVorganger(Zeitblock $vorganger): self
+    {
+        if (!$this->vorganger->contains($vorganger)) {
+            $this->vorganger[] = $vorganger;
+            $vorganger->addNachfolger($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVorganger(Zeitblock $vorganger): self
+    {
+        if ($this->vorganger->contains($vorganger)) {
+            $this->vorganger->removeElement($vorganger);
+            $vorganger->removeNachfolger($this);
         }
 
         return $this;

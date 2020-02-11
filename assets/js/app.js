@@ -76,7 +76,7 @@ $(window).on('load', function () {
 
 // Load a plugin.
     $.trumbowyg.svgPath = icon;
-    $('textarea').trumbowyg({
+    $('.onlineEditor').trumbowyg({
         autogrow: true,
         semantic: false,
     });

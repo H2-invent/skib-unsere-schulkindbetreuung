@@ -24,6 +24,13 @@ $(document).on('click', '.chooseBlock', function (e) {
         url: url,
         method: 'PATCH',
         success: function (data) {
+            console.log(data);
+            if(typeof(data.hinweis)!='undefined' ){
+                $('#hinweis_text').text(data.hinweis).closest('.row').removeClass('d-none');
+
+            }else {
+                $('#hinweis_text').closest('.row').addClass('d-none');
+            }
             for(var c in data.blocks){
 
                 changeState(data.blocks[c].id,data.blocks[c].state,data.blocks[c]);
@@ -53,6 +60,7 @@ function changeState(id, state, data) {
         ele.removeClass('bg-warning');
         ele.find('.gebucht-text').text(data.cardText);
     }
+
 }
 
 function fetchPrice(ele,url) {

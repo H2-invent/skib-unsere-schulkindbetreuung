@@ -6,6 +6,7 @@
 
         </div>
         <div class="modal-body">
+
             <div class="row">
                 <div class="{% if blocks[6] is not defined and blocks[5] is not defined %} offset-md-1 {% endif %}col-md-2 text-center">
                     <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
@@ -79,6 +80,13 @@
                         {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[6]} %}
                     </div>
                 {% endif %}
+            </div>
+            <div class="row d-none">
+                <div class="col-lg-12">
+                    <p id="hinweis_text" class="red-text">
+                    </p>
+
+                </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
