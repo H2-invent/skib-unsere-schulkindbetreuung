@@ -817,8 +817,8 @@
         <source>Mein Kind isst kein Schweinefleisch</source>
         <target state="translated">Mon enfant ne mange pas de porc</target>
       </trans-unit>
-      <trans-unit id="BiOCtbE" resname="Vegetrarisch">
-        <source>Vegetrarisch</source>
+      <trans-unit id="Rx43KOx" resname="Vegetarisch">
+        <source>Vegetarisch</source>
         <target state="translated">Végétarien</target>
       </trans-unit>
       <trans-unit id="oc2paVv" resname="Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause">
@@ -1056,8 +1056,8 @@
         <target state="translated">Détails bancaires pour le débit direct</target>
       </trans-unit>
       <trans-unit id="47DEQpj" resname="">
-        <source/>
-        <target/>
+        <source></source>
+        <target></target>
       </trans-unit>
       <trans-unit id="bXHPK6K" resname="Daten der Kinder">
         <source>Daten der Kinder</source>
@@ -1761,8 +1761,8 @@
         <source>SEPA Lastschrift fällig</source>
         <target state="translated">Débit direct SEPA dû</target>
       </trans-unit>
-      <trans-unit id="lYBlt4a" resname="Schulkindbetreuung und Ferienbetreuung der ">
-        <source>Schulkindbetreuung und Ferienbetreuung von </source>
+      <trans-unit id="KfMBjdl" resname="Schulkindbetreuung und Ferienbetreuung der ">
+        <source>Schulkindbetreuung und Ferienbetreuung der </source>
         <target state="translated">La garde d'enfants à l'école et la garde de vacances de </target>
       </trans-unit>
       <trans-unit id="L5N7_3u" resname=" Hier anmelden">
@@ -2304,8 +2304,8 @@ Responsabilité pour les liens
         <target state="translated">Coordonnées du représentant légal</target>
       </trans-unit>
       <trans-unit id="zmlkEaD" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;&#10;Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;&#10;">
-        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
-Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
+        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;
+Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;
 </source>
         <target state="translated">SKiB est jusqu'à présent la seule solution en ligne pour l'inscription et l'administration des services de garde d'enfants et de vacances scolaires.
 L'application web permet une mise en réseau directe entre les parents, les organisations externes et l'administration municipale ou les autorités scolaires. 
@@ -2337,7 +2337,11 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       </trans-unit>
       <trans-unit id="AqxNplZ" resname="Software &amp; technische Umsetzung">
         <source>Software &amp; technische Umsetzung</source>
-        <target state="translated"><![CDATA[Logiciel et mise en œuvre technique]]></target>
+        <target state="translated">Logiciel et mise en œuvre technique</target>
+      </trans-unit>
+      <trans-unit id="Uuif66_" resname="Weitere Hinweise zum Datenschutz von SKiB finden Sie in unserem">
+        <source>Weitere Hinweise zum Datenschutz von SKiB finden Sie in unserem</source>
+        <target>Vous trouverez de plus amples informations sur la protection des données au SKiB dans notre</target>
       </trans-unit>
     </body>
   </file>

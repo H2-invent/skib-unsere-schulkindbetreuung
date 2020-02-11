@@ -253,6 +253,10 @@
         <source>Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden.</source>
         <target>__Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden</target>
       </trans-unit>
+      <trans-unit id="C3sxWCp" resname="Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder von SKiB elektronisch verarbeitet werden und an betreuende Organisationen, sowie en Schulträger weitergegeben werden.">
+        <source>Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder von SKiB elektronisch verarbeitet werden und an betreuende Organisationen, sowie en Schulträger weitergegeben werden.</source>
+        <target>J'accepte que mes données et celles de mes enfants soient traitées électroniquement par le SKiB et transmises aux organisations qui s'occupent de moi et de mes enfants ainsi qu'aux autorités scolaires.</target>
+      </trans-unit>
       <trans-unit id="urJCTwm" resname="Zum Newsletter anmelden">
         <source>Zum Newsletter anmelden</source>
         <target>__Zum Newsletter anmelden</target>
