@@ -59,27 +59,24 @@ class BlockType extends AbstractType
             ->add('bis', TimeType::class, array('label' => 'Betreuungsende', 'required' => true, 'translation_domain' => 'form'))
             ->add('min', NumberType::class, array('label' => 'Mindestanzahl an Kindern (Leerlassen wenn keine Begrenzung)', 'required' => false, 'translation_domain' => 'form'))
             ->add('max', NumberType::class, array('label' => 'Maximalanzahl an Kindern (Leerlassen wenn keine Begrenzung)', 'required' => false, 'translation_domain' => 'form'))
+            ->add('ganztag', ChoiceType::class, [
+                'choices' => [
+                    'Ganztagsbetreuung' => 1,
+                    'Halbtagsbetreuung' => 2,
+                    'Mittagessen' => 0,
+                ], 'label' => 'Art der Betreuung', 'translation_domain' => 'form'])
             ->add('preise', CollectionType::class, [
                 'entry_type' => NumberType::class,
                 'entry_options' => array('label' => 'Preis', 'required' => true, 'translation_domain' => 'form')
 
             ])
-            ->add('save', SubmitType::class, ['label' => 'Speichern', 'translation_domain' => 'form'])
             ->add('save', SubmitType::class, ['label' => 'Speichern', 'translation_domain' => 'form']);
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
+
 
     }
 
     protected function addElements(FormInterface $form, Zeitblock $zeitblock)
     {
-        // 4. Add the province element
-        $form->add('ganztag', ChoiceType::class, [
-            'choices' => [
-                'Ganztagsbetreuung' => 1,
-                'Halbtagsbetreuung' => 2,
-                'Mittagessen' => 0,
-            ], 'label' => 'Art der Betreuung', 'translation_domain' => 'form']);
 
 
         $vorganger = array();
@@ -107,26 +104,6 @@ class BlockType extends AbstractType
         ]);
 
 
-    }
-
-    function onPreSubmit(FormEvent $event)
-    {
-        $form = $event->getForm();
-        $data = $event->getData();
-
-        // Search for selected City and convert it into an Entity
-     //   $zeitblock = $this->em->getRepository(Zeitblock::class)->find($data['id']);
-
-      //  $this->addElements($form, $zeitblock);
-    }
-
-    function onPreSetData(FormEvent $event)
-    {
-        $zeitblock = $event->getData();
-        $form = $event->getForm();
-
-        // When you create a new person, the City is always empty
-        $this->addElements($form, $zeitblock);
     }
 
     public function configureOptions(OptionsResolver $resolver)

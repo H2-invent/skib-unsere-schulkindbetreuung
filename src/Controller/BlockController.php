@@ -6,6 +6,7 @@ use App\Entity\Active;
 use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Zeitblock;
+use App\Form\Type\BlockAbhangigkeitType;
 use App\Form\Type\BlockType;
 use App\Service\AnmeldeEmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -139,6 +140,10 @@ class BlockController extends AbstractController
         $text = $translator->trans('Erfolgreich gelöscht');
         return new JsonResponse(array('error'=>0,'snack'=>$text));
     }
+    // Rest of your original controller
+
+
+
     /**
      * @Route("/org_block/schule/block/editBlock", name="block_schule_editBlocks",methods={"GET","POST"})
      */
@@ -157,6 +162,7 @@ class BlockController extends AbstractController
         ]);
 
         $form->remove('save');
+        $form->remove('ganztag');
         $form->remove('preise');
         $form->remove('min');
         $form->remove('max');
@@ -183,5 +189,46 @@ class BlockController extends AbstractController
         return $this->render('block/blockForm.html.twig',array('block'=>$block,'form'=>$form->createView()));
 
     }
+    /**
+     * @Route("/org_block/schule/block/linkBlock", name="block_schule_linkBlock",methods={"GET","POST"})
+     */
+    public function linkBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('id'));
+        if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
+            $text = $translator->trans('Fehler: Falsche Organisation');
+            return new JsonResponse(array('error'=>1,'snack'=>$text));
+        }
+        $blocks = $this->getDoctrine()->getRepository('App:Zeitblock')->findBy(
+            array('schule'=>$block->getSchule(),
+                'ganztag'=>$block->getGanztag(),
+                'active'=>$block->getActive()));
 
+        $form = $this->createForm(BlockAbhangigkeitType::class, $block,[
+            'action' => $this->generateUrl('block_schule_linkBlock',array('id'=>$block->getId())),
+            'blocks'=>$blocks
+        ]);
+
+        $form->handleRequest($request);
+
+        $errors = array();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $block = $form->getData();
+            $errors = $validator->validate($block);
+            try {
+                if (count($errors) == 0) {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($block);
+                    $em->flush();
+                    $text = $translator->trans('Erfolgreich gespeichert');
+                    return new JsonResponse(array('error' => 0, 'snack' => $text));
+                }
+            }catch (\Exception $e){
+                $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+                return new JsonResponse(array('error' => 1, 'snack' => $text));
+            }
+
+        }
+        return $this->render('block/blockLinkForm.html.twig',array('block'=>$block,'form'=>$form->createView()));
+    }
 }
