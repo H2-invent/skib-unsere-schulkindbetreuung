@@ -123,10 +123,15 @@ class BlockController extends AbstractController
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
             return new JsonResponse(array('error'=>1,'snack'=>$text));
-
-
         }
         $block->setDeleted(true);
+        foreach ($block->getNachfolger() as $data){
+            $block->removeNachfolger($data);
+        }
+        foreach ($block->getVorganger() as $data){
+            $block->removeVorganger($data);
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($block);
         $em->flush();
