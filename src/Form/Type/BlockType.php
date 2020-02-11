@@ -49,11 +49,6 @@ class BlockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        dump($options['data']);
-        $schule = $options['data']->getSchule();
-        $active = $options['data']->getActive();
-        $blocks =
-            dump($active);
         $builder
             ->add('von', TimeType::class, array('label' => 'Betreuungsbeginn', 'required' => true, 'translation_domain' => 'form'))
             ->add('bis', TimeType::class, array('label' => 'Betreuungsende', 'required' => true, 'translation_domain' => 'form'))
