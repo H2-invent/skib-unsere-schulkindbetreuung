@@ -119,17 +119,17 @@
                                         <div class="card">
 
                                             <div class="view overlay skib-card-image">
-                                                <img class="card-img-top"
+                                                <img alt="{{ s.name }}" class="card-img-top"
                                                      src="{{ vich_uploader_asset(s,'imageFile') }}">
                                             </div>
                                             <div class="card-body">
 
                                                 <h2 class="card-title">{{ s.name }}</h2>
                                                 <!-- Text -->
-                                                <p class="card-text">{{ s.translate.infoText|nl2br|length > 50 ? s.translate.infoText|nl2br|slice(0,50)~'...':s.translate.infoText }}</p>
+                                                
                                                 <!-- Button -->
                                                 <a href="{{ path('workflow_start',{'slug':s.slug}) }}"
-                                                   class="btn btn-primary">{{ 'Ich lebe in '~s.name|trans }}</a>
+                                                   class="btn btn-primary">{{ s.name~' besuchen'|trans }}</a>
 
                                             </div>
 
