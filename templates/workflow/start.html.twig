@@ -132,9 +132,9 @@
                                             <b>{{ n.title }}</b>
                                         </a>
                                         <br/>
-                                        <p>
-                                            {{ n.message|length > 70 ? n.message|nl2br|slice(0,70)~'...':n.message|nl2br }}
-                                        </p>
+                                        <div class="newsPreview">
+                                            {{ n.message|raw }}
+                                        </div>
                                     {% endfor %}
                                     <a href="{{ path('news_show_page', {'slug': stadt.slug }) }}"
                                        class="btn btn-primary">
