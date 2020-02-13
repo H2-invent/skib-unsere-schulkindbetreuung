@@ -12,8 +12,14 @@
                     </small>
                 {% endif %}
                 <p>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</p>
-
-
+                {% if b.vorganger is not empty %}
+                    <ul class="list-group">
+                        <li class="list-group-item">Vorgänger:</li>
+                        {% for l in b.vorganger %}
+                        <li class="list-group-item">{{ l.wochentagString }} {{ l.von|date('H:i') }}-{{ l.bis|date('H:i') }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
                 <p>
                     <a class="btn btn-primary" data-toggle="collapse" href="#collapse{{ b.id }}" role="button"
                        aria-expanded="false" aria-controls="collapseExample">
@@ -49,7 +55,7 @@
                         <a href="{{ path('block_schule_editBlocks',{'id':b.id}) }}" class="loadContent"> <i
                                     class="material-icons">edit</i></a>
                         <a href="{{ path('block_schule_linkBlock',{'id':b.id}) }}" class="loadContent"><i
-                                class="material-icons">link</i></a>
+                                    class="material-icons">link</i></a>
                         <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}" class="deleteAjax"><i
                                     class="material-icons">delete</i></a>
 
