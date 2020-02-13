@@ -7,7 +7,7 @@
     <h4 class="text-center">{{ news.title }}
     </h4>
     <p>
-        {{ news.message|nl2br }}
+        {{ news.message|raw }}
     </p>
     <p>
         {% trans %}Erstellt am{% endtrans %}: {{ news.createdDate|date('d.m.Y') }}

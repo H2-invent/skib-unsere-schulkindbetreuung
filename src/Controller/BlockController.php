@@ -207,7 +207,7 @@ class BlockController extends AbstractController
         $blocks = $this->getDoctrine()->getRepository('App:Zeitblock')->findBy(
             array('schule'=>$block->getSchule(),
                 'ganztag'=>$block->getGanztag(),
-                'active'=>$block->getActive()));
+                'active'=>$block->getActive()),array('von'=>'ASC'));
 
         $form = $this->createForm(BlockAbhangigkeitType::class, $block,[
             'action' => $this->generateUrl('block_schule_linkBlock',array('id'=>$block->getId())),

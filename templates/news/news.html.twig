@@ -8,7 +8,7 @@
                 <div class=" col-12 card">
                     <div class="card-header">
                         <h1> {% trans %}Neuigkeiten{% endtrans %} <a
-                                    href="{{ path('content_n',{'id':city.id}) }}">
+                                    href="{{ path('city_admin_news_neu',{'id':city.id}) }}">
                                 <button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
                                     <i class="material-icons">add</i>
                                 </button>
@@ -21,7 +21,7 @@
                                 <th></th>
                                 <th>{% trans %}Sichtbar{% endtrans %}</th>
                                 <th>{% trans %}Titel{% endtrans %}</th>
-                                <th>{% trans %}News Nachricht{% endtrans %}</th>
+
                                 <th>{% trans %}Datum{% endtrans %}</th>
                                 <th>{% trans %}Schulen{% endtrans %}</th>
                             </tr>
@@ -56,7 +56,7 @@
                                     </td>
                                     <td>{{ n.activ?"Ja":'Nein'|trans }}</td>
                                     <td>{{ n.title }}</td>
-                                    <td>{{ n.message }}</td>
+
                                     <td>{{ n.date|date("d.m.Y G:i") }}</td>
                                     <td>{% for s in n.schule %}{{ s.name }}<br>{% endfor %}</td>
                                 </tr>

@@ -132,9 +132,9 @@
                                             <b>{{ n.title }}</b>
                                         </a>
                                         <br/>
-                                        <p>
-                                            {{ n.message|length > 70 ? n.message|nl2br|slice(0,70)~'...':n.message|nl2br }}
-                                        </p>
+                                        <div class="newsPreview">
+                                            {{ n.message|raw }}
+                                        </div>
                                     {% endfor %}
                                     <a href="{{ path('news_show_page', {'slug': stadt.slug }) }}"
                                        class="btn btn-primary">
@@ -222,7 +222,7 @@
                                     {% for o in stadt.organisations %}
                                         <div class="col-md-4 col-sm-6">
                                             <div class="card hoverable">
-                                                <div class="view overlay">
+                                                <div class="view overlay skib-card-image">
 
                                                     <img class="card-img-top lazy" style="max-height: 300px"
 
@@ -245,8 +245,12 @@
                                                 </div>
 
                                                 <div class="card-body ">
-                                                    <h5 class="card-title">{{ o.name }}</h5>
+
                                                     <p class="card-text">{{ o.infoText }}</p>
+
+                                                </div>
+                                                <div class="card-footer">
+                                                  {{ o.name }}
                                                 </div>
                                             </div>
                                         </div>

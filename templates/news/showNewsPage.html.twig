@@ -41,7 +41,7 @@
     <b>
     {% trans %}Erstellt am{% endtrans %}: {{ news.createdDate|date('d.m.Y') }} {% if news.date %}| {% trans %}Bearbeitet am{% endtrans %}: {{ news.date|date('d.m.Y') }}{% endif %}
 </b>
-    <p>{{ news.message|nl2br }}</p>
+    <p>{{ news.message|raw }}</p>
 
     <a class="btn btn-primary"
        href="{{ path('news_show_page', {'slug':news.stadt.slug}) }}">
