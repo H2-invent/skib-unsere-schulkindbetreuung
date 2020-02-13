@@ -11,9 +11,10 @@
 
         <h2>{{ n.title }}</h2><b>{% trans %}Erstellt am{% endtrans %}: {{ n.createdDate|date('d.m.Y') }}{% if n.date %} | {% trans %}Bearbeitet am{% endtrans %}: {{ n.date|date('d.m.Y') }}{% endif %}</b>
 
-        <p>
-            {{ n.message|nl2br|length > 150 ? n.message|nl2br|slice(0,150)~'...':n.message|nl2br }}
-        </p>
+        <div class="newsPreview">
+
+            {{ n.message|raw }}
+        </div>
 
         <a class="btn btn-primary"
            href="{{ path('news_show_all', {'id': n.id, 'slug': stadt.slug}) }}">

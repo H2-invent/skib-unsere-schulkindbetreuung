@@ -24,11 +24,8 @@
                             <a href={{ path('workflow_agb',{'slug':stadt.slug}) }}>{% trans %}Vertragsbedingungen{% endtrans %}</a>
                         </li>
                         <li>
-                            <a href="https://unsere-schulkindbetreuung.de">{% trans %}SKiB Software - H2 invent{% endtrans %}</a>
-                        </li>
-                        <li >
-                            <a href={{ path('sitemap') }}>{% trans %}Sitemap{% endtrans %}</a>
-                        </li>
+                         </li>
+
                     </ul>
                 </div>
                     <div class="col-lg-6 col-md-8 mb-md-0 text-right">
@@ -58,9 +55,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href={{ path('nutzungsbedingungen') }}>{% trans %}Nutzungsbedingungen{% endtrans %}</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href={{ path('sitemap') }}>{% trans %}Sitemap{% endtrans %}</a>
-                                </li>
                             </ul>
                         </div>
                 {% endif %}
@@ -69,7 +63,8 @@
         </div>
     </div>
     <div class="footer-copyright text-center py-2">
-        Made with ❤ in Lörrach by H2 invent GmbH • {{ 'now'|date('Y') }} • <a target="_blank" rel="nofollow" href="https://book.h2-invent.com/books/skib/page/versionen-und-changelog"> v{{ shivas_app_version }}</a> • <a href="https://unsere-schulkindbetreuung.de/datenschutz">{% trans %}Datenschutz{% endtrans %} SKiB</a>
+        Made with ❤ in Lörrach by H2 invent GmbH • {{ 'now'|date('Y') }} • <a target="_blank" rel="nofollow" href="https://book.h2-invent.com/books/skib/page/versionen-und-changelog"> v{{ shivas_app_version }}</a> • <a href="https://unsere-schulkindbetreuung.de/datenschutz">{% trans %}Datenschutz{% endtrans %} SKiB</a> • <a href={{ path('sitemap') }}>{% trans %}Sitemap{% endtrans %}</a> • <a href="https://unsere-schulkindbetreuung.de">{% trans %}SKiB Software - H2 invent{% endtrans %}</a>
+
     </div>
 </footer>
 <!-- Footer -->

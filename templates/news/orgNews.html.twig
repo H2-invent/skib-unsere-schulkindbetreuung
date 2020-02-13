@@ -20,7 +20,7 @@
                             <tr>
                                 <th></th>
                                 <th>{% trans %}Titel{% endtrans %}</th>
-                                <th>{% trans %}News Nachricht{% endtrans %}</th>
+
                                 <th>{% trans %}Schule{% endtrans %}</th>
                                 <th>{% trans %}Datum{% endtrans %}</th>
                             </tr>
@@ -47,7 +47,7 @@
                                         </div>
                                     </td>
                                     <td>{{ n.title }}</td>
-                                    <td>{{ n.message }}</td>
+                                   
                                     <td>{% for s in n.schule %}{{ s.name }}<br>{% endfor %}</td>
                                     <td>{{ n.date|date("d.m.Y G:i") }}</td>
                                 </tr>

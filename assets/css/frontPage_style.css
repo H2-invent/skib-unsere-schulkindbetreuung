@@ -319,3 +319,8 @@ img.lazy {
 .trumbowyg-box {
   border: none;
 }
+.newsPreview{
+  height: 5em;
+  overflow: hidden;
+  white-space: nowrap;
+}
