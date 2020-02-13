@@ -129,7 +129,7 @@
                                                 
                                                 <!-- Button -->
                                                 <a href="{{ path('workflow_start',{'slug':s.slug}) }}"
-                                                   class="btn btn-primary">{{ s.name~' besuchen'|trans }}</a>
+                                                   class="btn btn-primary">{% trans with{'%stadt%':s.name} %}%stadt% besuchen{% endtrans %}</a>
 
                                             </div>
 
