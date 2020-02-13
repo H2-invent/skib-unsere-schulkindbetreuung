@@ -1055,10 +1055,6 @@
         <source>Bankverbindung für Lastschrift</source>
         <target state="translated">Détails bancaires pour le débit direct</target>
       </trans-unit>
-      <trans-unit id="47DEQpj" resname="">
-        <source></source>
-        <target></target>
-      </trans-unit>
       <trans-unit id="bXHPK6K" resname="Daten der Kinder">
         <source>Daten der Kinder</source>
         <target state="translated">Données sur les enfants</target>
@@ -2339,9 +2335,9 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Software &amp; technische Umsetzung</source>
         <target state="translated">Logiciel et mise en œuvre technique</target>
       </trans-unit>
-      <trans-unit id="Uuif66_" resname="Weitere Hinweise zum Datenschutz von SKiB finden Sie in unserem">
-        <source>Weitere Hinweise zum Datenschutz von SKiB finden Sie in unserem</source>
-        <target>Vous trouverez de plus amples informations sur la protection des données au SKiB dans notre</target>
+      <trans-unit id="Uuif66_" resname="Weitere Hinweise zum Datenschutz finden Sie in dem">
+        <source>Weitere Hinweise zum Datenschutz finden Sie in dem</source>
+        <target>De plus amples informations sur la protection des données sont disponibles dans le</target>
       </trans-unit>
     </body>
   </file>

@@ -1207,10 +1207,6 @@
         <source>Bankverbindung für Lastschrift</source>
         <target state="translated">Bank details for direct debit</target>
       </trans-unit>
-      <trans-unit id="47DEQpj" resname="">
-        <source></source>
-        <target></target>
-      </trans-unit>
       <trans-unit id="bXHPK6K" resname="Daten der Kinder">
         <source>Daten der Kinder</source>
         <target state="translated">Data of children</target>
@@ -2339,9 +2335,9 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Einkommensgruppe numerisch</source>
         <target state="translated">Income group numerical</target>
       </trans-unit>
-      <trans-unit id="Uuif66_" resname="Weitere Hinweise zum Datenschutz von SKiB finden Sie in unserem">
-        <source>Weitere Hinweise zum Datenschutz von SKiB finden Sie in unserem</source>
-        <target>Further information on data protection at SKiB can be found in our</target>
+      <trans-unit id="Uuif66_" resname="Weitere Hinweise zum Datenschutz finden Sie in dem">
+        <source>Weitere Hinweise zum Datenschutz finden Sie in dem</source>
+        <target>Further information on data protection can be found in the</target>
       </trans-unit>
     </body>
   </file>
