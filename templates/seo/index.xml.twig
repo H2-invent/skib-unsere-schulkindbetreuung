@@ -9,12 +9,12 @@
 {% for l in loc %}
     <url>
         <loc>{{ absolute_url(path('welcome_landing',{} | merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
-        <xhtml:link rel="alternate" hreflang="de"
-                    href="{{ absolute_url(path('welcome_landing',{} | merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
-        <xhtml:link rel="alternate" hreflang="en"
-                    href="{{ absolute_url(path('welcome_landing',{} | merge({'_locale':'en'})))|replace({"http://":"https://"}) }}"/>
-        <xhtml:link rel="alternate" hreflang="fr"
-                    href="{{ absolute_url(path('welcome_landing',{} | merge({'_locale':'fr'})))|replace({"http://":"https://"}) }}"/>
+		{% for l in loc %}
+		   <xhtml:link rel="alternate" hreflang="{{l}}"
+                    href="{{ absolute_url(path('welcome_landing',{} | merge({'_locale':l})))|replace({"http://":"https://"}) }}"/>
+		{% endfor %}
+     
+     
         <lastmod>2020-01-13T16:27:45+00:00</lastmod>
         <priority>1</priority>
     </url>
