@@ -257,9 +257,9 @@
         <source>Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden.</source>
         <target state="translated">I note that my data will be processed electronically.</target>
       </trans-unit>
-      <trans-unit id="C3sxWCp" resname="Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder von SKiB elektronisch verarbeitet werden und an betreuende Organisationen, sowie en Schulträger weitergegeben werden.">
-        <source>Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder von SKiB elektronisch verarbeitet werden und an betreuende Organisationen, sowie en Schulträger weitergegeben werden.</source>
-        <target>I agree that my data and the data of my children may be electronically processed by SKiB and forwarded to the organisations that look after me and my children and to the school authorities.</target>
+      <trans-unit id="lVV37Zu" resname="Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet werden und an die betreuende Organisation weitergegeben werden.">
+        <source>Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet werden und an die betreuende Organisation weitergegeben werden.</source>
+        <target>I agree that my data and the data of my children will be electronically processed and passed on to the supervising organisation.</target>
       </trans-unit>
       <trans-unit id="urJCTwm" resname="Zum Newsletter anmelden">
         <source>Zum Newsletter anmelden</source>
@@ -544,6 +544,10 @@
       <trans-unit id="yt7GnqI" resname="Caterer Info Französisch (Markdown)">
         <source>Caterer Info Französisch (Markdown)</source>
         <target>Caterer Info French (Markdown)</target>
+      </trans-unit>
+      <trans-unit id="C3sxWCp" resname="Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder von SKiB elektronisch verarbeitet werden und an betreuende Organisationen, sowie en Schulträger weitergegeben werden.">
+        <source>Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder von SKiB elektronisch verarbeitet werden und an betreuende Organisationen, sowie en Schulträger weitergegeben werden.</source>
+        <target>I agree that my data and the data of my children may be electronically processed by SKiB and forwarded to the organisations that look after me and my children and to the school authorities.</target>
       </trans-unit>
       <trans-unit id="Egy_4e5" resname="AGB hochladen. Diese wird an die Bestätigungsemail angehängt">
         <source>AGB hochladen. Diese wird an die Bestätigungsemail angehängt</source>

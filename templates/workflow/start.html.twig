@@ -147,7 +147,7 @@
                     {% if stadt.schulkindBetreung %}
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h3> {% trans %}Für folgenden Schulen können Sie die Schulkindbetreuung hier online buchen.{% endtrans %}</h3>
+                                <h3> {% trans %}Hier können Sie die Schulkindbetreuung für die folgenden Schulen online buchen{% endtrans %}</h3>
                                 {% if schuljahr is not null %}
                                     <p style="font-family: TypeWritersSubstitute">
                                         {% trans %}Aktuelles Schuljahr{% endtrans %}: {{ schuljahr.von|date('d.m.Y') }}
@@ -291,7 +291,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4>
-                                        {% trans %}Träger{% endtrans %}
+                                        {{ 'Betreuende Organisationen'|trans }}
                                     </h4>
                                     {% for o in stadt.organisations %}
                                         <div class="row mb-1">

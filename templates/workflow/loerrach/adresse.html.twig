@@ -116,7 +116,7 @@
                         {{ form_label(form.gdpr) }}
                         {{ form_widget(form.gdpr) }}
                         <p>
-                            {% trans %}Weitere Hinweise zum Datenschutz von SKiB finden Sie in unserem{% endtrans %} <a href="https://unsere-schulkindbetreuung.de/datenschutz" target="_blank" rel="noopener noreferrer">{{ 'Datenschutzhinweis'|trans }}</a>
+                            {% trans %}Weitere Hinweise zum Datenschutz finden Sie in dem{% endtrans %} <a href={{ path('workflow_datenschutz',{'slug':stadt.slug,'org_id':'city'}) }} target="_blank" rel="noopener noreferrer">{{ 'Datenschutzhinweis'|trans }}</a>
                         </p>
 
                         {{ form_rest(form) }}
