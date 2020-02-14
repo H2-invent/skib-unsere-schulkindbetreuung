@@ -5,7 +5,7 @@
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
 >
-{% set loc = ['de','en','fr] %}
+{% set loc = ['de','en','fr'] %}
 {% for l in loc %}
     <url>
         <loc>{{ absolute_url(path('welcome_landing',{} | merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
