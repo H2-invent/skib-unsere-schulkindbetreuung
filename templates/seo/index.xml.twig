@@ -5,8 +5,10 @@
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
 >
+{% set loc = ['de','en','fr] %}
+{% for l in loc %}
     <url>
-        <loc>{{ absolute_url(path('welcome_landing'))|replace({"http://":"https://"}) }}</loc>
+        <loc>{{ absolute_url(path('welcome_landing',{} | merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
         <xhtml:link rel="alternate" hreflang="de"
                     href="{{ absolute_url(path('welcome_landing',{} | merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
         <xhtml:link rel="alternate" hreflang="en"
@@ -16,8 +18,9 @@
         <lastmod>2020-01-13T16:27:45+00:00</lastmod>
         <priority>1</priority>
     </url>
+
     <url>
-        <loc>{{ absolute_url(path('impressum'))|replace({"http://":"https://"}) }}</loc>
+        <loc>{{ absolute_url(path('impressum',{} | merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
         <xhtml:link rel="alternate" hreflang="de"
                     href="{{ absolute_url(path('impressum',{} | merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
         <xhtml:link rel="alternate" hreflang="en"
@@ -28,7 +31,7 @@
         <priority>0.1</priority>
     </url>
     <url>
-        <loc>{{ absolute_url(path('datenschutz'))|replace({"http://":"https://"}) }}</loc>
+        <loc>{{ absolute_url(path('datenschutz',{} | merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
         <xhtml:link rel="alternate" hreflang="de"
                     href="{{ absolute_url(path('datenschutz',{} | merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
         <xhtml:link rel="alternate" hreflang="en"
@@ -39,7 +42,7 @@
         <priority>0.1</priority>
     </url>
     <url>
-        <loc>{{ absolute_url(path('nutzungsbedingungen'))|replace({"http://":"https://"}) }}</loc>
+        <loc>{{ absolute_url(path('nutzungsbedingungen',{} | merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
         <xhtml:link rel="alternate" hreflang="de"
                     href="{{ absolute_url(path('nutzungsbedingungen',{} | merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
         <xhtml:link rel="alternate" hreflang="en"
@@ -53,7 +56,7 @@
 {% for c in content %}
 
     <url>
-        <loc>{{ absolute_url(path('welcome_landing_slug',{'content':c.slug}))|replace({"http://":"https://"})}}</loc>
+        <loc>{{ absolute_url(path('welcome_landing_slug',{'content':c.slug} | merge({'_locale':l})))|replace({"http://":"https://"})}}</loc>
         <xhtml:link rel="alternate" hreflang="de"
                     href="{{ absolute_url(path('welcome_landing_slug',{'content':c.slug} | merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
         <xhtml:link rel="alternate" hreflang="en"
@@ -73,7 +76,7 @@
             {% set date = s.createdAt %}
         {% endif %}
         <url>
-            <loc>{{ absolute_url(path('workflow_start',{'slug':s.slug}))|replace({"http://":"https://"}) }}</loc>
+            <loc>{{ absolute_url(path('workflow_start',{'slug':s.slug} | merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
             <xhtml:link rel="alternate" hreflang="de"
                         href="{{ absolute_url(path('workflow_start',{'slug':s.slug}| merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
             <xhtml:link rel="alternate" hreflang="en"
@@ -86,7 +89,7 @@
 
         {% if s.schulkindBetreung == true %}
             <url>
-                <loc>{{ absolute_url(path('loerrach_workflow_adresse',{'slug':s.slug}))|replace({"http://":"https://"}) }}</loc>
+                <loc>{{ absolute_url(path('loerrach_workflow_adresse',{'slug':s.slug}| merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
                 <xhtml:link rel="alternate" hreflang="de"
                             href="{{ absolute_url(path('loerrach_workflow_adresse',{'slug':s.slug}| merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
                 <xhtml:link rel="alternate" hreflang="en"
@@ -99,7 +102,7 @@
         {% endif %}
         {% if s.ferienprogramm == true %}
             <url>
-                <loc>{{ absolute_url(path('ferien_adresse',{'slug':s.slug}))|replace({"http://":"https://"}) }}</loc>
+                <loc>{{ absolute_url(path('ferien_adresse',{'slug':s.slug}| merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
                 <xhtml:link rel="alternate" hreflang="de"
                             href="{{ absolute_url(path('ferien_adresse',{'slug':s.slug}| merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
                 <xhtml:link rel="alternate" hreflang="en"
@@ -111,7 +114,7 @@
             </url>
         {% endif %}
         <url>
-            <loc>{{ absolute_url(path('workflow_imprint',{'slug':s.slug}))|replace({"http://":"https://"}) }}</loc>
+            <loc>{{ absolute_url(path('workflow_imprint',{'slug':s.slug}| merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
             <xhtml:link rel="alternate" hreflang="de"
                         href="{{ absolute_url(path('workflow_imprint',{'slug':s.slug}| merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
             <xhtml:link rel="alternate" hreflang="en"
@@ -122,7 +125,7 @@
             <priority>0.2</priority>
         </url>
         <url>
-            <loc>{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':'city'}))|replace({"http://":"https://"}) }}</loc>
+            <loc>{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':'city'}| merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
             <xhtml:link rel="alternate" hreflang="de"
                         href="{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':'city'}| merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
             <xhtml:link rel="alternate" hreflang="en"
@@ -133,7 +136,7 @@
             <priority>0.2</priority>
         </url>
         <url>
-            <loc>{{ absolute_url(path('workflow_agb',{'slug':s.slug}))|replace({"http://":"https://"}) }}</loc>
+            <loc>{{ absolute_url(path('workflow_agb',{'slug':s.slug}| merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
             <xhtml:link rel="alternate" hreflang="de"
                         href="{{ absolute_url(path('workflow_agb',{'slug':s.slug}| merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
             <xhtml:link rel="alternate" hreflang="en"
@@ -148,7 +151,7 @@
             <!-- City: {{ s.name }} Organisation: {{ o.name }} -->
 
             <url>
-                <loc>{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':o.id}))|replace({"http://":"https://"}) }}</loc>
+                <loc>{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':o.id}| merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
                 <xhtml:link rel="alternate" hreflang="de"
                             href="{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':o.id}| merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
                 <xhtml:link rel="alternate" hreflang="en"
@@ -162,7 +165,7 @@
         {% endfor %}
         <!-- City: Newsuebersicht {{ s.name }} News -->
         <url>
-            <loc>{{ absolute_url(path('news_show_page',{'slug':s.slug}))|replace({"http://":"https://"}) }}</loc>
+            <loc>{{ absolute_url(path('news_show_page',{'slug':s.slug}| merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
             <xhtml:link rel="alternate" hreflang="de"
                         href="{{ absolute_url(path('news_show_page',{'slug':s.slug}| merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
             <xhtml:link rel="alternate" hreflang="en"
@@ -180,7 +183,7 @@
                 {% set date = n.date %}
             {% endif %}
             <url>
-                <loc>{{ absolute_url(path('news_show_all',{'slug':s.slug,'id':n.id}))|replace({"http://":"https://"}) }}</loc>
+                <loc>{{ absolute_url(path('news_show_all',{'slug':s.slug,'id':n.id}| merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
                 <xhtml:link rel="alternate" hreflang="de"
                             href="{{ absolute_url(path('news_show_all',{'slug':s.slug,'id':n.id}| merge({'_locale':'de'})))|replace({"http://":"https://"}) }}"/>
                 <xhtml:link rel="alternate" hreflang="en"
@@ -193,5 +196,5 @@
 
         {% endfor %}
     {% endfor %}
-
+{% endfor %}
 </urlset>
