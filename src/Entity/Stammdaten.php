@@ -243,6 +243,11 @@ class Stammdaten
      */
     private $customerID;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $language;
+
 
 
 
@@ -797,6 +802,18 @@ class Stammdaten
     public function setCustomerID(?string $customerID): self
     {
         $this->customerID = $customerID;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?string $language): self
+    {
+        $this->language = $language;
 
         return $this;
     }

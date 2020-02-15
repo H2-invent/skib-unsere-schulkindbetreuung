@@ -147,7 +147,7 @@
                     {% if stadt.schulkindBetreung %}
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h3> {% trans %}Für folgenden Schulen können Sie die Schulkindbetreuung hier online buchen.{% endtrans %}</h3>
+                                <h3> {% trans %}Hier können Sie die Schulkindbetreuung für die folgenden Schulen online buchen{% endtrans %}</h3>
                                 {% if schuljahr is not null %}
                                     <p style="font-family: TypeWritersSubstitute">
                                         {% trans %}Aktuelles Schuljahr{% endtrans %}: {{ schuljahr.von|date('d.m.Y') }}
@@ -166,7 +166,7 @@
                                     <!-- Count item widget-->
                                     {% for s in schule %}
                                         <div class="col-md-6 col-lg-4 mb-4">
-                                            <div class="cardhoverable h-100 card  ">
+                                            <div class="cardhoverable h-100 card hoverable ">
                                                 <div class=" overlay skib-card-image">
                                                     <a href="{{path('loerrach_workflow_adresse',{'slug':stadt.slug})}}">
                                                     <img class="card-img-top lazy"
@@ -217,7 +217,7 @@
                                 <h3> {% trans %}Von folgenden Trägern kann das Ferienprogramm hier online gebucht werden.{% endtrans %}</h3>
                             </div>
                             <div class="card-body">
-                                <div class="card-deck">
+                                <div class="row row-eq-height">
                                     <!-- Count item widget-->
                                     {% for o in stadt.organisations %}
                                         <div class="col-md-4 col-sm-6">
@@ -245,14 +245,13 @@
                                                 </div>
 
                                                 <div class="card-body ">
+                                                    <h5 class="card-title">{{ o.name }}</h5>
 
-                                                    <p class="card-text">{{ o.infoText }}</p>
 
                                                 </div>
-                                                <div class="card-footer">
-                                                    {% trans %}Betreuende Organisation{% endtrans %}
-                                                    : {{ o.name }}
-                                                </div>
+
+
+
                                             </div>
                                         </div>
                                     {% endfor %}
@@ -292,7 +291,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4>
-                                        {% trans %}Träger{% endtrans %}
+                                        {{ 'Betreuende Organisationen'|trans }}
                                     </h4>
                                     {% for o in stadt.organisations %}
                                         <div class="row mb-1">

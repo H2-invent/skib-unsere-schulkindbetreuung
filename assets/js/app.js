@@ -34,7 +34,8 @@ import niceScroll from 'jquery.nicescroll';
 // Import TinyMCE
 import trumbowgy from 'trumbowyg';
 import icon from 'trumbowyg/dist/ui/icons.svg'
-import ('trumbowyg/dist/plugins/colors/trumbowyg.colors')
+import ('trumbowyg/dist/plugins/colors/trumbowyg.colors');
+import ('trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste');
 
 $(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
 

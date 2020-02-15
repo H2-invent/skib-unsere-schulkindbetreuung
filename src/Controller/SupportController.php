@@ -25,7 +25,7 @@ class SupportController extends AbstractController
             'email' => $this->getUser()->getEmail(),
             'phone' => '',
             'subject' => 'Betreff',
-            'message' => 'Nachricht',
+            'message' => '',
             'datenschutz' => true,
             'topicId' => '17',
             'user' => $this->getUser()->getUsername(),
@@ -36,6 +36,7 @@ class SupportController extends AbstractController
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $arr = $form->getData();
+            $arr['message']='data:text/html,'.$arr['message'];
             $support = new OsticketPhpClient($parameterBag->get('osTicketUrl'), $parameterBag->get('osTicketApi'));
              try{
             $support->request('api/tickets.json', $arr);

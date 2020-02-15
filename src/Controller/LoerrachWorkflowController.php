@@ -85,6 +85,7 @@ class LoerrachWorkflowController extends AbstractController
 
 
         $adresse = new Stammdaten();
+
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
@@ -100,6 +101,7 @@ class LoerrachWorkflowController extends AbstractController
         $form->handleRequest($request);
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
+
             $adresse = $form->getData();
             $errors = $validator->validate($adresse);
             if (count($errors) == 0) {
@@ -504,6 +506,7 @@ class LoerrachWorkflowController extends AbstractController
         }
 
 // Daten speichern und fixieren
+        $adresse->setLanguage($request->getLocale());
         $workflowAbschluss->abschluss($adresse, $kind);
 //Emails an die Eltern senden
         foreach ($kind as $data) {
