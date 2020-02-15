@@ -166,7 +166,7 @@
                                     <!-- Count item widget-->
                                     {% for s in schule %}
                                         <div class="col-md-6 col-lg-4 mb-4">
-                                            <div class="cardhoverable h-100 card  ">
+                                            <div class="cardhoverable h-100 card hoverable ">
                                                 <div class=" overlay skib-card-image">
                                                     <a href="{{path('loerrach_workflow_adresse',{'slug':stadt.slug})}}">
                                                     <img class="card-img-top lazy"
@@ -217,7 +217,7 @@
                                 <h3> {% trans %}Von folgenden Trägern kann das Ferienprogramm hier online gebucht werden.{% endtrans %}</h3>
                             </div>
                             <div class="card-body">
-                                <div class="card-deck">
+                                <div class="row row-eq-height">
                                     <!-- Count item widget-->
                                     {% for o in stadt.organisations %}
                                         <div class="col-md-4 col-sm-6">
@@ -245,13 +245,11 @@
                                                 </div>
 
                                                 <div class="card-body ">
+                                                    <h5 class="card-title">{{ o.name }}</h5>
 
-                                                    <p class="card-text">{{ o.infoText }}</p>
 
                                                 </div>
-                                                <div class="card-footer">
-                                                  {{ o.name }}
-                                                </div>
+
                                             </div>
                                         </div>
                                     {% endfor %}
