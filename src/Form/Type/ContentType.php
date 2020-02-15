@@ -50,6 +50,7 @@ class ContentType extends AbstractType
             ->add('titleDE', TextType::class, ['required'=>false,'label'=>'Title Deutsch ','translation_domain' => 'form', 'property_path' => 'translations[de].title', ])
             ->add('titleEN', TextType::class, ['required'=>false,'label'=>'Title Englisch ','translation_domain' => 'form','property_path' => 'translations[en].title', ])
             ->add('titleFR', TextType::class, ['required'=>false,'label'=>'Title Französisch ','translation_domain' => 'form','property_path' => 'translations[fr].title', ])
+            ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
             ->add('contentDE', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>false,'label'=>'Content Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].content', ])
             ->add('contentEN', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>false,'label'=>'Content Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].content', ])
             ->add('contentFR', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>false,'label'=>'Content Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].content', ])
@@ -62,8 +63,7 @@ class ContentType extends AbstractType
             ->add('activ', CheckboxType::class,array('label'=>'Content öffentlich','translation_domain' => 'form'))
             ->add('reihenfolge', NumberType::class,array('label'=>'Reihenfolge','translation_domain' => 'form'))
 
-            ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
-        ;
+         ;
     }
     public function configureOptions(OptionsResolver $resolver)
     {
