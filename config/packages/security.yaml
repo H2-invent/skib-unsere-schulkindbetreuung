@@ -29,7 +29,10 @@ security:
                 login_path: fos_user_security_login
             logout:
                 path: fos_user_security_logout
-
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /login
 
             anonymous:    true
             switch_user: true
