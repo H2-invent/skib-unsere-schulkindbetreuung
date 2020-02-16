@@ -42,7 +42,7 @@
     "respond.js": "^1.4.2",
     "simple-parallax-js": "^5.2.0",
     "snackbarjs": "^1.1.0",
-    "trumbowyg": "^2.21.0",
+    "holematrumbowyg": "^2.21.1",
     "webpack-notifier": "^1.8.0"
   },
   "devDependencies": {
