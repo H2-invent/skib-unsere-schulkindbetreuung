@@ -62,15 +62,15 @@ $(document).ready(function () {
     });
 });
 
-$(window).on('load', function() {
+$(window).on('load', function () {
 
-    $(function() {
+    $(function () {
         $('.lazy').show().Lazy({
             // your configuration goes here
             scrollDirection: 'vertical',
             effect: 'fadeIn',
             visibleOnly: true,
-            onError: function(element) {
+            onError: function (element) {
                 console.log('error loading ' + element.data('src'));
             }
         });
@@ -88,4 +88,17 @@ $(window).on('load', function() {
     );
 
 });
+$(document).on('click', '.loadInTarget', function (e) {
+    e.preventDefault();
+    var ele = $(this);
+    $(ele.attr('data-wrapper')).load(ele.attr('href')+' '+ele.attr('data-target'),function () {
+        $('.nav-tabs').scrollingTabs({
+            bootstrapVersion: 4,
+            cssClassLeftArrow: 'fa fa-chevron-left',
+            cssClassRightArrow: 'fa fa-chevron-right',
+            disableScrollArrowsOnFullyScrolled: true
+        });
+    });
+    window.history.pushState('test',"test", ele.attr('href'));
 
+})
