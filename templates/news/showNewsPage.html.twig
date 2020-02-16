@@ -32,6 +32,32 @@
             "description":"{{ news.message|slice(0,200) }}"
         }
 
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Books",
+                    "item": "{{absolute_url( path('workflow_start',{'slug':news.stadt.slug}))}}"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "{{news.stadt.name}}",
+                    "item": "{{ absolute_url(path('news_show_page',{'slug':news.stadt.slug})) }}"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "{{news.title}}",
+                    "item": "{{ absolute_url(path('news_show_all',{'slug':news.stadt.slug,'id':news.id})) }}"
+                }
+            ]
+        }
 
 
     </script>
