@@ -77,7 +77,7 @@
                     <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist" >
                         {% for c in content %}
 
-                            <li class="nav-item text-center {% if c == contentSelect %} z-depth-2{% endif %}">
+                            <li class="nav-item text-center {% if c == contentSelect %} z-depth-1{% endif %}">
                                 <a class="nav-link {% if c == contentSelect %} active {% endif %}" id="{{ c.id }}-tab" href="{{ path('welcome_landing_slug',{'content':c.slug}) }}#feature"
                                    aria-controls="{{ c.slug }}"
                                    aria-selected="true"><i class="fa fa-3x {{c.icon}}"></i><br> {{ c.translate.title }}</a>
