@@ -27,6 +27,7 @@
     "html5shiv": "^3.7.3",
     "jarallax": "^1.12.0",
     "jquery": "^3.4.1",
+    "jquery-bootstrap-scrolling-tabs": "^2.6.1",
     "jquery-clockpicker": "0.0.8",
     "jquery-confirm": "^3.3.4",
     "jquery-lazy": "^1.7.10",

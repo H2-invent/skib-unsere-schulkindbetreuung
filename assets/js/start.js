@@ -28,6 +28,8 @@ import {
     jarallaxVideo
 } from 'jarallax';
 
+import scrollingTabs from 'jquery-bootstrap-scrolling-tabs';
+
 jarallaxVideo();
 jarallaxElement();
 jarallax(document.querySelectorAll('.jarallax'), {
@@ -51,6 +53,14 @@ $(document).on('click', '.loadContent', function (e) {
 
 });
 
+$(document).ready(function () {
+    $('.nav-tabs').scrollingTabs({
+        bootstrapVersion: 4,
+        cssClassLeftArrow: 'fa fa-chevron-left',
+        cssClassRightArrow: 'fa fa-chevron-right',
+        disableScrollArrowsOnFullyScrolled: true
+    });
+});
 
 $(window).on('load', function() {
 

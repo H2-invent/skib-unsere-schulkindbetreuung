@@ -29,6 +29,7 @@ import('jquery-clockpicker');
 import('daterangepicker');
 import ('jquery-lazy');
 
+
 import {
     jarallax,
     jarallaxElement,
