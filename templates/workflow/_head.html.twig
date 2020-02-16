@@ -8,7 +8,7 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>{% if title is defined and title is not null %}{{ title }}{% else %}{% trans %}Anmeldeportal Schulkindbetreuung{% endtrans %} | {% if stadt is defined and stadt is not null %}{{ stadt.name }}{% endif %}{% endif %} | {{ app.request.locale|language_name(app.request.locale) }}</title>
 {% if metaDescription is defined and metaDescription is not null %}
-<meta name="description" content="{{ metaDescription }}"/>
+<meta name="description" content="{{ metaDescription|striptags }}"/>
 {% endif %}
 
 

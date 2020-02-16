@@ -323,6 +323,7 @@ img.lazy {
   height: 5em;
   overflow: hidden;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
