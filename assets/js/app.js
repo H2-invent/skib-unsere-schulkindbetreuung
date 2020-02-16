@@ -34,9 +34,10 @@ import niceScroll from 'jquery.nicescroll';
 // Import TinyMCE
 import trumbowgy from 'trumbowyg';
 import icon from 'trumbowyg/dist/ui/icons.svg'
+
 import ('trumbowyg/dist/plugins/colors/trumbowyg.colors');
 import ('trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste');
-
+import ('trumbowyg/dist/plugins/template/trumbowyg.template');
 $(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
 
 $('#toggle-btn').on('click', function (e) {
@@ -80,10 +81,35 @@ $(window).on('load', function () {
     $('.onlineEditor').trumbowyg({
         autogrow: true,
         semantic: false,
+        btns: [
+            ['viewHTML'],
+            ['undo', 'redo'], // Only supported in Blink browsers
+            ['formatting'],
+            ['strong', 'em', 'del'],
+            ['superscript', 'subscript'],
+            ['link'],
+            ['insertImage'],
+            ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+            ['unorderedList', 'orderedList'],
+            ['horizontalRule'],
+            ['removeformat'],
+            ['template'],
+            ['foreColor', 'backColor'],
+            ['fullscreen']
+        ],
+        plugins: {
+            templates: [
+                {
+                    name: 'Teamplate mit Zitat',
+                    html: '<h1>H1-Header</h1><hr><div class="row"><div class="col-md-8"><h2>H2-Header</h2><hr><p>Text</p></div><div class="col-md-4"><p>Kleiner Text hier außerhalb des blauen Kastens</p><blockquote class="note note-primary"><p>Zitat kann hier eingefügt werden</p><footer class="blockquote-footer">byName</footer> </blockquote></div></div><hr>'
+                },
+                {
+                    name: 'Template mit zwei Spalten',
+                    html: '<h1>H1-Header</h1><hr><div class="row"><div class="col-md-6"><h2>H2-Header</h2><hr><p>Text</p></div><div class="col-md-6"><h2>H2-Header</h2><hr><p>Text</p></div> </div>'
+                }
+            ]
+        }
     });
-
-
-
 
 
     $('input[type="date"]').daterangepicker({

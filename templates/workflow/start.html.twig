@@ -133,7 +133,7 @@
                                         </a>
                                         <br/>
                                         <div class="newsPreview">
-                                            {{ n.message|raw }}
+                                            {{ n.message|striptags('<br>')|raw }}
                                         </div>
                                     {% endfor %}
                                     <a href="{{ path('news_show_page', {'slug': stadt.slug }) }}"
