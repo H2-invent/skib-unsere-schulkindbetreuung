@@ -79,7 +79,7 @@ class ChildExcelService
         $counter = 2;
         foreach ($kinder as $data) {
             $count = 0;
-        
+
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getVorname());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getNachname());
             $kindSheet->setCellValue($alphas[$count++] . $counter, ($data->getGeburtstag()->diff($data->getEltern()->getCreatedAt()))->y);
