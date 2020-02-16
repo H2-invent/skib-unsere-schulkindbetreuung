@@ -100,8 +100,8 @@ $(window).on('load', function () {
         plugins: {
             templates: [
                 {
-                    name: 'Teamplate mit Zitat',
-                    html: '<h1>H1-Header</h1><hr><div class="row"><div class="col-md-8"><h2>H2-Header</h2><hr><p>Text</p></div><div class="col-md-4"><p>Kleiner Text hier außerhalb des blauen Kastens</p><blockquote class="note note-primary"><p>Zitat kann hier eingefügt werden</p><footer class="blockquote-footer">byName</footer> </blockquote></div></div><hr>'
+                    name: 'Template mit Zitat',
+                    html: '<h1>H1-Header</h1><hr><div class="row"><div class="col-md-8"><h2>H2-Header</h2><hr><p>Text</p></div><div class="col-md-4"><p>Kleiner Text hier außerhalb des blauen Kastens</p><blockquote class="note note-primary z-depth-2"><p>Zitat kann hier eingefügt werden</p><footer class="blockquote-footer">byName</footer> </blockquote></div></div><hr>'
                 },
                 {
                     name: 'Template mit zwei Spalten',
