@@ -15,20 +15,25 @@
                 "name": "SkiB unsere-schulkindbetreuung.de",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": "{{ absolute_url(asset('images/logo-breit-mittig.png')) }}",
-                    "width":300 ,
-                    "height": "auto"
+                    "url": "{{ absolute_url(asset('images/logo_news.png')) }}",
+                    "width":154 ,
+                    "height": 60
                 }
             },
-                  "mainEntityOfPage": {
-         "@type": "WebPage",
-         "@id": "{{absolute_url(path('news_show_page',{'slug':news.stadt.slug}))}}"
-      },
-            "datePublished": "{{ news.createdDate|date('Y-m-d') }}"
-            {% if news.date is defined and news.date is not null %},
-            "dateModified": "{{ news.date|date('Y-m-d') }}"
+            "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ absolute_url(path('news_show_all',{'slug':news.stadt.slug,'id':news.id})) }}"
+  },
+
+            "datePublished": "{{ news.createdDate|date('Y-m-d') }}",
+            {% if news.date is defined and news.date is not null %}
+            "dateModified": "{{ news.date|date('Y-m-d') }}",
             {% endif %}
+            "description":"{{ news.message|slice(0,200) }}"
         }
+
+
+
     </script>
     <div class="col-md-12 mb-6 white-text text-centerm text-md-left align-items-md-center">
 
@@ -39,8 +44,9 @@
 {% block content %}
     <h1 class="cover-heading">{{ news.title }}</h1>
     <b>
-    {% trans %}Erstellt am{% endtrans %}: {{ news.createdDate|date('d.m.Y') }} {% if news.date %}| {% trans %}Bearbeitet am{% endtrans %}: {{ news.date|date('d.m.Y') }}{% endif %}
-</b>
+        {% trans %}Erstellt am{% endtrans %}
+        : {{ news.createdDate|date('d.m.Y') }} {% if news.date %}| {% trans %}Bearbeitet am{% endtrans %}: {{ news.date|date('d.m.Y') }}{% endif %}
+    </b>
     <p>{{ news.message|raw }}</p>
 
     <a class="btn btn-primary"
