@@ -341,3 +341,6 @@ height: auto;
 .scrtabs-tab-scroll-arrow:hover {
   background-color: inherit;
 }
+.scrtabs-tab-container {
+  height: 100px;
+}

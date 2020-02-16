@@ -41,16 +41,16 @@
                 {
                     "@type": "ListItem",
                     "position": 1,
-                    "name": "Books",
+                    "name": "{{news.stadt.name}}",
                     "item": "{{absolute_url( path('workflow_start',{'slug':news.stadt.slug}))}}"
                 },
                 {
                     "@type": "ListItem",
                     "position": 2,
-                    "name": "{{news.stadt.name}}",
+                    "name": "{{news.stadt.name}} | Neuigkeiten",
                     "item": "{{ absolute_url(path('news_show_page',{'slug':news.stadt.slug})) }}"
                 },
-                {
+                {rechnung_kind
                     "@type": "ListItem",
                     "position": 3,
                     "name": "{{news.title}}",

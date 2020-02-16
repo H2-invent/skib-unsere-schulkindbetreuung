@@ -68,7 +68,9 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Darf an Ausflügen teilnehmen'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Darf alleine nach Hause'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Fotos dürfen veröffentlicht werden'));
-       if($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')){
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Gebuchte Betreuungszeitfenster'));
+
+        if($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')){
            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kundennummer'));
            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('IBAN'));
            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('BIC'));
@@ -103,6 +105,12 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getAusfluege());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getAlleineHause());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getFotos());
+            $gebucht = array();
+            foreach ($data->getZeitblocks() as $data2){
+                $gebucht[]=$data2->getWochentagString().': '.$data2->getVon()->format('H:i').'-'.$data2->getBis()->format('H:i');
+            }
+            $kindSheet->setCellValue($alphas[$count++] .$counter,implode(' | ', $gebucht));
+
             if($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')){
                 $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getCustomerID());
                 $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getIban());
