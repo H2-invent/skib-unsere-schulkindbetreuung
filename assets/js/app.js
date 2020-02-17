@@ -33,11 +33,11 @@ import 'datatables.net-dt';
 import niceScroll from 'jquery.nicescroll';
 // Import TinyMCE
 import trumbowgy from 'holematrumbowyg';
-import icon from 'holematrumbowyg/dist/ui/icons.svg'
+import icon from 'trumbowyg/dist/ui/icons.svg'
 
-import ('holematrumbowyg/dist/plugins/colors/trumbowyg.colors');
-import ('holematrumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste');
-import ('holematrumbowyg/dist/plugins/template/trumbowyg.template');
+import ('trumbowyg/dist/plugins/colors/trumbowyg.colors');
+import ('trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste');
+import ('trumbowyg/dist/plugins/template/trumbowyg.template');
 $(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
 
 $('#toggle-btn').on('click', function (e) {
