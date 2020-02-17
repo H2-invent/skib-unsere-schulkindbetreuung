@@ -33,11 +33,11 @@ import 'datatables.net-dt';
 import niceScroll from 'jquery.nicescroll';
 // Import TinyMCE
 import trumbowgy from 'holematrumbowyg';
-import icon from 'holematrumbowyg/dist/ui/icons.svg'
+import icon from 'trumbowyg/dist/ui/icons.svg'
 
-import ('holematrumbowyg/dist/plugins/colors/trumbowyg.colors');
-import ('holematrumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste');
-import ('holematrumbowyg/dist/plugins/template/trumbowyg.template');
+import ('trumbowyg/dist/plugins/colors/trumbowyg.colors');
+import ('trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste');
+import ('trumbowyg/dist/plugins/template/trumbowyg.template');
 $(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
 
 $('#toggle-btn').on('click', function (e) {
@@ -81,10 +81,13 @@ $(window).on('load', function () {
     $('.onlineEditor').trumbowyg({
         autogrow: true,
         semantic: false,
-        h1Class:['h1-responsive'],
-        h2Class:['h2-responsive'],
-        h3Class:['h3-responsive'],
-        h4Class:['h4-responsive'],
+        tagClasses: {
+            'h1':['h1-responsive'],
+            'h2':['h2-responsive'],
+            'h3':['h3-responsive'],
+            'h4':['h4-responsive'],
+        },
+
         btns: [
             ['viewHTML'],
             ['undo', 'redo'], // Only supported in Blink browsers

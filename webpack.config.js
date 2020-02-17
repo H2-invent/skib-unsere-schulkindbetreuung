@@ -20,7 +20,7 @@ Encore
     .addEntry('startpage', './assets/js/start.js')
     .addEntry('schulen', './assets/js/schulen.js')
     .addRule({
-        test: /holematrumbowyg\/dist\/ui\/[^/]+\.svg$/,
+        test: /trumbowgy\/dist\/ui\/[^/]+\.svg$/,
         use: [ {
             loader: 'raw-loader'
         } ]
