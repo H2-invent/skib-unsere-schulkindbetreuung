@@ -81,10 +81,13 @@ $(window).on('load', function () {
     $('.onlineEditor').trumbowyg({
         autogrow: true,
         semantic: false,
-        h1Class:['h1-responsive'],
-        h2Class:['h2-responsive'],
-        h3Class:['h3-responsive'],
-        h4Class:['h4-responsive'],
+        tagClasses: {
+            'h1':['h1-responsive'],
+            'h2':['h2-responsive'],
+            'h3':['h3-responsive'],
+            'h4':['h4-responsive'],
+        },
+
         btns: [
             ['viewHTML'],
             ['undo', 'redo'], // Only supported in Blink browsers
