@@ -32,7 +32,7 @@ import('datatables.net');
 import 'datatables.net-dt';
 import niceScroll from 'jquery.nicescroll';
 // Import TinyMCE
-import trumbowgy from 'holematrumbowyg';
+import trumbowgy from './trumbowyg';
 import icon from 'trumbowyg/dist/ui/icons.svg'
 
 import ('trumbowyg/dist/plugins/colors/trumbowyg.colors');
@@ -86,6 +86,7 @@ $(window).on('load', function () {
             'h2':['h2-responsive'],
             'h3':['h3-responsive'],
             'h4':['h4-responsive'],
+            'blockquote':['note', 'note-primary', 'z-depth-2'],
         },
 
         btns: [
