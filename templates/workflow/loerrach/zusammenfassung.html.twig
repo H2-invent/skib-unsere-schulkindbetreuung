@@ -256,28 +256,22 @@
             {% trans %}Kontoinhaber{% endtrans %}: {{ eltern.kontoinhaber }}<br/>
             {% trans %}IBAN{% endtrans %}: {{ eltern.iban }}<br/>
             {% trans %}BIC{% endtrans %}: {{ eltern.bic }}<br/>
-            {{ eltern.sepaInfo?"Ich erteile dem betreuenden Organisationen (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags"|trans:""|trans }} </br>
+            {{ eltern.sepaInfo?"Ich erteile der betreuenden Organisation (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags"|trans:""|trans }} </br>
             {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
 
         </div>
     </div>
 
-    <table class="table table-responsive">
-        <tr>
-            <td style="width: 70%">
-                <h5>{% trans %}Gebühren für alle Kinder pro Monat{% endtrans %}</h5>
-            </td>
-            <td>
-                <h5>
-                    {% if error == false %}
-                        {{ preis|number_format(2,',','.') }} €
-                    {% else %}
-                        {% trans %}Bitte weiteres Betreuungszeitfenster auswählen{% endtrans %}
-                    {% endif %}
-                </h5>
-            </td>
-        </tr>
-    </table>
+    <div class="m-4">
+        <h5>{% trans %}Gebühren für alle Kinder pro Monat{% endtrans %}:
+            {% if error == false %}
+                {{ preis|number_format(2,',','.') }} €
+            {% else %}
+                {% trans %}Bitte weiteres Betreuungszeitfenster auswählen{% endtrans %}
+            {% endif %}
+        </h5>
+    </div>
+
     <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz"
            value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der betreuenden Organisationen gelesen und akzeptiere die Verarbeitung.{% endtrans %}
     <br>
