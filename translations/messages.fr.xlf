@@ -1487,7 +1487,7 @@
       </trans-unit>
       <trans-unit id=".XUsqZK" resname="Vertragsbedingungen als PDF herunterladen">
         <source>Vertragsbedingungen als PDF herunterladen</source>
-        <target state="translated">Télécharger les termes du contrat en pdf</target>
+        <target state="translated">Conditions générales de vente à télécharger en PDF</target>
       </trans-unit>
       <trans-unit id="dvbbbZg" resname="Fortsetzen">
         <source>Fortsetzen</source>
@@ -1511,7 +1511,7 @@
       </trans-unit>
       <trans-unit id="1C61Lnb" resname="Impressum %stadt%">
         <source>Impressum %stadt%</source>
-        <target state="translated">Impression %stadt%</target>
+        <target state="translated">Mentions légales %stadt%</target>
       </trans-unit>
       <trans-unit id="blnC7zN" resname="Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).">
         <source>Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).</source>
@@ -1747,7 +1747,7 @@
       </trans-unit>
       <trans-unit id="fCQ84Uw" resname="Alle Neuigkeiten der Stadt">
         <source>Alle Neuigkeiten der Stadt</source>
-        <target state="translated">Toute l'actualité de la ville</target>
+        <target state="translated">Toutes les nouvelles</target>
       </trans-unit>
       <trans-unit id="gq8j58x" resname="Nachricht konnte nicht versendet werden">
         <source>Nachricht konnte nicht versendet werden</source>
