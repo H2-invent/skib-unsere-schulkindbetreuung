@@ -1833,16 +1833,16 @@
         <source>Kontoinhaber</source>
         <target state="translated">Account holder</target>
       </trans-unit>
-      <trans-unit id="MbFIa5j" resname="Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung.">
-        <source>Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung.</source>
+      <trans-unit id="MbFIa5j" resname="Ich habe alle Datenschutzhinweise der betreuenden Organisationen gelesen und akzeptiere die Verarbeitung.">
+        <source>Ich habe alle Datenschutzhinweise der betreuenden Organisationen gelesen und akzeptiere die Verarbeitung.</source>
         <target state="translated">I have read all the privacy notices of the carriers and accept the processing.</target>
       </trans-unit>
       <trans-unit id="j1eycUf" resname="Ich habe die Datenschutzhinweise der %stadt% gelesen und akzeptiere die Verarbeitung.">
         <source>Ich habe die Datenschutzhinweise der %stadt% gelesen und akzeptiere die Verarbeitung.</source>
         <target state="translated">I have read the privacy policy of %stadt% and accept the processing.</target>
       </trans-unit>
-      <trans-unit id="Ipa8Od5" resname="Ich habe verstanden, dass meine Anmeldung vom Träger wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.">
-        <source>Ich habe verstanden, dass meine Anmeldung vom Träger wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.</source>
+      <trans-unit id="Ipa8Od5" resname="Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.">
+        <source>Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.</source>
         <target state="translated">I understand that my registration can be recalled by the organization if the care capacities are exceeded. There is no right to receive care.</target>
       </trans-unit>
       <trans-unit id="QcRXpns" resname="Ich habe die allgemeinen Vertragsbedingungen der %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese.">
