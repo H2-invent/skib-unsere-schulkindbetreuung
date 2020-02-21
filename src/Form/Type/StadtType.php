@@ -41,6 +41,9 @@ class StadtType extends AbstractType
             $stadt->translate('de')->setCatererInfo('');
             $stadt->translate('en')->setCatererInfo('');
             $stadt->translate('fr')->setCatererInfo('');
+            $stadt->translate('de')->setCareBlockInfo('');
+            $stadt->translate('en')->setCareBlockInfo('');
+            $stadt->translate('fr')->setCareBlockInfo('');
 
             foreach ($stadt->getNewTranslations() as $newTranslation) {
                 if (!$stadt->getTranslations()->contains($newTranslation) && !$stadt->getNewTranslations()->isEmpty()) {
@@ -85,12 +88,15 @@ class StadtType extends AbstractType
             ->add('infoTextDe', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>false,'label'=>'Info Text Deutsch ','translation_domain' => 'form', 'property_path' => 'translations[de].infoText', ])
             ->add('infoTextEn', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>false,'label'=>'Info Text Englisch','translation_domain' => 'form','property_path' => 'translations[en].infoText', ])
             ->add('infoTextFr', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>false,'label'=>'Info Text Französisch','translation_domain' => 'form','property_path' => 'translations[fr].infoText', ])
-            ->add('infoAGBDe', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>true,'label'=>'AGB Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].agb', ])
-            ->add('infoAGBEn', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>true,'label'=>'AGB Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].agb', ])
-            ->add('infoAGBFr', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>true,'label'=>'AGB Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].agb', ])
+            ->add('infoAGBDe', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>true,'label'=>'Vertragsbedingungen Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].agb', ])
+            ->add('infoAGBEn', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>true,'label'=>'Vertragsbedingungen Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].agb', ])
+            ->add('infoAGBFr', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>true,'label'=>'Vertragsbedingungen Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].agb', ])
             ->add('datenschutzDE', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>true,'label'=>'Datenschutzhinweis Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].datenschutz', ])
             ->add('datenschutzEn', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>true,'label'=>'Datenschutzhinweis Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].datenschutz', ])
             ->add('datenschutzFr', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>true,'label'=>'Datenschutzhinweis Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].datenschutz', ])
+            ->add('careBlockInfoDE', TextareaType::class, ['attr'=>['rows'=>3,'class'=>'onlineEditor'],'required'=>true,'label'=>'Betreuungszeitfenster Info Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].careBlockInfo', ])
+            ->add('careBlockInfoEn', TextareaType::class, ['attr'=>['rows'=>3,'class'=>'onlineEditor'],'required'=>true,'label'=>'Betreuungszeitfenster Info Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].careBlockInfo', ])
+            ->add('careBlockInfoFr', TextareaType::class, ['attr'=>['rows'=>3,'class'=>'onlineEditor'],'required'=>true,'label'=>'Betreuungszeitfenster Info Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].careBlockInfo', ])
             ->add('catererInfoDE', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>true,'label'=>'Caterer Info Deutsch (Markdown)','translation_domain' => 'form', 'property_path' => 'translations[de].catererInfo', ])
             ->add('catererInfoEn', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>true,'label'=>'Caterer Info Englisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[en].catererInfo', ])
             ->add('catererInfoFr', TextareaType::class, ['attr'=>['rows'=>6,'class'=>'onlineEditor'],'required'=>true,'label'=>'Caterer Info Französisch (Markdown)','translation_domain' => 'form','property_path' => 'translations[fr].catererInfo', ])
