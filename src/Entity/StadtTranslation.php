@@ -33,6 +33,11 @@ class StadtTranslation
      */
     private $catererInfo;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $careBlockInfo;
+
 
 
     public function getInfoText(): ?string
@@ -79,6 +84,18 @@ class StadtTranslation
     public function setCatererInfo(?string $catererInfo): self
     {
         $this->catererInfo = $catererInfo;
+
+        return $this;
+    }
+
+    public function getCareBlockInfo(): ?string
+    {
+        return $this->careBlockInfo;
+    }
+
+    public function setCareBlockInfo(?string $careBlockInfo): self
+    {
+        $this->careBlockInfo = $careBlockInfo;
 
         return $this;
     }
