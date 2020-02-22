@@ -1,16 +1,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% if app.request.getSchemeAndHttpHost() != 'https://unsere-schulkindbetreuung.de' %}
-    <link href="http://unsere-schulkindbetreuung.de{{ path(app.request.get('_route'), app.request.get('_route_params')) }}" rel="canonical" />
-{% endif %}
+
+<link href="https://unsere-schulkindbetreuung.de{{ path(app.request.get('_route'), app.request.get('_route_params')) }}"
+      rel="canonical"/>
+
 
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>{% if title is defined and title is not null %}{{ title }}{% else %}{% trans %}Anmeldeportal Schulkindbetreuung{% endtrans %} | {% if stadt is defined and stadt is not null %}{{ stadt.name }}{% endif %}{% endif %} | {{ app.request.locale|language_name(app.request.locale) }}</title>
+<title>{% if title is defined and title is not null %}{{ title }}{% else %}{% trans %}Anmeldeportal Schulkindbetreuung{% endtrans %} | {% if stadt is defined and stadt is not null %}{{ stadt.name }}{% endif %}{% endif %}
+    | {{ app.request.locale|language_name(app.request.locale) }}</title>
 {% if metaDescription is defined and metaDescription is not null %}
-<meta name="description" content="{{ metaDescription|striptags }}"/>
+    <meta name="description" content="{{ metaDescription|striptags }}"/>
 {% endif %}
-
 
 
 <meta property="og:image" content="
@@ -19,7 +20,8 @@
 {% else %}
 {{ absolute_url(asset('images/logo-breit-mittig.png')) }}
 {% endif %}"/>
-<meta property="og:title" content="{% if title is defined and title is not null %}{{ title }}{% else %}{% trans %}Anmeldeportal Schulkindbetreuung{% endtrans %} | {% if stadt is defined and stadt is not null %}{{ stadt.name }}{% endif %}{% endif %}"/>
+<meta property="og:title"
+      content="{% if title is defined and title is not null %}{{ title }}{% else %}{% trans %}Anmeldeportal Schulkindbetreuung{% endtrans %} | {% if stadt is defined and stadt is not null %}{{ stadt.name }}{% endif %}{% endif %}"/>
 <meta property="og:description" content="
 {% if metaDescription is defined and metaDescription is not null %}
 {{ metaDescription }}
