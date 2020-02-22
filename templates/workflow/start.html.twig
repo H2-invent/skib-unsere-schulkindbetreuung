@@ -140,7 +140,7 @@
                                     {% endfor %}
                                     <a href="{{ path('news_show_page', {'slug': stadt.slug }) }}"
                                        class="btn btn-primary">
-                                        {% trans %}Alle Neuigkeiten der Stadt{% endtrans %}
+                                        {{ 'Alle Neuigkeiten'|trans }}
                                     </a>
                                 {% endif %}
                             </div>
@@ -311,14 +311,16 @@
                                                     </a><br/>
                                                 {% endif %}
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 text-center">
                                                 {% if o.image is not empty %}
                                                     <img src="{{ vich_uploader_asset(o,'imageFile') }}"
                                                          style="max-height: 110px; max-width: 100%"  alt="{{ o.name }} Logo">
                                                 {% endif %}
                                             </div>
                                         </div>
+                                        {% if not loop.last %}
                                         <hr class="hr-bold">
+                                            {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>

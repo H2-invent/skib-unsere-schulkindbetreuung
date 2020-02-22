@@ -25,9 +25,9 @@ Gläubiger ID: Identification du créancier
 Info Text Deutsch: Texte d'information en allemand
 Info Text Englisch: Texte d'information en anglais
 Info Text Französisch: Texte d'information en français
-AGB Deutsch (Markdown): Termes allemands (Markdown)
-AGB Englisch (Markdown): Termes anglais (Markdown)
-AGB Französisch (Markdown): Termes français (Markdown)
+Vertragsbedingungen Deutsch (Markdown): Termes allemands (Markdown)
+Vertragsbedingungen Englisch (Markdown): Termes anglais (Markdown)
+Vertragsbedingungen Französisch (Markdown): Termes français (Markdown)
 Telefonnummer: Téléphone
 SMTP Server: SMTP Server
 SMTP Port: SMTP Port
@@ -132,3 +132,6 @@ Stripe akzeptieren: Accept Stripe
 Caterer Info Deutsch (Markdown): Informations sur le restaurant en alemand (Markdown)
 Caterer Info Englisch (Markdown): Informations sur le restaurant en anglais (Markdown)
 Caterer Info Französisch (Markdown): Informations sur le restaurant en français  (Markdown)
+Betreuungszeitfenster Info Deutsch (Markdown): Care Slots Info German (Markdown)
+Betreuungszeitfenster Info Englisch (Markdown): Care Slots Info English (Markdown)
+Betreuungszeitfenster Info Französisch (Markdown): Care Slots Info French (Markdown)

@@ -1487,7 +1487,7 @@
       </trans-unit>
       <trans-unit id=".XUsqZK" resname="Vertragsbedingungen als PDF herunterladen">
         <source>Vertragsbedingungen als PDF herunterladen</source>
-        <target state="translated">Télécharger les termes du contrat en pdf</target>
+        <target state="translated">Conditions générales de vente à télécharger en PDF</target>
       </trans-unit>
       <trans-unit id="dvbbbZg" resname="Fortsetzen">
         <source>Fortsetzen</source>
@@ -1511,7 +1511,7 @@
       </trans-unit>
       <trans-unit id="1C61Lnb" resname="Impressum %stadt%">
         <source>Impressum %stadt%</source>
-        <target state="translated">Impression %stadt%</target>
+        <target state="translated">Mentions légales %stadt%</target>
       </trans-unit>
       <trans-unit id="blnC7zN" resname="Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).">
         <source>Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).</source>
@@ -1553,8 +1553,8 @@
         <source>Kontoinhaber</source>
         <target state="translated">Propriétaire du compte</target>
       </trans-unit>
-      <trans-unit id="Ipa8Od5" resname="Ich habe verstanden, dass meine Anmeldung vom Träger wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.">
-        <source>Ich habe verstanden, dass meine Anmeldung vom Träger wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.</source>
+      <trans-unit id="Ipa8Od5" resname="Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.">
+        <source>Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.</source>
         <target state="translated">Je comprends que mon inscription peut être révoquée par les organisations si les capacités de soutien sont dépassées. Il n'y a pas de droit à l'admission aux soins.</target>
       </trans-unit>
       <trans-unit id="5LufHs6" resname="Start">
@@ -1747,7 +1747,7 @@
       </trans-unit>
       <trans-unit id="fCQ84Uw" resname="Alle Neuigkeiten der Stadt">
         <source>Alle Neuigkeiten der Stadt</source>
-        <target state="translated">Toute l'actualité de la ville</target>
+        <target state="translated">Toutes les nouvelles</target>
       </trans-unit>
       <trans-unit id="gq8j58x" resname="Nachricht konnte nicht versendet werden">
         <source>Nachricht konnte nicht versendet werden</source>
@@ -2087,9 +2087,9 @@ Veuillez confirmer votre e-mail en entrant le code de vérification dans votre n
         <source>News Nachricht</source>
         <target state="translated">Message d'information</target>
       </trans-unit>
-      <trans-unit id="MbFIa5j" resname="Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung.">
-        <source>Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung.</source>
-        <target state="translated">J'ai lu tous les avis de confidentialité des transporteurs et j'accepte le traitement.</target>
+      <trans-unit id="MbFIa5j" resname="Ich habe alle Datenschutzhinweise der betreuenden Organisationen gelesen und akzeptiere die Verarbeitung.">
+        <source>Ich habe alle Datenschutzhinweise der betreuenden Organisationen gelesen und akzeptiere die Verarbeitung.</source>
+        <target state="translated">J'ai lu tous les avis de confidentialité des organisations et j'accepte le traitement.</target>
       </trans-unit>
       <trans-unit id="aq9j.Xq" resname="Zusammenfassung der Datenschutzhinweise">
         <source>Zusammenfassung der Datenschutzhinweise</source>
