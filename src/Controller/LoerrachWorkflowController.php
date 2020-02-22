@@ -550,7 +550,7 @@ class LoerrachWorkflowController extends AbstractController
 
         // Wenn weniger als zwei Blöcke für das Kind ausgewählt sind
 
-        if ($kind->getTageWithBlocks() < 2) {
+        if ($kind->getTageWithBlocks() < $stadt->getMinDaysperWeek()) {
             $result['error'] = 1;
             $result['text'] = $translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)');
             return new JsonResponse($result);

@@ -68,8 +68,6 @@ class ToogleKindBlockSchulkind
 
         try {
             $result['blocks'] = $this->toggleBlock($kind, $block);
-
-
             $blocks2 = $kind->getTageWithBlocks();
 
             if ($blocks2 < $stadt->getMinDaysperWeek()) {
