@@ -345,3 +345,14 @@ height: auto;
 .scrtabs-tab-container {
   height: 100px;
 }
+.jssocials-share {
+  display: inherit;
+  vertical-align: top;
+  margin: 0;
+}
+#share{
+  position: fixed;
+  top: 40%;
+  right: 0px;
+  z-index: 1000;
+}

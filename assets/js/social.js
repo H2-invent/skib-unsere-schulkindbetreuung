@@ -10,22 +10,23 @@ import jssocial from 'jssocials';
 function initSocial(){
 
     $("#share").jsSocials({
-        shares: ["email", {
-            share: "twitter",
-            label: "Tweet",
-            logo: "fab fa-twitter",
-            shareIn: "blank",
-        },
+        shares: ["email",
             {
                 share: "facebook",
                 label: "Facebook",
-                logo: "fab fa-facebook",
+                logo: "fab fa-facebook-f",
                 shareIn: "blank",
             },
             {
                 share: "whatsapp",
                 label: "Whatsapp",
                 logo: "fab fa-whatsapp",
+                shareIn: "blank",
+            },
+            {
+                share: "twitter",
+                label: "Tweet",
+                logo: "fab fa-twitter",
                 shareIn: "blank",
             }],
         showCount: function(screenWidth) {

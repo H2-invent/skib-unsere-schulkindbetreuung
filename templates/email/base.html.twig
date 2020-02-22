@@ -42,14 +42,14 @@
 
                 {% endblock %}
                 <center>
-                    {{ 'Diese Email wurde im Auftrag der '|trans }}
-                    -
+                    {% trans with {'%s%':stadt.name} %}Diese Email wurde im Auftrag der %s% versandt{% endtrans %}
+
                     <menu>
                         -
-                        <small>Powered by <item href="https://unsere-schulkindbetreuung.de">Usere-Schulkindbetreuung.de</item> </small>
+                        <small>Powered by <item href="https://unsere-schulkindbetreuung.de">unsere-Schulkindbetreuung.de</item> </small>
                         -
                     </menu>
-                    -
+
                 </center>
             </columns>
         </row>

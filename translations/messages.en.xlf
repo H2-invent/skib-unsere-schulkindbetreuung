@@ -1075,7 +1075,7 @@
         <source>Hiermit senden wir Ihnen ihre Rechnung für die Schulkindbetreuung an der Organisation %org% zu.</source>
         <target state="translated">We will send you your invoice for the school childcare from the organization %org%.</target>
       </trans-unit>
-      <trans-unit id="VYDPU5D" resname="Der berechnet Betrag in Höhe von&lt;br>&lt;b>%betrag%€&lt;/b> &lt;br> wird am &lt;br>&lt;b>%einzugsdatum%&lt;/b>&lt;br> eingezogen.">
+      <trans-unit id="VYDPU5D" resname="Der berechnet Betrag in Höhe von&lt;br&gt;&lt;b&gt;%betrag%€&lt;/b&gt; &lt;br&gt; wird am &lt;br&gt;&lt;b&gt;%einzugsdatum%&lt;/b&gt;&lt;br&gt; eingezogen.">
         <source>Der berechnet Betrag in Höhe von&lt;br&gt;&lt;b&gt;%betrag%€&lt;/b&gt; &lt;br&gt; wird am &lt;br&gt;&lt;b&gt;%einzugsdatum%&lt;/b&gt;&lt;br&gt; eingezogen.</source>
         <target state="translated"><![CDATA[The calculated fees in the amount of<br><b>%amount%€</b><br>will be<br><b>%collection date%</b><br>Fed.]]></target>
       </trans-unit>
@@ -1833,7 +1833,7 @@
         <source>Kontoinhaber</source>
         <target state="translated">Account holder</target>
       </trans-unit>
-      <trans-unit id="MbFIa5j" resname="Ich habe alle Datenschutzhinweise der betreuenden Organisationen gelesen und akzeptiere die Verarbeitung.">
+      <trans-unit id="rif9YDZ" resname="Ich habe alle Datenschutzhinweise der betreuenden Organisationen gelesen und akzeptiere die Verarbeitung.">
         <source>Ich habe alle Datenschutzhinweise der betreuenden Organisationen gelesen und akzeptiere die Verarbeitung.</source>
         <target state="translated">I have read all the privacy notices of the carriers and accept the processing.</target>
       </trans-unit>
@@ -1841,7 +1841,7 @@
         <source>Ich habe die Datenschutzhinweise der %stadt% gelesen und akzeptiere die Verarbeitung.</source>
         <target state="translated">I have read the privacy policy of %stadt% and accept the processing.</target>
       </trans-unit>
-      <trans-unit id="Ipa8Od5" resname="Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.">
+      <trans-unit id="no2scoB" resname="Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.">
         <source>Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.</source>
         <target state="translated">I understand that my registration can be recalled by the organization if the care capacities are exceeded. There is no right to receive care.</target>
       </trans-unit>
@@ -2042,8 +2042,8 @@
         <target state="translated">Online application and administration</target>
       </trans-unit>
       <trans-unit id="zmlkEaD" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;&#10;Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;&#10;">
-        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
-Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
+        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.&#13;
+Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. &#13;
 </source>
         <target state="translated">SKiB is so far the only online solution for the registration and administration of school childcare and holiday care.
 The web application enables direct networking between parent or legal guardian, external organisations and the municipal administration or school authorities.
@@ -2153,7 +2153,7 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Abmeldebestätigung für die Schulkindbetreuung</source>
         <target state="translated">Confirmation of deregistration for school childcare</target>
       </trans-unit>
-      <trans-unit id="mEd9iOh" resname="Hiermit informieren wir Sie über die &lt;b>Abmeldung&lt;/b> Ihrers Kindes">
+      <trans-unit id="mEd9iOh" resname="Hiermit informieren wir Sie über die &lt;b&gt;Abmeldung&lt;/b&gt; Ihrers Kindes">
         <source>Hiermit informieren wir Sie über die &lt;b&gt;Abmeldung&lt;/b&gt; Ihrers Kindes</source>
         <target state="translated"><![CDATA[We hereby inform you about the <b>cancellation</b> of your child]]></target>
       </trans-unit>
@@ -2165,7 +2165,7 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Für Informationen zum Datenschutz der Stadt und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.</source>
         <target state="translated">Please contact the respective administrations for information on data protection at the city and the supervising organisations.</target>
       </trans-unit>
-      <trans-unit id="SCjqXLr" resname="#### Anschrift&#10;                        H2 invent GmbH&lt;br>&#10;                        Gewerbestraße 9 (HALLE9)&lt;br>&#10;                        D-79539 Lörrach&lt;br>&#10;&#10;                        Vertretungsberechtiger Geschäftsführer: Andreas Holzmann&lt;br>&#10;                        Telefon: 07621-7925862&lt;br>&#10;                        EMail: info@h2-invent.com&lt;br>&#10;                        Registergericht: Amtsgericht Freiburg im Breisgau&lt;br>&#10;                        Registernummer: HRB 720434&lt;br>&#10;                        Umsatzsteuer-Identifikationsnummer gem. § 27a UStG: DE326041099&lt;br>&#10;                        Inhaltlich Verantwortlicher gem. § 55 II RStV: H2 invent GmbH&lt;br>&#10;&#10;                        #### Urheberecht / Nutzungsbedingungen&#10;                        Die auf unseren Seiten veröffentlichten Inhalte sind urheberrechtlich geschützt. Alle Rechte der hier veröffentlichten Bilder und Dokumente, insbesondere Projektfotografien und -beschreibungen liegen bei der H2 Invent GmbH oder den jeweiligen Rechtegebern.&#10;&#10;                        #### Haftung für Inhalte&#10;                        Die Inhalte unserer Seiten werden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend sperren oder entfernen.&#10;&#10;                        #### Haftung für Links&#10;                        Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.">
+      <trans-unit id="SCjqXLr" resname="#### Anschrift&#10;                        H2 invent GmbH&lt;br&gt;&#10;                        Gewerbestraße 9 (HALLE9)&lt;br&gt;&#10;                        D-79539 Lörrach&lt;br&gt;&#10;&#10;                        Vertretungsberechtiger Geschäftsführer: Andreas Holzmann&lt;br&gt;&#10;                        Telefon: 07621-7925862&lt;br&gt;&#10;                        EMail: info@h2-invent.com&lt;br&gt;&#10;                        Registergericht: Amtsgericht Freiburg im Breisgau&lt;br&gt;&#10;                        Registernummer: HRB 720434&lt;br&gt;&#10;                        Umsatzsteuer-Identifikationsnummer gem. § 27a UStG: DE326041099&lt;br&gt;&#10;                        Inhaltlich Verantwortlicher gem. § 55 II RStV: H2 invent GmbH&lt;br&gt;&#10;&#10;                        #### Urheberecht / Nutzungsbedingungen&#10;                        Die auf unseren Seiten veröffentlichten Inhalte sind urheberrechtlich geschützt. Alle Rechte der hier veröffentlichten Bilder und Dokumente, insbesondere Projektfotografien und -beschreibungen liegen bei der H2 Invent GmbH oder den jeweiligen Rechtegebern.&#10;&#10;                        #### Haftung für Inhalte&#10;                        Die Inhalte unserer Seiten werden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend sperren oder entfernen.&#10;&#10;                        #### Haftung für Links&#10;                        Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.">
         <source>#### Anschrift
                         H2 invent GmbH&lt;br&gt;
                         Gewerbestraße 9 (HALLE9)&lt;br&gt;
@@ -2313,7 +2313,7 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Details des Erziehungsberechtigten</source>
         <target state="translated">Details of the parent or legal guardian</target>
       </trans-unit>
-      <trans-unit id="6kYrCka" resname="Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.&#10;            &lt;br>Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.">
+      <trans-unit id="6kYrCka" resname="Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.&#10;            &lt;br&gt;Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.">
         <source>Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.
             &lt;br&gt;Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.</source>
         <target state="translated"><![CDATA[You have just registered for the online portal for school child care.
@@ -2348,8 +2348,8 @@ The web application enables direct networking between parent or legal guardian, 
         <target state="translated">Create new parent</target>
       </trans-unit>
       <trans-unit id="47DEQpj" resname="">
-        <source/>
-        <target/>
+        <source></source>
+        <target></target>
       </trans-unit>
       <trans-unit id="N0p6kI2" resname="besuchen">
         <source>besuchen</source>
@@ -2362,6 +2362,34 @@ The web application enables direct networking between parent or legal guardian, 
       <trans-unit id="trMP3Vm" resname="Informationen">
         <source>Informationen</source>
         <target state="translated">Information</target>
+      </trans-unit>
+      <trans-unit id="sN86JB." resname="#Beide Erziehungsberechtigte sind berufstätig#">
+        <source>#Beide Erziehungsberechtigte sind berufstätig#</source>
+        <target>__#Beide Erziehungsberechtigte sind berufstätig#</target>
+      </trans-unit>
+      <trans-unit id="iIQDRgZ" resname="#Beide Erziehungsberechtigte sind arbeitssuchend#">
+        <source>#Beide Erziehungsberechtigte sind arbeitssuchend#</source>
+        <target>__#Beide Erziehungsberechtigte sind arbeitssuchend#</target>
+      </trans-unit>
+      <trans-unit id="RQls4AT" resname="#Ein Erziehungsberechtigter ist berufstätig und ein Erziehungsberechtigter ist arbeitssuchend#">
+        <source>#Ein Erziehungsberechtigter ist berufstätig und ein Erziehungsberechtigter ist arbeitssuchend#</source>
+        <target>__#Ein Erziehungsberechtigter ist berufstätig und ein Erziehungsberechtigter ist arbeitssuchend#</target>
+      </trans-unit>
+      <trans-unit id="YYmSkzD" resname="#Alleinerziehender Erziehungsberechtigter ist berufstätig#">
+        <source>#Alleinerziehender Erziehungsberechtigter ist berufstätig#</source>
+        <target>__#Alleinerziehender Erziehungsberechtigter ist berufstätig#</target>
+      </trans-unit>
+      <trans-unit id="LzCer2P" resname="#Alleinerziehender Erziehungsberechtigter ist arbeitssuchend#">
+        <source>#Alleinerziehender Erziehungsberechtigter ist arbeitssuchend#</source>
+        <target>__#Alleinerziehender Erziehungsberechtigter ist arbeitssuchend#</target>
+      </trans-unit>
+      <trans-unit id="Omi_lE_" resname="Passwort für das PDF: Geburtsdatum des Kindes (tt.mm.JJJJ)">
+        <source>Passwort für das PDF: Geburtsdatum des Kindes (tt.mm.JJJJ)</source>
+        <target>Password for the PDF: Date of birth of the child (dd.mm.YYYY)</target>
+      </trans-unit>
+      <trans-unit id="w5UHDL4" resname="Diese Email wurde im Auftrag der %s% versandt">
+        <source>Diese Email wurde im Auftrag der %s% versandt</source>
+        <target>This email was sent on behalf of  %s%</target>
       </trans-unit>
     </body>
   </file>

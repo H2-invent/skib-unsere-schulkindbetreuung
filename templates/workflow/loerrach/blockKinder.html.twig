@@ -6,11 +6,16 @@
 
         </div>
         <div class="modal-body">
-            {% if stadt.translate.careBlockInfo %}
-                <p class="note note-info">
-                    {{ stadt.translate.careBlockInfo|nl2br }}
-                </p>
-            {% endif %}
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    {% if stadt.translate.careBlockInfo %}
+                        <p class="note note-info z-depth-1">
+                            {{ stadt.translate.careBlockInfo|nl2br }}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
             <div class="row">
                 <div class="{% if blocks[6] is not defined and blocks[5] is not defined %} offset-md-1 {% endif %}col-md-2 text-center">
                     <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
