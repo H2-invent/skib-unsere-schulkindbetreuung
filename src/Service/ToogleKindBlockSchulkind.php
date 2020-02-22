@@ -59,7 +59,6 @@ class ToogleKindBlockSchulkind
             'text' => $this->translator->trans('Betreuungszeitfenster erfolgreich gespeichert'),
             'error' => 0,
             'blocks' => array(),
-            'preisUrl' => $this->router->generate('loerrach_workflow_preis_einKind', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()))
         );
         $blockRes = array(
             'id' => $block->getId(),
@@ -76,6 +75,9 @@ class ToogleKindBlockSchulkind
             if ($blocks2 < $stadt->getMinDaysperWeek()) {
                 $result['text'] = $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)');
                 $result['error'] = 2;
+            }else{
+                $result['preisUrl'] = $this->router->generate('loerrach_workflow_preis_einKind', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()));
+
             }
         } catch (\Exeption $e) {
             $result['text'] = $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.');
@@ -87,9 +89,9 @@ class ToogleKindBlockSchulkind
         return $result;
     }
 
-    function toggleBlock(Kind $kind, Zeitblock $block)
+    private function toggleBlock(Kind $kind, Zeitblock $block)
     {
-        $state = 0;
+
         $res = array();
         if ($block->getMin() || $block->getMax()) {
             if (in_array($block, $kind->getBeworben()->toArray())) {
@@ -113,7 +115,7 @@ class ToogleKindBlockSchulkind
         return $res;
     }
 
-    function blockDelete(Kind $kind, Zeitblock $block): array
+    private function blockDelete(Kind $kind, Zeitblock $block): array
     {
         $state = null;
         $blockRes = array(
@@ -153,7 +155,7 @@ class ToogleKindBlockSchulkind
         return $res;
     }
 
-    function blockAdd(Kind $kind, Zeitblock $block): array
+    private function blockAdd(Kind $kind, Zeitblock $block): array
     {
         $state = null;
         $blockRes = array(
