@@ -28,7 +28,7 @@ import('./jquery.bs.gdpr.cookies');
 import('jquery-clockpicker');
 import('daterangepicker');
 import ('jquery-lazy');
-
+import {initSocial} from './social';
 
 import {
     jarallax,
@@ -41,6 +41,9 @@ jarallaxVideo();
 jarallaxElement();
 jarallax(document.querySelectorAll('.jarallax'), {
     speed: 0.2
+});
+$(document).ready(function () {
+initSocial();
 });
 
 $(document).on('click', '.loadContent', function (e) {

@@ -397,14 +397,7 @@ class Stammdaten
 
         return $this;
     }
-    public function getBeruflicheSituationString(){
-        $beruflicheSituationString = array(
-            0=>'Keine Angabe',
-            1=>'Berufstätig',
-            2=>'Arbeitssuchend',
-        );
-        return $beruflicheSituationString[$this->beruflicheSituation];
-    }
+
     public function getNotfallkontakt(): ?string
     {
         return $this->notfallkontakt;

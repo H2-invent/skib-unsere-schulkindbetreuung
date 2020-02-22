@@ -22,6 +22,7 @@ import('moment');
 import ('morecontent-js/dist/jquery.morecontent');
 import('jquery-confirm');
 import ('jquery-lazy');
+import {initSocial} from './social';
 import {
     jarallax,
     jarallaxElement,
@@ -43,7 +44,6 @@ $(function () {
         });
     });
 });
-
 $(document).on('click', '.loadContent', function (e) {
     e.preventDefault();
     var url = $(this).attr('href');
@@ -60,6 +60,7 @@ $(document).ready(function () {
         cssClassRightArrow: 'fa fa-chevron-right',
         disableScrollArrowsOnFullyScrolled: true
     });
+    initSocial();
 });
 
 $(window).on('load', function () {
@@ -91,14 +92,16 @@ $(window).on('load', function () {
 $(document).on('click', '.loadInTarget', function (e) {
     e.preventDefault();
     var ele = $(this);
-    $(ele.attr('data-wrapper')).load(ele.attr('href')+' '+ele.attr('data-target'),function () {
+    $(ele.attr('data-wrapper')).load(ele.attr('href') + ' ' + ele.attr('data-target'), function () {
         $('.nav-tabs').scrollingTabs({
             bootstrapVersion: 4,
             cssClassLeftArrow: 'fa fa-chevron-left',
             cssClassRightArrow: 'fa fa-chevron-right',
             disableScrollArrowsOnFullyScrolled: true
         });
+        initSocial();
     });
-    window.history.pushState('test',"test", ele.attr('href'));
+
+    window.history.pushState('test', "test", ele.attr('href'));
 
 })
