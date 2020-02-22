@@ -508,16 +508,16 @@ class LoerrachWorkflowController extends AbstractController
 
 // Daten speichern und fixieren
         $adresse->setLanguage($request->getLocale());
-       // $workflowAbschluss->abschluss($adresse, $kind);
+       $workflowAbschluss->abschluss($adresse, $kind);
 //Emails an die Eltern senden
         foreach ($kind as $data) {
             $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $this->beruflicheSituation);
         }
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
-      //  $response->headers->clearCookie('UserID');
-       // $response->headers->clearCookie('SecID');
-       // $response->headers->clearCookie('KindID');
+        $response->headers->clearCookie('UserID');
+        $response->headers->clearCookie('SecID');
+        $response->headers->clearCookie('KindID');
         return $response;
 
     }
