@@ -16,7 +16,8 @@
                     <ul class="list-group">
                         <li class="list-group-item">Vorgänger:</li>
                         {% for l in b.vorganger %}
-                        <li class="list-group-item">{{ l.wochentagString }} {{ l.von|date('H:i') }}-{{ l.bis|date('H:i') }}</li>
+                            <li class="list-group-item">{{ l.wochentagString }} {{ l.von|date('H:i') }}
+                                -{{ l.bis|date('H:i') }}</li>
                         {% endfor %}
                     </ul>
                 {% endif %}

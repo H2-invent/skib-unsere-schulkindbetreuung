@@ -204,11 +204,16 @@ class BlockController extends AbstractController
             $text = $translator->trans('Fehler: Falsche Organisation');
             return new JsonResponse(array('error'=>1,'snack'=>$text));
         }
-        $blocks = $this->getDoctrine()->getRepository('App:Zeitblock')->findBy(
+        $blocks1 = $this->getDoctrine()->getRepository('App:Zeitblock')->findBy(
             array('schule'=>$block->getSchule(),
                 'ganztag'=>$block->getGanztag(),
                 'active'=>$block->getActive()),array('von'=>'ASC'));
-
+        $blocks = array();
+        foreach ($blocks1 as $data){
+            if($data != $block){
+                $blocks[] = $data;
+            }
+        }
         $form = $this->createForm(BlockAbhangigkeitType::class, $block,[
             'action' => $this->generateUrl('block_schule_linkBlock',array('id'=>$block->getId())),
             'blocks'=>$blocks
@@ -235,5 +240,23 @@ class BlockController extends AbstractController
 
         }
         return $this->render('block/blockLinkForm.html.twig',array('block'=>$block,'form'=>$form->createView()));
+    }
+    /**
+     * @Route("/org_block/schule/block/linkBlock/remove", name="block_schule_linkBlock_remove",methods={"DELETE"})
+     */
+    public function removeLinkBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
+            $text = $translator->trans('Fehler: Falsche Organisation');
+            return new JsonResponse(array('error'=>1,'snack'=>$text));
+        }
+        foreach ($block->getVorganger() as $data){
+            $block->removeVorganger($data);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($block);
+        $em->flush();
+        return new JsonResponse(array('redirect'=>$this->generateUrl('block_schule_schow',array('id'=>$block->getSchule()->getId()))));
     }
 }
