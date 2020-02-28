@@ -86,7 +86,7 @@ class ConfirmEmailService
                 return new RedirectResponse($this->router->generate('workflow_confirm_Email', array('stadt' => $stadt->getId(), 'uid' => $stammdaten->getUid(), 'redirect' => $formData['redirectUrl'], 'snack' => $this->translator->trans('Bestätigungscode fehlerhaft'))));
             }
             $mailBetreff = $this->translator->trans('Bestätigung der E-Mail-Adresse');
-            $mailContent = $this->twig->render('email/bestaetigungscode.html.twig', array('eltern' => $stammdaten));
+            $mailContent = $this->twig->render('email/bestaetigungscode.html.twig', array('eltern' => $stammdaten, 'stadt'=>$stadt));
             if ($stammdaten->getConfirmEmailSend() === false) {
                 $this->mailer->sendEmail('Unsere Schulkindbetreuung', 'info@h2-invent.com', $stammdaten->getEmail(), $mailBetreff, $mailContent);
                 $stammdaten->setConfirmEmailSend(true);
