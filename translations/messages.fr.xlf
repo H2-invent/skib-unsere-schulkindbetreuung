@@ -1617,9 +1617,9 @@
         <source>Herzlich Willkommen bei SKiB</source>
         <target state="translated">Bienvenue à SKiB</target>
       </trans-unit>
-      <trans-unit id="CB3jEY0" resname="Hier können Sie die Schulkindbetreuung für die folgenden Schulen online buchen">
-        <source>Hier können Sie die Schulkindbetreuung für die folgenden Schulen online buchen</source>
-        <target state="translated">Ici, vous pouvez réserver en ligne la garde d'enfants pour les écoles suivantes</target>
+      <trans-unit id="CB3jEY0" resname="Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.">
+        <source>Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.</source>
+        <target state="translated">Pour les écoles suivantes, vous pouvez réserver la garde d'enfants en ligne ici.</target>
       </trans-unit>
       <trans-unit id="6jGKQ7r" resname="Aktuelles Schuljahr">
         <source>Aktuelles Schuljahr</source>

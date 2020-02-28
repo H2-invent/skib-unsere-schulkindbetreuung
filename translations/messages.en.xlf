@@ -1913,9 +1913,9 @@
         <source>Herzlich Willkommen bei SKiB</source>
         <target state="translated">Welcome to SKiB</target>
       </trans-unit>
-      <trans-unit id="CB3jEY0" resname="Hier können Sie die Schulkindbetreuung für die folgenden Schulen online buchen">
-        <source>Hier können Sie die Schulkindbetreuung für die folgenden Schulen online buchen</source>
-        <target state="translated">Here you can book online the schoolchild care for the following schools</target>
+      <trans-unit id="CB3jEY0" resname="Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.">
+        <source>Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.</source>
+        <target state="translated">For the following schools you can book the school child care online here.</target>
       </trans-unit>
       <trans-unit id="6jGKQ7r" resname="Aktuelles Schuljahr">
         <source>Aktuelles Schuljahr</source>
