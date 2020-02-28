@@ -24,6 +24,10 @@
                 <td>{{ eltern.email }}</td>
             </tr>
             <tr>
+                <td>{% trans %}Telefonnummer{% endtrans %}</td>
+                <td>{{ eltern.phoneNumber }}</td>
+            </tr>
+            <tr>
                 <td>{% trans %}Adresse des Erziehungsberechtigten{% endtrans %}</td>
                 <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
             </tr>

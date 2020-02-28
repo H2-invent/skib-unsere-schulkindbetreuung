@@ -1913,9 +1913,9 @@
         <source>Herzlich Willkommen bei SKiB</source>
         <target state="translated">Welcome to SKiB</target>
       </trans-unit>
-      <trans-unit id="CB3jEY0" resname="Hier können Sie die Schulkindbetreuung für die folgenden Schulen online buchen">
-        <source>Hier können Sie die Schulkindbetreuung für die folgenden Schulen online buchen</source>
-        <target state="translated">Here you can book online the schoolchild care for the following schools</target>
+      <trans-unit id="CB3jEY0" resname="Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.">
+        <source>Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.</source>
+        <target state="translated">For the following schools you can book the school child care online here.</target>
       </trans-unit>
       <trans-unit id="6jGKQ7r" resname="Aktuelles Schuljahr">
         <source>Aktuelles Schuljahr</source>
@@ -2363,25 +2363,25 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Informationen</source>
         <target state="translated">Information</target>
       </trans-unit>
-      <trans-unit id="sN86JB." resname="#Beide Erziehungsberechtigte sind berufstätig#">
-        <source>#Beide Erziehungsberechtigte sind berufstätig#</source>
-        <target>__#Beide Erziehungsberechtigte sind berufstätig#</target>
+      <trans-unit id="sN86JB." resname="Beide Elternteile / Erziehungsberechtigte sind berufstätig">
+        <source>Beide Elternteile / Erziehungsberechtigte sind berufstätig</source>
+        <target>Both parents / legal guardians are working</target>
       </trans-unit>
-      <trans-unit id="iIQDRgZ" resname="#Beide Erziehungsberechtigte sind arbeitssuchend#">
-        <source>#Beide Erziehungsberechtigte sind arbeitssuchend#</source>
-        <target>__#Beide Erziehungsberechtigte sind arbeitssuchend#</target>
+      <trans-unit id="iIQDRgZ" resname="Beide Elternteile / Erziehungsberechtigte sind arbeitssuchend">
+        <source>Beide Elternteile / Erziehungsberechtigte sind arbeitssuchend</source>
+        <target>Both parents / legal guardians are job-seekers</target>
       </trans-unit>
-      <trans-unit id="RQls4AT" resname="#Ein Erziehungsberechtigter ist berufstätig und ein Erziehungsberechtigter ist arbeitssuchend#">
-        <source>#Ein Erziehungsberechtigter ist berufstätig und ein Erziehungsberechtigter ist arbeitssuchend#</source>
-        <target>__#Ein Erziehungsberechtigter ist berufstätig und ein Erziehungsberechtigter ist arbeitssuchend#</target>
+      <trans-unit id="RQls4AT" resname="Ein Elternteil / Erziehungsberechtigter ist berufstätig // arbeitssuchend">
+        <source>Ein Elternteil / Erziehungsberechtigter ist berufstätig // arbeitssuchend</source>
+        <target>One parent / legal guardian is working another is a job-seeker</target>
       </trans-unit>
-      <trans-unit id="YYmSkzD" resname="#Alleinerziehender Erziehungsberechtigter ist berufstätig#">
-        <source>#Alleinerziehender Erziehungsberechtigter ist berufstätig#</source>
-        <target>__#Alleinerziehender Erziehungsberechtigter ist berufstätig#</target>
+      <trans-unit id="YYmSkzD" resname="Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig">
+        <source>Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig</source>
+        <target>Singe parent / legal guardian is working</target>
       </trans-unit>
-      <trans-unit id="LzCer2P" resname="#Alleinerziehender Erziehungsberechtigter ist arbeitssuchend#">
-        <source>#Alleinerziehender Erziehungsberechtigter ist arbeitssuchend#</source>
-        <target>__#Alleinerziehender Erziehungsberechtigter ist arbeitssuchend#</target>
+      <trans-unit id="LzCer2P" resname="Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend">
+        <source>Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend</source>
+        <target>Singe parent / legal guardian is a job-seeker</target>
       </trans-unit>
       <trans-unit id="Omi_lE_" resname="Passwort für das PDF: Geburtsdatum des Kindes (tt.mm.JJJJ)">
         <source>Passwort für das PDF: Geburtsdatum des Kindes (tt.mm.JJJJ)</source>

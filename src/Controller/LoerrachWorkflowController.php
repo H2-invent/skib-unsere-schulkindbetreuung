@@ -62,11 +62,11 @@ class LoerrachWorkflowController extends AbstractController
     public function __construct(TranslatorInterface $translator)
     {
         $this->beruflicheSituation = array(
-            $translator->trans('#Beide Erziehungsberechtigte sind berufstätig#') => 3,
-            $translator->trans('#Beide Erziehungsberechtigte sind arbeitssuchend#') => 4,
-            $translator->trans('#Ein Erziehungsberechtigter ist berufstätig und ein Erziehungsberechtigter ist arbeitssuchend#') => 5,
-            $translator->trans('#Alleinerziehender Erziehungsberechtigter ist berufstätig#') => 1,
-            $translator->trans('#Alleinerziehender Erziehungsberechtigter ist arbeitssuchend#') => 2,
+            $translator->trans('Beide Elternteile / Erziehungsberechtigte sind berufstätig') => 3,
+            $translator->trans('Beide Elternteile / Erziehungsberechtigte sind arbeitssuchend') => 4,
+            $translator->trans('Ein Elternteil / Erziehungsberechtigter ist berufstätig // arbeitssuchend') => 5,
+            $translator->trans('Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig') => 1,
+            $translator->trans('Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend') => 2,
         );
 
     }
