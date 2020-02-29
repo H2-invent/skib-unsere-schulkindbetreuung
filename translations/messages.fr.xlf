@@ -1617,9 +1617,9 @@
         <source>Herzlich Willkommen bei SKiB</source>
         <target state="translated">Bienvenue à SKiB</target>
       </trans-unit>
-      <trans-unit id="CB3jEY0" resname="Hier können Sie die Schulkindbetreuung für die folgenden Schulen online buchen">
-        <source>Hier können Sie die Schulkindbetreuung für die folgenden Schulen online buchen</source>
-        <target state="translated">Ici, vous pouvez réserver en ligne la garde d'enfants pour les écoles suivantes</target>
+      <trans-unit id="CB3jEY0" resname="Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.">
+        <source>Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.</source>
+        <target state="translated">Pour les écoles suivantes, vous pouvez réserver la garde d'enfants en ligne ici.</target>
       </trans-unit>
       <trans-unit id="6jGKQ7r" resname="Aktuelles Schuljahr">
         <source>Aktuelles Schuljahr</source>
@@ -2359,25 +2359,25 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Informationen</source>
         <target state="translated">Informations</target>
       </trans-unit>
-      <trans-unit id="sN86JB." resname="#Beide Erziehungsberechtigte sind berufstätig#">
-        <source>#Beide Erziehungsberechtigte sind berufstätig#</source>
-        <target>__#Beide Erziehungsberechtigte sind berufstätig#</target>
+      <trans-unit id="sN86JB." resname="Beide Elternteile / Erziehungsberechtigte sind berufstätig">
+        <source>Beide Elternteile / Erziehungsberechtigte sind berufstätig</source>
+        <target>Les parents / les tuteurs légaux exercent une activité professionelle</target>
       </trans-unit>
-      <trans-unit id="iIQDRgZ" resname="#Beide Erziehungsberechtigte sind arbeitssuchend#">
-        <source>#Beide Erziehungsberechtigte sind arbeitssuchend#</source>
-        <target>__#Beide Erziehungsberechtigte sind arbeitssuchend#</target>
+      <trans-unit id="iIQDRgZ" resname="Beide Elternteile / Erziehungsberechtigte sind arbeitssuchend">
+        <source>Beide Elternteile / Erziehungsberechtigte sind arbeitssuchend</source>
+        <target>Les parents / tuteurs légaux sont  demandeurs d'emploi</target>
       </trans-unit>
-      <trans-unit id="RQls4AT" resname="#Ein Erziehungsberechtigter ist berufstätig und ein Erziehungsberechtigter ist arbeitssuchend#">
-        <source>#Ein Erziehungsberechtigter ist berufstätig und ein Erziehungsberechtigter ist arbeitssuchend#</source>
-        <target>__#Ein Erziehungsberechtigter ist berufstätig und ein Erziehungsberechtigter ist arbeitssuchend#</target>
+      <trans-unit id="RQls4AT" resname="Ein Elternteil / Erziehungsberechtigter ist berufstätig // arbeitssuchend">
+        <source>Ein Elternteil / Erziehungsberechtigter ist berufstätig // arbeitssuchend</source>
+        <target>Un parent / un tuteur légal exerce une activité professionelle  ou est demandeur d'emploi</target>
       </trans-unit>
-      <trans-unit id="YYmSkzD" resname="#Alleinerziehender Erziehungsberechtigter ist berufstätig#">
-        <source>#Alleinerziehender Erziehungsberechtigter ist berufstätig#</source>
-        <target>__#Alleinerziehender Erziehungsberechtigter ist berufstätig#</target>
+      <trans-unit id="YYmSkzD" resname="Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig">
+        <source>Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig</source>
+        <target>Parent isolé / tuteur legal isolé exerce une activité professionelle</target>
       </trans-unit>
-      <trans-unit id="LzCer2P" resname="#Alleinerziehender Erziehungsberechtigter ist arbeitssuchend#">
-        <source>#Alleinerziehender Erziehungsberechtigter ist arbeitssuchend#</source>
-        <target>__#Alleinerziehender Erziehungsberechtigter ist arbeitssuchend#</target>
+      <trans-unit id="LzCer2P" resname="Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend">
+        <source>Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend</source>
+        <target>Parent isolé / tuteur legal isolé est demandeur d'emploi</target>
       </trans-unit>
       <trans-unit id="Omi_lE_" resname="Passwort für das PDF: Geburtsdatum des Kindes (tt.mm.JJJJ)">
         <source>Passwort für das PDF: Geburtsdatum des Kindes (dd.mm.YYYY)</source>

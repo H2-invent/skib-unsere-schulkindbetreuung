@@ -248,6 +248,13 @@ class Stammdaten
      */
     private $language;
 
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
+     */
+    private $phoneNumber;
+
 
 
 
@@ -807,6 +814,18 @@ class Stammdaten
     public function setLanguage(?string $language): self
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }

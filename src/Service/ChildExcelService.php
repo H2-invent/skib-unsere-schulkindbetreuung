@@ -55,8 +55,9 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Adresse'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('PLZ'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Ort'));
-        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Notfallnummer'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Telefonnummer'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Notfallkontakt'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Notfallnummer'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Abholung durch'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Medikamente'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Allergien'));
@@ -92,8 +93,9 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getAdresszusatz());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getPlz());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getStadt());
-            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getNotfallkontakt());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getPhoneNumber());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getNotfallName());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getNotfallkontakt());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getAbholberechtigter());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getMedikamente());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getAllergie());

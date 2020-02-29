@@ -12,7 +12,7 @@
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="cover-heading">{% trans %}Daten der erziehungsberechtigten Person{% endtrans %}</h2>
+                            <h2 class="cover-heading">{{ 'Daten des Erziehungsberechtigten'|trans }}</h2>
                         </div>
                         <div class="card-body">
                             <table class="table">
@@ -28,6 +28,10 @@
                                 <tr>
                                     <td>{% trans %} E-Mail Adresse {% endtrans %}</td>
                                     <td>{{ eltern.email }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'Telefonnummer'|trans }}</td>
+                                    <td>{{ eltern.phoneNumber }}</td>
                                 </tr>
                                 <tr>
                                     <td>{% trans %} Adresse des Erziehungsberechtigten {% endtrans %}</td>
@@ -61,7 +65,7 @@
                     <!-- Daten der Kinder in einer for Schleife -->
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="cover-heading">{% trans %}Daten des Kinds{% endtrans %} </h2>
+                            <h2 class="cover-heading">{{ 'Daten des Kindes'|trans }}</h2>
                         </div>
                         <div class="text-left" id="accordion">
 
