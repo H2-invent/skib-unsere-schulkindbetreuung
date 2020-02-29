@@ -14,8 +14,8 @@
 <div class="view full-page-intro ">
     <div class="jarallax">
         <img class="jarallax-img" src="
-   {% if stadt.image is empty %}{{ asset('images/background.jpg') }}
-        {% else %}{{ vich_uploader_asset(stadt,'imageFile') }}
+   {% if stadt.image is empty %}{{ asset('images/background.jpg')| imagine_filter('my_background') }}
+        {% else %}{{ vich_uploader_asset(stadt,'imageFile')| imagine_filter('my_background') }}
         {% endif %}
 
 " alt="">
@@ -71,7 +71,7 @@
                         <div class="col-md-12 mb-4 white-text text-center">
                             <p class="lead align-content-center">
                                 <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"
-                                class="btn btn-primary btn-lg">
+                                   class="btn btn-primary btn-lg">
                                     {% if app.request.cookies.has('SecID') %}
                                         {% trans %}Kind bearbeiten{% endtrans %}
                                     {% else %}
@@ -168,29 +168,29 @@
                                         <div class="col-md-6 col-lg-4 mb-4">
                                             <div class="cardhoverable h-100 card hoverable ">
                                                 <div class=" overlay skib-card-image">
-                                                    <a href="{{path('loerrach_workflow_adresse',{'slug':stadt.slug})}}">
-                                                    <img class="card-img-top lazy"
-                                                            {% if s.image %}
-                                                                data-src="{{ vich_uploader_asset(s,'imageFile') }}"
-                                                                alt="{{ s.name }} Logo"
-                                                            {% else %}
-                                                                data-src="{{ asset('images/logo-breit-mittig.png') }}"
-                                                                alt="SKiB Logo"
-                                                            {% endif %}
-                                                          style="max-height: 300px"
-                                                    />
-                                                    <noscript>
-                                                        <img class="card-img-top"
+                                                    <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}">
+                                                        <img class="card-img-top lazy"
                                                                 {% if s.image %}
-                                                                    src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                                    data-src="{{ vich_uploader_asset(s,'imageFile')| imagine_filter('my_thumb') }}"
                                                                     alt="{{ s.name }} Logo"
                                                                 {% else %}
-                                                                    src="{{ asset('images/logo-breit-mittig.png') }}"
+                                                                    data-src="{{ asset('images/logo-breit-mittig.png')| imagine_filter('my_thumb') }}"
                                                                     alt="SKiB Logo"
                                                                 {% endif %}
                                                              style="max-height: 300px"
                                                         />
-                                                    </noscript>
+                                                        <noscript>
+                                                            <img class="card-img-top"
+                                                                    {% if s.image %}
+                                                                        src="{{ vich_uploader_asset(s,'imageFile')| imagine_filter('my_thumb') }}"
+                                                                        alt="{{ s.name }} Logo"
+                                                                    {% else %}
+                                                                        src="{{ asset('images/logo-breit-mittig.png')| imagine_filter('my_thumb') }}"
+                                                                        alt="SKiB Logo"
+                                                                    {% endif %}
+                                                                 style="max-height: 300px"
+                                                            />
+                                                        </noscript>
 
                                                         <div class="mask rgba-white-slight"></div>
                                                     </a>
@@ -226,14 +226,14 @@
 
                                                     <img class="card-img-top lazy" style="max-height: 300px"
 
-                                                                data-src="{{ vich_uploader_asset(o,'imageFile') }}"
-                                                                alt="{{ o.name }} Logo" style="max-height: 300px"
+                                                         data-src="{{ vich_uploader_asset(o,'imageFile')| imagine_filter('my_thumb') }}"
+                                                         alt="{{ o.name }} Logo" style="max-height: 300px"
 
                                                     />
                                                     <noscript>
                                                         <img class="card-img-top lazy" style="max-height: 300px"
-                                                                    src="{{ vich_uploader_asset(o,'imageFile') }}"
-                                                                    alt="{{ o.name }} Logo" style="max-height: 300px"
+                                                             src="{{ vich_uploader_asset(o,'imageFile')| imagine_filter('my_thumb') }}"
+                                                             alt="{{ o.name }} Logo" style="max-height: 300px"
 
                                                         />
                                                     </noscript>
@@ -249,7 +249,6 @@
 
 
                                                 </div>
-
 
 
                                             </div>
@@ -312,13 +311,14 @@
                                             <div class="col-md-4 text-center">
                                                 {% if o.image is not empty %}
                                                     <img src="{{ vich_uploader_asset(o,'imageFile') }}"
-                                                         style="max-height: 110px; max-width: 100%"  alt="{{ o.name }} Logo">
+                                                         style="max-height: 110px; max-width: 100%"
+                                                         alt="{{ o.name }} Logo">
                                                 {% endif %}
                                             </div>
                                         </div>
                                         {% if not loop.last %}
-                                        <hr class="hr-bold">
-                                            {% endif %}
+                                            <hr class="hr-bold">
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>
