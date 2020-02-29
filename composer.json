@@ -10,6 +10,7 @@
         "beelab/recaptcha2-bundle": "^2.1",
         "braintree/braintree_php": "^4.5",
         "cron/cron-bundle": "^2.2",
+        "dpolac/twig-lambda": "^1.0",
         "friendsofsymfony/user-bundle": "~2.0",
         "jms/i18n-routing-bundle": "^3.0",
         "knplabs/doctrine-behaviors": "^1.6",

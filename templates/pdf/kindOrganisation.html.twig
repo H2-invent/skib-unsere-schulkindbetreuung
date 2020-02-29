@@ -11,9 +11,9 @@
     }
 </style>
 <h2>{% trans %}Zusammenfassung{% endtrans %}</h2>
-        <h2>{% trans %}Daten des Kindes{% endtrans %}: {{ k.vorname }} {{ k.nachname }}</h2>
+<h2>{% trans %}Daten des Kindes{% endtrans %}: {{ k.vorname }} {{ k.nachname }}</h2>
 
-<table cellpadding="5px" >
+<table cellpadding="5px">
     <tbody>
     <tr>
         <td>{% trans %}Vorname{% endtrans %}</td>
@@ -88,10 +88,15 @@
                 {% trans %}Gebuchte Betreuungszeitfenster{% endtrans %}
             </td>
 
+
             <td>
                 <ul class="list-group">
-                    {%  for z in k.BetreungsblocksReal %}
-                        <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}</li>
+                    {% for day in zeitblock %}
+                        <li><b>{{ day[0].wochentagString }}</b></li>
+                        {% for z in day %}
+                            <li class="list-group-item"> {{ z.von|date('H:i') }}
+                                - {{ z.bis|date('H:i') }}</li>
+                        {% endfor %}
                     {% endfor %}
                 </ul>
             </td>
@@ -105,8 +110,12 @@
 
             <td>
                 <ul class="list-group">
-                    {%  for z in k.betreungsblocksRealKontingent %}
-                        <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}</li>
+                    {% for day in beworben %}
+                        <li><b>{{ day[0].wochentagString }}</b></li>
+                        {% for z in day %}
+                            <li class="list-group-item"> {{ z.von|date('H:i') }}
+                                - {{ z.bis|date('H:i') }}</li>
+                        {% endfor %}
                     {% endfor %}
                 </ul>
             </td>
@@ -118,4 +127,4 @@
 </table>
 
 
-        <!-- Daten der Kinder in einer for Schleife -->
+<!-- Daten der Kinder in einer for Schleife -->

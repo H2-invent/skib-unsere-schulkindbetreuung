@@ -108,13 +108,12 @@ class PrintService
         );
         // hier beginnt die Seite mit den Kindern
         $pdf->AddPage( 'A4');
-        $elternDaten = $this->templating->render('pdf/kindOrganisation.html.twig', array('k' => $kind));
         $pdf->writeHTMLCell(
             0,
             0,
             20,
             20,
-            $elternDaten,
+            $this->generateChildPage($kind),
             0,
             1,
             0,
@@ -189,14 +188,12 @@ class PrintService
         $pdf->setOrganisation($organisation);
         $pdf = $this->preparePDF($pdf,'Test','test','test',null,$organisation);
 
-
-        $kindData = $this->templating->render('pdf/kindOrganisation.html.twig', array('k' => $kind));
-        $pdf->writeHTMLCell(
+         $pdf->writeHTMLCell(
             $w = 0,
             $h = 0,
             $x = 20,
             $y = 50,
-            $kindData,
+            $this->generateChildPage($kind),
             $border = 0,
             $ln = 1,
             $fill = 0,
@@ -230,6 +227,19 @@ class PrintService
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }
 
+    private function generateChildPage(Kind $kind){
+        $zeitBloeckeGebucht = array();
+        foreach ($kind->getRealZeitblocks() as $data){
+            $zeitBloeckeGebucht[$data->getWochentag()][] = $data;
+        }
+        $zeitBloeckeAngemeldet = array();
+        foreach ($kind->getBeworben() as $data){
+            $zeitBloeckeAngemeldet[$data->getWochentag()][] = $data;
+        }
+
+       return $this->templating->render('pdf/kindOrganisation.html.twig', array('k' => $kind,'beworben'=>$zeitBloeckeAngemeldet,'zeitblock'=>$zeitBloeckeGebucht));
+
+    }
     public function printChildList($kinder, Organisation $organisation, $text, $fileName, TCPDFController $tcpdf, $type = 'I')
     {
 
