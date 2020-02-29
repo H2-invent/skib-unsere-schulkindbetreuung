@@ -307,6 +307,11 @@ class Kind
                 $block[] = $data;
             }
         }
+
+        usort($block, function ($a, $b) {
+        return ($a->getVon()>$b->getVon()?true:false);
+    });
+
         return new ArrayCollection($block);
     }
 
