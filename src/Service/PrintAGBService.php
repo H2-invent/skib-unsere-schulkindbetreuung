@@ -74,7 +74,7 @@ class PrintAGBService
                 $im = $this->fileSystem->read($stadt->getImage());
                 $imdata = base64_encode($im);
                 $imgdata = base64_decode($imdata);
-                $pdf->Image('@' . $imgdata, 140, 20, 50);
+                $pdf->Image('@' . $imgdata, 140, 20, 0,30);
             }
 
         }else{
@@ -84,7 +84,7 @@ class PrintAGBService
                 $im = $this->fileSystem->read($organisation->getImage());
                 $imdata = base64_encode($im);
                 $imgdata = base64_decode($imdata);
-                $pdf->Image('@' . $imgdata, 140, 20, 50);
+                $pdf->Image('@' . $imgdata, 140, 20, 0,30);
             }
         }
 
