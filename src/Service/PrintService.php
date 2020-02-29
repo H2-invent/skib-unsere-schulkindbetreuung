@@ -41,7 +41,7 @@ class PrintService
     {
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
-        $pdf = $this->preparePDF($pdf,'Test','test','test');
+        $pdf = $this->preparePDF($pdf,'Test','test','test',null,$organisation);
 
         $adressComp = '<p><small>' . $organisation->getName() . ' | ' . $organisation->getAdresse() . $organisation->getAdresszusatz() . ' | ' . $organisation->getPlz() . (' ') . $organisation->getOrt() . '</small><br><br>';
 
@@ -68,12 +68,6 @@ class PrintService
 
 
 
-        if ($organisation->getImage()) {
-            $im = $this->fileSystem->read($organisation->getImage());
-            $imdata = base64_encode($im);
-            $imgdata = base64_decode($imdata);
-            $pdf->Image('@' . $imgdata, 140, 20, 50);
-        }
 
         $kontaktDaten = '<table cellspacing="3px">' .
 
@@ -193,15 +187,8 @@ class PrintService
     {
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
-        $pdf = $this->preparePDF($pdf,'Test','test','test');
+        $pdf = $this->preparePDF($pdf,'Test','test','test',null,$organisation);
 
-
-        if ($organisation->getImage()) {
-            $im = $this->fileSystem->read($organisation->getImage());
-            $imdata = base64_encode($im);
-            $imgdata = base64_decode($imdata);
-            $pdf->Image('@' . $imgdata, 140, 20, 50);
-        }
 
         $kindData = $this->templating->render('pdf/kindOrganisation.html.twig', array('k' => $kind));
         $pdf->writeHTMLCell(
@@ -248,14 +235,9 @@ class PrintService
 
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
-        $pdf = $this->preparePDF($pdf,'Test','test','test');
+        $pdf = $this->preparePDF($pdf,'Test','test','test',null,$organisation);
 
-        if ($organisation->getImage()) {
-            $im = $this->fileSystem->read($organisation->getImage());
-            $imdata = base64_encode($im);
-            $imgdata = base64_decode($imdata);
-            $pdf->Image('@' . $imgdata, 140, 20, 50);
-        }
+
 
 
         $kindData = $this->templating->render('pdf/kinderliste.html.twig', array('text' => $text, 'kinder' => $kinder));
@@ -277,7 +259,7 @@ class PrintService
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }
 
-    public function preparePDF($pdf, $title, $author, $subject)
+    public function preparePDF($pdf, $title, $author, $subject,?Stadt $stadt, ?Organisation $organisation)
     {
 
         $pdf->SetAuthor($author);
@@ -292,6 +274,23 @@ class PrintService
         $pdf->AddPage();
         $pdf->setJPEGQuality(75);
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+        if($organisation) {
+            if ($organisation->getImage()) {
+                $im = $this->fileSystem->read($organisation->getImage());
+                $imdata = base64_encode($im);
+                $imgdata = base64_decode($imdata);
+                $pdf->Image('@' . $imgdata, 140, 20, 0,30);
+            }
+        }
+        if($stadt) {
+            if ($stadt->getImage()) {
+                $im = $this->fileSystem->read($stadt->getImage());
+                $imdata = base64_encode($im);
+                $imgdata = base64_decode($imdata);
+                $pdf->Image('@' . $imgdata, 140, 20, 0,30);
+            }
+        }
         return $pdf;
     }
+
 }
