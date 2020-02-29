@@ -373,6 +373,8 @@ class LoerrachWorkflowController extends AbstractController
         //Include Parents in this route
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
+        } else {
+            return $this->redirectToRoute('loerrach_workflow_adresse',array('slug'=>$stadt->getSlug()));
         }
 
         $renderSchulen = array();
@@ -395,7 +397,7 @@ class LoerrachWorkflowController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         } else {
-            return $this->redirectToRoute('loerrach_workflow_adresse');
+            return $this->redirectToRoute('loerrach_workflow_adresse',array('slug'=>$stadt->getSlug()));
         }
 
         $qb = $this->getDoctrine()->getRepository(Organisation::class)->createQueryBuilder('organisation');
@@ -446,7 +448,7 @@ class LoerrachWorkflowController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         } else {
-            return $this->redirectToRoute('loerrach_workflow_adresse');
+            return $this->redirectToRoute('loerrach_workflow_adresse',array('slug'=>$stadt->getSlug()));
         }
 
         $kind = $adresse->getKinds();
