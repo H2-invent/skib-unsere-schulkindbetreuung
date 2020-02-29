@@ -356,3 +356,7 @@ height: auto;
   right: 0px;
   z-index: 1000;
 }
+.card-img-top{
+  height: 200px;
+  object-fit: cover;
+}
