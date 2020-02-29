@@ -69,7 +69,7 @@ class PrintAGBService
 
         if($stadt){
             $pdf->setStadt($stadt);
-            $fileName = 'AGB '.$stadt->getName();
+            $fileName = 'Vertragsbedingungen '.$stadt->getSlug();
             if ($stadt->getImage()) {
                 $im = $this->fileSystem->read($stadt->getImage());
                 $imdata = base64_encode($im);

@@ -881,10 +881,10 @@
             Ceci n'est valable qu'une seule fois et vous sera réaffecté avec la confirmation.
             Ce mécanisme empêche des tiers d'accéder de manière inappropriée aux données de vos enfants.</target>
       </trans-unit>
-      <trans-unit id="s5wccT1" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.&#10;            Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.&#10;            Die Kontaktdaten sind in dem PDF angehängten angegeben.">
+      <trans-unit id="s5wccT1" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.&#10;            Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.&#10;            Die Kontaktdaten sind in dem angehängten PDF angegeben.">
         <source>Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
             Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.
-            Die Kontaktdaten sind in dem PDF angehängten angegeben.</source>
+            Die Kontaktdaten sind in dem angehängten PDF angegeben.</source>
         <target state="translated">Dans l'annexe, vous trouverez vos données et celle de vos enfants en format PDF pour le contrôle.
             Veuillez vérifier vos données et contacter votre organisation locale si vous avez des questions.
             Les coordonnées sont fournies dans le PDF ci-joint.</target>
@@ -999,9 +999,9 @@
         <source>Die E-Mail Adresse ist wichtig, da alle Dokumente, Bestätigungen und Rechnungen automatisch an diese E-Mail geschickt werden.</source>
         <target state="translated">L'adresse électronique est importante car tous les documents, confirmations et factures sont automatiquement envoyés à cet e-mail.</target>
       </trans-unit>
-      <trans-unit id="mA_UHeC" resname="Daten für Notfälle und weitere Informationen">
-        <source>Daten für Notfälle und weitere Informationen</source>
-        <target state="translated">Données pour les situations d'urgence et informations complémentaires</target>
+      <trans-unit id="mA_UHeC" resname="Weitere Informationen und Kontaktdaten">
+        <source>Weitere Informationen und Kontaktdaten</source>
+        <target state="translated">Informations complémentaires et coordonnées</target>
       </trans-unit>
       <trans-unit id="nMLlc_B" resname="Zeitraum wählen">
         <source>Zeitraum wählen</source>
@@ -1553,8 +1553,8 @@
         <source>Kontoinhaber</source>
         <target state="translated">Propriétaire du compte</target>
       </trans-unit>
-      <trans-unit id="no2scoB" resname="Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.">
-        <source>Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.</source>
+      <trans-unit id="no2scoB" resname="Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen widerrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.">
+        <source>Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen widerrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.</source>
         <target state="translated">Je comprends que mon inscription peut être révoquée par les organisations si les capacités de soutien sont dépassées. Il n'y a pas de droit à l'admission aux soins.</target>
       </trans-unit>
       <trans-unit id="5LufHs6" resname="Start">
@@ -2199,10 +2199,10 @@ Responsabilité pour les liens
         <source>Notfallkontakt des Erziehungsberechtigten</source>
         <target state="translated">Contact d'urgence du représentant légal</target>
       </trans-unit>
-      <trans-unit id="0.8fMYp" resname="Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch der betreuenden Organisation müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.&#10;            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.">
-        <source>Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch der betreuenden Organisation müssen Sie diesen Sicherheitscode angeben.
+      <trans-unit id="0.8fMYp" resname="Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.&#10;            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.">
+        <source>Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.
             Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.
-            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.</source>
+            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.</source>
         <target state="translated">Pour la communication avec l'organisme de contrôle et pour les modifications de vos données par l'organisme de contrôle, vous devez entrer ce code de sécurité.
             Ce code n'est valable qu'une seule fois et vous sera envoyé à nouveau après chaque changement.
             Ce mécanisme empêche l'accès non autorisé aux données de vos enfants par des tiers.</target>
@@ -2211,10 +2211,10 @@ Responsabilité pour les liens
         <source>Wichtig: Diesen Sicherheitscode gut aufbewahren!</source>
         <target state="translated">Important : conservez ce code de sécurité dans un endroit sûr !</target>
       </trans-unit>
-      <trans-unit id="Nzh6gMX" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.&#10;            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.&#10;            Die Kontaktdaten sind in dem PDF angehängten angegeben.">
+      <trans-unit id="Nzh6gMX" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.&#10;            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.&#10;            Die Kontaktdaten sind in dem angehängten PDF angegeben.">
         <source>Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
             Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
-            Die Kontaktdaten sind in dem PDF angehängten angegeben.</source>
+            Die Kontaktdaten sind in dem angehängten PDF angegeben.</source>
         <target state="translated">Dans la annexe, vous trouverez vos données et celles de vos enfants sous forme de fichiers PDF à des fins de vérification.
             Veuillez vérifier les données et contacter votre organisme de contrôle si vous avez des questions.
             Les coordonnées sont indiquées dans le PDF attaché.</target>
@@ -2243,8 +2243,8 @@ Responsabilité pour les liens
         <source>Monatliche Gebühren</source>
         <target state="translated">Frais mensuels</target>
       </trans-unit>
-      <trans-unit id="o4wVfLm" resname="Fotos auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden">
-        <source>Fotos auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden</source>
+      <trans-unit id="o4wVfLm" resname="Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.">
+        <source>Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.</source>
         <target state="translated">Les photos montrant mon enfant sont autorisées à être publiées dans la presse publique</target>
       </trans-unit>
       <trans-unit id="rRfczkt" resname="Rechnung an alle Erziehungsberechtigten versenden">
@@ -2286,10 +2286,6 @@ Responsabilité pour les liens
       <trans-unit id="pfhPhND" resname="Kind entfernen">
         <source>Kind entfernen</source>
         <target state="translated">Supprimer l'enfant</target>
-      </trans-unit>
-      <trans-unit id="ggfHHLm" resname="Ich erteile dem betreuenden Organisationen (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags">
-        <source>Ich erteile dem betreuenden Organisationen (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags</source>
-        <target state="translated">J'accorde à la/aux organisation(s) de soutien un client de prélèvement SEPA pour la durée du contrat de soutien</target>
       </trans-unit>
       <trans-unit id="2f45s_g" resname="Email an Erziehungsberechtigten senden">
         <source>Email an Erziehungsberechtigten senden</source>
