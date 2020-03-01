@@ -9,11 +9,12 @@ Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen K
 Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger: I am an education and participation package (BUT) recipient
 Berufliche Situation des Erziehungsberechtigten: Employment situation of the legal guardian
 Name des Notfallkontakts: Name of the emergency contact
-Notfalltelefonnummer: Emergency telephone number
+Telefonnummer des Notfallkontakts: Telephone number of the emergency contact
 Name der Stadt: Name of the city
 Slug der Stadt: Slug of the city
 Username: Username
 E-Mail: E-Mail
+Telefonnummer /Handynummer des Erziehungsberechtigten: Telephone/mobile phone number of parent or guardian
 Passwort: Password
 Geburtstag: Date of Birth
 Name der Schule: Name of the School
@@ -25,9 +26,9 @@ Gläubiger ID: Gläubiger ID
 Info Text Deutsch: Info text German
 Info Text Englisch: Info text English
 Info Text Französisch: Info text French
-AGB Deutsch (Markdown): Terms German (Markdown)
-AGB Englisch (Markdown): Terms English (Markdown)
-AGB Französisch (Markdown): Terms French (Markdown)
+Vertragsbedingungen Deutsch (Markdown): Terms German (Markdown)
+Vertragsbedingungen Englisch (Markdown): Terms English (Markdown)
+Vertragsbedingungen Französisch (Markdown): Terms French (Markdown)
 Telefonnummer: Phone
 SMTP Server: SMTP Server
 SMTP Port: SMTP Port
@@ -56,12 +57,12 @@ Kontoinhaber für das Lastschriftmandat: Account holder for the direct debit man
 SEPA-Lastschrift Mandat wird elektronisch erteilt: SEPA Direct Debit Mandate is issued electronically
 Schulform: School form
 Jahrgangsstufe: Class
-Ganztagsbetreuung: Full-day school
-Halbtagsbetreuung: Half-day school
+Ganztag: Full-day
+Halbtag: Half-day
 Mein Kind benötig folgende Medikamente: Child needs the following medication
 Mein Kind hat folgende Allergien: Child has the following allergies
 Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden.: I acknowledge that my data will be processed electronically
-Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder von SKiB elektronisch verarbeitet werden und an die betreuende Organisationen, sowie den Schulträger weitergegeben werden.: I agree that my data and the data of my children may be electronically processed by SKiB and forwarded to the organisations that look after me and my children and to the school authorities.
+Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet werden und an die betreuende Organisation weitergegeben werden.: I agree that my data and the data of my children will be electronically processed and passed on to the supervising organisation.
 Zum Newsletter anmelden: Subscribe to the newsletter
 Klasse 1: Class 1
 Klasse 2: Class 2
@@ -75,11 +76,11 @@ Anzahl der Preiskategorien: Number of price categories
 Sicherheitscode des Erziehungsberechtigten: Security code of the parents
 Name und Beziehung des Notfallkontakts: Name and relationship of the emergency contact
 Ich bin alleinerziehend: I am a single parent
-Weitere abholberechtigte Personen: Other persons authorised to collect
+Weitere abholberechtigte Personen: Other persons authorised to pick up
 Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause: My child may go home alone after the end of the booked care
 Mein Kind darf an Ausflügen teilnehmen: My child may participate in excursions
 Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden: My child may be treated with standard sunscreen in summer
-Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.: Photos showing my child may be published in the public press as well as used for the public relations work of the sponsors.
+Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.: Photos showing my child may be published in the public press as well as used for the public relations work of the sponsors.
 Mein Kind ernährt sich vegetarisch: My child is a vegetarian
 Mein Kind isst kein Schweinefleich: My child does not eat pork
 Mein Kind ist glutenintolerant: My child is gluten intolerant
@@ -133,3 +134,6 @@ Stripe akzeptieren: Accept Stripe
 Caterer Info Deutsch (Markdown): Caterer Info German (Markdown)
 Caterer Info Englisch (Markdown): Caterer Info English (Markdown)
 Caterer Info Französisch (Markdown): Caterer Info French (Markdown)
+Betreuungszeitfenster Info Deutsch (Markdown): Care Slots Info German (Markdown)
+Betreuungszeitfenster Info Englisch (Markdown): Care Slots Info English (Markdown)
+Betreuungszeitfenster Info Französisch (Markdown): Care Slots Info French (Markdown)

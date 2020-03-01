@@ -1,9 +1,8 @@
 {% extends 'workflow/base.html.twig' %}
 
 {% block header %}
-    <div class="col-md-6 mb-4 white-text text-centerm text-md-left">
-        <h1 class="font-weight-bold">SKiB</h1>
-        <hr class="hr-light ">
+    <div class="col-md-12 white-text text-centerm text-md-left">
+        <h1 class="h1-responsive">SKiB unsere-schulkindbetreuung.de</h1>
     </div>
 {% endblock %}
 {% block content %}
@@ -97,37 +96,35 @@
             </div>
             <div class="card-body">
                 <div class="row mb-3">
-                    <div class="col-md-2">
-                        <i class="fas fa-sitemap  fa-2x"></i>
-                    </div>
-                    <div class="col-md-10">
+
+                    <div class="col-md-10 offset-md-1">
+
                         <p>
                             {% apply markdown_to_html %}
-                                Stand: Januar 2020
+                                Stand: Februar 2020
 
-                                Wir freuen uns über Ihren Besuch auf unserer Website sowie über Ihr Interesse an unserem Unternehmen. Im Folgenden informieren wir Sie in Übereinstimmung mit den anwendbaren Datenschutzvorschriften darüber, welche personenbezogenen Daten wir im Rahmen
+                                Wir freuen uns über Ihren Besuch auf unserer Website sowie über Ihr Interesse an unserem Unternehmen. Im Folgenden informieren wir Sie in Übereinstimmung mit den anwendbaren Datenschutzvorschriften über Art und Umfang der personenbezogenen Daten, welche wir im Rahmen
                                 * Ihres Besuchs unserer Website,
-                                * der Nutzung der Schulkind Betreuungsplattform,
                                 * der Kommunikation mit uns,
                                 * von Stellenausschreibungen
 
-                                (nachfolgend gemeinsam „Website“) erheben, zu welchen Zwecken wir diese Daten verwenden und wie wir diese einsetzen, um unsere Dienste für Sie zu optimieren.
+                                (nachfolgend gemeinsam „Website“) erheben, zu welchen Zwecken wir diese Daten verwenden und wie wir diese einsetzen, um unsere Dienste für Sie zu optimieren. Wir unterscheiden dabei in folgende Bereiche
+                                * A. Allgemeines
+                                * B. Rechte der Betroffenen
+                                * C. Schlussbestimmungen
 
-                                ## A.	Allgemeines
-                                #### 1. Verantwortlicher
-                                __H2 invent GmbH__
 
-                                Gewerbestraße 979539
+                                ## A. Allgemeines
+                                ### 1. Verantwortlicher
 
-                                Lörrach, Deutschland
-
-                                Internet: www.h2-invent.com
-
-                                E-Mail: info@h2-invent.com
-
+                                __H2 invent GmbH__<br>
+                                Gewerbestraße 9<br>
+                                79539 Lörrach, Deutschland<br>
+                                Internet: www.h2-invent.com<br>
+                                E-Mail: info@h2-invent.com<br>
                                 Telefon: 07621 7925862
 
-                                nachfolgend „H2 Invent“, „wir“ oder „uns“ genannt. Weitere Information zum Anbieter finden Sie in unserem Impressum.
+                                nachfolgend „H2 Invent“, „wir“ oder „uns“ genannt. Weitere Information zum Anbieter finden Sie in unserem [Impressum](https://www.unsere-schulkindbetreuung.de/impressum)
 
                                 ### 2. Arten der verarbeiteten Daten, Kategorien betroffener Personen
                                 #### 2.1 Art der verarbeiteten Daten
@@ -141,10 +138,8 @@
                                 * Bewerber
 
                                 (Nachfolgend bezeichnen wir die betroffenen Personen zusammenfassend auch als „Nutzer“.)
-
                                 ### 3. Zweck der Verarbeitung
                                 Wir verwenden Ihre personenbezogenen Daten
-
                                 * bei der Zurverfügungstellung der Website und des Onlineangebotes, seiner Funktionen und Inhalte.
                                 * für die Beantwortung von Kontaktanfragen und Kommunikation mit Nutzern.
                                 * zu Sicherheitsmaßnahmen.
@@ -165,136 +160,84 @@
                                 (2) Die IP-Adressen der Nutzer werden nach Beendigung der Nutzung gelöscht oder anonymisiert. Bei einer Anonymisierung werden die IP-Adressen derart geändert, dass die Einzelangaben über persönliche oder sachliche Verhältnisse nicht mehr oder nur mit einem unverhältnismäßig großen Aufwand an Zeit, Kosten und Arbeitskraft einer bestimmten oder bestimmbaren natürlichen Person zugeordnet werden können.
 
                                 ### 5. Cookies
-                                Zusätzlich zu den zuvor genannten Logfiles Daten werden bei Ihrer Nutzung unserer Website Cookies auf Ihrem Rechner gespeichert. Bei Cookies handelt es sich um kleine Textdateien, die auf Ihrer Festplatte dem von Ihnen verwendeten Browser zugeordnet und gespeichert werden und durch welche der Stelle, die den Cookie setzt (hier durch uns), bestimmte Informationen zufließen. Cookies können keine Programme ausführen oder Viren auf Ihren Computer übertragen. Sie dienen dazu, das Internetangebot insgesamt nutzerfreundlicher und effektiver zu machen.
-                                ##### (1) Einsatz von Cookies:
+                                (1) Zusätzlich zu den zuvor genannten Logfiles Daten werden bei Ihrer Nutzung unserer Website Cookies auf Ihrem Rechner gespeichert. Bei Cookies handelt es sich um kleine Textdateien, die auf Ihrer Festplatte dem von Ihnen verwendeten Browser zugeordnet und gespeichert werden und durch welche der Stelle, die den Cookie setzt (hier durch uns), bestimmte Informationen zufließen. Cookies können keine Programme ausführen oder Viren auf Ihren Computer übertragen. Sie dienen dazu, das Internetangebot insgesamt nutzerfreundlicher und effektiver zu machen.
+
+                                (2) Einsatz von Cookies:
+
                                 a) Diese Website nutzt folgende Arten von Cookies, deren Umfang und Funktionsweise im Folgenden erläutert werden:
                                 * Session Cookies (dazu b)
                                 * Dauerhafte Cookies (dazu c).
 
-                                b) Session Cookies speichern eine sogenannte Session-ID, mit welcher sich verschiedene Anfragen Ihres Browsers der gemeinsamen Sitzung zuordnen lassen. Die Session-Cookies werden gelöscht, wenn Sie sich ausloggen oder den Browser schließen. Wenn Sie Ihren Browser neu starten und zurück auf die Website gehen, wird die Website Sie nicht erkennen. Sie müssen sich erneut einloggen (falls ein Login benötigt wird) oder Sie müssen Vorlagen und Präferenzen neu einstellen, wenn die Website diese Funktionen anbietet. Dann wird ein neues Sitzungscookie generiert, welcher Ihre Informationen speichert und aktiv bleibt, bis Sie die Seite wieder verlassen und Ihren Browser schließen.
+                                b) Session Cookies speichern eine sogenannte Session-ID, mit welcher sich verschiedene Anfragen Ihres Browsers der gemeinsamen Sitzung zuordnen lassen. Die Session-Cookies werden gelöscht, wenn Sie sich ausloggen oder den Browser schließen. Wenn Sie Ihren Browser neu starten und zurück auf die Website gehen, wird die Website Sie nicht erkennen. Sie müssen sich erneut einloggen (falls ein Login benötigt wird) oder Sie müssen Vorlagen und Präferenzen neu einstellen, wenn die Website diese Funktionen anbietet. Dann wird ein neues Sitzungscookie generiert, welches Ihre Informationen speichert und aktiv bleibt, bis Sie die Seite wieder verlassen und Ihren Browser schließen.
 
                                 c) Dauerhafte Cookies werden automatisiert nach einer vorgegebenen Dauer gelöscht, die sich je nach Cookie unterscheiden kann. Sie können die Cookies in den Sicherheitseinstellungen Ihres Browsers jederzeit löschen.
-                                ##### (2) Für welche Zwecke setzen wir Cookies ein?
+
+                                (3) Für welche Zwecke setzen wir Cookies ein?
+
                                 Wir verwenden Cookies, um Inhalte und Anzeigen zu personalisieren, Funktionen für soziale Medien anbieten zu können und die Zugriffe auf unsere Website zu analysieren. Außerdem geben wir Informationen zu Ihrer Verwendung unserer Website an unsere Partner für soziale Medien, Werbung und Analysen weiter. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die sie im Rahmen Ihrer Nutzung der Dienste gesammelt haben. Sie geben Einwilligung zu unseren Cookies, wenn Sie unsere Webseite weiterhin nutzen.
 
-                            Grundsätzliche Informationen
+                                __Grundsätzliche Informationen__
+                                ###### Technisch notwendige Cookies
+                                * Technisch notwendige Cookies ermöglichen die Nutzung unserer Website, indem sie Grundfunktionen wie Seitennavigation und Zugriff auf sichere Bereiche der Website ermöglichen. Der Besuch unserer Website kann ohne diese Cookies nicht richtig funktionieren.
+                                * Session Cookies - werden mit Schließen des Browsers gelöscht.
+                                ---
+                                ###### Leistung (z.B. Browser des Nutzers), Darstellung und Präferenzen
 
-                                <table>
-                            <thead>
-                            <th style="width: 20%">
-                                Zweck
-                            </th>
-                            <th style="width: 60%">
-                                Beschreibung
-                            </th>
-                            <th style="width: 20%">
-                                Speicherdauer
-                            </th>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    Technisch notwendige Cookies
-                                </td>
-                                <td>
-                                    Technisch notwendige Cookies ermöglichen die Nutzung unserer Website, indem sie Grundfunktionen wie Seitennavigation und Zugriff auf sichere Bereiche der Website ermöglichen. Der Besuch unserer Website kann ohne diese Cookies nicht richtig funktionieren.
-                                </td>
-                                <td>
-                                    Session Cookies - werden mit Schließen des Browsers gelöscht.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Leistung (z.B. Browser des Nutzers)
-                                </td>
-                                <td>
-                                    Bei der Nutzung unserer Website werden Cookies eingesetzt (z.B. um den Browser zu erkennen), um die Leistung zu verbessern (z.B. schnelleres Laden von Inhalten). Wenn Sie unsere Website besuchen, wird die ermittelte oder von Ihnen selbstgewählte Landes- und Sprachauswahl in Cookies abgespeichert, um Ihnen die erneute Auswahl bei Folgebesuchen zu ersparen. Im Vorfeld wird geprüft, ob Ihr Browser Cookies unterstützt und diese Information wird in einem weiteren Cookie abgelegt. Anschließend werden Ihnen landes- und sprachbezogen lokalisierte Kontaktinformationen angezeigt, welche ebenfalls gespeichert werden. Rechtsgrundlage hierfür ist Art. 6 Abs. 1 S.1 lit. f) DSGVO.                                </td>
-                                <td>
-                                    Session Cookies - werden mit Schließen des Browsers gelöscht.
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                * Bei der Nutzung unserer Website werden Cookies eingesetzt (z.B. um den Browser zu erkennen), um die Leistung zu verbessern (z.B. schnelleres Laden von Inhalten). Wenn Sie unsere Website besuchen, wird die ermittelte oder von Ihnen selbstgewählte Landes- und Sprachauswahl in Cookies abgespeichert, um Ihnen die erneute Auswahl bei Folgebesuchen zu ersparen. Im Vorfeld wird geprüft, ob Ihr Browser Cookies unterstützt und diese Information wird in einem weiteren Cookie abgelegt. Anschließend werden Ihnen landes- und sprachbezogen lokalisierte Kontaktinformationen angezeigt, welche ebenfalls gespeichert werden. Rechtsgrundlage hierfür ist Art. 6 Abs. 1 S.1 lit. f) DSGVO.
+                                * Session Cookies - werden mit Schließen des Browsers gelöscht.
+                                ---
 
-                                ##### (3) Kontrolle über Cookies
+                                (4) Kontrolle über Cookies
                                 Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert werden und Cookies nur im Einzelfall erlauben, die Annahme von Cookies für bestimmte Fälle oder generell ausschließen sowie das automatische Löschen der Cookies beim Schließen des Browsers aktivieren. Bei der Deaktivierung von Cookies kann die Funktionalität dieser Website eingeschränkt sein.
 
                                 ### 6. Kontaktformular und E-Mail-Kontakt
-                                1. Auf unserer Website ist ein Kontaktformular vorhanden, das für die elektronische Kontaktaufnahme genutzt werden kann. Nimmt ein Nutzer diese Möglichkeit wahr, so werden die im Webformular eingegebenen Daten (Namen, E-Mail-Adresse, Telefonnummer und Nachricht) an uns übermittelt und gespeichert. Zum Zeitpunkt der Absendung werden zudem folgende Daten gespeichert:
+                                (1) Auf unserer Internetseite stellen wir ein Kontaktformular zur Verfügung, welches Sie für die einfache elektronische Kontaktaufnahme nutzen können. Nehmen Sie diese Möglichkeit wahr, so werden die in der Eingabemaske eingegebenen Daten an uns übermittelt und gespeichert. Die entsprechenden Daten sind unmittelbar auf der jeweiligen Eingabemaske ersichtlich. Für die Verarbeitung der Daten ist im Rahmen des Absendevorgangs die Bestätigung Ihrer Kenntnisnahme erforderlich und dabei wird auf diese Datenschutzerklärung verwiesen.
+                                Im Zeitpunkt der Absendung werden zudem folgende Daten gespeichert:
                                 * Die IP-Adresse des Nutzers
-                                * Absendedatum und -uhrzeit des Formulars
+                                * Datum und Uhrzeit des Absendens des Formulars
 
-                                1. Eine Kontaktaufnahme ist auch über die auf der Website bereitgestellten E-Mail-Adressen möglich. In diesem Fall werden die mit der E-Mail übermittelten personenbezogenen Daten des Nutzers gespeichert. Die Daten werden ausschließlich für die Verarbeitung der Anfrage verwendet. Rechtsgrundlage für die Verarbeitung der Daten, die im Zuge einer Übersendung einer E-Mail übermittelt werden, ist Art. 6 Abs. 1 S.1 lit. f) DSGVO. Zielt der E-Mail-Kontakt auf den Abschluss eines Vertrages ab, so ist zusätzliche Rechtsgrundlage für die Verarbeitung Art. 6 Abs. 1 S. 1 lit. b) DSGVO.
 
-                                1. Die Daten werden gelöscht, sobald sie für die Erreichung des Zweckes ihrer Erhebung nicht mehr erforderlich sind. Für die personenbezogenen Daten aus der Eingabemaske des Kontaktformulars und diejenigen, die per E-Mail übersandt wurden, ist dies dann der Fall, wenn die jeweilige Konversation mit dem Nutzer beendet ist. Beendet ist die Konversation dann, wenn sich aus den Umständen entnehmen lässt, dass der betroffene Sachverhalt abschließend geklärt ist.
+                                (2) Eine Kontaktaufnahme ist auch über die auf der Website bereitgestellten E-Mail-Adressen möglich. In diesem Fall werden die mit der E-Mail übermittelten personenbezogenen Daten des Nutzers gespeichert. Die Daten werden ausschließlich für die Verarbeitung der Anfrage verwendet. Rechtsgrundlage für die Verarbeitung der Daten, die im Zuge einer Übersendung einer E-Mail übermittelt werden, ist Art. 6 Abs. 1 S.1 lit. f) DSGVO. Zielt der E-Mail-Kontakt auf den Abschluss eines Vertrages ab, so ist zusätzliche Rechtsgrundlage für die Verarbeitung Art. 6 Abs. 1 S. 1 lit. b) DSGVO.
 
-                                1. Ungeachtet Abs. 3 gilt: Kontaktanfragen von Kunden, welche sich auf einen bestimmten Geschäftsvorgang beziehen werden gespeichert, solange dies für die Durchführung und Abwicklung des Vertrages (Art. 6 Abs. 1 lit. b DSGVO) oder aufgrund gesetzlicher Aufbewahrungspflichten (Art. 6 Abs. 1 lit. c) DSGVO) erforderlich ist. Kontaktanfragen von Kunden, welche sich nicht auf einen bestimmten Geschäftsvorgang beziehen, werden gespeichert solange das Geschäftsverhältnis besteht. Rechtsgrundlage ist Art. 6 Abs. 1 lt. f) DSGVO zur Wahrung unserer berechtigten Interessen und der des Kunden, insbesondere Support und Qualitätssicherung. Kunden können der Verarbeitung jederzeit im Einzelfall widersprechen.
+                                (3) Die Daten werden gelöscht, sobald sie für die Erreichung des Zweckes ihrer Erhebung nicht mehr erforderlich sind. Für die personenbezogenen Daten aus der Eingabemaske des Kontaktformulars und diejenigen, die per E-Mail übersandt wurden, ist dies dann der Fall, wenn die jeweilige Konversation mit dem Nutzer beendet ist. Beendet ist die Konversation dann, wenn sich aus den Umständen entnehmen lässt, dass der betroffene Sachverhalt abschließend geklärt ist.
+
+                                (4) Ungeachtet Abs. 3 gilt: Kontaktanfragen von Kunden, welche sich auf einen bestimmten Geschäftsvorgang beziehen, werden gespeichert, solange dies für die Durchführung und Abwicklung des Vertrages (Art. 6 Abs. 1 lit. b DSGVO) oder aufgrund gesetzlicher Aufbewahrungspflichten (Art. 6 Abs. 1 lit. c) DSGVO) erforderlich ist. Kontaktanfragen von Kunden, welche sich nicht auf einen bestimmten Geschäftsvorgang beziehen, werden gespeichert solange das Geschäftsverhältnis besteht. Rechtsgrundlage ist Art. 6 Abs. 1 lt. f) DSGVO zur Wahrung unserer berechtigten Interessen und der des Kunden, insbesondere Support und Qualitätssicherung. Kunden können der Verarbeitung jederzeit im Einzelfall widersprechen.
 
                                 ### 7. Stellenausschreibungen
-                                1. Auf unserer Website schreiben wir offene Stellen aus. Zur Bearbeitung Ihrer Online-Bewerbung erheben, verarbeiten und nutzen wir Ihre personenbezogenen Daten. Rechtsgrundlage ist Art. 6 Abs. 1 S.1 lit. b) DSGVO i.V.m. § 26 BDSG. Ihre Online-Bewerbungsdaten werden per E-Mail direkt zur Geschäftsführung übermittelt. Durch geeignete technische und organisatorische Maßnahmen ist sichergestellt, dass Ihre personenbezogenen Daten innerhalb der gesetzlichen Bestimmungen vertraulich behandelt werden.
-                                1. Bitte beachten Sie, dass die Übermittlung der Daten per E-Mail unverschlüsselt erfolgt und die Daten unter Umständen von Unbefugten zur Kenntnis genommen oder auch verfälscht werden könnten. Gerne können Sie uns Ihre Unterlagen per Post zukommen lassen. Falls Sie sich auf eine konkrete Position beworben haben und diese schon besetzt sein sollte oder wir Sie für eine andere Position ebenfalls oder als noch besser geeignet ansehen, würden wir Ihre Bewerbung gern innerhalb unseres Unternehmens weiterleiten. Rechtsgrundlage hierfür ist Art. 6 Abs.1 S. 1 lit. f) DSGVO zur Wahrung Ihrer und unserer berechtigten Interessen. Bitte informieren Sie uns, wenn Sie mit dieser Vorgehensweise nicht einverstanden sein sollten. Nach Beendigung des Bewerbungsverfahrens, spätestens jedoch nach 6 Monaten, werden Ihre personenbezogenen Daten automatisch gelöscht, es sei denn, Sie willigen ausdrücklich in eine Speicherung über einen längeren Zeitraum ein.
-                                1. Ergänzend gelten die Allgemeinen Datenschutzhinweise für Beschäftigte und Bewerber (Pflichtinformationen nach Art. 13 DSGVO).
+                                (1) Auf unserer Website schreiben wir offene Stellen aus. Zur Bearbeitung Ihrer Online-Bewerbung erheben, verarbeiten und nutzen wir Ihre personenbezogenen Daten. Rechtsgrundlage ist Art. 6 Abs. 1 S.1 lit. b) DSGVO i.V.m. § 26 BDSG. Ihre Online-Bewerbungsdaten werden per E-Mail direkt zur Geschäftsführung übermittelt. Durch geeignete technische und organisatorische Maßnahmen ist sichergestellt, dass Ihre personenbezogenen Daten innerhalb der gesetzlichen Bestimmungen vertraulich behandelt werden.
+
+
+                                (2) Bitte beachten Sie, dass die Übermittlung der Daten per E-Mail unverschlüsselt erfolgt und die Daten unter Umständen von Unbefugten zur Kenntnis genommen oder auch verfälscht werden könnten. Gerne können Sie uns Ihre Unterlagen per Post zukommen lassen. Falls Sie sich auf eine konkrete Position beworben haben und diese schon besetzt sein sollte oder wir Sie für eine andere Position ebenfalls oder als noch besser geeignet ansehen, würden wir Ihre Bewerbung gern innerhalb unseres Unternehmens weiterleiten. Rechtsgrundlage hierfür ist Art. 6 Abs.1 S. 1 lit. f) DSGVO zur Wahrung Ihrer und unserer berechtigten Interessen. Bitte informieren Sie uns, wenn Sie mit dieser Vorgehensweise nicht einverstanden sein sollten. Nach Beendigung des Bewerbungsverfahrens, spätestens jedoch nach 6 Monaten, werden Ihre personenbezogenen Daten automatisch gelöscht, es sei denn, Sie willigen ausdrücklich in eine Speicherung über einen längeren Zeitraum ein.
 
                                 ### 8. Weitergabe an Dritte
-                                Im Rahmen des Hostings unserer Webseite und der Cloud-Dienste werden Ihre von uns verarbeiteten Daten aufgrund eines Auftragsverarbeitungsvertrags von Dritten für uns verarbeitet. Die Verarbeitungen finden dabei ausschließlich in der Europäischen Union statt. Mit den Dienstanbietern bestehen entsprechende Vereinbarungen zur Auftragsverarbeitung nach Art. 28 DSGVO. Wir nutzen externen Mailprovider zur Abwicklung der E-Mail-Kommunikation mit uns und Bereitstellung der Dienste.
+                                Im Rahmen des Hostings unserer Webseite und der Cloud-Dienste werden Ihre von uns verarbeiteten Daten aufgrund eines Auftragsverarbeitungsvertrags von Dritten für uns verarbeitet. Die Verarbeitungen finden dabei ausschließlich in der Europäischen Union statt. Mit den Dienstanbietern bestehen entsprechende Vereinbarungen zur Auftragsverarbeitung nach Art. 28 DSGVO. Wir nutzen einen externen Mailprovider zur Abwicklung der E-Mail-Kommunikation mit uns und Bereitstellung der Dienste.
 
                                 ### 9. Speicherdauer
-                                Wir verarbeiten und speichern Ihre personenbezogenen Daten, solange es für die Erfüllung unserer vertraglichen und gesetzlichen Pflichten erforderlich ist. Wir löschen Ihre personenbezogenen Daten, sobald sie für die oben genannten Zwecke nicht mehr erforderlich sind. Dabei kann es vorkommen, dass personenbezogene Daten für die Zeit aufbewahrt werden, in der Ansprüche gegen unsere Gesellschaften geltend gemacht werden können (gesetzliche Verjährungsfristen von drei oder bis zu dreißig Jahren). Zudem speichern wir Ihre personenbezogenen Daten, soweit wir dazu gesetzlich verpflichtet sind. Entsprechende Nachweis- und Aufbewahrungspflichten ergeben sich aus handels-, steuer- und sozialversicherungsrechtlichen Vorschriften.
+                                Wir verarbeiten und speichern Ihre personenbezogenen Daten, solange es für die Erfüllung unserer vertraglichen und gesetzlichen Pflichten erforderlich ist. Wir löschen Ihre personenbezogenen Daten, sobald sie für die oben genannten Zwecke nicht mehr erforderlich sind. Dabei kann es vorkommen, dass personenbezogene Daten für die Zeit aufbewahrt werden, in der Ansprüche gegen unsere Gesellschaft geltend gemacht werden können (gesetzliche Verjährungsfristen von drei oder bis zu dreißig Jahren). Zudem speichern wir Ihre personenbezogenen Daten, soweit wir dazu gesetzlich verpflichtet sind. Entsprechende Nachweis- und Aufbewahrungspflichten ergeben sich aus handels-, steuer- und sozialversicherungsrechtlichen Vorschriften.
 
                                 ### 10. Automatisierte Entscheidungsfindung, Profiling
                                 Zur Begründung und Durchführung der Geschäftsbeziehung nutzen wir grundsätzlich keine vollautomatisierte Entscheidungsﬁndung gemäß Artikel 22 DSGVO. Wir betreiben kein Profiling.
 
 
-                                ## B.	Besondere Bestimmungen zur Datenverarbeitung im Rahmen der Schuldkind Betreuungsplattform
-                                Die nachfolgenden Bestimmungen finden ergänzend und vorrangig im Falle der Nutzung der Schuldkind Betreuungsplattform Anwendung:
+                                ## B. Rechte der Betroffenen
 
-                                ### 11. Arten der verarbeiteten Daten, Kategorien betroffener Personen
-
-                                #### 11.1 Art der verarbeiteten Daten
-                                * Personenstammdaten der Sorgeberechtigten
-                                * Personenstammdaten der betreuten Kinder und ggf. Geschwister
-                                * Kommunikationsdaten (z.B. Telefon, E-Mail) und Notfallnummern
-                                * Angaben zur Familie
-                                * Besondere Kategorien personenbezogener Daten, insbesondere Gesundheitsdaten, wie Essensunverträglichkeiten, Allergien oder sonstige im Rahmen der Betreuung zu berücksichtigende Krankheiten des Kindes, soweit diese im Rahmen der Anmeldung freiwillig mitgeteilt werden
-                                * Daten zur Betreuung des Kindes: Halb- oder Ganztagesbetreuung, Zeitraum, Einrichtung
-                                * Relevante Daten im Rahmen der Betreuung, insbesondere Teilnehmererlaubnis an Ausflügen, Erlaubnis alleine nach Hause zu gehen, Sonnenschutz und Sonnencreme, Einwilligung in das Anfertigen und Veröffentlichen von Fotos
-                                * Angabe zum Einkommen (Selbsteinschätzung)
-                                * Kontoinformationen
-                                * Berichte und Auswertungen
-
-                                #### 11.2 Kategorien betroffener Personen
-                                * Eltern und Sorgeberechtigte
-                                * sonstige Betreuungsverantwortliche und Abholberechtigte
-                                * Betreute Schulkinder
-                                * Geschwisterkinder
-                                * Notfallkontakte
-                                * Mitarbeiter des Trägers (als registrierte Nutzer)
-                                * Betreuungspersonen des Trägers
-                                * Sonstige (bitte benennen)
-
-                                ### 12. Zwecke der Verarbeitung, Rechtsgrundlagen
-                                Rechtsgrundlage der Verarbeitung der Daten durch uns ist Art. 28 DSGVO. Wir verarbeiten als Plattformbetreiber die personenbezogenen Daten, soweit nachstehend nicht abweichend beschrieben im Auftrag des verantwortlichen Trägers, welchem wir Betreuungsanfragen weiterleiten. Rechtsgrundlage der Verarbeitung durch den Verantwortlichen ist Art. 6 Abs. 1 lit. b) DSGVO zu Anbahnung, Durchführung und Abwicklungen eines Vertrages über die Betreuung von Schulkindern in Ferienzeiten. Dies betrifft Stammdaten. Angaben zum betreuten Kind und von Geschwistern, Betreuungspersonen und Notfallkontakte, Daten zur Betreuung des Kindes wie Angaben zu Einkommen und Kontoinformationen. Soweit darüber hinaus besonderen Kategorien personenbezogener Daten verarbeitet werden erfolgt die auf Grundlage der erteilten Einwilligung. Rechtsgrundlage ist Art. 9 Abs. 2 lit. a) DSGVO. Die Verarbeitung von Daten zur Anfertigung und Veröffentlichung von Fotoaufnahmen von Kindern erfolgt auf Grundlage von Art. 6 Abs. 1 lit. a) DSGVO: Die Verarbeitung darüber hinaus erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f) DSGVO zur Wahrung der berechtigten Interessen. Dies betrifft vor allem Angaben zur Familie, Gesundheitsvorsorgemassnahmen wie Sonnencreme oder Berichte und Auswertungen. Es bestehen berechtige Interessen sowohl seitens der durchführenden Träger wie auch der teilnehmenden Kommunen. Der Träger erhält Auswertungen der nachgefragten und erbrachten Leistungen. Die Kommune erhält aggregierte Berichte und Informationen zu Wohnort, Schule und Familiensituation zur Verbesserung der Bedarfsplanung.
-
-                                ### 13. Weitergabe an Dritte
-                                Über die Plattform eingegebene und verarbeitete personenbezogene Daten werden an den adressierten Träger zur weiteren Veranlassung sowie generisch, d.h. aggregiert als Statusrückmeldung an die Kommune weitergegeben. Als Plattformbetreiber sind wir um die Speicherung und Verwaltung der Daten sowie die Organisation der Kommunikation der Teilnehmer untereinander besorgt.
-
-                                ## C.	Datenverarbeitung durch Drittanbieter
-                                ##### 14. Plug-Ins
-                                ###### 14.1 Google-Web Fonts
-                                1. Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten so genannte Web Fonts, die von Google (Google Inc., 1600 Amphitheatre Parkway, Mountain View, California 94043, USA). bereitgestellt werden. Beim Aufruf einer Seite lädt Ihr Browser die in ihren Browsercache, um Texte und Schriftarten korrekt anzuzeigen. Zu diesem Zweck muss der von Ihnen verwendete Browser Verbindung zu den Servern von Google aufnehmen. Hierdurch erlangt Google Kenntnis darüber, dass über Ihre Website aufgerufen wurde. Die Nutzung von Google Web Fonts erfolgt im Interesse einer einheitlichen und ansprechenden Darstellung unserer Online-Angebote. Dies stellt ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f) DSGVO dar.
-                                1. Angaben zum Drittanbieter und zu Zweck und Umfang der Datenerhebung und die weitere Verarbeitung und Nutzung der Daten durch Google sowie Ihre diesbezüglichen Rechte und Einstellungsmöglichkeiten zum Schutz Ihrer Privatsphäre von Google finden Sie unter: https://www.google.com/intl/de/policies/privacy/ .
-
-                                ## D.	Rechte der Betroffenen
-                                ##### 15. Ihre Rechte
+                                ### 11. Ihre Rechte
                                 Werden personenbezogene Daten von Ihnen verarbeitet, sind Sie Betroffener i.S.d. DSGVO und es stehen Ihnen die nachfolgenden Rechte gegenüber uns als dem Verantwortlichen zu.
-                                1. Rechte nach Art. 15 ff. DSGVO
-                                Die betroffene Person hat das Recht, von dem Verantwortlichen eine Bestätigung darüber zu verlangen, ob sie betreffende personenbezogene Daten verarbeitet werden; ist dies der Fall, so hat sie ein __Recht auf Auskunft__ über diese personenbezogenen Daten und auf die in Art. 15 DSGVO im einzelnen aufgeführten Informationen. Unter bestimmten gesetzlichen Voraussetzungen haben Sie das __Recht auf Berichtigung__ nach Artikel 16 DSGVO, das __Recht auf Einschränkung__ der Verarbeitung nach Artikel 18 DSGVO und das __Recht auf Löschung__ („Recht auf Vergessenwerden“) nach Artikel 17 DSGVO. Für das __Recht auf Auskunft und Löschung__ gelten ergänzend die §§ 34, 35 BDSG. Zudem haben Sie das __Recht auf Herausgabe__ der von Ihnen bereitgestellten Daten in einem strukturierten, gängigen und maschinenlesbaren Format (__Recht auf Datenübertragbarkeit__) nach Artikel 20 DSGVO, sofern die Verarbeitung mithilfe automatisierter Verfahren erfolgt und auf einer Einwilligung nach Art. 6 Abs. 1 lit. a) oder Art. 9 Abs. 2 lit. a) oder auf einem Vertrag gem. Art. 6 Abs. 1 lit. b) DSGVO beruht.
-                                2. Widerruf einer Einwilligung nach Art. 7 Abs. 3 DSGVO
-                                Beruht die Verarbeitung auf einer Einwilligung können Sie die Einwilligung in die Verarbeitung personenbezogener Daten jederzeit uns gegenüber widerrufen. Bitte beachten Sie, dass der Widerruf erst für die Zukunft wirkt. Verarbeitungen, die vor dem Widerruf erfolgt sind, sind davon nicht betroffen.
-                                a. Beschwerderecht
-                                Sie haben die Möglichkeit, sich mit einer Beschwerde an uns oder an eine Datenschutzaufsichtsbehörde zu wenden (Artikel 77 DSGVO). In Baden Württemberg ist die zuständige Aufsichtsbehörde: Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit, Postfach 10 29 32, 70025 Stuttgart, Tel.: 0711/615541-0, FAX: 0711/615541-15, E-Mail: poststelle@lfdi.bwl.de.
 
-                                3. Widerspruchsrecht nach Artikel 21 DSGVO
+                                __a) Rechte nach Art. 15 ff. DSGVO__
+
+                                (1) Die betroffene Person hat das Recht, von dem Verantwortlichen eine Bestätigung darüber zu verlangen, ob sie betreffende personenbezogene Daten verarbeitet werden; ist dies der Fall, so hat sie ein __Recht auf Auskunft__ über diese personenbezogenen Daten und auf die in Art. 15 DSGVO im einzelnen aufgeführten Informationen. Unter bestimmten gesetzlichen Voraussetzungen haben Sie das __Recht auf Berichtigung__ nach Artikel 16 DSGVO, das __Recht auf Einschränkung der Verarbeitung__ nach Artikel 18 DSGVO und das __Recht auf Löschung__ („__Recht auf Vergessenwerden__“) nach Artikel 17 DSGVO. Für das __Recht auf Auskunft und Löschung__ gelten ergänzend die §§ 34, 35 BDSG. Zudem haben Sie das __Recht auf Herausgabe__ der von Ihnen bereitgestellten Daten in einem strukturierten, gängigen und maschinenlesbaren Format (__Recht auf Datenübertragbarkeit__) nach Artikel 20 DSGVO, sofern die Verarbeitung mithilfe automatisierter Verfahren erfolgt und auf einer Einwilligung nach Art. 6 Abs. 1 lit. a) oder Art. 9 Abs. 2 lit. a) oder auf einem Vertrag gem. Art. 6 Abs. 1 lit. b) DSGVO beruht.
+
+                                __b) Widerruf einer Einwilligung nach Art. 7 Abs. 3 DSGVO__
+
+                                Beruht die Verarbeitung auf einer Einwilligung können Sie die Einwilligung in die Verarbeitung personenbezogener Daten jederzeit uns gegenüber widerrufen. Bitte beachten Sie, dass der Widerruf erst für die Zukunft wirkt. Verarbeitungen, die vor dem Widerruf erfolgt sind, sind davon nicht betroffen.
+
+                                __c) Beschwerderecht__
+
+                                Sie haben die Möglichkeit, sich mit einer Beschwerde an uns oder an eine Datenschutzaufsichtsbehörde zu wenden (Artikel 77 DSGVO). In Baden Württemberg ist die zuständige Aufsichtsbehörde: Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit, Postfach 10 29 32, 70025 Stuttgart, Tel.: 0711/615541-0, FAX: 0711/615541-15, E-Mail: [poststelle@lfdi.bwl.de]( poststelle@lfdi.bwl.de).
+
+                                __d) Widerspruchsrecht nach Artikel 21 DSGVO__
+
                                 Zusätzlich zu den vorgenannten Rechten, steht Ihnen ein Widerspruchsrecht wie folgt zu:
 
                                 __Einzelfallbezogenes Widerspruchsrecht__
@@ -302,12 +245,12 @@
                                 Sie haben das Recht aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung Sie betreffender personenbezogener Daten, die aufgrund von Artikel 6 Abs. 1 S. 1 lit. e) DSGVO (Datenverarbeitung im öffentlichen Interesse) und Artikel 6 Abs. 1 S.1 lit. f) DSGVO (Datenverarbeitung auf der Grundlage einer Interessenabwägung) erfolgt, Widerspruch einzulegen; dies gilt auch für ein auf diese Bestimmung gestütztes Proﬁling im Sinne von Artikel 4 Nr. 4 DSGVO.
                                 Legen Sie Widerspruch ein, werden wir Ihre personenbezogenen Daten nicht mehr verarbeiten, es sei denn, wir können zwingende schutzwürdige Gründe für die Verarbeitung nachweisen, die Ihre Interessen, Rechte und Freiheiten überwiegen oder die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen.
 
-                                ## E.	Schlussbestimmungen
-                                ### 16. Sicherheit
-                                1. Wir haben technische und organisatorische Sicherheitsmaßnahmen nach Art. 24, 32 DSGVO getroffen, um Ihre personenbezogenen Daten vor Verlust, Zerstörung, Manipulation und unberechtigten Zugriff zu schützen. Alle unsere Mitarbeiter und alle an der Datenverarbeitung beteiligten Dritten sind auf Verpflichtung zur Einhaltung der Anforderungen nach der DSGVO und den vertraulichen Umgang mit personenbezogenen Daten verpflichtet.
-                                1. SSL- bzw. TLS-Verschlüsselung: Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte, wie zum Beispiel Bestellungen oder Anfragen, die Sie an uns als Seitenbetreiber senden, eine SSL-bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von “http://” auf “https://” wechselt und an dem Schloss-Symbol in Ihrer Browserzeile. Wenn die SSL- bzw. TLS-Verschlüsselung aktiviert ist, können die Daten, die Sie an uns übermitteln, nicht von Dritten mitgelesen werden.
+                                ## C. Schlussbestimmungen
+                                ### 12. Sicherheit
+                                (1) Wir haben technische und organisatorische Sicherheitsmaßnahmen nach Art. 24, 32 DSGVO getroffen, um Ihre personenbezogenen Daten vor Verlust, Zerstörung, Manipulation und unberechtigten Zugriff zu schützen. Alle unsere Mitarbeiter und alle an der Datenverarbeitung beteiligten Dritten sind zur Einhaltung der Anforderungen nach der DSGVO und den vertraulichen Umgang mit personenbezogenen Daten verpflichtet.
+                                (2) SSL- bzw. TLS-Verschlüsselung: Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte, wie zum Beispiel Bestellungen oder Anfragen, die Sie an uns als Seitenbetreiber senden, eine SSL-bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von “http://” auf “https://” wechselt und an dem Schloss-Symbol in Ihrer Browserzeile. Wenn die SSL- bzw. TLS-Verschlüsselung aktiviert ist, können die Daten, die Sie an uns übermitteln, nicht von Dritten mitgelesen werden.
 
-                                ### 17. Änderungen unserer Datenschutzbestimmungen
+                                ### 13. Änderungen unserer Datenschutzbestimmungen
                                 Wir behalten uns das Recht vor, unsere Sicherheits- und Datenschutzmaßnahmen zu verändern, soweit dies wegen der technischen Entwicklung, der Erweiterung unserer Dienste oder rechtlicher Änderungen erforderlich wird. In diesen Fällen werden wir auch unsere Datenschutzerklärung entsprechend anpassen. Bitte beachten Sie daher die jeweils aktuelle Version unserer Datenschutzerklärung.
 
                             {% endapply %}
@@ -324,10 +267,10 @@
             </div>
             <div class="card-body">
                 <div class="row mb-3">
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <i class="fas fa-sitemap  fa-2x"></i>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-11">
                         <p>
                             {% trans %}
                                 Für Informationen zum Datenschutz der Stadt und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.

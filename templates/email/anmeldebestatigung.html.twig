@@ -7,18 +7,19 @@
     <p class="text-center">{% trans %}Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:{% endtrans %}<br>
 
     <b>{{ kind.vorname }} {{ kind.nachname }}</b> </p>
-    <p class="text-center">{% trans %}Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch der betreuenden Organisation müssen Sie diesen Sicherheitscode angeben.
+    <p class="text-center">{% trans %}Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.
             Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.
-            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.{% endtrans %}</p>
+            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.{% endtrans %}</p>
     <h3 class="text-center">
         {{ 'Sicherheitscode'|trans }}: {{ eltern.secCode }}
     </h3>
     <h3 class="text-center">
         {% trans %}Wichtig: Diesen Sicherheitscode gut aufbewahren!{% endtrans %}
     </h3>
+    <b>{% trans %}Passwort für das PDF: Geburtsdatum des Kindes (tt.mm.JJJJ){% endtrans %}</b>
     <p class="text-center">{% trans %}Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
             Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
-            Die Kontaktdaten sind in dem PDF angehängten angegeben.{% endtrans %}
+            Die Kontaktdaten sind in dem angehängten PDF angegeben.{% endtrans %}
     </p>
     <br>
     <br>

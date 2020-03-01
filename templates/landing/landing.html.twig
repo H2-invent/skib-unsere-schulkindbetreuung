@@ -49,7 +49,7 @@
                 <!--Grid column-->
                 <div class="col-md-12 mb-4 white-text text-center" style="word-break: break-word">
 
-                    <h1 class="font-weight-bold h1-responsive">{% trans %}Online Anmeldung und Verwaltung für die Schulkindbetreuung{% endtrans %}</h1>
+                    <h2 class="font-weight-bold h1-responsive">{% trans %}Online Anmeldung und Verwaltung für die Schulkindbetreuung{% endtrans %}</h2>
 
                 </div>
 
@@ -69,32 +69,44 @@
 </div>
 
 <main>
-    {% if contentSelect is defined and contentSelect is not null  %}
-    <div class="container anchor" id="feature">
-        <section class="mt-5 wow fadeIn">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        {% for c in content %}
-                            <li class="nav-item text-center">
-                                <a class="nav-link active" id="{{ c.id }}-tab" href="{{ path('welcome_landing_slug',{'content':c.slug}) }}#feature"
-                                   aria-controls="{{ c.slug }}"
-                                   aria-selected="true"><i class="fa fa-3x {{c.icon}}"></i><br> {{ c.translate.title }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+    {% if contentSelect is defined and contentSelect is not null %}
+        <div class="container anchor" id="feature">
+            <section class="mt-5 wow fadeIn">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="tabWrapper">
+                            <div id="tabContent">
+                                <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                                    {% for c in content %}
 
-                    <div class="tab-content mt-3" id="myTabContent">
-                            <div class="tab-pane fade show active"
-                                 role="tabpanel" aria-labelledby="{{ contentSelect.slug }}">
-                                {{ contentSelect.translate.content|markdown_to_html}}
+                                        <li class="nav-item text-center {% if c == contentSelect %} z-depth-1{% endif %}">
+                                            <a data-target="#tabContent" data-wrapper="#tabWrapper"
+                                               class="loadInTarget nav-link {% if c == contentSelect %} active {% endif %}"
+                                               id="{{ c.id }}-tab"
+                                               href="{{ path('welcome_landing_slug',{'content':c.slug}) }}#feature"
+                                               aria-controls="{{ c.slug }}"
+                                               aria-selected="true"><i
+                                                        class="fa fa-3x {{ c.icon }}"></i><br> {{ c.translate.title }}
+                                            </a>
+                                        </li>
+
+                                    {% endfor %}
+                                </ul>
+
+                                <div class="tab-content mt-3" id="myTabContent">
+                                    <div class="tab-pane fade show active"
+                                         role="tabpanel" aria-labelledby="{{ contentSelect.slug }}">
+                                        {{ contentSelect.translate.content|markdown_to_html }}
+                                        <div id="share"></div>
+                                    </div>
+
+                                </div>
                             </div>
-
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </div>
+            </section>
+        </div>
     {% endif %}
     <div class="container anchor" id="stadtliste">
 
@@ -119,17 +131,17 @@
                                         <div class="card">
 
                                             <div class="view overlay skib-card-image">
-                                                <img class="card-img-top"
+                                                <img alt="{{ s.name }}" class="card-img-top"
                                                      src="{{ vich_uploader_asset(s,'imageFile') }}">
                                             </div>
                                             <div class="card-body">
 
                                                 <h2 class="card-title">{{ s.name }}</h2>
                                                 <!-- Text -->
-                                                <p class="card-text">{{ s.translate.infoText|nl2br|length > 50 ? s.translate.infoText|nl2br|slice(0,50)~'...':s.translate.infoText }}</p>
+
                                                 <!-- Button -->
                                                 <a href="{{ path('workflow_start',{'slug':s.slug}) }}"
-                                                   class="btn btn-primary">{{ 'Ich lebe in '~s.name|trans }}</a>
+                                                   class="btn btn-primary">{{'Weiter'|trans}}</a>
 
                                             </div>
 

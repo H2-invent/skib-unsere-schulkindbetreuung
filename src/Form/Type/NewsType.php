@@ -30,7 +30,7 @@ class NewsType extends AbstractType
     {
         $builder
            ->add('title', TextType::class,array('label'=>'Titel','required'=>true,'translation_domain' => 'form'))
-            ->add('message', TextareaType::class,array('label'=>'Nachricht','required'=>true,'translation_domain' => 'form'))
+            ->add('message', TextareaType::class,array('attr'=>['rows'=>6,'class'=>'onlineEditor'],'label'=>'Nachricht','required'=>true,'translation_domain' => 'form'))
             ->add('schule', EntityType::class, [
                 'choice_label' => 'name',
                 'class' => Schule::class,

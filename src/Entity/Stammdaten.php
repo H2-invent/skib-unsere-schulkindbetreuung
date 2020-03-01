@@ -243,6 +243,18 @@ class Stammdaten
      */
     private $customerID;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $language;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
+     */
+    private $phoneNumber;
+
 
 
 
@@ -392,14 +404,7 @@ class Stammdaten
 
         return $this;
     }
-    public function getBeruflicheSituationString(){
-        $beruflicheSituationString = array(
-            0=>'Keine Angabe',
-            1=>'Berufstätig',
-            2=>'Arbeitssuchend',
-        );
-        return $beruflicheSituationString[$this->beruflicheSituation];
-    }
+
     public function getNotfallkontakt(): ?string
     {
         return $this->notfallkontakt;
@@ -797,6 +802,30 @@ class Stammdaten
     public function setCustomerID(?string $customerID): self
     {
         $this->customerID = $customerID;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?string $language): self
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }

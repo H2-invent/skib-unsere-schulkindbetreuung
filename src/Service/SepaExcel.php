@@ -47,6 +47,7 @@ class SepaExcel
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Straße'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('PLZ'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Stadt'));
+        $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Telefonnummer'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Betrag in €'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Anzahl der Kinder'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('IBAN'));
@@ -61,6 +62,7 @@ class SepaExcel
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getStrasse());
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getPlz());
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getStadt());
+            $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getPhoneNumber());
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getSumme());
             $sepaSheet->setCellValue($alphas[$count++] . $counter, sizeof($data->getKinder()));
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getIban());

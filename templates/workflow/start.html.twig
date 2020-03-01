@@ -10,7 +10,7 @@
 <!-- Navbar -->
 {% include 'workflow/navbar.html.twig' %}
 <!-- Navbar -->
-
+<div id="share"></div>
 <div class="view full-page-intro ">
     <div class="jarallax">
         <img class="jarallax-img" src="
@@ -111,7 +111,7 @@
                 <div class="col-lg-12">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <h3>{% trans %}Herzlich Willkommen bei SKiB{% endtrans %}</h3>
+                            <h3>{% trans %}Herzlich Willkommen bei SKiB der{% endtrans %} {{ stadt.name }}</h3>
                         </div>
                         <div class="row card-body">
                             <div class="col-md-8" style="border-right: solid lightgrey 1px">
@@ -132,13 +132,13 @@
                                             <b>{{ n.title }}</b>
                                         </a>
                                         <br/>
-                                        <p>
-                                            {{ n.message|length > 70 ? n.message|nl2br|slice(0,70)~'...':n.message|nl2br }}
-                                        </p>
+                                        <div class="newsPreview">
+                                            {{ n.message|striptags('<br>')|raw }}
+                                        </div>
                                     {% endfor %}
                                     <a href="{{ path('news_show_page', {'slug': stadt.slug }) }}"
                                        class="btn btn-primary">
-                                        {% trans %}Alle Neuigkeiten der Stadt{% endtrans %}
+                                        {{ 'Alle Neuigkeiten'|trans }}
                                     </a>
                                 {% endif %}
                             </div>
@@ -147,7 +147,7 @@
                     {% if stadt.schulkindBetreung %}
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h3> {% trans %}Für folgenden Schulen können Sie die Schulkindbetreuung hier online buchen.{% endtrans %}</h3>
+                                <h3> {% trans %}Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.{% endtrans %}</h3>
                                 {% if schuljahr is not null %}
                                     <p style="font-family: TypeWritersSubstitute">
                                         {% trans %}Aktuelles Schuljahr{% endtrans %}: {{ schuljahr.von|date('d.m.Y') }}
@@ -166,7 +166,7 @@
                                     <!-- Count item widget-->
                                     {% for s in schule %}
                                         <div class="col-md-6 col-lg-4 mb-4">
-                                            <div class="cardhoverable h-100 card  ">
+                                            <div class="cardhoverable h-100 card hoverable ">
                                                 <div class=" overlay skib-card-image">
                                                     <a href="{{path('loerrach_workflow_adresse',{'slug':stadt.slug})}}">
                                                     <img class="card-img-top lazy"
@@ -217,12 +217,12 @@
                                 <h3> {% trans %}Von folgenden Trägern kann das Ferienprogramm hier online gebucht werden.{% endtrans %}</h3>
                             </div>
                             <div class="card-body">
-                                <div class="card-deck">
+                                <div class="row row-eq-height">
                                     <!-- Count item widget-->
                                     {% for o in stadt.organisations %}
                                         <div class="col-md-4 col-sm-6">
                                             <div class="card hoverable">
-                                                <div class="view overlay">
+                                                <div class="view overlay skib-card-image">
 
                                                     <img class="card-img-top lazy" style="max-height: 300px"
 
@@ -246,8 +246,12 @@
 
                                                 <div class="card-body ">
                                                     <h5 class="card-title">{{ o.name }}</h5>
-                                                    <p class="card-text">{{ o.infoText }}</p>
+
+
                                                 </div>
+
+
+
                                             </div>
                                         </div>
                                     {% endfor %}
@@ -287,7 +291,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4>
-                                        {% trans %}Träger{% endtrans %}
+                                        {{ 'Betreuende Organisationen'|trans }}
                                     </h4>
                                     {% for o in stadt.organisations %}
                                         <div class="row mb-1">
@@ -305,18 +309,22 @@
                                                     </a><br/>
                                                 {% endif %}
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 text-center">
                                                 {% if o.image is not empty %}
                                                     <img src="{{ vich_uploader_asset(o,'imageFile') }}"
                                                          style="max-height: 110px; max-width: 100%"  alt="{{ o.name }} Logo">
                                                 {% endif %}
                                             </div>
                                         </div>
+                                        {% if not loop.last %}
                                         <hr class="hr-bold">
+                                            {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>
+
                         </div>
+
                     </div>
                 </div>
             </div>

@@ -18,6 +18,13 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('frontend', './assets/js/frontend.js')
     .addEntry('startpage', './assets/js/start.js')
+    .addEntry('schulen', './assets/js/schulen.js')
+    .addRule({
+        test: /trumbowgy\/dist\/ui\/[^/]+\.svg$/,
+        use: [ {
+            loader: 'raw-loader'
+        } ]
+    })
     // empty the outputPath dir before each build
     .cleanupOutputBeforeBuild()
 
@@ -32,7 +39,7 @@ Encore
     //.enableSassLoader()
 
     // allow legacy applications to use $/jQuery as a global variable
-
+    .autoProvidejQuery()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
     // create hashed filenames (e.g. app.abc123.css)

@@ -27,3 +27,22 @@
 </section>
 
 {% endblock %}
+{% block jquery %}
+    <script>
+        $(document).ready(function(){
+            var form = $('form'),
+                original = form.serialize()
+
+            form.submit(function(){
+                window.onbeforeunload = null
+            })
+
+            window.onbeforeunload = function(){
+                if (form.serialize() != original)
+                    return 'Are you sure you want to leave?'
+            }
+        })
+    </script>
+
+
+{% endblock %}

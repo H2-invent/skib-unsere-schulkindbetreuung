@@ -6,6 +6,7 @@ use App\Entity\Content;
 use App\Form\Type\ContentType;
 use App\Form\Type\OrganisationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -71,7 +72,7 @@ class ContentController extends AbstractController
                 $em->persist($content);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('content_show', array('snack' => $text));
+                return $this->redirectToRoute('content_edit', array('content_id'=>$content->getId(),'snack' => $text));
             }
         }
         $title = $translator->trans('Content bearbeiten');
@@ -96,7 +97,7 @@ class ContentController extends AbstractController
         return $this->redirectToRoute('content_show', array('snack' => $text));
     }
     /**
-     * @Route("/admin/content/delete", name="content_delete")
+     * @Route("/admin/content/delete", name="content_delete",methods={"DELETE"})
      */
     public function deletecontent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
@@ -106,7 +107,7 @@ class ContentController extends AbstractController
         $em->remove($content);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
-        return $this->redirectToRoute('content_show', array('snack' => $text));
+        return new JsonResponse(array('redirect'=> $this->generateUrl('content_show', array('snack' => $text))));
     }
 }
 

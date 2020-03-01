@@ -239,6 +239,16 @@ class Stadt
      */
     private $active;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $minDaysperWeek=1;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $minBlocksPerDay = 0;
+
 
     public function __construct()
     {
@@ -795,6 +805,30 @@ class Stadt
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getMinDaysperWeek(): ?int
+    {
+        return $this->minDaysperWeek;
+    }
+
+    public function setMinDaysperWeek(int $minDaysperWeek): self
+    {
+        $this->minDaysperWeek = $minDaysperWeek;
+
+        return $this;
+    }
+
+    public function getMinBlocksPerDay(): ?int
+    {
+        return $this->minBlocksPerDay;
+    }
+
+    public function setMinBlocksPerDay(int $minBlocksPerDay): self
+    {
+        $this->minBlocksPerDay = $minBlocksPerDay;
 
         return $this;
     }

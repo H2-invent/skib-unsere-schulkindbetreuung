@@ -9,11 +9,12 @@ Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen K
 Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger: Je suis un bénéficiaire du paquet éducation et participation (MAIS)
 Berufliche Situation des Erziehungsberechtigten: Situation en matière professionnelle du représentant légal
 Name des Notfallkontakts: Nom de la personne à contacter en cas d'urgence
-Notfalltelefonnummer: Numéro de téléphone d'urgence
+Telefonnummer des Notfallkontakts: Numéro de téléphone de la personne à contacter en cas d'urgence
 Name der Stadt: Nom de la ville
 Slug der Stadt: La limace de la ville
 Username: Nom d'utilisateur
 E-Mail: L'adresse électronique
+Telefonnummer /Handynummer des Erziehungsberechtigten: Numéro de téléphone / numéro de téléphone portable du parent ou du tuteur
 Passwort: Mot de passe
 Geburtstag: Date de naissance
 Name der Schule: Nom de l'école
@@ -25,9 +26,9 @@ Gläubiger ID: Identification du créancier
 Info Text Deutsch: Texte d'information en allemand
 Info Text Englisch: Texte d'information en anglais
 Info Text Französisch: Texte d'information en français
-AGB Deutsch (Markdown): Termes allemands (Markdown)
-AGB Englisch (Markdown): Termes anglais (Markdown)
-AGB Französisch (Markdown): Termes français (Markdown)
+Vertragsbedingungen Deutsch (Markdown): Termes allemands (Markdown)
+Vertragsbedingungen Englisch (Markdown): Termes anglais (Markdown)
+Vertragsbedingungen Französisch (Markdown): Termes français (Markdown)
 Telefonnummer: Téléphone
 SMTP Server: SMTP Server
 SMTP Port: SMTP Port
@@ -55,12 +56,12 @@ Kontoinhaber für das Lastschriftmandat: Titulaire du compte pour le mandat de d
 SEPA-Lastschrift Mandat wird elektronisch erteilt: Le mandat de prélèvement SEPA est émis par voie électronique
 Schulform: Forme scolaire
 Jahrgangsstufe: Classe
-Ganztagsbetreuung: Journée entière
-Halbtagsbetreuung: Demi-journée
+Ganztag: Journée entière
+Halbtag: Demi-journée
 Mein Kind benötig folgende Medikamente: L'enfant a besoin des médicaments suivants
 Mein Kind hat folgende Allergien: L'enfant présente les allergies suivantes
 Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden.: Je reconnais que mes données seront traitées électroniquement
-Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder von SKiB elektronisch verarbeitet werden und an die betreuende Organisationen, sowie den Schulträger weitergegeben werden.: J'accepte que mes données et celles de mes enfants soient traitées électroniquement par le SKiB et transmises aux organisations qui s'occupent de moi et de mes enfants ainsi qu'aux autorités scolaires.
+Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet werden und an die betreuende Organisation weitergegeben werden.: J'accepte que mes données et celles de mes enfants soient traitées électroniquement et transmises à l'organisme de contrôle.
 Zum Newsletter anmelden: S'abonner à la newsletter
 Klasse 1: Classe 1
 Klasse 2: Classe 2
@@ -78,7 +79,7 @@ Weitere abholberechtigte Personen: Autres personnes autorisées à collecter
 Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause: Mon enfant peut rentrer seul à la maison après la fin de la garde réservée
 Mein Kind darf an Ausflügen teilnehmen: Mon enfant peut participer à des excursions
 Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden: Mon enfant peut être traité avec un écran solaire standard en été
-Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der Träger genutzt werden.: Les photos montrant mon enfant peuvent être publiées dans la presse publique ainsi qu'utilisées pour le travail de relations publiques des organisations.
+Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.: Les photos montrant mon enfant peuvent être publiées dans la presse publique ainsi qu'utilisées pour le travail de relations publiques des organisations.
 Mein Kind ernährt sich vegetarisch: Mon enfant est végétarien
 Mein Kind isst kein Schweinefleich: Mon enfant ne mange pas de porc
 Mein Kind ist glutenintolerant: Mon enfant est intolérant au gluten
@@ -132,3 +133,6 @@ Stripe akzeptieren: Accept Stripe
 Caterer Info Deutsch (Markdown): Informations sur le restaurant en alemand (Markdown)
 Caterer Info Englisch (Markdown): Informations sur le restaurant en anglais (Markdown)
 Caterer Info Französisch (Markdown): Informations sur le restaurant en français  (Markdown)
+Betreuungszeitfenster Info Deutsch (Markdown): Care Slots Info German (Markdown)
+Betreuungszeitfenster Info Englisch (Markdown): Care Slots Info English (Markdown)
+Betreuungszeitfenster Info Französisch (Markdown): Care Slots Info French (Markdown)

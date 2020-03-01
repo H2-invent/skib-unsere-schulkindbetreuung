@@ -10,11 +10,15 @@
 {% endblock %}
 
 {% block content %}
-    <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
+
+        <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
+
     {% trans %}
         Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.
     {% endtrans %}
+
     <div class="card mb-3 mt-3">
+
         <div class="card-header">
             <h3 class="cover-heading">{% trans %}Daten des Erziehungsberechtigten{% endtrans %} <a
                         href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"> <i
@@ -31,12 +35,16 @@
                     <td>{{ eltern.email }}</td>
                 </tr>
                 <tr>
+                    <td>{{ 'Telefonnummer'|trans }}</td>
+                    <td>{{ eltern.phoneNumber }}</td>
+                </tr>
+                <tr>
                     <td>{% trans %}Adresse des Erziehungsberechtigten{% endtrans %}</td>
                     <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
                 </tr>
                 <tr>
                     <td>{% trans %}Brutto Haushaltseinkommen pro Monat{% endtrans %}</td>
-                    <td>{{ stadt.gehaltsklassen[eltern.einkommen] }} €</td>
+                    <td>{{ stadt.gehaltsklassen[eltern.einkommen] }}</td>
                 </tr>
                 <tr>
                     <td>{% trans %}Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung{% endtrans %}</td>
@@ -160,7 +168,7 @@
                                     <td>{{ k.sonnencreme?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans %}Fotos auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht werden{% endtrans %}</td>
+                                    <td>{% trans %}Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.{% endtrans %}</td>
                                     <td>{{ k.fotos?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
 
@@ -252,37 +260,27 @@
             {% trans %}Kontoinhaber{% endtrans %}: {{ eltern.kontoinhaber }}<br/>
             {% trans %}IBAN{% endtrans %}: {{ eltern.iban }}<br/>
             {% trans %}BIC{% endtrans %}: {{ eltern.bic }}<br/>
-            {{ eltern.sepaInfo?"Ich erteile dem betreuenden Organisationen (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags"|trans:""|trans }} </br>
+            {{ eltern.sepaInfo?"Ich erteile der betreuenden Organisation (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags"|trans:""|trans }} </br>
             {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
 
         </div>
     </div>
 
-    <table class="table table-responsive">
-        <tr>
-            <td style="width: 70%">
-                <h5>{% trans %}Gebühren für alle Kinder pro Monat{% endtrans %}</h5>
-            </td>
-            <td>
-                <h5>
-                    {% if error == false %}
-                        {{ preis|number_format(2,',','.') }} €
-                    {% else %}
-                        {% trans %}Bitte weiteres Betreuungszeitfenster auswählen{% endtrans %}
-                    {% endif %}
-                </h5>
-            </td>
-        </tr>
-    </table>
+    <div class="m-4">
+        <h5>{% trans %}Gebühren für alle Kinder pro Monat{% endtrans %}:
+            {% if error == false %}
+                {{ preis|number_format(2,',','.') }} €
+            {% else %}
+                {% trans %}Bitte weiteres Betreuungszeitfenster auswählen{% endtrans %}
+            {% endif %}
+        </h5>
+    </div>
+
     <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz"
-           value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Träger gelesen und akzeptiere die Verarbeitung.{% endtrans %}
-    <br>
-    <input id="checkboxDatenschutzStadt" type="checkbox" class="checkboxSelect" name="Datenschutz"
-           value="Datenschutzhinweis"> {% trans with {'%stadt%':stadt.name} %}Ich habe die Datenschutzhinweise der %stadt% gelesen und akzeptiere die Verarbeitung.{% endtrans %}
-    <a href="{{ path('workflow_datenschutz', {'org_id': 'city', 'slug': stadt.slug}) }}">{% trans %}Zum Datenschutzhinweis{% endtrans %}</a>
+           value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der betreuenden Organisationen gelesen und akzeptiere die Verarbeitung.{% endtrans %}
     <br>
     <input id="checkboxStorno" type="checkbox" class="checkboxSelect" name="Datenschutz"
-           value="Datenschutzhinweis"> {% trans %}Ich habe verstanden, dass meine Anmeldung vom Träger wiederrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.{% endtrans %}
+           value="Datenschutzhinweis"> {% trans %}Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen widerrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.{% endtrans %}
     <br>
     <div>
         <input id="checkboxAgb" type="checkbox" class="checkboxSelect" name="AGB" value="AGB"> <a target="_blank"

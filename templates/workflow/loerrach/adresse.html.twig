@@ -34,8 +34,11 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mt-3">
                     <div class="col-sm-11">
+                {{ form_label(form.phoneNumber) }}
+                {{ form_widget(form.phoneNumber) }}
+
                 {{ form_label(form.vorname) }}
                 {{ form_widget(form.vorname) }}
 
@@ -55,7 +58,7 @@
                 {{ form_widget(form.stadt) }}
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col-sm-11">
                         {{ form_label(form.einkommen) }}
                         {{ form_widget(form.einkommen) }}
@@ -65,7 +68,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col-sm-11">
                         {{ form_label(form.beruflicheSituation) }}
                         {{ form_widget(form.beruflicheSituation) }}
@@ -75,7 +78,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col-sm-11">
                         {{ form_widget(form.kinderImKiga) }}
                         {{ form_label(form.kinderImKiga) }}
@@ -84,7 +87,7 @@
                         <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf die Gebühr des ältesten Kindes{% endtrans %}"></i>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col-sm-11">
                         {{ form_widget(form.alleinerziehend) }}
                         {{ form_label(form.alleinerziehend) }}
@@ -99,7 +102,7 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h4> {% trans %}Daten für Notfälle und weitere Informationen{% endtrans %}</h4>
+                <h4> {% trans %}Weitere Informationen und Kontaktdaten{% endtrans %}</h4>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -116,7 +119,7 @@
                         {{ form_label(form.gdpr) }}
                         {{ form_widget(form.gdpr) }}
                         <p>
-                            {% trans %}Weitere Hinweise zum Datenschutz von SKiB finden Sie in unserem{% endtrans %} <a href="https://unsere-schulkindbetreuung.de/datenschutz" target="_blank" rel="noopener noreferrer">{{ 'Datenschutzhinweis'|trans }}</a>
+                            {% trans %}Weitere Hinweise zum Datenschutz finden Sie in dem{% endtrans %} <a href={{ path('workflow_datenschutz',{'slug':stadt.slug,'org_id':'city'}) }} target="_blank" rel="noopener noreferrer">{{ 'Datenschutzhinweis'|trans }}</a>
                         </p>
 
                         {{ form_rest(form) }}

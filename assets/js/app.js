@@ -25,13 +25,20 @@ import('jquery.cookie');
 import('jquery-validation');
 import('jquery-confirm');
 import('material-design-icons');
-import('snackbarjs');
+import snackbar from 'snackbarjs';
+
 import('daterangepicker');
 import('datatables.net');
 import 'datatables.net-dt';
+import niceScroll from 'jquery.nicescroll';
+// Import TinyMCE
+import trumbowgy from './trumbowyg';
+import icon from 'trumbowyg/dist/ui/icons.svg'
 
-
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js!!!');
+import ('trumbowyg/dist/plugins/colors/trumbowyg.colors');
+import ('trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste');
+import ('trumbowyg/dist/plugins/template/trumbowyg.template');
+$(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
 
 $('#toggle-btn').on('click', function (e) {
 
@@ -60,7 +67,58 @@ $('table').DataTable({
         ]
     }
 );
+
+$(document).ready(function () {
+    if (typeof optionsSnack !== 'undefined') {
+        $.snackbar(optionsSnack);
+    }
+})
 $(window).on('load', function () {
+
+
+// Load a plugin.
+    $.trumbowyg.svgPath = icon;
+    $('.onlineEditor').trumbowyg({
+        autogrow: true,
+        semantic: false,
+        tagClasses: {
+            'h1':['h1-responsive'],
+            'h2':['h2-responsive'],
+            'h3':['h3-responsive'],
+            'h4':['h4-responsive'],
+            'blockquote':['note', 'note-primary', 'z-depth-2'],
+        },
+
+        btns: [
+            ['viewHTML'],
+            ['undo', 'redo'], // Only supported in Blink browsers
+            ['formatting'],
+            ['strong', 'em', 'del'],
+            ['superscript', 'subscript'],
+            ['link'],
+            ['insertImage'],
+            ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+            ['unorderedList', 'orderedList'],
+            ['horizontalRule'],
+            ['removeformat'],
+            ['template'],
+            ['foreColor', 'backColor'],
+            ['fullscreen']
+        ],
+        plugins: {
+            templates: [
+                {
+                    name: 'Template mit Zitat',
+                    html: '<h1>H1-Header</h1><hr><div class="row"><div class="col-md-8"><h2>H2-Header</h2><hr><p>Text</p></div><div class="col-md-4"><p>Kleiner Text hier außerhalb des blauen Kastens</p><blockquote class="note note-primary z-depth-2"><p>Zitat kann hier eingefügt werden</p><footer class="blockquote-footer">byName</footer> </blockquote></div></div><hr>'
+                },
+                {
+                    name: 'Template mit zwei Spalten',
+                    html: '<h1>H1-Header</h1><hr><div class="row"><div class="col-md-6"><h2>H2-Header</h2><hr><p>Text</p></div><div class="col-md-6"><h2>H2-Header</h2><hr><p>Text</p></div> </div>'
+                }
+            ]
+        }
+    });
+
 
     $('input[type="date"]').daterangepicker({
         "singleDatePicker": true,
@@ -101,12 +159,9 @@ $(window).on('load', function () {
         $('#loadContentModal').modal('show');
         $('#loadContentModal .modal-content').load(url);
     });
-    if (typeof optionsSnack !== 'undefined') {
-        $.snackbar(optionsSnack);
-    }
 
 
-    $(document).on('click', '.deleteBtn',function (e) {
+    $(document).on('click', '.deleteBtn', function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
         var type = $(this).attr('type');

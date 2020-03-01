@@ -58,7 +58,7 @@ class AnmeldeEmailService
                 'S'
             );
             $attachment[] = array('type' => 'application/pdf', 'filename' => $fileName . '.pdf', 'body' => $pdf);
-            $attachment[] = array('type' => 'application/pdf', 'filename' => $this->translator->trans('AGB ') . ' ' . $stadt->getName() . '.pdf', 'body' => $this->abgService->printAGB($stadt->translate()->getAgb(), 'S', $stadt, null));
+            $attachment[] = array('type' => 'application/pdf', 'filename' => $this->translator->trans('Vertragsbedingungen ') . ' ' . $stadt->getSlug() . '.pdf', 'body' => $this->abgService->printAGB($stadt->translate()->getAgb(), 'S', $stadt, null));
 
 
             foreach ($kind->getZeitblocks() as $data2) {

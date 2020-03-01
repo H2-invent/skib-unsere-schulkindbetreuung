@@ -15,7 +15,9 @@
         {{ form_row(form.von) }}
 
         {{ form_row(form.bis) }}
+    {% if form.ganztag is defined %}
   {{ form_row(form.ganztag) }}
+    {% endif %}
     {% if form.min is defined %}
     {{ form_row(form.min) }}
     {% endif %}
@@ -25,6 +27,7 @@
 {% if form.preise is defined %}
        {{ form_row(form.preise) }}
 {% endif %}
+
     <button type="submit" class="btn btn-primary">{% trans %}Speichern{% endtrans %}</button>
     {{ form_end(form) }}
 </div>
@@ -43,6 +46,8 @@
           }
       });
   })
+
+
 </script>
 <div class="modal-footer">
 

@@ -26,8 +26,12 @@
                 <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
             </tr>
             <tr>
+                <td>{{ 'Telefonnummer'|trans }}</td>
+                <td>{{ eltern.phoneNumber }}</td>
+            </tr>
+            <tr>
                 <td>{% trans %}Brutto Haushaltseinkommen pro Monat{% endtrans %}</td>
-                <td>{{ einkommen[eltern.einkommen] }} €</td>
+                <td>{{ einkommen[eltern.einkommen] }}</td>
             </tr>
             <tr>
                 <td>{% trans %}Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung{% endtrans %}</td>
