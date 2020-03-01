@@ -513,7 +513,7 @@ class LoerrachWorkflowController extends AbstractController
        $workflowAbschluss->abschluss($adresse, $kind);
 //Emails an die Eltern senden
         foreach ($kind as $data) {
-            $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $this->beruflicheSituation);
+           $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $this->beruflicheSituation);
         }
 
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
