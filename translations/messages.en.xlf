@@ -1111,9 +1111,9 @@
         <source>Online Anmeldung</source>
         <target state="translated">Online registration</target>
       </trans-unit>
-      <trans-unit id="g7KT4KD" resname="Vielen Dank für Ihre Anmeldung ...">
-        <source>Vielen Dank für Ihre Anmeldung ...</source>
-        <target state="translated">Thank you for registering ...</target>
+      <trans-unit id="g7KT4KD" resname="Vielen Dank für Ihre Anmeldung">
+        <source>Vielen Dank für Ihre Anmeldung</source>
+        <target state="translated">Thank you for your registration</target>
       </trans-unit>
       <trans-unit id="qZFHrCt" resname="Online Anmeldung für Ferienbetreuung">
         <source>Online Anmeldung für Ferienbetreuung</source>
