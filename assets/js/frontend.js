@@ -29,7 +29,7 @@ import('jquery-clockpicker');
 import('daterangepicker');
 import ('jquery-lazy');
 import {initSocial} from './social';
-
+import daterangepicker from 'daterangepicker';
 import {
     jarallax,
     jarallaxElement,
@@ -51,6 +51,7 @@ $(document).on('click', '.loadContent', function (e) {
     var url = $(this).attr('href');
     $('#loadContentModal').load(url, function () {
         $('#loadContentModal ').modal('show');
+
     });
 });
 

@@ -28,7 +28,7 @@ node_modules/
 *.Halite.key*
 *node_modules/*
 /public/build/*
-
+/public/media/*
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
