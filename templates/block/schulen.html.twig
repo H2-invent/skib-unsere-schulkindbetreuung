@@ -9,10 +9,10 @@
                     <div class="col-lg-3 col-sm-6 ">
                     <div class="card" >
                         {% if not s.image is empty %}
-                        <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}" alt="{{ s.name }}"
+                        <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile')| imagine_filter('my_thumb') }}" alt="{{ s.name }}"
                              style="max-height: 300px">
                             {% else %}
-                            <img class="card-img-top" src="{{ asset('images/logo-breit-mittig.png') }}" alt="SKiB"
+                            <img class="card-img-top" src="{{ asset('images/logo-breit-mittig.png')| imagine_filter('my_thumb') }}" alt="SKiB"
                                  style="max-height: 300px">
                         {% endif %}
                         <div class="card-body">
