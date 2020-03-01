@@ -1613,9 +1613,9 @@
         <source>Kind/Kinder zur Ferienbetreuung anmelden</source>
         <target state="translated">Inscrire l'enfant/les enfants à la garderie de vacances</target>
       </trans-unit>
-      <trans-unit id="0ddCQ9N" resname="Herzlich Willkommen bei SKiB">
-        <source>Herzlich Willkommen bei SKiB</source>
-        <target state="translated">Bienvenue à SKiB</target>
+      <trans-unit id="0ddCQ9N" resname="Herzlich Willkommen bei SKiB der">
+        <source>Herzlich Willkommen bei SKiB der</source>
+        <target state="translated">Bienvenue à SKiB de</target>
       </trans-unit>
       <trans-unit id="CB3jEY0" resname="Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.">
         <source>Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.</source>

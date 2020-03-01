@@ -1909,9 +1909,9 @@
         <source>Kind/Kinder zur Ferienbetreuung anmelden</source>
         <target state="translated">Register children/children for holiday childcare</target>
       </trans-unit>
-      <trans-unit id="0ddCQ9N" resname="Herzlich Willkommen bei SKiB">
-        <source>Herzlich Willkommen bei SKiB</source>
-        <target state="translated">Welcome to SKiB</target>
+      <trans-unit id="0ddCQ9N" resname="Herzlich Willkommen bei SKiB der">
+        <source>Herzlich Willkommen bei SKiB der</source>
+        <target state="translated">Welcome to SKiB from</target>
       </trans-unit>
       <trans-unit id="CB3jEY0" resname="Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.">
         <source>Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.</source>
