@@ -17,12 +17,8 @@ import Popper from 'popper.js';
 global.Popper = Popper;
 import('bootstrap');
 import('./mdb');
-import('snackbarjs');
-import('moment');
-import ('morecontent-js/dist/jquery.morecontent');
-import('jquery-confirm');
 import ('jquery-lazy');
-
+import {initSocial} from "./social";
 import {
     jarallax,
     jarallaxElement,
@@ -64,7 +60,7 @@ $(document).ready(function () {
 });
 
 $(window).on('load', function () {
-
+    initSocial();
     $(function () {
         $('.lazy').show().Lazy({
             // your configuration goes here
