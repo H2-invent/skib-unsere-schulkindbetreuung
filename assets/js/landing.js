@@ -18,7 +18,7 @@ global.Popper = Popper;
 import('bootstrap');
 import('./mdb');
 import ('jquery-lazy');
-import {initSocial} from "./social";
+
 import {
     jarallax,
     jarallaxElement,
@@ -60,7 +60,7 @@ $(document).ready(function () {
 });
 
 $(window).on('load', function () {
-    initSocial();
+
     $(function () {
         $('.lazy').show().Lazy({
             // your configuration goes here
@@ -95,7 +95,7 @@ $(document).on('click', '.loadInTarget', function (e) {
             cssClassRightArrow: 'fa fa-chevron-right',
             disableScrollArrowsOnFullyScrolled: true
         });
-        initSocial();
+    
     });
 
     window.history.pushState('test', "test", ele.attr('href'));
