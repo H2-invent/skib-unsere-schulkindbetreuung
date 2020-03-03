@@ -176,8 +176,7 @@ class PrintService
             '',
             true
         );
-        $pdf->SetProtection(array('print', 'copy','modify'),$kind->getGeburtstag()->format('d.m.Y') , 'EmanuelUndAndySindCool', 0, null);
-
+      
 
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }
