@@ -14,7 +14,7 @@ Encore
     // but, you probably want this, unless you're building a single-page app
     //.enableSingleRuntimeChunk()
     .disableSingleRuntimeChunk()
-
+    .addEntry('landing', './assets/js/landing.js')
     .addEntry('app', './assets/js/app.js')
     .addEntry('frontend', './assets/js/frontend.js')
     .addEntry('startpage', './assets/js/start.js')
