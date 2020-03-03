@@ -1513,9 +1513,9 @@
         <source>Impressum %stadt%</source>
         <target state="translated">Mentions légales %stadt%</target>
       </trans-unit>
-      <trans-unit id="blnC7zN" resname="Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).">
-        <source>Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).</source>
-        <target state="translated">Les frais dépendent du revenu. Le revenu familial brut (salaire, allocations familiales, pension alimentaire, allocation de transition, indemnités de remplacement de salaire et tous les autres revenus) est pris en compte.</target>
+      <trans-unit id="blnC7zN" resname="Die Gebühren sind einkommensabhängig. Angerechnet wird das Brutto Haushaltseinkommen  (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).">
+        <source>Die Gebühren sind einkommensabhängig. Angerechnet wird das Brutto Haushaltseinkommen  (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).</source>
+        <target state="translated">Les frais dépendent du revenu. Revenu brut des ménages (salaire, allocations familiales, pension alimentaire, allocation de transition, indemnités de remplacement de salaire et tous les autres revenus) est pris en compte.</target>
       </trans-unit>
       <trans-unit id="NF9yKdJ" resname="Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf die Gebühr des ältesten Kindes">
         <source>Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf die Gebühr des ältesten Kindes</source>

@@ -1761,9 +1761,9 @@
         <source>Impressum %stadt%</source>
         <target state="translated">Imprint %stadt%</target>
       </trans-unit>
-      <trans-unit id="blnC7zN" resname="Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).">
-        <source>Die Gebühren sind einkommensabhängig. Angerechnet wird das Familienbruttoeinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).</source>
-        <target state="translated">The fees are income-dependent. The gross family income (salary, salary, child benefit, maintenance, bridging allowance, wage replacement and all other income) is taken into account.</target>
+      <trans-unit id="blnC7zN" resname="Die Gebühren sind einkommensabhängig. Angerechnet wird das Brutto Haushaltseinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).">
+        <source>Die Gebühren sind einkommensabhängig. Angerechnet wird das  Brutto Haushaltseinkommen  (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).</source>
+        <target state="translated">The fees are income-dependent. The gross household income  (salary, salary, child benefit, maintenance, bridging allowance, wage replacement and all other income) is taken into account.</target>
       </trans-unit>
       <trans-unit id="N3M75.G" resname="Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Erziehungsberechtigten. Ein Rechtsanspruch auf Aufnahme besteht nicht.">
         <source>Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Erziehungsberechtigten. Ein Rechtsanspruch auf Aufnahme besteht nicht.</source>
