@@ -72,17 +72,7 @@ $(window).on('load', function () {
             }
         });
     });
-    $('.more').moreContent(
-        {
-            textClose: mehrLesen,
-            textOpen: wenigerLesen,
-            tpl: {
 
-                btn: '<button class="btn btn-primary" type="button"></button>',
-
-            },
-        }
-    );
 
 });
 $(document).on('click', '.loadInTarget', function (e) {
@@ -95,7 +85,7 @@ $(document).on('click', '.loadInTarget', function (e) {
             cssClassRightArrow: 'fa fa-chevron-right',
             disableScrollArrowsOnFullyScrolled: true
         });
-    
+
     });
 
     window.history.pushState('test', "test", ele.attr('href'));
