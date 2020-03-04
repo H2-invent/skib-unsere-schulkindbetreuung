@@ -114,7 +114,7 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] .$counter,implode(' | ', $gebucht));
 
             if($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')){
-                $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getCustomerID());
+                $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())?$data->getEltern()->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())->getKundennummer():"");
                 $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getIban());
                 $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getBic());
                 $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getKontoinhaber());

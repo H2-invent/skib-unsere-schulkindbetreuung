@@ -56,7 +56,7 @@ class SepaExcel
            $counter = 2;
         foreach ($sepa->getRechnungen() as $data) {
             $count = 0;
-            $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getCustomerID());
+            $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getKundennummerForOrg($sepa->getOrganisation()->getId())?$data->getStammdaten()->getKundennummerForOrg($sepa->getOrganisation()->getId())->getKundennummer():"");
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getVorname());
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getName());
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getStrasse());

@@ -157,13 +157,13 @@ class workflowController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}/agb",name="workflow_agb",methods={"GET"})
+     * @Route("/{slug}/vertragsbedingungen",name="workflow_agb",methods={"GET"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public function agbAction(Request $request, TranslatorInterface $translator, Stadt $stadt)
     {
         $stadtAGB = $stadt->translate()->getAgb();
-        $titel = $translator->trans('AGB') . ' | ' . $stadt->getName() . ' | unsere-Schulkindbetreuung.de';
+        $titel = $translator->trans('Vertragsbedingungen') . ' | ' . $stadt->getName() . ' | unsere-Schulkindbetreuung.de';
         $metaDescrition = $translator->trans('Allgemeine Vertragsbedingungen der %stadt%', array('%stadt%' => $stadt->getName()));
 
         return $this->render('workflow/agb.html.twig', array('metaDescription' => $metaDescrition, 'title' => $titel, 'stadtAGB' => $stadtAGB, 'stadt' => $stadt, 'redirect' => $request->get('redirect')));
