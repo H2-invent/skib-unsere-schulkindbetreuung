@@ -57,7 +57,8 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td>{{ s.customerID }}</td>
+                                                {% set kn = s.KundennummerForOrg(organisation.id) %}
+                                                <td>{% if kn is defined and kn is not null  %}{{ kn.kundennummer }}{% endif %}</td>
                                                 <td>{{ s.vorname }} {{ s.name }}</td>
                                                 <td>{{ s.email }}</td>
                                                 <td>{{ s.strasse }}</td>

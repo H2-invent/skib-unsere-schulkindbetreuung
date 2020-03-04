@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Active;
+use App\Entity\Kundennummern;
 use App\Entity\Organisation;
 use App\Entity\Rechnung;
 use App\Entity\Schule;
@@ -73,7 +74,7 @@ class SepaController extends AbstractController
         if ($sepa->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $result = $sepaCreateService->collectallFromSepa($sepa)?$translator->trans('Die Email wurde erfolgreich versandt'):$translator->trans('Die E-Mail konnte nicht vesandt werden');
+        $result = $sepaCreateService->collectallFromSepa($sepa) ? $translator->trans('Die Email wurde erfolgreich versandt') : $translator->trans('Die E-Mail konnte nicht vesandt werden');
 
         return $this->redirectToRoute('accounting_overview', array('id' => $sepa->getOrganisation()->getId(), 'snack' => $result));
 
@@ -117,15 +118,26 @@ class SepaController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
 
+
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->find($request->get('stammdaten_id'));
-        $form = $this->createForm(customerIDStammdatenType::class, $stammdaten);
+
+        $kundennummer = $this->getDoctrine()->getRepository(Kundennummern::class)->findOneBy(array('organisation' => $organisation, 'stammdaten' => $stammdaten));
+        if (!$kundennummer) {
+            $kundennummer = new Kundennummern();
+        }
+
+        $form = $this->createForm(customerIDStammdatenType::class, $kundennummer);
 
         $form->handleRequest($request);
-        $errors = array();
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $stammdaten = $form->getData();
+
+            $kundennummer = $form->getData();
+            $kundennummer->setOrganisation($organisation);
+            $kundennummer->setStammdaten($stammdaten);
+
             $em = $this->getDoctrine()->getManager();
-            $em->persist($stammdaten);
+            $em->persist($kundennummer);
             $em->flush();
 
             $response = $this->redirectToRoute('accounting_showdata', array('id' => $organisation->getId()));

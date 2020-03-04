@@ -238,10 +238,6 @@ class Stammdaten
      */
     private $paymentFerien;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $customerID;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -255,7 +251,10 @@ class Stammdaten
      */
     private $phoneNumber;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Kundennummern", mappedBy="stammdaten")
+     */
+    private $kundennummerns;
 
 
     public function __construct()
@@ -265,6 +264,7 @@ class Stammdaten
         $this->rechnungs = new ArrayCollection();
         $this->paymentsFerien = new ArrayCollection();
         $this->paymentFerien = new ArrayCollection();
+        $this->kundennummerns = new ArrayCollection();
 
     }
 
@@ -759,18 +759,20 @@ class Stammdaten
     {
         return $this->paymentFerien;
     }
+
     /**
      * @return Collection|Payment[]
      */
     public function getPaymentFerienforOrg(Organisation $organisation): ?Payment
     {
-        foreach ($this->paymentFerien as $data){
-            if($data->getOrganisation() == $organisation){
+        foreach ($this->paymentFerien as $data) {
+            if ($data->getOrganisation() == $organisation) {
                 return $data;
             }
         }
         return null;
     }
+
     public function addPaymentFerien(Payment $paymentFerien): self
     {
         if (!$this->paymentFerien->contains($paymentFerien)) {
@@ -794,17 +796,6 @@ class Stammdaten
         return $this;
     }
 
-    public function getCustomerID(): ?string
-    {
-        return $this->customerID;
-    }
-
-    public function setCustomerID(?string $customerID): self
-    {
-        $this->customerID = $customerID;
-
-        return $this;
-    }
 
     public function getLanguage(): ?string
     {
@@ -830,7 +821,49 @@ class Stammdaten
         return $this;
     }
 
+    /**
+     * @return Collection|Kundennummern[]
+     */
+    public function getKundennummerns(): Collection
+    {
+        return $this->kundennummerns;
+    }
 
+    public function addKundennummern(Kundennummern $kundennummern): self
+    {
+        if (!$this->kundennummerns->contains($kundennummern)) {
+            $this->kundennummerns[] = $kundennummern;
+            $kundennummern->setStammdaten($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKundennummern(Kundennummern $kundennummern): self
+    {
+        if ($this->kundennummerns->contains($kundennummern)) {
+            $this->kundennummerns->removeElement($kundennummern);
+            // set the owning side to null (unless already changed)
+            if ($kundennummern->getStammdaten() === $this) {
+                $kundennummern->setStammdaten(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Kundennummern[]
+     */
+    public function getKundennummerForOrg($orgId)
+    {
+        $kn = $this->kundennummerns;
+        foreach ($kn as $data) {
+            if ($data->getOrganisation()->getId() == $orgId) {
+                return $data;
+            }
+        }
+    }
 
 
 }

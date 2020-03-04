@@ -283,6 +283,11 @@ class Organisation
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Kundennummern", mappedBy="organisation")
+     */
+    private $kundennummerns;
+
 
 
 
@@ -295,6 +300,7 @@ class Organisation
         $this->PaymentsFerien = new ArrayCollection();
         $this->paymentsFerien = new ArrayCollection();
         $this->orgNews = new ArrayCollection();
+        $this->kundennummerns = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -968,6 +974,37 @@ class Organisation
     public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Kundennummern[]
+     */
+    public function getKundennummerns(): Collection
+    {
+        return $this->kundennummerns;
+    }
+
+    public function addKundennummern(Kundennummern $kundennummern): self
+    {
+        if (!$this->kundennummerns->contains($kundennummern)) {
+            $this->kundennummerns[] = $kundennummern;
+            $kundennummern->setOrganisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKundennummern(Kundennummern $kundennummern): self
+    {
+        if ($this->kundennummerns->contains($kundennummern)) {
+            $this->kundennummerns->removeElement($kundennummern);
+            // set the owning side to null (unless already changed)
+            if ($kundennummern->getOrganisation() === $this) {
+                $kundennummern->setOrganisation(null);
+            }
+        }
 
         return $this;
     }
