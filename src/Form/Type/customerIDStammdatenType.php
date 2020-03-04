@@ -9,6 +9,8 @@
 namespace App\Form\Type;
 
 
+use App\Entity\Ferienblock;
+use App\Entity\Kundennummern;
 use App\Entity\Stammdaten;
 use Symfony\Component\Form\AbstractType;
 
@@ -29,14 +31,14 @@ class customerIDStammdatenType extends AbstractType
     {
 
         $builder
-            ->add('customerID', TextType::class, ['required' => true, 'label' => 'Kundennummer', 'translation_domain' => 'form'])
+            ->add('kundennummer', TextType::class, ['required' => true, 'label' => 'Kundennummer', 'translation_domain' => 'form'])
             ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-
+            'data_class' => Kundennummern::class,
         ]);
 
     }
