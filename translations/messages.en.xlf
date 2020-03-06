@@ -917,9 +917,9 @@
         <source>Mein Kind isst kein Schweinefleisch</source>
         <target state="translated">My child doesn't eat pork</target>
       </trans-unit>
-      <trans-unit id="Rx43KOx" resname="Vegetarisch">
-        <source>Vegetarisch</source>
-        <target state="translated">Vegetarian</target>
+      <trans-unit id="Rx43KOx" resname="Mein Kind ernährt sich vegetarisch">
+        <source>Mein Kind ernährt sich vegetarisch</source>
+        <target state="translated">My child is a vegetarian</target>
       </trans-unit>
       <trans-unit id="oc2paVv" resname="Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause">
         <source>Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause</source>
