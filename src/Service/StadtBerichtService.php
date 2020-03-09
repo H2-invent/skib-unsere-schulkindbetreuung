@@ -119,7 +119,7 @@ class StadtBerichtService
         $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Einkommensgruppe'));
         $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Anzahl an Kindern'));
         $counter = 2;
-        dump($this->beruflicheSituationString);
+    
         foreach ($eltern as $data) {
             $count = 0;
 
