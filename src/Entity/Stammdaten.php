@@ -8,13 +8,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 // importing @Encrypted annotation
 use Ambta\DoctrineEncryptBundle\Configuration\Encrypted;
+use App\Controller\LoerrachWorkflowController;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StammdatenRepository")
  */
 class Stammdaten
 {
-    private $beruflicheSituationString;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -259,6 +262,7 @@ class Stammdaten
 
     public function __construct()
     {
+
         $this->kinds = new ArrayCollection();
         $this->rechnungen = new ArrayCollection();
         $this->rechnungs = new ArrayCollection();
