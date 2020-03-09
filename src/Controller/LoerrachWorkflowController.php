@@ -57,7 +57,7 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 class LoerrachWorkflowController extends AbstractController
 {
-    private $beruflicheSituation;
+    public $beruflicheSituation;
 
     public function __construct(TranslatorInterface $translator)
     {
