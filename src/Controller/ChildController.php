@@ -59,7 +59,7 @@ class ChildController extends AbstractController
     /**
      * @Route("/org_child/show/detail", name="child_detail")
      */
-    public function childDetail(Request $request, TranslatorInterface $translator)
+    public function childDetail(Request $request, TranslatorInterface $translator,LoerrachWorkflowController $loerrachWorkflowController)
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
         $history= $this->getDoctrine()->getRepository(Kind::class)->findBy(array('tracing'=>$kind->getTracing(),'saved'=>true));
@@ -67,7 +67,7 @@ class ChildController extends AbstractController
              throw new \Exception('Wrong Organisation');
          }
 
-         return $this->render('child/childDetail.html.twig',array('k'=>$kind,'eltern'=>$kind->getEltern(),'history'=>$history));
+         return $this->render('child/childDetail.html.twig',array('beruflicheSituation'=>array_flip($loerrachWorkflowController->beruflicheSituation),'k'=>$kind,'eltern'=>$kind->getEltern(),'history'=>$history));
     }
     /**
      * @Route("/org_child/print/detail", name="child_detail_print")
