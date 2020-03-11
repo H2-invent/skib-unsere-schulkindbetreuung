@@ -29,11 +29,12 @@ class WidgetStadtController extends AbstractController
         $today = (new \DateTime())->format('w');
         $stadt = $this->getUser()->getStadt();
         $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findOneBy(array('stadt'=>$stadt,'id'=>$request->get('schule_id')));
+        $schule = $this->getDoctrine()->getRepository(Schule::class)->findOneBy(array('stadt'=>$stadt,'deleted'=>false,'id'=>$request->get('schule_id')));
         $qb = $this->getDoctrine()->getRepository(Kind::class)->createQueryBuilder('k')
             ->innerJoin('k.zeitblocks','b')
             ->andWhere('b.active = :jahr')
             ->andWhere('b.schule = :schule')
+
             ->setParameter('schule',$schule);
 
         $qb->andWhere('k.fin = true');
