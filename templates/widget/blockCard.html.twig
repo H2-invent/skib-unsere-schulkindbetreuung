@@ -4,6 +4,8 @@
             <div class="card-body text-center {% if b.deleted == true %}bg-danger{% endif %}">
                 <p>
                     {{ b.schule.name }}
+                    <br>
+                    {{ b.ganztagString }}
                 </p>
 
                 <p>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</p>

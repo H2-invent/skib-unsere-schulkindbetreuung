@@ -155,7 +155,7 @@ class WidgetController extends AbstractController
         foreach ($blocks as $data) {
             $blocksRender[$data->getWochentag()][] = $data;
         }
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation'=>$organisation));
+        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('deleted'=>false,'organisation'=>$organisation));
         return $this->render('widget/blockContent.html.twig', array('org'=>$organisation,'blocks' => $blocksRender,'schule'=>$schule));
 
     }

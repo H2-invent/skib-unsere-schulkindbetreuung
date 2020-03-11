@@ -40,7 +40,7 @@ class SepaExcel
         $alphas = range('a', 'z');
         $count = 0;
         $sepaSheet = $this->spreadsheet->createSheet();
-        $sepaSheet->setTitle($this->translator->trans('Rechnungen'));
+        $sepaSheet->setTitle($this->translator->trans('SEPA Übersicht'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kundennummer'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Vorname'));
         $sepaSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Nachname'));

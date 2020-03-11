@@ -22,7 +22,7 @@ import('moment');
 import ('morecontent-js/dist/jquery.morecontent');
 import('jquery-confirm');
 import ('jquery-lazy');
-
+import('./jquery.bs.gdpr.cookies');
 import {
     jarallax,
     jarallaxElement,
@@ -64,7 +64,7 @@ $(document).ready(function () {
 });
 
 $(window).on('load', function () {
-
+    $('body').bsgdprcookies(bssettings);
     $(function () {
         $('.lazy').show().Lazy({
             // your configuration goes here
