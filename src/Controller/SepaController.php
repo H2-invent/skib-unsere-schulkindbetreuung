@@ -21,6 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -76,7 +77,7 @@ class SepaController extends AbstractController
         }
         $result = $sepaCreateService->collectallFromSepa($sepa) ? $translator->trans('Die Email wurde erfolgreich versandt') : $translator->trans('Die E-Mail konnte nicht vesandt werden');
 
-        return $this->redirectToRoute('accounting_overview', array('id' => $sepa->getOrganisation()->getId(), 'snack' => $result));
+        return new JsonResponse(array('redirect'=>$this->generateUrl('accounting_overview', array('id' => $sepa->getOrganisation()->getId(), 'snack' => $result))));
 
     }
 

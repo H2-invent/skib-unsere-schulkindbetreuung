@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -103,7 +104,7 @@ class SchuleController extends AbstractController
 
     }
     /**
-     * @Route("/city_schule/delete", name="city_admin_schule_delete",methods={"GET"})
+     * @Route("/city_schule/delete", name="city_admin_schule_delete",methods={"DELETE"})
      */
     public function deleteSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
@@ -117,7 +118,7 @@ class SchuleController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($school);
         $em->flush();
-        return $this->redirectToRoute('city_admin_schule_show',array('id'=>$city->getId()));
+        return new JsonResponse(array('redirect'=> $this->generateUrl('city_admin_schule_show',array('id'=>$city->getId()))));
     }
     /**
      * @Route("/org_shool/detail", name="city_admin_schule_detail",methods={"GET"})
