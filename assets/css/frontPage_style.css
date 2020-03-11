@@ -363,3 +363,10 @@ height: auto;
 .dropdown-menu .dropdown-item{
   max-width: none;
 }
+.rotateTitle{
+
+  position: absolute;
+  margin-top: -200px;
+  transform: rotateZ(-30deg);
+  z-index: 1000;
+}
