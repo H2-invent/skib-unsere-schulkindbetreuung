@@ -12,7 +12,7 @@ liip_imagine:
         my_thumb :
 
             # adjust the image quality to 80%
-            quality : 100
+            quality : 75
 
             # list of transformations to apply (the "filters")
             filters :
@@ -20,7 +20,7 @@ liip_imagine:
                 # to crop the image when the size ratio of the input differs
                 downscale:
                     # input 3960x2560px -> output 1980x1280px
-                    max: [600, 300]
+                    max: [100, 100]
         my_background:
 
             # adjust the image quality to 80%
