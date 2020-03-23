@@ -172,6 +172,12 @@ class Kind
      */
     private $kindFerienblocks;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Encrypted()
+     */
+    private $masernImpfung;
+
 
 
     public function __construct()
@@ -831,6 +837,18 @@ class Kind
         }
         return $res;
 
+    }
+
+    public function getMasernImpfung(): ?bool
+    {
+        return $this->masernImpfung;
+    }
+
+    public function setMasernImpfung(?bool $masernImpfung): self
+    {
+        $this->masernImpfung = $masernImpfung;
+
+        return $this;
     }
 
 

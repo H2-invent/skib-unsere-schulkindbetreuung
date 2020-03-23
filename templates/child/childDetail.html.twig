@@ -111,7 +111,10 @@
                                                 <td>{% trans %} Medikamente {% endtrans %}</td>
                                                 <td>{{ k.medikamente }}</td>
                                             </tr>
-
+                                            <tr>
+                                                <td>{% trans %} Masernimpfung {% endtrans %}</td>
+                                                <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
+                                            </tr>
                                             <tr>
                                                 <td>{% trans %} Mein Kind ist glutenintolerant {% endtrans %}</td>
                                                 <td>{{ k.gluten?"Ja"|trans:'Nein'|trans }}</td>

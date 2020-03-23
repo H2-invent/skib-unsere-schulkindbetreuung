@@ -62,11 +62,12 @@ class LoerrachWorkflowController extends AbstractController
     public function __construct(TranslatorInterface $translator)
     {
         $this->beruflicheSituation = array(
+            $translator->trans('Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig') => 1,
+            $translator->trans('Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend') => 2,
             $translator->trans('Beide Elternteile / Erziehungsberechtigte sind berufstätig') => 3,
             $translator->trans('Beide Elternteile / Erziehungsberechtigte sind arbeitssuchend') => 4,
             $translator->trans('Ein Elternteil / Erziehungsberechtigter ist berufstätig // arbeitssuchend') => 5,
-            $translator->trans('Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig') => 1,
-            $translator->trans('Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend') => 2,
+
         );
 
     }
@@ -201,7 +202,7 @@ class LoerrachWorkflowController extends AbstractController
         );
         $halbtag = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
 
-        $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug' => $stadt->getSlug(), 'schule_id' => $schule->getId()))));
+        $form = $this->createForm(LoerrachKind::class, $kind, array('validation_groups'=>['Eltern'],'action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug' => $stadt->getSlug(), 'schule_id' => $schule->getId()))));
         if (empty($ganztag) && empty($halbtag)) {
 
         } elseif (empty($ganztag)) {
@@ -212,15 +213,25 @@ class LoerrachWorkflowController extends AbstractController
             $form->remove('art');
         }
 
-        $form->handleRequest($request);
+        try {
+            $form->handleRequest($request);
+        }catch (\Exception $e){
+            $text = $translator->trans('Überprüfe Sie Ihre Eingabe');
+            return new JsonResponse(array('error' => 1, 'snack' => $text));
+        }
+
         $errors = array();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $kind = $form->getData();
-            $errors = $validator->validate($kind);
-
+        if ($form->isSubmitted()) {
             try {
-                if (count($errors) == 0) {
+                $kind = $form->getData();
+                $errors = $validator->validate($kind);
+               // $kind = new Kind();
+                if($kind->getMasernImpfung() == false){
+                    $text = $translator->trans('Fehler. Bitte kreuzen Sie masern an');
+                    return new JsonResponse(array('error' => 1, 'snack' => $text));
+                }
 
+                if (count($errors) == 0) {
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($kind);
                     $em->flush();
