@@ -10,5 +10,5 @@ services:
         tags: ['kernel.event_subscriber']
         arguments:
             $sender: null
-            $recipients: ['emanuel.holzmann@h2-invent.com','an.holzmann@hotmail.com','andreas.holzmann@h2-invent.com','emanuel-holzmann@web.de']
+            $recipients: ['entwicklung@h2-invent.com']
 

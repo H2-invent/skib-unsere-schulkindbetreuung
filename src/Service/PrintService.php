@@ -244,7 +244,7 @@ class PrintService
 
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
-        $pdf = $this->preparePDF($pdf,'Test','test','test',null,$organisation);
+        $pdf = $this->preparePDF($pdf,'Kinder in Organistaion '.$organisation->getName() ,'test','test',null,$organisation);
 
 
 
