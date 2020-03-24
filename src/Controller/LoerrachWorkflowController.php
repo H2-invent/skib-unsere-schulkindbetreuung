@@ -25,6 +25,8 @@ use App\Service\MailerService;
 use App\Service\PrintAGBService;
 use App\Service\PrintService;
 use App\Service\SchuljahrService;
+use App\Service\SchulkindBetreuungAdresseService;
+use App\Service\SchulkindBetreuungKindNeuService;
 use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindBlockSchulkind;
 use App\Service\WorkflowAbschluss;
@@ -76,16 +78,13 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/adresse",name="loerrach_workflow_adresse",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function adresseAction(AuthorizationCheckerInterface $authorizationChecker, TranslatorInterface $translator, Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function adresseAction(SchulkindBetreuungAdresseService $schulkindBetreuungAdresseService, AuthorizationCheckerInterface $authorizationChecker, TranslatorInterface $translator, Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
-
-
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
 
         if ($schuljahr === null) {
             return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
-
 
         $adresse = new Stammdaten();
 
@@ -93,12 +92,7 @@ class LoerrachWorkflowController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
         //Add SecCode into if to create a SecCode the first time to be not "null"
-
-        if ($adresse->getUid() === null) {
-            $adresse->setUid(md5(uniqid('', true)))
-                ->setAngemeldet(false);
-            $adresse->setCreatedAt(new \DateTime());
-        }
+        $adresse = $schulkindBetreuungAdresseService->setUID($adresse);
         $form = $this->createForm(LoerrachEltern::class, $adresse, array('einkommen' => array_flip($stadt->getGehaltsklassen()), 'beruflicheSituation' => $this->beruflicheSituation));
 
         $form->handleRequest($request);
@@ -108,18 +102,9 @@ class LoerrachWorkflowController extends AbstractController
             $adresse = $form->getData();
             $errors = $validator->validate($adresse);
             if (count($errors) == 0) {
-                if ($authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE')) {
-                    $adresse->setEmailConfirmed(true);
-                    $adresse->setConfirmEmailSend(true);
-                    $adresse->setConfirmationCode(str_shuffle(MD5(microtime())), 0, 6);
-                    $adresse->setIpAdresse($request->getClientIp());
-                    $adresse->setConfirmDate(new \DateTime());
-                }
-                $adresse->setFin(false);
+                $schulkindBetreuungAdresseService->setAdress($adresse,$authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE'),$request->getClientIp());
+
                 $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($adresse);
-                $em->flush();
                 $response = $this->redirectToRoute('workflow_confirm_Email', array('redirect' => $this->generateUrl('loerrach_workflow_schulen', array('slug' => $stadt->getSlug()), UrlGeneratorInterface::ABSOLUTE_URL), 'uid' => $adresse->getUid(), 'stadt' => $stadt->getId()));
                 $response->headers->setCookie($cookie);
                 return $response;
@@ -169,7 +154,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/schulen/kind/neu",name="loerrach_workflow_schulen_kind_neu",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function neukindAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function neukindAction(SchulkindBetreuungKindNeuService $schulkindBetreuungKindNeuService, Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
         $adresse = new Stammdaten;
 
@@ -177,41 +162,16 @@ class LoerrachWorkflowController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
-
         $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule_id'));
 
         $kind = new Kind();
-        $kind->setEltern($adresse);
-        $kind->setSchule($schule);
-
+        $kind = $schulkindBetreuungKindNeuService->prepareKind($kind,$schule,$adresse);
         // Load the data from the city into the controller as $stadt
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
-        $req = array(
-            'deleted' => false,
-            'active' => $schuljahr,
-            'schule' => $schule,
-            'ganztag' => 1
-        );
-        $ganztag = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
-
-        $req = array(
-            'deleted' => false,
-            'active' => $schuljahr,
-            'schule' => $schule,
-            'ganztag' => 2
-        );
-        $halbtag = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
 
         $form = $this->createForm(LoerrachKind::class, $kind, array('validation_groups'=>['Eltern'],'action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug' => $stadt->getSlug(), 'schule_id' => $schule->getId()))));
-        if (empty($ganztag) && empty($halbtag)) {
-
-        } elseif (empty($ganztag)) {
-            $kind->setArt(2);
-            $form->remove('art');
-        } elseif (empty($halbtag)) {
-            $kind->setArt(1);
-            $form->remove('art');
-        }
+        $form = $schulkindBetreuungKindNeuService->cleanUpForm($form,$schuljahr,$schule);
+        $kind = $schulkindBetreuungKindNeuService->cleanUpKind($schuljahr,$schule,$kind);
 
         try {
             $form->handleRequest($request);
@@ -224,20 +184,7 @@ class LoerrachWorkflowController extends AbstractController
         if ($form->isSubmitted()) {
             try {
                 $kind = $form->getData();
-                $errors = $validator->validate($kind);
-                if($kind->getMasernImpfung() === false && !$this->isGranted('ROLE_ORG_CHILD_CHANGE')){
-                    //todo fehlertext
-                    $text = $translator->trans('Fehler. Bitte kreuzen Sie masern an');
-                    return new JsonResponse(array('error' => 1, 'snack' => $text));
-                }
-
-                if (count($errors) == 0) {
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($kind);
-                    $em->flush();
-                    $text = $translator->trans('Erfolgreich gespeichert');
-                    return new JsonResponse(array('error' => 0, 'snack' => $text, 'next' => $this->generateUrl('loerrach_workflow_schulen_kind_zeitblock', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()))));
-                }
+                return $schulkindBetreuungKindNeuService->saveKind($kind,$this->isGranted('ROLE_ORG_CHILD_CHANGE'),$stadt);
             } catch (\Exception $e) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
                 return new JsonResponse(array('error' => 1, 'snack' => $text));
@@ -251,7 +198,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/schulen/kind/edit",name="loerrach_workflow_schulen_kind_edit",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function editkindAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
+    public function editkindAction(SchulkindBetreuungKindNeuService $schulkindBetreuungKindNeuService, Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
     {
         $adresse = new Stammdaten;
 
@@ -259,12 +206,13 @@ class LoerrachWorkflowController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
-
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+
         $form = $this->createForm(LoerrachKind::class, $kind, array(
             'action' => $this->generateUrl('loerrach_workflow_schulen_kind_edit', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()))
         ));
         $form->remove('art');
+
         try {
             $form->handleRequest($request);
         }catch (\Exception $e){
@@ -273,22 +221,9 @@ class LoerrachWorkflowController extends AbstractController
         }
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
-            $kind = $form->getData();
-            $errors = $validator->validate($kind);
-            if($kind->getMasernImpfung() === false && !$this->isGranted('ROLE_ORG_CHILD_CHANGE')){
-                //todo fehlertext
-                $text = $translator->trans('Fehler. Bitte kreuzen Sie masern an');
-                return new JsonResponse(array('error' => 1, 'snack' => $text));
-            }
             try {
-                if (count($errors) == 0) {
-
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($kind);
-                    $em->flush();
-                    $text = $translator->trans('Erfolgreich geändert');
-                    return new JsonResponse(array('error' => 0, 'snack' => $text));
-                }
+                $kind = $form->getData();
+                return $schulkindBetreuungKindNeuService->saveKind($kind,$this->isGranted('ROLE_ORG_CHILD_CHANGE'),$stadt);
             } catch (\Exception $e) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
                 return new JsonResponse(array('error' => 1, 'snack' => $text));
