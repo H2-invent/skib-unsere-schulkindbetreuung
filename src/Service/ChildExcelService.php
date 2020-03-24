@@ -61,6 +61,7 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Abholung durch'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Medikamente'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Allergien'));
+        //todo masernimpfung
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Masernimpfung'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Bemerkung'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Gluten intolerant'));
