@@ -226,7 +226,7 @@ class LoerrachWorkflowController extends AbstractController
                 $kind = $form->getData();
                 $errors = $validator->validate($kind);
                // $kind = new Kind();
-                if($kind->getMasernImpfung() == false){
+                if($kind->getMasernImpfung() == false && !$this->isGranted('ROLE_ORG_CHILD_CHANGE')){
                     $text = $translator->trans('Fehler. Bitte kreuzen Sie masern an');
                     return new JsonResponse(array('error' => 1, 'snack' => $text));
                 }
@@ -265,12 +265,20 @@ class LoerrachWorkflowController extends AbstractController
             'action' => $this->generateUrl('loerrach_workflow_schulen_kind_edit', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()))
         ));
         $form->remove('art');
-        $form->handleRequest($request);
+        try {
+            $form->handleRequest($request);
+        }catch (\Exception $e){
+            $text = $translator->trans('Überprüfe Sie Ihre Eingabe');
+            return new JsonResponse(array('error' => 1, 'snack' => $text));
+        }
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $kind = $form->getData();
             $errors = $validator->validate($kind);
-
+            if($kind->getMasernImpfung() == false && !$this->isGranted('ROLE_ORG_CHILD_CHANGE')){
+                $text = $translator->trans('Fehler. Bitte kreuzen Sie masern an');
+                return new JsonResponse(array('error' => 1, 'snack' => $text));
+            }
             try {
                 if (count($errors) == 0) {
 
