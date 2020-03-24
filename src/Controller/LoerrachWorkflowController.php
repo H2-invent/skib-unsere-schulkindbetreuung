@@ -8,9 +8,7 @@ namespace App\Controller;
  * Time: 12:21
  */
 
-use App\Entity\Active;
 use App\Entity\Kind;
-use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
@@ -18,7 +16,6 @@ use App\Entity\Zeitblock;
 use App\Form\Type\LoerrachEltern;
 use App\Form\Type\LoerrachKind;
 use App\Form\Type\SepaStammdatenType;
-use App\Form\Type\StadtType;
 use App\Service\AnmeldeEmailService;
 use App\Service\IcsService;
 use App\Service\MailerService;
@@ -27,31 +24,19 @@ use App\Service\PrintService;
 use App\Service\SchuljahrService;
 use App\Service\SchulkindBetreuungAdresseService;
 use App\Service\SchulkindBetreuungKindNeuService;
+use App\Service\SchulkindBetreuungKindSEPAService;
 use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindBlockSchulkind;
 use App\Service\WorkflowAbschluss;
 use App\Service\WorkflowStart;
-use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
-use Beelab\Recaptcha2Bundle\Validator\Constraints\Recaptcha2;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\HttpFoundation\Cookie;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Validator\Constraints\Json;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
@@ -219,7 +204,6 @@ class LoerrachWorkflowController extends AbstractController
             $text = $translator->trans('Überprüfe Sie Ihre Eingabe');
             return new JsonResponse(array('error' => 1, 'snack' => $text));
         }
-        $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $kind = $form->getData();
@@ -344,7 +328,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/bezahlen", name="loerrach_workflow_bezahlen")
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function sepaAction(Request $request, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, ValidatorInterface $validator)
+    public function sepaAction(SchulkindBetreuungKindSEPAService $schulkindBetreuungKindSEPAService, Request $request, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, ValidatorInterface $validator)
     {
         $adresse = new Stammdaten;
 
@@ -354,14 +338,7 @@ class LoerrachWorkflowController extends AbstractController
         } else {
             return $this->redirectToRoute('loerrach_workflow_adresse',array('slug'=>$stadt->getSlug()));
         }
-
-        $qb = $this->getDoctrine()->getRepository(Organisation::class)->createQueryBuilder('organisation');
-        $qb->innerJoin('organisation.schule', 'schule')
-            ->innerJoin('schule.kinder', 'kinder')
-            ->andWhere('kinder.eltern = :stammdaten')
-            ->setParameter('stammdaten', $adresse);
-        $query = $qb->getQuery();
-        $renderOrganisation = $query->getResult();
+        $renderOrganisation = $schulkindBetreuungKindSEPAService ->findOrg($adresse);
         $form = $this->createForm(SepaStammdatenType::class, $adresse);
 
         $form->handleRequest($request);
@@ -373,11 +350,9 @@ class LoerrachWorkflowController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($adresse);
                 $em->flush();
-
                 $response = $this->redirectToRoute('loerrach_workflow_zusammenfassung', array('slug' => $stadt->getSlug()));
                 return $response;
             }
-
         }
         return $this->render('workflow/loerrach/bezahlen.html.twig', array('stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors, 'organisation' => $renderOrganisation));
     }
