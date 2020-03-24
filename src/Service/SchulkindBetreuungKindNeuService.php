@@ -11,25 +11,16 @@ namespace App\Service;
 
 use App\Entity\Active;
 use App\Entity\Kind;
-use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
-
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 class SchulkindBetreuungKindNeuService
 {
@@ -97,7 +88,7 @@ class SchulkindBetreuungKindNeuService
     }
     public  function saveKind(Kind $kind, bool $hasRole,Stadt $stadt){
         $errors = $this->validator->validate($kind);
-        if($kind->getMasernImpfung() === false && $hasRole){
+        if($kind->getMasernImpfung() === false && !$hasRole){
             //todo fehlertext
             $text = $this->translator->trans('Fehler. Bitte kreuzen Sie masern an');
             return new JsonResponse(array('error' => 1, 'snack' => $text));
