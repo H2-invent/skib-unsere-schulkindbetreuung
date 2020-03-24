@@ -10,23 +10,19 @@ namespace App\Service;
 use App\Entity\Organisation;
 use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SchulkindBetreuungKindSEPAService
 {
     private $em;
-    private $translator;
-    private $validator;
-    private $generator;
 
-    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator, ValidatorInterface $validator, UrlGeneratorInterface $urlGenerator)
+
+
+
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->translator = $translator;
-        $this->validator = $validator;
-        $this->generator = $urlGenerator;
+
+
     }
 
     public function findOrg(Stammdaten $adresse)
