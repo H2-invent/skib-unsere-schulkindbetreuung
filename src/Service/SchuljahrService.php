@@ -30,7 +30,7 @@ class SchuljahrService
    }
 
     public
-    function getSchuljahr(Stadt $stadt)
+    function getSchuljahr(Stadt $stadt): Active
     {
         if ($this->user->getUser() && $this->user->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE')) {
             return $this->em->getRepository(Active::class)->findSchuljahrFromCity($stadt,new \DateTime());

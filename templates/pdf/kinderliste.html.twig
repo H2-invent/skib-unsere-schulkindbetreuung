@@ -35,6 +35,7 @@
             <td>{{ k.schule.name }}</td>
             <td>{{ k.klasse }}. {{ 'Klasse'|trans }}</td>
             <td>{{ k.alleineHause?'Ja'|trans:'Nein'|trans }}</td>
+            {#  todo masernimpfungText #}
             <td>{{ k.masernImpfung?'Ja'|trans:'Nein'|trans }}</td>
         </tr>
     {% endfor %}
