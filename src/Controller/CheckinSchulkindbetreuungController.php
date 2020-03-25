@@ -48,7 +48,6 @@ class CheckinSchulkindbetreuungController extends AbstractController
     {
         $org = $this->getDoctrine()->getRepository(Organisation::class)->find($orgID);
         return new JsonResponse(array(
-                'id' => $org->getId(),
                 'name' => $org->getName(),
                 'partner' => $org->getAnsprechpartner()
             )
