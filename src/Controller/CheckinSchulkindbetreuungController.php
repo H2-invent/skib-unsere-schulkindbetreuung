@@ -22,7 +22,6 @@ class CheckinSchulkindbetreuungController extends AbstractController
         $today = (new \DateTime());
         $org = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
         $kind =  $this->getDoctrine()->getRepository(Kind::class)->find($kindID);
-
         $result = $checkinSchulkindservice->checkin($kind, $today,$org);
 
         return new JsonResponse($result);

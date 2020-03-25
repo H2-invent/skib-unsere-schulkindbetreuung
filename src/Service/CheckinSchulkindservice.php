@@ -32,7 +32,7 @@ class CheckinSchulkindservice
         $result['checkinText'] = $this->translator->trans('Eingecheckt');
         $result['vorname']= $kind->getVorname();
         $result['nachname']= $kind->getNachname();
-        $result['kurs']= '';
+        $result['kurs']= 'Schulkindbetreuung | '.$organisation->getName();
 
         return $result;
     }
