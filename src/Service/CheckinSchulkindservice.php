@@ -33,11 +33,11 @@ class CheckinSchulkindservice
         $result['checkinText'] = $this->translator->trans('Eingecheckt');
         $result['vorname'] = $kind->getVorname();
         $result['nachname'] = $kind->getNachname();
-        $result['kurs'] = 'SKiB | ' . $organisation->getName();
+        $result['kurs'] = 'SKiB | ' . $organisation->getName().' | '.$kind->getSchule()->getName();
         $block = $this->getZeitblock($dateTime, $kind, $organisation);
 
         if (sizeof($block) == 0) {
-            $result['error'] = false;
+            $result['error'] = true;
             $result['errorText'] = $this->translator->trans('Das Kind ist aktuell zu keiner Schulkindbetreuung angemeldet');
             $result['checkinText'] = $this->translator->trans('Nicht eingecheckt');
 
