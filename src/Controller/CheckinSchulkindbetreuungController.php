@@ -15,14 +15,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CheckinSchulkindbetreuungController extends AbstractController
 {
     /**
-     * @Route("/checkin/schulkindbetreuung/{kindID}", name="checkin_schulkindbetreuung")
+     * @Route("/checkin/schulkindbetreuung/{kindID}", name="checkin_schulkindbetreuung", methods={"GET","POST"})
      */
     public function index(Request $request, TranslatorInterface $translator, $kindID, CheckinSchulkindservice $checkinSchulkindservice)
     {
-        $today = (new \DateTime());
-        $org = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $kind =  $this->getDoctrine()->getRepository(Kind::class)->find($kindID);
-        $result = $checkinSchulkindservice->checkin($kind, $today,$org);
+
+            $today = (new \DateTime());
+            $org = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+            $kind =  $this->getDoctrine()->getRepository(Kind::class)->find($kindID);
+            $result = $checkinSchulkindservice->checkin($kind, $today,$org);
+
 
         return new JsonResponse($result);
     }
