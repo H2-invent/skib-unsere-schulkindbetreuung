@@ -29,7 +29,7 @@ class CheckinSchulkindservice
     function checkin(Kind $kind, \DateTime $dateTime, Organisation $organisation)
     {
         $result['error'] = false;
-        $result['errorText'] = $this->translator->trans('Kind erfolgreich eingecheckt');
+        $result['errorText'] = 'Hallo '.$kind->getVorname().', Willkommen in der Schulkindbetreuung.';
         $result['checkinText'] = $this->translator->trans('Eingecheckt');
         $result['vorname'] = $kind->getVorname();
         $result['nachname'] = $kind->getNachname();
