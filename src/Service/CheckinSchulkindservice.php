@@ -52,7 +52,6 @@ class CheckinSchulkindservice
         $wochentag = $dateTime->format('N') - 1;
         $timeLate = clone $dateTime;
         $timeLate->modify('+1 hour');
-        dump($timeLate);
         $qb = $this->em->getRepository(Zeitblock::class)->createQueryBuilder('zb');
         $qb->innerJoin('zb.active', 'active')
             ->andWhere(
