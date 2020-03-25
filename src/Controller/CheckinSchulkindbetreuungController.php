@@ -20,10 +20,11 @@ class CheckinSchulkindbetreuungController extends AbstractController
         $today = (new \DateTime('today'))->format('Y-m-d');
         $result = $checkinSchulkindservice->checkin($kindID, $today);
 
-            return new JsonResponse($result);
+        return new JsonResponse($result);
 
 
     }
+
     /**
      * @Route("/connect/organisation/{orgID}", name="connect_Org", methods={"GET"})
      */
@@ -31,9 +32,10 @@ class CheckinSchulkindbetreuungController extends AbstractController
     {
         $org = $this->getDoctrine()->getRepository(Organisation::class)->find($orgID);
         return new JsonResponse(array(
-            'id'=>$org->getId(),
-            'name'=>$org->getName(),
-            'partner'=>$org->getAnsprechpartner()
+                'id' => $org->getId(),
+                'name' => $org->getName(),
+                'partner' => $org->getAnsprechpartner(),
+                'url'=>$this->generateUrl('getOrganisationfromId',array('orgID'=>$org->getId()))
             )
         );
     }
@@ -45,9 +47,9 @@ class CheckinSchulkindbetreuungController extends AbstractController
     {
         $org = $this->getDoctrine()->getRepository(Organisation::class)->find($orgID);
         return new JsonResponse(array(
-                'id'=>$org->getId(),
-                'name'=>$org->getName(),
-                'partner'=>$org->getAnsprechpartner()
+                'id' => $org->getId(),
+                'name' => $org->getName(),
+                'partner' => $org->getAnsprechpartner()
             )
         );
     }
