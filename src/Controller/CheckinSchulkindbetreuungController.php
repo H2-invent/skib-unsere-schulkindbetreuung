@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CheckinSchulkindbetreuungController extends AbstractController
@@ -35,7 +36,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
                 'id' => $org->getId(),
                 'name' => $org->getName(),
                 'partner' => $org->getAnsprechpartner(),
-                'url'=>$this->generateUrl('getOrganisationfromId',array('orgID'=>$org->getId()))
+                'url'=>$this->generateUrl('getOrganisationfromId',array('orgID'=>$org->getId()),UrlGeneratorInterface::ABSOLUTE_URL)
             )
         );
     }
