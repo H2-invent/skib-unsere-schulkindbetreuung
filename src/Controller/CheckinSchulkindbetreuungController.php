@@ -20,15 +20,12 @@ class CheckinSchulkindbetreuungController extends AbstractController
     public function index(Request $request, TranslatorInterface $translator, $kindID, CheckinSchulkindservice $checkinSchulkindservice)
     {
         $today = (new \DateTime());
-        $dataIn = json_encode($request->get());
         $org = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
         $kind =  $this->getDoctrine()->getRepository(Kind::class)->find($kindID);
 
         $result = $checkinSchulkindservice->checkin($kind, $today,$org);
 
         return new JsonResponse($result);
-
-
     }
 
     /**
