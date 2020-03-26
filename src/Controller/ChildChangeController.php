@@ -4,11 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Kind;
 use App\Entity\Stammdaten;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -21,7 +17,7 @@ class ChildChangeController extends AbstractController
     /**
      * @Route("/org_child/change/seccode", name="child_change_seccode")
      */
-    public function change_seccodeAction(Request $request, TranslatorInterface $translator)
+    public function changeSeccodeAction(Request $request, TranslatorInterface $translator)
     {
 
 

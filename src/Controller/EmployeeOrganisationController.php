@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Organisation;
-use App\Entity\Stadt;
 use App\Entity\User;
 use App\Form\Type\UserType;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -227,7 +226,7 @@ class EmployeeOrganisationController extends AbstractController
     /**
      * @Route("login/org_edit/userRoles", name="org_admin_mitarbeiter_roles")
      */
-    public function UserRoles(Request $request, TranslatorInterface $translator)
+    public function userRoles(Request $request, TranslatorInterface $translator)
     {
         $user = $this->manager->findUserBy(array('id'=>$request->get('id')));
 

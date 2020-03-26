@@ -129,7 +129,7 @@ class FerienAbschluss
                 )
             );
         }
-        $attachment[] = array('type' => 'text/calendar', 'filename' => 'Ferienprogramm.ics', 'body' => $this->ics->to_string());
+        $attachment[] = array('type' => 'text/calendar', 'filename' => 'Ferienprogramm.ics', 'body' => $this->ics->toString());
         $this->mailer->sendEmail('SKIB Ferienprogramm',
             'info@h2-invent.com',
             $adresse->getEmail(),

@@ -6,7 +6,6 @@ use App\Entity\Active;
 use App\Entity\Stadt;
 use App\Entity\Zeitblock;
 use App\Service\StadtBerichtService;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -56,8 +55,6 @@ class BerichtController extends AbstractController
         $eltern = array();
         $elternT = array();
         $kinderT = array();
-        $spreadsheeet = new Spreadsheet();
-
 
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt_id'));
         if ($stadt != $this->getUser()->getStadt()) {
