@@ -13,6 +13,7 @@ import Popper from 'popper.js';
 import 'datatables.net-dt';
 // Import TinyMCE
 import icon from 'trumbowyg/dist/ui/icons.svg'
+// Import TinyMCE
 
 global.$ = global.jQuery = $;
 
@@ -27,7 +28,6 @@ import('jquery.cookie');
 import('jquery-validation');
 import('jquery-confirm');
 import('material-design-icons');
-
 import('daterangepicker');
 import('datatables.net');
 
