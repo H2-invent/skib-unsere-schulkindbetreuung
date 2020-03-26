@@ -1,0 +1,9 @@
+{
+	"name":"unsere-schulkindbetreuung.de",
+	"short_name":"SkiB",
+	"icons":[{"src":"/images/android_logo_192.png","sizes":"192x192","type":"image/png"},{"src":"/images/android_logo_512.png","sizes":"512x512","type":"image/png"}],
+	"theme_color":"#0058b0",
+	"background_color":"#f51a20",
+	"display":"standalone",
+	"start_url": "/",
+}
