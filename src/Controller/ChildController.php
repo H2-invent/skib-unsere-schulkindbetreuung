@@ -6,7 +6,6 @@ use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
-use App\Entity\Zeitblock;
 use App\Service\ChildExcelService;
 use App\Service\PrintService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -80,7 +79,7 @@ class ChildController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
         $fileName = $kind->getVorname().'_'.$kind->getNachname();
-        return $printService->printChildDetail($kind,$kind->getEltern(),$TCPDFController,$fileName,$kind->getSchule()->getOrganisation(),'D');
+        return $printService->printChildDetail($kind,$kind->getEltern(),$TCPDFController,$fileName,$kind->getSchule()->getOrganisation(),'I');
     }
     /**
      * @Route("/org_child/search/child/table", name="child_child_Table",methods={"GET","POST"})
