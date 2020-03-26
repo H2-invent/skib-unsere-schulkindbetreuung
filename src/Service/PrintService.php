@@ -225,7 +225,7 @@ class PrintService
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }
 
-    public function preparePDF($pdf, $title, $author, $subject, ?Stadt $stadt, ?Organisation $organisation)
+    public function preparePDF(\TCPDF $pdf, $title, $author, $subject, ?Stadt $stadt, ?Organisation $organisation)
     {
 
         $pdf->SetAuthor($author);

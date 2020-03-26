@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Active;
 use App\Entity\Kind;
-use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Zeitblock;
@@ -12,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WidgetStadtController extends AbstractController
@@ -26,7 +24,7 @@ class WidgetStadtController extends AbstractController
         if ($stadt != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
-        $today = (new \DateTime())->format('w');
+
         $stadt = $this->getUser()->getStadt();
         $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findOneBy(array('stadt'=>$stadt,'deleted'=>false,'id'=>$request->get('schule_id')));
@@ -41,7 +39,7 @@ class WidgetStadtController extends AbstractController
         $qb->setParameter('jahr',$active);
 
         $query = $qb->getQuery();
-        $kinder = $result = $query->getResult();
+        $kinder =  $query->getResult();
         return new JsonResponse(array('title'=>$schule->getName(),'small'=>$translator->trans('Kinder angemeldet'),'anzahl'=>sizeof($kinder),'symbol'=>'school'));
 
     }
@@ -77,7 +75,7 @@ class WidgetStadtController extends AbstractController
         $qb->setParameter('jahr',$active);
 
         $query = $qb->getQuery();
-        $kinder = $result = $query->getResult();
+        $kinder = $query->getResult();
 
 
         return new JsonResponse(array('title'=>$translator->trans('Kinder dieses Schuljahr'),'small'=>'','anzahl'=>sizeof($kinder),'symbol'=>'people'));
@@ -142,7 +140,7 @@ class WidgetStadtController extends AbstractController
         if ($stadt != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
-        $today = new DateTime();
+
         $result = array();
         $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
         foreach ($stadt->getOrganisations() as $data){

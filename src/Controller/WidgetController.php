@@ -178,7 +178,7 @@ class WidgetController extends AbstractController
             ->setParameter('today', $lastMonth)
             ->setParameter('org', $organisation);
         $query = $qb->getQuery();
-        $sepa = $result = $query->getResult();
+        $sepa = $query->getResult();
 
 
         if (sizeof($sepa) == 0 && $active !== null) {

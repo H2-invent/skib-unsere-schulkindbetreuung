@@ -10,6 +10,7 @@ namespace App\Service;
 
 
 use App\Controller\LoerrachWorkflowController;
+use App\Entity\Stadt;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -27,7 +28,7 @@ class StadtBerichtService
         $this->beruflicheSituationString = array_flip($loerrachWorkflowController->beruflicheSituation);
     }
 
-    public function generateExcel($blocks, $kinder, $eltern,$stadt)
+    public function generateExcel($blocks, $kinder, $eltern,Stadt $stadt)
     {
 
         $writer = new Xlsx($this->spreadsheet);

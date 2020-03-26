@@ -189,7 +189,6 @@ class StadtadminController extends AbstractController
             $user->setEnabled(true);
         }
         $this->manager->updateUser($user);
-        $previous = $request->getSession()->get('previous');
 
         $referer = $request
             ->headers

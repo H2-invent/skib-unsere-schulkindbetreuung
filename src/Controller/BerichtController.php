@@ -3,15 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Active;
-use App\Entity\Kind;
-use App\Entity\Schule;
 use App\Entity\Stadt;
-use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use App\Service\StadtBerichtService;
-use Doctrine\ORM\Query\Expr\Math;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -63,7 +58,7 @@ class BerichtController extends AbstractController
         $kinderT = array();
         $spreadsheeet = new Spreadsheet();
 
-        $writer = new Xlsx($spreadsheeet);
+
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt_id'));
         if ($stadt != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
