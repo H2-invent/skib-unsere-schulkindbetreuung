@@ -325,7 +325,7 @@ class PrintService
         );
 
 // QRCODE,H : QR-CODE Best error correction
-        $pdf->write2DBarcode($this->generator->generate('checkin_schulkindbetreuung', array('kindID' => $kind->getId())), 'QRCODE,H', 25, 68, 30, 30, $style, 'N');
+        $pdf->write2DBarcode($this->generator->generate('checkin_schulkindbetreuung', array('kindID' => $kind->getId()),UrlGeneratorInterface::ABSOLUTE_URL), 'QRCODE,H', 25, 68, 30, 30, $style, 'N');
         return $pdf;
     }
 }
