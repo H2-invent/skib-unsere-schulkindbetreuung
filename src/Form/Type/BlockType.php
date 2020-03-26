@@ -8,34 +8,18 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Active;
-
-use App\Entity\Schule;
-use App\Entity\Tags;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichFileType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class BlockType extends AbstractType
 {
@@ -50,8 +34,8 @@ class BlockType extends AbstractType
     {
 
         $builder
-            ->add('von', TimeType::class, array('label' => 'Betreuungsbeginn', 'required' => true, 'translation_domain' => 'form'))
-            ->add('bis', TimeType::class, array('label' => 'Betreuungsende', 'required' => true, 'translation_domain' => 'form'))
+            ->add('von', TimeType::class, array('widget'=>'single_text','label' => 'Betreuungsbeginn', 'required' => true, 'translation_domain' => 'form','attr'=>array('cl')))
+            ->add('bis', TimeType::class, array('widget'=>'single_text','label' => 'Betreuungsende', 'required' => true, 'translation_domain' => 'form'))
             ->add('min', NumberType::class, array('label' => 'Mindestanzahl an Kindern (Leerlassen wenn keine Begrenzung)', 'required' => false, 'translation_domain' => 'form'))
             ->add('max', NumberType::class, array('label' => 'Maximalanzahl an Kindern (Leerlassen wenn keine Begrenzung)', 'required' => false, 'translation_domain' => 'form'))
             ->add('ganztag', ChoiceType::class, [

@@ -5,16 +5,24 @@
     </button>
 </div>
 <div class="modal-body">
+
     {{ form_start(form, {
         'attr': {
             'class':'ajaxForm'
         }
     }) }}
     {{ form_errors(form) }}
-
+<div class="row">
+    <div class="col-md-6">
         {{ form_row(form.von) }}
-
+    </div>
+    <div class="col-md-6">
         {{ form_row(form.bis) }}
+    </div>
+</div>
+
+
+
     {% if form.ganztag is defined %}
   {{ form_row(form.ganztag) }}
     {% endif %}
