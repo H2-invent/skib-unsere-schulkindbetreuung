@@ -208,17 +208,17 @@ class PrintService
 
         $kindData = $this->templating->render('pdf/kinderliste.html.twig', array('text' => $text, 'kinder' => $kinder));
         $pdf->writeHTMLCell(
-            $w = 0,
-            $h = 0,
-            $x = 20,
-            $y = 50,
+            0,
+            0,
+            20,
+            50,
             $kindData,
-            $border = 0,
-            $ln = 1,
-            $fill = 0,
-            $reseth = true,
-            $align = '',
-            $autopadding = true
+            0,
+            1,
+            0,
+            true,
+            '',
+            true
         );
 
 
@@ -265,17 +265,17 @@ class PrintService
 
         $elternDaten = $this->templating->render('pdf/elternOrganisation.html.twig', array('eltern' => $eltern));
         $pdf->writeHTMLCell(
-            $w = 0,
-            $h = 0,
-            $x = 20,
-            $y = 30,
+            0,
+            0,
+            20,
+            30,
             $elternDaten,
-            $border = 0,
-            $ln = 1,
-            $fill = 0,
-            $reseth = true,
-            $align = '',
-            $autopadding = true
+            0,
+            1,
+            0,
+            true,
+            '',
+            true
         );
         return $pdf;
     }
@@ -284,17 +284,17 @@ class PrintService
     {
 
         $pdf->writeHTMLCell(
-            $w = 0,
-            $h = 0,
-            $x = 20,
-            $y = 50,
+            0,
+            0,
+            20,
+            50,
             $this->generateChildPage($kind),
-            $border = 0,
-            $ln = 1,
-            $fill = 0,
-            $reseth = true,
-            $align = '',
-            $autopadding = true
+            0,
+            1,
+            0,
+            true,
+            '',
+            true
         );
         return $pdf;
     }
@@ -305,17 +305,17 @@ class PrintService
         //die seite mit der kleinen checkin card
 
         $pdf->writeHTMLCell(
-            $w = 0,
-            $h = 0,
-            $x = 20,
-            $y = 30,
+            0,
+            0,
+            20,
+            30,
             $this->templating->render('pdf/checkInAusweis.html.twig', array('kind' => $kind)),
             $border = 0,
-            $ln = 1,
-            $fill = 0,
-            $reseth = true,
-            $align = '',
-            $autopadding = true
+            1,
+            0,
+            true,
+            '',
+            true
         );
         $style = array(
             'border' => false,
@@ -325,7 +325,7 @@ class PrintService
         );
 
 // QRCODE,H : QR-CODE Best error correction
-        $pdf->write2DBarcode($this->generator->generate('checkin_schulkindbetreuung', array('kindID' => $kind->getId()),UrlGeneratorInterface::ABSOLUTE_URL), 'QRCODE,H', 25, 68, 30, 30, $style, 'N');
+        $pdf->write2DBarcode($this->generator->generate('checkin_schulkindbetreuung', array('kindID' => $kind->getId()), UrlGeneratorInterface::ABSOLUTE_URL), 'QRCODE,H', 25, 68, 30, 30, $style, 'N');
         return $pdf;
     }
 }
