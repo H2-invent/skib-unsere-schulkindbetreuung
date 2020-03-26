@@ -12,7 +12,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use function Doctrine\ORM\QueryBuilder;
 
@@ -53,7 +52,7 @@ class WidgetController extends AbstractController
         $qb->setParameter('jahr', $active)
             ->setParameter('wochentag', $today);
         $query = $qb->getQuery();
-        $kinder = $result = $query->getResult();
+        $kinder = $query->getResult();
 
 
         return new JsonResponse(array('title' => $translator->trans('Anwesende Kinder heute'), 'small' => '', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));
@@ -91,7 +90,7 @@ class WidgetController extends AbstractController
         $qb->setParameter('jahr', $active);
 
         $query = $qb->getQuery();
-        $kinder = $result = $query->getResult();
+        $kinder =$query->getResult();
 
 
         return new JsonResponse(array('title' => $translator->trans('Kinder dieses Schuljahr'), 'small' => '', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));
@@ -106,7 +105,7 @@ class WidgetController extends AbstractController
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $today = (new \DateTime())->format('w');
+
         $stadt = $this->getUser()->getStadt();
         $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findOneBy(array('organisation' => $organisation, 'id' => $request->get('schule_id')));
@@ -120,7 +119,7 @@ class WidgetController extends AbstractController
         $qb->setParameter('jahr', $active);
 
         $query = $qb->getQuery();
-        $kinder = $result = $query->getResult();
+        $kinder = $query->getResult();
         return new JsonResponse(array('title' => $schule->getName(), 'small' => $translator->trans('Kinder angemeldet'), 'anzahl' => sizeof($kinder), 'symbol' => 'school'));
 
     }
@@ -134,7 +133,7 @@ class WidgetController extends AbstractController
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $today = (new \DateTime())->format('w');
+
         $stadt = $this->getUser()->getStadt();
         $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
         $qb = $this->getDoctrine()->getRepository(Zeitblock::class)->createQueryBuilder('b')

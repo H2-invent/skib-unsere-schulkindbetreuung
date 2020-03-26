@@ -29,7 +29,7 @@ class PrintService
     private $fileSystem;
     private $generator;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, FilesystemInterface $publicUploadsFilesystem, \Swift_Mailer $mailer, EngineInterface $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(UrlGeneratorInterface $urlGenerator, FilesystemInterface $publicUploadsFilesystem, EngineInterface $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
 
         $this->templating = $templating;
@@ -310,7 +310,7 @@ class PrintService
             20,
             30,
             $this->templating->render('pdf/checkInAusweis.html.twig', array('kind' => $kind)),
-            $border = 0,
+            0,
             1,
             0,
             true,

@@ -10,31 +10,19 @@ namespace App\Service;
 
 
 use App\Controller\LoerrachWorkflowController;
-use App\Entity\Active;
-use App\Entity\Kind;
-use App\Entity\Organisation;
-use App\Entity\Sepa;
-use App\Entity\Stadt;
-use App\Entity\Stammdaten;
-
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 class StadtBerichtService
 {
     private $spreadsheet;
-    private $writer;
+
     private $translator;
     private $beruflicheSituationString;
     public function __construct(TranslatorInterface $translator,LoerrachWorkflowController $loerrachWorkflowController)
     {
         $this->spreadsheet = new Spreadsheet();
-        $this->writer = new Xlsx($this->spreadsheet);
         $this->translator = $translator;
         $this->beruflicheSituationString = array_flip($loerrachWorkflowController->beruflicheSituation);
     }

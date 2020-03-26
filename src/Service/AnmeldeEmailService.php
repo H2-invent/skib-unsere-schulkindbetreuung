@@ -10,14 +10,8 @@ namespace App\Service;
 
 
 use App\Entity\Kind;
-use App\Entity\Organisation;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
-
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
@@ -79,7 +73,6 @@ class AnmeldeEmailService
             }
             $attachment[] = array('type' => 'text/calendar', 'filename' => $kind->getVorname() . ' ' . $kind->getNachname() . '.ics', 'body' => $this->ics->to_string());
 
-            $icsService = new IcsService();
             $mailBetreff = $this->translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $kind->getVorname() . ' ' . $kind->getNachname();
             $mailContent = $this->templating->render('email/anmeldebestatigung.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt));
             $this->mailer->sendEmail($kind->getSchule()->getOrganisation()->getName(), $kind->getSchule()->getOrganisation()->getEmail(), $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
