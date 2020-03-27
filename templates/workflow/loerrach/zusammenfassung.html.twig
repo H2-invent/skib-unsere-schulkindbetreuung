@@ -131,12 +131,18 @@
                                     <td>{{ k.klasse }}. {{ 'Klasse'|trans }}</td>
                                 </tr>
                                 <tr>
+                                    {#  todo masernimpfungText #}
+                                    <td>{% trans %}Masernimpfung{% endtrans %}</td>
+                                    <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
                                     <td>{% trans %}Allergien{% endtrans %}</td>
-                                    <td>{{ k.allergie }}</td>
+                                    <td> {% if k.allergie|length== 0 %}{{ 'Keine Angabe'|trans }}{% else %}{{ k.allergie }}{% endif %}</td>
                                 </tr>
                                 <tr>
                                     <td>{% trans %}Medikamente{% endtrans %}</td>
-                                    <td>{{ k.medikamente }}</td>
+                                    <td> {% if k.medikamente|length== 0 %}{{ 'Keine Angabe'|trans }}{% else %}{{ k.medikamente }}{% endif %}</td>
+
                                 </tr>
 
                                 <tr>
@@ -179,7 +185,7 @@
                                 {% if k.betreungsblocksReal|length > 0 %}
                                     <tr>
                                         <td>{% trans %}Bemerkung{% endtrans %}</td>
-                                        <td>{{ k.bemerkung }}</td>
+                                        <td> {% if k.bemerkung|length== 0 %}{{ 'Keine Angabe'|trans }}{% else %}{{ k.bemerkung|nl2br }}{% endif %}</td>
                                     </tr>
 
                                     <tr>

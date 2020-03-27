@@ -14,6 +14,7 @@
             <th>{% trans %}Notfallkontakt{% endtrans %}</th>
             <th>{% trans %}Schule{% endtrans %}</th>
             <th>{% trans %}Klasse{% endtrans %}</th>
+            <th>{% trans %}Masernimpfung{% endtrans %}</th>
         </tr>
         </thead>
         <tbody>
@@ -44,6 +45,8 @@
                 <td>{{ k.eltern.notfallkontakt }}</td>
                 <td>{{ k.schule.name }}</td>
                 <td>{{ k.klasse }}. {{ 'Klasse'|trans }}</td>
+                {#  todo masernimpfungText #}
+                <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>

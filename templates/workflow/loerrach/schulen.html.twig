@@ -92,13 +92,17 @@
                     </div>
                 </div>
             </section>
-            <div class="text-center">
-                <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"
-                   class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
-                <a href="{{ path('loerrach_workflow_mittagessen', {'slug':stadt.slug}) }}"
-                   class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
-            </div>
+
+
         </div>
+    </div>
+
+    <div class="text-center stickyBottom">
+        <hr class="hr-bold">
+        <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"
+           class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
+        <a href="{{ path('loerrach_workflow_mittagessen', {'slug':stadt.slug}) }}"
+           class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
     </div>
 {% endblock %}
 {% block webpack %}
