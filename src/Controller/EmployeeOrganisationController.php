@@ -37,6 +37,7 @@ class EmployeeOrganisationController extends AbstractController
             'ROLE_ORG_FERIEN_CHECKIN'=>'ROLE_ORG_FERIEN_CHECKIN',
             'ROLE_ORG_FERIEN_ADMIN'=>'ROLE_ORG_FERIEN_ADMIN',
             'ROLE_ORG_FERIEN_STORNO'=>'ROLE_ORG_FERIEN_STORNO',
+            'ROLE_ORG_CHECKIN_SHOW'=>'ROLE_ORG_CHECKIN_SHOW',
         );
     }
     /**

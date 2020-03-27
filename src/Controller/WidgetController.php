@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Active;
+use App\Entity\Anwesenheit;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
@@ -55,7 +56,37 @@ class WidgetController extends AbstractController
         $kinder = $query->getResult();
 
 
-        return new JsonResponse(array('title' => $translator->trans('Anwesende Kinder heute'), 'small' => '', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));
+        return new JsonResponse(array('title' => $translator->trans('Anwesende Kinder'), 'small' => 'Nach Liste', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));
+    }
+
+    /**
+     * @Route("/org_checkin/widget/kidsTodayReal", name="widget_kids_today_real")
+     */
+    public function indexCheckin(Request $request, TranslatorInterface $translator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        if ($organisation != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        $today = new \DateTime();
+        $midnight = new \DateTime();
+        $midnight->setTime(0,0,0);
+
+        $stadt = $this->getUser()->getStadt();
+        $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        $qb = $this->getDoctrine()->getRepository(Anwesenheit::class)->createQueryBuilder('an');
+        $qb->andWhere('an.organisation = :org')
+            ->andWhere(
+                $qb->expr()->between('an.arrivedAt', ':midnight', ':now')
+            )
+            ->setParameter('now', $today)
+            ->setParameter('midnight', $midnight)
+            ->setParameter('org', $organisation);
+        $query = $qb->getQuery();
+        $kinder = $query->getResult();
+
+
+        return new JsonResponse(array('title' => $translator->trans('Anwesende Kinder'), 'small' => 'Checkin', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));
     }
 
     /**
@@ -90,7 +121,7 @@ class WidgetController extends AbstractController
         $qb->setParameter('jahr', $active);
 
         $query = $qb->getQuery();
-        $kinder =$query->getResult();
+        $kinder = $query->getResult();
 
 
         return new JsonResponse(array('title' => $translator->trans('Kinder dieses Schuljahr'), 'small' => '', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));
@@ -143,19 +174,19 @@ class WidgetController extends AbstractController
             ->andWhere('schule.organisation =:org')
             ->setParameter('org', $organisation)
             ->setParameter('jahr', $active);
-            if($request->get('schule_id')){
-                $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule_id'));
-                $qb->andWhere('b.schule =:schule')
-                    ->setParameter('schule',$schule);
-            }
+        if ($request->get('schule_id')) {
+            $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule_id'));
+            $qb->andWhere('b.schule =:schule')
+                ->setParameter('schule', $schule);
+        }
         $blocks = $qb->getQuery()->getResult();
 
         $blocksRender = array();
         foreach ($blocks as $data) {
             $blocksRender[$data->getWochentag()][] = $data;
         }
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('deleted'=>false,'organisation'=>$organisation));
-        return $this->render('widget/blockContent.html.twig', array('org'=>$organisation,'blocks' => $blocksRender,'schule'=>$schule));
+        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('deleted' => false, 'organisation' => $organisation));
+        return $this->render('widget/blockContent.html.twig', array('org' => $organisation, 'blocks' => $blocksRender, 'schule' => $schule));
 
     }
 
@@ -170,7 +201,7 @@ class WidgetController extends AbstractController
         }
         $lastMonth = (new \DateTime())->modify('first day of last Month');
         $lastDay = (new \DateTime())->modify('last day of last Month');
-        $active = $this->getDoctrine()->getRepository(Active::class)->findSchuleBetweentwoDates($lastDay,$lastDay,$organisation->getStadt());
+        $active = $this->getDoctrine()->getRepository(Active::class)->findSchuleBetweentwoDates($lastDay, $lastDay, $organisation->getStadt());
         $qb = $this->getDoctrine()->getRepository(Sepa::class)->createQueryBuilder('s');
         $qb->andWhere('s.von <= :today')
             ->andWhere('s.bis >= :today')

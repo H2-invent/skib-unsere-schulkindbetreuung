@@ -137,6 +137,12 @@
                                     class="material-icons">people</i> {% trans %}Angemeldete Kinder{% endtrans %}
                         </a></li>
                 {% endif %}
+                {% if is_granted('ROLE_ORG_CHECKIN_SHOW') %}
+                    <li><a href="{{ path('orgCheckin_how_all_kids',{'id':app.user.organisation.id}) }}"> <i
+                                    class="material-icons">people</i> {% trans %}Anwesende Kinder{% endtrans %}
+                        </a></li>
+
+                {% endif %}
 
                 {% if is_granted('ROLE_CITY_REPORT') %}
                     <li><a href="{{ path('stadt_bericht_index',{'stadt_id':app.user.stadt.id}) }}"> <i

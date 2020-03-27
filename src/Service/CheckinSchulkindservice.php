@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Anwesenheit;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Zeitblock;
@@ -29,10 +30,10 @@ class CheckinSchulkindservice
     function checkin(Kind $kind, \DateTime $dateTime, Organisation $organisation)
     {
         $result['error'] = false;
-        $result['errorText'] = 'Hallo '.$kind->getVorname().', Willkommen in der Schulkindbetreuung.';
+        $result['errorText'] = 'Hallo ' . $kind->getVorname() . ', Willkommen in der Schulkindbetreuung.';
         $result['checkinText'] = $this->translator->trans('Eingecheckt');
-        $result['name'] = 'Name: '.$kind->getVorname().' '.$kind->getNachname();
-        $result['kurs'] = 'SKiB | ' . $organisation->getName().' | '.$kind->getSchule()->getName();
+        $result['name'] = 'Name: ' . $kind->getVorname() . ' ' . $kind->getNachname();
+        $result['kurs'] = 'SKiB | ' . $organisation->getName() . ' | ' . $kind->getSchule()->getName();
         $block = $this->getZeitblock($dateTime, $kind, $organisation);
 
         if (sizeof($block) == 0) {
@@ -40,6 +41,8 @@ class CheckinSchulkindservice
             $result['errorText'] = $this->translator->trans('Das Kind ist aktuell zu keiner Schulkindbetreuung angemeldet');
             $result['checkinText'] = $this->translator->trans('Nicht eingecheckt');
 
+        } else {
+            $this->getAnwesenheitToday($kind, $dateTime, $organisation);
         }
 
         return $result;
@@ -85,5 +88,56 @@ class CheckinSchulkindservice
         $block = $query->getResult();
 
         return $block;
+    }
+
+    public function getAnwesenheitToday(Kind $kind, \DateTime $dateTime, Organisation $organisation)
+    {
+
+        $midnight = clone $dateTime;
+
+        $midnight->setTime(0, 0, 0);
+        $qb = $this->em->getRepository(Anwesenheit::class)->createQueryBuilder('an');
+        $qb->andWhere('an.kind = :kind')
+            ->andWhere(
+                $qb->expr()->between('an.arrivedAt', ':midnight', ':now')
+            )
+            ->setParameter('midnight', $midnight)
+            ->setParameter('now', $dateTime)
+            ->setParameter('kind', $kind);
+        $query = $qb->getQuery();
+        $anwesenheit = $query->getOneOrNullResult();
+
+        if ($anwesenheit) {
+            $anwesenheit->setArrivedAt($dateTime);
+        } else {
+            $anwesenheit = new Anwesenheit();
+            $anwesenheit->setCreatedAt($dateTime);
+            $anwesenheit->setArrivedAt($dateTime);
+            $anwesenheit->setKind($kind);
+            $anwesenheit->setOrganisation($organisation);
+        }
+        $this->em->persist($anwesenheit);
+        $this->em->flush();
+
+        return $anwesenheit;
+    }
+
+    public function getAllKidsToday(Organisation $organisation, \DateTime $dateTime)
+    {
+
+        $midnight = clone $dateTime;
+        $midnight->setTime(0, 0, 0);
+        $dateTime->setTime(23, 59, 59);
+        $qb = $this->em->getRepository(Kind::class)->createQueryBuilder('k');
+        $qb->innerJoin('k.anwesenheitenSchulkindbetreuung','an')
+        ->andWhere('an.organisation = :org')
+            ->andWhere(
+                $qb->expr()->between('an.arrivedAt', ':midnight', ':endDay')
+            )
+            ->setParameter('midnight', $midnight)
+            ->setParameter('endDay', $dateTime)
+            ->setParameter('org', $organisation);
+        $query = $qb->getQuery();
+        return $query->getResult();
     }
 }

@@ -15,15 +15,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CheckinSchulkindbetreuungController extends AbstractController
 {
     /**
-     * @Route("/checkin/schulkindbetreuung/{kindID}", name="checkin_schulkindbetreuung", methods={"GET","POST"})
+     * @Route("/checkin/schulkindbetreuung/{kindID}", name="checkin_schulkindbetreuung", methods={"POST"})
      */
     public function index(Request $request, TranslatorInterface $translator, $kindID, CheckinSchulkindservice $checkinSchulkindservice)
     {
 
-            $today = (new \DateTime());
-            $org = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-            $kind =  $this->getDoctrine()->getRepository(Kind::class)->find($kindID);
-            $result = $checkinSchulkindservice->checkin($kind, $today,$org);
+        $today = (new \DateTime());
+        $org = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($kindID);
+        $result = $checkinSchulkindservice->checkin($kind, $today, $org);
 
 
         return new JsonResponse($result);
@@ -39,7 +39,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
                 'id' => $org->getId(),
                 'name' => $org->getName(),
                 'partner' => $org->getAnsprechpartner(),
-                'url'=>$this->generateUrl('getOrganisationfromId',array('orgID'=>$org->getId()),UrlGeneratorInterface::ABSOLUTE_URL)
+                'url' => $this->generateUrl('getOrganisationfromId', array('orgID' => $org->getId()), UrlGeneratorInterface::ABSOLUTE_URL)
             )
         );
     }
@@ -56,4 +56,21 @@ class CheckinSchulkindbetreuungController extends AbstractController
             )
         );
     }
+
+    /**
+     * @Route("/org_checkin/show/all", name="orgCheckin_how_all_kids", methods={"GET"})
+     */
+    public function getallKids(Request $request, CheckinSchulkindservice $checkinSchulkindservice,TranslatorInterface $translator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        if ($organisation != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        $today = new \DateTime();
+        $kinder = $checkinSchulkindservice->getAllKidsToday($organisation, $today);
+        $text = $translator->trans('Kinder Anwesend am %date%',array('%date%'=>$today->format('d.m.Y')));
+     return $this->render('checkin_schulkindbetreuung/childList.twig',array('text'=>$text,'kinder'=>$kinder));
+
+    }
+
 }
