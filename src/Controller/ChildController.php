@@ -6,7 +6,6 @@ use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
-use App\Entity\Zeitblock;
 use App\Service\ChildExcelService;
 use App\Service\PrintService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

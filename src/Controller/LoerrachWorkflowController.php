@@ -165,7 +165,7 @@ class LoerrachWorkflowController extends AbstractController
             return new JsonResponse(array('error' => 1, 'snack' => $text));
         }
 
-        $errors = array();
+
         if ($form->isSubmitted()) {
             try {
                 $kind = $form->getData();

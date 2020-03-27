@@ -382,3 +382,6 @@ height: auto;
   bottom: 0;
   background: #ffffff;
 }
+.jqclockpicker-container{
+  z-index: 5000;
+}

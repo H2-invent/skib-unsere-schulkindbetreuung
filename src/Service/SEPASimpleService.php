@@ -9,14 +9,11 @@
 namespace App\Service;
 
 
-use Symfony\Component\Templating\EngineInterface;
-
-
 class SEPASimpleService
 {
     private $FVersion, $FPmtInf, $FAnzahl, $FSumme;
 
-    public function __construct(SEPAService $SEPAService)
+    public function __construct()
     {
         $this->FVersion = '1';
         $this->FPmtInf = array();

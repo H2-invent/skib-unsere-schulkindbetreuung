@@ -7,8 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable as Translatable;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OrganisationRepository")
  * @Vich\Uploadable
@@ -288,6 +289,11 @@ class Organisation
      */
     private $kundennummerns;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Anwesenheit", mappedBy="organisation")
+     */
+    private $anwesenheitSchulkindbetreuung;
+
 
 
 
@@ -301,6 +307,7 @@ class Organisation
         $this->paymentsFerien = new ArrayCollection();
         $this->orgNews = new ArrayCollection();
         $this->kundennummerns = new ArrayCollection();
+        $this->anwesenheitSchulkindbetreuung = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1003,6 +1010,37 @@ class Organisation
             // set the owning side to null (unless already changed)
             if ($kundennummern->getOrganisation() === $this) {
                 $kundennummern->setOrganisation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Anwesenheit[]
+     */
+    public function getAnwesenheitSchulkindbetreuung(): Collection
+    {
+        return $this->anwesenheitSchulkindbetreuung;
+    }
+
+    public function addAnwesenheitSchulkindbetreuung(Anwesenheit $anwesenheitSchulkindbetreuung): self
+    {
+        if (!$this->anwesenheitSchulkindbetreuung->contains($anwesenheitSchulkindbetreuung)) {
+            $this->anwesenheitSchulkindbetreuung[] = $anwesenheitSchulkindbetreuung;
+            $anwesenheitSchulkindbetreuung->setOrganisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnwesenheitSchulkindbetreuung(Anwesenheit $anwesenheitSchulkindbetreuung): self
+    {
+        if ($this->anwesenheitSchulkindbetreuung->contains($anwesenheitSchulkindbetreuung)) {
+            $this->anwesenheitSchulkindbetreuung->removeElement($anwesenheitSchulkindbetreuung);
+            // set the owning side to null (unless already changed)
+            if ($anwesenheitSchulkindbetreuung->getOrganisation() === $this) {
+                $anwesenheitSchulkindbetreuung->setOrganisation(null);
             }
         }
 

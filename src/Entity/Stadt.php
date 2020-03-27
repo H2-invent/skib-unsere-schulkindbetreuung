@@ -7,8 +7,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable as Translatable;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StadtRepository")
@@ -248,6 +248,11 @@ class Stadt
      * @ORM\Column(type="integer")
      */
     private $minBlocksPerDay = 0;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $onlineCheckinEnable;
 
 
     public function __construct()
@@ -829,6 +834,18 @@ class Stadt
     public function setMinBlocksPerDay(int $minBlocksPerDay): self
     {
         $this->minBlocksPerDay = $minBlocksPerDay;
+
+        return $this;
+    }
+
+    public function getOnlineCheckinEnable(): ?bool
+    {
+        return $this->onlineCheckinEnable;
+    }
+
+    public function setOnlineCheckinEnable(?bool $onlineCheckinEnable): self
+    {
+        $this->onlineCheckinEnable = $onlineCheckinEnable;
 
         return $this;
     }
