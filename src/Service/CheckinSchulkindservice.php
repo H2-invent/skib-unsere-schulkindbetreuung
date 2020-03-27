@@ -31,8 +31,7 @@ class CheckinSchulkindservice
         $result['error'] = false;
         $result['errorText'] = 'Hallo '.$kind->getVorname().', Willkommen in der Schulkindbetreuung.';
         $result['checkinText'] = $this->translator->trans('Eingecheckt');
-        $result['vorname'] = $kind->getVorname();
-        $result['nachname'] = $kind->getNachname();
+        $result['name'] = 'Name: '.$kind->getVorname().' '.$kind->getNachname();
         $result['kurs'] = 'SKiB | ' . $organisation->getName().' | '.$kind->getSchule()->getName();
         $block = $this->getZeitblock($dateTime, $kind, $organisation);
 
