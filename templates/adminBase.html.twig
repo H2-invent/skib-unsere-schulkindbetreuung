@@ -7,13 +7,12 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
-
+    <link rel="manifest" href="/site.webmanifest">
 
     {{ encore_entry_link_tags('app') }}
 
 
     <!-- Favicon-->
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
 
@@ -137,6 +136,12 @@
                     <li><a href="{{ path('child_show',{'id':app.user.organisation.id}) }}"> <i
                                     class="material-icons">people</i> {% trans %}Angemeldete Kinder{% endtrans %}
                         </a></li>
+                {% endif %}
+                {% if is_granted('ROLE_ORG_CHECKIN_SHOW') %}
+                    <li><a href="{{ path('orgCheckin_how_all_kids',{'id':app.user.organisation.id}) }}"> <i
+                                    class="material-icons">people</i> {% trans %}Anwesende Kinder{% endtrans %}
+                        </a></li>
+
                 {% endif %}
 
                 {% if is_granted('ROLE_CITY_REPORT') %}

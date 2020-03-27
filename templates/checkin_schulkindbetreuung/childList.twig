@@ -1,0 +1,14 @@
+{% extends 'adminBase.html.twig' %}
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <!-- Count item widget-->
+                <div class=" col-12 card">
+                    {% include 'child/childTable.html.twig' %}
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

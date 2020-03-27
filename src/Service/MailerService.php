@@ -10,29 +10,22 @@ namespace App\Service;
 
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\Mailer\Bridge\Mailgun\Http\MailgunTransport;
-
-use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mailer\Transport\TransportInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\NamedAddress;
-use function MongoDB\BSON\fromJSON;
+use Symfony\Component\Mime\Email;
 
 class MailerService
 {
 
 
     private $mailgun;
-    private $smtp;
+
     private $swift;
     private $parameter;
-    public function __construct(ParameterBagInterface $parameterBag, MailerInterface $mailerInterface, TransportInterface $smtp,\Swift_Mailer $swift_Mailer)
+    public function __construct(ParameterBagInterface $parameterBag, MailerInterface $mailerInterface, \Swift_Mailer $swift_Mailer)
     {
-        $this->smtp = $smtp;
+
         $this->mailgun =$mailerInterface;
         $this->swift = $swift_Mailer;
 

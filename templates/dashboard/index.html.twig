@@ -34,6 +34,7 @@
             {% if app.user.organisation is not null %}
             '{{ path('widget_kids_today',{'id':app.user.organisation.id}) }}',
             '{{ path('widget_kids_schuljahr',{'id':app.user.organisation.id}) }}',
+            '{{ path('widget_kids_today_real',{'id':app.user.organisation.id}) }}',
                 {% for s in app.user.organisation.schule  %}
             '{{ path('widget_kids_schule',{'org_id':app.user.organisation.id,'schule_id':s.id}) |raw    }}',
                 {% endfor %}

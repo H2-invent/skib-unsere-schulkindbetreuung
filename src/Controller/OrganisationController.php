@@ -6,9 +6,6 @@ use App\Entity\Organisation;
 use App\Entity\Stadt;
 use App\Form\Type\OrganisationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -50,7 +47,7 @@ class OrganisationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $organisation = $form->getData();
             $organisation->setStadt($city);
-            $organisation->setSlug($this->friendly_url($organisation->getName()));
+            $organisation->setSlug($this->friendlyUrl($organisation->getName()));
             $errors = $validator->validate($organisation);
             if (count($errors) == 0) {
                 $em = $this->getDoctrine()->getManager();
@@ -134,7 +131,7 @@ class OrganisationController extends AbstractController
 
     }
 
-    private function friendly_url($url)
+    private function friendlyUrl($url)
     {
         // everything to lower and no spaces begin or end
         $url = strtolower(trim($url));
