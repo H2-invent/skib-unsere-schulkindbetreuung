@@ -94,8 +94,8 @@ class CheckinSchulkindservice
     {
 
         $midnight = clone $dateTime;
-
         $midnight->setTime(0, 0, 0);
+
         $qb = $this->em->getRepository(Anwesenheit::class)->createQueryBuilder('an');
         $qb->andWhere('an.kind = :kind')
             ->andWhere(
@@ -137,6 +137,29 @@ class CheckinSchulkindservice
             ->setParameter('midnight', $midnight)
             ->setParameter('endDay', $dateTime)
             ->setParameter('org', $organisation);
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+    public function getAllKidsTodayandBlock(Organisation $organisation, \DateTime $dateTime,Zeitblock $zeitblock)
+    {
+
+        $midnight = clone $dateTime;
+        $midnight->setTime(0, 0, 0);
+        $dateTime->setTime(23, 59, 59);
+
+        $qb = $this->em->getRepository(Kind::class)->createQueryBuilder('k');
+        $qb->innerJoin('k.anwesenheitenSchulkindbetreuung','an')
+            ->andWhere('an.organisation = :org')
+            ->andWhere(
+                $qb->expr()->between('an.arrivedAt', ':midnight', ':endDay')
+            )
+            ->innerJoin('k.zeitblocks','zb')
+            ->andWhere('zb = :block')
+            ->setParameter('block',$zeitblock)
+            ->setParameter('midnight', $midnight)
+            ->setParameter('endDay', $dateTime)
+            ->setParameter('org', $organisation);
+
         $query = $qb->getQuery();
         return $query->getResult();
     }

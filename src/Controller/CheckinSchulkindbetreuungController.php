@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Kind;
 use App\Entity\Organisation;
+use App\Entity\Zeitblock;
 use App\Service\CheckinSchulkindservice;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -60,7 +61,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
     /**
      * @Route("/org_checkin/show/all", name="orgCheckin_how_all_kids", methods={"GET"})
      */
-    public function getallKids(Request $request, CheckinSchulkindservice $checkinSchulkindservice,TranslatorInterface $translator)
+    public function getallKids(Request $request, CheckinSchulkindservice $checkinSchulkindservice, TranslatorInterface $translator)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
@@ -68,9 +69,31 @@ class CheckinSchulkindbetreuungController extends AbstractController
         }
         $today = new \DateTime();
         $kinder = $checkinSchulkindservice->getAllKidsToday($organisation, $today);
-        $text = $translator->trans('Kinder Anwesend am %date%',array('%date%'=>$today->format('d.m.Y')));
-     return $this->render('checkin_schulkindbetreuung/childList.twig',array('text'=>$text,'kinder'=>$kinder));
+        $text = $translator->trans('Kinder Anwesend am %date%', array('%date%' => $today->format('d.m.Y')));
+        return $this->render('checkin_schulkindbetreuung/childList.twig', array('text' => $text, 'kinder' => $kinder));
 
     }
 
+    /**
+     * @Route("/org_checkin/show/block", name="orgCheckin_how_block_kids", methods={"GET"})
+     */
+    public function getBlockKids(Request $request, CheckinSchulkindservice $checkinSchulkindservice, TranslatorInterface $translator)
+    {
+        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        if ($organisation != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        $today = new \DateTime();
+        $kinder = $checkinSchulkindservice->getAllKidsTodayandBlock($organisation, $today, $block);
+        $text = $translator->trans('Kinder Anwesend im Betreuungszeitfenster am %date% von %time% Uhr für die Schule %schule%',
+            array(
+                '%date%' => $block->getWochentagString(),
+                '%time%' => $block->getVon()->format('H:i').'-'.$block->getBis()->format('H:i'),
+                '%schule%'=>$block->getSchule()->getName()
+            )
+        );
+        return $this->render('checkin_schulkindbetreuung/childList.twig', array('text' => $text, 'kinder' => $kinder));
+
+    }
 }

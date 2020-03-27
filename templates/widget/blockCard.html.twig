@@ -17,7 +17,9 @@
                 {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
                     <a href="{{ path('child_show',{'id':b.schule.organisation.id,'block':b.id}) }}"><i class="material-icons">info</i></a>
                 {% endif %}
-
+                {% if is_granted('ROLE_ORG_CHECKIN_SHOW') %}
+                    <a href="{{ path('orgCheckin_how_block_kids',{'id':b.schule.organisation.id,'block_id':b.id}) }}"><i class="material-icons">how_to_reg</i></a>
+                {% endif %}
 
             </div>
         </div>

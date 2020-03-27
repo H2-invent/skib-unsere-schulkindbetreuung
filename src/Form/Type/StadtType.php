@@ -12,14 +12,12 @@ use App\Entity\Stadt;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class StadtType extends AbstractType
@@ -56,6 +54,7 @@ class StadtType extends AbstractType
             ->add('name', TextType::class,['label'=>'Name der Stadt','translation_domain' => 'form'])
             ->add('slug', TextType::class,['label'=>'Slug der Stadt','translation_domain' => 'form'])
             ->add('active', CheckboxType::class,['required'=>false,'label'=>'Stadt aktiv','translation_domain' => 'form'])
+            ->add('onlineCheckinEnable', CheckboxType::class,['required'=>false,'label'=>'Online Checkin aktivieren','translation_domain' => 'form'])
             ->add('ferienprogramm', CheckboxType::class,['required'=>false,'label'=>'Wir bieten eine Ferienbetreuung über dieses Portal an','translation_domain' => 'form'])
             ->add('schulkindBetreung', CheckboxType::class,['required'=>false,'label'=>'Wir bieten eine Schulkindbetreuung über dieses Portal an','translation_domain' => 'form'])
             ->add('email', TextType::class,['label'=>'Email','translation_domain' => 'form'])

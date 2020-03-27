@@ -164,8 +164,11 @@ class PrintService
             '',
             true
         );
-        $pdf->AddPage('H    ', 'A4');
-        $pdf = $this->addCard($kind, $pdf);
+        if($stadt->getOnlineCheckinEnable()){
+            $pdf->AddPage('H    ', 'A4');
+            $pdf = $this->addCard($kind, $pdf);
+        }
+
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }
 
@@ -177,8 +180,11 @@ class PrintService
         $pdf = $this->addChildDetails($kind, $pdf);
         $pdf->AddPage('H    ', 'A4');
         $pdf = $this->addEltern($elter, $pdf);
-        $pdf->AddPage('H    ', 'A4');
-        $pdf = $this->addCard($kind, $pdf);
+        if($kind->getSchule()->getOrganisation()->getStadt()->getOnlineCheckinEnable()){
+            $pdf->AddPage('H    ', 'A4');
+            $pdf = $this->addCard($kind, $pdf);
+        }
+
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }
 
