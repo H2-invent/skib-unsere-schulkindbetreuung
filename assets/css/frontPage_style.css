@@ -385,3 +385,11 @@ height: auto;
 .jqclockpicker-container{
   z-index: 5000;
 }
+
+.modal-dialog-scrollable>.modal-content {
+  overflow: visible;
+  max-height: calc(100vh - 7rem);
+}
+.modal-dialog.cascading-modal {
+  margin-top: 8%;
+}
