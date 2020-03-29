@@ -71,12 +71,7 @@ $(document).on('click', '.loadInTarget', function (e) {
     e.preventDefault();
     var ele = $(this);
     $(ele.attr('data-wrapper')).load(ele.attr('href') + ' ' + ele.attr('data-target'), function () {
-        $('.nav-tabs').scrollingTabs({
-            bootstrapVersion: 4,
-            cssClassLeftArrow: 'fa fa-chevron-left',
-            cssClassRightArrow: 'fa fa-chevron-right',
-            disableScrollArrowsOnFullyScrolled: true
-        });
+
         Waves.attach('.waves-light', ['waves-effect']);
     });
 

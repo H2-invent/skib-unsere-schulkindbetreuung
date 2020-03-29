@@ -388,8 +388,8 @@ height: auto;
 
 .modal-dialog-scrollable>.modal-content {
   overflow: visible;
-  max-height: calc(100vh - 7rem);
+  max-height: calc(85vh);
 }
 .modal-dialog.cascading-modal {
-  margin-top: 8%;
+  margin-top: 5%;
 }
