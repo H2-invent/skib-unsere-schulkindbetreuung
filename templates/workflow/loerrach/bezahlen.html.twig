@@ -19,14 +19,15 @@
             <div class="mb-4">
                 <div class="col-sm-11">
                     {{ form_start(form) }}
-                    {{ form_label(form.iban) }}
-                    {{ form_widget(form.iban) }}
 
-                    {{ form_label(form.bic) }}
-                    {{ form_widget(form.bic) }}
+                    {{ form_row(form.iban) }}
 
-                    {{ form_label(form.kontoinhaber) }}
-                    {{ form_widget(form.kontoinhaber) }}
+
+                    {{ form_row(form.bic) }}
+
+
+                    {{ form_row(form.kontoinhaber) }}
+
                 </div>
             </div>
             <div class="mb-3">

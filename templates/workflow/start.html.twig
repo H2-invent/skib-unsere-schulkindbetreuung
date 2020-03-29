@@ -125,16 +125,45 @@
                                 <h4>
                                     {% trans %}Neuigkeiten{% endtrans %}
                                 </h4>
+                                <hr class="hr-bold">
                                 {% if stadt.news is not null %}
                                     {% for n in stadt.news if n.activ %}
-                                        <a class="loadContent"
-                                           href="{{ path('news_show_all', {'id': n.id, 'slug': stadt.slug}) }}">
-                                            <b>{{ n.title }}</b>
-                                        </a>
-                                        <br/>
-                                        <div class="newsPreview">
-                                            {{ n.message|striptags('<br>')|raw }}
+
+                                        <!-- Small news -->
+                                        <div class="single-news mb-lg-0 mb-4">
+
+                                            <!-- Grid row -->
+                                            <div class="row">
+
+                                                <!-- Grid column -->
+
+                                                <!-- Grid column -->
+
+                                                <!-- Grid column -->
+                                                <div class="col-md-12">
+
+                                                    <!-- Excerpt -->
+                                                    <p class="font-weight-bold dark-grey-text">{{ n.date|date('d.m.Y')}} {{ n.title }}</p>
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="col-11 text-truncate pl-0 mb-lg-0 mb-3">
+
+                                                            <a class="loadContent" href="{{ path('news_show_all', {'id': n.id, 'slug': stadt.slug}) }}" class="dark-grey-text"> {{ n.message|striptags('<br>')|raw }}</a>
+                                                        </div>
+                                                        <a class="loadContent" href="{{ path('news_show_all', {'id': n.id, 'slug': stadt.slug}) }}"><i class="fas fa-angle-double-right"></i></a>
+                                                    </div>
+
+                                                </div>
+                                                <!-- Grid column -->
+
+                                            </div>
+                                            <!-- Grid row -->
+                                        <hr class="hr-bold">
                                         </div>
+                                        <!-- Small news -->
+
+
+
+
                                     {% endfor %}
                                     <a href="{{ path('news_show_page', {'slug': stadt.slug }) }}"
                                        class="btn btn-primary">
