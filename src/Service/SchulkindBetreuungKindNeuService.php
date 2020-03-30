@@ -89,8 +89,8 @@ class SchulkindBetreuungKindNeuService
     public  function saveKind(Kind $kind, bool $hasRole,Stadt $stadt){
         $errors = $this->validator->validate($kind);
         if($kind->getMasernImpfung() === false && !$hasRole){
-            //todo fehlertext
-            $text = $this->translator->trans('Fehler. Bitte kreuzen Sie masern an');
+
+            $text = $this->translator->trans('Fehler. Sie können Ihre Kind nur mit einer Masernimmunisierung anmelden');
             return new JsonResponse(array('error' => 1, 'snack' => $text));
         }
         if (count($errors) == 0) {

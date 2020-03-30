@@ -1,6 +1,6 @@
 {% extends 'workflow/base.html.twig' %}
 {% block header %}
-    <div class="col-md-12 mb-6 white-text text-center text-md-left" xmlns="http://www.w3.org/1999/html">
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
         <h1 class="h1-responsive hauptfarbe">{% trans %}Online Anmeldung{% endtrans %}</h1>
         <div class="progress mb-2">
             <div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0"
@@ -11,7 +11,7 @@
 
 {% block content %}
 
-    <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
+        <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
 
     {% trans %}
         Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.
@@ -311,6 +311,16 @@
         <input id="checkboxAgb" type="checkbox" class="checkboxSelect form-check-input" name="AGB" value="AGB">
         <label class="form-check-label" for="checkboxAgb"><a target="_blank"
                                                              href={{ path('workflow_agb', {'slug':stadt.slug}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die allgemeinen Vertragsbedingungen der %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese.{% endtrans %}</a></label>
+    <input id="checkboxStorno" type="checkbox" class="checkboxSelect" name="Datenschutz"
+           value="Datenschutzhinweis"> {% trans %}Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen widerrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.{% endtrans %}
+    <br>
+    <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz"
+           value="Datenschutzhinweis"> {% trans with{'%s%':stadt.name} %}Ich habe die Datenschutzerklärung der %s%  gelesen und bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet und an die betreuende Organisation weitergegeben werden.{% endtrans %}
+    <br>
+
+    <div>
+        <input id="checkboxAgb" type="checkbox" class="checkboxSelect" name="AGB" value="AGB"> <a target="_blank"
+                                                                                                  href={{ path('workflow_agb', {'slug':stadt.slug}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die allgemeinen Vertragsbedingungen der %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese.{% endtrans %}</a><br>
     </div>
     {% if error == false %}
         <button class="btn btn-outline-primary sendButton"

@@ -56,7 +56,7 @@ class LoerrachKind extends AbstractType
                     'Halbtag' => 2,
                 ],'label'=>'Schulform','translation_domain' => 'form'])
             ->add('geburtstag', BirthdayType::class,['attr'=>array('class'=>'daterange'),'widget'=>'single_text','years'=>range($today-20,$today,1),'label'=>'Geburtstag','translation_domain' => 'form'])
-            ->add('masernImpfung',CheckboxType::class,array('label'=>'#--todo--# Mein kind ist geimpft#--todo--#'))
+            ->add('masernImpfung',CheckboxType::class,array('label'=>'Mein Kind ist gegen Masern geimpft / bereits immun'))
             ->add('allergie', TextType::class,['required'=>false,'label'=>'Mein Kind hat folgende Allergien','translation_domain' => 'form'])
             ->add('medikamente', TextType::class,['required'=>false,'label'=>'Mein Kind benötig folgende Medikamente','translation_domain' => 'form'])
             ->add('gluten', CheckboxType::class,['required'=>false,'label'=>'Mein Kind ist glutenintolerant','translation_domain' => 'form'])
