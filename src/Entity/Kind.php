@@ -83,6 +83,7 @@ class Kind
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
      */
     private $bemerkung;
 
