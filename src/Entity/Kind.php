@@ -29,11 +29,13 @@ class Kind
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
      */
     private $allergie;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
      */
     private $medikamente;
 
@@ -81,6 +83,7 @@ class Kind
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
      */
     private $bemerkung;
 
