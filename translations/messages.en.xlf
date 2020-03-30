@@ -917,7 +917,7 @@
         <source>Mein Kind isst kein Schweinefleisch</source>
         <target state="translated">My child doesn't eat pork</target>
       </trans-unit>
-      <trans-unit id="Rx43KOx" resname="Mein Kind ernährt sich vegetarisch">
+      <trans-unit id="rTAOHPw" resname="Mein Kind ernährt sich vegetarisch">
         <source>Mein Kind ernährt sich vegetarisch</source>
         <target state="translated">My child is a vegetarian</target>
       </trans-unit>
@@ -993,7 +993,7 @@
             This is only valid once and will be re-assigned to you with the confirmation.
             This mechanism prevents third parties from improperly accessing your children's data.</target>
       </trans-unit>
-      <trans-unit id="s5wccT1" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.&#10;            Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.&#10;            Die Kontaktdaten sind in dem angehängten PDF angegeben.">
+      <trans-unit id="8216kgx" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.&#10;            Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.&#10;            Die Kontaktdaten sind in dem angehängten PDF angegeben.">
         <source>Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
             Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.
             Die Kontaktdaten sind in dem angehängten PDF angegeben.</source>
@@ -1111,7 +1111,7 @@
         <source>Online Anmeldung</source>
         <target state="translated">Online registration</target>
       </trans-unit>
-      <trans-unit id="g7KT4KD" resname="Vielen Dank für Ihre Anmeldung">
+      <trans-unit id="cAamBiH" resname="Vielen Dank für Ihre Anmeldung">
         <source>Vielen Dank für Ihre Anmeldung</source>
         <target state="translated">Thank you for your registration</target>
       </trans-unit>
@@ -1131,7 +1131,7 @@
         <source>Die E-Mail Adresse ist wichtig, da alle Dokumente, Bestätigungen und Rechnungen automatisch an diese E-Mail geschickt werden.</source>
         <target state="translated">The e-mail address is important as all documents, confirmations and invoices are automatically sent to this e-mail.</target>
       </trans-unit>
-      <trans-unit id="mA_UHeC" resname="Weitere Informationen und Kontaktdaten">
+      <trans-unit id="qkKNiO7" resname="Weitere Informationen und Kontaktdaten">
         <source>Weitere Informationen und Kontaktdaten</source>
         <target state="translated">Further information and contact details</target>
       </trans-unit>
@@ -1761,8 +1761,8 @@
         <source>Impressum %stadt%</source>
         <target state="translated">Imprint %stadt%</target>
       </trans-unit>
-      <trans-unit id="blnC7zN" resname="Die Gebühren sind einkommensabhängig. Angerechnet wird das Brutto Haushaltseinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).">
-        <source>Die Gebühren sind einkommensabhängig. Angerechnet wird das  Brutto Haushaltseinkommen  (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).</source>
+      <trans-unit id="6NREgtV" resname="Die Gebühren sind einkommensabhängig. Angerechnet wird das Brutto Haushaltseinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).">
+        <source>Die Gebühren sind einkommensabhängig. Angerechnet wird das Brutto Haushaltseinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).</source>
         <target state="translated">The fees are income-dependent. The gross household income  (salary, salary, child benefit, maintenance, bridging allowance, wage replacement and all other income) is taken into account.</target>
       </trans-unit>
       <trans-unit id="N3M75.G" resname="Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Erziehungsberechtigten. Ein Rechtsanspruch auf Aufnahme besteht nicht.">
@@ -1841,7 +1841,7 @@
         <source>Ich habe die Datenschutzhinweise der %stadt% gelesen und akzeptiere die Verarbeitung.</source>
         <target state="translated">I have read the privacy policy of %stadt% and accept the processing.</target>
       </trans-unit>
-      <trans-unit id="no2scoB" resname="Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen widerrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.">
+      <trans-unit id="R08_cOg" resname="Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen widerrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.">
         <source>Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen widerrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.</source>
         <target state="translated">I understand that my registration can be recalled by the organization if the care capacities are exceeded. There is no right to receive care.</target>
       </trans-unit>
@@ -1909,11 +1909,11 @@
         <source>Kind/Kinder zur Ferienbetreuung anmelden</source>
         <target state="translated">Register children/children for holiday childcare</target>
       </trans-unit>
-      <trans-unit id="0ddCQ9N" resname="Herzlich Willkommen bei SKiB der">
+      <trans-unit id="dBFRTnf" resname="Herzlich Willkommen bei SKiB der">
         <source>Herzlich Willkommen bei SKiB der</source>
         <target state="translated">Welcome to SKiB from</target>
       </trans-unit>
-      <trans-unit id="CB3jEY0" resname="Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.">
+      <trans-unit id="f5qPj_O" resname="Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.">
         <source>Für folgende Schulen können Sie die Schulkindbetreuung hier online buchen.</source>
         <target state="translated">For the following schools you can book the school child care online here.</target>
       </trans-unit>
@@ -2217,7 +2217,7 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Notfallkontakt des Erziehungsberechtigten</source>
         <target state="translated">Emergency contact of the parent or legal guardian</target>
       </trans-unit>
-      <trans-unit id="0.8fMYp" resname="Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.&#10;            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.">
+      <trans-unit id="_1BsOYF" resname="Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.&#10;            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.">
         <source>Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.
             Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.
             Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.</source>
@@ -2229,7 +2229,7 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Wichtig: Diesen Sicherheitscode gut aufbewahren!</source>
         <target state="translated">Important: Keep this security code handy!</target>
       </trans-unit>
-      <trans-unit id="Nzh6gMX" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.&#10;            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.&#10;            Die Kontaktdaten sind in dem angehängten PDF angegeben.">
+      <trans-unit id="LmO1h7k" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.&#10;            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.&#10;            Die Kontaktdaten sind in dem angehängten PDF angegeben.">
         <source>Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
             Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
             Die Kontaktdaten sind in dem angehängten PDF angegeben.</source>
@@ -2261,7 +2261,7 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Monatliche Gebühren</source>
         <target state="translated">Monthly fees</target>
       </trans-unit>
-      <trans-unit id="o4wVfLm" resname="Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.">
+      <trans-unit id="g9kzeVn" resname="Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.">
         <source>Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.</source>
         <target state="translated">Photos showing my child may be published in the public press as well as used for public relations of the supervising organizations.</target>
       </trans-unit>
@@ -2355,33 +2355,85 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Informationen</source>
         <target state="translated">Information</target>
       </trans-unit>
-      <trans-unit id="sN86JB." resname="Beide Elternteile / Erziehungsberechtigte sind berufstätig">
+      <trans-unit id="tnIiRYb" resname="Beide Elternteile / Erziehungsberechtigte sind berufstätig">
         <source>Beide Elternteile / Erziehungsberechtigte sind berufstätig</source>
         <target>Both parents / legal guardians are working</target>
       </trans-unit>
-      <trans-unit id="iIQDRgZ" resname="Beide Elternteile / Erziehungsberechtigte sind arbeitssuchend">
+      <trans-unit id="IRqtAfG" resname="Beide Elternteile / Erziehungsberechtigte sind arbeitssuchend">
         <source>Beide Elternteile / Erziehungsberechtigte sind arbeitssuchend</source>
         <target>Both parents / legal guardians are job-seekers</target>
       </trans-unit>
-      <trans-unit id="RQls4AT" resname="Ein Elternteil / Erziehungsberechtigter ist berufstätig // arbeitssuchend">
+      <trans-unit id="fZZm8j5" resname="Ein Elternteil / Erziehungsberechtigter ist berufstätig // arbeitssuchend">
         <source>Ein Elternteil / Erziehungsberechtigter ist berufstätig // arbeitssuchend</source>
         <target>One parent / legal guardian is working another is a job-seeker</target>
       </trans-unit>
-      <trans-unit id="YYmSkzD" resname="Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig">
+      <trans-unit id="3r4L_M3" resname="Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig">
         <source>Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig</source>
         <target>Singe parent / legal guardian is working</target>
       </trans-unit>
-      <trans-unit id="LzCer2P" resname="Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend">
+      <trans-unit id="oM8HA8j" resname="Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend">
         <source>Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend</source>
         <target>Singe parent / legal guardian is a job-seeker</target>
       </trans-unit>
-      <trans-unit id="Omi_lE_" resname="Passwort für das PDF: Geburtsdatum des Kindes (tt.mm.JJJJ)">
+      <trans-unit id="YlbDxQ9" resname="Passwort für das PDF: Geburtsdatum des Kindes (tt.mm.JJJJ)">
         <source>Passwort für das PDF: Geburtsdatum des Kindes (tt.mm.JJJJ)</source>
         <target>Password for the PDF: Date of birth of the child (dd.mm.YYYY)</target>
       </trans-unit>
-      <trans-unit id="w5UHDL4" resname="Diese Email wurde im Auftrag der %s% versandt">
+      <trans-unit id="V8wnGsJ" resname="Diese Email wurde im Auftrag der %s% versandt">
         <source>Diese Email wurde im Auftrag der %s% versandt</source>
         <target>This email was sent on behalf of  %s%</target>
+      </trans-unit>
+      <trans-unit id="YMnseki" resname="Überprüfe Sie Ihre Eingabe">
+        <source>Überprüfe Sie Ihre Eingabe</source>
+        <target>Check your input</target>
+      </trans-unit>
+      <trans-unit id="395JNMl" resname="Vertragsbedingungen ">
+        <source>Vertragsbedingungen </source>
+        <target>Terms of contract </target>
+      </trans-unit>
+      <trans-unit id="dMoF20F" resname="Das Kind ist aktuell zu keiner Schulkindbetreuung angemeldet">
+        <source>Das Kind ist aktuell zu keiner Schulkindbetreuung angemeldet</source>
+        <target>The child is currently not registered for school childcare</target>
+      </trans-unit>
+      <trans-unit id="pv8CkMZ" resname="Nicht eingecheckt">
+        <source>Nicht eingecheckt</source>
+        <target>Not checked in</target>
+      </trans-unit>
+      <trans-unit id="rKc1v1r" resname="Masernimpfung">
+        <source>Masernimpfung</source>
+        <target>Measles vaccination</target>
+      </trans-unit>
+      <trans-unit id="QWIMcgU" resname="Fehler. Bitte kreuzen Sie Masern an">
+        <source>Fehler. Bitte kreuzen Sie Masern an</source>
+        <target>Error. Please mark measles</target>
+      </trans-unit>
+      <trans-unit id="yOSrRW_" resname="Kinder Anwesend am %date%">
+        <source>Kinder Anwesend am %date%</source>
+        <target>Children Present on %date%</target>
+      </trans-unit>
+      <trans-unit id="fJdjArB" resname="Kinder Anwesend im Betreuungszeitfenster am %date% von %time% Uhr für die Schule %schule%">
+        <source>Kinder Anwesend im Betreuungszeitfenster am %date% von %time% Uhr für die Schule %schule%</source>
+        <target>Children Present in childcare window on %date% of %time% Clock for school %schule%</target>
+      </trans-unit>
+      <trans-unit id="ULJt1hZ" resname="Anwesende Kinder">
+        <source>Anwesende Kinder</source>
+        <target>Children present</target>
+      </trans-unit>
+      <trans-unit id="LYcgXfz" resname="Mein Kind ist gegen Masern geimpft / bereits immun">
+        <source>Mein Kind ist gegen Masern geimpft / bereits immun</source>
+        <target>My child is vaccinated against measles / already immune</target>
+      </trans-unit>
+      <trans-unit id="g7KT4KD" resname="Vielen Dank für Ihre Anmeldung ...">
+        <source>Vielen Dank für Ihre Anmeldung ...</source>
+        <target>Many thanks for your registration ...</target>
+      </trans-unit>
+      <trans-unit id="47DEQpj" resname="">
+        <source></source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="MXuMAK9" resname="Checkin Ausweis">
+        <source>Checkin Ausweis</source>
+        <target>Checkin badge</target>
       </trans-unit>
     </body>
   </file>
