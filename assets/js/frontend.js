@@ -7,19 +7,18 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/frontend.css';
-
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
+import Popper from 'popper.js';
+import moment from 'moment';
+import {jarallax, jarallaxElement, jarallaxVideo} from 'jarallax';
+
 global.$ = global.jQuery = $;
 
-import Popper from 'popper.js';
-
 global.Popper = Popper;
-import moment from 'moment';
 global.moment =moment;
 
-import('bootstrap');
-import('./mdb');
+import('mdbootstrap-pro/js/bootstrap');
 import('snackbarjs');
 
 import ('morecontent-js/dist/jquery.morecontent');
@@ -28,21 +27,12 @@ import('./jquery.bs.gdpr.cookies');
 import('jquery-clockpicker');
 import('daterangepicker');
 import ('jquery-lazy');
-import daterangepicker from 'daterangepicker';
-import {
-    jarallax,
-    jarallaxElement,
-    jarallaxVideo
-} from 'jarallax';
 
 
 jarallaxVideo();
 jarallaxElement();
 jarallax(document.querySelectorAll('.jarallax'), {
     speed: 0.2
-});
-$(document).ready(function () {
-
 });
 
 $(document).on('click', '.loadContent', function (e) {
@@ -51,6 +41,7 @@ $(document).on('click', '.loadContent', function (e) {
     $('#loadContentModal').load(url, function () {
         $('#loadContentModal ').modal('show');
 
+        $('select').materialSelect();
     });
 });
 
@@ -94,6 +85,7 @@ $(document).on('click', '.deleteBtn', function (e) {
 
 
 $(window).on('load', function () {
+
 
 
         $(function() {

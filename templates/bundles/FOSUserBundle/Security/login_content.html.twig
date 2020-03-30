@@ -7,30 +7,28 @@
     {% if csrf_token %}
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
     {% endif %}
-    <div class="form-group">
-        <div class="form-label-group">
+    <div class="md-form">
+        <i class="fas fa-user prefix white-text"></i>
             <label for="username">{{ 'security.login.username'|trans }}</label>
             <input type="text" id="username" class="form-control" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
 
-        </div>
-    </div>
 
-    <div class="form-group">
-        <div class="form-label-group">
+    </div>
+    <div class="md-form">
+        <i class="fas fa-lock prefix white-text"></i>
             <label for="password">{{ 'security.login.password'|trans }}</label>
             <input type="password" class="form-control" id="password" name="_password" required="required" autocomplete="current-password" />
 
-        </div>
+
 
     </div>
-    <div class="form-group">
-        <div class="checkbox">
-        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-        </div>
 
+
+
+    <div class="text-center">
+        <input class="btn blue-gradient btn-lg" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
     </div>
-    <input class="btn btn-primary btn-raised btn-block" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+
 
 </form>
 

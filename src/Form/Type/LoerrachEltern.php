@@ -11,17 +11,14 @@ namespace App\Form\Type;
 
 use App\Entity\Stammdaten;
 use Symfony\Component\Form\AbstractType;
-
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LoerrachEltern extends AbstractType
 {
@@ -36,7 +33,7 @@ class LoerrachEltern extends AbstractType
             ->add('strasse', TextType::class, ['label' => 'Straße Nr.', 'translation_domain' => 'form'])
             ->add('adresszusatz', TextType::class, ['required' => false, 'label' => 'Adresszusatz', 'translation_domain' => 'form'])
             ->add('plz', TextType::class, ['label' => 'Postleitzahl', 'translation_domain' => 'form'])
-            ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form', 'help' => 'Das ist eine Hilfe für diese Frage im Form'])
+            ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form', 'help' => 'Bitte Ihren Wohnort angeben'])
             ->add('einkommen', ChoiceType::class, [
                 'choices' => $options['einkommen'], 'label' => 'Brutto Haushaltseinkommen pro Monat', 'translation_domain' => 'form'])
             ->add('beruflicheSituation', ChoiceType::class, ['choices' => $options['beruflicheSituation'], 'required' => true, 'label' => 'Berufliche Situation des Erziehungsberechtigten', 'translation_domain' => 'form'])

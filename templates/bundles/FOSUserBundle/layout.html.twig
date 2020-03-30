@@ -1,89 +1,106 @@
+{% extends 'landing/landing.html.twig' %}
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Login</title>
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
-
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-    <!-- Custom styles for this template-->
+{% block image %}
+    <style>
 
 
-</head>
+        .card {
+            background-color: rgba(229, 228, 255, 0.4);
+        }
 
-<body class="bg-dark">
+        .md-form label {
+            color: #ffffff;
+        }
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-12">
-    <div class="card card-login mx-auto mt-5">
-        <div class="card-header text-center">{% block loginHead %}{% endblock %}</div>
-        <div class="card-body">
-            <div>
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                    <a href="{{ path('fos_user_security_logout') }}">
-                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                    </a>
-                {% else %}
-                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-                {% endif %}
-            </div>
+        h6 {
+            line-height: 1.7;
+        }
 
-            {% if app.request.hasPreviousSession %}
-                {% for type, messages in app.session.flashbag.all() %}
-                    {% for message in messages %}
-                        <div class="flash-{{ type }}">
-                            {{ message }}
+
+        .card {
+            margin-top: 30px;
+            /*margin-bottom: -45px;*/
+
+        }
+
+        .md-form input[type=text]:focus:not([readonly]),
+        .md-form input[type=password]:focus:not([readonly]) {
+            border-bottom: 1px solid #8EDEF8;
+            box-shadow: 0 1px 0 0 #8EDEF8;
+        }
+
+        .md-form input[type=text]:focus:not([readonly]) + label,
+        .md-form input[type=password]:focus:not([readonly]) + label {
+            color: #8EDEF8;
+        }
+
+        .md-form .form-control {
+            color: #fff;
+        }
+
+
+
+    </style>
+
+    <div class="mask rgba-stylish-strong h-100 d-flex justify-content-center align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-5 col-lg-6 col-md-10 col-sm-12 mx-auto mt-lg-5">
+                    <div class="card wow fadeIn" data-wow-delay="0.3s">
+                        <div class="card-body">
+
+                            <!--Header-->
+                            <div class="form-header blue-gradient">
+                                <h3> {% block loginHead %}{% endblock %}</h3>
+                            </div>
+
+                            <div>
+                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                                    <a href="{{ path('fos_user_security_logout') }}">
+                                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                                    </a>
+                                {% else %}
+                                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                                {% endif %}
+                            </div>
+
+                            <!--Body-->
+
+                            {% if app.request.hasPreviousSession %}
+                                {% for type, messages in app.session.flashbag.all() %}
+                                    {% for message in messages %}
+                                        <div class="flash-{{ type }}">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endif %}
+                            <div>
+                                {% block fos_user_content %}
+                                {% endblock fos_user_content %}
+                            </div>
+
+                            <a class="d-block small" href="{{ path('fos_user_resetting_request') }}">Forgot Password?</a>
+
+
                         </div>
-                    {% endfor %}
-                {% endfor %}
-            {% endif %}
-
-            <div>
-                {% block fos_user_content %}
-                {% endblock fos_user_content %}
-            </div>
-
-
-            <div class="text-center">
-
-                <a class="d-block small" href="{{ path('fos_user_resetting_request') }}">Forgot Password?</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-        </div>
-    </div>
-</div>
-
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
-<script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
-
-    <script>
-
-        $('.col-sm-2').removeClass('col-sm-2');
-    </script>
-
-</body>
+<div class="card-body">
 
 
-</html>
+
+
+
+
+
+
+    {% endblock %}
+    {% block content %}
+
+
+{% endblock %}
