@@ -8,10 +8,6 @@
 
 namespace App\Service;
 
-use Symfony\Component\Validator\Constraints\DateTime;
-
-
-
 
 class IcsService
 {
@@ -35,7 +31,7 @@ class IcsService
             }
         } else {
             if (in_array($key, $this->available_properties)) {
-                $this->properties[$key] = $this->sanitize_val($val, $key);
+                $this->properties[$key] = $this->sanitizeVal($val, $key);
             }
         }
         $this->appointments[]= $this->properties;
@@ -44,11 +40,11 @@ class IcsService
 
         array_push($this->appointments,$key);
     }
-    public function to_string() {
-        $rows = $this->build_props();
+    public function toString() {
+        $rows = $this->buildProps();
         return implode("\r\n", $rows);
     }
-    private function build_props() {
+    private function buildProps() {
         // Build ICS properties - add header
         $ics_props = array(
             'BEGIN:VCALENDAR',
@@ -66,7 +62,7 @@ class IcsService
                 $props[strtoupper($k . ($k === 'url' ? ';VALUE=URI' : ''))] = $v;
             }
             // Set some default values
-            $props['DTSTAMP'] = $this->format_timestamp('now');
+            $props['DTSTAMP'] = $this->formatTimestamp('now');
             $props['UID'] = uniqid('sd',true);
             // Append properties
             foreach ($props as $k => $v) {
@@ -81,19 +77,19 @@ class IcsService
         $ics_props[] = 'END:VCALENDAR';
         return $ics_props;
     }
-    private function sanitize_val($val, $key = false) {
+    private function sanitizeVal($val, $key = false) {
         switch($key) {
             case 'dtend':
             case 'dtstamp':
             case 'dtstart':
-                $val = $this->format_timestamp($val);
+                $val = $this->formatTimestamp($val);
                 break;
             default:
                 $val = $this->escape_string($val);
         }
         return $val;
     }
-    private function format_timestamp($timestamp) {
+    private function formatTimestamp($timestamp) {
         $dt = new \DateTime($timestamp);
         return $dt->format(self::DT_FORMAT);
     }

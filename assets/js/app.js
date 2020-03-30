@@ -7,12 +7,13 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/app.css';
-
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
+import Popper from 'popper.js';
+import 'datatables.net-dt';
+// Import TinyMCE
 
 global.$ = global.jQuery = $;
-import Popper from 'popper.js';
 
 global.Popper = Popper;
 import('bootstrap-material-design');
@@ -25,15 +26,13 @@ import('jquery.cookie');
 import('jquery-validation');
 import('jquery-confirm');
 import('material-design-icons');
-import snackbar from 'snackbarjs';
-
-import('daterangepicker');
-import('datatables.net');
-import 'datatables.net-dt';
 import niceScroll from 'jquery.nicescroll';
 // Import TinyMCE
 import trumbowgy from './trumbowyg';
 import icon from 'trumbowyg/dist/ui/icons.svg'
+import snackbar from 'snackbarjs'
+import('daterangepicker');
+import('datatables.net');
 
 import ('trumbowyg/dist/plugins/colors/trumbowyg.colors');
 import ('trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste');
@@ -136,7 +135,6 @@ $(window).on('load', function () {
             ele.val(picker.startDate.format('YYYY-MM-DD'))
         });
 
-
     $('input[type="time"]').jqclockpicker({
         autoclose: true,
         donetext: "OK"
@@ -157,7 +155,13 @@ $(window).on('load', function () {
         e.preventDefault();
         var url = $(this).attr('href');
         $('#loadContentModal').modal('show');
-        $('#loadContentModal .modal-content').load(url);
+        $('#loadContentModal .modal-content').load(url,function (e) {
+            $('input[type="time"]').jqclockpicker({
+                autoclose: true,
+                donetext: "OK"
+            });
+        });
+
     });
 
 

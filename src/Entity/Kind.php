@@ -2,15 +2,11 @@
 
 namespace App\Entity;
 
+use Ambta\DoctrineEncryptBundle\Configuration\Encrypted;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
-use phpDocumentor\Reflection\Types\Array_;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\Validator\Constraints as Assert;
-use Ambta\DoctrineEncryptBundle\Configuration\Encrypted;
-
 
 
 /**
@@ -33,11 +29,13 @@ class Kind
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
      */
     private $allergie;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
      */
     private $medikamente;
 
@@ -85,6 +83,7 @@ class Kind
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
      */
     private $bemerkung;
 
@@ -172,6 +171,17 @@ class Kind
      */
     private $kindFerienblocks;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Encrypted()
+     */
+    private $masernImpfung;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Anwesenheit", mappedBy="kind")
+     */
+    private $anwesenheitenSchulkindbetreuung;
+
 
 
     public function __construct()
@@ -185,6 +195,7 @@ class Kind
         $this->ferienProgrammBezahlt = new ArrayCollection();
         $this->ferienProgrammStorniert = new ArrayCollection();
         $this->kindFerienblocks = new ArrayCollection();
+        $this->anwesenheitenSchulkindbetreuung = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -308,7 +319,7 @@ class Kind
             }
         }
 
-        usort($block, function ($a, $b) {
+        usort($block, function (Zeitblock $a, Zeitblock $b) {
         return ($a->getVon()>$b->getVon()?true:false);
     });
 
@@ -831,6 +842,49 @@ class Kind
         }
         return $res;
 
+    }
+
+    public function getMasernImpfung(): ?bool
+    {
+        return $this->masernImpfung;
+    }
+
+    public function setMasernImpfung(?bool $masernImpfung): self
+    {
+        $this->masernImpfung = $masernImpfung;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Anwesenheit[]
+     */
+    public function getAnwesenheitenSchulkindbetreuung(): Collection
+    {
+        return $this->anwesenheitenSchulkindbetreuung;
+    }
+
+    public function addAnwesenheitenSchulkindbetreuung(Anwesenheit $anwesenheitenSchulkindbetreuung): self
+    {
+        if (!$this->anwesenheitenSchulkindbetreuung->contains($anwesenheitenSchulkindbetreuung)) {
+            $this->anwesenheitenSchulkindbetreuung[] = $anwesenheitenSchulkindbetreuung;
+            $anwesenheitenSchulkindbetreuung->setKind($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnwesenheitenSchulkindbetreuung(Anwesenheit $anwesenheitenSchulkindbetreuung): self
+    {
+        if ($this->anwesenheitenSchulkindbetreuung->contains($anwesenheitenSchulkindbetreuung)) {
+            $this->anwesenheitenSchulkindbetreuung->removeElement($anwesenheitenSchulkindbetreuung);
+            // set the owning side to null (unless already changed)
+            if ($anwesenheitenSchulkindbetreuung->getKind() === $this) {
+                $anwesenheitenSchulkindbetreuung->setKind(null);
+            }
+        }
+
+        return $this;
     }
 
 

@@ -56,6 +56,7 @@ security:
         - { path: /org_report/, role: ROLE_ORG_REPORT }
         - { path: /org_child/change/, role: ROLE_ORG_CHILD_CHANGE }
         - { path: /org_child/show/, role: ROLE_ORG_CHILD_SHOW }
+        - { path: /org_checkin/, role: ROLE_ORG_CHECKIN_SHOW }
         - { path: /org_accounting, role: ROLE_ORG_ACCOUNTING }
         - { path: /org_block/, role: ROLE_ORG_BLOCK_MANAGEMENT }
         - { path: /org_shool/, role: ROLE_ORG_SHOOL }

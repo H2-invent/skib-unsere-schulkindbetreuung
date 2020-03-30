@@ -370,3 +370,18 @@ height: auto;
   transform: rotateZ(-30deg);
   z-index: 1000;
 }
+.stickyBottomModal{
+  position: sticky;
+  flex: 1 100%;
+  bottom: -16px;
+  background: #ffffff;
+}
+.stickyBottom{
+  position: sticky;
+  flex: 1 100%;
+  bottom: 0;
+  background: #ffffff;
+}
+.jqclockpicker-container{
+  z-index: 5000;
+}

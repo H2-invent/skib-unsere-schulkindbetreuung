@@ -3,34 +3,9 @@
 namespace App\Service;
 
 use App\Entity\Ferienblock;
-use App\Entity\Kind;
 use App\Entity\KindFerienblock;
-use App\Entity\Payment;
-use App\Entity\Stadt;
-
 use App\Entity\Stammdaten;
-
-use App\Entity\Zeitblock;
-use App\Form\Type\ConfirmType;
 use Doctrine\ORM\EntityManagerInterface;
-
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Security;
-
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 
@@ -59,7 +34,7 @@ class FerienAbschluss
 
     }
 
-    public function startAbschluss(Stammdaten $stammdaten, Stadt $stadt, $iPAdresse)
+    public function startAbschluss(Stammdaten $stammdaten, $iPAdresse)
     {
 
         if ($this->checkoutPaymentService->createPayment($stammdaten, $iPAdresse)) {
@@ -154,7 +129,7 @@ class FerienAbschluss
                 )
             );
         }
-        $attachment[] = array('type' => 'text/calendar', 'filename' => 'Ferienprogramm.ics', 'body' => $this->ics->to_string());
+        $attachment[] = array('type' => 'text/calendar', 'filename' => 'Ferienprogramm.ics', 'body' => $this->ics->toString());
         $this->mailer->sendEmail('SKIB Ferienprogramm',
             'info@h2-invent.com',
             $adresse->getEmail(),

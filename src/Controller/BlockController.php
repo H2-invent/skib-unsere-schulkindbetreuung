@@ -10,13 +10,12 @@ use App\Form\Type\BlockAbhangigkeitType;
 use App\Form\Type\BlockType;
 use App\Service\AnmeldeEmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+
 class BlockController extends AbstractController
 {
 
@@ -119,7 +118,6 @@ class BlockController extends AbstractController
     public function deleteBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator,AnmeldeEmailService $anmeldeEmailService)
     {
        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('id'));
-       $stadt = $block->getSchule()->getStadt();
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
             return new JsonResponse(array('error'=>1,'snack'=>$text));

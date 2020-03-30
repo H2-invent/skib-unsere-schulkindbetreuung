@@ -61,6 +61,8 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Abholung durch'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Medikamente'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Allergien'));
+        //todo masernimpfung
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Masernimpfung'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Bemerkung'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Gluten intolerant'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kein Schweinefleisch'));
@@ -80,7 +82,6 @@ class ChildExcelService
         $counter = 2;
         foreach ($kinder as $data) {
             $count = 0;
-
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getVorname());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getNachname());
             $kindSheet->setCellValue($alphas[$count++] . $counter, ($data->getGeburtstag()->diff($data->getEltern()->getCreatedAt()))->y);
@@ -99,6 +100,7 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getAbholberechtigter());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getMedikamente());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getAllergie());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getMasernImpfung());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getBemerkung());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getGluten());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getSchweinefleisch());
