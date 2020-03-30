@@ -2403,9 +2403,9 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Masernimpfung</source>
         <target>Measles vaccination</target>
       </trans-unit>
-      <trans-unit id="QWIMcgU" resname="Fehler. Bitte kreuzen Sie Masern an">
-        <source>Fehler. Bitte kreuzen Sie Masern an</source>
-        <target>Error. Please mark measles</target>
+      <trans-unit id="QWIMcgU" resname="Fehler. Sie können Ihre Kind nur mit einer Masernimmunisierung anmelden">
+        <source>Fehler. Sie können Ihre Kind nur mit einer Masernimmunisierung anmelden</source>
+        <target>Error. You can only register your child with a measles immunization</target>
       </trans-unit>
       <trans-unit id="yOSrRW_" resname="Kinder Anwesend am %date%">
         <source>Kinder Anwesend am %date%</source>

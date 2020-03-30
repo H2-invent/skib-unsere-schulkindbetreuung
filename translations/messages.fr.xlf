@@ -2407,9 +2407,9 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Masernimpfung</source>
         <target>Vaccination contre la rougeole</target>
       </trans-unit>
-      <trans-unit id="AG69DQ2" resname="Fehler. Bitte kreuzen Sie Masern an">
-        <source>Fehler. Bitte kreuzen Sie Masern an</source>
-        <target>Erreur. Veuillez cocher la case rougeole</target>
+      <trans-unit id="AG69DQ2" resname="Fehler. Sie können Ihre Kind nur mit einer Masernimmunisierung anmelden">
+        <source>Fehler. Sie können Ihre Kind nur mit einer Masernimmunisierung anmelden</source>
+        <target>Erreur. Vous ne pouvez inscrire votre enfant qu'avec un vaccin contre la rougeole</target>
       </trans-unit>
       <trans-unit id="yOSrRW_" resname="Kinder Anwesend am %date%">
         <source>Kinder Anwesend am %date%</source>
