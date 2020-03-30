@@ -90,7 +90,7 @@ class SchulkindBetreuungKindNeuService
         $errors = $this->validator->validate($kind);
         if($kind->getMasernImpfung() === false && !$hasRole){
             //todo fehlertext
-            $text = $this->translator->trans('Fehler. Bitte kreuzen Sie masern an');
+            $text = $this->translator->trans('Fehler. Bitte kreuzen Sie Masern an');
             return new JsonResponse(array('error' => 1, 'snack' => $text));
         }
         if (count($errors) == 0) {

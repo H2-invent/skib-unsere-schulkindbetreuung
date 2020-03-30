@@ -131,11 +131,6 @@
                                     <td>{{ k.klasse }}. {{ 'Klasse'|trans }}</td>
                                 </tr>
                                 <tr>
-                                    {#  todo masernimpfungText #}
-                                    <td>{% trans %}Masernimpfung{% endtrans %}</td>
-                                    <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
-                                </tr>
-                                <tr>
                                     <td>{% trans %}Allergien{% endtrans %}</td>
                                     <td> {% if k.allergie|length== 0 %}{{ 'Keine Angabe'|trans }}{% else %}{{ k.allergie }}{% endif %}</td>
                                 </tr>
@@ -144,7 +139,10 @@
                                     <td> {% if k.medikamente|length== 0 %}{{ 'Keine Angabe'|trans }}{% else %}{{ k.medikamente }}{% endif %}</td>
 
                                 </tr>
-
+                                <tr>
+                                    <td>{% trans %}Mein Kind ist gegen Masern geimpft / bereits immun{% endtrans %}</td>
+                                    <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
+                                </tr>
                                 <tr>
                                     <td>{% trans %}Mein Kind ist glutenintolerant{% endtrans %}</td>
                                     <td>{{ k.gluten?"Ja"|trans:'Nein'|trans }}</td>
