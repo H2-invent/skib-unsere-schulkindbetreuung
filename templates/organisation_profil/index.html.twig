@@ -12,10 +12,13 @@
         <div class="row">
             <div class="col-md-6 text-center mb-3">
                 {% if organisation.image is not empty %}
-                    <img src="{{ vich_uploader_asset(organisation,'imageFile') }}"
-                         style="max-height: 110px; max-width: 100%" alt="{{ organisation.name }} Logo">
+                    <img src="{{ vich_uploader_asset(organisation,'imageFile') }}" class="img-fluid z-depth-1"
+                          alt="{{ organisation.name }} Logo">
+                {% else %}
+                    <img class="overlay skib-card-image img-fluid z-depth-1" src="{{ asset('images/logo-breit-mittig.png') }}" alt="Unsere SKiB" style="max-width: 90%">
                 {% endif %}
-                <img class="overlay skib-card-image" src="{{ asset('images/logo-breit-mittig.png') }}" alt="Unsere SKiB" style="max-width: 90%">
+
+
 
                 <h4 class="mt-4 text-md-left">
                     {% trans %}Angebote{% endtrans %} der {{ organisation.name }}
