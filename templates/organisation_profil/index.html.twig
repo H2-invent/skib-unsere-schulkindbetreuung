@@ -1,0 +1,111 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-center text-md-left">
+        <h1 class="h1-responsive hauptfarbe">{{ organisation.name }}</h1>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <div class="example-wrapper">
+
+        <div class="row">
+            <div class="col-md-6 text-center mb-3">
+                {% if organisation.image is not empty %}
+                    <img src="{{ vich_uploader_asset(organisation,'imageFile') }}"
+                         style="max-height: 110px; max-width: 100%" alt="{{ organisation.name }} Logo">
+                {% endif %}
+                <img class="overlay skib-card-image" src="{{ asset('images/logo-breit-mittig.png') }}" alt="Unsere SKiB" style="max-width: 90%">
+
+                <h4 class="mt-4 text-md-left">
+                    {% trans %}Angebote{% endtrans %} der {{ organisation.name }}
+                </h4>
+                {% if organisation.ferienprogramm %}
+                <p class="text-md-left">
+                    {% trans with {'%org':organisation.name} %} %org bietet ein Ferienprogramm an{% endtrans %}<br>
+                    {% endif %}
+                    {% trans with {'%org':organisation.name} %} %org bietet Schulkindbetreuung an{% endtrans %}
+                </p>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-5">
+                        {{ organisation.infoText }}
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Kontakt</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-4 mr-2">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        {{ organisation.ansprechpartner }}
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-4 mr-2">
+                                        <i class="fas fa-map"></i>
+                                    </div>
+                                    <div class="col-xs-6"> {{ organisation.adresse }}
+                                        <br>{{ organisation.plz }} {{ organisation.stadt.name }}</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-4 mr-2">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <a href="tel:{{ organisation.telefon }}">{{ organisation.telefon }}</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-4 mr-2">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <a href="mailto:{{ organisation.email }}">{{ organisation.email }}</a>
+                                    </div>
+                                </div>
+                            </li>
+                            {% if organisation.orgHomepage is not null %}
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-xs-4 mr-2">
+                                            <i class="fas fa-globe-europe"></i>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <a href="{{ organisation.orgHomepage }}"
+                                               target="_blank" rel="noopener noreferrer"> {{ organisation.orgHomepage }}
+                                                <i
+                                                        class="fas fa-external-link-alt"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endif %}
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-4 mr-2">
+                                        <i class="fas fa-info"></i>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <a href="{{ path('workflow_datenschutz',{'slug':organisation.stadt.slug, 'org_id':organisation.id}) }}">{{ 'Datenschutzhinweis'|trans }} {{ organisation.name }}</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
