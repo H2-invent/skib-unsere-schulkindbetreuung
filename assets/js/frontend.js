@@ -40,7 +40,7 @@ $(document).on('click', '.loadContent', function (e) {
     var url = $(this).attr('href');
     $('#loadContentModal').load(url, function () {
         $('#loadContentModal ').modal('show');
-
+        $('input').trigger('change');
         $('select').materialSelect();
     });
 });
