@@ -3,23 +3,23 @@
 {% block choice_widget_collapsed -%}
     {%- set attr = attr|merge({class: (attr.class|default('') ~ 'mdb-select md-form')|trim}) -%}
 
-        {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
-            {% set required = false %}
+    {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
+        {% set required = false %}
+    {%- endif -%}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {%- if placeholder is not none -%}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
         {%- endif -%}
-        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
-            {%- if placeholder is not none -%}
-                <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
-            {%- endif -%}
-            {%- if preferred_choices|length > 0 -%}
-                {% set options = preferred_choices %}
-                {{- block('choice_widget_options') -}}
-                {%- if choices|length > 0 and separator is not none -%}
-                    <option disabled="disabled">{{ separator }}</option>
-                {%- endif -%}
-            {%- endif -%}
-            {%- set options = choices -%}
+        {%- if preferred_choices|length > 0 -%}
+            {% set options = preferred_choices %}
             {{- block('choice_widget_options') -}}
-        </select>
+            {%- if choices|length > 0 and separator is not none -%}
+                <option disabled="disabled">{{ separator }}</option>
+            {%- endif -%}
+        {%- endif -%}
+        {%- set options = choices -%}
+        {{- block('choice_widget_options') -}}
+    </select>
 
 {%- endblock choice_widget_collapsed %}
 
@@ -60,19 +60,19 @@
     {%- if help is not empty -%}
         {%- set help_attr = help_attr|merge({class: (help_attr.class|default('') ~ ' form-text text-muted')|trim}) -%}
 
-            {%- if translation_domain is same as(false) -%}
-                {%- if help_html is same as(false) -%}
-                    {{- help -}}
-                {%- else -%}
-                    {{- help|raw -}}
-                {%- endif -%}
+        {%- if translation_domain is same as(false) -%}
+            {%- if help_html is same as(false) -%}
+                {{- help -}}
             {%- else -%}
-                {%- if help_html is same as(false) -%}
-                    {{- help|trans(help_translation_parameters, translation_domain) -}}
-                {%- else -%}
-                    {{- help|trans(help_translation_parameters, translation_domain)|raw -}}
-                {%- endif -%}
+                {{- help|raw -}}
             {%- endif -%}
+        {%- else -%}
+            {%- if help_html is same as(false) -%}
+                {{- help|trans(help_translation_parameters, translation_domain) -}}
+            {%- else -%}
+                {{- help|trans(help_translation_parameters, translation_domain)|raw -}}
+            {%- endif -%}
+        {%- endif -%}
 
     {%- endif -%}
 {%- endblock form_help %}
@@ -117,6 +117,15 @@
     {%- endif -%}
 {%- endblock checkbox_radio_label %}
 
+{% block form_widget_simple -%}
+
+    {% if value is defined and dateChecker(value) != false %}
+        {% set date = dateChecker(value) %}
+        {%- set attr = attr|merge({'data-value': '['~date|date('Y')~','~(date|date('n') - 1)~','~date|date('j')~']'}) -%}
+    {% endif %}
+    {{- parent() -}}
+{%- endblock form_widget_simple %}
+
 {% block form_row %}
     <div class="md-form">
         {{ form_label(form) }}
@@ -126,3 +135,4 @@
         </small>
     </div>
 {% endblock form_row %}
+

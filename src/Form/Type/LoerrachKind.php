@@ -10,25 +10,14 @@ namespace App\Form\Type;
 
 
 use App\Entity\Kind;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichFileType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class LoerrachKind extends AbstractType
 {
@@ -55,7 +44,7 @@ class LoerrachKind extends AbstractType
                     'Ganztag' => 1,
                     'Halbtag' => 2,
                 ],'label'=>'Schulform','translation_domain' => 'form'])
-            ->add('geburtstag', BirthdayType::class,['attr'=>array('class'=>'daterange'),'widget'=>'single_text','years'=>range($today-20,$today,1),'label'=>'Geburtstag','translation_domain' => 'form'])
+            ->add('geburtstag', BirthdayType::class,['attr'=>array('class'=>'pickadate'),'widget'=>'single_text','years'=>range($today-20,$today,1),'label'=>'Geburtstag','translation_domain' => 'form'])
             ->add('masernImpfung',CheckboxType::class,array('label'=>'Mein Kind ist gegen Masern geimpft / bereits immun'))
             ->add('allergie', TextType::class,['required'=>false,'label'=>'Mein Kind hat folgende Allergien','translation_domain' => 'form'])
             ->add('medikamente', TextType::class,['required'=>false,'label'=>'Mein Kind benötig folgende Medikamente','translation_domain' => 'form'])
