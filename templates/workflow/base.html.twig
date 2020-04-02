@@ -116,15 +116,26 @@
 {% block webpack %}
 {{ encore_entry_script_tags('frontend') }}
 
-    <script type="text/javascript" src="{{ asset('build/js/mdb.min.js') }}"></script>
+
 
 {% endblock %}
+<script type="text/javascript" src="{{ asset('build/js/mdb.min.js') }}"></script>
 {% block jquery %}{% endblock %}
 <script>
     $(document).ready(function () {
 
         $('select').materialSelect();
     });
+    $('#loadContentModal').on('shown.bs.modal', function (e) {
+
+        $('.pickadate').pickadate({
+// Escape any “rule” characters with an exclamation mark (!).
+            format: 'dd.mm.yyyy',
+            formatSubmit: 'yyyy-mm-dd',
+        });
+        $('.mdb-select').materialSelect();
+        $('input').trigger('change');
+    })
 </script>
 
 </body>
