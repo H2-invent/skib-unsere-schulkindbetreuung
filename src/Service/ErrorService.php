@@ -25,7 +25,6 @@ class ErrorService
 
     public function createError($error, FormInterface $form)
     {
-        dump($form);
 
         $ele = $form->all();
         $arr = array();
