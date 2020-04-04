@@ -34,11 +34,15 @@
                     data: $form.serialize(),
                     success: function (data) {
                         $snackText = '';
-                        $(data.snack).each(function (i) {
-                            $.snackbar({content: data.snack[i]});
-
-                        });
-
+                        if(data.error == 1){
+                            $(data.snack).each(function (i) {
+                                toastr.error( data.snack[i])
+                            });
+                        }else {
+                            $(data.snack).each(function (i) {
+                                toastr.success( data.snack[i])
+                            });
+                        }
 
 
                         if (data.error == 0) {

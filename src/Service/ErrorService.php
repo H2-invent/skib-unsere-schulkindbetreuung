@@ -30,11 +30,10 @@ class ErrorService
         $arr = array();
         foreach ($ele as $data) {
             $arr[$data->getName()] = $data->getConfig()->getOption('label');
-
         }
         $errorString = array();
         foreach ($error as $data) {
-            $errorString[]= $arr[$data->getPropertyPath()] . ': ' . $data->getMessage();
+            $errorString[]= $this->translator->trans($arr[$data->getPropertyPath()]) . ': ' . $data->getMessage();
         }
 
         return $errorString;

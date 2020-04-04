@@ -30,6 +30,12 @@ jarallax(document.querySelectorAll('.jarallax'), {
     speed: 0.2
 });
 
+$(document).ready(function () {
+    $(errors).each(function (i) {
+        toastr.error( errors[i]);
+    });
+
+})
 
 
 $(document).on('click', '.deleteBtn', function (e) {
@@ -81,7 +87,7 @@ $(document).on('click', '.loadContent', function (e) {
 $('#loadContentModal').on('show.bs.modal', function (e) {
     $('.pickadate').pickadate({
         format: 'dd.mm.yyyy',
-        formatSubmit: 'yyyy/mm/dd',
+        formatSubmit: 'yyyy-mm-dd',
     });
     $(this)
         .find('.mdb-select')

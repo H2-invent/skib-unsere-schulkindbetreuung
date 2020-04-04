@@ -100,7 +100,10 @@ class SchulkindBetreuungKindNeuService
             $text = array($this->translator->trans('Erfolgreich gespeichert'));
             return new JsonResponse(array('error' => 0, 'snack' => $text, 'next' => $this->generator->generate('loerrach_workflow_schulen_kind_zeitblock', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()))));
         }else{
-            $errorString[]= 'Fehler. Sie können Ihre Kind nur mit einer Masernimmunisierung anmelden';
+            if ($kind->getMasernImpfung() === false && !$hasRole){
+            $errorString[]= $this->translator->trans('Fehler. Sie können Ihre Kind nur mit einer Masernimmunisierung anmelden');
+            }
+
             $errorString = array_merge($errorString, $this->error->createError($errors,$form));
             return new JsonResponse(array('error' => 1, 'snack' => $errorString));
 
