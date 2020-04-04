@@ -41,7 +41,17 @@ Encore
                 {
                     from: './node_modules/mdbootstrap-pro/js/jquery.min.js',
                     to: 'js/jquery.min.js'
+                },
+                {
+                    from: './node_modules/mdbootstrap-pro/js/bootstrap.min.js',
+                    to: 'js/bootstrap.min.js'
+                },
+                {
+                    from: './node_modules/mdbootstrap-pro/js/popper.min.js',
+                    to: 'js/popper.min.js'
                 }
+
+
             ]
         )
     )

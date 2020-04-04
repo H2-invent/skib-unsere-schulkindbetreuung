@@ -169,7 +169,7 @@ class LoerrachWorkflowController extends AbstractController
         if ($form->isSubmitted()) {
             try {
                 $kind = $form->getData();
-                return $schulkindBetreuungKindNeuService->saveKind($kind,$this->isGranted('ROLE_ORG_CHILD_CHANGE'),$stadt);
+                return $schulkindBetreuungKindNeuService->saveKind($kind,$this->isGranted('ROLE_ORG_CHILD_CHANGE'),$stadt,$form);
             } catch (\Exception $e) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
                 return new JsonResponse(array('error' => 1, 'snack' => $text));
@@ -207,9 +207,9 @@ class LoerrachWorkflowController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $kind = $form->getData();
-                return $schulkindBetreuungKindNeuService->saveKind($kind,$this->isGranted('ROLE_ORG_CHILD_CHANGE'),$stadt);
+                return $schulkindBetreuungKindNeuService->saveKind($kind,$this->isGranted('ROLE_ORG_CHILD_CHANGE'),$stadt,$form);
             } catch (\Exception $e) {
-                $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+                $text = array($translator->trans('Fehler. Bitte versuchen Sie es erneut.'));
                 return new JsonResponse(array('error' => 1, 'snack' => $text));
             }
 

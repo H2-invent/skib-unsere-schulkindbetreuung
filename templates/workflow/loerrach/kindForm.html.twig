@@ -33,7 +33,13 @@
                     method: 'POST',
                     data: $form.serialize(),
                     success: function (data) {
-                        $.snackbar({content: data.snack});
+                        $snackText = '';
+                        $(data.snack).each(function (i) {
+                            $.snackbar({content: data.snack[i]});
+
+                        });
+
+
 
                         if (data.error == 0) {
                             if (typeof data.next != "undefined") {
