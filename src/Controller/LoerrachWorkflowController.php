@@ -17,6 +17,7 @@ use App\Form\Type\LoerrachEltern;
 use App\Form\Type\LoerrachKind;
 use App\Form\Type\SepaStammdatenType;
 use App\Service\AnmeldeEmailService;
+use App\Service\ErrorService;
 use App\Service\IcsService;
 use App\Service\MailerService;
 use App\Service\PrintAGBService;
@@ -63,7 +64,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/adresse",name="loerrach_workflow_adresse",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function adresseAction(SchulkindBetreuungAdresseService $schulkindBetreuungAdresseService, AuthorizationCheckerInterface $authorizationChecker, TranslatorInterface $translator, Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function adresseAction(ErrorService $errorService, SchulkindBetreuungAdresseService $schulkindBetreuungAdresseService, AuthorizationCheckerInterface $authorizationChecker, TranslatorInterface $translator, Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
 
@@ -82,10 +83,11 @@ class LoerrachWorkflowController extends AbstractController
 
         $form->handleRequest($request);
         $errors = array();
-        if ($form->isSubmitted() && $form->isValid()) {
-
+        $errorsString = array();
+        if ($form->isSubmitted()) {
             $adresse = $form->getData();
             $errors = $validator->validate($adresse);
+            $errorsString = $errorService->createError($errors,$form);
             if (count($errors) == 0) {
                 $schulkindBetreuungAdresseService->setAdress($adresse,$authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE'),$request->getClientIp());
 
@@ -95,8 +97,9 @@ class LoerrachWorkflowController extends AbstractController
                 return $response;
             }
         }
+
         $title = $translator->trans('Anmeldeportal Schulkindbetreuung') . '->' . $translator->trans('Adresse') . ' | ' . $stadt->getName();
-        return $this->render('workflow/loerrach/adresse.html.twig', array('title' => $title, 'stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors));
+        return $this->render('workflow/loerrach/adresse.html.twig', array('title' => $title, 'stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errorsString));
     }
 
 
@@ -328,7 +331,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/bezahlen", name="loerrach_workflow_bezahlen")
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function sepaAction(SchulkindBetreuungKindSEPAService $schulkindBetreuungKindSEPAService, Request $request, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, ValidatorInterface $validator)
+    public function sepaAction(ErrorService $errorService,SchulkindBetreuungKindSEPAService $schulkindBetreuungKindSEPAService, Request $request, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, ValidatorInterface $validator)
     {
         $adresse = new Stammdaten;
 
@@ -343,9 +346,11 @@ class LoerrachWorkflowController extends AbstractController
 
         $form->handleRequest($request);
         $errors = array();
-        if ($form->isSubmitted() && $form->isValid()) {
+        $errorString  =array();
+        if ($form->isSubmitted()) {
             $adresse = $form->getData();
-            $errors = $validator->validate($adresse, null, ['schulkind']);
+            $errors = $validator->validate($adresse,null,['Schulkind']);
+            $errorString = $errorService->createError($errors,$form);
             if (count($errors) == 0) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($adresse);
@@ -354,7 +359,7 @@ class LoerrachWorkflowController extends AbstractController
                 return $response;
             }
         }
-        return $this->render('workflow/loerrach/bezahlen.html.twig', array('stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors, 'organisation' => $renderOrganisation));
+        return $this->render('workflow/loerrach/bezahlen.html.twig', array('stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errorString, 'organisation' => $renderOrganisation));
     }
 
 

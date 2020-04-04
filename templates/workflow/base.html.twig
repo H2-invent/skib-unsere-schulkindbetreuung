@@ -90,7 +90,9 @@
 
 </script>
 <script>
-
+    {% if errors is defined and errors is not empty %}
+    var errors = JSON.parse('{{ errors|json_encode()|raw }}');
+    {% endif %}
     bssettings = {
         title: '{% trans %}Cookie & Datenschutzhinweis{% endtrans %}',
         message: '{% trans %}Cookies ermöglichen die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden. Weitere Informationen zum Datenschutz erhalten Sie über den folgenden Link{% endtrans %}: <b>',

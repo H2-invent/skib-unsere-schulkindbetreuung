@@ -30,6 +30,12 @@ jarallax(document.querySelectorAll('.jarallax'), {
     speed: 0.2
 });
 
+$(document).ready(function () {
+    $(errors).each(function (i) {
+        toastr.error( errors[i]);
+    });
+
+})
 
 
 $(document).on('click', '.deleteBtn', function (e) {
