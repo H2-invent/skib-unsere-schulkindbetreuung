@@ -43,7 +43,7 @@ class PrintService
     {
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
-        $pdf = $this->preparePDF($pdf, 'Test', 'test', 'test', null, $organisation);
+        $pdf = $this->preparePDF($pdf, $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), $organisation->getName(),  $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), null, $organisation);
 
         $adressComp = '<p><small>' . $organisation->getName() . ' | ' . $organisation->getAdresse() . $organisation->getAdresszusatz() . ' | ' . $organisation->getPlz() . (' ') . $organisation->getOrt() . '</small><br><br>';
 
@@ -164,7 +164,7 @@ class PrintService
             '',
             true
         );
-        if($stadt->getOnlineCheckinEnable()){
+        if ($stadt->getOnlineCheckinEnable()) {
             $pdf->AddPage('H    ', 'A4');
             $pdf = $this->addCard($kind, $pdf);
         }
@@ -180,7 +180,7 @@ class PrintService
         $pdf = $this->addChildDetails($kind, $pdf);
         $pdf->AddPage('H    ', 'A4');
         $pdf = $this->addEltern($elter, $pdf);
-        if($kind->getSchule()->getOrganisation()->getStadt()->getOnlineCheckinEnable()){
+        if ($kind->getSchule()->getOrganisation()->getStadt()->getOnlineCheckinEnable()) {
             $pdf->AddPage('H    ', 'A4');
             $pdf = $this->addCard($kind, $pdf);
         }
@@ -246,21 +246,41 @@ class PrintService
         $pdf->AddPage();
         $pdf->setJPEGQuality(75);
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+        $w = 60;
+        $h = 0;
+        $imgdata = null;
         if ($organisation) {
             if ($organisation->getImage()) {
                 $im = $this->fileSystem->read($organisation->getImage());
                 $imdata = base64_encode($im);
                 $imgdata = base64_decode($imdata);
-                $pdf->Image('@' . $imgdata, 140, 20, 0, 30);
+
+                $dimensions = getimagesizefromstring($im);
+                if ($dimensions[0] < $dimensions[1]) {
+                    $h = 30;
+                    $w = 0;
+                }
             }
         }
+
         if ($stadt) {
-            if ($stadt->getImage()) {
-                $im = $this->fileSystem->read($stadt->getImage());
+            if ($stadt->getLogoUrl()) {
+                $im = $this->fileSystem->read($stadt->getLogoStadt());
                 $imdata = base64_encode($im);
                 $imgdata = base64_decode($imdata);
-                $pdf->Image('@' . $imgdata, 140, 20, 0, 30);
+                $dimensions = getimagesizefromstring($im);
+
+                if ($dimensions[0] < $dimensions[1]) {
+                    $h = 30;
+                    $w = 0;
+                }
             }
+
+        }
+
+
+        if ($imgdata) {
+            $pdf->Image('@' . $imgdata, 140, 20, $w, $h);
         }
         return $pdf;
     }
@@ -331,7 +351,7 @@ class PrintService
         );
 
 // QRCODE,H : QR-CODE Best error correction
-        $pdf->write2DBarcode($this->generator->generate('checkin_schulkindbetreuung', array('kindID' => $kind->getId()), UrlGeneratorInterface::ABSOLUTE_URL), 'QRCODE,H', 25, 68, 30, 30, $style, 'N');
+        $pdf->write2DBarcode($this->generator->generate('checkin_schulkindbetreuung', array('kindID' => $kind->getId()), UrlGeneratorInterface::ABSOLUTE_URL), 'QRCODE,H', 25, 72, 33, 33, $style, 'N');
         return $pdf;
     }
 }
