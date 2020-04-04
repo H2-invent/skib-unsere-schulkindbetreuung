@@ -81,7 +81,7 @@ $(document).on('click', '.loadContent', function (e) {
 $('#loadContentModal').on('show.bs.modal', function (e) {
     $('.pickadate').pickadate({
         format: 'dd.mm.yyyy',
-        formatSubmit: 'yyyy/mm/dd',
+        formatSubmit: 'yyyy-mm-dd',
     });
     $(this)
         .find('.mdb-select')
