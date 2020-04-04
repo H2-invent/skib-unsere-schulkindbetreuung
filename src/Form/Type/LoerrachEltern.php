@@ -27,7 +27,7 @@ class LoerrachEltern extends AbstractType
 
         $builder
             ->add('email', EmailType::class, ['label' => 'E-Mail', 'translation_domain' => 'form'])
-            ->add('phoneNumber', TextType::class, ['label' => 'Telefonnummer /Handynummer des Erziehungsberechtigten', 'translation_domain' => 'form'])
+            ->add('phoneNumber', TextType::class, ['label' => 'Telefonnummer', 'translation_domain' => 'form'])
             ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
             ->add('name', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
             ->add('strasse', TextType::class, ['label' => 'Straße Nr.', 'translation_domain' => 'form'])
@@ -36,7 +36,7 @@ class LoerrachEltern extends AbstractType
             ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form', 'help' => 'Bitte Ihren Wohnort angeben'])
             ->add('einkommen', ChoiceType::class, [
                 'choices' => $options['einkommen'], 'label' => 'Brutto Haushaltseinkommen pro Monat', 'translation_domain' => 'form'])
-            ->add('beruflicheSituation', ChoiceType::class, ['choices' => $options['beruflicheSituation'], 'required' => true, 'label' => 'Berufliche Situation des Erziehungsberechtigten', 'translation_domain' => 'form'])
+            ->add('beruflicheSituation', ChoiceType::class, ['choices' => $options['beruflicheSituation'], 'required' => true, 'label' => 'Berufliche Situation', 'translation_domain' => 'form'])
             ->add('kinderImKiga', CheckboxType::class, ['required' => false, 'label' => 'Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung', 'translation_domain' => 'form'])
             ->add('alleinerziehend', CheckboxType::class, ['required' => false, 'label' => 'Ich bin alleinerziehend', 'translation_domain' => 'form'])
             ->add('notfallName', TextType::class, ['required' => true, 'label' => 'Name des Notfallkontakts', 'translation_domain' => 'form'])
