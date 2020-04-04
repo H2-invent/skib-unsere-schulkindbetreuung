@@ -33,7 +33,7 @@
                         {% if stadt.logoUrl is not empty %}
                             <div class="mt-2">
                                 <a href="{{ stadt.stadtHomepage }}">
-                                    <img src="{{ stadt.logoUrl }}" alt="Unsere SKiB" style="width: 210px">
+                                    <img src="{{ vich_uploader_asset(stadt,'logoStadtFile') }}" alt="Unsere SKiB" style="width: 210px">
                                 </a>
                             </div>
                         {% endif %}
