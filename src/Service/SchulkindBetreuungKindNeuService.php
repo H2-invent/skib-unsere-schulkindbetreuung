@@ -17,6 +17,7 @@ use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -28,12 +29,14 @@ class SchulkindBetreuungKindNeuService
     private $translator;
     private $validator;
     private $generator;
-    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator, ValidatorInterface $validator,UrlGeneratorInterface $urlGenerator)
+    private $error;
+    public function __construct(ErrorService $errorService, EntityManagerInterface $em, TranslatorInterface $translator, ValidatorInterface $validator,UrlGeneratorInterface $urlGenerator)
     {
         $this->em = $em;
         $this->translator = $translator;
         $this->validator = $validator;
         $this->generator = $urlGenerator;
+        $this->error = $errorService;
     }
     public function prepareKind(Kind $kind, Schule $schule, Stammdaten $eltern){
         $kind->setEltern($eltern);
@@ -86,18 +89,21 @@ class SchulkindBetreuungKindNeuService
         }
         return $kind;
     }
-    public  function saveKind(Kind $kind, bool $hasRole,Stadt $stadt){
+    public  function saveKind(Kind $kind, bool $hasRole,Stadt $stadt,FormInterface $form){
         $errors = $this->validator->validate($kind);
-        if($kind->getMasernImpfung() === false && !$hasRole){
+        $errorString = array();
 
-            $text = $this->translator->trans('Fehler. Sie können Ihre Kind nur mit einer Masernimmunisierung anmelden');
-            return new JsonResponse(array('error' => 1, 'snack' => $text));
-        }
-        if (count($errors) == 0) {
+
+        if (count($errors) == 0 && ($kind->getMasernImpfung() === true || $hasRole) ) {
             $this->em->persist($kind);
             $this->em->flush();
-            $text = $this->translator->trans('Erfolgreich gespeichert');
+            $text = array($this->translator->trans('Erfolgreich gespeichert'));
             return new JsonResponse(array('error' => 0, 'snack' => $text, 'next' => $this->generator->generate('loerrach_workflow_schulen_kind_zeitblock', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()))));
+        }else{
+            $errorString[]= 'Fehler. Sie können Ihre Kind nur mit einer Masernimmunisierung anmelden';
+            $errorString = array_merge($errorString, $this->error->createError($errors,$form));
+            return new JsonResponse(array('error' => 1, 'snack' => $errorString));
+
         }
     }
 }

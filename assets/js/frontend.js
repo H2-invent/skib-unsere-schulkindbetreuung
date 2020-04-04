@@ -9,18 +9,13 @@
 import '../css/frontend.css';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
-import Popper from 'popper.js';
+
 import moment from 'moment';
 import {jarallax, jarallaxElement, jarallaxVideo} from 'jarallax';
 
 global.$ = global.jQuery = $;
-
-global.Popper = Popper;
 global.moment =moment;
-
-import('mdbootstrap-pro/js/bootstrap');
 import('snackbarjs');
-
 import ('morecontent-js/dist/jquery.morecontent');
 import('jquery-confirm');
 import('./jquery.bs.gdpr.cookies');
@@ -35,14 +30,6 @@ jarallax(document.querySelectorAll('.jarallax'), {
     speed: 0.2
 });
 
-$(document).on('click', '.loadContent', function (e) {
-    e.preventDefault();
-    var url = $(this).attr('href');
-    $('#loadContentModal').load(url, function () {
-        $('#loadContentModal ').modal('show');
-
-    });
-});
 
 
 $(document).on('click', '.deleteBtn', function (e) {
@@ -82,10 +69,27 @@ $(document).on('click', '.deleteBtn', function (e) {
 });
 
 
+$(document).on('click', '.loadContent', function (e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
+    $('#loadContentModal').load(url, function () {
+        $('#loadContentModal ').modal('show');
+
+    });
+});
+
+$('#loadContentModal').on('show.bs.modal', function (e) {
+    $('.pickadate').pickadate({
+        format: 'dd.mm.yyyy',
+        formatSubmit: 'yyyy/mm/dd',
+    });
+    $(this)
+        .find('.mdb-select')
+        .materialSelect();
+    $('input').trigger('change');
+});
 
 $(window).on('load', function () {
-
-
 
         $(function() {
             $('.lazy').show().Lazy({

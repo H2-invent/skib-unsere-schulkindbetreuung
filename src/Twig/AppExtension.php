@@ -18,7 +18,6 @@ class AppExtension extends AbstractExtension
     {
         try {
             $date= new \DateTime($object);
-            dump($date);
             return $date;
         }catch (\Exception $e){
             return false;
