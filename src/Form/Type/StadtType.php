@@ -77,6 +77,13 @@ class StadtType extends AbstractType
                 'required' => false,
                 'allow_delete' => true,
                 'delete_label' => 'Löschen',
+                'label'=>'Hintergrundbild hochladen',
+                'translation_domain' => 'form'
+            ])
+            ->add('logoStadtFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Löschen',
                 'label'=>'Logo hochladen',
                 'translation_domain' => 'form'
             ])
