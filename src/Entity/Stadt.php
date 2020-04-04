@@ -67,7 +67,17 @@ class Stadt
      * @var File
      */
     private $imageFile;
+    /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     * @var string
+     */
+    private $logoStadt;
 
+    /**
+     * @Vich\UploadableField(mapping="profil_picture", fileNameProperty="logoStadt")
+     * @var File
+     */
+    private $logoStadtFile;
     /**
      * @ORM\Column(type="datetime",nullable=true)
      * @var \DateTime
@@ -438,7 +448,33 @@ class Stadt
     {
         return $this->image;
     }
+    public function setLogoStadtFile(File $logoStadtFile = null)
+    {
+        $this->logoStadtFile = $logoStadtFile;
 
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($logoStadtFile) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getLogoStadtFile()
+    {
+        return $this->logoStadtFile;
+    }
+
+    public function setLogoStadt($logoStadt)
+    {
+        $this->logoStadt = $logoStadt;
+    }
+
+    public function getLogoStadt()
+    {
+        return $this->logoStadt;
+    }
     public function getEmail(): ?string
     {
         return $this->email;
