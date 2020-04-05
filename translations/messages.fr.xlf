@@ -1673,9 +1673,9 @@
         <source> im ausgewählten Betreuungszeitfenster</source>
         <target state="translated"> dans la période de soins sélectionnée</target>
       </trans-unit>
-      <trans-unit id="0_77c55" resname="Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)">
-        <source>Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)</source>
-        <target state="translated">Veuillez sélectionner une autre période de soins (au moins deux jours doivent être sélectionnés)</target>
+      <trans-unit id="0_77c55" resname="Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)">
+        <source>Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)</source>
+        <target state="translated">Veuillez sélectionner une autre période de soins (au moins %d% jours doivent être sélectionnés)</target>
       </trans-unit>
       <trans-unit id="UkguW0u" resname="Laktose intolerant">
         <source>Laktose intolerant</source>

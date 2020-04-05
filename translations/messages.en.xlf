@@ -2101,9 +2101,9 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Sitemap</source>
         <target state="translated">Sitemap</target>
       </trans-unit>
-      <trans-unit id="0_77c55" resname="Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)">
-        <source>Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)</source>
-        <target state="translated">Please select another care time slot (At least two days must be selected)</target>
+      <trans-unit id="0_77c55" resname="Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)">
+        <source>Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)</source>
+        <target state="translated">Please select another care time slot (At least %d% days must be selected)</target>
       </trans-unit>
       <trans-unit id="dhhPs7h" resname="Bestätigungscode zur Überprüfung der E-Mail Adresse">
         <source>Bestätigungscode zur Überprüfung der E-Mail Adresse</source>
