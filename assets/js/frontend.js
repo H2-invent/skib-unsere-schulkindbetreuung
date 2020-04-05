@@ -50,7 +50,7 @@ $(document).ready(function () {
     };
     if(typeof errors !=='undefined'){
         $(errors).each(function (i) {
-            toastr["error"](errors[i]);
+            toastr[errors[i].type](errors[i].text);
         });
     }
 
