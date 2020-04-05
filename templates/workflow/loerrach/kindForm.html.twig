@@ -34,21 +34,13 @@
                     data: $form.serialize(),
                     success: function (data) {
                         $snackText = '';
-                        if(data.error == 1){
-                            $(data.snack).each(function (i) {
-                                toastr.error( data.snack[i])
-                            });
-                        }else {
-                            $(data.snack).each(function (i) {
-                                toastr.success( data.snack[i])
-                            });
-                        }
+                        $(data.snack).each(function (i) {
+                            toastr[data.snack[i].type](data.snack[i].text);
 
-
+                        });
                         if (data.error == 0) {
                             if (typeof data.next != "undefined") {
                                 $('#loadContentModal').load(data.next);
-
                             } else {
                                 $('#loadContentModal').modal('hide');
                             }
