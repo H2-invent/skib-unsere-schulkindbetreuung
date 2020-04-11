@@ -2,28 +2,10 @@
 
 namespace App\Service;
 
-use App\Entity\Active;
 use App\Entity\Kind;
-use App\Entity\Organisation;
-use App\Entity\Stadt;
-
 use App\Entity\Stammdaten;
-use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 // <- Add this
@@ -33,29 +15,39 @@ class WorkflowAbschluss
 
 
     private $em;
-   public function __construct(Security $security,EntityManagerInterface $entityManager)
-   {
-       $this->em = $entityManager;
-       $this->user = $security;
-   }
+
+    public function __construct(Security $security, EntityManagerInterface $entityManager)
+    {
+        $this->em = $entityManager;
+        $this->user = $security;
+    }
 
     public
-    function abschluss(Stammdaten $adresse,$kind)
+    function abschluss(Stammdaten $adresse, $kind)
     {
         $adresse->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
 
         if (!$adresse->getTracing()) {
             $adresse->setTracing(md5(uniqid('stammdaten', true)));
         }
+        $kundennummern = array();
         if ($adresse->getHistory() > 0) {// es gibt bereits eine alte Historie, diese bsitzt schon ein Fin
             $adresseOld = $this->em->getRepository(Stammdaten::class)->findOneBy(array('tracing' => $adresse->getTracing(), 'fin' => true));
             $adresseOld->setFin(false);
             $adresseOld->setEndedAt((clone $adresse->getCreatedAt())->modify('last day of this month'));
             $this->em->persist($adresseOld);
+            $kundennummern = $adresseOld->getKundennummerns();
         }
 
         $adresse->setCreatedAt(new \DateTime());
+        foreach ($kundennummern as $data) {
+            $kn = clone $data;
+            $kn->setStammdaten($adresse);
+            $this->em->persist($kn);
+        }
+
         $adressCopy = clone $adresse;
+
         $adressCopy->setSaved(false);
         $adressCopy->setHistory($adressCopy->getHistory() + 1);
         $adressCopy->setSecCode(null);
