@@ -12,8 +12,8 @@ import $ from 'jquery';
 import Popper from 'popper.js';
 import 'datatables.net-dt';
 // Import TinyMCE
-import icon from 'trumbowyg/dist/ui/icons.svg'
 // Import TinyMCE
+import icon from 'trumbowyg/dist/ui/icons.svg'
 
 global.$ = global.jQuery = $;
 
