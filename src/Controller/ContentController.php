@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Content;
 use App\Form\Type\ContentType;
-use App\Form\Type\OrganisationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,7 +49,7 @@ class ContentController extends AbstractController
             }
         }
         $title = $translator->trans('Content anlegen');
-        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
+        return $this->render('content/ContentForm.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
 
     }
     /**
@@ -76,7 +75,7 @@ class ContentController extends AbstractController
             }
         }
         $title = $translator->trans('Content bearbeiten');
-        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
+        return $this->render('content/ContentForm.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
     }
     /**
      * @Route("/admin/content/activate", name="content_activate")
