@@ -3,17 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Stadt;
-
 use App\Form\Type\FormelType;
 use App\Form\Type\StadtType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class StadtverwaltungController extends AbstractController
 {
@@ -105,7 +101,7 @@ class StadtverwaltungController extends AbstractController
 
         }
         $title = $translator->trans('Stadt bearbeiten');
-        return $this->render('administrator/neu.html.twig', array('title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors));
+        return $this->render('administrator/stadtForm.html.twig', array('title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors));
     }
 
     /**
