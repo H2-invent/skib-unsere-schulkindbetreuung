@@ -62,7 +62,7 @@ class StadtverwaltungController extends AbstractController
 
         }
         $title = $translator->trans('Stadt anlegen');
-        return $this->render('administrator/neu.html.twig', array('title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors));
+        return $this->render('administrator/stadtForm.html.twig', array('title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors));
     }
 
     /**
