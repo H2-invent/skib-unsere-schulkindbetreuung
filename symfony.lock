@@ -1,4 +1,10 @@
 {
+    "a2lix/auto-form-bundle": {
+        "version": "0.3"
+    },
+    "a2lix/translation-form-bundle": {
+        "version": "3.0.7"
+    },
     "bacon/bacon-qr-code": {
         "version": "2.0.0"
     },
