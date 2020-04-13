@@ -12,6 +12,8 @@ import $ from 'jquery';
 import Popper from 'popper.js';
 import 'datatables.net-dt';
 // Import TinyMCE
+import icon from 'trumbowyg/dist/ui/icons.svg'
+// Import TinyMCE
 
 global.$ = global.jQuery = $;
 
@@ -26,11 +28,6 @@ import('jquery.cookie');
 import('jquery-validation');
 import('jquery-confirm');
 import('material-design-icons');
-import niceScroll from 'jquery.nicescroll';
-// Import TinyMCE
-import trumbowgy from './trumbowyg';
-import icon from 'trumbowyg/dist/ui/icons.svg'
-import snackbar from 'snackbarjs'
 import('daterangepicker');
 import('datatables.net');
 
@@ -108,11 +105,11 @@ $(window).on('load', function () {
             templates: [
                 {
                     name: 'Template mit Zitat',
-                    html: '<h1>H1-Header</h1><hr><div class="row"><div class="col-md-8"><h2>H2-Header</h2><hr><p>Text</p></div><div class="col-md-4"><p>Kleiner Text hier außerhalb des blauen Kastens</p><blockquote class="note note-primary z-depth-2"><p>Zitat kann hier eingefügt werden</p><footer class="blockquote-footer">byName</footer> </blockquote></div></div><hr>'
+                    html: '<h1 class="h1-responsive">H1-Header</h1><hr><div class="row"><div class="col-md-8"><h2 class="h2-responsive">H2-Header</h2><hr><p>Text</p></div><div class="col-md-4"><p>Kleiner Text hier außerhalb des blauen Kastens</p><blockquote class="note note-primary z-depth-2"><p>Zitat kann hier eingefügt werden</p><footer class="blockquote-footer">byName</footer> </blockquote></div></div><hr>'
                 },
                 {
                     name: 'Template mit zwei Spalten',
-                    html: '<h1>H1-Header</h1><hr><div class="row"><div class="col-md-6"><h2>H2-Header</h2><hr><p>Text</p></div><div class="col-md-6"><h2>H2-Header</h2><hr><p>Text</p></div> </div>'
+                    html: '<h1 class="h1-responsive">H1-Header</h1><hr><div class="row"><div class="col-md-6"><h2 class="h2-responsive">H2-Header</h2><hr><p>Text</p></div><div class="col-md-6"><h2 class="h2-responsive">H2-Header</h2><hr><p>Text</p></div> </div>'
                 }
             ]
         }
