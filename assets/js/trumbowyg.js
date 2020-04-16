@@ -1442,26 +1442,18 @@ Object.defineProperty(jQuery.trumbowyg, 'defaultOptions', {
                     t.syncCode();
                     t.semanticCode(false, true);
                     try {
-
                         var listId = window.getSelection().focusNode;
                         if(!$(window.getSelection().focusNode.parentNode).hasClass('trumbowyg-editor')){
                             listId = window.getSelection().focusNode.parentNode;
                         }
                         var arr = t.o.tagClasses[param];
                         if (arr) {
-                            $(listId).removeClass();
-                            for (var i = 0; i < arr.length; i++) {
-                                $(listId).removeClass(arr[i]);
-                                console.log('remove');
-                            }
                             for (var i = 0; i < arr.length; i++) {
                                 $(listId).addClass(arr[i]);
-                                console.log('wrote');
                             }
                         }
-
                     } catch (e) {
-                        console.log('dumm gelaufen');
+
                     }
 
                 }
