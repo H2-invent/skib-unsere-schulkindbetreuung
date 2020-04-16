@@ -202,7 +202,17 @@
 
 </script>
 {{ encore_entry_script_tags('landing') }}
+<script>
 
+    $(document).ready(function () {
+        $('select')
+            .materialSelect();
+        $('.pickadate').pickadate({
+            format: 'dd.mm.yyyy',
+            formatSubmit: 'yyyy-mm-dd',
+        });
+    });
+</script>
 </body>
 
 </html>

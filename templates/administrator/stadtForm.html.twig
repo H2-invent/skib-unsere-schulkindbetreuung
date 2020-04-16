@@ -1,4 +1,5 @@
 {% extends 'adminBase.html.twig' %}
+{% import "form/macros.html.twig" as a2lixTranslations %}
 
 {% block content %}
 <section class="dashboard-counts section-padding">
@@ -85,63 +86,18 @@
 
                         <div class="tab-pane fade" id="texte" role="tabpanel" aria-labelledby="profile-tab"><h2>
                                 Texte</h2>
-                            <h3>Infotext</h3>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#infoDe"
-                                       role="tab" aria-controls="home" aria-selected="true">Deutsch</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#infoEn" role="tab"
-                                       aria-controls="profile" aria-selected="false">Englisch</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#infoFr" role="tab"
-                                       aria-controls="contact" aria-selected="false">Französisch</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="infoDe" role="tabpanel"
-                                     aria-labelledby="home-tab">
-                                    {{ form_row(form.infoTextDe) }}</div>
-                                <div class="tab-pane fade" id="infoEn" role="infoEn"
-                                     aria-labelledby="profile-tab">
-                                    {{ form_row(form.infoTextEn) }}</div>
-                                <div class="tab-pane fade" id="infoFr" role="infoFr" aria-labelledby="contact-tab">
-                                    {{ form_row(form.infoTextFr) }}</div>
-                            </div>
+
+                            {{ a2lixTranslations.partialTranslations(form.translations, ['infoText']) }}
 
 
                         </div>
                         <div class="tab-pane fade" id="rechtliches" role="tabpanel" aria-labelledby="profile-tab">
                             <h2>Rechliches</h2>
                             {{ form_row(form.imprint) }}
-                            <h3>Datenschutzhinweis</h3>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#dsgvoDe"
-                                       role="tab" aria-controls="home" aria-selected="true">Deutsch</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#dsgvoEn" role="tab"
-                                       aria-controls="profile" aria-selected="false">Englisch</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#dsgvoFr" role="tab"
-                                       aria-controls="contact" aria-selected="false">Französisch</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="dsgvoDe" role="tabpanel"
-                                     aria-labelledby="home-tab">
-                                    {{ form_row(form.datenschutzDE) }}</div>
-                                <div class="tab-pane fade" id="dsgvoEn" role="infoEn"
-                                     aria-labelledby="profile-tab">
-                                    {{ form_row(form.datenschutzEn) }}</div>
-                                <div class="tab-pane fade" id="dsgvoFr" role="vertragsbedingungenFr"
-                                     aria-labelledby="contact-tab">
-                                    {{ form_row(form.datenschutzFr) }}</div>
-                            </div>
+
+                            {{ a2lixTranslations.partialTranslations(form.translations, ['datenschutz']) }}
+
+
                         </div>
                         <div class="tab-pane fade" id="bilder" role="tabpanel" aria-labelledby="profile-tab"><h2>
                                 Bilder</h2>
@@ -159,91 +115,9 @@
                             {{ form_row(form.minDaysperWeek) }}
                             {{ form_row(form.preiskategorien) }}
                             {{ form_row(form.gehaltsklassen) }}
-                            <h3>Vertragsbedingungen</h3>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab"
-                                       href="#vertragsbedingungenDe"
-                                       role="tab" aria-controls="home" aria-selected="true">Deutsch</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#vertragsbedingungenEn"
-                                       role="tab"
-                                       aria-controls="profile" aria-selected="false">Englisch</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#vertragsbedingungenFr"
-                                       role="tab"
-                                       aria-controls="contact" aria-selected="false">Französisch</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="vertragsbedingungenDe" role="tabpanel"
-                                     aria-labelledby="home-tab">
-                                    {{ form_row(form.infoAGBDe) }}</div>
-                                <div class="tab-pane fade" id="vertragsbedingungenEn" role="infoEn"
-                                     aria-labelledby="profile-tab">
-                                    {{ form_row(form.infoAGBEn) }}</div>
-                                <div class="tab-pane fade" id="vertragsbedingungenFr" role="vertragsbedingungenFr"
-                                     aria-labelledby="contact-tab">
-                                    {{ form_row(form.infoAGBFr) }}</div>
-                            </div>
-                            <h3>Betreuungszeitfensterinformation</h3>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#careBlockInfoDe"
-                                       role="tab" aria-controls="home" aria-selected="true">Deutsch</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#careBlockInfoEn"
-                                       role="tab"
-                                       aria-controls="profile" aria-selected="false">Englisch</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#careBlockInfoFr"
-                                       role="tab"
-                                       aria-controls="contact" aria-selected="false">Französisch</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="careBlockInfoDe" role="tabpanel"
-                                     aria-labelledby="home-tab">
-                                    {{ form_row(form.careBlockInfoDE) }}</div>
-                                <div class="tab-pane fade" id="careBlockInfoEn" role="infoEn"
-                                     aria-labelledby="profile-tab">
-                                    {{ form_row(form.careBlockInfoEn) }}</div>
-                                <div class="tab-pane fade" id="careBlockInfoFr" role="vertragsbedingungenFr"
-                                     aria-labelledby="contact-tab">
-                                    {{ form_row(form.careBlockInfoFr) }}</div>
-                            </div>
-                            <h3>Catererinformation</h3>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#catererInfoDE"
-                                       role="tab" aria-controls="home" aria-selected="true">Deutsch</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#catererInfoEn"
-                                       role="tab"
-                                       aria-controls="profile" aria-selected="false">Englisch</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#catererInfoFr"
-                                       role="tab"
-                                       aria-controls="contact" aria-selected="false">Französisch</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="catererInfoDE" role="tabpanel"
-                                     aria-labelledby="home-tab">
-                                    {{ form_row(form.catererInfoDE) }}</div>
-                                <div class="tab-pane fade" id="catererInfoEn" role="infoEn"
-                                     aria-labelledby="profile-tab">
-                                    {{ form_row(form.catererInfoEn) }}</div>
-                                <div class="tab-pane fade" id="catererInfoFr" role="vertragsbedingungenFr"
-                                     aria-labelledby="contact-tab">
-                                    {{ form_row(form.catererInfoFr) }}</div>
-                            </div>
+                            {{ a2lixTranslations.partialTranslations(form.translations, ['agb','catererInfo','careBlockInfo']) }}
+
+
                         </div>
                         <div class="tab-pane fade" id="ferienbetreeuung" role="tabpanel"
                              aria-labelledby="profile-tab"><h2>Ferienbetreuung</h2></div>
