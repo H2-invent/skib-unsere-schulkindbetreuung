@@ -274,13 +274,18 @@
                             class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
         </div>
         <div class="text-left card-body">
-
             {% trans %}Kontoinhaber{% endtrans %}: {{ eltern.kontoinhaber }}<br/>
             {% trans %}IBAN{% endtrans %}: {{ eltern.iban }}<br/>
             {% trans %}BIC{% endtrans %}: {{ eltern.bic }}<br/>
-            {{ eltern.sepaInfo?"Ich erteile der betreuenden Organisation (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags"|trans:""|trans }} </br>
-            {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
-
+            <p class="mt-2">
+                {% trans %}Ich ermächtige{% endtrans %} {% for k in kind %}{% trans %}die{% endtrans %} {% if k.schule.organisation.sepaOrganisation %}<b>{{ k.schule.organisation.sepaOrganisation }}</b>{% else %}<b>betreuende Organisation {{ k.schule.organisation.name }}</b>{% endif %}, {% endfor %}{% trans %}Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von{% endtrans %}{% for k in kind %} {% trans %}der{% endtrans %} {% if k.schule.organisation.sepaOrganisation %}<b>{{ k.schule.organisation.sepaOrganisation }}</b>{% else %}<b>betreuenden Organisation {{ k.schule.organisation.name }}</b>{% endif %}{% if not loop.last %},{% endif %} {% endfor %}{% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
+            </p>
+            <p>
+                {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
+            </p>
+            <p>
+                {% trans %}Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.{% endtrans %}
+            </p>
         </div>
     </div>
 
