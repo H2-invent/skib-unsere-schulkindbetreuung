@@ -367,7 +367,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/zusammenfassung",name="loerrach_workflow_zusammenfassung",methods={"GET"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function zusammenfassungAction(Stadt $stadt, Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function zusammenfassungAction(SchulkindBetreuungKindSEPAService $schulkindBetreuungKindSEPAService, Stadt $stadt, Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
         // Load the data from the city into the controller as $stadt
 
@@ -399,8 +399,8 @@ class LoerrachWorkflowController extends AbstractController
                 break;
             }
         }
-
-        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('beruflicheSituation' => array_flip($this->beruflicheSituation), 'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis' => $preis, 'error' => $error));
+        $renderOrganisation = $schulkindBetreuungKindSEPAService ->findOrg($adresse);
+        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('beruflicheSituation' => array_flip($this->beruflicheSituation), 'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis' => $preis, 'error' => $error,'organisation'=>$renderOrganisation));
     }
 
     /**

@@ -28,7 +28,15 @@
                 <div class="col-sm-11">
                     {{ form_row(form.sepaInfo) }}
                     <p>
-                        {% trans %}Ich ermächtige{% endtrans %} {% for o in organisation%}{% trans %}die{% endtrans %} {% if o.sepaOrganisation %}<b>{{ o.sepaOrganisation }}</b>{% else %}<b>betreuende Organisation {{ o.name }}</b>{% endif %}, {% endfor %}{% trans %}Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von{% endtrans %}{% for o in organisation%} {% trans %}der{% endtrans %} {% if o.sepaOrganisation %}<b>{{ o.sepaOrganisation }}</b>{% else %}<b>betreuenden Organisation {{ o.name }}</b>{% endif %}{% if not loop.last %},{% endif %} {% endfor %}{% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
+                        {% trans %}Ich ermächtige{% endtrans %}
+                        {% for o in organisation%}
+                            {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:'betreuende Organisation '~o.name } %}die <b>%org%</b> {% endtrans %},
+                        {% endfor %}
+                        {% trans %}Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von{% endtrans %}
+                         {% for o in organisation%}
+                             {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:'betreuende Organisation '~o.name } %}der <b>%org%</b> {% endtrans %}{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                        {% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
                     </p>
                     <p>
                         {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}

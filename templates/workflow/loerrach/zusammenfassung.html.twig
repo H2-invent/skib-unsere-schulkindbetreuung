@@ -278,8 +278,17 @@
             {% trans %}IBAN{% endtrans %}: {{ eltern.iban }}<br/>
             {% trans %}BIC{% endtrans %}: {{ eltern.bic }}<br/>
             <p class="mt-2">
-                {% trans %}Ich ermächtige{% endtrans %} {% for k in kind %}{% trans %}die{% endtrans %} {% if k.schule.organisation.sepaOrganisation %}<b>{{ k.schule.organisation.sepaOrganisation }}</b>{% else %}<b>betreuende Organisation {{ k.schule.organisation.name }}</b>{% endif %}, {% endfor %}{% trans %}Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von{% endtrans %}{% for k in kind %} {% trans %}der{% endtrans %} {% if k.schule.organisation.sepaOrganisation %}<b>{{ k.schule.organisation.sepaOrganisation }}</b>{% else %}<b>betreuenden Organisation {{ k.schule.organisation.name }}</b>{% endif %}{% if not loop.last %},{% endif %} {% endfor %}{% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
-            </p>
+                {% trans %}Ich ermächtige{% endtrans %}
+                {% for o in organisation%}
+                    {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:'betreuende Organisation '~o.name } %}die <b>%org%</b> {% endtrans %},
+                {% endfor %}
+                {% trans %}Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von{% endtrans %}
+                {% for o in organisation%}
+                    {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:'betreuende Organisation '~o.name } %}der <b>%org%</b> {% endtrans %}{% if not loop.last %},{% endif %}
+                {% endfor %}
+                {% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
+
+                </p>
             <p>
                 {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
             </p>
