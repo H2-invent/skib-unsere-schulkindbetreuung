@@ -34,7 +34,7 @@ class OrganisationController extends AbstractController
     /**
      * @Route("/city_admin/organisation/new", name="city_admin_organisation_new",methods={"GET","POST"})
      */
-    public function newSchool(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    public function newOrg(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         if ($city != $this->getUser()->getStadt()) {
@@ -66,7 +66,7 @@ class OrganisationController extends AbstractController
     /**
      * @Route("/org_edit/organisation/edit", name="city_admin_organisation_edit",methods={"GET","POST"})
      */
-    public function editSchool(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    public function editOrg(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
 
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));

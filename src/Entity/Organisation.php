@@ -294,6 +294,11 @@ class Organisation
      */
     private $anwesenheitSchulkindbetreuung;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $sepaOrganisation;
+
 
 
 
@@ -1043,6 +1048,18 @@ class Organisation
                 $anwesenheitSchulkindbetreuung->setOrganisation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSepaOrganisation(): ?string
+    {
+        return $this->sepaOrganisation;
+    }
+
+    public function setSepaOrganisation(?string $sepaOrganisation): self
+    {
+        $this->sepaOrganisation = $sepaOrganisation;
 
         return $this;
     }

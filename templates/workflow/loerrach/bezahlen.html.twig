@@ -28,9 +28,22 @@
                 <div class="col-sm-11">
                     {{ form_row(form.sepaInfo) }}
                     <p>
-                        {% trans %}Ich ermächtige die betreuende Organisation{% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>, {% endfor %}{% trans %}Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der betreuenden Organisation{% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>{% if not loop.last %},{% endif %} {% endfor %}{% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
+                        {% trans %}Ich ermächtige{% endtrans %}
+                        {% for o in organisation%}
+                            {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:'betreuende Organisation '~o.name } %}die <b>%org%</b> {% endtrans %},
+                        {% endfor %}
+                        {% trans %}Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von{% endtrans %}
+                         {% for o in organisation%}
+                             {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:'betreuende Organisation '~o.name } %}der <b>%org%</b> {% endtrans %}{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                        {% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
                     </p>
-                    {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
+                    <p>
+                        {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
+                    </p>
+                    <p>
+                        {% trans %}Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.{% endtrans %}
+                    </p>
                 </div>
             </div>
             <div class="text-center stickyBottom">
