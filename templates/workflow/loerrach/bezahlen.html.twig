@@ -30,11 +30,11 @@
                     <p>
                         {% trans %}Ich ermächtige{% endtrans %}
                         {% for o in organisation%}
-                            {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:'betreuende Organisation '~o.name } %}die <b>%org%</b> {% endtrans %},
+                            {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:'betreuende Organisation '~o.name } %}die %org% {% endtrans %},
                         {% endfor %}
                         {% trans %}Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von{% endtrans %}
                          {% for o in organisation%}
-                             {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:'betreuende Organisation '~o.name } %}der <b>%org%</b> {% endtrans %}{% if not loop.last %},{% endif %}
+                             {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:'betreuende Organisation '~o.name } %}der %org% {% endtrans %}{% if not loop.last %},{% endif %}
                         {% endfor %}
                         {% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
                     </p>
