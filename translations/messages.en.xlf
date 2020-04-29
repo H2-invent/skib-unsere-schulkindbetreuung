@@ -2483,6 +2483,10 @@ The web application enables direct networking between parent or legal guardian, 
         <source>der %org%</source>
         <target>the %org%</target>
       </trans-unit>
+      <trans-unit id="Kdkf0By" resname="betreuende Organisation">
+        <source>betreuende Organisation</source>
+        <target>supervising organization</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
