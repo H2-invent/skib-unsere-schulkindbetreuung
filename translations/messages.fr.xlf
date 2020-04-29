@@ -2467,12 +2467,10 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Ich ermächtige</source>
         <target>J'autorise</target>
       </trans-unit>
-
       <trans-unit id="Mpp0I57" resname="Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von">
         <source>Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von</source>
         <target>recouvrer les paiements sur mon compte par prélèvement automatique. Dans le même temps, je donne des instructions à mon établissement de crédit, qui est</target>
       </trans-unit>
-
       <trans-unit id="WQZwCEB" resname="Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.">
         <source>Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.</source>
         <target>Information : Les prélèvements sont exécutés aux dates d'échéance expressément mentionnées dans les décisions, les demandes de paiement et les conditions contractuelles. Vous y trouverez également les montants exacts des recouvrements.</target>
@@ -2488,6 +2486,10 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       <trans-unit id="Yd7KP0K" resname="der %org%">
         <source>der %org%</source>
         <target>le %org%</target>
+      </trans-unit>
+      <trans-unit id="Kdkf0By" resname="betreuende Organisation">
+        <source>betreuende Organisation</source>
+        <target>organisation de supervision</target>
       </trans-unit>
     </body>
   </file>
