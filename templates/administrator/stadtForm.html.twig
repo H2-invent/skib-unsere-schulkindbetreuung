@@ -1,0 +1,156 @@
+{% extends 'adminBase.html.twig' %}
+{% import "form/macros.html.twig" as a2lixTranslations %}
+
+{% block content %}
+<section class="dashboard-counts section-padding">
+    <div class="container-fluid ">
+        <div class="row">
+            <!-- Count item widget-->
+            <div class=" col-12 card">
+                <div class="card-header">
+                    <h1>{{ title }}</h1>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        {% for error in errors %}
+                            <li>{{ error.message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_row(form.submit) }}
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#allgemein" role="tab"
+                               aria-controls="home" aria-selected="true">Allgemein</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#bilder" role="tab"
+                               aria-controls="profile" aria-selected="false">Aussehen</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="home-tab" data-toggle="tab" href="#module" role="tab"
+                               aria-controls="home" aria-selected="true">Module</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#texte" role="tab"
+                               aria-controls="profile" aria-selected="false">Texte</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#rechtliches" role="tab"
+                               aria-controls="profile" aria-selected="false">Rechtliches</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#schulkindbetreuung"
+                               role="tab" aria-controls="contact" aria-selected="false">Schulkindbetreuung</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#ferienbetreeuung"
+                               role="tab" aria-controls="contact" aria-selected="false">Ferienbetreuung</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="myTabContent">
+
+                        <div class="tab-pane fade show active" id="allgemein" role="tabpanel"
+                             aria-labelledby="home-tab"><h2>Allgemein</h2>
+                            {% if form.slug is defined %}
+                                {{ form_row(form.slug) }}
+                            {% endif %}
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.email) }}
+                            {{ form_row(form.adresse) }}
+                            {{ form_row(form.adresszusatz) }}
+                            {{ form_row(form.plz) }}
+                            {{ form_row(form.ort) }}
+                            {{ form_row(form.telefon) }}
+                            {{ form_row(form.ansprechpartner) }}
+                            {{ form_row(form.stadtHomepage) }}
+
+                        </div>
+                        <div class="tab-pane fade" id="module" role="tabpanel" aria-labelledby="profile-tab"><h2>
+                                Module</h2>
+                            {% if form.active is defined %}
+                            {{ form_row(form.active) }}
+                            {% endif %}
+                            {% if form.onlineCheckinEnable %}
+                            {{ form_row(form.onlineCheckinEnable) }}
+                            {% endif %}
+                            {% if form.schulkindBetreung is defined %}
+                            {{ form_row(form.schulkindBetreung) }}
+                            {% endif %}
+                            {% if form.ferienprogramm is defined%}
+                            {{ form_row(form.ferienprogramm) }}
+                            {% endif %}
+                        </div>
+
+                        <div class="tab-pane fade" id="texte" role="tabpanel" aria-labelledby="profile-tab"><h2>
+                                Texte</h2>
+
+                            {{ a2lixTranslations.partialTranslations(form.translations, ['infoText']) }}
+
+
+                        </div>
+                        <div class="tab-pane fade" id="rechtliches" role="tabpanel" aria-labelledby="profile-tab">
+                            <h2>Rechliches</h2>
+                            {{ form_row(form.imprint) }}
+
+                            {{ a2lixTranslations.partialTranslations(form.translations, ['datenschutz']) }}
+
+
+                        </div>
+                        <div class="tab-pane fade" id="bilder" role="tabpanel" aria-labelledby="profile-tab"><h2>
+                                Bilder</h2>
+                            {{ form_row(form.imageFile) }}
+                            {{ form_row(form.logoStadtFile) }}
+                            {{ form_row(form.logoUrl) }}
+                            {{ form_row(form.hauptfarbe) }}
+                            {{ form_row(form.akzentfarbe) }}
+                            {{ form_row(form.akzentfarbeFehler) }}
+
+                        </div>
+                        <div class="tab-pane fade" id="schulkindbetreuung" role="tabpanel"
+                             aria-labelledby="profile-tab"><h2>Schulkindbetreuung</h2>
+                            {{ form_row(form.minBlocksPerDay) }}
+                            {{ form_row(form.minDaysperWeek) }}
+                            {{ form_row(form.preiskategorien) }}
+                            {{ form_row(form.gehaltsklassen) }}
+                            {{ a2lixTranslations.partialTranslations(form.translations, ['agb','catererInfo','careBlockInfo']) }}
+
+
+                        </div>
+                        <div class="tab-pane fade" id="ferienbetreeuung" role="tabpanel"
+                             aria-labelledby="profile-tab"><h2>Ferienbetreuung</h2></div>
+
+
+                    </div>
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block jquery %}
+    <script>
+        $(document).ready(function () {
+            var form = $('form'),
+                original = form.serialize()
+
+            form.submit(function () {
+                window.onbeforeunload = null
+            })
+
+            window.onbeforeunload = function () {
+                if (form.serialize() != original)
+                    return 'Are you sure you want to leave?'
+            }
+        })
+    </script>
+
+
+{% endblock %}

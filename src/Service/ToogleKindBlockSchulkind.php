@@ -36,6 +36,7 @@ class ToogleKindBlockSchulkind
     function toggleKind(Stadt $stadt, Kind $kind, Zeitblock $block)
     {
         $result = array(
+            'snack'=>array(),
             'text' => $this->translator->trans('Betreuungszeitfenster erfolgreich gespeichert'),
             'error' => 0,
             'blocks' => array(),
@@ -46,18 +47,19 @@ class ToogleKindBlockSchulkind
             $blocks2 = $kind->getTageWithBlocks();
 
             if ($blocks2 < $stadt->getMinDaysperWeek()) {
-                $result['text'] = $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)');
+                $result['snack'][] = array('type'=>'warning','text'=>$this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)',array('%d%'=>$stadt->getMinDaysperWeek())));
+                $result['text'] = $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)',array('%d%'=>$stadt->getMinDaysperWeek()));
                 $result['error'] = 2;
             }else{
                 $result['preisUrl'] = $this->router->generate('loerrach_workflow_preis_einKind', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()));
 
             }
         } catch (\Exeption $e) {
-            $result['text'] = $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+            $result['snack'][] = array('type'=>'error','text'=>$this->translator->trans('Fehler. Bitte versuchen Sie es erneut.'));
             $result['error'] = 1;
         }
         if(sizeof($result['blocks'])>1){
-            $result['hinweis']=$this->translator->trans('Es wurden weitere Blöcke bearbeitet, da keine unbetreuten Zeiten in der Tagesbetreuung vorhanden sein dürfen');
+            $result['snack'][]=array('type'=>'info','text'=>$this->translator->trans('Es wurden weitere Blöcke bearbeitet, da keine unbetreuten Zeiten in der Tagesbetreuung vorhanden sein dürfen'));
         }
         return $result;
     }

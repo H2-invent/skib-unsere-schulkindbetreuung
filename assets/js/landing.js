@@ -7,25 +7,17 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/frontend.css';
-
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
+import Popper from 'popper.js';
+import {jarallax, jarallaxElement, jarallaxVideo} from 'jarallax';
 
 global.$ = global.jQuery = $;
-import Popper from 'popper.js';
 
 global.Popper = Popper;
 import('bootstrap');
 import('./mdb');
 import ('jquery-lazy');
-
-import {
-    jarallax,
-    jarallaxElement,
-    jarallaxVideo
-} from 'jarallax';
-
-import scrollingTabs from 'jquery-bootstrap-scrolling-tabs';
 
 jarallaxVideo();
 jarallaxElement();
@@ -79,13 +71,8 @@ $(document).on('click', '.loadInTarget', function (e) {
     e.preventDefault();
     var ele = $(this);
     $(ele.attr('data-wrapper')).load(ele.attr('href') + ' ' + ele.attr('data-target'), function () {
-        $('.nav-tabs').scrollingTabs({
-            bootstrapVersion: 4,
-            cssClassLeftArrow: 'fa fa-chevron-left',
-            cssClassRightArrow: 'fa fa-chevron-right',
-            disableScrollArrowsOnFullyScrolled: true
-        });
 
+        Waves.attach('.waves-light', ['waves-effect']);
     });
 
     window.history.pushState('test', "test", ele.attr('href'));

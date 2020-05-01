@@ -1,6 +1,6 @@
-<div class="modal-dialog modal-dialog-scrollable" role="document">
+<div class="modal-dialog cascading-modal modal-dialog-scrollable" role="document">
     <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header light-blue darken-3 white-text">
             <h5 class="modal-title">{% trans %}Daten des Kindes eingeben{% endtrans %}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -33,12 +33,14 @@
                     method: 'POST',
                     data: $form.serialize(),
                     success: function (data) {
-                        $.snackbar({content: data.snack});
+                        $snackText = '';
+                        $(data.snack).each(function (i) {
+                            toastr[data.snack[i].type](data.snack[i].text);
 
+                        });
                         if (data.error == 0) {
                             if (typeof data.next != "undefined") {
                                 $('#loadContentModal').load(data.next);
-
                             } else {
                                 $('#loadContentModal').modal('hide');
                             }

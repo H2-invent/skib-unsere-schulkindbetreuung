@@ -7,21 +7,26 @@
                 <!-- Count item widget-->
                 {% for s in schule %}
                     <div class="col-lg-3 col-sm-6 ">
-                    <div class="card" >
-                        {% if not s.image is empty %}
-                        <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}" alt="{{ s.name }}"
-                             style="max-height: 300px">
+                        <div class="card">
+                            {% if not s.image is empty %}
+                                <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                     alt="{{ s.name }}"
+                                     style="max-height: 300px">
                             {% else %}
-                            <img class="card-img-top" src="{{ asset('images/logo-breit-mittig.png') }}" alt="SKiB"
-                                 style="max-height: 300px">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ s.name }}</h5>
-                            <p class="card-text">{{ s.infoText }}</p>
-                            <a href="{{ path('block_schule_schow',{'id':s.id}) }}"
-                               class="btn btn-primary">{% trans %}Betreuungsblöcke{% endtrans %}</a>
+                                <img class="card-img-top" src="{{ asset('images/logo-breit-mittig.png') }}" alt="SKiB"
+                                     style="max-height: 300px">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ s.name }}</h5>
+
+                                <a href="{{ path('block_schule_schow',{'id':s.id}) }}"
+                                   class="btn btn-primary">{% trans %}Betreuungsblöcke{% endtrans %}</a>
+                                {% if is_granted('ROLE_ORG_SHOOL') %}
+                                    <a href="{{ path('city_admin_schule_edit',{'id':s.id}) }}"
+                                       class="btn btn-primary">{% trans %}Schule bearbeiten{% endtrans %}</a>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
                     </div>
                 {% endfor %}
 

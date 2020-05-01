@@ -16,6 +16,8 @@
             <h4> {% trans %}Daten des Kindes/Kinder{% endtrans %}</h4>
         </div>
         <div class="card-body">
+
+
             <section class="dashboard-counts section-padding" id="schulenShow">
                 <div id="schulenShowContent">
                     <div class="container-fluid ">
@@ -52,10 +54,10 @@
                                                 <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id,'slug':stadt.slug}) }}"
                                                    class="waves-effect loadContent btn btn-outline-primary">{% trans %}Kind anmelden{% endtrans %}</a>
 
-                                            </div>
-                                            {% if kinder[s.id] is defined and kinder[s.id] is not null %}
-                                                {% for k in kinder[s.id] %}
-                                                    <div class="card-body">
+                                                <br>
+                                                {% if kinder[s.id] is defined and kinder[s.id] is not null %}
+                                                    {% for k in kinder[s.id] %}
+
                                                         <div class="btn-group">
                                                             <button class="btn bmd-btn-icon dropdown-toggle waves-effect px-3"
                                                                     type="button"
@@ -78,11 +80,11 @@
                                                         </div>
                                                         {{ k.vorname }} {{ k.nachname }}
                                                         <b><span class="price">{% if k.tageWithBlocks>=2 %}{{ k.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></b>
-                                                    </div>
 
-                                                {% endfor %}
-                                            {% endif %}
-
+                                                        <br>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +112,7 @@
 {% endblock %}
 {% block jquery %}
     <script>
-       urlShool = '{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #schulenShowContent';
+        urlShool = '{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }} #schulenShowContent';
     </script>
 
 {% endblock %}

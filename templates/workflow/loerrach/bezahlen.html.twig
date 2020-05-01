@@ -18,26 +18,33 @@
         <div class="card-body">
             <div class="mb-4">
                 <div class="col-sm-11">
-                    {{ form_start(form) }}
-                    {{ form_label(form.iban) }}
-                    {{ form_widget(form.iban) }}
-
-                    {{ form_label(form.bic) }}
-                    {{ form_widget(form.bic) }}
-
-                    {{ form_label(form.kontoinhaber) }}
-                    {{ form_widget(form.kontoinhaber) }}
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_row(form.iban) }}
+                    {{ form_row(form.bic) }}
+                    {{ form_row(form.kontoinhaber) }}
                 </div>
             </div>
             <div class="mb-3">
                 <div class="col-sm-11">
-                    {{ form_label(form.sepaInfo) }}
-                    {{ form_widget(form.sepaInfo) }}
+                    {{ form_row(form.sepaInfo) }}
                     <p>
-                        {% trans %}Ich ermächtige die betreuende Organisation{% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>, {% endfor %}{% trans %}Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der betreuenden Organisation{% endtrans %} {% for o in organisation%} <b>{{ o.name }}</b>{% if not loop.last %},{% endif %} {% endfor %}{% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
+                        {% set text = 'betreuende Organisation'|trans %}
+                        {% trans %}Ich ermächtige{% endtrans %}
+                        {% for o in organisation%}
+                            {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:text~' '~o.name } %}die %org% {% endtrans %},
+                        {% endfor %}
+                        {% trans %}Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von{% endtrans %}
+                        {% for o in organisation%}
+                            {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:text~' '~o.name } %}der %org% {% endtrans %}{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                        {% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
                     </p>
-                    {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
-
+                    <p>
+                        {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
+                    </p>
+                    <p>
+                        {% trans %}Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.{% endtrans %}
+                    </p>
                 </div>
             </div>
             <div class="text-center stickyBottom">
@@ -47,6 +54,7 @@
                 {{ form_label(form.submit) }}
                 {{ form_widget(form.submit) }}
             </div>
+            {{ form_rest(form) }}
             {{ form_end(form) }}
         </div>
     </div>

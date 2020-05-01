@@ -1673,9 +1673,9 @@
         <source> im ausgewählten Betreuungszeitfenster</source>
         <target state="translated"> dans la période de soins sélectionnée</target>
       </trans-unit>
-      <trans-unit id="0_77c55" resname="Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)">
-        <source>Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)</source>
-        <target state="translated">Veuillez sélectionner une autre période de soins (au moins deux jours doivent être sélectionnés)</target>
+      <trans-unit id="8CFu8Xt" resname="Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)">
+        <source>Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)</source>
+        <target state="translated">Veuillez sélectionner une autre période de soins (au moins %d% jours doivent être sélectionnés)</target>
       </trans-unit>
       <trans-unit id="UkguW0u" resname="Laktose intolerant">
         <source>Laktose intolerant</source>
@@ -2407,7 +2407,7 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Masernimpfung</source>
         <target>Vaccination contre la rougeole</target>
       </trans-unit>
-      <trans-unit id="AG69DQ2" resname="Fehler. Sie können Ihre Kind nur mit einer Masernimmunisierung anmelden">
+      <trans-unit id="0GCC.3g" resname="Fehler. Sie können Ihre Kind nur mit einer Masernimmunisierung anmelden">
         <source>Fehler. Sie können Ihre Kind nur mit einer Masernimmunisierung anmelden</source>
         <target>Erreur. Vous ne pouvez inscrire votre enfant qu'avec un vaccin contre la rougeole</target>
       </trans-unit>
@@ -2438,6 +2438,58 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       <trans-unit id="6NREgtV" resname="Die Gebühren sind einkommensabhängig. Angerechnet wird das Brutto Haushaltseinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).">
         <source>Die Gebühren sind einkommensabhängig. Angerechnet wird das Brutto Haushaltseinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).</source>
         <target>Les frais dépendent du revenu. Le revenu brut du ménage (salaire, allocations familiales, pension alimentaire, allocation de transition, indemnités de remplacement de salaire et tous les autres revenus) est pris en compte.</target>
+      </trans-unit>
+      <trans-unit id="0_77c55" resname="Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)">
+        <source>Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)</source>
+        <target>Veuillez sélectionner une autre période de soins (au moins deux jours doivent être sélectionnés)</target>
+      </trans-unit>
+      <trans-unit id="arxVE8q" resname="Schule bearbeiten">
+        <source>Schule bearbeiten</source>
+        <target>École d'édition</target>
+      </trans-unit>
+      <trans-unit id="RokUi3i" resname="[Default]">
+        <source>[Default]</source>
+        <target>[Par défaut]</target>
+      </trans-unit>
+      <trans-unit id="pPMupR4" resname="Angebote">
+        <source>Angebote</source>
+        <target>Offres</target>
+      </trans-unit>
+      <trans-unit id="OJxSbDa" resname="%org bietet ein Ferienprogramm an">
+        <source>%org bietet ein Ferienprogramm an</source>
+        <target>%org propose un programme de vacances</target>
+      </trans-unit>
+      <trans-unit id="OFDTIs3" resname="%org bietet Schulkindbetreuung an">
+        <source>%org bietet Schulkindbetreuung an</source>
+        <target>%org offre une garde d'enfants à l'école</target>
+      </trans-unit>
+      <trans-unit id="tmyoH7j" resname="Ich ermächtige">
+        <source>Ich ermächtige</source>
+        <target>J'autorise</target>
+      </trans-unit>
+      <trans-unit id="Mpp0I57" resname="Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von">
+        <source>Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von</source>
+        <target>recouvrer les paiements sur mon compte par prélèvement automatique. Dans le même temps, je donne des instructions à mon établissement de crédit, qui est</target>
+      </trans-unit>
+      <trans-unit id="WQZwCEB" resname="Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.">
+        <source>Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.</source>
+        <target>Information : Les prélèvements sont exécutés aux dates d'échéance expressément mentionnées dans les décisions, les demandes de paiement et les conditions contractuelles. Vous y trouverez également les montants exacts des recouvrements.</target>
+      </trans-unit>
+      <trans-unit id="a90sKGv" resname="Ich habe die Datenschutzerklärung der %s%  gelesen und bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet und an die betreuende Organisation weitergegeben werden.">
+        <source>Ich habe die Datenschutzerklärung der %s%  gelesen und bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet und an die betreuende Organisation weitergegeben werden.</source>
+        <target>J'ai lu la politique de confidentialité de %s% et j'accepte que mes données et celles de mes enfants soient traitées électroniquement et transmises à l'organisme de contrôle.</target>
+      </trans-unit>
+      <trans-unit id="onDbr8P" resname="die %org%">
+        <source>die %org%</source>
+        <target>la %org%</target>
+      </trans-unit>
+      <trans-unit id="Yd7KP0K" resname="der %org%">
+        <source>der %org%</source>
+        <target>le %org%</target>
+      </trans-unit>
+      <trans-unit id="Kdkf0By" resname="betreuende Organisation">
+        <source>betreuende Organisation</source>
+        <target>organisation de supervision</target>
       </trans-unit>
     </body>
   </file>

@@ -8,9 +8,9 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/frontend.css';
-
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
+
 global.$ = global.jQuery = $;
 
 import('./frontend');
@@ -25,11 +25,11 @@ $(document).on('click', '.chooseBlock', function (e) {
         method: 'PATCH',
         success: function (data) {
             console.log(data);
-            if(typeof(data.hinweis)!='undefined' ){
-                $('#hinweis_text').text(data.hinweis).closest('.row').removeClass('d-none');
+            if(typeof(data.snack)!='undefined' ){
+                $(data.snack).each(function (i) {
+                    toastr[data.snack[i].type](data.snack[i].text);
 
-            }else {
-                $('#hinweis_text').closest('.row').addClass('d-none');
+                });
             }
             for(var c in data.blocks){
 

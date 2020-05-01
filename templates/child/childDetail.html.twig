@@ -202,7 +202,7 @@
                                                 <td>{% trans %} Historie{% endtrans %}</td>
                                                 <td>
                                                     <ul class="list-group">
-                                                        {% for k in history %}
+                                                        {% for k in history|reverse %}
                                                             <a href="{{ path('child_detail',{'kind_id':k.id}) }}">
                                                                 <li class="list-group-item">{{ k.eltern.createdAt|date('d.m.Y H:i') }}</li>
                                                             </a>

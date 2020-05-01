@@ -1,6 +1,6 @@
 // webpack.config.js
 var Encore = require('@symfony/webpack-encore');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 Encore
     // directory where all compiled assets will be stored
     .setOutputPath('public/build')
@@ -27,7 +27,34 @@ Encore
     })
     // empty the outputPath dir before each build
     .cleanupOutputBeforeBuild()
+    .addPlugin(
+        new CopyWebpackPlugin(
+            [
+                {
+                    from: './node_modules/mdbootstrap-pro/js/mdb.min.js',
+                    to: 'js/mdb.min.js'
+                },
+                {
+                    from: './node_modules/mdbootstrap-pro/js/mdb.min.js.map',
+                    to: 'js/mdb.min.js.map'
+                },
+                {
+                    from: './node_modules/mdbootstrap-pro/js/jquery.min.js',
+                    to: 'js/jquery.min.js'
+                },
+                {
+                    from: './node_modules/mdbootstrap-pro/js/bootstrap.min.js',
+                    to: 'js/bootstrap.min.js'
+                },
+                {
+                    from: './node_modules/mdbootstrap-pro/js/popper.min.js',
+                    to: 'js/popper.min.js'
+                }
 
+
+            ]
+        )
+    )
 
     // will output as web/build/app.js
     //.addEntry('app', ['./src/public/app.js','./src/public/main.scss'])
