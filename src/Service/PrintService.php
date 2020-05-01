@@ -264,7 +264,7 @@ class PrintService
         }
 
         if ($stadt) {
-            if ($stadt->getLogoUrl()) {
+            if ($stadt->getLogoStadt()) {
                 $im = $this->fileSystem->read($stadt->getLogoStadt());
                 $imdata = base64_encode($im);
                 $imgdata = base64_decode($imdata);
