@@ -19,9 +19,7 @@ class LandingController extends AbstractController
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findBy(array('deleted' => false, 'active' => true));
         $title = $translator->trans('Schulkindbetreuung SKiB') . ' | ' . $translator->trans('Online Anmeldung und Verwaltung');
-        $metaDescription = $translator->trans('SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.
-Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger. 
-');
+        $metaDescription = $translator->trans('SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.');
         $contentAll = $this->getDoctrine()->getRepository(Content::class)->findBy(array('activ' => true),array('reihenfolge'=>'ASC'));
         $content = $this->getDoctrine()->getRepository(Content::class)->findOneBy(array('activ' => true),array('reihenfolge'=>'ASC'));
 
