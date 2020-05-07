@@ -13,9 +13,9 @@
             <div class="col-md-6 text-center mb-3">
                 {% if organisation.image is not empty %}
                     <img src="{{ vich_uploader_asset(organisation,'imageFile') }}" class="rounded img-fluid"
-                          alt="{{ organisation.name }} Logo">
+                          alt="{{ organisation.name }} Logo" style="max-width: 90%; max-height: 200px">
                 {% else %}
-                    <img class="overlay skib-card-image img-fluid z-depth-1 rounded" src="{{ asset('images/logo-breit-mittig.png') }}" alt="Unsere SKiB" style="max-width: 90%">
+                    <img class="overlay skib-card-image img-fluid rounded" src="{{ asset('images/logo-breit-mittig.png') }}" alt="Unsere SKiB" style="max-width: 90%; max-height: 200px">
                 {% endif %}
 
 
