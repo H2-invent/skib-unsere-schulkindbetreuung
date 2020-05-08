@@ -17,12 +17,11 @@ class OrganisationProfilController extends AbstractController
      */
     public function index(Request $request, Organisation $organisation, TranslatorInterface $translator)
     {
-        $title = $translator->trans('Organisationsprofil');
         return $this->render('organisation_profil/index.html.twig', [
             'organisation' => $organisation,
             'stadt' => $organisation->getStadt(),
             'metaDescription' => $organisation->getInfoText(),
-            'title' => $title.' | '.$organisation->getName(),
+            'title' => $organisation->getName(),
         ]);
     }
 }
