@@ -38,9 +38,9 @@ class NewsType extends AbstractType
                 'label'=>'Name der Schule für den Versand der Nachricht',
                 'translation_domain' => 'form',
                 'multiple' =>true,
+                'required' =>false
             ])
-            ->add('activ', CheckboxType::class,array('label'=>'Neuigkeit auf der Startseite sichtbar','translation_domain' => 'form'))
-
+            ->add('activ', CheckboxType::class,array('required'=>false,'label'=>'Neuigkeit auf der Startseite sichtbar','translation_domain' => 'form'))
             ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
     }
