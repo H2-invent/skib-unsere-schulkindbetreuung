@@ -12,6 +12,7 @@ namespace App\Service;
 use App\Entity\Kind;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
@@ -25,7 +26,8 @@ class AnmeldeEmailService
     private $templating;
     private $mailer;
     private $abgService;
-    public function __construct(PrintAGBService $printAGBService,PrintService $print,TCPDFController $tcpdf,TranslatorInterface $translator,IcsService $icsService,EngineInterface $templating, MailerService $mailer)
+    private $parameterbag;
+    public function __construct(ParameterBagInterface $parameterBag, PrintAGBService $printAGBService,PrintService $print,TCPDFController $tcpdf,TranslatorInterface $translator,IcsService $icsService,EngineInterface $templating, MailerService $mailer)
     {
         $this->print = $print;
         $this->tcpdf = $tcpdf;
@@ -34,6 +36,7 @@ class AnmeldeEmailService
         $this->templating = $templating;
         $this->mailer = $mailer;
         $this->abgService = $printAGBService;
+        $this->parameterbag = $parameterBag;
     }
 
     public  function sendEmail(Kind $kind,Stammdaten $adresse,Stadt $stadt, $beruflicheSituation){
