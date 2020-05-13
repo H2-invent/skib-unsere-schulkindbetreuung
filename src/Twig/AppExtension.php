@@ -16,6 +16,9 @@ class AppExtension extends AbstractExtension
 
     public function getClassName($object)
     {
+        if($object === ''){
+            return false;
+        }
         try {
             $date= new \DateTime($object);
             return $date;

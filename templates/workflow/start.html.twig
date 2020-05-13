@@ -336,9 +336,9 @@
                                                        target="_blank" rel="noopener noreferrer"><i
                                                                 class="fas fa-external-link-alt"></i> {% trans %}Webseite{% endtrans %}
                                                     </a><br/>
-                                                    {% if o.slug %}
-                                                        <a href="{{ path('organisation_profil', {'slug':o.slug}) }}">{{ 'Weitere Informationen'|trans }}</a>
-                                                    {% endif %}
+                                                {% endif %}
+                                                {% if o.slug %}
+                                                    <a href="{{ path('organisation_profil', {'slug':o.slug}) }}">{{ 'Weitere Informationen'|trans }}</a>
                                                 {% endif %}
                                             </div>
                                             <div class="col-md-4 text-center">
