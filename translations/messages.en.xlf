@@ -2041,8 +2041,8 @@
         <source>Online Anmeldung und Verwaltung</source>
         <target state="translated">Online application and administration</target>
       </trans-unit>
-      <trans-unit id="zmlkEaD" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.">
-        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung.Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.</source>
+      <trans-unit id="1Fj0jnL" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.">
+        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.</source>
         <target state="translated">SKiB is so far the only online solution for the registration and administration of school childcare and holiday care.
 The web application enables direct networking between parent or legal guardian, external organizations and the municipal administration or school authorities.
 </target>
@@ -2199,9 +2199,9 @@ The web application enables direct networking between parent or legal guardian, 
         <source>An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.</source>
         <target state="translated">On this day, no supervision can be booked in the chosen school form.</target>
       </trans-unit>
-      <trans-unit id="T0AZQuJ" resname="Wir beraten Sie gerne individuell:">
-        <source>Wir beraten Sie gerne individuell:</source>
-        <target state="translated">We are happy to advise you individually:</target>
+      <trans-unit id="FsbLcax" resname="Wir beraten Städte bei der Umsetzung Ihrer Schulkindbetreuung gerne individuell:">
+        <source>Wir beraten Städte bei der Umsetzung Ihrer Schulkindbetreuung gerne individuell:</source>
+        <target state="translated">We are happy to advise cities individually on the implementation of their school childcare:</target>
       </trans-unit>
       <trans-unit id="lxPd.CQ" resname="Name des Erziehungsberechtigten">
         <source>Name des Erziehungsberechtigten</source>
@@ -2484,6 +2484,14 @@ The web application enables direct networking between parent or legal guardian, 
       <trans-unit id="Kdkf0By" resname="betreuende Organisation">
         <source>betreuende Organisation</source>
         <target>supervising organization</target>
+      </trans-unit>
+      <trans-unit id="ndjBRyE" resname="Anmeldeportal">
+        <source>Anmeldeportal</source>
+        <target>Registration portal</target>
+      </trans-unit>
+      <trans-unit id="Od7mshJ" resname="Erziehungsberechtigten und Eltern stehen die betreuenden Organisationen in den Städten gerne zur Verfügung.">
+        <source>Erziehungsberechtigten und Eltern stehen die betreuenden Organisationen in den Städten gerne zur Verfügung.</source>
+        <target>Parents and guardians are welcome to contact the organisations providing care.</target>
       </trans-unit>
     </body>
   </file>
