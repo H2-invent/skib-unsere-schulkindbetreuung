@@ -2175,9 +2175,9 @@ Responsabilité pour les liens
         <source>An diesem Tag kann in der gewählen Schulform keine Betreuung gebucht werden.</source>
         <target state="translated">Ce jour-là, aucune supervision ne peut être réservée dans le formulaire scolaire choisi.</target>
       </trans-unit>
-      <trans-unit id="T0AZQuJ" resname="Wir beraten Sie gerne individuell:">
-        <source>Wir beraten Sie gerne individuell:</source>
-        <target state="translated">Nous sommes heureux de vous conseiller individuellement :</target>
+      <trans-unit id="FsbLcax" resname="Wir beraten Städte bei der Umsetzung Ihrer Schulkindbetreuung gerne individuell:">
+        <source>Wir beraten Städte bei der Umsetzung Ihrer Schulkindbetreuung gerne individuell:</source>
+        <target state="translated">Nous sommes heureux de conseiller les villes individuellement sur la mise en place de leur système de garde d'enfants à l'école:</target>
       </trans-unit>
       <trans-unit id="G12aiJf" resname="Erziehungsberechtigter">
         <source>Erziehungsberechtigter</source>
@@ -2295,7 +2295,7 @@ Responsabilité pour les liens
         <source>Details des Erziehungsberechtigten</source>
         <target state="translated">Coordonnées du représentant légal</target>
       </trans-unit>
-      <trans-unit id="zmlkEaD" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.">
+      <trans-unit id="1Fj0jnL" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.">
         <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.</source>
         <target state="translated">SKiB est jusqu'à présent la seule solution en ligne pour l'inscription et l'administration des services de garde d'enfants et de vacances scolaires.
 L'application web permet une mise en réseau directe entre les parents, les organisations externes et l'administration municipale ou les autorités scolaires. 
@@ -2488,6 +2488,14 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       <trans-unit id="Kdkf0By" resname="betreuende Organisation">
         <source>betreuende Organisation</source>
         <target>organisation de supervision</target>
+      </trans-unit>
+      <trans-unit id="ndjBRyE" resname="Anmeldeportal">
+        <source>Anmeldeportal</source>
+        <target>Portail d'enregistrement</target>
+      </trans-unit>
+      <trans-unit id="Od7mshJ" resname="Erziehungsberechtigten und Eltern stehen die betreuenden Organisationen in den Städten gerne zur Verfügung.">
+        <source>Erziehungsberechtigten und Eltern stehen die betreuenden Organisationen in den Städten gerne zur Verfügung.</source>
+        <target>Les parents et les tuteurs sont invités à prendre contact avec les organismes d'accueil.</target>
       </trans-unit>
     </body>
   </file>
