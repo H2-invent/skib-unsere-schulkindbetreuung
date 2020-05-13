@@ -153,9 +153,7 @@ class LoerrachWorkflowController extends AbstractController
         $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule_id'));
 
         $kind = new Kind();
-        $kind->setGeburtstag(null);
         $kind = $schulkindBetreuungKindNeuService->prepareKind($kind,$schule,$adresse);
-        dump($kind);
         // Load the data from the city into the controller as $stadt
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
 

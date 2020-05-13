@@ -292,7 +292,7 @@ class Kind
         return $this->geburtstag;
     }
 
-    public function setGeburtstag(?\DateTimeInterface $geburtstag): self
+    public function setGeburtstag(\DateTimeInterface $geburtstag): self
     {
         $this->geburtstag = $geburtstag;
 
