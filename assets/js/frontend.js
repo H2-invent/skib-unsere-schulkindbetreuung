@@ -104,6 +104,7 @@ $(document).on('click', '.loadContent', function (e) {
 });
 
 $('#loadContentModal').on('show.bs.modal', function (e) {
+    console.log('test');
     $('.pickadate').pickadate({
         format: 'dd.mm.yyyy',
         formatSubmit: 'yyyy-mm-dd',
