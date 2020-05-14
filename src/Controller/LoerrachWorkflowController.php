@@ -156,26 +156,25 @@ class LoerrachWorkflowController extends AbstractController
         $kind = $schulkindBetreuungKindNeuService->prepareKind($kind,$schule,$adresse);
         // Load the data from the city into the controller as $stadt
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
-
         $form = $this->createForm(LoerrachKind::class, $kind, array('validation_groups'=>['Eltern'],'action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug' => $stadt->getSlug(), 'schule_id' => $schule->getId()))));
         $form = $schulkindBetreuungKindNeuService->cleanUpForm($form,$schuljahr,$schule);
         $kind = $schulkindBetreuungKindNeuService->cleanUpKind($schuljahr,$schule,$kind);
-
         try {
             $form->handleRequest($request);
         }catch (\Exception $e){
             $text = $translator->trans('Überprüfe Sie Ihre Eingabe');
-            return new JsonResponse(array('error' => 1, 'snack' => $text));
+            return new JsonResponse(array('snack'=>array(array('type'=>'error','text'=> $text))));
         }
 
 
         if ($form->isSubmitted()) {
             try {
+
                 $kind = $form->getData();
                 return $schulkindBetreuungKindNeuService->saveKind($kind,$this->isGranted('ROLE_ORG_CHILD_CHANGE'),$stadt,$form);
             } catch (\Exception $e) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
-                return new JsonResponse(array('error' => 1, 'snack' => $text));
+                return new JsonResponse(array('snack'=>array(array('type'=>'error','text'=> $text))));
             }
 
         }
@@ -205,7 +204,7 @@ class LoerrachWorkflowController extends AbstractController
             $form->handleRequest($request);
         }catch (\Exception $e){
             $text = $translator->trans('Überprüfe Sie Ihre Eingabe');
-            return new JsonResponse(array('error' => 1, 'snack' => $text));
+            return new JsonResponse(array('snack'=>array(array('type'=>'error','text'=> $text))));
         }
         if ($form->isSubmitted() && $form->isValid()) {
             try {
@@ -213,7 +212,7 @@ class LoerrachWorkflowController extends AbstractController
                 return $schulkindBetreuungKindNeuService->saveKind($kind,$this->isGranted('ROLE_ORG_CHILD_CHANGE'),$stadt,$form);
             } catch (\Exception $e) {
                 $text = array($translator->trans('Fehler. Bitte versuchen Sie es erneut.'));
-                return new JsonResponse(array('error' => 1, 'snack' => $text));
+                return new JsonResponse(array('snack'=>array(array('type'=>'error','text'=> $text))));
             }
 
         }
