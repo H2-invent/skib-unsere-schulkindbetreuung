@@ -100,7 +100,7 @@ class Stammdaten
     private $sepaInfo;
 
     /**
-     * @Assert\Iban()
+     * @Assert\Iban(groups={"Schulkind"})
      * @Assert\NotBlank(groups={"Schulkind"})
      * @ORM\Column(type="text",nullable=true)
      * @Encrypted()
@@ -113,7 +113,7 @@ class Stammdaten
     private $kinds;
 
     /**
-     * @Assert\Bic()
+     * @Assert\Bic(groups={"Schulkind"})
      * @ORM\Column(type="text",nullable=true)
      * @Assert\NotBlank(groups={"Schulkind"})
      * @Encrypted()
