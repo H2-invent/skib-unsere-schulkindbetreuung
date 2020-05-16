@@ -71,6 +71,11 @@ class EmailResponse
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $messageId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -204,6 +209,18 @@ class EmailResponse
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getMessageId(): ?string
+    {
+        return $this->messageId;
+    }
+
+    public function setMessageId(string $messageId): self
+    {
+        $this->messageId = $messageId;
 
         return $this;
     }

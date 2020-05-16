@@ -1,20 +1,58 @@
-<!DOCTYPE html>
+{% extends 'adminBase.html.twig' %}
 
-<title>Hello MailgunWebhockController!</title>
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <!-- Count item widget-->
+                <div class=" col-12 card">
+                    <div class="card-header">
+                        <h1>{{title}}</h1>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>{% trans %}Name{% endtrans %}</th>
+                                <th>{% trans %}Status{% endtrans %}</th>
+                                <th>{% trans %}Severety{% endtrans %}</th>
+                                <th>{% trans %}Zeit{% endtrans %}</th>
+                                <th>{% trans %}Description{% endtrans %}</th>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                                <th>{% trans %}Message{% endtrans %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for m in emails %}
+                                <tr class="{% if m.allert == true %}table-danger{% elseif m.warning == true %}table-warning{% else %}table-success{% endif %}">
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="material-icons">more_vert</i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                                <a class="dropdown-item" href="{{ path('admin_mailgun_detail',{'message-id':m.messageId}) }}">{% trans %}Historie{% endtrans %}</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ m.reciever }}</td>
+                                    <td>{{ m.event }}</td>
+                                    <td>{{ m.severity }}</td>
+                                    <td>{{ m.createdAt|date('d.m.Y-H:i:s')}}</td>
+                                    <td>{{ m.description }}</td>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/emanuel.holzmann/Documents/projekte/skb/src/Controller/MailgunWebhockController.php'|file_link(0) }}">src/Controller/MailgunWebhockController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/emanuel.holzmann/Documents/projekte/skb/templates/mailgun_webhock/index.html.twig'|file_link(0) }}">templates/mailgun_webhock/index.html.twig</a></code></li>
-    </ul>
-</div>
+                                    <td>{{ m.message|nl2br }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
 {% endblock %}

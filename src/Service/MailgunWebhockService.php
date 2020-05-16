@@ -42,6 +42,7 @@ class MailgunWebhockService
                 ->setDescription($parametersAsArray['event-data']['delivery-status']['description'])
                 ->setWarning($parametersAsArray['event-data']['log-level'] == 'warn' ? true : false)
                 ->setPayload(json_encode($parametersAsArray))
+                ->setMessageId($parametersAsArray['event-data']['message']['headers']['message-id'])
                 ->setReciever($parametersAsArray['event-data']['recipient']);
 
             $this->em->persist($emailResult);
@@ -75,6 +76,7 @@ class MailgunWebhockService
                 ->setAllert($parametersAsArray['event-data']['log-level'] == 'error' ? true : false)
                 ->setWarning($parametersAsArray['event-data']['log-level'] == 'warn' ? true : false)
                 ->setPayload(json_encode($parametersAsArray))
+                ->setMessageId($parametersAsArray['event-data']['message']['headers']['message-id'])
                 ->setReciever($parametersAsArray['event-data']['recipient']);
 
             $this->em->persist($emailResult);
