@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\EmailResponse;
+use App\Service\GroupORMService;
 use App\Service\MailgunWebhockService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -48,18 +49,33 @@ class MailgunWebhockController extends AbstractController
     /**
      * @Route("/admin/mailgun/index", name="admin_mailgun_index",methods={"GET"})
      */
-    public function index(Request $request,MailgunWebhockService $mailgunWebhockService)
+    public function index(Request $request,MailgunWebhockService $mailgunWebhockService,GroupORMService $groupORMService)
     {
         $mails = $this->getDoctrine()->getRepository(EmailResponse::class)->findBy(array(),array('createdAt'=>'desc'));
-        return $this->render('mailgun_webhock/index.html.twig',array('emails'=>$mails,'title'=>'Mail-Übersicht'));
+        $mailsChart =array();
+
+        $mailsChart[]=array('label'=>'Erfolgreich','data'=>$groupORMService->groupData($this->getDoctrine()->getRepository(EmailResponse::class)->findBy(array('allert'=>false,'warning'=>false),array('createdAt'=>'desc'))));
+        $mailsChart[]=array('label'=>'Permament','data'=>$groupORMService->groupData($this->getDoctrine()->getRepository(EmailResponse::class)->findBy(array('allert'=>true),array('createdAt'=>'desc'))));
+        $mailsChart[]=array('label'=>'Temporary','data'=> $groupORMService->groupData($this->getDoctrine()->getRepository(EmailResponse::class)->findBy(array('warning'=>true),array('createdAt'=>'desc'))));
+        return $this->render('mailgun_webhock/index.html.twig',array('emails'=>$mails,'title'=>'Mail-Übersicht','chart'=>$mailsChart));
+    }
+    /**
+     * @Route("/admin/mailgun/history", name="admin_mailgun_history",methods={"GET"})
+     */
+    public function hist(Request $request,MailgunWebhockService $mailgunWebhockService)
+    {
+        $email = $this->getDoctrine()->getRepository(EmailResponse::class)->findBy(array('messageId'=>$request->get('message-id')),array('createdAt'=>'desc'));
+        return $this->render('mailgun_webhock/index.html.twig',array('emails'=>$email,'title'=>$request->get('message-id')));
     }
     /**
      * @Route("/admin/mailgun/detail", name="admin_mailgun_detail",methods={"GET"})
      */
     public function detail(Request $request,MailgunWebhockService $mailgunWebhockService)
     {
-        $email = $this->getDoctrine()->getRepository(EmailResponse::class)->findBy(array('messageId'=>$request->get('message-id')),array('createdAt'=>'desc'));
-        return $this->render('mailgun_webhock/index.html.twig',array('emails'=>$email,'title'=>$request->get('message-id')));
-    }
+        $email = $this->getDoctrine()->getRepository(EmailResponse::class)->find($request->get('message-id'));
+        $json = json_decode($email->getPayload());
 
+        return $this->render('mailgun_webhock/detail.html.twig',array('json'=>$json,'emails'=>$email,'title'=>'Detail'));
+
+    }
 }
