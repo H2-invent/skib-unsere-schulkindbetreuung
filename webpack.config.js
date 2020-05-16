@@ -16,6 +16,7 @@ Encore
     .disableSingleRuntimeChunk()
     .addEntry('landing', './assets/js/landing.js')
     .addEntry('app', './assets/js/app.js')
+    .addEntry('mailgun', './assets/js/mailgun.js')
     .addEntry('frontend', './assets/js/frontend.js')
     .addEntry('startpage', './assets/js/start.js')
     .addEntry('schulen', './assets/js/schulen.js')

@@ -45,6 +45,7 @@
     "morecontent-js": "^1.0.1",
     "node-waves": "^0.7.6",
     "popper.js": "^1.16.1",
+    "pretty-print-json": "^0.2.1",
     "respond.js": "^1.4.2",
     "save": "^2.4.0",
     "simple-parallax-js": "^5.3.0",

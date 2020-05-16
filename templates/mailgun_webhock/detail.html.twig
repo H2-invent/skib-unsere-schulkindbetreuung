@@ -1,0 +1,36 @@
+{% extends 'adminBase.html.twig' %}
+
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <!-- Count item widget-->
+                <div class=" col-12 card">
+                    <div class="card-header">
+                        <h1>{{ title }}</h1>
+                    </div>
+                    <h3>{{ emails.reciever }}</h3>
+                    <pre id="example"></pre>
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+{% block webpack %}
+    {{ encore_entry_script_tags('mailgun') }}
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        var str ='{{ emails.payload|raw }}';
+        console.log(str);
+        var jsonData = JSON.parse(str.replace(/(?:\r\n|\r|\n)/g, ''));
+        console.log(jsonData);
+    </script>
+
+{% endblock %}
