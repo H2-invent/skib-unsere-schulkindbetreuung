@@ -13,6 +13,9 @@ import Popper from 'popper.js';
 import 'datatables.net-dt';
 // Import TinyMCE
 // Import TinyMCE
+import niceScroll from 'jquery.nicescroll';
+
+import trumbowgy from './trumbowyg';
 import icon from 'trumbowyg/dist/ui/icons.svg'
 import Chart from 'chart.js';
 import prettyPrintJson from 'pretty-print-json';
