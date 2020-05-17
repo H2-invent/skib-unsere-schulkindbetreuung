@@ -16,7 +16,7 @@ class GroupORMService
         if(sizeof($inArr)>1){
             $last = $inArr[0]->getCreatedAt();
             $first = $inArr[sizeof($inArr)-1]->getCreatedAt();
-            $res[$inArr[0]->format('Y-m-d')] = 0;
+            $res[$inArr[0]->getCreated()->format('Y-m-d')] = 0;
             for($i = $first; $i <= $last; $i->modify('+1 day')){
                 $res[$i->format('Y-m-d')] = 0;
             }
