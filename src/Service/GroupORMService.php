@@ -12,11 +12,12 @@ namespace App\Service;
 class GroupORMService
 {
     public function groupData($inArr){
+        dump($inArr);
         $res = array();
 
         if(sizeof($inArr)>1){
-            $last = $inArr[0]->getCreatedAt();
-            $first = $inArr[sizeof($inArr)-1]->getCreatedAt();
+            $last = clone $inArr[0]->getCreatedAt();
+            $first = clone $inArr[sizeof($inArr)-1]->getCreatedAt();
             $res[$inArr[0]->getCreatedAt()->format('Y-m-d')] = 0;
             for($i = $first; $i <= $last; $i->modify('+1 day')){
                 $res[$i->format('Y-m-d')] = 0;
@@ -24,13 +25,16 @@ class GroupORMService
         }
 
         foreach ($inArr as $data){
-            if(isset($res[$data->getCreatedAt()->format('Y-m-d')])){
-                $res[$data->getCreatedAt()->format('Y-m-d')]++;
+            $date = $data->getCreatedAt()->format('Y-m-d');
+            dump($date);
+            dump($data);
+            if(isset($res[$date])){
+                $res[$date]++;
             }else{
-                $res[$data->getCreatedAt()->format('Y-m-d')] = 1;
+                $res[$date] = 1;
             }
         }
-
+        dump($res);
 
         return $res;
 
