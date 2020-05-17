@@ -116,6 +116,11 @@ $(document).ready(function () {
                         }
                     }
                 }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
 
             }
         }
