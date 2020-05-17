@@ -12,7 +12,7 @@ namespace App\Service;
 class GroupORMService
 {
     public function groupData($inArr){
-        dump($inArr);
+
         $res = array();
 
         if(sizeof($inArr)>1){
@@ -26,15 +26,13 @@ class GroupORMService
 
         foreach ($inArr as $data){
             $date = $data->getCreatedAt()->format('Y-m-d');
-            dump($date);
-            dump($data);
             if(isset($res[$date])){
                 $res[$date]++;
             }else{
                 $res[$date] = 1;
             }
         }
-        dump($res);
+
 
         return $res;
 
