@@ -87,24 +87,28 @@ $(document).ready(function () {
                 data: mailgunTimeSuccess,
                 borderWidth: 1,
                 borderColor:'#14ff1d',
-                backgroundColor:'rgba(17,255,37,0.3)'
-},
+                backgroundColor:'rgba(17,255,37,0.3)',
+                lineTension: 0,
+            },
                 {
                     label: 'Temporary',
                     data: mailgunTimeWarning,
                     borderWidth: 1,
                     borderColor:'#ff2ef6',
-                    backgroundColor:'rgba(255,8,237,0.3)'
+                    backgroundColor:'rgba(255,8,237,0.3)',
+                    lineTension: 0,
                 },
                 {
                     label: 'Permanent',
                     data: mailgunTimeFail,
                     borderWidth: 1,
                     borderColor:'#ff1100',
-                    backgroundColor:'rgba(255,0,5,0.3)'
+                    backgroundColor:'rgba(255,0,5,0.3)',
+                    lineTension: 0,
                 }]
         },
         options: {
+
             scales: {
                 xAxes: [{
                     type: 'time',
