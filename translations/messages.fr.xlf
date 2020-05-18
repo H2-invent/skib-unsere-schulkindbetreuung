@@ -2493,9 +2493,33 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Anmeldeportal</source>
         <target>Portail d'enregistrement</target>
       </trans-unit>
-      <trans-unit id="Od7mshJ" resname="Erziehungsberechtigten und Eltern stehen die betreuenden Organisationen in den Städten gerne zur Verfügung.">
+      <trans-unit id="YU8Nm1l" resname="Erziehungsberechtigten und Eltern stehen die betreuenden Organisationen in den Städten gerne zur Verfügung.">
         <source>Erziehungsberechtigten und Eltern stehen die betreuenden Organisationen in den Städten gerne zur Verfügung.</source>
         <target>Les parents et les tuteurs sont invités à prendre contact avec les organismes d'accueil.</target>
+      </trans-unit>
+      <trans-unit id="UhAi66F" resname="Mailgun">
+        <source>Mailgun</source>
+        <target>__Mailgun</target>
+      </trans-unit>
+      <trans-unit id="Vwz_KuL" resname="Severety">
+        <source>Severety</source>
+        <target>__Severety</target>
+      </trans-unit>
+      <trans-unit id="dPJJMfT" resname="Zeit">
+        <source>Zeit</source>
+        <target>__Zeit</target>
+      </trans-unit>
+      <trans-unit id="Um4Ah8w" resname="Description">
+        <source>Description</source>
+        <target>__Description</target>
+      </trans-unit>
+      <trans-unit id="L3dmip3" resname="Message">
+        <source>Message</source>
+        <target>__Message</target>
+      </trans-unit>
+      <trans-unit id="VqRF6wY" resname="E-Mail Adresse ändern">
+        <source>E-Mail Adresse ändern</source>
+        <target>Modifier l'adresse électronique</target>
       </trans-unit>
     </body>
   </file>
