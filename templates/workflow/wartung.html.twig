@@ -1,0 +1,25 @@
+{% extends 'workflow/base.html.twig' %}
+{% block header %}
+    <div class="col-md-12 mb-6 white-text text-centerm text-md-left align-items-md-center">
+
+        <h1 class="h1-responsive hauptfarbe">{% trans %}Wartung{% endtrans %}</h1>
+        <hr class="hr-light ">
+
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <h1 class="cover-heading">{% trans %}Wit führen gerade ein Update der Anwendung duch.{% endtrans %}</h1>
+            <p class="lead">{% trans %}Die Anwendung wird in ein paar Minuten wieder online sein{% endtrans %}</p>
+            <p class="lead">{% trans %}Haben Sie bereits Daten eingegeben und gespeichert, dann bleiben diese erhalten und Sie können nach einer kurzen Pause daran weiterarbeiten.{% endtrans %}</p>
+            <p class="lead">{% trans %}Vielen Dank für Ihr Verständniss Ihr unsere-Schulkindbetreuung Team{% endtrans %}</p>
+
+            <a href="{{ referer }}" class="btn btn-outline-primary">{{ 'Nochmal versuchen'|trans }}</a>
+        </div>
+        <div class="col-md-6">
+            <img src="{{ asset('images/wartung.jpg') }}" class="img-rounded img-fluid z-depth-2">
+        </div>
+    </div>
+
+{% endblock %}
