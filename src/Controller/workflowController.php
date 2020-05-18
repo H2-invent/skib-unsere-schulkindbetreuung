@@ -92,7 +92,7 @@ class workflowController extends AbstractController
     public function wartungAction(Request $request)
     {
         $referer = $request->headers->get('referer');
-        return $this->render('workflow/wartung.html.twig',array('referer'=>$referer));
+        return $this->render('workflow/wartung.html.twig',array('referer'=>$request->get('redirect')));
     }
 
     /**
