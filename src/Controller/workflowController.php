@@ -21,6 +21,7 @@ use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
 use Beelab\Recaptcha2Bundle\Validator\Constraints\Recaptcha2;
 use phpDocumentor\Reflection\Types\This;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -46,6 +47,7 @@ class workflowController extends AbstractController
         if ($stadt === null) {
             return $this->redirectToRoute('workflow_city_not_found');
         }
+
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
         $cityInfoText = $stadt->translate()->getInfoText();
         // Load all schools from the city into the controller as $schulen
@@ -84,7 +86,14 @@ class workflowController extends AbstractController
 
         return $this->render('workflow/noCity.html.twig');
     }
-
+    /**
+     * @Route("/wartung",name="workflow_wartung",methods={"GET"})
+     */
+    public function wartungAction(Request $request)
+    {
+        $referer = $request->headers->get('referer');
+        return $this->render('workflow/wartung.html.twig',array('referer'=>$referer));
+    }
 
     /**
      * @Route("/confirmEmail",name="workflow_confirm_Email",methods={"GET","POST"})

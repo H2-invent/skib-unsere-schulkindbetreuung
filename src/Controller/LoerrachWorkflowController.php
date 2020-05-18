@@ -32,6 +32,7 @@ use App\Service\WorkflowAbschluss;
 use App\Service\WorkflowStart;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,14 +65,16 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/adresse",name="loerrach_workflow_adresse",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function adresseAction(ErrorService $errorService, SchulkindBetreuungAdresseService $schulkindBetreuungAdresseService, AuthorizationCheckerInterface $authorizationChecker, TranslatorInterface $translator, Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function adresseAction(ParameterBagInterface $parameterBag, ErrorService $errorService, SchulkindBetreuungAdresseService $schulkindBetreuungAdresseService, AuthorizationCheckerInterface $authorizationChecker, TranslatorInterface $translator, Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
 
         if ($schuljahr === null) {
             return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
-
+        if($parameterBag->get('wartung') == 'true'){
+            return $this->redirectToRoute('workflow_wartung');
+        }
         $adresse = new Stammdaten();
 
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
