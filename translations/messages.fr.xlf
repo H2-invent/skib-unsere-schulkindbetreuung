@@ -2521,6 +2521,30 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>E-Mail Adresse ändern</source>
         <target>Modifier l'adresse électronique</target>
       </trans-unit>
+      <trans-unit id="hU9pvfW" resname="Wartung">
+        <source>Wartung</source>
+        <target>Maintenance</target>
+      </trans-unit>
+      <trans-unit id="DpI_GY." resname="Wir führen gerade ein Update der Anwendung durch.">
+        <source>Wir führen gerade ein Update der Anwendung durch.</source>
+        <target>Nous sommes en train de mettre à jour l'application.</target>
+      </trans-unit>
+      <trans-unit id="9JxShit" resname="Die Anwendung wird in ein paar Minuten wieder online sein">
+        <source>Die Anwendung wird in ein paar Minuten wieder online sein</source>
+        <target>La demande sera de nouveau en ligne dans quelques minutes</target>
+      </trans-unit>
+      <trans-unit id="mtU9JG9" resname="Haben Sie bereits Daten eingegeben und gespeichert, dann bleiben diese erhalten und Sie können nach einer kurzen Pause daran weiterarbeiten.">
+        <source>Haben Sie bereits Daten eingegeben und gespeichert, dann bleiben diese erhalten und Sie können nach einer kurzen Pause daran weiterarbeiten.</source>
+        <target>Si vous avez déjà saisi et enregistré des données, elles seront conservées et vous pourrez continuer à les travailler après une courte pause.</target>
+      </trans-unit>
+      <trans-unit id="6IhrMaK" resname="Vielen Dank für Ihr Verständniss. Ihr unsere-Schulkindbetreuung Team">
+        <source>Vielen Dank für Ihr Verständniss Ihr unsere-Schulkindbetreuung Team</source>
+        <target>Merci de votre compréhension. Notre équipe unsere-Schulkindbetreuung</target>
+      </trans-unit>
+      <trans-unit id="I1JxOXz" resname="Nochmal versuchen">
+        <source>Nochmal versuchen</source>
+        <target>Essayer à nouveau</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
