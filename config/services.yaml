@@ -15,6 +15,7 @@ parameters:
     mailgunApiKEy: '%env(MAILGUNAPIKEY)%'
     osTicketUrl: '%env(osTicketUrl)%'
     osTicketApi: '%env(osTicketApi)%'
+    wartung: '%env(WARTUNG)%'
 
 
 services:

@@ -86,7 +86,7 @@ class ConfirmEmailService
 
             $text = $this->translator->trans('Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch in Ihrem Spamordner nach.');
 
-            return $this->twig->render('workflow/formConfirmation.html.twig', array('form' => $form->createView(), 'titel' => $mailBetreff, 'text' => $text, 'stadt' => $stadt, 'stammdaten' => $stammdaten, 'redirect' => $request->get('redirect')));
+            return $this->twig->render('workflow/formConfirmation.html.twig', array('form' => $form->createView(), 'titel' => $mailBetreff.':<br> '.$stammdaten->getEmail(), 'text' => $text, 'stadt' => $stadt, 'stammdaten' => $stammdaten, 'redirect' => $request->get('redirect')));
 
 
         }

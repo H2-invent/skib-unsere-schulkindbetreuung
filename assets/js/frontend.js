@@ -107,6 +107,9 @@ $('#loadContentModal').on('show.bs.modal', function (e) {
     $('.pickadate').pickadate({
         format: 'dd.mm.yyyy',
         formatSubmit: 'yyyy-mm-dd',
+        selectYears: 2010,
+        min: '01.01.2000',
+        max: new Date(),
     });
     $(this)
         .find('.mdb-select')
