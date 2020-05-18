@@ -437,7 +437,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $adresse->getKinds();
         foreach ($kind as $data) {
-            if ($data->getTageWithBlocks() < 2) {
+            if ($data->getTageWithBlocks() < $stadt->getMinDaysperWeek()) {
                 $this->redirectToRoute('loerrach_workflow_zusammenfassung', array('slug' => $stadt->getSlug()));
             }
         }
