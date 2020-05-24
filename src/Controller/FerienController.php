@@ -72,7 +72,7 @@ class FerienController extends AbstractController
         }
 
         $form = $this->createForm(LoerrachEltern::class, $adresse);
-        $form->remove('alleinerziehend', 'kinderImKiga', 'beruflicheSituation', 'einkommen', 'bic', 'iban', 'kontoinhaber');
+        $form->remove('alleinerziehend', 'kinderImKiga', 'beruflicheSituation', 'einkommen');
         $form->handleRequest($request);
 
         $errors = array();
