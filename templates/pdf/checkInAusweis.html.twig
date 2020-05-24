@@ -15,24 +15,19 @@
 
 <table cellpadding="8px" width="190px">
     <tr >
-        <td align="center" style="height: 60px" colspan="2"><span style="font-size: 18px">{{ kind.schule.name }}</span></td>
+        <td align="center" style="height: 30px" colspan="2"><span style="font-size: 12px">{{ kind.schule.name }}</span></td>
     </tr>
     <tr style="background-color: {{ farbe }}">
-        <td style="height: 30px" colspan="2"><span style="font-size: 15px">{{ kind.schule.organisation.name }}</span></td>
+        <td style="height: 30px" colspan="2"><span style="font-size: 10px">{{ kind.schule.organisation.name }}</span></td>
     </tr>
     <tr style="background-color: {{ farbe }}">
-        <td style="height: 115px" colspan="2">
+        <td style="height: 125px" colspan="2">
         </td>
     </tr>
+    <tr style="background-color: {{ farbe }}"><td style="height: 10px"  colspan="2"><span style="font-size: 18px">{{ kind.vorname|upper}}</span></td></tr>
+    <tr style="background-color: {{ farbe }}"><td style="height: 15px" colspan="2"><span style="font-size: 15px">{{ kind.nachname}}</span></td></tr>
     <tr style="background-color: {{ farbe }}">
-        <td style="height: 15px" colspan="2"><span style="font-size: 20px">{{ kind.vorname|upper}}</span></td>
-    </tr>
-    <tr style="background-color: {{ farbe }}">
-        <td style="height: 15px"><span style="font-size: 15px">{{ kind.nachname}}</span></td>
-        <td rowspan="2"><img src="{{ asset('images/logo-breit-mittig.png') }}"></td>
-    </tr>
-    <tr style="background-color: {{ farbe }}">
-        <td style="height: 10px"><span style="font-size: 10px">{{ kind.schule.organisation.stadt.name}}</span></td>
-
+        <td style="height: 15px"><span style="font-size: 10px">{{ kind.schule.organisation.stadt.name}}</span></td>
+        <td><img src="{{ asset('images/logo-breit-mittig.png') }}"></td>
     </tr>
 </table>
