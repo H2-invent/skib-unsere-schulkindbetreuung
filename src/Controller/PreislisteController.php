@@ -4,19 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Schule;
 use App\Entity\Stadt;
-use App\Entity\Zeitblock;
-use App\Service\ErrorService;
+use App\Service\PreisListeService;
 use App\Service\SchuljahrService;
-use App\Service\SchulkindBetreuungAdresseService;
-use App\Service\StamdatenFromCookie;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PreislisteController extends AbstractController
 {
@@ -25,42 +19,11 @@ class PreislisteController extends AbstractController
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      * * @ParamConverter("schule", options={"mapping"={"schule"="id"}})
      */
-    public function adresseAction(Stadt $stadt, Schule $schule, Request $request, SchuljahrService $schuljahrService)
+    public function adresseAction(PreisListeService $preisListeService, Stadt $stadt, Schule $schule, Request $request, SchuljahrService $schuljahrService)
     {
-        $schuljahr = $schuljahrService->getSchuljahr($stadt);
-        $schulen = $stadt->getSchules();
-        $gehalt = $stadt->getGehaltsklassen();
-        $art = [
-            'Ganztag' => 1,
-            'Halbtag' => 2,
-        ];
-
-        $gehaltIst = $request->get('gehalt', sizeof($gehalt) - 1);
-        dump($gehaltIst);
+        $gehaltIst = $request->get('gehalt', sizeof($stadt->getGehaltsklassen()) - 1);
         $artIst = $request->get('art', 1);
-        $req = array(
-            'deleted' => false,
-            'active' => $schuljahr,
-            'schule' => $schule,
-        );
+        return new Response($preisListeService->preisliste($stadt,$schule,$gehaltIst,$artIst));
 
-        $req['ganztag'] = $artIst;
-        $block = array();
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
-
-        $renderBlocks = array();
-        foreach ($block as $data) {
-            $renderBlocks[$data->getWochentag()][] = $data;
-        }
-
-        return $this->render('preisliste/index.html.twig', [
-            'schulen' => $schulen,
-            'gehalt' => $gehalt,
-            'art' => array_flip($art),
-            'schule' => $schule,
-            'gehaltIst' => $gehaltIst,
-            'blocks' => $renderBlocks,
-            'artIst' => $artIst
-        ]);
     }
 }

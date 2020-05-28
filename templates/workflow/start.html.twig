@@ -227,7 +227,7 @@
 
                                                 <div class="card-body ">
                                                     <h5 class="card-title">{{ s.name }}</h5>
-                                                    <a href="{{ path('trager_preisliste',{'schule':s.id,'slug':stadt.slug}) }}" class="loadContent btn-outline-primary btn">Preisliste</a>
+                                                    <a href="{{ path('trager_preisliste',{'schule':s.id,'slug':stadt.slug}) }}" class="loadContent btn-outline-primary btn">{{'Preisliste'|trans}}</a>
                                                 </div>
                                                 <div class="card-footer">
                                                     {% trans %}Betreuende Organisation{% endtrans %}

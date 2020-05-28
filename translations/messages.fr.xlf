@@ -2525,7 +2525,7 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Wartung</source>
         <target>Maintenance</target>
       </trans-unit>
-      <trans-unit id="DpI_GY." resname="Wir führen gerade ein Update der Anwendung durch.">
+      <trans-unit id="iPnT90o" resname="Wir führen gerade ein Update der Anwendung durch.">
         <source>Wir führen gerade ein Update der Anwendung durch.</source>
         <target>Nous sommes en train de mettre à jour l'application.</target>
       </trans-unit>
@@ -2537,13 +2537,21 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Haben Sie bereits Daten eingegeben und gespeichert, dann bleiben diese erhalten und Sie können nach einer kurzen Pause daran weiterarbeiten.</source>
         <target>Si vous avez déjà saisi et enregistré des données, elles seront conservées et vous pourrez continuer à les travailler après une courte pause.</target>
       </trans-unit>
-      <trans-unit id="6IhrMaK" resname="Vielen Dank für Ihr Verständniss. Ihr unsere-Schulkindbetreuung Team">
-        <source>Vielen Dank für Ihr Verständniss Ihr unsere-Schulkindbetreuung Team</source>
+      <trans-unit id="cT1.JUh" resname="Vielen Dank für Ihr Verständniss. Ihr unsere-Schulkindbetreuung Team">
+        <source>Vielen Dank für Ihr Verständniss. Ihr unsere-Schulkindbetreuung Team</source>
         <target>Merci de votre compréhension. Notre équipe unsere-Schulkindbetreuung</target>
       </trans-unit>
       <trans-unit id="I1JxOXz" resname="Nochmal versuchen">
         <source>Nochmal versuchen</source>
         <target>Essayer à nouveau</target>
+      </trans-unit>
+      <trans-unit id="yq0VVwi" resname="Preisliste">
+        <source>Preisliste</source>
+        <target>liste des prix</target>
+      </trans-unit>
+      <trans-unit id="wgwDdOh" resname="Schulform">
+        <source>Schulform</source>
+        <target>Forme scolaire</target>
       </trans-unit>
     </body>
   </file>

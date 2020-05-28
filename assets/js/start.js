@@ -8,6 +8,7 @@
 import '../css/frontend.css';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
+import {jarallax, jarallaxElement, jarallaxVideo} from 'jarallax';
 
 global.$ = global.jQuery = $;
 
@@ -17,14 +18,8 @@ import ('morecontent-js/dist/jquery.morecontent');
 import('jquery-confirm');
 import ('jquery-lazy');
 import('./jquery.bs.gdpr.cookies');
-import {
-    jarallax,
-    jarallaxElement,
-    jarallaxVideo
-} from 'jarallax';
 
 import('./frontend');
-import scrollingTabs from 'jquery-bootstrap-scrolling-tabs';
 
 jarallaxVideo();
 jarallaxElement();
@@ -77,6 +72,7 @@ $(window).on('load', function () {
     );
 
 });
+
 $(document).on('change', '.preisliste_trigger', function (e) {
     e.preventDefault();
     var $url = $('#preisliste_schule option:checked').val();
@@ -85,9 +81,7 @@ $(document).on('change', '.preisliste_trigger', function (e) {
     $('#preislisteWrappre').load($url+'?'+$.param({
         art: $art,
         gehalt: $gehalt})+' #preisliste_content',function () {
-        $(this)
-            .find('.mdb-select')
-            .materialSelect();
+
     })
 });
 $(document).on('click', '.loadInTarget', function (e) {
