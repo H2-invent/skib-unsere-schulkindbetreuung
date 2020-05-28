@@ -227,7 +227,7 @@
 
                                                 <div class="card-body ">
                                                     <h5 class="card-title">{{ s.name }}</h5>
-
+                                                    <a href="{{ path('trager_preisliste',{'schule':s.id,'slug':stadt.slug}) }}" class="loadContent btn-outline-primary btn">Preisliste</a>
                                                 </div>
                                                 <div class="card-footer">
                                                     {% trans %}Betreuende Organisation{% endtrans %}
@@ -398,8 +398,16 @@
     wenigerLesen = '{{ 'Schließen'|trans }}'
 
 </script>
+<script type="text/javascript" src="{{ asset('build/js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('build/js/popper.min.js') }}"></script>
 
-{{ encore_entry_script_tags('startpage') }}
+{% block webpack %}
+    {{ encore_entry_script_tags('startpage') }}
+{% endblock %}
+
+<script type="text/javascript" src="{{ asset('build/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('build/js/mdb.min.js') }}"></script>
+
 </body>
 
 </html>
