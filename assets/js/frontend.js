@@ -104,6 +104,7 @@ $(document).on('click', '.loadContent', function (e) {
 });
 
 $('#loadContentModal').on('show.bs.modal', function (e) {
+    console.log('test');
     $('.pickadate').pickadate({
         format: 'dd.mm.yyyy',
         formatSubmit: 'yyyy-mm-dd',
@@ -111,10 +112,11 @@ $('#loadContentModal').on('show.bs.modal', function (e) {
         min: '01.01.2000',
         max: new Date(),
     });
+    $('input').trigger('change');
     $(this)
         .find('.mdb-select')
         .materialSelect();
-    $('input').trigger('change');
+
 });
 
 $(window).on('load', function () {
