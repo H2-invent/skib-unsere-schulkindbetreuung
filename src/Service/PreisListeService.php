@@ -9,11 +9,8 @@
 namespace App\Service;
 
 
-use App\Entity\Kind;
-use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Stadt;
-use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemInterface;
@@ -21,7 +18,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 class PreisListeService
 {
@@ -46,7 +42,7 @@ class PreisListeService
 
     public function preisliste(Stadt $stadt, Schule $schule,$gehaltIst,$artIst ){
         $schuljahr = $this->schuljahrService->getSchuljahr($stadt);
-        $schulen = $stadt->getSchules();
+        $schulen = $this->em->getRepository(Schule::class)->findBy(array('stadt'=>$stadt,'deleted'=>false));
         $gehalt = $stadt->getGehaltsklassen();
         $art = [
             'Ganztag' => 1,
