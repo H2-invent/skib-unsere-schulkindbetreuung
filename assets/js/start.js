@@ -85,9 +85,7 @@ $(document).on('change', '.preisliste_trigger', function (e) {
     $('#preislisteWrappre').load($url+'?'+$.param({
         art: $art,
         gehalt: $gehalt})+' #preisliste_content',function () {
-        $(this)
-            .find('.mdb-select')
-            .materialSelect();
+
     })
 });
 $(document).on('click', '.loadInTarget', function (e) {

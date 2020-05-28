@@ -11,8 +11,11 @@ namespace App\Service;
 
 use App\Entity\Kind;
 use App\Entity\Organisation;
+use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use App\Entity\Zeitblock;
+use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -28,18 +31,49 @@ class PreisListeService
     protected $parameterBag;
     private $fileSystem;
     private $generator;
-
-    public function __construct(UrlGeneratorInterface $urlGenerator, FilesystemInterface $publicUploadsFilesystem, EngineInterface $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    private $schuljahrService;
+    private $em;
+    public function __construct(EntityManagerInterface $entityManager,SchuljahrService $schuljahrService, UrlGeneratorInterface $urlGenerator, FilesystemInterface $publicUploadsFilesystem, EngineInterface $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
-
+        $this->em = $entityManager;
         $this->templating = $templating;
         $this->translator = $translator;
         $this->parameterBag = $parameterBag;
         $this->fileSystem = $publicUploadsFilesystem;
         $this->generator = $urlGenerator;
+        $this->schuljahrService = $schuljahrService;
     }
 
-    public function preisliste(){
+    public function preisliste(Stadt $stadt, Schule $schule,$gehaltIst,$artIst ){
+        $schuljahr = $this->schuljahrService->getSchuljahr($stadt);
+        $schulen = $stadt->getSchules();
+        $gehalt = $stadt->getGehaltsklassen();
+        $art = [
+            'Ganztag' => 1,
+            'Halbtag' => 2,
+        ];
 
+        $req = array(
+            'deleted' => false,
+            'active' => $schuljahr,
+            'schule' => $schule,
+        );
+
+        $req['ganztag'] = $artIst;
+        $block = $this->em->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
+        $renderBlocks = array();
+        foreach ($block as $data) {
+            $renderBlocks[$data->getWochentag()][] = $data;
+        }
+
+        return $this->templating->render('preisliste/index.html.twig', [
+            'schulen' => $schulen,
+            'gehalt' => $gehalt,
+            'art' => array_flip($art),
+            'schule' => $schule,
+            'gehaltIst' => $gehaltIst,
+            'blocks' => $renderBlocks,
+            'artIst' => $artIst
+        ]);
     }
 }

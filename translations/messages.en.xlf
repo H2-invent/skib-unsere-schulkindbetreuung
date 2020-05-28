@@ -2521,7 +2521,7 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Wartung</source>
         <target>Maintenance</target>
       </trans-unit>
-      <trans-unit id="DpI_GY." resname="Wir führen gerade ein Update der Anwendung durch.">
+      <trans-unit id="iPnT90o" resname="Wir führen gerade ein Update der Anwendung durch.">
         <source>Wir führen gerade ein Update der Anwendung durch.</source>
         <target>We are currently updating the application.</target>
       </trans-unit>
@@ -2533,13 +2533,21 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Haben Sie bereits Daten eingegeben und gespeichert, dann bleiben diese erhalten und Sie können nach einer kurzen Pause daran weiterarbeiten.</source>
         <target>If you have already entered and saved data, they are retained and you can continue working on them after a short break.</target>
       </trans-unit>
-      <trans-unit id="6IhrMaK" resname="Vielen Dank für Ihr Verständniss. Ihr unsere-Schulkindbetreuung Team">
-        <source>Vielen Dank für Ihr Verständniss Ihr unsere-Schulkindbetreuung Team</source>
+      <trans-unit id="cT1.JUh" resname="Vielen Dank für Ihr Verständniss. Ihr unsere-Schulkindbetreuung Team">
+        <source>Vielen Dank für Ihr Verständniss. Ihr unsere-Schulkindbetreuung Team</source>
         <target>Thank you for your understanding. Your unsere-Schulkindbetreuung Team</target>
       </trans-unit>
       <trans-unit id="I1JxOXz" resname="Nochmal versuchen">
         <source>Nochmal versuchen</source>
         <target>Retry the action</target>
+      </trans-unit>
+      <trans-unit id="yq0VVwi" resname="Preisliste">
+        <source>Preisliste</source>
+        <target>Price list</target>
+      </trans-unit>
+      <trans-unit id="wgwDdOh" resname="Schulform">
+        <source>Schulform</source>
+        <target>School form</target>
       </trans-unit>
     </body>
   </file>
