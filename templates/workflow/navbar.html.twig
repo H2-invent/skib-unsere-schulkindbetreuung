@@ -31,6 +31,10 @@
                             {{ 'Informationen'|trans }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% if stadt.schules is not empty %}
+                                <a class="dropdown-item loadContent"
+                                   href="{{ path('trager_preisliste',{'slug':stadt.slug,'schule':stadt.schules[0].id}) }}">{% trans %}Zeitblöcke und Preise{% endtrans %}</a>
+                            {% endif %}
                             <a class="dropdown-item"
                                href="{{ path('workflow_agb',{'slug':stadt.slug}) }}">{% trans %}Vertragsbedingungen{% endtrans %}</a>
                             <a class="dropdown-item"
