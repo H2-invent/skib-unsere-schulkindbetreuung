@@ -36,15 +36,6 @@ $(function () {
 });
 
 
-$(document).ready(function () {
-    $('.nav-tabs').scrollingTabs({
-        bootstrapVersion: 4,
-        cssClassLeftArrow: 'fa fa-chevron-left',
-        cssClassRightArrow: 'fa fa-chevron-right',
-        disableScrollArrowsOnFullyScrolled: true
-    });
-
-});
 
 $(window).on('load', function () {
     $('body').bsgdprcookies(bssettings);
