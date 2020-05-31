@@ -9,6 +9,7 @@
 namespace App\Service;
 
 
+use App\Entity\Active;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Zeitblock;
@@ -41,7 +42,7 @@ class PreisListeService
     }
 
     public function preisliste(Stadt $stadt, Schule $schule,$gehaltIst,$artIst ){
-        $schuljahr = $this->schuljahrService->getSchuljahr($stadt);
+        $schuljahr = $this->em->getRepository(Active::class)->findSchuljahrFromCity($stadt,new \DateTime());
         $schulen = $this->em->getRepository(Schule::class)->findBy(array('stadt'=>$stadt,'deleted'=>false));
         $gehalt = $stadt->getGehaltsklassen();
         $art = [
