@@ -29,8 +29,8 @@
 
                 <div class="row">
                     <div class="col-sm-11">
-                        {{ form_label(form.email) }}
-                        {{ form_widget(form.email) }}
+                        {{ form_row(form.email) }}
+
                     </div>
                     <div class="col-sm-1">
                         <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Die E-Mail Adresse ist wichtig, da alle Dokumente, Bestätigungen und Rechnungen automatisch an diese E-Mail geschickt werden.{% endtrans %}"></i>
@@ -39,23 +39,18 @@
 
                 <div class="row">
                     <div class="col-sm-11">
-                {{ form_label(form.vorname) }}
-                {{ form_widget(form.vorname) }}
+                        {{ form_row(form.phoneNumber) }}
+                        {{ form_row(form.vorname) }}
+                        {{ form_row(form.name) }}
 
-                {{ form_label(form.name) }}
-                {{ form_widget(form.name) }}
+                        {{ form_row(form.strasse) }}
 
-                {{ form_label(form.strasse) }}
-                {{ form_widget(form.strasse) }}
+                        {{ form_row(form.adresszusatz) }}
 
-                {{ form_label(form.adresszusatz) }}
-                {{ form_widget(form.adresszusatz) }}
+                        {{ form_row(form.plz) }}
+                        {{ form_row(form.stadt) }}
 
-                {{ form_label(form.plz) }}
-                {{ form_widget(form.plz) }}
 
-                {{ form_label(form.stadt) }}
-                {{ form_widget(form.stadt) }}
                     </div>
                 </div>
 
@@ -69,17 +64,13 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-11">
-                        {{ form_label(form.notfallName) }}
-                        {{ form_widget(form.notfallName) }}
+                        {{ form_row(form.notfallName) }}
+                        {{ form_row(form.notfallkontakt) }}
 
-                        {{ form_label(form.notfallkontakt) }}
-                        {{ form_widget(form.notfallkontakt) }}
+                        {{ form_row(form.abholberechtigter) }}
+                        {{ form_row(form.gdpr) }}
 
-                        {{ form_label(form.abholberechtigter) }}
-                        {{ form_widget(form.abholberechtigter) }}
 
-                        {{ form_label(form.gdpr) }}
-                        {{ form_widget(form.gdpr) }}
 
                         {{ form_widget(form.submit) }}
                         {{ form_widget(form._token) }}

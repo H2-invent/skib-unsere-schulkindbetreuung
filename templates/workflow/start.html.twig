@@ -195,9 +195,9 @@
                                     <!-- Count item widget-->
                                     {% for s in schule %}
                                         <div class="col-md-6 col-lg-4 mb-4">
-                                            <div class="cardhoverable h-100 card hoverable ">
+                                            <div class="cardhoverable h-100 card  ">
                                                 <div class=" overlay skib-card-image">
-                                                    <a href="{{path('loerrach_workflow_adresse',{'slug':stadt.slug})}}">
+
                                                     <img class="card-img-top lazy"
                                                             {% if s.image %}
                                                                 data-src="{{ vich_uploader_asset(s,'imageFile') }}"
@@ -222,13 +222,17 @@
                                                     </noscript>
 
                                                         <div class="mask rgba-white-slight"></div>
-                                                    </a>
+
                                                 </div>
 
-                                                <div class="card-body ">
+                                                <div class="card-body text-center">
                                                     <h5 class="card-title">{{ s.name }}</h5>
+                                                    <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                                                        <a href="{{ path('trager_preisliste',{'schule':s.id,'slug':stadt.slug}) }}" class="loadContent btn-rounded btn-outline-primary btn btn-sm">{{'Betreuungszeitfenster'|trans}}</a>
+                                                        <a href="{{path('loerrach_workflow_adresse',{'slug':stadt.slug})}}" class="btn-rounded btn-outline-primary btn  btn-sm">{{ 'Kind anmelden'|trans }}</a>
 
-                                                </div>
+                                                    </div>
+                                                 </div>
                                                 <div class="card-footer">
                                                     {% trans %}Betreuende Organisation{% endtrans %}
                                                     : {{ s.organisation.name }}
@@ -398,8 +402,16 @@
     wenigerLesen = '{{ 'Schließen'|trans }}'
 
 </script>
+<script type="text/javascript" src="{{ asset('build/js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('build/js/popper.min.js') }}"></script>
 
-{{ encore_entry_script_tags('startpage') }}
+{% block webpack %}
+    {{ encore_entry_script_tags('startpage') }}
+{% endblock %}
+
+<script type="text/javascript" src="{{ asset('build/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('build/js/mdb.min.js') }}"></script>
+
 </body>
 
 </html>

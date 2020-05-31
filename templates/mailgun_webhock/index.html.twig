@@ -8,8 +8,9 @@
                 <!-- Count item widget-->
                 <div class=" col-12 card">
                     <div class="card-header">
-                        <h1>{{title}}</h1>
+                        <h1>{{ title }}</h1>
                     </div>
+                    <canvas id="myChart" width="500" height="150"></canvas>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
@@ -29,18 +30,23 @@
                                 <tr class="{% if m.allert == true %}table-danger{% elseif m.warning == true %}table-warning{% else %}table-success{% endif %}">
                                     <td>
                                         <div class="btn-group">
-                                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="material-icons">more_vert</i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-                                                <a class="dropdown-item" href="{{ path('admin_mailgun_detail',{'message-id':m.messageId}) }}">{% trans %}Historie{% endtrans %}</a>
+                                                <a class="dropdown-item"
+                                                   href="{{ path('admin_mailgun_history',{'message-id':m.messageId}) }}">{% trans %}Historie{% endtrans %}</a>
+                                                <a class="dropdown-item"
+                                                   href="{{ path('admin_mailgun_detail',{'message-id':m.id}) }}">{% trans %}Detail{% endtrans %}</a>
+
                                             </div>
                                         </div>
                                     </td>
                                     <td>{{ m.reciever }}</td>
                                     <td>{{ m.event }}</td>
                                     <td>{{ m.severity }}</td>
-                                    <td>{{ m.createdAt|date('d.m.Y-H:i:s')}}</td>
+                                    <td>{{ m.createdAt|date('d.m.Y-H:i:s') }}</td>
                                     <td>{{ m.description }}</td>
 
                                     <td>{{ m.message|nl2br }}</td>
@@ -56,3 +62,44 @@
     </section>
 
 {% endblock %}
+{% block webpack %}
+    {{ encore_entry_script_tags('mailgun') }}
+{% endblock %}
+{% block jquery %}
+    {% if chart is defined %}
+    <script>
+
+        var mailgunTimeSuccess = [
+            {% for key,m in chart[0].data %}
+
+            {
+                x: new Date('{{ key }}'),
+                y:{{ m }}
+            },
+
+            {% endfor %}
+        ];
+        var mailgunTimeFail = [
+            {% for key,m in chart[1].data %}
+
+            {
+                x: new Date('{{ key }}'),
+                y:{{ m }}
+            },
+
+            {% endfor %}
+        ];
+        var mailgunTimeWarning = [
+            {% for key,m in chart[2].data %}
+
+            {
+                x: new Date('{{ key }}'),
+                y:{{ m }}
+            },
+
+            {% endfor %}
+        ]
+    </script>
+    {% endif %}
+{% endblock %}
+

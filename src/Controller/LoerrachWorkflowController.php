@@ -74,7 +74,7 @@ class LoerrachWorkflowController extends AbstractController
         }
         if($parameterBag->get('wartung') == 'true'){
             return $this->redirectToRoute('workflow_wartung',array('redirect'=>$this->generateUrl('loerrach_workflow_adresse',array('slug'=>$stadt->getSlug()))));
-        }
+    }
         $adresse = new Stammdaten();
 
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {

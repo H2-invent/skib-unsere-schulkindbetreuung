@@ -111,10 +111,11 @@ $('#loadContentModal').on('show.bs.modal', function (e) {
         min: '01.01.2000',
         max: new Date(),
     });
+    $('input').trigger('change');
     $(this)
         .find('.mdb-select')
         .materialSelect();
-    $('input').trigger('change');
+
 });
 
 $(window).on('load', function () {
@@ -164,3 +165,15 @@ $(window).on('load', function () {
     });
     }
 );
+
+$(document).on('change', '.preisliste_trigger .mdb-select', function (e) {
+    e.preventDefault();
+    var $url = $('#preisliste_schule option:checked').val();
+    var $gehalt = $('#preisliste_gehalt option:checked').val() ;
+    var $art = $('#preisliste_schulart option:checked').val() ;
+    $('#preislisteWrappre').load($url+'?'+$.param({
+        art: $art,
+        gehalt: $gehalt})+' #preisliste_content',function () {
+
+    })
+});
