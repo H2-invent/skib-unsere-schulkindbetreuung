@@ -104,7 +104,6 @@ $(document).on('click', '.loadContent', function (e) {
 });
 
 $('#loadContentModal').on('show.bs.modal', function (e) {
-    console.log('test');
     $('.pickadate').pickadate({
         format: 'dd.mm.yyyy',
         formatSubmit: 'yyyy-mm-dd',
@@ -167,7 +166,7 @@ $(window).on('load', function () {
     }
 );
 
-$(document).on('change', '.preisliste_trigger', function (e) {
+$(document).on('change', '.preisliste_trigger .mdb-select', function (e) {
     e.preventDefault();
     var $url = $('#preisliste_schule option:checked').val();
     var $gehalt = $('#preisliste_gehalt option:checked').val() ;

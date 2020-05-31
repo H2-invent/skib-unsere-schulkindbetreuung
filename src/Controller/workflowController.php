@@ -12,27 +12,16 @@ use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
-use App\Form\Type\StadtType;
 use App\Service\ConfirmEmailService;
 use App\Service\MailerService;
 use App\Service\PrintAGBService;
 use App\Service\SchuljahrService;
-use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
-use Beelab\Recaptcha2Bundle\Validator\Constraints\Recaptcha2;
-use phpDocumentor\Reflection\Types\This;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class workflowController extends AbstractController
@@ -91,7 +80,6 @@ class workflowController extends AbstractController
      */
     public function wartungAction(Request $request)
     {
-        $referer = $request->headers->get('referer');
         return $this->render('workflow/wartung.html.twig',array('referer'=>$request->get('redirect')));
     }
 
