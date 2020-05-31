@@ -10,8 +10,13 @@ parameters:
     secret: '%env(APP_SECRET)%'
     locale: 'de'
     mailprovider: '%env(MAILPROVIDER)%'
+    confirmEmailSender: '%env(CONFIRMEMAIL)%'
+    alarmEmail: '%env(ALLERTMAIL)%'
+    mailgunApiKEy: '%env(MAILGUNAPIKEY)%'
     osTicketUrl: '%env(osTicketUrl)%'
     osTicketApi: '%env(osTicketApi)%'
+    wartung: '%env(WARTUNG)%'
+
 
 services:
     # default configuration for services in *this* file

@@ -1,13 +1,13 @@
-<div class="modal-dialog modal-dialog-scrollable modal-fluid">
+<div class="modal-dialog modal-dialog-scrollable  cascading-modal  modal-fluid">
     <div class="modal-content">
 
-        <div class="modal-header">
+        <div class="modal-header  light-blue darken-3 white-text">
             <h5 class="modal-title">{% trans %}Betreuungszeitfenster zum Auswählen anklicken{% endtrans %}</h5>
 
         </div>
         <div class="modal-body">
             <div class="row">
-                <div class="col-md-8 offset-md-2">
+                <div class="col-lg-8 offset-lg-2">
                     {% if stadt.translate.careBlockInfo %}
                         <p class="note note-info z-depth-1">
                             {{ stadt.translate.careBlockInfo|nl2br }}
@@ -17,7 +17,7 @@
             </div>
 
             <div class="row">
-                <div class="{% if blocks[6] is not defined and blocks[5] is not defined %} offset-md-1 {% endif %}col-md-2 text-center">
+                <div class="{% if blocks[6] is not defined and blocks[5] is not defined %} offset-lg-1 {% endif %}col-lg-2 text-center">
                     <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
                     {% if blocks[0] is defined %}
                         {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[0]} %}
@@ -29,7 +29,7 @@
                         </div>
                     {% endif %}
                 </div>
-                <div class="col-md-2 text-center">
+                <div class="col-lg-2 text-center">
                     <h5 class="card-title">{% trans %}Dienstag{% endtrans %}</h5>
                     {% if blocks[1] is defined %}
                         {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[1]} %}
@@ -41,7 +41,7 @@
                         </div>
                     {% endif %}
                 </div>
-                <div class="col-md-2 text-center">
+                <div class="col-lg-2 text-center">
                     <h5 class="card-title">{% trans %}Mittwoch{% endtrans %}</h5>
                     {% if blocks[2] is defined %}
                         {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[2]} %}
@@ -53,7 +53,7 @@
                         </div>
                     {% endif %}
                 </div>
-                <div class="col-md-2 text-center">
+                <div class="col-lg-2 text-center">
                     <h5 class="card-title">{% trans %}Donnerstag{% endtrans %}</h5>
                     {% if blocks[3] is defined %}
                         {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[3]} %}
@@ -65,7 +65,7 @@
                         </div>
                     {% endif %}
                 </div>
-                <div class="col-md-2 text-center">
+                <div class="col-lg-2 text-center">
                     <h5 class="card-title">{% trans %}Freitag{% endtrans %}</h5>
                     {% if blocks[4] is defined %}
                         {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[4]} %}
@@ -78,13 +78,13 @@
                     {% endif %}
                 </div>
                 {% if blocks[5] is defined %}
-                    <div class="{% if blocks[6] is not defined %} col-md-2 {% else %}col-md-1{% endif %} text-center">
+                    <div class="{% if blocks[6] is not defined %} col-lg-2 {% else %}col-md-1{% endif %} text-center">
                         <h5 class="card-title">{% trans %}Samstag{% endtrans %}</h5>
                         {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[5]} %}
                     </div>
                 {% endif %}
                 {% if blocks[6] is defined %}
-                    <div class="{% if blocks[5] is not defined %} col-md-2 {% else %}col-md-1{% endif %} text-center">
+                    <div class="{% if blocks[5] is not defined %} col-lg-2 {% else %}col-md-1{% endif %} text-center">
                         <h5 class="card-title">{% trans %}Sonntag{% endtrans %}</h5>
                         {% include 'workflow/blockCard.html.twig' with {'blocks': blocks[6]} %}
                     </div>

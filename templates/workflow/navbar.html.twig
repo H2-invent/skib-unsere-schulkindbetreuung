@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top navbar-expand-md navbar-custom navbar-dark scrolling-navbar">
+<nav class="navbar fixed-top navbar-expand-lg navbar-custom navbar-dark scrolling-navbar">
     <div class="container">
         <!-- Brand -->
         {% if stadt is defined and stadt is not null %}
@@ -31,6 +31,10 @@
                             {{ 'Informationen'|trans }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% if stadt.schules is not empty %}
+                                <a class="dropdown-item loadContent"
+                                   href="{{ path('trager_preisliste',{'slug':stadt.slug,'schule':stadt.schules[0].id}) }}">{% trans %}Zeitblöcke und Preise{% endtrans %}</a>
+                            {% endif %}
                             <a class="dropdown-item"
                                href="{{ path('workflow_agb',{'slug':stadt.slug}) }}">{% trans %}Vertragsbedingungen{% endtrans %}</a>
                             <a class="dropdown-item"
@@ -65,6 +69,23 @@
                                     src="{{ asset('images/flags/16/FR.png') }}" alt="Francais" class="mr-2"><span>Francais</span></a>
                     </div>
                 </li>
+
+                {% if stadt is defined and stadt is not null %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            {{ 'Organisationen'|trans }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for o in stadt.organisations %}
+                                {% if o.slug %}
+                                    <a class="dropdown-item"
+                                       href="{{ path('organisation_profil',{'slug':o.slug}) }}">{{ o.name }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('dashboard') }}">{% if is_granted('IS_AUTHENTICATED_FULLY') %}<i class="fa fa-user "></i> {{ app.user.username }}{% else %}{% trans %}Mitarbeiterlogin{% endtrans %}{% endif %}</a>
                 </li>

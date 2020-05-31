@@ -1,0 +1,9 @@
+{% if blocks is defined %}
+    {% for b in blocks %}
+        <div class="card card-body">
+            <b>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</b><br>
+            {{ 'Grundgebühr'|trans }}: {{ b.preise[gehaltIst]|number_format(2,',') }}€<br>
+        </div>
+
+    {% endfor %}
+{% endif %}

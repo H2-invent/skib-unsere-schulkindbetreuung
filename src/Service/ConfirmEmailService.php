@@ -3,28 +3,15 @@
 namespace App\Service;
 
 use App\Entity\Stadt;
-
 use App\Entity\Stammdaten;
-
 use App\Form\Type\ConfirmType;
 use Doctrine\ORM\EntityManagerInterface;
-
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
-
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
@@ -41,7 +28,8 @@ class ConfirmEmailService
     private $formBuilder;
     private $twig;
     private $mailer;
-   public function __construct(MailerService $mailerService,Environment $twig, FormFactoryInterface $formBuilder,RouterInterface $router,TranslatorInterface $translator,Security $security,EntityManagerInterface $entityManager)
+    private $parameterbag;
+   public function __construct(ParameterBagInterface $parameterBag, MailerService $mailerService,Environment $twig, FormFactoryInterface $formBuilder,RouterInterface $router,TranslatorInterface $translator,Security $security,EntityManagerInterface $entityManager)
    {
        $this->em = $entityManager;
        $this->user = $security;
@@ -50,6 +38,7 @@ class ConfirmEmailService
        $this->formBuilder = $formBuilder;
        $this->twig = $twig;
        $this->mailer= $mailerService;
+       $this->parameterbag = $parameterBag;
    }
 
     public
@@ -88,7 +77,7 @@ class ConfirmEmailService
             $mailBetreff = $this->translator->trans('Bestätigung der E-Mail-Adresse');
             $mailContent = $this->twig->render('email/bestaetigungscode.html.twig', array('eltern' => $stammdaten, 'stadt'=>$stadt));
             if ($stammdaten->getConfirmEmailSend() === false) {
-                $this->mailer->sendEmail('Unsere Schulkindbetreuung', 'info@h2-invent.com', $stammdaten->getEmail(), $mailBetreff, $mailContent);
+                $this->mailer->sendEmail('Unsere Schulkindbetreuung', $this->parameterbag->get('confirmEmailSender'), $stammdaten->getEmail(), $mailBetreff, $mailContent);
                 $stammdaten->setConfirmEmailSend(true);
                 $stammdaten->setResendEmail(md5(uniqid()));
                 $this->em->persist($stammdaten);
@@ -97,7 +86,7 @@ class ConfirmEmailService
 
             $text = $this->translator->trans('Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch in Ihrem Spamordner nach.');
 
-            return $this->twig->render('workflow/formConfirmation.html.twig', array('form' => $form->createView(), 'titel' => $mailBetreff, 'text' => $text, 'stadt' => $stadt, 'stammdaten' => $stammdaten, 'redirect' => $request->get('redirect')));
+            return $this->twig->render('workflow/formConfirmation.html.twig', array('form' => $form->createView(), 'titel' => $mailBetreff.':<br> '.$stammdaten->getEmail(), 'text' => $text, 'stadt' => $stadt, 'stammdaten' => $stammdaten, 'redirect' => $request->get('redirect')));
 
 
         }

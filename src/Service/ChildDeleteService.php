@@ -62,7 +62,7 @@ class ChildDeleteService
     public function sendEmail(Stammdaten $stammdaten, Kind $kind, Organisation $organisation)
     {
         $mailBetreff = $this->translator->trans('Abmeldung der Schulkindbetreuung für ') . $kind->getVorname() . ' ' . $kind->getNachname();
-        $mailContent = $this->templating->render('email/abmeldebestatigung.html.twig', array('eltern' => $stammdaten, 'kind' => $kind, 'org' => $organisation));
+        $mailContent = $this->templating->render('email/abmeldebestatigung.html.twig', array('eltern' => $stammdaten, 'kind' => $kind, 'org' => $organisation, 'stadt' => $organisation->getStadt()));
         $this->mailer->sendEmail($kind->getSchule()->getOrganisation()->getName(), $kind->getSchule()->getOrganisation()->getEmail(), $stammdaten->getEmail(), $mailBetreff, $mailContent);
 
     }

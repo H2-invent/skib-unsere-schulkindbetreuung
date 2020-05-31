@@ -2,14 +2,13 @@
 
 namespace App\Entity;
 
+use Ambta\DoctrineEncryptBundle\Configuration\Encrypted;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 // importing @Encrypted annotation
-use Ambta\DoctrineEncryptBundle\Configuration\Encrypted;
-use App\Controller\LoerrachWorkflowController;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 
 /**
@@ -101,7 +100,7 @@ class Stammdaten
     private $sepaInfo;
 
     /**
-     * @Assert\Iban()
+     * @Assert\Iban(groups={"Schulkind"})
      * @Assert\NotBlank(groups={"Schulkind"})
      * @ORM\Column(type="text",nullable=true)
      * @Encrypted()
@@ -114,7 +113,7 @@ class Stammdaten
     private $kinds;
 
     /**
-     * @Assert\Bic()
+     * @Assert\Bic(groups={"Schulkind"})
      * @ORM\Column(type="text",nullable=true)
      * @Assert\NotBlank(groups={"Schulkind"})
      * @Encrypted()
@@ -228,6 +227,7 @@ class Stammdaten
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Encrypted()
      */
     private $ipAdresse;
 

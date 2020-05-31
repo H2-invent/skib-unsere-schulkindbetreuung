@@ -7,33 +7,21 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/frontend.css';
-
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
-global.$ = global.jQuery = $;
 
-import Popper from 'popper.js';
-
-global.Popper = Popper;
 import moment from 'moment';
+import {jarallax, jarallaxElement, jarallaxVideo} from 'jarallax';
+
+global.$ = global.jQuery = $;
 global.moment =moment;
-
-import('bootstrap');
-import('./mdb');
 import('snackbarjs');
-
 import ('morecontent-js/dist/jquery.morecontent');
 import('jquery-confirm');
 import('./jquery.bs.gdpr.cookies');
 import('jquery-clockpicker');
 import('daterangepicker');
 import ('jquery-lazy');
-import daterangepicker from 'daterangepicker';
-import {
-    jarallax,
-    jarallaxElement,
-    jarallaxVideo
-} from 'jarallax';
 
 
 jarallaxVideo();
@@ -41,18 +29,32 @@ jarallaxElement();
 jarallax(document.querySelectorAll('.jarallax'), {
     speed: 0.2
 });
+
 $(document).ready(function () {
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "md-toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": 300,
+        "hideDuration": 1000,
+        "timeOut": 5000,
+        "extendedTimeOut": 1000,
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+    if(typeof errors !=='undefined'){
+        $(errors).each(function (i) {
+            toastr[errors[i].type](errors[i].text);
+        });
+    }
 
-});
-
-$(document).on('click', '.loadContent', function (e) {
-    e.preventDefault();
-    var url = $(this).attr('href');
-    $('#loadContentModal').load(url, function () {
-        $('#loadContentModal ').modal('show');
-
-    });
-});
+})
 
 
 $(document).on('click', '.deleteBtn', function (e) {
@@ -92,9 +94,31 @@ $(document).on('click', '.deleteBtn', function (e) {
 });
 
 
+$(document).on('click', '.loadContent', function (e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
+    $('#loadContentModal').load(url, function () {
+        $('#loadContentModal ').modal('show');
+
+    });
+});
+
+$('#loadContentModal').on('show.bs.modal', function (e) {
+    $('.pickadate').pickadate({
+        format: 'dd.mm.yyyy',
+        formatSubmit: 'yyyy-mm-dd',
+        selectYears: 2010,
+        min: '01.01.2000',
+        max: new Date(),
+    });
+    $('input').trigger('change');
+    $(this)
+        .find('.mdb-select')
+        .materialSelect();
+
+});
 
 $(window).on('load', function () {
-
 
         $(function() {
             $('.lazy').show().Lazy({
@@ -141,3 +165,15 @@ $(window).on('load', function () {
     });
     }
 );
+
+$(document).on('change', '.preisliste_trigger .mdb-select', function (e) {
+    e.preventDefault();
+    var $url = $('#preisliste_schule option:checked').val();
+    var $gehalt = $('#preisliste_gehalt option:checked').val() ;
+    var $art = $('#preisliste_schulart option:checked').val() ;
+    $('#preislisteWrappre').load($url+'?'+$.param({
+        art: $art,
+        gehalt: $gehalt})+' #preisliste_content',function () {
+
+    })
+});

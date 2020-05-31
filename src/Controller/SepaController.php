@@ -5,25 +5,14 @@ namespace App\Controller;
 use App\Entity\Active;
 use App\Entity\Kundennummern;
 use App\Entity\Organisation;
-use App\Entity\Rechnung;
-use App\Entity\Schule;
 use App\Entity\Sepa;
-use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Form\Type\customerIDStammdatenType;
-use App\Form\Type\SepaStammdatenType;
 use App\Form\Type\SepaType;
-use App\Service\MailerService;
-use App\Service\PrintRechnungService;
 use App\Service\SepaCreateService;
-use App\Service\SEPASimpleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -94,6 +83,7 @@ class SepaController extends AbstractController
         $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
         $qb->innerJoin('stammdaten.kinds', 'kinds')
             ->innerJoin('kinds.schule', 'schule')
+            ->andWhere('stammdaten.fin = true')
             ->andWhere('schule.organisation = :org')
             ->setParameter('org', $organisation);
         if ($request->get('year_id')) {

@@ -7,14 +7,13 @@ Brutto Haushaltseinkommen pro Monat: Revenu brut des ménages par mois
 Speichern: Enregistrer
 Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung: J'ai au moins un enfant supplémentaire dans un jardin d'enfants public payant
 Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger: Je suis un bénéficiaire du paquet éducation et participation (MAIS)
-Berufliche Situation des Erziehungsberechtigten: Situation en matière professionnelle du représentant légal
+Berufliche Situation: Situation en matière professionnelle
 Name des Notfallkontakts: Nom de la personne à contacter en cas d'urgence
 Telefonnummer des Notfallkontakts: Numéro de téléphone de la personne à contacter en cas d'urgence
 Name der Stadt: Nom de la ville
 Slug der Stadt: La limace de la ville
 Username: Nom d'utilisateur
 E-Mail: L'adresse électronique
-Telefonnummer /Handynummer des Erziehungsberechtigten: Numéro de téléphone / numéro de téléphone portable du parent ou du tuteur
 Passwort: Mot de passe
 Geburtstag: Date de naissance
 Name der Schule: Nom de l'école
@@ -49,6 +48,7 @@ Ende der Anmeldung: Fin de l'enregistrement
 Betreuungsbeginn: Début de la supervision
 Betreuungsende: Fin de la supervision
 Preis: Prix
+Name der Organisation für den SEPA Lastschrifteinzug: Nom de l'organisation pour le prélèvement SEPA
 IBAN für das Lastschriftmandat: IBAN pour le mandat de domiciliation
 BIC für das Lastschriftmandat: BIC pour le mandat de domiciliation
 BIC: BIC
@@ -58,7 +58,7 @@ Schulform: Forme scolaire
 Jahrgangsstufe: Classe
 Ganztag: Journée entière
 Halbtag: Demi-journée
-Mein Kind benötig folgende Medikamente: L'enfant a besoin des médicaments suivants
+Mein Kind benötigt folgende Medikamente: L'enfant a besoin des médicaments suivants
 Mein Kind hat folgende Allergien: L'enfant présente les allergies suivantes
 Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden.: Je reconnais que mes données seront traitées électroniquement
 Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet werden und an die betreuende Organisation weitergegeben werden.: J'accepte que mes données et celles de mes enfants soient traitées électroniquement et transmises à l'organisme de contrôle.
@@ -84,6 +84,7 @@ Mein Kind ernährt sich vegetarisch: Mon enfant est végétarien
 Mein Kind isst kein Schweinefleich: Mon enfant ne mange pas de porc
 Mein Kind ist glutenintolerant: Mon enfant est intolérant au gluten
 Mein Kind ist laktoseintolerant: Mon enfant est intolérant au lactose
+Mein Kind ist gegen Masern geimpft / bereits immun: Mon enfant est vacciné contre la rougeole / déjà immunisé
 Tag des Lastschrifteinzugs: Date de l'inscription au débit
 Beginn des Abrechnungszeitraums: Début de l'exercice financier
 Datenschutzhinweis Deutsch (Markdown): Protection des données en allemand (Markdown)

@@ -69,6 +69,8 @@
                                     class="material-icons">people</i>{% trans %}Alle User{% endtrans %}</a></li>
                     <li><a href="{{ path('content_show') }}"><i
                                     class="material-icons">inbox</i>{% trans %}Frontpage Content{% endtrans %}</a></li>
+                    <li><a href="{{ path('admin_mailgun_index') }}"><i
+                                    class="material-icons">inbox</i>{% trans %}Mailgun{% endtrans %}</a></li>
 
                 {% endif %}
 
@@ -833,9 +835,9 @@
         confirmText = '{{ 'Wollen Sie diese Aktion durchführen?'|trans }}'
 
 </script>
-
+{% block webpack %}
     {{ encore_entry_script_tags('app') }}
-
+{% endblock %}
 {% block jquery %}
 
 {% endblock %}

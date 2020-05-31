@@ -2,19 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Active;
-use App\Entity\Kind;
 use App\Entity\News;
 use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
-use App\Form\Type\LoerrachKind;
 use App\Form\Type\NewsType;
-use App\Form\Type\SchuljahrType;
 use App\Service\MailerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -53,6 +48,7 @@ class NewsController extends AbstractController
         $activity->setStadt($stadt);
         $today = new \DateTime();
         $activity->setCreatedDate($today);
+        $activity->setDate($today);
         $schulen = $stadt->getSchules();
         $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen));
         $form->remove('schulen');
