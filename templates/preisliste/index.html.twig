@@ -20,7 +20,7 @@
                 <div class="col-md-4">
                     <label for="preisliste_gehalt">{{ 'Brutto Haushaltseinkommen pro Monat'|trans }}</label>
                     <select class="mdb-select md-form preisliste_trigger" id="preisliste_gehalt">
-                        <option value="{{ gehaltIst }}" disabled selected>{{gehalt[gehaltIst]}} €</option>
+                        <option value="{{ gehaltIst }}" disabled selected>{{gehalt[gehaltIst]}} </option>
                         {% for key,g in gehalt %}
                             <option value="{{ key }}">{{ g }}</option>
                         {% endfor %}
