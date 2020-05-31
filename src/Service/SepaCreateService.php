@@ -3,36 +3,11 @@
 namespace App\Service;
 
 use App\Entity\Active;
-use App\Entity\Ferienblock;
-use App\Entity\Kind;
-use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
 use App\Entity\Rechnung;
 use App\Entity\Sepa;
-use App\Entity\Stadt;
-
 use App\Entity\Stammdaten;
-
-use App\Entity\Zeitblock;
-use App\Form\Type\ConfirmType;
 use Doctrine\ORM\EntityManagerInterface;
-
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Security;
-
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
@@ -179,14 +154,14 @@ class SepaCreateService
         $rechnung->setPdf('');
         $this->em->persist($rechnung);
         $this->em->flush();
-        //todo repair the rechnung
+
         $table = $this->environment->render('rechnung/tabelle.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
         $rechnung->setPdf($table);
-        //todo end todo
+
         $rechnung->setRechnungsnummer('RE' . (new \DateTime())->format('Ymd') . $rechnung->getId());
         $rechnung->setSepa($sepa);
         if ($summe > 0) {
-            //todo check ob alle angaben richtig sind
+
             $this->sepaSimpleService->Add($sepa->getEinzugsDatum()->format('Y-m-d'), $rechnung->getSumme(), $rechnung->getStammdaten()->getKontoinhaber(), $rechnung->getStammdaten()->getIban(), $rechnung->getStammdaten()->getBic(),
                 NULL, NULL, $rechnung->getRechnungsnummer(), $rechnung->getRechnungsnummer(), $type, 'skb-' . $rechnung->getStammdaten()->getConfirmationCode(), $rechnung->getStammdaten()->getCreatedAt()->format('Y-m-d'));
         }
