@@ -16,9 +16,9 @@
 
 <meta property="og:image" content="
 {% if stadt is defined and stadt is not null %}
-{{ absolute_url( vich_uploader_asset(stadt.image)| imagine_filter('my_thumb')) }}
+{{  vich_uploader_asset(stadt.image)| imagine_filter('my_cards')|makeHttps }}
 {% else %}
-{{ absolute_url(asset('images/logo-breit-mittig.png')) }}
+{{ asset('images/logo-breit-mittig.png')| imagine_filter('my_cards')|makeHttps }}
 {% endif %}"/>
 <meta property="og:title"
       content="{% if title is defined and title is not null %}{{ title }}{% else %}{% trans %}Anmeldeportal Schulkindbetreuung{% endtrans %} | {% if stadt is defined and stadt is not null %}{{ stadt.name }}{% endif %}{% endif %}"/>

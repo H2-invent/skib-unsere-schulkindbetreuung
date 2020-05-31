@@ -16,7 +16,7 @@
 
 <div class="view"
         {% if stadt is defined and stadt is not null and stadt.image is not empty %}
-     style="background-image: url({{ vich_uploader_asset(stadt,'imageFile')| imagine_filter('my_background') }}); background-repeat: no-repeat; background-size: cover;">
+     style="background-image: url({{ vich_uploader_asset(stadt,'imageFile')| imagine_filter('my_background')|makeHttps }}); background-repeat: no-repeat; background-size: cover;">
     {% else %}
         style="background-image: url('{{ asset('images/background.jpg')| imagine_filter('my_background')|makeHttps }}'); background-repeat: no-repeat; background-size: cover;">
     {% endif %}
