@@ -30,18 +30,18 @@
                                             <div class=" overlay skib-card-image">
                                                 <img class="card-img-top"
                                                         {% if s.image %}
-                                                            src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                            src="{{ vich_uploader_asset(s,'imageFile')|imagine_filter('my_cards')|makeHttps }}"
                                                             alt="{{ s.name }}" style="max-height: 300px"
                                                         {% else %}
-                                                            src="{{ asset('images/logo-breit-mittig.png') }}"
+                                                            src="{{ asset('images/logo-breit-mittig.png')|imagine_filter('my_cards')|makeHttps }}"
                                                         {% endif %}
                                                 />
                                                 <noscript><img class="card-img-top lazy"
                                                             {% if s.image %}
-                                                                src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                                src="{{ vich_uploader_asset(s,'imageFile')|imagine_filter('my_cards')|makeHttps }}"
                                                                 alt="{{ s.name }}" style="max-height: 300px"
                                                             {% else %}
-                                                                src="{{ asset('images/logo-breit-mittig.png') }}"
+                                                                src="{{ asset('images/logo-breit-mittig.png')|imagine_filter('my_cards')|makeHttps }}"
                                                             {% endif %}
                                                     />
                                                 </noscript>

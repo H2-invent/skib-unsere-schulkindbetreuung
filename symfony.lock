@@ -162,6 +162,9 @@
     "guzzlehttp/psr7": {
         "version": "1.6.1"
     },
+    "imagine/imagine": {
+        "version": "1.2.3"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -182,6 +185,19 @@
     },
     "league/flysystem": {
         "version": "1.0.57"
+    },
+    "liip/imagine-bundle": {
+        "version": "1.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.8",
+            "ref": "1d42bc3f713130582e6e0c475c49bc327ab0a2a2"
+        },
+        "files": [
+            "./config/packages/liip_imagine.yaml",
+            "./config/routes/liip_imagine.yaml"
+        ]
     },
     "lorenzo/pinky": {
         "version": "1.0.5"

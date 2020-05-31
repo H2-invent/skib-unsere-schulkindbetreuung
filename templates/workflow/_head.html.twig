@@ -16,7 +16,7 @@
 
 <meta property="og:image" content="
 {% if stadt is defined and stadt is not null %}
-{{ absolute_url( vich_uploader_asset(stadt.image)) }}
+{{ absolute_url( vich_uploader_asset(stadt.image)| imagine_filter('my_thumb')) }}
 {% else %}
 {{ absolute_url(asset('images/logo-breit-mittig.png')) }}
 {% endif %}"/>

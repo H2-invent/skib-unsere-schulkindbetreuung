@@ -1,7 +1,7 @@
 {% if blocks is defined %}
     {% for b in blocks %}
         <div class="card">
-            <div class="card-body text-center {% if b.deleted == true %}bg-danger{% endif %}">
+            <div class="card-body text-center {% if b.deleted == true %}bg-danger collapse{% endif %}" id="deletedCollape-{{ b.id }}">
                 <p>
                     {{ b.ganztagString }}{% if b.ganztag == 0 %}<i class="material-icons">restaurant</i> {% endif %}
 
@@ -74,7 +74,7 @@
                         </a>
                     {% endif %}
                 {% else %}
-                    {% trans %}gelöscht{% endtrans %}/{% trans %}deaktiviert{% endtrans %}
+                   <a data-toggle="collapse" href="#deletedCollape-{{ b.id }}" role="button" aria-expanded="false" aria-controls="collapseExample"> {% trans %}gelöscht{% endtrans %}/{% trans %}deaktiviert{% endtrans %}</a>
                 {% endif %}
             </div>
         </div>
