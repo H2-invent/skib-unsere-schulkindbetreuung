@@ -9,19 +9,10 @@
 namespace App\Service;
 
 
-use App\Entity\Kind;
-use App\Entity\Organisation;
-use App\Entity\Stadt;
-use App\Entity\Stammdaten;
-
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 class ChildExcelService
 {
@@ -61,7 +52,6 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Abholung durch'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Medikamente'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Allergien'));
-        //todo masernimpfung
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Masernimpfung'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Bemerkung'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Gluten intolerant'));
