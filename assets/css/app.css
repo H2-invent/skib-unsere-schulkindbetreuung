@@ -1,5 +1,7 @@
-@import '~bootstrap-material-design';
+@import '~mdbootstrap-pro/css/bootstrap.css';
+@import '~mdbootstrap-pro/css/mdb.css';
 @import '~font-awesome';
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
 @import '~material-icons-font/material-icons-font.css';
 @import '~datatables.net-dt/css/jquery.dataTables.css';
 @import '~daterangepicker';

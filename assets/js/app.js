@@ -9,19 +9,14 @@
 import '../css/app.css';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
-import Popper from 'popper.js';
 import 'datatables.net-dt';
 // Import TinyMCE
 // Import TinyMCE
-import niceScroll from 'jquery.nicescroll';
-
-import trumbowgy from './trumbowyg';
 import icon from 'trumbowyg/dist/ui/icons.svg'
-import snackbar from 'snackbarjs'
+
 global.$ = global.jQuery = $;
 
 global.Popper = Popper;
-import('bootstrap-material-design');
 import('moment');
 import('chart.js');
 import('chartjs-color-string');
@@ -73,7 +68,6 @@ $(document).ready(function () {
     }
 })
 $(window).on('load', function () {
-
 
 // Load a plugin.
     $.trumbowyg.svgPath = icon;

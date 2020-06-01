@@ -1,0 +1,225 @@
+<!--Double navigation-->
+<header>
+    <!-- Sidebar navigation sn-bg-4 for image-->
+    <div id="slide-out" class="side-nav h2-sn-bg-4 fixed">
+        <ul class="custom-scrollbar vh-100 overflow-auto scrollbar-deep-purple bordered-deep-purple thin">
+            <!-- Logo -->
+            <li>
+                <div class="logo-wrapper waves-light">
+                    <h2 class="text-bold flex-center red-text">{{ app.user.username }}<small>{{ app.user.vorname }} {{ app.user.nachname }}</small></h2>
+                </div>
+            </li>
+            <!--/. Logo -->
+
+            <!--Search Form-->
+
+            <!--/.Search Form-->
+
+            <!-- Side navigation links -->
+            <li>
+                <ul class="collapsible collapsible-accordion">
+                    <li><a href="{{ path('dashboard') }}"><i class="fas fa-tachometer-alt"></i>{% trans %}Dashboard{% endtrans %}</a></li>
+                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                        <li>
+                            <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">{% trans %}Original Account{% endtrans %}</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <h5 class="sidenav-heading">{% trans %}Admin{% endtrans %}</h5>
+                        <li><a href="{{ path('admin_stadt') }}"> <i
+                                        class="fas fa-home"></i>{% trans %}Städte{% endtrans %}</a></li>
+                        <li><a href="{{ path('admin_showAllUser') }}"><i
+                                        class="fas fa-users"></i>{% trans %}Alle User{% endtrans %}</a></li>
+                        <li><a href="{{ path('content_show') }}"><i
+                                        class="fas fa-inbox"></i>{% trans %}Frontpage Content{% endtrans %}</a></li>
+                        <li><a href="{{ path('admin_mailgun_index') }}"><i
+                                        class="fas fa-inbox"></i>{% trans %}Mailgun{% endtrans %}</a></li>
+
+                    {% endif %}
+
+
+                    {% if app.user.stadt is not null %}
+                        <h5 class="sidenav-heading">{{ app.user.stadt.name }}</h5>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_CITY_EDITOR') and app.user.stadt is not null %}
+                        <li><a href="{{ path('admin_stadt_edit',{'id':app.user.stadt.id}) }}"> <i class="material-icons">home</i>{% trans %}Stadt bearbeiten{% endtrans %}
+                            </a></li>
+                    {% endif %}
+                    {% if is_granted('ROLE_CITY_ADMIN') %}
+                        <li><a href="{{ path('city_admin_organisation_show',{'id':app.user.stadt.id}) }}"> <i
+                                        class="material-icons">home</i>{% trans %}Organisationen{% endtrans %}</a></li>
+
+                        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
+                                        class="material-icons">people</i>{% trans %}Mitarbeiter{% endtrans %} </a>
+                            <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                                <li>
+                                    <a href="{{ path('city_employee_show',{'id':app.user.stadt.id}) }}">{% trans %}Stadt{% endtrans %}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_CITY_NEWS') %}
+                        <li><a href="{{ path('city_admin_news_anzeige',{'id':app.user.stadt.id}) }}"> <i
+                                        class="material-icons">chat</i>{% trans %}Neuigkeiten{% endtrans %}</a></li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ORG_ADMIN') %}
+                        <li><a href="{{ path('city_admin_organisation_detail',{'id':app.user.organisation.id}) }}"> <i
+                                        class="fas fa-home"></i>{% trans %}Organisation{% endtrans %}</a></li>
+                        <li><a href="{{ path('city_employee_org_show',{'id':app.user.organisation.id}) }}"> <i
+                                        class="fas fa-users"></i> {% trans %}Mitarbeiter{% endtrans %}</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ORG_NEWS') %}
+                        <li><a href="{{ path('org_news_anzeige',{'id':app.user.organisation.id}) }}"> <i
+                                        class="fas fa-newspaper"></i>{% trans %}Neuigkeiten{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if app.user.stadt.schulkindBetreung is defined and app.user.stadt.schulkindBetreung == true %}
+                        <h5 class="sidenav-heading">SKiB</h5>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_CITY_ADMIN') %}
+                        <li><a href="{{ path('city_admin_schuljahr_anzeige',{'id':app.user.stadt.id}) }}"> <i
+                                        class="material-icons">today</i>{% trans %}Schuljahre{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_CITY_SCHOOL') %}
+                        <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"> <i
+                                        class="fas fa-school"></i>{% trans %}Schulen{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
+
+                    {% endif %}
+
+                    {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
+                        <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"><i
+                                        class="fas fa-school"></i>{% trans %}Meine Schulen{% endtrans %}
+                            </a></li>
+                        <li><a href="{{ path('child_show',{'id':app.user.organisation.id}) }}"> <i
+                                        class="fas fa-users"></i> {% trans %}Angemeldete Kinder{% endtrans %}
+                            </a></li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ORG_CHECKIN_SHOW') %}
+                        <li><a href="{{ path('orgCheckin_how_all_kids',{'id':app.user.organisation.id}) }}"> <i
+                                        class="fas fa-users"></i>  {% trans %}Anwesende Kinder{% endtrans %}
+                            </a></li>
+
+                    {% endif %}
+
+                    {% if is_granted('ROLE_CITY_REPORT') %}
+                        <li><a href="{{ path('stadt_bericht_index',{'stadt_id':app.user.stadt.id}) }}"> <i
+                                        class="material-icons">note</i> {% trans %}Berichte{% endtrans %}</a></li>
+                    {% endif %}
+
+
+
+                    {% if app.user.stadt.ferienprogramm is defined and app.user.stadt.ferienprogramm == true %}
+                        <h5 class="sidenav-heading">Ferienbetreuung</h5>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_ORG_FERIEN_EDITOR') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
+                        <li><a href="{{ path('ferien_management_show',{'org_id':app.user.organisation.id}) }}"> <i
+                                        class="fas fa-home"></i> {% trans %}Programm{% endtrans %}</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ORG_FERIEN_ORDERS') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
+                        <li><a href="{{ path('ferien_management_orders',{'org_id':app.user.organisation.id}) }}"> <i
+                                        class="fas fa-home"></i>{% trans %}Anmeldungen{% endtrans %}</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ORG_FERIEN_CHECKIN') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
+                        <li>
+                            <a href="{{ path('ferien_management_report_checkinlist_tag',{'org_id':app.user.organisation.id}) }}">
+                                <i
+                                        class="fas fa-sign-in-alt"></i>{% trans %}Checkin{% endtrans %}</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ORG_FERIEN_ADMIN') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
+                        <li>
+                            <a href="{{ path('ferien_admin_edit',{'org_id':app.user.organisation.id}) }}">
+                                <i
+                                        class="fas fa-cogs"></i> {% trans %}Ferien Einstellungen{% endtrans %}</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('org_ferien_admin_payment_art',{'org_id':app.user.organisation.id}) }}">
+                                <i
+                                        class="fas fa-money-check-alt"></i> {% trans %}Zahlungsarten{% endtrans %}</a>
+                        </li>
+                    {% endif %}
+
+
+
+
+                    {% if is_granted('ROLE_ORG_ACCOUNTING') %}
+                        <h5 class="sidenav-heading">Buchhaltung</h5>
+                        <li><a href="{{ path('accounting_overview',{'id':app.user.organisation.id}) }}"> <i
+                                        class="fas fa-money-bill-alt"></i> {% trans %}SEPA Übersicht{% endtrans %}</a></li>
+                        <li><a href="{{ path('accounting_showdata',{'id':app.user.organisation.id}) }}"> <i
+                                        class="fas fa-database"></i> {% trans %}Stammdaten{% endtrans %}</a></li>
+                    {% endif %}
+
+
+                    <h5 class="sidenav-heading">{% trans %}Einstellungen{% endtrans %}</h5>
+                    <li><a href="{{ path('fos_user_change_password') }}"> <i
+                                    class="icon-home"></i>{% trans %}Passwort ändern{% endtrans %}</a>
+                    </li>
+
+
+
+            <div class="sidenav-bg mask-strong"></div>
+            <!--/. Side navigation links -->
+        </ul>
+
+    </div>
+    <!--/. Sidebar navigation -->
+
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-toggleable-md navbar-expand-lg  double-nav">
+        <!-- SideNav slide-out button -->
+        <div class="float-left">
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="fas fa-bars"></i></a>
+        </div>
+
+
+
+        <ul class="nav navbar-nav nav-flex-icons ml-auto">
+            {% if is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                <li class="nav-item">
+                    <a href="{{ path('support') }}" class="nav-link ">
+                        <span class="d-none d-sm-inline-block">Support</span> <i class="fa fa-question-circle"></i></a>
+                    </a>
+                </li>
+                <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#"
+                                                 data-toggle="dropdown" aria-haspopup="true"
+                                                 aria-expanded="false"
+                                                 class="nav-link language dropdown-toggle"><span
+                                class="d-none d-sm-inline-block">{% trans %}Sprache{% endtrans %}</span></a>
+                    <ul aria-labelledby="languages" class="dropdown-menu">
+                        <li><a rel="nofollow" href="{{ path("dashboard", {"_locale": "de"}) }}"
+                               class="dropdown-item"> <img src="{{ asset('images/flags/16/DE.png') }}"
+                                                           alt="English" class="mr-2"><span>German</span></a>
+                        </li>
+                        <li><a rel="nofollow" href="{{ path("dashboard", {"_locale": "fr"}) }}"
+                               class="dropdown-item"> <img src="{{ asset('images/flags/16/FR.png') }}"
+                                                           alt="English" class="mr-2"><span>French</span></a>
+                        </li>
+                        <li><a rel="nofollow" href="{{ path("dashboard", {"_locale": "en"}) }}"
+                               class="dropdown-item"> <img src="{{ asset('images/flags/16/GB.png') }}"
+                                                           alt="English" class="mr-2"><span>English</span></a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="{{ path('fos_user_security_logout') }}" class="nav-link logout">
+                        <span class="d-none d-sm-inline-block">Logout</span><i class="fas fa-sign-out-alt"></i></a>
+                </li>
+
+            {% endif %}
+        </ul>
+    </nav>
+    <!-- /.Navbar -->
+</header>
+<!--/.Double navigation-->
