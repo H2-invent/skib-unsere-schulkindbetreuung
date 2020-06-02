@@ -2553,6 +2553,14 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Schulform</source>
         <target>Forme scolaire</target>
       </trans-unit>
+      <trans-unit id="TiYpwGC" resname="Zeitblöcke und Preise pro Monat">
+        <source>Zeitblöcke und Preise pro Monat</source>
+        <target>Blocs horaires et prix par mois</target>
+      </trans-unit>
+      <trans-unit id="mXt83Kz" resname="Zeitblöcke und Preise">
+        <source>Zeitblöcke und Preise</source>
+        <target>Blocs horaires et prix</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
