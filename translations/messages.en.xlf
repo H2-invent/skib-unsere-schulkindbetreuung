@@ -2549,6 +2549,14 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Schulform</source>
         <target>School form</target>
       </trans-unit>
+      <trans-unit id="TiYpwGC" resname="Zeitblöcke und Preise pro Monat">
+        <source>Zeitblöcke und Preise pro Monat</source>
+        <target>Care slots and prices per month</target>
+      </trans-unit>
+      <trans-unit id="mXt83Kz" resname="Zeitblöcke und Preise">
+        <source>Zeitblöcke und Preise</source>
+        <target>Care slots and prices</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
