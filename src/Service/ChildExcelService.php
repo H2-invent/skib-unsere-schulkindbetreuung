@@ -9,19 +9,10 @@
 namespace App\Service;
 
 
-use App\Entity\Kind;
-use App\Entity\Organisation;
-use App\Entity\Stadt;
-use App\Entity\Stammdaten;
-
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 class ChildExcelService
 {
@@ -61,7 +52,6 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Abholung durch'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Medikamente'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Allergien'));
-        //todo masernimpfung
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Masernimpfung'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Bemerkung'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Gluten intolerant'));
@@ -72,13 +62,16 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Darf alleine nach Hause'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Fotos dürfen veröffentlicht werden'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Gebuchte Betreuungszeitfenster'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('E-Mail Adresse'));
 
         if($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')){
            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kundennummer'));
            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('IBAN'));
            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('BIC'));
            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kontoinhaber'));
-       }
+           $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Gebühr pro Monat für gebuchte Betreuung'));
+
+        }
         $counter = 2;
         foreach ($kinder as $data) {
             $count = 0;
@@ -114,12 +107,13 @@ class ChildExcelService
                 $gebucht[]=$data2->getWochentagString().': '.$data2->getVon()->format('H:i').'-'.$data2->getBis()->format('H:i');
             }
             $kindSheet->setCellValue($alphas[$count++] .$counter,implode(' | ', $gebucht));
-
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getEmail());
             if($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')){
                 $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())?$data->getEltern()->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())->getKundennummer():"");
                 $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getIban());
                 $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getBic());
                 $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getKontoinhaber());
+                $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getPreisforBetreuung());
             }
             $counter++;
         }
