@@ -8,6 +8,7 @@ namespace App\Controller;
  * Time: 12:21
  */
 
+use App\Entity\News;
 use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Stadt;
@@ -49,11 +50,11 @@ class workflowController extends AbstractController
         } elseif ($stadt->getFerienprogramm()) {
             $title = $translator->trans('Ferienprogramm buchen') . ' ' . $stadt->getName() . ' | ' . $translator->trans(' Hier anmelden');
         }
-
+        $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt'=>$stadt,'activ'=>true),array('date'=>'DESC'));
         $text = $stadt->translate()->getInfoText();
         $array = explode('. ', $text);
         $metaDescription = $this->buildMeta($array);
-        return $this->render('workflow/start.html.twig', array('metaDescription' => $metaDescription, 'title' => $title, 'schule' => $schule, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'schuljahr' => $schuljahr));
+        return $this->render('workflow/start.html.twig', array('metaDescription' => $metaDescription, 'title' => $title, 'schule' => $schule,'news'=>$news, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'schuljahr' => $schuljahr));
     }
 
 

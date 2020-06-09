@@ -324,7 +324,7 @@ class NewsController extends AbstractController
     public function newsPageAction($slug, Request $request,TranslatorInterface $translator)
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
-        $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true));
+        $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true),array('date'=>'DESC'));
 
         $title= $translator->trans('Alle Neuigkeiten der Stadt').' '.$stadt->getName().' | '.$stadt->getName();
 
