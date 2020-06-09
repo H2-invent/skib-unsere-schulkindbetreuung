@@ -68,15 +68,18 @@
     </div>
 {% endblock %}
 {% block content %}
-    <h1 class="cover-heading">{{ news.title }}</h1>
-    <b>
-        {% trans %}Erstellt am{% endtrans %}
-        : {{ news.createdDate|date('d.m.Y') }} {% if news.date %}| {% trans %}Bearbeitet am{% endtrans %}: {{ news.date|date('d.m.Y') }}{% endif %}
-    </b>
-    <p>{{ news.message|raw }}</p>
+    <div class="card-body card">
+        <h1 class="cover-heading">{{ news.title }}</h1>
+        <b>
+            {% trans %}Erstellt am{% endtrans %}
+            : {{ news.createdDate|date('d.m.Y') }} {% if news.date %}| {% trans %}Bearbeitet am{% endtrans %}: {{ news.date|date('d.m.Y') }}{% endif %}
+        </b>
+        <p>{{ news.message|raw }}</p>
 
-    <a class="btn btn-primary"
-       href="{{ path('news_show_page', {'slug':news.stadt.slug}) }}">
-        <b>{% trans %}Zur Übersicht{% endtrans %}</b>
-    </a>
+        <a class="btn btn-outline-primary"
+           href="{{ path('news_show_page', {'slug':news.stadt.slug}) }}">
+            <b>{% trans %}Zur Übersicht{% endtrans %}</b>
+        </a>
+    </div>
+
 {% endblock %}

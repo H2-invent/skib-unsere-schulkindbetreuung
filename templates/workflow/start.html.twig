@@ -127,7 +127,7 @@
                                 </h4>
                                 <hr class="hr-bold">
                                 {% if stadt.news is not null %}
-                                    {% for n in stadt.news if n.activ %}
+                                    {% for n in news|slice(0, 3) %}
 
                                         <!-- Small news -->
                                         <div class="single-news mb-lg-0 mb-4">
