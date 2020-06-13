@@ -51,9 +51,14 @@ class CheckinSchulkindbetreuungController extends AbstractController
     public function getORg(Request $request, TranslatorInterface $translator, $orgID, CheckinSchulkindservice $checkinSchulkindservice)
     {
         $org = $this->getDoctrine()->getRepository(Organisation::class)->find($orgID);
+        $today = new \DateTime();
+        $kinder = $checkinSchulkindservice->getAllKidsToday($org, $today);
         return new JsonResponse(array(
                 'name' => $org->getName(),
-                'partner' => $org->getAnsprechpartner()
+                'partner' => $org->getAnsprechpartner(),
+                'tel'=>$org->getTelefon(),
+                'image' => $this->renderView('checkin_schulkindbetreuung/image.html.twig',array('org'=>$org)),
+                'anwesend'=>sizeof($kinder),
             )
         );
     }
