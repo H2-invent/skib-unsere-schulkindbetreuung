@@ -30,7 +30,7 @@
                                <li class="list-group-item"><h2>{% trans %}Email{% endtrans %}: </h2>{{ organisation.email }}</li>
                                <li class="list-group-item"><h2>{% trans %}Ansprechpartner{% endtrans %}: </h2>{{ organisation.ansprechpartner }}</li>
                                <li class="list-group-item"><h2>{% trans %}Info{% endtrans %}: </h2>{{ organisation.infoText|nl2br }}</li>
-                               <li class="list-group-item"><h2>App Verbindung: </h2><img src="{{ qr_code_path(absolute_url(path('connect_Org',{'orgID':organisation.id})|makeHttps),{ writer: 'svg', size: 100 }) }}" /></li>
+                               <li class="list-group-item"><h2>App Verbindung: </h2><img src="{{ qr_code_path(absolute_url(path('connect_Org',{'orgID':organisation.id}))|makeHttps,{ writer: 'svg', size: 100 }) }}" /></li>
                             </ul>
                        </div>
 
