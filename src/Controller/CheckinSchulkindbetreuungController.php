@@ -40,7 +40,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
                 'id' => $org->getId(),
                 'name' => $org->getName(),
                 'partner' => $org->getAnsprechpartner(),
-                'url' => $this->generateUrl('getOrganisationfromId', array('orgID' => $org->getId()), UrlGeneratorInterface::ABSOLUTE_URL)
+                'url' => str_replace('http','https',str_replace('https','http',$this->generateUrl('getOrganisationfromId', array('orgID' => $org->getId()), UrlGeneratorInterface::ABSOLUTE_URL)))
             )
         );
     }
