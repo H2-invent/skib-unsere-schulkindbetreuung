@@ -57,6 +57,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
                 'name' => $org->getName(),
                 'partner' => $org->getAnsprechpartner(),
                 'tel'=>$org->getTelefon(),
+                'image' => $this->renderView('checkin_schulkindbetreuung/image.html.twig',array('org'=>$org)),
                 'anwesend'=>sizeof($kinder),
             )
         );
