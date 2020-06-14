@@ -37,7 +37,7 @@ class UserAppController extends AbstractController
     */
 
     /**
-     * @Route("/login/connect/user", name="login_apptoken", methods={"GET"})
+     * @Route("/login/connect/user", name="connection_app_start", methods={"GET"})
      */
     public function generateTOken(Request $request, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
     {
