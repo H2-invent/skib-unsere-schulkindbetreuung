@@ -64,7 +64,8 @@ class UserConnectionService
                             str_replace('https','http',
                                 $this->router->generate('connect_user_information',[], UrlGenerator::ABSOLUTE_URL)
                             )
-                        )
+                        ),
+                    'user'=>$this->userInfo($user)
                 );
             } else {
                 return array('error' => true);

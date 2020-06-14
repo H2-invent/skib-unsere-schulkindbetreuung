@@ -49,22 +49,7 @@ class UserAppController extends AbstractController
         $em->flush();
         return $this->render('user_app/index.html.twig', array('user' => $user));
     }
-    /**
-     * @Route("/login/disconnect/user", name="connection_app_disconnect", methods={"GET"})
-     */
-    public function deleteConnection(Request $request, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
-    {
-        $user = $this->getUser();
-        $user->setAppToken(null);
-        $user->setAppCommunicationToken(null);
-        $user->setAppDetectionToken(null);
-        $user->setConfirmationTokenApp(null);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
-        return $this->redirectToRoute('login_apptoken');
 
-    }
     /**
      * @Route("/connect/user/confirmation/{appToken}", name="connect_User", methods={"GET"})
      */
@@ -106,6 +91,22 @@ class UserAppController extends AbstractController
             )
         );
         return new JsonResponse($userConnectionService->userInfo($user));
+
+    }
+    /**
+     * @Route("/login/disconnect/user", name="connection_app_disconnect", methods={"GET"})
+     */
+    public function deleteConnection(Request $request, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
+    {
+        $user = $this->getUser();
+        $user->setAppToken(null);
+        $user->setAppCommunicationToken(null);
+        $user->setAppDetectionToken(null);
+        $user->setConfirmationTokenApp(null);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+        return $this->redirectToRoute('login_apptoken');
 
     }
 }
