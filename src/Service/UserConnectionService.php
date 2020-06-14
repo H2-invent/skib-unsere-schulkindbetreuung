@@ -42,7 +42,10 @@ class UserConnectionService
             return array(
                 'error' => false,
                 'token' => $user->getAppDetectionToken(),
-                'url' => $this->router->generate('connect_communication_token'));
+                'url' => str_replace('http', 'https',
+                    str_replace('https', 'http', $this->router->generate('connect_communication_token'), UrlGenerator::ABSOLUTE_URL)
+                )
+            );
         } catch (\Exception $e) {
             return array('error' => true);
         }
@@ -60,12 +63,12 @@ class UserConnectionService
                     'error' => false,
                     'token' => $user->getAppCommunicationToken(),
                     'url' =>
-                        str_replace('http','https',
-                            str_replace('https','http',
-                                $this->router->generate('connect_user_information',[], UrlGenerator::ABSOLUTE_URL)
+                        str_replace('http', 'https',
+                            str_replace('https', 'http',
+                                $this->router->generate('connect_user_information', [], UrlGenerator::ABSOLUTE_URL)
                             )
                         ),
-                    'user'=>$this->userInfo($user)
+                    'user' => $this->userInfo($user)
                 );
             } else {
                 return array('error' => true);
@@ -83,14 +86,14 @@ class UserConnectionService
         try {
             if ($user) {
                 $res = array();
-                $res['info']= array(
-                    'firstName'=>$user->getVorname(),
-                    'lastName'=>$user->getNachname(),
-                    'email'=>$user->getEmail(),
-                    'organisation'=>$user->getOrganisation()->getName());
-                $res['url']= array(
-                    array('name'=>'Angemeldete Kinder','url'=>'url der angemeldeten Kinder'),
-                    array('name'=>'Eingecheckte Kinder','url'=>'url der eingecheckten kinder')
+                $res['info'] = array(
+                    'firstName' => $user->getVorname(),
+                    'lastName' => $user->getNachname(),
+                    'email' => $user->getEmail(),
+                    'organisation' => $user->getOrganisation()->getName());
+                $res['url'] = array(
+                    array('name' => 'Angemeldete Kinder', 'url' => 'url der angemeldeten Kinder'),
+                    array('name' => 'Eingecheckte Kinder', 'url' => 'url der eingecheckten kinder')
                 );
                 return $res;
             } else {
