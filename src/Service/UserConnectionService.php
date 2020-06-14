@@ -43,7 +43,8 @@ class UserConnectionService
                 'error' => false,
                 'token' => $user->getAppDetectionToken(),
                 'url' => str_replace('http', 'https',
-                    str_replace('https', 'http', $this->router->generate('connect_communication_token'), UrlGenerator::ABSOLUTE_URL)
+                    str_replace('https', 'http', $this->router->generate('connect_communication_token', [], UrlGenerator::ABSOLUTE_URL)
+                    )
                 )
             );
         } catch (\Exception $e) {
