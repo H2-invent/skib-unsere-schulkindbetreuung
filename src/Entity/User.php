@@ -3,8 +3,8 @@
 
 namespace App\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity
@@ -42,6 +42,26 @@ class User extends BaseUser
      * @ORM\Column(type="date", nullable=true)
      */
     private $birthday;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $appToken;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $confirmationTokenApp;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $appCommunicationToken;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $appDetectionToken;
 
     public function __construct()
     {
@@ -110,6 +130,54 @@ class User extends BaseUser
     public function setOrganisation(?Organisation $organisation): self
     {
         $this->organisation = $organisation;
+
+        return $this;
+    }
+
+    public function getAppToken(): ?string
+    {
+        return $this->appToken;
+    }
+
+    public function setAppToken(?string $appToken): self
+    {
+        $this->appToken = $appToken;
+
+        return $this;
+    }
+
+    public function getConfirmationTokenApp(): ?string
+    {
+        return $this->confirmationTokenApp;
+    }
+
+    public function setConfirmationTokenApp(?string $confirmationTokenApp): self
+    {
+        $this->confirmationTokenApp = $confirmationTokenApp;
+
+        return $this;
+    }
+
+    public function getAppCommunicationToken(): ?string
+    {
+        return $this->appCommunicationToken;
+    }
+
+    public function setAppCommunicationToken(?string $appCommunicationToken): self
+    {
+        $this->appCommunicationToken = $appCommunicationToken;
+
+        return $this;
+    }
+
+    public function getAppDetectionToken(): ?string
+    {
+        return $this->appDetectionToken;
+    }
+
+    public function setAppDetectionToken(?string $appDetectionToken): self
+    {
+        $this->appDetectionToken = $appDetectionToken;
 
         return $this;
     }
