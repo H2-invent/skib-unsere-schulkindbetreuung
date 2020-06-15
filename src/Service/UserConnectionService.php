@@ -40,6 +40,7 @@ class UserConnectionService
             $stadt = $user->getStadt();
             $this->mailer->sendEmail('Unsere Schulkindbetreuung', 'test@local.com', $user->getEmail(), 'Bestätigungscode für die SKIBin App', $this->twig->render('email/appConfirmationCode.html.twig', array('user' => $user, 'stadt' => $stadt)));
             return array(
+                'type'=>'USER',
                 'error' => false,
                 'token' => $user->getAppDetectionToken(),
                 'url' => str_replace('http', 'https',
