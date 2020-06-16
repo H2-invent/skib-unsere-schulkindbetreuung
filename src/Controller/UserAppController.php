@@ -110,10 +110,13 @@ class UserAppController extends AbstractController
         $user->setAppCommunicationToken(null);
         $user->setAppDetectionToken(null);
         $user->setConfirmationTokenApp(null);
+        $user->setAppOS(null);
+        $user->setAppDevice(null);
+        $user->setAppImei(null);
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
-        return $this->redirectToRoute('login_apptoken');
+        return $this->redirectToRoute('connection_app_start');
 
     }
 }
