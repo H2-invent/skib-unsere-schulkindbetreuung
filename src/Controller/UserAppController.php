@@ -68,11 +68,18 @@ class UserAppController extends AbstractController
      */
     public function communicationToken(UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
     {
+        $imei = '';
+        $os = '';
+        $device='';
         try {
             $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(
                 array(
                     'confirmationTokenApp' => $request->get('confirmationToken'),
                     'appDetectionToken' => $request->get('requestToken')));
+            $user->setAppOS($request->get('os'));
+            $user->setAppDevice($request->get("device"));
+            $user->setAppImei($request->get('imei'));
+
         } catch (\Exception $e) {
             return new JsonResponse(array('error' => true));
 

@@ -63,6 +63,21 @@ class User extends BaseUser
      */
     private $appDetectionToken;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $AppImei;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $appOS;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $appDevice;
+
     public function __construct()
     {
         parent::__construct();
@@ -178,6 +193,42 @@ class User extends BaseUser
     public function setAppDetectionToken(?string $appDetectionToken): self
     {
         $this->appDetectionToken = $appDetectionToken;
+
+        return $this;
+    }
+
+    public function getAppImei(): ?string
+    {
+        return $this->AppImei;
+    }
+
+    public function setAppImei(?string $AppImei): self
+    {
+        $this->AppImei = $AppImei;
+
+        return $this;
+    }
+
+    public function getAppOS(): ?string
+    {
+        return $this->appOS;
+    }
+
+    public function setAppOS(?string $appOS): self
+    {
+        $this->appOS = $appOS;
+
+        return $this;
+    }
+
+    public function getAppDevice(): ?string
+    {
+        return $this->appDevice;
+    }
+
+    public function setAppDevice(?string $appDevice): self
+    {
+        $this->appDevice = $appDevice;
 
         return $this;
     }
