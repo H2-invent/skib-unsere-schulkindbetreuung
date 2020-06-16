@@ -11,6 +11,12 @@
                                     src="{{ qr_code_path(absolute_url(path('connect_User',{'appToken':user.appToken}))|makeHttps,{ writer: 'svg', size: 100 }) }}"/>
                         </li>
                         <li class="list-group-item">
+                            {% if user.appCommunicationToken is not null %}
+                                Gerät verbunden:<br>
+                            {{ user.appDevice }},{{ user.appOS }}({{ user.AppImei }})
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">
                         <a href="{{ path('connection_app_disconnect') }}" class="btn btn-primary">{{ 'Verbindung zu der App trennen'|trans }}</a>
                         </li>
                     </ul>
