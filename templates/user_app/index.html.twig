@@ -12,12 +12,15 @@
                         </li>
                         <li class="list-group-item">
                             {% if user.appCommunicationToken is not null %}
-                                <h3>Gerät verbunden:</h3>
-                           <b>{{ user.appDevice }} , {{ user.appOS }}</b> ({{ user.AppImei }})
+                                <h3>Gerät verbunden:</h3><br>
+                                Gerät: <b>{{ user.appDevice }}</b> <br>
+                                OS: <b>{{ user.appOS }}</b><br>
+                                IMEI: <b>({{ user.AppImei }})</b>
                             {% endif %}
                         </li>
                         <li class="list-group-item">
-                        <a href="{{ path('connection_app_disconnect') }}" class="btn btn-primary">{{ 'Verbindung zu der App trennen'|trans }}</a>
+                            <a href="{{ path('connection_app_disconnect') }}"
+                               class="btn btn-primary">{{ 'Verbindung zu der App trennen'|trans }}</a>
                         </li>
                     </ul>
                 </div>
