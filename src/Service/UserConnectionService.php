@@ -109,15 +109,21 @@ class UserConnectionService
             return array('errosr' => true);
         }
     }
-    public function saveSetting(User $user){
+    public function saveSetting(?User $user){
         try {
-            $user->setAppSettingsSaved(true);
-            $user->setConfirmationTokenApp(null);
-            $user->setAppDetectionToken(null);
-            $user->setAppToken(null);
-            $this->em->persist($user);
-            $this->em->flush();
-           return array('error'=>false);
+            if ($user){
+                $user->setAppSettingsSaved(true);
+                $user->setConfirmationTokenApp(null);
+                $user->setAppDetectionToken(null);
+                $user->setAppToken(null);
+                $this->em->persist($user);
+                $this->em->flush();
+                return array('error'=>false);
+            }else{
+                return array('error'=>true);
+            }
+
+
         }catch (\Exception $e){
             return array('error'=>true);
         }
