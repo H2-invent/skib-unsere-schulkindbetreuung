@@ -10,7 +10,7 @@
                         <li class="list-group-item"><h2>App Verbindung: </h2><img
                                     src="{{ qr_code_path(absolute_url(path('connect_User',{'appToken':user.appToken}))|makeHttps,{ writer: 'svg', size: 100 }) }}"/>
                         </li>
-                        {% if user.appSettingsSaved %}
+                        {% if user.appSettingsSaved == true %}
                         <li class="list-group-item">
                                 <h3>Gerät verbunden:</h3>
                         </li>
