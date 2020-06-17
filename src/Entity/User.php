@@ -78,6 +78,11 @@ class User extends BaseUser
      */
     private $appDevice;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $appSettingsSaved = false;
+
     public function __construct()
     {
         parent::__construct();
@@ -229,6 +234,18 @@ class User extends BaseUser
     public function setAppDevice(?string $appDevice): self
     {
         $this->appDevice = $appDevice;
+
+        return $this;
+    }
+
+    public function getAppSettingsSaved(): ?bool
+    {
+        return $this->appSettingsSaved;
+    }
+
+    public function setAppSettingsSaved(bool $appSettingsSaved): self
+    {
+        $this->appSettingsSaved = $appSettingsSaved;
 
         return $this;
     }

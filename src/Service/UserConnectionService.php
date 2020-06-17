@@ -70,7 +70,11 @@ class UserConnectionService
                                 $this->router->generate('connect_user_information', [], UrlGenerator::ABSOLUTE_URL)
                             )
                         ),
-                    'user' => $this->userInfo($user)
+                    'user' => $this->userInfo($user),
+                    'urlSave'=>str_replace('http', 'https',
+                        str_replace('https', 'http', $this->router->generate('connect_communication_save', [], UrlGenerator::ABSOLUTE_URL)
+                        )
+                    )
                 );
             } else {
                 return array('error' => true);
@@ -103,6 +107,19 @@ class UserConnectionService
             }
         } catch (\Exception $e) {
             return array('errosr' => true);
+        }
+    }
+    public function saveSetting(User $user){
+        try {
+            $user->setAppSettingsSaved(true);
+            $user->setConfirmationTokenApp(null);
+            $user->setAppDetectionToken(null);
+            $user->setAppToken(null);
+            $this->em->persist($user);
+            $this->em->flush();
+           return array('error'=>false);
+        }catch (\Exception $e){
+            return array('error'=>true);
         }
     }
 }

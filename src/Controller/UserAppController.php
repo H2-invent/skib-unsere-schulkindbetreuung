@@ -87,7 +87,16 @@ class UserAppController extends AbstractController
         return new JsonResponse($userConnectionService->generateCommunicationToken($user));
 
     }
+    /**
+     * @Route("/connect/user/save", name="connect_communication_save", methods={"POST"})
+     */
+    public function saveToken(UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array('appCommunicationToken'=>$request->get('token')));
+        return new JsonResponse($userConnectionService->saveSetting($user));
 
+
+    }
     /**
      * @Route("/get/user/information", name="connect_user_information", methods={"POST"})
      */
@@ -113,10 +122,10 @@ class UserAppController extends AbstractController
         $user->setAppOS(null);
         $user->setAppDevice(null);
         $user->setAppImei(null);
+        $user->setAppSettingsSaved(false);
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
         return $this->redirectToRoute('connection_app_start');
-
     }
 }
