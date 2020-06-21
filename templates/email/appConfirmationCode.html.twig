@@ -1,0 +1,12 @@
+{% extends 'email/base.html.twig' %}
+{% block header %}
+    {% trans %}Bestätigungscode zur Anmeldung bei der SKIBin App{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <h4 class="text-center">{% trans %}Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK{% endtrans %}
+    </h4>
+    <h3 class="text-center">
+        {{ 'Bestätigungscode'|trans }}: {{ user.confirmationTokenApp }}
+    </h3>
+{% endblock %}
