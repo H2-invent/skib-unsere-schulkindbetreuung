@@ -35,6 +35,7 @@
     "jquery-clockpicker": "0.0.8",
     "jquery-confirm": "^3.3.4",
     "jquery-lazy": "^1.7.10",
+    "jquery-ui": "^1.12.1",
     "jquery-validation": "^1.19.2",
     "jquery.cookie": "^1.4.1",
     "jquery.nicescroll": "^3.7.6",
