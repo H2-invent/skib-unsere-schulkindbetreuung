@@ -9,14 +9,14 @@
 
     <center>
         {% trans %}Über diesen Link können Sie ihre Bestellung bearbeiten.{% endtrans %}
-        <button href="{{ absolute_url(path('ferien_storno',{'slug':'loerrach','parent_id':stammdaten.uid})) }}">
+        <button href="{{ absolute_url(path('ferien_storno',{'slug':stadt.slug,'parent_id':stammdaten.uid})) }}">
             {% trans %}Bearbeiten {% endtrans %}
         </button>
     </center>
 
 
 
-    <small>{{ absolute_url(path('ferien_storno',{'slug':'loerrach','parent_id':stammdaten.uid})) }}</small>
+    <small>{{ absolute_url(path('ferien_storno',{'slug':stadt.slug,'parent_id':stammdaten.uid})) }}</small>
     <p class="text-center">{% trans %}Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
             Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.
             Die Kontaktdaten sind in dem angehängten PDF angegeben.{% endtrans %}

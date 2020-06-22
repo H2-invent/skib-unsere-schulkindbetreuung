@@ -324,8 +324,8 @@ class FerienController extends AbstractController
         if ($check !== null) {
             return $this->redirectToRoute('ferien_auswahl', array('slug' => $stadt->getSlug(), 'snack' => $translator->trans('Das Ferienprogramm %kursname% ist bereits ausgebucht oder Sie haben zu viele Kinder angemeldet', array('%kursname%' => $check->translate()->getTitel()))));
 
-        };
-        $res = $ferienAbschluss->startAbschluss($adresse, $stadt, $request->getClientIps() === true);
+        }
+        $res = $ferienAbschluss->startAbschluss($adresse, $request->getClientIps() === true, $stadt);
 
         if ($res === true) {
             $result = $this->render('ferien/abschluss.html.twig', array('stadt' => $stadt));

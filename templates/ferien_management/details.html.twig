@@ -122,6 +122,7 @@
                                                     </div>
                                                 </div>
 
+                                                <h4>{% trans %}Bebuchtes Programm{% endtrans %}</h4>
                                                 {% for f in k.programmFromOrg(org) %}
                                                     <div class="row mt-3">
 
@@ -147,24 +148,37 @@
                                                                     € {% if f.state == 20 %}</del>{% endif %}
                                                             </b>
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            {% if f.state == 20 %}
-                                                            <del>{% endif %} Checkin
-                                                                ID {% if f.state == 20 %}</del>{% endif %}
-                                                        </div>
-                                                        <div class="col-md-9">
-                                                            {% if f.state == 20 %}
-                                                            <del>{% endif %}  {{ f.checkinID }}    {% if f.state == 20 %}</del>{% endif %}
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-5 ml-md-4">
+
+                                                            {% if f.customQuestionAnswer %}
+                                                                <dl>
+                                                                    {% for frage in f.customQuestionAnswer %}
+                                                                        <dt>{{ frage['label'] }}</dt>
+                                                                        {% if frage['type'] == 'select' or frage['type'] == 'radio-group' or frage['type'] == 'checkbox-group' %}
+                                                                            {% for value in frage['values'] %}
+                                                                                {% if value['selected'] is defined %}
+                                                                                    <dd>{{ value['value'] }}</dd>
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                        {% else %}
+                                                                            <dd>{{ frage['value'] }}</dd>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </dl>
+                                                            {% endif %}
+
                                                         </div>
                                                         <div class="col-md-3">
                                                             Checkins
                                                         </div>
-                                                        <div class="col-md-9">
+                                                        <div class="col-md-3">
                                                             {% for c in f.checkinStatus %}
                                                                 {{ c }}<br/>
                                                             {% endfor %}
                                                         </div>
-
                                                     </div>
                                                 {% endfor %}
                                             </div>

@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Ferienblock;
 use App\Entity\KindFerienblock;
+use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
 use Twig\Environment;
@@ -34,7 +35,7 @@ class FerienAbschluss
 
     }
 
-    public function startAbschluss(Stammdaten $stammdaten, $iPAdresse)
+    public function startAbschluss(Stammdaten $stammdaten, $iPAdresse, Stadt $stadt)
     {
 
         if ($this->checkoutPaymentService->createPayment($stammdaten, $iPAdresse)) {
@@ -52,7 +53,7 @@ class FerienAbschluss
         }
         //setze alles auf saved. somit ist alles abgeschlossen
         $this->abschlussSave($stammdaten);
-        $this->abschlussSendEmail($stammdaten);
+        $this->abschlussSendEmail($stammdaten, $stadt);
        return true;
     }
 
@@ -95,7 +96,7 @@ class FerienAbschluss
     }
 
     public
-    function abschlussSendEmail(Stammdaten $adresse)
+    function abschlussSendEmail(Stammdaten $adresse, Stadt $stadt)
     {
         $kinder = $adresse->getKinds();
         $programm = array();
@@ -107,7 +108,7 @@ class FerienAbschluss
 
         $attachment = array();
         foreach ($programm as $data) {
-            //pdf mit dem Tiket
+            //PDF mit dem Ticket
             $ferienblock = $data->getFerienblock();
             $kind = $data->getKind();
             $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $ferienblock->translate()->getTitel();
@@ -134,7 +135,7 @@ class FerienAbschluss
             'info@h2-invent.com',
             $adresse->getEmail(),
             'Tickets zu dem gebuchten Ferienprogramm',
-            $this->twig->render('email/anmeldebestatigungFerien.html.twig', array('stammdaten' => $adresse)),
+            $this->twig->render('email/anmeldebestatigungFerien.html.twig', array('stammdaten' => $adresse, 'stadt' => $stadt)),
             $attachment);
         return 0;
     }
@@ -146,7 +147,7 @@ class FerienAbschluss
         $kindFerienblock = $qb->getQuery()->getResult();
         $check = array();
         $max = array();
-        //alle Kinder zöhlen sowie Kinder, welche hinzukommen würde dazuzählen
+        //Alle Kinder zählen sowie Kinder, welche hinzukommen würde dazuzählen
         foreach ($kindFerienblock as $data){
             if(!array_key_exists($data->getFerienblock()->getId(),$check)){
                 $check[$data->getFerienblock()->getId()] = sizeof($data->getFerienblock()->getKindFerienblocksGebucht()) + 1;
