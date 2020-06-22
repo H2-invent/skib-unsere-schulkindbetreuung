@@ -23,6 +23,11 @@
 {% endblock %}
 {% block jquery %}
 
-
+<script>
+    var surveUrl = '{{ path('ferien_management_question_save') }}';
+    var ferienId = {{ ferien.id }};
+    var orgId = {{ ferien.organisation.id }};
+    var survey = JSON.parse('{{ ferien.individualQuestions|replace({"\n":' ', "\r":' '})|raw }}');
+</script>
 
 {% endblock %}
