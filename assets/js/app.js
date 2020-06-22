@@ -13,11 +13,8 @@ import Popper from 'popper.js';
 import 'datatables.net-dt';
 // Import TinyMCE
 // Import TinyMCE
-import niceScroll from 'jquery.nicescroll';
-
-import trumbowgy from './trumbowyg';
 import icon from 'trumbowyg/dist/ui/icons.svg'
-import snackbar from 'snackbarjs'
+
 global.$ = global.jQuery = $;
 
 global.Popper = Popper;
@@ -37,6 +34,7 @@ import('datatables.net');
 import ('trumbowyg/dist/plugins/colors/trumbowyg.colors');
 import ('trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste');
 import ('trumbowyg/dist/plugins/template/trumbowyg.template');
+import ('formBuilder/dist/form-builder.min');
 $(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
 
 $('#toggle-btn').on('click', function (e) {
@@ -73,8 +71,9 @@ $(document).ready(function () {
     }
 })
 $(window).on('load', function () {
-
-
+    jQuery($ => {
+        $('#surveyBuilder').formBuilder()
+    });
 // Load a plugin.
     $.trumbowyg.svgPath = icon;
     $('.onlineEditor').trumbowyg({

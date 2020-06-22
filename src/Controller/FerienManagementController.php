@@ -3,13 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Ferienblock;
-use App\Entity\Kind;
 use App\Entity\KindFerienblock;
-use App\Entity\News;
 use App\Entity\Organisation;
 use App\Entity\Stammdaten;
-use App\Entity\Tags;
-use App\Form\Type\FerienBlockCustomQuestionType;
 use App\Form\Type\FerienBlockPreisType;
 use App\Form\Type\FerienBlockType;
 use App\Form\Type\FerienBlockVoucherType;
@@ -112,38 +108,6 @@ class FerienManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_ferien/edit/question", name="ferien_management_question", methods={"GET","POST"})
-     */
-    public function ferienblockFragen(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
-    {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        if ($organisation != $this->getUser()->getOrganisation()) {
-            throw new \Exception('Wrong Organisation');
-        }
-        $ferienblock = $this->getDoctrine()->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
-        if (sizeof($ferienblock->getCustomQuestion()) != 5 || $ferienblock->getAmountCustomQuestion() === null) {
-            $ferienblock->setCustomQuestion(array_fill(0, 5, ''));
-        }
-
-        $form = $this->createForm(FerienBlockCustomQuestionType::class, $ferienblock);
-        $form->handleRequest($request);
-        $errors = array();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $block = $form->getData();
-            $errors = $validator->validate($block);
-            if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($block);
-                $em->flush();
-                $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('ferien_management_show', array('org_id' => $organisation->getId(), 'snack' => $text));
-            }
-
-        }
-        $title = $translator->trans('Fragen bearbeiten');
-        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
-    }
 
 
     /**

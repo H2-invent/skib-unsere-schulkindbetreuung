@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable as Translatable;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FerienblockRepository")
  */
@@ -150,6 +151,11 @@ class Ferienblock
      * @ORM\ManyToMany(targetEntity="App\Entity\Tags", inversedBy="feriens")
      */
     private $kategorie;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $individualQuestions;
 
 
 
@@ -584,6 +590,18 @@ class Ferienblock
         if ($this->kategorie->contains($kategorie)) {
             $this->kategorie->removeElement($kategorie);
         }
+
+        return $this;
+    }
+
+    public function getIndividualQuestions(): ?string
+    {
+        return $this->individualQuestions;
+    }
+
+    public function setIndividualQuestions(?string $individualQuestions): self
+    {
+        $this->individualQuestions = $individualQuestions;
 
         return $this;
     }
