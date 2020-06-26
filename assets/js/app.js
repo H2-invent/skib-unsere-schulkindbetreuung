@@ -9,18 +9,13 @@
 import '../css/app.css';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
+global.$ = global.jQuery = $;
 import Popper from 'popper.js';
 import 'datatables.net-dt';
-// Import TinyMCE
-// Import TinyMCE
 import niceScroll from 'jquery.nicescroll';
-
 import trumbowgy from './trumbowyg';
 import icon from 'trumbowyg/dist/ui/icons.svg'
 
-
-global.$ = global.jQuery = $;
-import snackbar from 'snackbarjs'
 import('jquery-ui/ui/widgets/sortable');
 global.Popper = Popper;
 import('bootstrap-material-design');
@@ -35,18 +30,16 @@ import('jquery-confirm');
 import('material-design-icons');
 import('daterangepicker');
 import('datatables.net');
-
 import ('trumbowyg/dist/plugins/colors/trumbowyg.colors');
 import ('trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste');
 import ('trumbowyg/dist/plugins/template/trumbowyg.template');
 import ('formBuilder/dist/form-builder.min');
+import snackbar from 'snackbarjs';
 let formBuilderLoc;
 $(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
 
 $('#toggle-btn').on('click', function (e) {
-
     e.preventDefault();
-
     if ($(window).outerWidth() > 1194) {
         $('nav.side-navbar').toggleClass('shrink');
         $('.page').toggleClass('active');
@@ -73,44 +66,45 @@ $('table').DataTable({
 
 $(document).ready(function () {
     if (typeof optionsSnack !== 'undefined') {
+        console.log('test');
         $.snackbar(optionsSnack);
     }
 })
 
 $(window).on('load', function () {
-    var options = {
-        i18n: {
-            locale: 'de-DE'
-        },
-        onSave: function (formData) {
-            sendSurveyToServer(orgId, ferienId, formBuilderLoc.actions.getData('json', true));
-            console.log(formBuilderLoc.actions.getData('json', true));
-        },
-        dataType: 'json',
-        formData:JSON.stringify(survey),
-        notify: {
-            error: function (message) {
-                $.snackbar({
-                    text: message, // text of the snackbar
-                    timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
-                });
+    if(typeof survey != 'undefined') {
+        var options = {
+            i18n: {
+                locale: 'de-DE'
             },
-            success: function (message) {
-                $.snackbar({
-                    text: message, // text of the snackbar
-                    timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
-                });
+            onSave: function (formData) {
+                sendSurveyToServer(orgId, ferienId, formBuilderLoc.actions.getData('json', true));
             },
-            warning: function (message) {
-                $.snackbar({
-                    text: message, // text of the snackbar
-                    timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
-                });
+            dataType: 'json',
+            formData: JSON.stringify(survey),
+            notify: {
+                error: function (message) {
+                    $.snackbar({
+                        text: message, // text of the snackbar
+                        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+                    });
+                },
+                success: function (message) {
+                    $.snackbar({
+                        text: message, // text of the snackbar
+                        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+                    });
+                },
+                warning: function (message) {
+                    $.snackbar({
+                        text: message, // text of the snackbar
+                        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+                    });
+                }
             }
-        }
-    };
-    formBuilderLoc = $('#surveyBuilder').formBuilder(options);
-
+        };
+        formBuilderLoc = $('#surveyBuilder').formBuilder(options);
+    }
 
 // Load a plugin.
     $.trumbowyg.svgPath = icon;
@@ -241,9 +235,9 @@ function sendSurveyToServer($orgId, $id, $question) {
             let $options= {
                 content: data.text, // text of the snackbar
                 timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
-                style: "toast", // add a custom class to your snackbar
             };
-            $.snackbar($options);
+            console.log('test');
+            var snack = $.snackbar($options);
         },
 
     });
