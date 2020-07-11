@@ -142,9 +142,9 @@ class UserAppController extends AbstractController
                 );
                 $kinderSend[] = $tmp;
             }
-            return new JsonResponse(array('error'=>0,'number'=>sizeof($kinderSend),'result'=>$kinderSend));
+            return new JsonResponse(array('error'=>false,'number'=>sizeof($kinderSend),'result'=>$kinderSend));
         } else {
-            return new JsonResponse(array('error' => 1, 'errorText' => 'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
+            return new JsonResponse(array('error' =>true, 'errorText' => 'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
         }
 
     }
