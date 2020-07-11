@@ -106,7 +106,7 @@ class UserConnectionService
                 return array('error' => true);
             }
         } catch (\Exception $e) {
-            return array('errosr' => true);
+            return array('error' => $e->getMessage());
         }
     }
 
