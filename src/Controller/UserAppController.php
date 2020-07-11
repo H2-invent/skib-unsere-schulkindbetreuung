@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Kind;
 use App\Entity\User;
 use App\Service\CheckinSchulkindservice;
 use App\Service\MailerService;
@@ -108,6 +109,46 @@ class UserAppController extends AbstractController
         );
         return new JsonResponse($userConnectionService->userInfo($user));
 
+    }
+    /**
+     * @Route("/get/user/kidsCheckin", name="connect_user_checkinKids", methods={"POST"})
+     */
+    public function userCheckinKids(CheckinSchulkindservice $checkinSchulkindservice, UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
+                'appCommunicationToken' => $request->get('communicationToken')
+            )
+        );
+        if ($user){
+            $today = new \DateTime();
+            $kinder = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today);
+            $kinderSend = array();
+            foreach ($kinder as $data){
+                $tmp = array(
+                    'name'=>$data->getNachname(),
+                    'vorname'=>$data->getVorname(),
+                    'schule'=>$data->getSchule()->getName(),
+                    'erziehungsberechtigter'=>$data->getEltern()->getVorname().' '.$data->getEltern()->getName(),
+                    'notfallkontakt'=>$data->getEltern()->getNotfallkontakt(),
+                    'klasse'=>$data->getKlasse()
+                );
+                $kinderSend[]=$tmp;
+            }
+            return new JsonResponse($kinderSend);
+        }else{
+            return new JsonResponse(array('error'=>1,'errorText'=>'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
+        }
+
+    }
+    /**
+     * @Route("/get/user/kidsHeuteDa", name="connect_user_checkinKids", methods={"POST"})
+     */
+    public function userKidsHeuteDa(UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
+                'appCommunicationToken' => $request->get('communicationToken')
+            )
+        );
     }
     /**
      * @Route("/login/disconnect/user", name="connection_app_disconnect", methods={"GET"})
