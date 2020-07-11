@@ -66,7 +66,6 @@ $('table').DataTable({
 
 $(document).ready(function () {
     if (typeof optionsSnack !== 'undefined') {
-        console.log('test');
         $.snackbar(optionsSnack);
     }
 })
@@ -236,7 +235,6 @@ function sendSurveyToServer($orgId, $id, $question) {
                 content: data.text, // text of the snackbar
                 timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
             };
-            console.log('test');
             var snack = $.snackbar($options);
         },
 

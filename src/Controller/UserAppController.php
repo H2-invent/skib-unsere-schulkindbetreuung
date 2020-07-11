@@ -120,13 +120,12 @@ class UserAppController extends AbstractController
     {
         $user = null;
         if ($request->get('communicationToken')){
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
-                'appCommunicationToken' => $request->get('communicationToken')
-            )
-        );
+            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
+                    'appCommunicationToken' => $request->get('communicationToken')
+                )
+            );
         }
 
-        dump($user);
         if ($user) {
             $today = new \DateTime();
             $kinder = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today);
