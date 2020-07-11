@@ -71,7 +71,7 @@ class UserAppController extends AbstractController
     {
         $imei = '';
         $os = '';
-        $device='';
+        $device = '';
         try {
             $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(
                 array(
@@ -88,16 +88,18 @@ class UserAppController extends AbstractController
         return new JsonResponse($userConnectionService->generateCommunicationToken($user));
 
     }
+
     /**
      * @Route("/connect/user/save", name="connect_communication_save", methods={"POST"})
      */
     public function saveToken(UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array('appCommunicationToken'=>$request->get('token')));
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array('appCommunicationToken' => $request->get('token')));
         return new JsonResponse($userConnectionService->saveSetting($user));
 
 
     }
+
     /**
      * @Route("/get/user/information", name="connect_user_information", methods={"POST"})
      */
@@ -110,38 +112,45 @@ class UserAppController extends AbstractController
         return new JsonResponse($userConnectionService->userInfo($user));
 
     }
+
     /**
-     * @Route("/get/user/kidsCheckin", name="connect_user_checkinKids", methods={"POST"})
+     * @Route("/get/user/kidsCheckin", name="connect_user_checkinKids", methods={"GET"})
      */
     public function userCheckinKids(CheckinSchulkindservice $checkinSchulkindservice, UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator)
     {
+        $user = null;
+        if ($request->get('communicationToken')){
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
                 'appCommunicationToken' => $request->get('communicationToken')
             )
         );
-        if ($user){
+        }
+
+        dump($user);
+        if ($user) {
             $today = new \DateTime();
             $kinder = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today);
             $kinderSend = array();
-            foreach ($kinder as $data){
+            foreach ($kinder as $data) {
                 $tmp = array(
-                    'name'=>$data->getNachname(),
-                    'vorname'=>$data->getVorname(),
-                    'schule'=>$data->getSchule()->getName(),
-                    'erziehungsberechtigter'=>$data->getEltern()->getVorname().' '.$data->getEltern()->getName(),
-                    'notfallkontakt'=>$data->getEltern()->getNotfallkontakt(),
-                    'klasse'=>$data->getKlasse()
+                    'name' => $data->getNachname(),
+                    'vorname' => $data->getVorname(),
+                    'schule' => $data->getSchule()->getName(),
+                    'erziehungsberechtigter' => $data->getEltern()->getVorname() . ' ' . $data->getEltern()->getName(),
+                    'notfallkontakt' => $data->getEltern()->getNotfallkontakt(),
+                    'klasse' => $data->getKlasse()
                 );
-                $kinderSend[]=$tmp;
+                $kinderSend[] = $tmp;
             }
             return new JsonResponse($kinderSend);
-        }else{
-            return new JsonResponse(array('error'=>1,'errorText'=>'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
+        } else {
+            return new JsonResponse(array('error' => 1, 'errorText' => 'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
         }
 
     }
+
     /**
-     * @Route("/get/user/kidsHeuteDa", name="connect_user_checkinKids", methods={"POST"})
+     * @Route("/get/user/kidsHeuteDa", name="connect_user_kidsDa", methods={"GET"})
      */
     public function userKidsHeuteDa(UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
     {
@@ -150,6 +159,7 @@ class UserAppController extends AbstractController
             )
         );
     }
+
     /**
      * @Route("/login/disconnect/user", name="connection_app_disconnect", methods={"GET"})
      */
