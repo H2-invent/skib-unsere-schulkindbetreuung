@@ -98,8 +98,8 @@ class UserConnectionService
                     'email' => $user->getEmail(),
                     'organisation' => $user->getOrganisation()->getName());
                 $res['url'] = array(
-                    array('name' => 'Angemeldete Kinder', 'url' => 'url der angemeldeten Kinder'),
-                    array('name' => 'Eingecheckte Kinder', 'url' => 'url der eingecheckten kinder')
+                    array('name' => 'Angemeldete Kinder', 'url' => $this->router->generate('connect_user_kidsDa')),
+                    array('name' => 'Eingecheckte Kinder', 'url' => $this->router->generate('connect_user_checkinKids'))
                 );
                 return $res;
             } else {
