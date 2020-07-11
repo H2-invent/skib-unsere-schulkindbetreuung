@@ -97,8 +97,8 @@ class UserConnectionService
                     'lastName' => $user->getNachname(),
                     'email' => $user->getEmail(),
                     'organisation' => $user->getOrganisation()->getName(),
-                    'urlCheckinKids' => $this->router->generate('connect_user_checkinKids'),
-                    'urlKinderListeHeute' => $this->router->generate('connect_user_kidsDa')
+                    'urlCheckinKids' => str_replace('http','https',str_replace('https','http',$this->router->generate('connect_user_checkinKids',UrlGenerator::ABSOLUTE_URL))),
+                    'urlKinderListeHeute' => str_replace('http','https',str_replace('https','http',$this->router->generate('connect_user_kidsDa',UrlGenerator::ABSOLUTE_URL)))
                 );
                 return $res;
             } else {
