@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -97,8 +98,8 @@ class UserConnectionService
                     'lastName' => $user->getNachname(),
                     'email' => $user->getEmail(),
                     'organisation' => $user->getOrganisation()->getName(),
-                    'urlCheckinKids' => str_replace('http','https',str_replace('https','http',$this->router->generate('connect_user_checkinKids',UrlGenerator::ABSOLUTE_URL))),
-                    'urlKinderListeHeute' => str_replace('http','https',str_replace('https','http',$this->router->generate('connect_user_kidsDa',UrlGenerator::ABSOLUTE_URL)))
+                    'urlCheckinKids' => str_replace('http','https',str_replace('https','http',$this->router->generate('connect_user_checkinKids',UrlGeneratorInterface::ABSOLUTE_URL))),
+                    'urlKinderListeHeute' => str_replace('http','https',str_replace('https','http',$this->router->generate('connect_user_kidsDa',UrlGeneratorInterface::ABSOLUTE_URL)))
                 );
                 return $res;
             } else {
