@@ -128,4 +128,7 @@ class UserConnectionService
             return array('error'=>true);
         }
     }
+    public function kinderCheckedIn(User $user){
+
+    }
 }
