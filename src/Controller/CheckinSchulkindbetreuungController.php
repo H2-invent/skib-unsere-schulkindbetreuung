@@ -53,7 +53,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
     {
         $org = $this->getDoctrine()->getRepository(Organisation::class)->find($orgID);
         $today = new \DateTime();
-        $kinder = $checkinSchulkindservice->getAllKidsToday($org, $today);
+        $kinder = $checkinSchulkindservice->getAllKidsToday($org, $today,$this->getUser());
         return new JsonResponse(array(
                 'name' => $org->getName(),
                 'partner' => $org->getAnsprechpartner(),
@@ -74,7 +74,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
         $today = new \DateTime();
-        $kinder = $checkinSchulkindservice->getAllKidsToday($organisation, $today);
+        $kinder = $checkinSchulkindservice->getAllKidsToday($organisation, $today,$this->getUser());
         $text = $translator->trans('Kinder Anwesend am %date%', array('%date%' => $today->format('d.m.Y')));
         return $this->render('checkin_schulkindbetreuung/childList.twig', array('text' => $text, 'kinder' => $kinder));
 
