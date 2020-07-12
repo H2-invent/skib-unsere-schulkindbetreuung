@@ -131,11 +131,10 @@ class CheckinSchulkindservice
         $dateTime->setTime(23, 59, 59);
         $qb = $this->em->getRepository(Kind::class)->createQueryBuilder('k');
         $orX = $qb->expr()->orX();
-        $condition = array();
+        $orX->add('k.schule = -1');
         foreach ($user->getSchulen() as $data){
             $orX->add('k.schule =:schule'.$data->getId());
         }
-        $orX->addMultiple($condition);
         $qb->innerJoin('k.anwesenheitenSchulkindbetreuung', 'an')
             ->andWhere('an.organisation = :org')
             ->andWhere(
