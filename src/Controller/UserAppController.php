@@ -165,7 +165,7 @@ class UserAppController extends AbstractController
             }
             $schulen = array();
             foreach ($user->getSchulen() as $data) {
-                $schulen[] = array('id' => $data - getId(), 'name' => $data->getName());
+                $schulen[] = array('id' => $data -> getId(), 'name' => $data->getName());
             }
             return new JsonResponse(array(
                 'error' => false,
@@ -213,7 +213,7 @@ class UserAppController extends AbstractController
             }
             $schulen = array();
             foreach ($user->getSchulen() as $data) {
-                $schulen[] = array('id' => $data - getId(), 'name' => $data->getName());
+                $schulen[] = array('id' => $data -> getId(), 'name' => $data->getName());
             }
             return new JsonResponse(array(
                     'error' => false,
