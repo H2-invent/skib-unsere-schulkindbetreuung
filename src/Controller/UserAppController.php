@@ -224,7 +224,7 @@ class UserAppController extends AbstractController
             );
         }
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($id);
-        if ($user && in_array($kind->getSchule(), $user->getSchulen())) {
+        if ($user && in_array($kind->getSchule(), $user->getSchulen()->toArray())) {
             return new JsonResponse(array(
                     'vorname' => $kind->getVorname(),
                     'name' => $kind->getNachname(),
