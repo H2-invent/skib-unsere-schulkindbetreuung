@@ -132,7 +132,7 @@ class UserAppController extends AbstractController
     /**
      * @Route("/get/user/kidsCheckin", name="connect_user_checkinKids", methods={"GET"})
      */
-    public function userCheckinKids(CheckinSchulkindservice $checkinSchulkindservice, UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator)
+    public function userCheckinKids(CheckinSchulkindservice $checkinSchulkindservice, Request $request, MailerService $mailerService, TranslatorInterface $translator)
     {
         $user = null;
         if ($request->get('communicationToken')){
@@ -201,7 +201,25 @@ class UserAppController extends AbstractController
             return new JsonResponse(array('error' =>true, 'errorText' => 'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
         }
     }
-
+    /**
+     * @Route("/get/user/kindDetail/{id}", name="connect_user_kidsDetails", methods={"GET"})
+     */
+    public function userKidsDetail($id,CheckinSchulkindservice $checkinSchulkindservice, UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator)
+    {
+        $user = null;
+        if ($request->get('communicationToken')){
+            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
+                    'appCommunicationToken' => $request->get('communicationToken')
+                )
+            );
+        }
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($id);
+        if(in_array($kind->getSchule(),$user->getOrganisation()->getSchulen())){
+            return new JsonResponse(array());
+        }else{
+            return new JsonResponse(array('error'=>true,'errorText'=>"Kein Kind gefunden"));
+        }
+    }
     /**
      * @Route("/login/disconnect/user", name="connection_app_disconnect", methods={"GET"})
      */
