@@ -53,7 +53,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
     {
         $org = $this->getDoctrine()->getRepository(Organisation::class)->find($orgID);
         $today = new \DateTime();
-        $kinder = $checkinSchulkindservice->getAllKidsToday($org, $today,$this->getUser());
+        $kinder = $checkinSchulkindservice->getAllKidsToday($org, $today,null);
         return new JsonResponse(array(
                 'name' => $org->getName(),
                 'partner' => $org->getAnsprechpartner(),

@@ -123,7 +123,7 @@ class CheckinSchulkindservice
         return $anwesenheit;
     }
 
-    public function getAllKidsToday(Organisation $organisation, \DateTime $dateTime,User $user)
+    public function getAllKidsToday(Organisation $organisation, \DateTime $dateTime,?User $user)
     {
 
         $midnight = clone $dateTime;
@@ -141,12 +141,15 @@ class CheckinSchulkindservice
             ->setParameter('endDay', $dateTime)
             ->setParameter('org', $organisation);
         $orX = $qb->expr()->orX();
-        $orX->add('k.schule = -1');
-        foreach ($user->getSchulen() as $data){
-            $orX->add('k.schule =:schule'.$data->getId());
+        if($user){
+            $orX->add('k.schule = -1');
+            foreach ($user->getSchulen() as $data){
+                $orX->add('k.schule =:schule'.$data->getId());
 
-            $qb->setParameter('schule'.$data->getId(),$data);
+                $qb->setParameter('schule'.$data->getId(),$data);
+            }
         }
+
         $qb->andWhere($orX);
         $query = $qb->getQuery();
         return $query->getResult();
