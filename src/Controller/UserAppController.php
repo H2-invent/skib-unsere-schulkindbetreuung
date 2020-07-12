@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserAppController extends AbstractController
@@ -145,7 +146,7 @@ class UserAppController extends AbstractController
 
         if ($user) {
             $today = new \DateTime();
-            $kinder = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today,$user);
+            $kinder = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today, $user);
             $kinderSend = array();
             foreach ($kinder as $data) {
                 $tmp = array(
@@ -156,7 +157,9 @@ class UserAppController extends AbstractController
                     'notfallkontakt' => $data->getEltern()->getNotfallkontakt(),
                     'klasse' => $data->getKlasse(),
                     'checkin' => true,
-                    'schuleId'=>$data->getSchule()->getId(),
+                    'schuleId' => $data->getSchule()->getId(),
+                    'detail' => $this->makeHttps($this->generateUrl('connect_user_kidsDetails', array('id' => $data->getId()), UrlGenerator::ABSOLUTE_URL))
+
                 );
                 $kinderSend[] = $tmp;
             }
@@ -186,8 +189,8 @@ class UserAppController extends AbstractController
         if ($user) {
             $today = new \DateTime();
             $schuljahr = $schuljahrService->getSchuljahr($user->getStadt());
-            $kinder = $childSearchService->searchChild(array('wochentag' => $this->daymapper[$today->format("w")]), $user->getOrganisation(),true,$user);
-            $kinderCheckin = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today,$user);
+            $kinder = $childSearchService->searchChild(array('wochentag' => $this->daymapper[$today->format("w")]), $user->getOrganisation(), true, $user);
+            $kinderCheckin = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today, $user);
             $kinderSend = array();
             foreach ($kinder as $data) {
                 $tmp = array(
@@ -198,7 +201,8 @@ class UserAppController extends AbstractController
                     'notfallkontakt' => $data->getEltern()->getNotfallkontakt(),
                     'klasse' => $data->getKlasse(),
                     'checkin' => in_array($data, $kinderCheckin),
-                    'schuleId'=>$data->getSchule()->getId(),
+                    'schuleId' => $data->getSchule()->getId(),
+                    'detail' => $this->makeHttps($this->generateUrl('connect_user_kidsDetails', array('id' => $data->getId()), UrlGenerator::ABSOLUTE_URL))
                 );
                 $kinderSend[] = $tmp;
             }
@@ -236,18 +240,18 @@ class UserAppController extends AbstractController
                     'abholberechtigter' => $kind->getEltern()->getAbholberechtigter(),
                     'geburtstag' => $kind->getGeburtstag()->format('d.m.Y'),
                     'medikamente' => $kind->getMedikamente(),
-                    'schule'=>$kind->getSchule()->getName(),
-                    'boolean'=>array(
-                        array('name'=>'Glutenintollerant','value'=>$kind->getGluten()),
-                        array('name'=>'Laktoseintollerant','value'=>$kind->getLaktose()),
-                        array('name'=>'Isst kein Schweinefleisch','value'=>$kind->getSchweinefleisch()),
-                        array('name'=>'Ernährt sich vegetraisch','value'=>$kind->getVegetarisch()),
-                        array('name'=>'Kind darf alleine nach Hause','value'=>$kind->getAlleineHause()),
-                        array('name'=>'Darf an Ausflügen Teilnehmen','value'=>$kind->getAusfluege()),
-                        array('name'=>'Darf mit Sonnencreme eingecremt werden','value'=>$kind->getSonnencreme()),
-                        array('name'=>'Fotos dürfen veröffentlicht werden','value'=>$kind->getFotos()),
+                    'schule' => $kind->getSchule()->getName(),
+                    'boolean' => array(
+                        array('name' => 'Glutenintollerant', 'value' => $kind->getGluten()),
+                        array('name' => 'Laktoseintollerant', 'value' => $kind->getLaktose()),
+                        array('name' => 'Isst kein Schweinefleisch', 'value' => $kind->getSchweinefleisch()),
+                        array('name' => 'Ernährt sich vegetraisch', 'value' => $kind->getVegetarisch()),
+                        array('name' => 'Kind darf alleine nach Hause', 'value' => $kind->getAlleineHause()),
+                        array('name' => 'Darf an Ausflügen Teilnehmen', 'value' => $kind->getAusfluege()),
+                        array('name' => 'Darf mit Sonnencreme eingecremt werden', 'value' => $kind->getSonnencreme()),
+                        array('name' => 'Fotos dürfen veröffentlicht werden', 'value' => $kind->getFotos()),
                     ),
-                    'bemerkung'=>$kind->getBemerkung()
+                    'bemerkung' => $kind->getBemerkung()
                 )
             );
         } else {
@@ -273,5 +277,12 @@ class UserAppController extends AbstractController
         $em->persist($user);
         $em->flush();
         return $this->redirectToRoute('connection_app_start');
+    }
+
+    private function makeHttps($input)
+    {
+        $out = str_replace('http', 'https',
+            str_replace('https', 'http', $input));
+        return $out;
     }
 }
