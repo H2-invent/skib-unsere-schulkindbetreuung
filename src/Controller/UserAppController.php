@@ -230,12 +230,24 @@ class UserAppController extends AbstractController
                     'name' => $kind->getNachname(),
                     'allergie' => $kind->getAllergie(),
                     'notfallkontakt' => $kind->getEltern()->getNotfallkontakt(),
+                    'notfallName' => $kind->getEltern()->getNotfallName(),
                     'elternVorname' => $kind->getEltern()->getVorname(),
                     'elterName' => $kind->getEltern()->getName(),
-                    'abholberechtigte' => $kind->getEltern()->getAbholberechtigter(),
+                    'abholberechtigter' => $kind->getEltern()->getAbholberechtigter(),
                     'geburtstag' => $kind->getGeburtstag()->format('d.m.Y'),
                     'medikamente' => $kind->getMedikamente(),
-                    'schule'=>$kind->getSchule()->getName()
+                    'schule'=>$kind->getSchule()->getName(),
+                    'boolean'=>array(
+                        array('name'=>'Glutenintollerant','value'=>$kind->getGluten()),
+                        array('name'=>'Laktoseintollerant','value'=>$kind->getLaktose()),
+                        array('name'=>'Isst kein Schweinefleisch','value'=>$kind->getSchweinefleisch()),
+                        array('name'=>'Ernährt sich vegetraisch','value'=>$kind->getVegetarisch()),
+                        array('name'=>'Kind darf alleine nach Hause','value'=>$kind->getAlleineHause()),
+                        array('name'=>'Darf an Ausflügen Teilnehmen','value'=>$kind->getAusfluege()),
+                        array('name'=>'Darf mit Sonnencreme eingecremt werden','value'=>$kind->getSonnencreme()),
+                        array('name'=>'Fotos dürfen veröffentlicht werden','value'=>$kind->getFotos()),
+                    ),
+                    'bemerkung'=>$kind->getBemerkung()
                 )
             );
         } else {
