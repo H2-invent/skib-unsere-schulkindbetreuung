@@ -158,6 +158,7 @@ class UserAppController extends AbstractController
                     'klasse' => $data->getKlasse(),
                     'checkin' => true,
                     'schuleId' => $data->getSchule()->getId(),
+                    'hasBirthday'=>$this->hasBirthday($data),
                     'detail' => $this->makeHttps($this->generateUrl('connect_user_kidsDetails', array('id' => $data->getId()), UrlGenerator::ABSOLUTE_URL))
 
                 );
@@ -198,6 +199,7 @@ class UserAppController extends AbstractController
             $kinderCheckin = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today, $user);
             $kinderSend = array();
             foreach ($kinder as $data) {
+
                 $tmp = array(
                     'name' => $data->getNachname(),
                     'vorname' => $data->getVorname(),
@@ -207,6 +209,7 @@ class UserAppController extends AbstractController
                     'klasse' => $data->getKlasse(),
                     'checkin' => in_array($data, $kinderCheckin),
                     'schuleId' => $data->getSchule()->getId(),
+                    'hasBirthday'=>$this->hasBirthday($data),
                     'detail' => $this->makeHttps($this->generateUrl('connect_user_kidsDetails', array('id' => $data->getId()), UrlGenerator::ABSOLUTE_URL))
                 );
                 $kinderSend[] = $tmp;
@@ -298,5 +301,13 @@ class UserAppController extends AbstractController
         $out = str_replace('http', 'https',
             str_replace('https', 'http', $input));
         return $out;
+    }
+    private function hasBirthday(Kind $kind){
+        $today = new \DateTime();
+        if($kind->getGeburtstag()->format('d.m') == $today->format('d.m')){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
