@@ -225,7 +225,7 @@ class UserAppController extends AbstractController
                     'elternVorname' => $kind->getEltern()->getVorname(),
                     'elterName' => $kind->getEltern()->getName(),
                     'abholberechtigte' => $kind->getEltern()->getAbholberechtigter(),
-                    'geburtstag' => $kind->getGeburtstag()->format('dd.mm.YYYY'),
+                    'geburtstag' => $kind->getGeburtstag()->format('d.m.Y'),
                     'medikamente' => $kind->getMedikamente(),
                     'schule'=>$kind->getSchule()->getName()
                 )
