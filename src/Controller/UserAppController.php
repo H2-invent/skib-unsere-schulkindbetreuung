@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Kind;
 use App\Entity\User;
 use App\Service\CheckinSchulkindservice;
+use App\Service\ChildSearchService;
 use App\Service\MailerService;
+use App\Service\SchuljahrService;
 use App\Service\UserConnectionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,6 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserAppController extends AbstractController
 {
+    private $daymapper = array();
     /*
     * Workflow für den register Vorang der App:
      * Der Uuser üffnet die Seite /login/connect/user und scannt den Code mit der App
@@ -36,6 +39,18 @@ class UserAppController extends AbstractController
      * Die URL enthält dann weitere URLs mit Informationen sowie die Infos zu dem USer
     *
     */
+    public function __construct()
+    {
+        $this->daymapper = array(
+            1=>0,
+            2=>1,
+            3=>2,
+            4=>3,
+            5=>4,
+            6=>5,
+            0=>6,
+            );
+    }
 
     /**
      * @Route("/login/connect/user", name="connection_app_start", methods={"GET"})
@@ -152,12 +167,37 @@ class UserAppController extends AbstractController
     /**
      * @Route("/get/user/kidsHeuteDa", name="connect_user_kidsDa", methods={"GET"})
      */
-    public function userKidsHeuteDa(UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
+    public function userKidsHeuteDa(SchuljahrService $schuljahrService, ChildSearchService $childSearchService, UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
-                'appCommunicationToken' => $request->get('communicationToken')
-            )
-        );
+        $user = null;
+        if ($request->get('communicationToken')){
+            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
+                    'appCommunicationToken' => $request->get('communicationToken')
+                )
+            );
+        }
+
+        if ($user) {
+            $today = new \DateTime();
+            $schuljahr = $schuljahrService->getSchuljahr($user->getStadt());
+            $childSearchService->searchChild(array('wochentag'=>$this->daymapper[$today->format("w")]),$user->getOrganisation());
+            $kinder = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today);
+            $kinderSend = array();
+            foreach ($kinder as $data) {
+                $tmp = array(
+                    'name' => $data->getNachname(),
+                    'vorname' => $data->getVorname(),
+                    'schule' => $data->getSchule()->getName(),
+                    'erziehungsberechtigter' => $data->getEltern()->getVorname() . ' ' . $data->getEltern()->getName(),
+                    'notfallkontakt' => $data->getEltern()->getNotfallkontakt(),
+                    'klasse' => $data->getKlasse()
+                );
+                $kinderSend[] = $tmp;
+            }
+            return new JsonResponse(array('error'=>false,'number'=>sizeof($kinderSend),'result'=>$kinderSend));
+        } else {
+            return new JsonResponse(array('error' =>true, 'errorText' => 'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
+        }
     }
 
     /**
