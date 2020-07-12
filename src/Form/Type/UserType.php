@@ -31,6 +31,7 @@ class UserType extends AbstractType
             ->add('plainPassword', TextType::class,array('required'=>true,'label'=>'Password','translation_domain' => 'form'))
             ->add('vorname', EmailType::class,array('label'=>'Vorname','required'=>true,'translation_domain' => 'form'))
             ->add('nachname', EmailType::class,array('label'=>'Name','required'=>true,'translation_domain' => 'form'))
+
             ->add('birthday', BirthdayType::class,array('required'=>false,'label'=>'Geburtstag','translation_domain' => 'form'))
             ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;

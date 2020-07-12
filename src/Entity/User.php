@@ -3,6 +3,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -83,11 +85,17 @@ class User extends BaseUser
      */
     private $appSettingsSaved = false;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Schule::class, inversedBy="users")
+     */
+    private $schulen;
+
     public function __construct()
     {
         parent::__construct();
 // your own logic
-    }
+
+$this->schulen = new ArrayCollection();    }
 
     public function getVorname(): ?string
     {
@@ -246,6 +254,32 @@ class User extends BaseUser
     public function setAppSettingsSaved(bool $appSettingsSaved): self
     {
         $this->appSettingsSaved = $appSettingsSaved;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Schule[]
+     */
+    public function getSchulen(): Collection
+    {
+        return $this->schulen;
+    }
+
+    public function addSchulen(Schule $schulen): self
+    {
+        if (!$this->schulen->contains($schulen)) {
+            $this->schulen[] = $schulen;
+        }
+
+        return $this;
+    }
+
+    public function removeSchulen(Schule $schulen): self
+    {
+        if ($this->schulen->contains($schulen)) {
+            $this->schulen->removeElement($schulen);
+        }
 
         return $this;
     }

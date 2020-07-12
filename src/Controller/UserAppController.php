@@ -155,7 +155,8 @@ class UserAppController extends AbstractController
                     'erziehungsberechtigter' => $data->getEltern()->getVorname() . ' ' . $data->getEltern()->getName(),
                     'notfallkontakt' => $data->getEltern()->getNotfallkontakt(),
                     'klasse' => $data->getKlasse(),
-                    'checkin' => true
+                    'checkin' => true,
+                    'schuleId'=>$data->getSchule()->getId(),
                 );
                 $kinderSend[] = $tmp;
             }
@@ -193,7 +194,8 @@ class UserAppController extends AbstractController
                     'erziehungsberechtigter' => $data->getEltern()->getVorname() . ' ' . $data->getEltern()->getName(),
                     'notfallkontakt' => $data->getEltern()->getNotfallkontakt(),
                     'klasse' => $data->getKlasse(),
-                    'checkin' => in_array($data, $kinderCheckin)
+                    'checkin' => in_array($data, $kinderCheckin),
+                    'schuleId'=>$data->getSchule()->getId(),
                 );
                 $kinderSend[] = $tmp;
             }
@@ -216,7 +218,7 @@ class UserAppController extends AbstractController
             );
         }
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($id);
-        if ($user && in_array($kind->getSchule(), $user->getOrganisation()->getSchule()->toArray())) {
+        if ($user && in_array($kind->getSchule(), $user->getSchulen())) {
             return new JsonResponse(array(
                     'vorname' => $kind->getVorname(),
                     'name' => $kind->getNachname(),
