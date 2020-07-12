@@ -295,25 +295,12 @@ class UserAppController extends AbstractController
             $today = new \DateTime();
             $kind = $this->getDoctrine()->getRepository(Kind::class)->find($id);
             $anwesenheit = $checkinSchulkindservice->getAnwesenheitToday($kind, $today, $user->getOrganisation());
-            if ($anwesenheit) {
+
                 return new JsonResponse(array(
                         'error' => false,
-                        'text' => 'Das Kind ist bereits eingecheckt')
+                        'errorText' => 'Das Kind wurde erfolgreich eingecheckt')
                 );
-            } else {
-                $anwesenheit = new Anwesenheit();
-                $anwesenheit->setCreatedAt($today);
-                $anwesenheit->setArrivedAt($today);
-                $anwesenheit->setOrganisation($user->getOrganisation());
-                $anwesenheit->setKind($kind);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($anwesenheit);
-                $em->flush();
-                return new JsonResponse(array(
-                    'error' => false,
-                    'text' => 'Das Kind wurde erfolgreich eingecheckt'),
-                );
-            }
+
         } else {
             return new JsonResponse(array('error' => true, 'errorText' => 'Kind nicht vorhanden'));
         }
