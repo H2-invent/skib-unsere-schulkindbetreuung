@@ -7,6 +7,7 @@ use App\Entity\Anwesenheit;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
+use App\Entity\User;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -28,8 +29,8 @@ class ChildSearchService
         $this->translator = $translator;
     }
 
-   public function searchChild($parameters, Organisation $organisation){
-        dump($parameters);
+   public function searchChild($parameters, Organisation $organisation, $isApp,User $user){
+
        $qb = $this->em->getRepository(Kind::class)->createQueryBuilder('k')
            ->innerJoin('k.zeitblocks', 'b');
       //Schule als FIlter ausgewählt
@@ -68,6 +69,15 @@ class ChildSearchService
                ->setParameter('klasse', $parameters['klasse']);
          }
        $qb->andWhere('k.fin = 1');
+       if($isApp){
+           $orX = $qb->expr()->orX();
+           $orX->add('k.schule = -1');
+           foreach ($user->getSchulen() as $data){
+               $orX->add('k.schule =:schule'.$data->getId());
+               $qb->setParameter('schule'.$data->getId(),$data);
+           }
+
+       }
        $query = $qb->getQuery();
        $kinder = $query->getResult();
       return $kinder;

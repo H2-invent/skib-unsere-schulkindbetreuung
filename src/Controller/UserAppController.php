@@ -160,7 +160,10 @@ class UserAppController extends AbstractController
                 );
                 $kinderSend[] = $tmp;
             }
-            return new JsonResponse(array('error' => false, 'number' => sizeof($kinderSend), 'result' => $kinderSend));
+            return new JsonResponse(array(
+                'error' => false,
+                'number' => sizeof($kinderSend),
+                'result' => $kinderSend));
         } else {
             return new JsonResponse(array('error' => true, 'errorText' => 'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
         }
@@ -183,7 +186,7 @@ class UserAppController extends AbstractController
         if ($user) {
             $today = new \DateTime();
             $schuljahr = $schuljahrService->getSchuljahr($user->getStadt());
-            $kinder = $childSearchService->searchChild(array('wochentag' => $this->daymapper[$today->format("w")]), $user->getOrganisation());
+            $kinder = $childSearchService->searchChild(array('wochentag' => $this->daymapper[$today->format("w")]), $user->getOrganisation(),true,$user);
             $kinderCheckin = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today,$user);
             $kinderSend = array();
             foreach ($kinder as $data) {
@@ -199,7 +202,10 @@ class UserAppController extends AbstractController
                 );
                 $kinderSend[] = $tmp;
             }
-            return new JsonResponse(array('error' => false, 'number' => sizeof($kinderSend), 'result' => $kinderSend));
+            return new JsonResponse(array(
+                'error' => false,
+                'number' => sizeof($kinderSend),
+                'result' => $kinderSend));
         } else {
             return new JsonResponse(array('error' => true, 'errorText' => 'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
         }

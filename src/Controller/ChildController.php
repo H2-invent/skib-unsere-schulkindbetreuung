@@ -115,7 +115,7 @@ class ChildController extends AbstractController
             $text .= $translator->trans(' in der Klasse: %klasse%', array('%klasse%' => $request->get('klasse')));
         }
 
-        $kinderU = $childSearchService->searchChild($parameter,$organisation);
+        $kinderU = $childSearchService->searchChild($parameter,$organisation,false,$this->getUser());
 
 
         if ($request->get('print')) {

@@ -130,11 +130,7 @@ class CheckinSchulkindservice
         $midnight->setTime(0, 0, 0);
         $dateTime->setTime(23, 59, 59);
         $qb = $this->em->getRepository(Kind::class)->createQueryBuilder('k');
-        $orX = $qb->expr()->orX();
-        $orX->add('k.schule = -1');
-        foreach ($user->getSchulen() as $data){
-            $orX->add('k.schule =:schule'.$data->getId());
-        }
+
         $qb->innerJoin('k.anwesenheitenSchulkindbetreuung', 'an')
             ->andWhere('an.organisation = :org')
             ->andWhere(
@@ -144,7 +140,10 @@ class CheckinSchulkindservice
             ->setParameter('midnight', $midnight)
             ->setParameter('endDay', $dateTime)
             ->setParameter('org', $organisation);
+        $orX = $qb->expr()->orX();
+        $orX->add('k.schule = -1');
         foreach ($user->getSchulen() as $data){
+            $orX->add('k.schule =:schule'.$data->getId());
             $qb->setParameter('schule'.$data->getId(),$data);
         }
         $query = $qb->getQuery();
