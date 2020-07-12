@@ -230,18 +230,19 @@ class UserAppController extends AbstractController
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($id);
         if ($user && in_array($kind->getSchule(), $user->getSchulen()->toArray())) {
             return new JsonResponse(array(
+                    'error' => false,
                     'vorname' => $kind->getVorname(),
                     'name' => $kind->getNachname(),
                     'info' => array(
-                        array('name'=>'Allergie','value'=>$kind->getAllergie()),
-                        array('name'=>'Notfallname','value'=>$kind->getEltern()->getNotfallName()),
-                        array('name'=>'Notfallkontakt','value'=>$kind->getEltern()->getNotfallkontakt()),
-                        array('name'=>'Eltern','value'=>$kind->getEltern()->getVorname() .' '.$kind->getEltern()->getName()),
-                        array('name'=>'Abholberechtigter','value'=> $kind->getEltern()->getAbholberechtigter()),
-                        array('name'=>'Geburtstag','value'=>$kind->getGeburtstag()->format('d.m.Y')),
-                        array('name'=>'Medikamente','value'=>$kind->getMedikamente()),
-                        array('name'=>'Schule','value'=>$kind->getSchule()->getName()),
-                        array('name'=>'Bemerkung','value'=>$kind->getBemerkung()),
+                        array('name' => 'Allergie', 'value' => $kind->getAllergie()),
+                        array('name' => 'Notfallname', 'value' => $kind->getEltern()->getNotfallName()),
+                        array('name' => 'Notfallkontakt', 'value' => $kind->getEltern()->getNotfallkontakt()),
+                        array('name' => 'Eltern', 'value' => $kind->getEltern()->getVorname() . ' ' . $kind->getEltern()->getName()),
+                        array('name' => 'Abholberechtigter', 'value' => $kind->getEltern()->getAbholberechtigter()),
+                        array('name' => 'Geburtstag', 'value' => $kind->getGeburtstag()->format('d.m.Y')),
+                        array('name' => 'Medikamente', 'value' => $kind->getMedikamente()),
+                        array('name' => 'Schule', 'value' => $kind->getSchule()->getName()),
+                        array('name' => 'Bemerkung', 'value' => $kind->getBemerkung()),
                     ),
                     'boolean' => array(
                         array('name' => 'Glutenintollerant', 'value' => $kind->getGluten()),
