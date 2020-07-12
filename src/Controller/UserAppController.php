@@ -159,8 +159,8 @@ class UserAppController extends AbstractController
                     'checkin' => true,
                     'schuleId' => $data->getSchule()->getId(),
                     'hasBirthday'=>$this->hasBirthday($data),
-                    'detail' => $this->makeHttps($this->generateUrl('connect_user_kidsDetails', array('id' => $data->getId()), UrlGenerator::ABSOLUTE_URL))
-
+                    'detail' => $this->makeHttps($this->generateUrl('connect_user_kidsDetails', array('id' => $data->getId()), UrlGenerator::ABSOLUTE_URL)),
+                    'checkinUrl'=>$this->makeHttps($this->generateUrl('checkin_schulkindbetreuung',array('kindID'=>$data->getId()))),
                 );
                 $kinderSend[] = $tmp;
             }
