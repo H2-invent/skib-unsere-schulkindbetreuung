@@ -76,7 +76,7 @@ class ChildSearchService
                $orX->add('k.schule =:schule'.$data->getId());
                $qb->setParameter('schule'.$data->getId(),$data);
            }
-
+           $qb->andWhere($orX);
        }
        $query = $qb->getQuery();
        $kinder = $query->getResult();

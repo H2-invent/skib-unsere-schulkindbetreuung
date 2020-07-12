@@ -136,7 +136,7 @@ class CheckinSchulkindservice
             ->andWhere(
                 $qb->expr()->between('an.arrivedAt', ':midnight', ':endDay')
             )
-            ->andWhere($orX)
+
             ->setParameter('midnight', $midnight)
             ->setParameter('endDay', $dateTime)
             ->setParameter('org', $organisation);
@@ -144,8 +144,10 @@ class CheckinSchulkindservice
         $orX->add('k.schule = -1');
         foreach ($user->getSchulen() as $data){
             $orX->add('k.schule =:schule'.$data->getId());
+
             $qb->setParameter('schule'.$data->getId(),$data);
         }
+        $qb->andWhere($orX);
         $query = $qb->getQuery();
         return $query->getResult();
     }
