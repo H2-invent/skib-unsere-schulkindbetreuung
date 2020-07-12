@@ -296,16 +296,14 @@ class UserAppController extends AbstractController
             $kind = $this->getDoctrine()->getRepository(Kind::class)->find($id);
             $anwesenheit = $checkinSchulkindservice->getAnwesenheitToday($kind, $today, $user->getOrganisation());
 
-                return new JsonResponse(array(
-                        'error' => false,
-                        'errorText' => 'Das Kind wurde erfolgreich eingecheckt')
-                );
+            return new JsonResponse(array(
+                    'error' => false,
+                    'errorText' => 'Das Kind wurde erfolgreich eingecheckt')
+            );
 
         } else {
             return new JsonResponse(array('error' => true, 'errorText' => 'Kind nicht vorhanden'));
         }
-
-
     }
 
     /**
