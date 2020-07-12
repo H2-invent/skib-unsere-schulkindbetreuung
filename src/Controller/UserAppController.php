@@ -181,7 +181,8 @@ class UserAppController extends AbstractController
             $today = new \DateTime();
             $schuljahr = $schuljahrService->getSchuljahr($user->getStadt());
            $kinder =  $childSearchService->searchChild(array('wochentag'=>$this->daymapper[$today->format("w")]),$user->getOrganisation());
-            $kinderSend = array();
+           $kinderCheckin = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today);
+           $kinderSend = array();
             foreach ($kinder as $data) {
                 $tmp = array(
                     'name' => $data->getNachname(),
@@ -189,7 +190,8 @@ class UserAppController extends AbstractController
                     'schule' => $data->getSchule()->getName(),
                     'erziehungsberechtigter' => $data->getEltern()->getVorname() . ' ' . $data->getEltern()->getName(),
                     'notfallkontakt' => $data->getEltern()->getNotfallkontakt(),
-                    'klasse' => $data->getKlasse()
+                    'klasse' => $data->getKlasse(),
+                    'checkin'=>in_array($data,$kinderCheckin)
                 );
                 $kinderSend[] = $tmp;
             }
