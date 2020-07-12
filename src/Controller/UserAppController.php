@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Anwesenheit;
 use App\Entity\Kind;
 use App\Entity\User;
 use App\Service\CheckinSchulkindservice;
@@ -159,21 +160,21 @@ class UserAppController extends AbstractController
                     'klasse' => $data->getKlasse(),
                     'checkin' => true,
                     'schuleId' => $data->getSchule()->getId(),
-                    'hasBirthday'=>$this->hasBirthday($data),
+                    'hasBirthday' => $this->hasBirthday($data),
                     'detail' => $this->makeHttps($this->generateUrl('connect_user_kidsDetails', array('id' => $data->getId()), UrlGenerator::ABSOLUTE_URL)),
-                    'checkinUrl'=>$this->makeHttps($this->generateUrl('checkin_schulkindbetreuung',array('kindID'=>$data->getId()),UrlGeneratorInterface::ABSOLUTE_URL)),
+                    'checkinUrl' => $this->makeHttps($this->generateUrl('connect_user_chekcinManuel', array('id' => $data->getId()), UrlGeneratorInterface::ABSOLUTE_URL)),
                 );
                 $kinderSend[] = $tmp;
             }
             $schulen = array();
             foreach ($user->getSchulen() as $data) {
-                $schulen[] = array('id' => $data -> getId(), 'name' => $data->getName());
+                $schulen[] = array('id' => $data->getId(), 'name' => $data->getName());
             }
             return new JsonResponse(array(
                 'error' => false,
                 'number' => sizeof($kinderSend),
                 'result' => $kinderSend,
-                'schulen'=>$schulen));
+                'schulen' => $schulen));
         } else {
             return new JsonResponse(array('error' => true, 'errorText' => 'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
         }
@@ -210,15 +211,15 @@ class UserAppController extends AbstractController
                     'klasse' => $data->getKlasse(),
                     'checkin' => in_array($data, $kinderCheckin),
                     'schuleId' => $data->getSchule()->getId(),
-                    'hasBirthday'=>$this->hasBirthday($data),
+                    'hasBirthday' => $this->hasBirthday($data),
                     'detail' => $this->makeHttps($this->generateUrl('connect_user_kidsDetails', array('id' => $data->getId()), UrlGenerator::ABSOLUTE_URL)),
-                     'checkinUrl'=>$this->makeHttps($this->generateUrl('checkin_schulkindbetreuung',array('kindID'=>$data->getId()),UrlGeneratorInterface::ABSOLUTE_URL)),
+                    'checkinUrl' => $this->makeHttps($this->generateUrl('connect_user_chekcinManuel', array('id' => $data->getId()), UrlGeneratorInterface::ABSOLUTE_URL)),
                 );
                 $kinderSend[] = $tmp;
             }
             $schulen = array();
             foreach ($user->getSchulen() as $data) {
-                $schulen[] = array('id' => $data -> getId(), 'name' => $data->getName());
+                $schulen[] = array('id' => $data->getId(), 'name' => $data->getName());
             }
             return new JsonResponse(array(
                     'error' => false,
@@ -279,6 +280,48 @@ class UserAppController extends AbstractController
     }
 
     /**
+     * @Route("/get/user/checkinManuelChild/{id}", name="connect_user_chekcinManuel", methods={"GET"})
+     */
+    public function userKidscheckin($id, CheckinSchulkindservice $checkinSchulkindservice, SchuljahrService $schuljahrService, ChildSearchService $childSearchService, UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator)
+    {
+        $user = null;
+        if ($request->get('communicationToken')) {
+            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
+                    'appCommunicationToken' => $request->get('communicationToken')
+                )
+            );
+        }
+        if ($user) {
+            $today = new \DateTime();
+            $kind = $this->getDoctrine()->getRepository(Kind::class)->find($id);
+            $anwesenheit = $checkinSchulkindservice->getAnwesenheitToday($kind, $today, $user->getOrganisation());
+            if ($anwesenheit) {
+                return new JsonResponse(array(
+                        'error' => false,
+                        'text' => 'Das Kind ist bereits eingecheckt')
+                );
+            } else {
+                $anwesenheit = new Anwesenheit();
+                $anwesenheit->setCreatedAt($today);
+                $anwesenheit->setArrivedAt($today);
+                $anwesenheit->setOrganisation($user->getOrganisation());
+                $anwesenheit->setKind($kind);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($anwesenheit);
+                $em->flush();
+                return new JsonResponse(array(
+                    'error' => false,
+                    'text' => 'Das Kind wurde erfolgreich eingecheckt'),
+                );
+            }
+        } else {
+            return new JsonResponse(array('error' => true, 'errorText' => 'Kind nicht vorhanden'));
+        }
+
+
+    }
+
+    /**
      * @Route("/login/disconnect/user", name="connection_app_disconnect", methods={"GET"})
      */
     public function deleteConnection(Request $request, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
@@ -304,11 +347,13 @@ class UserAppController extends AbstractController
             str_replace('https', 'http', $input));
         return $out;
     }
-    private function hasBirthday(Kind $kind){
+
+    private function hasBirthday(Kind $kind)
+    {
         $today = new \DateTime();
-        if($kind->getGeburtstag()->format('d.m') == $today->format('d.m')){
+        if ($kind->getGeburtstag()->format('d.m') == $today->format('d.m')) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
