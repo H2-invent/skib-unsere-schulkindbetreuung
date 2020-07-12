@@ -153,7 +153,8 @@ class UserAppController extends AbstractController
                     'schule' => $data->getSchule()->getName(),
                     'erziehungsberechtigter' => $data->getEltern()->getVorname() . ' ' . $data->getEltern()->getName(),
                     'notfallkontakt' => $data->getEltern()->getNotfallkontakt(),
-                    'klasse' => $data->getKlasse()
+                    'klasse' => $data->getKlasse(),
+                    'checkin'=>true
                 );
                 $kinderSend[] = $tmp;
             }
