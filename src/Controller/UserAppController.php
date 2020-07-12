@@ -232,15 +232,17 @@ class UserAppController extends AbstractController
             return new JsonResponse(array(
                     'vorname' => $kind->getVorname(),
                     'name' => $kind->getNachname(),
-                    'allergie' => $kind->getAllergie(),
-                    'notfallkontakt' => $kind->getEltern()->getNotfallkontakt(),
-                    'notfallName' => $kind->getEltern()->getNotfallName(),
-                    'elternVorname' => $kind->getEltern()->getVorname(),
-                    'elterName' => $kind->getEltern()->getName(),
-                    'abholberechtigter' => $kind->getEltern()->getAbholberechtigter(),
-                    'geburtstag' => $kind->getGeburtstag()->format('d.m.Y'),
-                    'medikamente' => $kind->getMedikamente(),
-                    'schule' => $kind->getSchule()->getName(),
+                    'info' => array(
+                        array('name'=>'Allergie','value'=>$kind->getAllergie()),
+                        array('name'=>'Notfallname','value'=>$kind->getEltern()->getNotfallName()),
+                        array('name'=>'Notfallkontakt','value'=>$kind->getEltern()->getNotfallkontakt()),
+                        array('name'=>'Eltern','value'=>$kind->getEltern()->getVorname() .' '.$kind->getEltern()->getName()),
+                        array('name'=>'Abholberechtigter','value'=> $kind->getEltern()->getAbholberechtigter()),
+                        array('name'=>'Geburtstag','value'=>$kind->getGeburtstag()->format('d.m.Y')),
+                        array('name'=>'Medikamente','value'=>$kind->getMedikamente()),
+                        array('name'=>'Schule','value'=>$kind->getSchule()->getName()),
+                        array('name'=>'Bemerkung','value'=>$kind->getBemerkung()),
+                    ),
                     'boolean' => array(
                         array('name' => 'Glutenintollerant', 'value' => $kind->getGluten()),
                         array('name' => 'Laktoseintollerant', 'value' => $kind->getLaktose()),
@@ -251,7 +253,7 @@ class UserAppController extends AbstractController
                         array('name' => 'Darf mit Sonnencreme eingecremt werden', 'value' => $kind->getSonnencreme()),
                         array('name' => 'Fotos dürfen veröffentlicht werden', 'value' => $kind->getFotos()),
                     ),
-                    'bemerkung' => $kind->getBemerkung()
+
                 )
             );
         } else {
