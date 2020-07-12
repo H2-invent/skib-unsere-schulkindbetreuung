@@ -18,6 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UserAppController extends AbstractController
 {
     private $daymapper = array();
+
     /*
     * Workflow für den register Vorang der App:
      * Der Uuser üffnet die Seite /login/connect/user und scannt den Code mit der App
@@ -42,14 +43,14 @@ class UserAppController extends AbstractController
     public function __construct()
     {
         $this->daymapper = array(
-            1=>0,
-            2=>1,
-            3=>2,
-            4=>3,
-            5=>4,
-            6=>5,
-            0=>6,
-            );
+            1 => 0,
+            2 => 1,
+            3 => 2,
+            4 => 3,
+            5 => 4,
+            6 => 5,
+            0 => 6,
+        );
     }
 
     /**
@@ -90,7 +91,7 @@ class UserAppController extends AbstractController
                 array(
                     'confirmationTokenApp' => $request->get('confirmationToken'),
                     'appDetectionToken' => $request->get('requestToken')));
-            if(!$user){
+            if (!$user) {
                 return new JsonResponse(array('error' => true));
             }
             $user->setAppOS($request->get('os'));
@@ -135,7 +136,7 @@ class UserAppController extends AbstractController
     public function userCheckinKids(CheckinSchulkindservice $checkinSchulkindservice, Request $request, MailerService $mailerService, TranslatorInterface $translator)
     {
         $user = null;
-        if ($request->get('communicationToken')){
+        if ($request->get('communicationToken')) {
             $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
                     'appCommunicationToken' => $request->get('communicationToken')
                 )
@@ -154,13 +155,13 @@ class UserAppController extends AbstractController
                     'erziehungsberechtigter' => $data->getEltern()->getVorname() . ' ' . $data->getEltern()->getName(),
                     'notfallkontakt' => $data->getEltern()->getNotfallkontakt(),
                     'klasse' => $data->getKlasse(),
-                    'checkin'=>true
+                    'checkin' => true
                 );
                 $kinderSend[] = $tmp;
             }
-            return new JsonResponse(array('error'=>false,'number'=>sizeof($kinderSend),'result'=>$kinderSend));
+            return new JsonResponse(array('error' => false, 'number' => sizeof($kinderSend), 'result' => $kinderSend));
         } else {
-            return new JsonResponse(array('error' =>true, 'errorText' => 'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
+            return new JsonResponse(array('error' => true, 'errorText' => 'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
         }
 
     }
@@ -171,7 +172,7 @@ class UserAppController extends AbstractController
     public function userKidsHeuteDa(SchuljahrService $schuljahrService, ChildSearchService $childSearchService, UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
     {
         $user = null;
-        if ($request->get('communicationToken')){
+        if ($request->get('communicationToken')) {
             $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
                     'appCommunicationToken' => $request->get('communicationToken')
                 )
@@ -181,9 +182,9 @@ class UserAppController extends AbstractController
         if ($user) {
             $today = new \DateTime();
             $schuljahr = $schuljahrService->getSchuljahr($user->getStadt());
-           $kinder =  $childSearchService->searchChild(array('wochentag'=>$this->daymapper[$today->format("w")]),$user->getOrganisation());
-           $kinderCheckin = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today);
-           $kinderSend = array();
+            $kinder = $childSearchService->searchChild(array('wochentag' => $this->daymapper[$today->format("w")]), $user->getOrganisation());
+            $kinderCheckin = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today);
+            $kinderSend = array();
             foreach ($kinder as $data) {
                 $tmp = array(
                     'name' => $data->getNachname(),
@@ -192,34 +193,48 @@ class UserAppController extends AbstractController
                     'erziehungsberechtigter' => $data->getEltern()->getVorname() . ' ' . $data->getEltern()->getName(),
                     'notfallkontakt' => $data->getEltern()->getNotfallkontakt(),
                     'klasse' => $data->getKlasse(),
-                    'checkin'=>in_array($data,$kinderCheckin)
+                    'checkin' => in_array($data, $kinderCheckin)
                 );
                 $kinderSend[] = $tmp;
             }
-            return new JsonResponse(array('error'=>false,'number'=>sizeof($kinderSend),'result'=>$kinderSend));
+            return new JsonResponse(array('error' => false, 'number' => sizeof($kinderSend), 'result' => $kinderSend));
         } else {
-            return new JsonResponse(array('error' =>true, 'errorText' => 'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
+            return new JsonResponse(array('error' => true, 'errorText' => 'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
         }
     }
+
     /**
      * @Route("/get/user/kindDetail/{id}", name="connect_user_kidsDetails", methods={"GET"})
      */
-    public function userKidsDetail($id,CheckinSchulkindservice $checkinSchulkindservice, UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator)
+    public function userKidsDetail($id, CheckinSchulkindservice $checkinSchulkindservice, UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator)
     {
         $user = null;
-        if ($request->get('communicationToken')){
+        if ($request->get('communicationToken')) {
             $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
                     'appCommunicationToken' => $request->get('communicationToken')
                 )
             );
         }
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($id);
-        if($user && in_array($kind->getSchule(),$user->getOrganisation()->getSchule()->toArray())){
-            return new JsonResponse(array());
-        }else{
-            return new JsonResponse(array('error'=>true,'errorText'=>"Kein Kind gefunden"));
+        if ($user && in_array($kind->getSchule(), $user->getOrganisation()->getSchule()->toArray())) {
+            return new JsonResponse(array(
+                    'vorname' => $kind->getVorname(),
+                    'name' => $kind->getNachname(),
+                    'allergie' => $kind->getAllergie(),
+                    'notfallkontakt' => $kind->getEltern()->getNotfallkontakt(),
+                    'elternVorname' => $kind->getEltern()->getVorname(),
+                    'elterName' => $kind->getEltern()->getName(),
+                    'abholberechtigte' => $kind->getEltern()->getAbholberechtigter(),
+                    'geburtstag' => $kind->getGeburtstag()->format('dd.mm.YYYY'),
+                    'medikamente' => $kind->getMedikamente(),
+                    'schule'=>$kind->getSchule()->getName()
+                )
+            );
+        } else {
+            return new JsonResponse(array('error' => true, 'errorText' => "Kein Kind gefunden"));
         }
     }
+
     /**
      * @Route("/login/disconnect/user", name="connection_app_disconnect", methods={"GET"})
      */
