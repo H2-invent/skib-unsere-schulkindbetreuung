@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserAppController extends AbstractController
@@ -160,7 +161,7 @@ class UserAppController extends AbstractController
                     'schuleId' => $data->getSchule()->getId(),
                     'hasBirthday'=>$this->hasBirthday($data),
                     'detail' => $this->makeHttps($this->generateUrl('connect_user_kidsDetails', array('id' => $data->getId()), UrlGenerator::ABSOLUTE_URL)),
-                    'checkinUrl'=>$this->makeHttps($this->generateUrl('checkin_schulkindbetreuung',array('kindID'=>$data->getId()))),
+                    'checkinUrl'=>$this->makeHttps($this->generateUrl('checkin_schulkindbetreuung',array('kindID'=>$data->getId()),UrlGeneratorInterface::ABSOLUTE_URL)),
                 );
                 $kinderSend[] = $tmp;
             }
@@ -210,7 +211,8 @@ class UserAppController extends AbstractController
                     'checkin' => in_array($data, $kinderCheckin),
                     'schuleId' => $data->getSchule()->getId(),
                     'hasBirthday'=>$this->hasBirthday($data),
-                    'detail' => $this->makeHttps($this->generateUrl('connect_user_kidsDetails', array('id' => $data->getId()), UrlGenerator::ABSOLUTE_URL))
+                    'detail' => $this->makeHttps($this->generateUrl('connect_user_kidsDetails', array('id' => $data->getId()), UrlGenerator::ABSOLUTE_URL)),
+                     'checkinUrl'=>$this->makeHttps($this->generateUrl('checkin_schulkindbetreuung',array('kindID'=>$data->getId()),UrlGeneratorInterface::ABSOLUTE_URL)),
                 );
                 $kinderSend[] = $tmp;
             }
