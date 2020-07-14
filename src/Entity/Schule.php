@@ -124,6 +124,11 @@ class Schule
      */
     private $news;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="schulen")
+     */
+    private $users;
+
 
     public function __construct()
     {
@@ -131,6 +136,7 @@ class Schule
         $this->actives = new ArrayCollection();
         $this->kinder = new ArrayCollection();
         $this->news = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -394,6 +400,34 @@ class Schule
         if ($this->news->contains($news)) {
             $this->news->removeElement($news);
             $news->removeSchule($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addSchulen($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeSchulen($this);
         }
 
         return $this;

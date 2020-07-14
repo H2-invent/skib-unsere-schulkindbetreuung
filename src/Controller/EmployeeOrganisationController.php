@@ -74,7 +74,7 @@ class EmployeeOrganisationController extends AbstractController
         }
         $city = $defaultData->getStadt();
         $errors = array();
-        $form = $this->createForm(UserType::class, $defaultData);
+        $form = $this->createForm(UserType::class, $defaultData,array('schulen'=>$this->getUser()->getOrganisation()->getSchule()));
         $form->remove('plainPassword');
         $form->remove('username');
         $form->handleRequest($request);
@@ -120,7 +120,7 @@ class EmployeeOrganisationController extends AbstractController
         $defaultData->setOrganisation($organisation);
         $defaultData->setStadt($organisation->getStadt());
         $errors = array();
-        $form = $this->createForm(UserType::class, $defaultData);
+        $form = $this->createForm(UserType::class, $defaultData,array('schulen'=>$this->getUser()->getOrganisation()->getSchule()));
 
         $form->handleRequest($request);
 

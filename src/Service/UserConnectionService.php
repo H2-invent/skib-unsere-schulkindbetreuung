@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -40,7 +41,7 @@ class UserConnectionService
             $stadt = $user->getStadt();
             $this->mailer->sendEmail('Unsere Schulkindbetreuung', 'test@local.com', $user->getEmail(), 'Bestätigungscode für die SKIBin App', $this->twig->render('email/appConfirmationCode.html.twig', array('user' => $user, 'stadt' => $stadt)));
             return array(
-                'type'=>'USER',
+                'type' => 'USER',
                 'error' => false,
                 'token' => $user->getAppDetectionToken(),
                 'url' => str_replace('http', 'https',
@@ -71,7 +72,7 @@ class UserConnectionService
                             )
                         ),
                     'user' => $this->userInfo($user),
-                    'urlSave'=>str_replace('http', 'https',
+                    'urlSave' => str_replace('http', 'https',
                         str_replace('https', 'http', $this->router->generate('connect_communication_save', [], UrlGenerator::ABSOLUTE_URL)
                         )
                     )
@@ -96,36 +97,45 @@ class UserConnectionService
                     'firstName' => $user->getVorname(),
                     'lastName' => $user->getNachname(),
                     'email' => $user->getEmail(),
-                    'organisation' => $user->getOrganisation()->getName());
-                $res['url'] = array(
-                    array('name' => 'Angemeldete Kinder', 'url' => 'url der angemeldeten Kinder'),
-                    array('name' => 'Eingecheckte Kinder', 'url' => 'url der eingecheckten kinder')
-                );
+                    'organisation' => $user->getOrganisation()->getName(),
+                    'urlCheckinKids' => str_replace('http', 'https',
+                        str_replace('https', 'http', $this->router->generate('connect_user_checkinKids',[],UrlGenerator::ABSOLUTE_URL))),
+                    'urlKinderListeHeute' => str_replace('http', 'https',
+                    str_replace('https', 'http', $this->router->generate('connect_user_kidsDa',[],UrlGenerator::ABSOLUTE_URL)
+                )))
+                ;
                 return $res;
             } else {
                 return array('error' => true);
             }
         } catch (\Exception $e) {
-            return array('errosr' => true);
+            return array('error' => $e->getMessage());
         }
     }
-    public function saveSetting(?User $user){
+
+    public function saveSetting(?User $user)
+    {
         try {
-            if ($user){
+            if ($user) {
                 $user->setAppSettingsSaved(true);
                 $user->setConfirmationTokenApp(null);
                 $user->setAppDetectionToken(null);
                 $user->setAppToken(null);
                 $this->em->persist($user);
                 $this->em->flush();
-                return array('error'=>false);
-            }else{
-                return array('error'=>true);
+                return array('error' => false);
+            } else {
+                return array('error' => true);
             }
 
 
-        }catch (\Exception $e){
-            return array('error'=>true);
+        } catch (\Exception $e) {
+            return array('error' => true);
         }
+    }
+
+    public function kinderCheckedIn(User $user)
+    {
+
     }
 }
