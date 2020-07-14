@@ -136,12 +136,12 @@ class CheckinSchulkindservice
             ->andWhere(
                 $qb->expr()->between('an.arrivedAt', ':midnight', ':endDay')
             )
-
             ->setParameter('midnight', $midnight)
             ->setParameter('endDay', $dateTime)
             ->setParameter('org', $organisation);
         $orX = $qb->expr()->orX();
         if($user){
+
             if(sizeof($user->getSchulen()) == 0){
                 $orX->add('k.schule = -1');
             }else{
@@ -150,11 +150,8 @@ class CheckinSchulkindservice
                     $qb->setParameter('schule'.$data->getId(),$data);
                 }
             }
-
-
+            $qb->andWhere($orX);
         }
-
-        $qb->andWhere($orX);
         $query = $qb->getQuery();
         return $query->getResult();
     }

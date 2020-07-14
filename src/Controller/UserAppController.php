@@ -221,12 +221,14 @@ class UserAppController extends AbstractController
             foreach ($user->getSchulen() as $data) {
                 $schulen[] = array('id' => $data->getId(), 'name' => $data->getName());
             }
+            return 0;
             return new JsonResponse(array(
                     'error' => false,
                     'number' => sizeof($kinderSend),
                     'result' => $kinderSend,
                     'schulen' => $schulen)
             );
+
         } else {
             return new JsonResponse(array('error' => true, 'errorText' => 'Fehler, bitte versuchen Sie es erneut oder melden Sie das Gerät bei SKIB an'));
         }
