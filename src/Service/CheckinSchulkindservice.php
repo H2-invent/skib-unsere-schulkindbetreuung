@@ -142,12 +142,16 @@ class CheckinSchulkindservice
             ->setParameter('org', $organisation);
         $orX = $qb->expr()->orX();
         if($user){
-            $orX->add('k.schule = -1');
-            foreach ($user->getSchulen() as $data){
-                $orX->add('k.schule =:schule'.$data->getId());
-
-                $qb->setParameter('schule'.$data->getId(),$data);
+            if(sizeof($user->getSchulen()) == 0){
+                $orX->add('k.schule = -1');
+            }else{
+                foreach ($user->getSchulen() as $data){
+                    $orX->add('k.schule =:schule'.$data->getId());
+                    $qb->setParameter('schule'.$data->getId(),$data);
+                }
             }
+
+
         }
 
         $qb->andWhere($orX);
