@@ -221,7 +221,7 @@ class UserAppController extends AbstractController
             foreach ($user->getSchulen() as $data) {
                 $schulen[] = array('id' => $data->getId(), 'name' => $data->getName());
             }
-            return 0;
+
             return new JsonResponse(array(
                     'error' => false,
                     'number' => sizeof($kinderSend),
