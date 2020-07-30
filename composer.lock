@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d292b785c0711bec4a7567bb44e041c2",
+    "content-hash": "4dbf5f68888b815751108f7308c160cb",
     "packages": [
         {
             "name": "a2lix/auto-form-bundle",
@@ -210,66 +210,6 @@
             "description": "BaconQrCode is a QR code generator for PHP.",
             "homepage": "https://github.com/Bacon/BaconQrCode",
             "time": "2020-07-14T11:04:05+00:00"
-        },
-        {
-            "name": "beelab/recaptcha2-bundle",
-            "version": "v2.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Bee-Lab/BeelabRecaptcha2Bundle.git",
-                "reference": "41e51231283ba2e45132671b375fd7ff8d44725f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Bee-Lab/BeelabRecaptcha2Bundle/zipball/41e51231283ba2e45132671b375fd7ff8d44725f",
-                "reference": "41e51231283ba2e45132671b375fd7ff8d44725f",
-                "shasum": ""
-            },
-            "require": {
-                "google/recaptcha": "^1.2",
-                "php": "^7.2",
-                "symfony/config": "^3.4 || ^4.3 || ^5.0",
-                "symfony/dependency-injection": "^3.4 || ^4.3 || ^5.0",
-                "symfony/form": "^3.4 || ^4.3 || ^5.0",
-                "symfony/http-kernel": "^3.4 || ^4.3 || ^5.0",
-                "symfony/validator": "^3.4 || ^4.3 || ^5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.4",
-                "symfony/phpunit-bridge": "^4.3 || 5.0"
-            },
-            "suggest": {
-                "symfony/twig-bundle": "To render widget. Minimum supported Twig version is 1.34, minimum suggested is 2.4"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Beelab\\Recaptcha2Bundle\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Massimiliano Arione",
-                    "email": "massimiliano.arione@bee-lab.net"
-                }
-            ],
-            "description": "Provide Google Recaptch2 form type",
-            "homepage": "https://github.com/bee-lab/",
-            "keywords": [
-                "form",
-                "recaptcha",
-                "symfony"
-            ],
-            "time": "2019-11-25T09:49:40+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -710,16 +650,16 @@
         },
         {
             "name": "doctrine/collections",
-            "version": "1.6.6",
+            "version": "1.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "5f0470363ff042d0057006ae7acabc5d7b5252d5"
+                "reference": "55f8b799269a1a472457bd1a41b4f379d4cfba4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/5f0470363ff042d0057006ae7acabc5d7b5252d5",
-                "reference": "5f0470363ff042d0057006ae7acabc5d7b5252d5",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/55f8b799269a1a472457bd1a41b4f379d4cfba4a",
+                "reference": "55f8b799269a1a472457bd1a41b4f379d4cfba4a",
                 "shasum": ""
             },
             "require": {
@@ -771,7 +711,7 @@
                 "iterators",
                 "php"
             ],
-            "time": "2020-06-22T19:14:02+00:00"
+            "time": "2020-07-27T17:53:49+00:00"
         },
         {
             "name": "doctrine/common",
@@ -2130,53 +2070,6 @@
                 "User management"
             ],
             "time": "2018-03-08T08:59:27+00:00"
-        },
-        {
-            "name": "google/recaptcha",
-            "version": "1.2.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/google/recaptcha.git",
-                "reference": "614f25a9038be4f3f2da7cbfd778dc5b357d2419"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/google/recaptcha/zipball/614f25a9038be4f3f2da7cbfd778dc5b357d2419",
-                "reference": "614f25a9038be4f3f2da7cbfd778dc5b357d2419",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.2.20|^2.15",
-                "php-coveralls/php-coveralls": "^2.1",
-                "phpunit/phpunit": "^4.8.36|^5.7.27|^6.59|^7.5.11"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "ReCaptcha\\": "src/ReCaptcha"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Client library for reCAPTCHA, a free service that protects websites from spam and abuse.",
-            "homepage": "https://www.google.com/recaptcha/",
-            "keywords": [
-                "Abuse",
-                "captcha",
-                "recaptcha",
-                "spam"
-            ],
-            "time": "2020-03-31T17:50:54+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -4651,16 +4544,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v7.44.0",
+            "version": "v7.45.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "b39ccc77358fbe0d462e6cc89ac01b7a0c896f35"
+                "reference": "21e5001f5e0d787e4755c8bfc00e578dce9ae058"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/b39ccc77358fbe0d462e6cc89ac01b7a0c896f35",
-                "reference": "b39ccc77358fbe0d462e6cc89ac01b7a0c896f35",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/21e5001f5e0d787e4755c8bfc00e578dce9ae058",
+                "reference": "21e5001f5e0d787e4755c8bfc00e578dce9ae058",
                 "shasum": ""
             },
             "require": {
@@ -4704,7 +4597,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2020-07-20T21:25:50+00:00"
+            "time": "2020-07-29T04:29:52+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
