@@ -45,9 +45,10 @@ class PreisListeService
         $schuljahr = $this->em->getRepository(Active::class)->findSchuljahrFromCity($stadt,new \DateTime());
         $schulen = $this->em->getRepository(Schule::class)->findBy(array('stadt'=>$stadt,'deleted'=>false));
         $gehalt = $stadt->getGehaltsklassen();
+        $onlyOneType = null;
         $art = [
-            'Ganztag' => 1,
-            'Halbtag' => 2,
+            $this->translator->trans('Ganztag') => 1,
+            $this->translator->trans('Halbtag') => 2,
         ];
 
         $req = array(
@@ -57,7 +58,25 @@ class PreisListeService
         );
 
         $req['ganztag'] = $artIst;
+
+        $qb = $this->em->getRepository(Zeitblock::class)->createQueryBuilder('zeitblock');
+        $qb->andWhere('zeitblock.deleted = false')
+            ->andWhere('zeitblock.active = :active')
+            ->andWhere('zeitblock.schule = :schule')
+            ->groupBy('zeitblock.ganztag')
+            ->setParameter('active',$schuljahr)
+            ->setParameter('schule',$schule);
+        $query = $qb->getQuery();
+        $checkBlock =$query->getResult();
+        $onlyOneType=sizeof($checkBlock)>1?false:true;
+
+
+         if($onlyOneType==1){
+            $artIst = $checkBlock[0]->getGanztag();
+            $req['ganztag'] = $artIst;
+        }
         $block = $this->em->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
+
         $renderBlocks = array();
         foreach ($block as $data) {
             $renderBlocks[$data->getWochentag()][] = $data;
@@ -70,7 +89,8 @@ class PreisListeService
             'schule' => $schule,
             'gehaltIst' => $gehaltIst,
             'blocks' => $renderBlocks,
-            'artIst' => $artIst
+            'artIst' => $artIst,
+            'onlyOneType'=>$onlyOneType
         ]);
     }
 }

@@ -166,11 +166,11 @@ $(window).on('load', function () {
     }
 );
 
-$(document).on('change', '.preisliste_trigger .mdb-select', function (e) {
+$(document).on('change', '.preisliste_trigger', function (e) {
     e.preventDefault();
     var $url = $('#preisliste_schule option:checked').val();
     var $gehalt = $('#preisliste_gehalt option:checked').val() ;
-    var $art = $('#preisliste_schulart option:checked').val() ;
+    var $art = $("input[name='preisliste_schulart']:checked").val(); ;
     $('#preislisteWrappre').load($url+'?'+$.param({
         art: $art,
         gehalt: $gehalt})+' #preisliste_content',function () {
