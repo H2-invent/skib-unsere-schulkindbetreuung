@@ -402,7 +402,14 @@ class LoerrachWorkflowController extends AbstractController
             }
         }
         $renderOrganisation = $schulkindBetreuungKindSEPAService ->findOrg($adresse);
-        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array('beruflicheSituation' => array_flip($this->beruflicheSituation), 'kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt, 'preis' => $preis, 'error' => $error,'organisation'=>$renderOrganisation));
+        return $this->render('workflow/loerrach/zusammenfassung.html.twig', array(
+            'beruflicheSituation' => array_flip($this->beruflicheSituation),
+            'kind' => $kind,
+            'eltern' => $adresse,
+            'stadt' => $stadt,
+            'preis' => $preis,
+            'error' => $error,
+            'organisation'=>$renderOrganisation));
     }
 
     /**

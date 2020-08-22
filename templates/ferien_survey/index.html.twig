@@ -1,0 +1,40 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <!-- Count item widget-->
+                <div class=" col-12 card">
+                    <div class="card-header">
+                        <h1></h1>
+                    </div>
+                    <div class="card-body">
+                      <div id="surveyBuilder">
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+{% endblock %}
+{% block jquery %}
+
+<script>
+    var surveUrl = '{{ path('ferien_management_question_save') }}';
+    var ferienId = {{ ferien.id }};
+    var orgId = {{ ferien.organisation.id }};
+    var survey;
+    try {
+      survey = JSON.parse('{{ ferien.individualQuestions|replace({"\n":' ', "\r":' '})|raw }}');
+    }
+    catch(err) {
+        console.log("Error");
+        survey = JSON.parse("[]");
+    }
+</script>
+
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Kind;
 use App\Entity\Organisation;
+use App\Entity\User;
 use App\Entity\Zeitblock;
 use App\Service\CheckinSchulkindservice;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,6 @@ class CheckinSchulkindbetreuungController extends AbstractController
      */
     public function index(Request $request, TranslatorInterface $translator, $kindID, CheckinSchulkindservice $checkinSchulkindservice)
     {
-
         $today = (new \DateTime());
         $org = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($kindID);
@@ -37,10 +37,11 @@ class CheckinSchulkindbetreuungController extends AbstractController
     {
         $org = $this->getDoctrine()->getRepository(Organisation::class)->find($orgID);
         return new JsonResponse(array(
+                'type'=>'ORGANISATION',
                 'id' => $org->getId(),
                 'name' => $org->getName(),
                 'partner' => $org->getAnsprechpartner(),
-                'url' => $this->generateUrl('getOrganisationfromId', array('orgID' => $org->getId()), UrlGeneratorInterface::ABSOLUTE_URL)
+                'url' => str_replace('http','https',str_replace('https','http',$this->generateUrl('getOrganisationfromId', array('orgID' => $org->getId()), UrlGeneratorInterface::ABSOLUTE_URL)))
             )
         );
     }
@@ -51,9 +52,14 @@ class CheckinSchulkindbetreuungController extends AbstractController
     public function getORg(Request $request, TranslatorInterface $translator, $orgID, CheckinSchulkindservice $checkinSchulkindservice)
     {
         $org = $this->getDoctrine()->getRepository(Organisation::class)->find($orgID);
+        $today = new \DateTime();
+        $kinder = $checkinSchulkindservice->getAllKidsToday($org, $today,null);
         return new JsonResponse(array(
                 'name' => $org->getName(),
-                'partner' => $org->getAnsprechpartner()
+                'partner' => $org->getAnsprechpartner(),
+                'tel'=>$org->getTelefon(),
+                'image' => $this->renderView('checkin_schulkindbetreuung/image.html.twig',array('org'=>$org)),
+                'anwesend'=>sizeof($kinder),
             )
         );
     }
@@ -68,7 +74,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
         $today = new \DateTime();
-        $kinder = $checkinSchulkindservice->getAllKidsToday($organisation, $today);
+        $kinder = $checkinSchulkindservice->getAllKidsToday($organisation, $today,$this->getUser());
         $text = $translator->trans('Kinder Anwesend am %date%', array('%date%' => $today->format('d.m.Y')));
         return $this->render('checkin_schulkindbetreuung/childList.twig', array('text' => $text, 'kinder' => $kinder));
 

@@ -14,8 +14,8 @@
 <div class="view full-page-intro ">
     <div class="jarallax">
         <img class="jarallax-img" src="
-   {% if stadt.image is empty %}{{ asset('images/background.jpg') }}
-        {% else %}{{ vich_uploader_asset(stadt,'imageFile') }}
+   {% if stadt.image is empty %}{{ asset('images/background.jpg')|imagine_filter('my_background')|makeHttps }}
+        {% else %}{{ vich_uploader_asset(stadt,'imageFile')|imagine_filter('my_background')|makeHttps }}
         {% endif %}
 
 " alt="">
@@ -200,10 +200,10 @@
 
                                                     <img class="card-img-top lazy"
                                                             {% if s.image %}
-                                                                data-src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                                data-src="{{ vich_uploader_asset(s,'imageFile')|imagine_filter('my_cards')|makeHttps }}"
                                                                 alt="{{ s.name }} Logo"
                                                             {% else %}
-                                                                data-src="{{ asset('images/logo-breit-mittig.png') }}"
+                                                                data-src="{{ asset('images/logo-breit-mittig.png')|imagine_filter('my_cards')|makeHttps }}"
                                                                 alt="SKiB Logo"
                                                             {% endif %}
                                                           style="max-height: 300px"
@@ -211,10 +211,10 @@
                                                     <noscript>
                                                         <img class="card-img-top"
                                                                 {% if s.image %}
-                                                                    src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                                                    src="{{ vich_uploader_asset(s,'imageFile')|imagine_filter('my_cards')|makeHttps }}"
                                                                     alt="{{ s.name }} Logo"
                                                                 {% else %}
-                                                                    src="{{ asset('images/logo-breit-mittig.png') }}"
+                                                                    src="{{ asset('images/logo-breit-mittig.png')|imagine_filter('my_cards')|makeHttps }}"
                                                                     alt="SKiB Logo"
                                                                 {% endif %}
                                                              style="max-height: 300px"
@@ -259,13 +259,13 @@
 
                                                     <img class="card-img-top lazy" style="max-height: 300px"
 
-                                                                data-src="{{ vich_uploader_asset(o,'imageFile') }}"
+                                                                data-src="{{ vich_uploader_asset(o,'imageFile')|imagine_filter('my_cards')|makeHttps }}"
                                                                 alt="{{ o.name }} Logo" style="max-height: 300px"
 
                                                     />
                                                     <noscript>
                                                         <img class="card-img-top lazy" style="max-height: 300px"
-                                                                    src="{{ vich_uploader_asset(o,'imageFile') }}"
+                                                                    src="{{ vich_uploader_asset(o,'imageFile')|imagine_filter('my_cards')|makeHttps }}"
                                                                     alt="{{ o.name }} Logo" style="max-height: 300px"
 
                                                         />
@@ -347,7 +347,7 @@
                                             </div>
                                             <div class="col-md-4 text-center">
                                                 {% if o.image is not empty %}
-                                                    <img src="{{ vich_uploader_asset(o,'imageFile') }}"
+                                                    <img src="{{ vich_uploader_asset(o,'imageFile')|imagine_filter('my_logos')|makeHttps }}"
                                                          style="max-height: 110px; max-width: 100%"  alt="{{ o.name }} Logo">
                                                 {% endif %}
                                             </div>

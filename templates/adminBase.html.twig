@@ -203,7 +203,12 @@
                 <li><a href="{{ path('fos_user_change_password') }}"> <i
                                 class="icon-home"></i>{% trans %}Passwort ändern{% endtrans %}</a>
                 </li>
+                {% if is_granted('ROLE_ORG_CHECKIN_SHOW') %}
+                    <li><a href="{{ path('connection_app_start') }}"> <i
+                                    class="material-icons">link</i> {% trans %}App Verbindung{% endtrans %}
+                        </a></li>
 
+                {% endif %}
 
                 {% if is_granted('ROLE_ADMIN') %}
                 <h5 class="sidenav-heading">Main</h5>
@@ -841,5 +846,6 @@
 {% block jquery %}
 
 {% endblock %}
+<div id="snackbar-container"></div>
 </body>
 </html>

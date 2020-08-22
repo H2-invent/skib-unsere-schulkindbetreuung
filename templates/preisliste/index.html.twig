@@ -11,7 +11,8 @@
                 <div class="col-md-4">
                     <label for="preisliste_schule">{{ 'Schule'|trans }}</label>
                     <select class="mdb-select md-form preisliste_trigger" id="preisliste_schule">
-                        <option value="{{ path('trager_preisliste',{'schule':schule.id,'slug':schule.organisation.stadt.slug}) }}" disabled selected>{{schule.name}}</option>
+                        <option value="{{ path('trager_preisliste',{'schule':schule.id,'slug':schule.organisation.stadt.slug}) }}"
+                                disabled selected>{{ schule.name }}</option>
                         {% for s in schulen %}
                             <option value="{{ path('trager_preisliste',{'schule':s.id,'slug':s.organisation.stadt.slug}) }}">{{ s.name }}</option>
                         {% endfor %}
@@ -20,7 +21,7 @@
                 <div class="col-md-4">
                     <label for="preisliste_gehalt">{{ 'Brutto Haushaltseinkommen pro Monat'|trans }}</label>
                     <select class="mdb-select md-form preisliste_trigger" id="preisliste_gehalt">
-                        <option value="{{ gehaltIst }}" disabled selected>{{gehalt[gehaltIst]}} </option>
+                        <option value="{{ gehaltIst }}" disabled selected>{{ gehalt[gehaltIst] }} </option>
                         {% for key,g in gehalt %}
                             <option value="{{ key }}">{{ g }}</option>
                         {% endfor %}
@@ -28,21 +29,28 @@
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label for="preisliste_schulart">{{ 'Schulform'|trans }}</label>
-                    <select class="mdb-select md-form preisliste_trigger" id="preisliste_schulart">
-                        <option value="{{ artIst }}" disabled selected>{{art[artIst]}}</option>
-                        {% for key,a in art %}
-                            <option value="{{ key }}">{{ a }}</option>
-                        {% endfor %}
-                    </select>
+
                 </div>
             </div>
             <div id="preislisteWrappre">
                 <div id="preisliste_content">
-                <div class="row" >
+                    <div class="row  {% if onlyOneType == true %} d-none{% endif %}">
 
-                </div>
+                        {% for key,a in art %}
+                            <div class="form-check">
+                                <input type="radio" value="{{ key }}" class="form-check-input preisliste_trigger"
+                                       id="schulform_{{ key }}" name="preisliste_schulart"
+                                       {% if loop.index == artIst %}checked{% endif %}>
+                                <label class="form-check-label" for="schulform_{{ key }}">{{ a }}</label>
+                            </div>
 
+                        {% endfor %}
+
+                    </div>
+                    <div class="row  {% if onlyOneType == false %} d-none{% endif %}">
+                        <h2>{{ art[artIst] }}</h2>
+                    </div>
+                    <hr>
                     <div class="row">
                         <div class="{% if blocks[6] is not defined and blocks[5] is not defined %} offset-lg-1 {% endif %}col-lg-2 text-center">
                             <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
@@ -117,7 +125,7 @@
                             </div>
                         {% endif %}
                     </div>
-            </div>
+                </div>
             </div>
 
 

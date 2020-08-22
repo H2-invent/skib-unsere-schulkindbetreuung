@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Anwesenheit;
 use App\Entity\Kind;
 use App\Entity\Organisation;
+use App\Entity\User;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -122,25 +123,40 @@ class CheckinSchulkindservice
         return $anwesenheit;
     }
 
-    public function getAllKidsToday(Organisation $organisation, \DateTime $dateTime)
+    public function getAllKidsToday(Organisation $organisation, \DateTime $dateTime,?User $user)
     {
 
         $midnight = clone $dateTime;
         $midnight->setTime(0, 0, 0);
         $dateTime->setTime(23, 59, 59);
         $qb = $this->em->getRepository(Kind::class)->createQueryBuilder('k');
-        $qb->innerJoin('k.anwesenheitenSchulkindbetreuung','an')
-        ->andWhere('an.organisation = :org')
+
+        $qb->innerJoin('k.anwesenheitenSchulkindbetreuung', 'an')
+            ->andWhere('an.organisation = :org')
             ->andWhere(
                 $qb->expr()->between('an.arrivedAt', ':midnight', ':endDay')
             )
             ->setParameter('midnight', $midnight)
             ->setParameter('endDay', $dateTime)
             ->setParameter('org', $organisation);
+        $orX = $qb->expr()->orX();
+        if($user){
+
+            if(sizeof($user->getSchulen()) == 0){
+                $orX->add('k.schule = -1');
+            }else{
+                foreach ($user->getSchulen() as $data){
+                    $orX->add('k.schule =:schule'.$data->getId());
+                    $qb->setParameter('schule'.$data->getId(),$data);
+                }
+            }
+            $qb->andWhere($orX);
+        }
         $query = $qb->getQuery();
         return $query->getResult();
     }
-    public function getAllKidsTodayandBlock(Organisation $organisation, \DateTime $dateTime,Zeitblock $zeitblock)
+
+    public function getAllKidsTodayandBlock(Organisation $organisation, \DateTime $dateTime, Zeitblock $zeitblock)
     {
 
         $midnight = clone $dateTime;
@@ -148,14 +164,14 @@ class CheckinSchulkindservice
         $dateTime->setTime(23, 59, 59);
 
         $qb = $this->em->getRepository(Kind::class)->createQueryBuilder('k');
-        $qb->innerJoin('k.anwesenheitenSchulkindbetreuung','an')
+        $qb->innerJoin('k.anwesenheitenSchulkindbetreuung', 'an')
             ->andWhere('an.organisation = :org')
             ->andWhere(
                 $qb->expr()->between('an.arrivedAt', ':midnight', ':endDay')
             )
-            ->innerJoin('k.zeitblocks','zb')
+            ->innerJoin('k.zeitblocks', 'zb')
             ->andWhere('zb = :block')
-            ->setParameter('block',$zeitblock)
+            ->setParameter('block', $zeitblock)
             ->setParameter('midnight', $midnight)
             ->setParameter('endDay', $dateTime)
             ->setParameter('org', $organisation);

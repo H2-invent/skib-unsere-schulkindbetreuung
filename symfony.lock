@@ -8,18 +8,6 @@
     "bacon/bacon-qr-code": {
         "version": "2.0.0"
     },
-    "beelab/recaptcha2-bundle": {
-        "version": "2.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "2.0",
-            "ref": "246da6d0e345e9ab6773dd2f46c8a138e2527ef6"
-        },
-        "files": [
-            "./config/packages/beelab_recaptcha2.yaml"
-        ]
-    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },
@@ -111,17 +99,8 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
-    "easycorp/easy-log-handler": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
-        },
-        "files": [
-            "./config/packages/dev/easy_log_handler.yaml"
-        ]
+    "doctrine/sql-formatter": {
+        "version": "1.1.0"
     },
     "egulias/email-validator": {
         "version": "2.1.11"
@@ -141,18 +120,6 @@
     "friendsofsymfony/user-bundle": {
         "version": "v2.1.2"
     },
-    "google/recaptcha": {
-        "version": "1.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.1",
-            "ref": "d087df3e087f50da3955f2def05079380da5894b"
-        },
-        "files": [
-            "./config/packages/google_recaptcha.yaml"
-        ]
-    },
     "guzzlehttp/guzzle": {
         "version": "6.5.2"
     },
@@ -162,8 +129,8 @@
     "guzzlehttp/psr7": {
         "version": "1.6.1"
     },
-    "jdorn/sql-formatter": {
-        "version": "v1.2.17"
+    "imagine/imagine": {
+        "version": "1.2.3"
     },
     "jms/i18n-routing-bundle": {
         "version": "3.0.3"
@@ -183,8 +150,24 @@
     "league/flysystem": {
         "version": "1.0.57"
     },
+    "liip/imagine-bundle": {
+        "version": "1.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.8",
+            "ref": "1d42bc3f713130582e6e0c475c49bc327ab0a2a2"
+        },
+        "files": [
+            "./config/packages/liip_imagine.yaml",
+            "./config/routes/liip_imagine.yaml"
+        ]
+    },
     "lorenzo/pinky": {
         "version": "1.0.5"
+    },
+    "maennchen/zipstream-php": {
+        "version": "2.1.0"
     },
     "markbaker/complex": {
         "version": "1.4.7"
@@ -257,6 +240,12 @@
     },
     "psr/container": {
         "version": "1.0.0"
+    },
+    "psr/http-client": {
+        "version": "1.0.1"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
     },
     "psr/http-message": {
         "version": "1.0.1"
@@ -515,6 +504,9 @@
     "symfony/polyfill-intl-idn": {
         "version": "v1.12.0"
     },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.18.0"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.12.0"
     },
@@ -523,6 +515,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.12.0"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.17.0"
     },
     "symfony/process": {
         "version": "v4.3.4"

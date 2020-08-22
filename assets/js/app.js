@@ -9,17 +9,20 @@
 import '../css/app.css';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
+global.$ = global.jQuery = $;
 import Popper from 'popper.js';
 import 'datatables.net-dt';
+
 // Import TinyMCE
 // Import TinyMCE
 import niceScroll from 'jquery.nicescroll';
 
 import trumbowgy from './trumbowyg';
 import icon from 'trumbowyg/dist/ui/icons.svg'
-import snackbar from 'snackbarjs'
+
 global.$ = global.jQuery = $;
 
+import('jquery-ui/ui/widgets/sortable');
 global.Popper = Popper;
 import('bootstrap-material-design');
 import('moment');
@@ -33,16 +36,16 @@ import('jquery-confirm');
 import('material-design-icons');
 import('daterangepicker');
 import('datatables.net');
-
 import ('trumbowyg/dist/plugins/colors/trumbowyg.colors');
 import ('trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste');
 import ('trumbowyg/dist/plugins/template/trumbowyg.template');
+import ('formBuilder/dist/form-builder.min');
+import snackbar from 'snackbarjs';
+let formBuilderLoc;
 $(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
 
 $('#toggle-btn').on('click', function (e) {
-
     e.preventDefault();
-
     if ($(window).outerWidth() > 1194) {
         $('nav.side-navbar').toggleClass('shrink');
         $('.page').toggleClass('active');
@@ -72,8 +75,41 @@ $(document).ready(function () {
         $.snackbar(optionsSnack);
     }
 })
-$(window).on('load', function () {
 
+$(window).on('load', function () {
+    if(typeof survey != 'undefined') {
+        var options = {
+            i18n: {
+                locale: 'de-DE'
+            },
+            onSave: function (formData) {
+                sendSurveyToServer(orgId, ferienId, formBuilderLoc.actions.getData('json', true));
+            },
+            dataType: 'json',
+            formData: JSON.stringify(survey),
+            notify: {
+                error: function (message) {
+                    $.snackbar({
+                        text: message, // text of the snackbar
+                        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+                    });
+                },
+                success: function (message) {
+                    $.snackbar({
+                        text: message, // text of the snackbar
+                        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+                    });
+                },
+                warning: function (message) {
+                    $.snackbar({
+                        text: message, // text of the snackbar
+                        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+                    });
+                }
+            }
+        };
+        formBuilderLoc = $('#surveyBuilder').formBuilder(options);
+    }
 
 // Load a plugin.
     $.trumbowyg.svgPath = icon;
@@ -81,11 +117,11 @@ $(window).on('load', function () {
         autogrow: true,
         semantic: false,
         tagClasses: {
-            'h1':['h1-responsive'],
-            'h2':['h2-responsive'],
-            'h3':['h3-responsive'],
-            'h4':['h4-responsive'],
-            'blockquote':['note', 'note-primary', 'z-depth-2'],
+            'h1': ['h1-responsive'],
+            'h2': ['h2-responsive'],
+            'h3': ['h3-responsive'],
+            'h4': ['h4-responsive'],
+            'blockquote': ['note', 'note-primary', 'z-depth-2'],
         },
 
         btns: [
@@ -155,7 +191,7 @@ $(window).on('load', function () {
         e.preventDefault();
         var url = $(this).attr('href');
         $('#loadContentModal').modal('show');
-        $('#loadContentModal .modal-content').load(url,function (e) {
+        $('#loadContentModal .modal-content').load(url, function (e) {
             $('input[type="time"]').jqclockpicker({
                 autoclose: true,
                 donetext: "OK"
@@ -194,3 +230,19 @@ $(window).on('load', function () {
         });
     });
 });
+
+function sendSurveyToServer($orgId, $id, $question) {
+    $.ajax({
+        url: surveUrl,
+        type: "POST",
+        data: {org_id: $orgId, id: $id, survey: $question},
+        success: function (data) {
+            let $options= {
+                content: data.text, // text of the snackbar
+                timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+            };
+            var snack = $.snackbar($options);
+        },
+
+    });
+}

@@ -9,11 +9,14 @@
                     <div class="col-lg-3 col-sm-6 ">
                         <div class="card">
                             {% if not s.image is empty %}
-                                <img class="card-img-top" src="{{ vich_uploader_asset(s,'imageFile') }}"
+                                <img class="card-img-top"
+                                     src="{{ vich_uploader_asset(s,'imageFile')|imagine_filter('my_cards')|makeHttps }}"
                                      alt="{{ s.name }}"
                                      style="max-height: 300px">
                             {% else %}
-                                <img class="card-img-top" src="{{ asset('images/logo-breit-mittig.png') }}" alt="SKiB"
+                                <img class="card-img-top"
+                                     src="{{ asset('images/logo-breit-mittig.png')|imagine_filter('my_cards')|makeHttps }}"
+                                     alt="SKiB"
                                      style="max-height: 300px">
                             {% endif %}
                             <div class="card-body">
@@ -22,8 +25,10 @@
                                 <a href="{{ path('block_schule_schow',{'id':s.id}) }}"
                                    class="btn btn-primary">{% trans %}Betreuungsblöcke{% endtrans %}</a>
                                 {% if is_granted('ROLE_ORG_SHOOL') %}
-                                    <a href="{{ path('city_admin_schule_edit',{'id':s.id}) }}"
-                                       class="btn btn-primary">{% trans %}Schule bearbeiten{% endtrans %}</a>
+                                    <a
+                                            href="{{ path('city_admin_schule_edit',{'id':s.id}) }}"
+                                            class="btn btn-primary">{% trans %}Schule bearbeiten{% endtrans %}
+                                    </a>
                                 {% endif %}
                             </div>
                         </div>

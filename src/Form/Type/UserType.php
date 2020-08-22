@@ -7,8 +7,11 @@
  */
 namespace App\Form\Type;
 
+use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\User;
+use App\Entity\Zeitblock;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -31,6 +34,18 @@ class UserType extends AbstractType
             ->add('plainPassword', TextType::class,array('required'=>true,'label'=>'Password','translation_domain' => 'form'))
             ->add('vorname', EmailType::class,array('label'=>'Vorname','required'=>true,'translation_domain' => 'form'))
             ->add('nachname', EmailType::class,array('label'=>'Name','required'=>true,'translation_domain' => 'form'))
+            ->add('schulen', EntityType::class, [
+                'class' => Schule::class,
+                'choice_label' => function (Schule $schule) {
+                    return $schule->getName();
+                },
+                'label' => 'Zugeordnete Schulen ',
+                'translation_domain' => 'form',
+                'multiple' => true,
+                'expanded' => true,
+                'choices' => $options['schulen'],
+
+            ])
             ->add('birthday', BirthdayType::class,array('required'=>false,'label'=>'Geburtstag','translation_domain' => 'form'))
             ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
@@ -39,6 +54,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'schulen'=>array()
         ]);
     }
 }

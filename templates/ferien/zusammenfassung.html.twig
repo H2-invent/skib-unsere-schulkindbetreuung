@@ -4,7 +4,8 @@
         <h1 class="font-weight-bold hauptfarbe">{% trans %}Zusammenfassung{% endtrans %}</h1>
         <hr class="hr-light ">
         <div class="progress mb-2">
-            <div class="progress-bar" role="progressbar" style="width:80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">{% trans %}Zusammenfassung{% endtrans %}</div>
+            <div class="progress-bar" role="progressbar" style="width:80%" aria-valuenow="80" aria-valuemin="0"
+                 aria-valuemax="100">{% trans %}Zusammenfassung{% endtrans %}</div>
         </div>
     </div>
 
@@ -143,19 +144,23 @@
                                 <tr>
 
 
-                                        <td>
-                                            {% trans %}Gebuchte Ferienprogramme{% endtrans %}
-                                        </td>
-                                        <td>
-                                            {% for f in k.kindFerienblocks %}
+                                    <td>
+                                        {% trans %}Gebuchte Ferienprogramme{% endtrans %}
+                                    </td>
+                                    <td>
+                                        {% for f in k.kindFerienblocks %}
                                             <b>{{ f.ferienblock.translate.titel }}</b><br/>
                                             {{ f.ferienblock.startDate|date('d.M.Y') }}
                                             - {{ f.ferienblock.endDate|date('d.M.Y') }}<br/>
-                                            {% trans %}Preis{% endtrans %}: {{ f.preis|number_format(2,',','.') }} €<br/>
-                                            {% trans %}Betreuende Organisation{% endtrans %}: {{ f.ferienblock.organisation.name }}<br/>
-                                            <a target="_blank" href={{ path('workflow_datenschutz', {'org_id':f.ferienblock.organisation.id, 'slug':stadt.slug}) }}>{% trans %}Datenschutzhinweis{% endtrans %} {{ f.ferienblock.organisation.name }}</a><br/>
-                                            {% endfor %}
-                                        </td>
+                                            {% trans %}Preis{% endtrans %}: {{ f.preis|number_format(2,',','.') }} €
+                                            <br/>
+                                            {% trans %}Betreuende Organisation{% endtrans %}: {{ f.ferienblock.organisation.name }}
+                                            <br/>
+                                            <a target="_blank"
+                                               href={{ path('workflow_datenschutz', {'org_id':f.ferienblock.organisation.id, 'slug':stadt.slug}) }}>{% trans %}Datenschutzhinweis{% endtrans %} {{ f.ferienblock.organisation.name }}</a>
+                                            <br/>
+                                        {% endfor %}
+                                    </td>
 
                                 </tr>
 
@@ -213,20 +218,27 @@
     </div>
 
 
-
     <div class="form-check">
         <input id="checkboxAgb" type="checkbox" class="checkboxSelect form-check-input" name="AGB" value="AGB">
         <label class="form-check-label" for="checkboxAgb"><a target="_blank"
                                                              href={{ path('workflow_agb', {'slug':stadt.slug}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die allgemeinen Vertragsbedingungen der %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese.{% endtrans %}</a></label>
     </div>
 
-    <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz"
-           value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}
-    <br>
-    <div>
-        <input id="checkboxAgb" type="checkbox" class="checkboxSelect" name="AGB" value="AGB"> <a target="_blank"
-                                                                                                  href={{ path('workflow_agb', {'slug':stadt.slug}) }}> {% trans with {'%stadt%':stadt.name} %}Ich habe die allgemeinen Geschäftsbedingungen der %stadt% zur Ferienbetreuung gelesen und akzeptiere diese{% endtrans %}</a><br>
+    <div class="form-check">
+        <input id="checkboxDatenschutzOrg" type="checkbox" class="checkboxSelect form-check-input" name="DatenschutzOrg"
+               value="Datenschutzhinweis">
+        <label class="form-check-label" for="checkboxDatenschutzOrg">
+        {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}
+        </label>
     </div>
+    <div class="form-check">
+        <input id="checkboxAgbStadt" type="checkbox" class="checkboxSelect form-check-input" name="AGB" value="AGBStadt">
+        <label class="form-check-label" for="checkboxAgbStadt">
+        <a target="_blank" href={{ path('workflow_agb', {'slug':stadt.slug}) }}>
+            {% trans with {'%stadt%':stadt.name} %}Ich habe die allgemeinen Geschäftsbedingungen der %stadt% zur Ferienbetreuung gelesen und akzeptiere diese{% endtrans %}</a>
+        </label>
+    </div>
+
     <button class="btn btn-outline-primary sendButton" disabled>{% trans %}Absenden{% endtrans %}</button>
 
 {% endblock %}

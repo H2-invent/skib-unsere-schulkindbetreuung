@@ -3,8 +3,10 @@
 
 namespace App\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity
@@ -43,11 +45,57 @@ class User extends BaseUser
      */
     private $birthday;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $appToken;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $confirmationTokenApp;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $appCommunicationToken;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $appDetectionToken;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $AppImei;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $appOS;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $appDevice;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $appSettingsSaved = false;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Schule::class, inversedBy="users")
+     */
+    private $schulen;
+
     public function __construct()
     {
         parent::__construct();
 // your own logic
-    }
+
+$this->schulen = new ArrayCollection();    }
 
     public function getVorname(): ?string
     {
@@ -110,6 +158,128 @@ class User extends BaseUser
     public function setOrganisation(?Organisation $organisation): self
     {
         $this->organisation = $organisation;
+
+        return $this;
+    }
+
+    public function getAppToken(): ?string
+    {
+        return $this->appToken;
+    }
+
+    public function setAppToken(?string $appToken): self
+    {
+        $this->appToken = $appToken;
+
+        return $this;
+    }
+
+    public function getConfirmationTokenApp(): ?string
+    {
+        return $this->confirmationTokenApp;
+    }
+
+    public function setConfirmationTokenApp(?string $confirmationTokenApp): self
+    {
+        $this->confirmationTokenApp = $confirmationTokenApp;
+
+        return $this;
+    }
+
+    public function getAppCommunicationToken(): ?string
+    {
+        return $this->appCommunicationToken;
+    }
+
+    public function setAppCommunicationToken(?string $appCommunicationToken): self
+    {
+        $this->appCommunicationToken = $appCommunicationToken;
+
+        return $this;
+    }
+
+    public function getAppDetectionToken(): ?string
+    {
+        return $this->appDetectionToken;
+    }
+
+    public function setAppDetectionToken(?string $appDetectionToken): self
+    {
+        $this->appDetectionToken = $appDetectionToken;
+
+        return $this;
+    }
+
+    public function getAppImei(): ?string
+    {
+        return $this->AppImei;
+    }
+
+    public function setAppImei(?string $AppImei): self
+    {
+        $this->AppImei = $AppImei;
+
+        return $this;
+    }
+
+    public function getAppOS(): ?string
+    {
+        return $this->appOS;
+    }
+
+    public function setAppOS(?string $appOS): self
+    {
+        $this->appOS = $appOS;
+
+        return $this;
+    }
+
+    public function getAppDevice(): ?string
+    {
+        return $this->appDevice;
+    }
+
+    public function setAppDevice(?string $appDevice): self
+    {
+        $this->appDevice = $appDevice;
+
+        return $this;
+    }
+
+    public function getAppSettingsSaved(): ?bool
+    {
+        return $this->appSettingsSaved;
+    }
+
+    public function setAppSettingsSaved(bool $appSettingsSaved): self
+    {
+        $this->appSettingsSaved = $appSettingsSaved;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Schule[]
+     */
+    public function getSchulen(): Collection
+    {
+        return $this->schulen;
+    }
+
+    public function addSchulen(Schule $schulen): self
+    {
+        if (!$this->schulen->contains($schulen)) {
+            $this->schulen[] = $schulen;
+        }
+
+        return $this;
+    }
+
+    public function removeSchulen(Schule $schulen): self
+    {
+        if ($this->schulen->contains($schulen)) {
+            $this->schulen->removeElement($schulen);
+        }
 
         return $this;
     }
