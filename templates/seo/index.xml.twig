@@ -154,7 +154,7 @@
                         <loc>{{ absolute_url(path('organisation_profil',{'slug':o.slug}| merge({'_locale':l})))|replace({"http://":"https://"}) }}</loc>
                         {% for l in loc %}
                             <xhtml:link rel="alternate" hreflang="{{ l }}"
-                                        href="{{ absolute_url(path('workflow_datenschutz',{'slug':s.slug,'org_id':o.id}| merge({'_locale':l})))|replace({"http://":"https://"}) }}"/>
+                                        href="{{ absolute_url(path('organisation_profil',{'slug':o.slug}| merge({'_locale':l})))|replace({"http://":"https://"}) }}"/>
                         {% endfor %}
                         <lastmod>{{ date|date('Y-m-d') }}</lastmod>
                         <priority>0.2</priority>
