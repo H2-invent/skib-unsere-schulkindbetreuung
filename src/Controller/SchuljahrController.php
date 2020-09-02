@@ -46,11 +46,13 @@ class SchuljahrController extends AbstractController
 
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
-            $city = $form->getData();
-            $errors = $validator->validate($city);
+            $activity = $form->getData();
+
+            $errors = $validator->validate($activity);
             if(count($errors)== 0) {
+                $activity->setAnmeldeEnde($activity->getAnmeldeEnde()->setTime(23,59,59));
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($city);
+                $em->persist($activity);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
                 return $this->redirectToRoute('city_admin_schuljahr_anzeige',array('id'=>$stadt->getId(),'snack'=>$text));
@@ -77,11 +79,12 @@ class SchuljahrController extends AbstractController
 
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
-            $city = $form->getData();
-            $errors = $validator->validate($city);
+            $activity = $form->getData();
+            $errors = $validator->validate($activity);
             if(count($errors)== 0) {
+                $activity->setAnmeldeEnde($activity->getAnmeldeEnde()->setTime(23,59,59));
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($city);
+                $em->persist($activity);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
                 return $this->redirectToRoute('city_admin_schuljahr_anzeige',array('id'=>$activity->getStadt()->getId(),'snack'=>$text));

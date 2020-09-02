@@ -116,6 +116,7 @@ class LoerrachWorkflowController extends AbstractController
         // Load all schools from the city into the controller as $schulen
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
+        $isEdit = false;
         if ($schuljahr === null) {
             return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
@@ -130,6 +131,7 @@ class LoerrachWorkflowController extends AbstractController
         if ($request->cookies->get('KindID')) {
             $cookie_kind = explode('.', $request->cookies->get('KindID'));
             $kinder = $this->getDoctrine()->getRepository(Kind::class)->findBy(array('id' => $cookie_kind[0]));
+            $isEdit = true;
         } else {
             $kinder = $adresse->getKinds()->toArray();
         }
@@ -138,7 +140,7 @@ class LoerrachWorkflowController extends AbstractController
         foreach ($kinder as $data) {
             $renderKinder[$data->getSchule()->getId()][] = $data;
         }
-        return $this->render('workflow/loerrach/schulen.html.twig', array('schule' => $schule, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $renderKinder));
+        return $this->render('workflow/loerrach/schulen.html.twig', array('isEdit'=>$isEdit,'schule' => $schule, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $renderKinder));
     }
 
     /**

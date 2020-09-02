@@ -82,8 +82,5 @@ class WorkflowAbschluss
         $this->em->persist($adresse);
         $this->em->persist($adressCopy);
         $this->em->flush();
-
-
     }
-
 }

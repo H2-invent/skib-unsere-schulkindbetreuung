@@ -92,6 +92,7 @@ class ChildSearchService
 
         $query = $qb->getQuery();
         $kinder = $query->getResult();
+
         return $kinder;
 
     }
