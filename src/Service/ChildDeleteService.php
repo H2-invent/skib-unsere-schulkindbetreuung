@@ -57,6 +57,8 @@ class ChildDeleteService
             $this->em->remove($kindAct);
             $kindClone = $this->em->getRepository(Kind::class)->findOneBy(array('saved'=>false,'fin'=>false,'tracing'=>$kind->getTracing()));
             $this->em->remove($kindClone);
+            $parentsNew->setSecCode($parents->getSecCode());
+            $this->em->persist($parentsNew);
             $this->em->flush();
             $this->sendEmail($kind->getEltern(), $kind, $kind->getSchule()->getOrganisation());
             return true;
