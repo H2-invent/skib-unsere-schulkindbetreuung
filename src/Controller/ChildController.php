@@ -95,7 +95,14 @@ class ChildController extends AbstractController
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $parameter = $request->request->all();
+        $parameter = null;
+        if ($request->isMethod('POST')) {
+            $parameter = $request->request->all();
+        }else{
+            $parameter = $request->query->all();
+        }
+
+
         $text = $translator->trans('Kinder betreut vom Träger %organisation%', array('%organisation%' => $organisation->getName()));
         if ($request->get('schule')) {
             $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule'));
@@ -121,6 +128,7 @@ class ChildController extends AbstractController
         if ($request->get('print')) {
 
             $fileName = (new \DateTime())->format('d.m.Y_H.i');
+
             return $printService->printChildList($kinderU, $organisation, $text, $fileName, $TCPDFController, 'D');
 
         } elseif ($request->get('spread')) {
