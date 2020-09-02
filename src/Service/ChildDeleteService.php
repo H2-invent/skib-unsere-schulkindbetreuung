@@ -36,20 +36,27 @@ class ChildDeleteService
     private $translator;
     private $templating;
     private $mailer;
-
-    public function __construct(MailerService $mailer, Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager)
+    private $abschluss;
+    public function __construct(WorkflowAbschluss $workflowAbschluss, MailerService $mailer, Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
         $this->translator = $translator;
         $this->templating = $environment;
         $this->mailer = $mailer;
+        $this->abschluss = $workflowAbschluss;
     }
 
     public function deleteChild(Kind $kind)
     {
         try {
-            $kind->setFin(false);
-            $this->em->persist($kind);
+            $parents = $kind->getEltern();
+            $parentsNew = $this->em->getRepository(Stammdaten::class)->findOneBy(array('fin'=>false,'saved'=>false,'tracing'=>$parents->getTracing()));
+            $kinds = $parentsNew->getKinds();
+            $this->abschluss->abschluss($parentsNew,$kinds);
+            $kindAct = $this->em->getRepository(Kind::class)->findOneBy(array('saved'=>true,'fin'=>true,'tracing'=>$kind->getTracing()));
+            $this->em->remove($kindAct);
+            $kindClone = $this->em->getRepository(Kind::class)->findOneBy(array('saved'=>false,'fin'=>false,'tracing'=>$kind->getTracing()));
+            $this->em->remove($kindClone);
             $this->em->flush();
             $this->sendEmail($kind->getEltern(), $kind, $kind->getSchule()->getOrganisation());
             return true;
