@@ -15,6 +15,7 @@ parameters:
     osTicketUrl: '%env(osTicketUrl)%'
     osTicketApi: '%env(osTicketApi)%'
     wartung: '%env(WARTUNG)%'
+    noEmailOnDelete: '%env(NOEMAILONDELETE)%'
 
 
 services:

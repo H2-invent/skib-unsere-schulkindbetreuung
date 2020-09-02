@@ -37,13 +37,15 @@ class ChildDeleteService
     private $templating;
     private $mailer;
     private $abschluss;
-    public function __construct(WorkflowAbschluss $workflowAbschluss, MailerService $mailer, Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager)
+    private  $parameterBag;
+    public function __construct(ParameterBagInterface $parameterBag, WorkflowAbschluss $workflowAbschluss, MailerService $mailer, Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
         $this->translator = $translator;
         $this->templating = $environment;
         $this->mailer = $mailer;
         $this->abschluss = $workflowAbschluss;
+        $this->parameterBag = $parameterBag;
     }
 
     public function deleteChild(Kind $kind)
@@ -60,7 +62,10 @@ class ChildDeleteService
             $parentsNew->setSecCode($parents->getSecCode());
             $this->em->persist($parentsNew);
             $this->em->flush();
-            $this->sendEmail($kind->getEltern(), $kind, $kind->getSchule()->getOrganisation());
+            if($this->parameterBag->get('noEmailOnDelete') == 0){
+                $this->sendEmail($kind->getEltern(), $kind, $kind->getSchule()->getOrganisation());
+            }
+
             return true;
         } catch (\Exception $exception) {
             return false;
