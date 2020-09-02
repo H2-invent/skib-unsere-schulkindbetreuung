@@ -50,10 +50,10 @@
                                             <div class="card-body ">
                                                 <h5 class="card-title">{{ s.name }}</h5>
                                                 <p class="card-text">{{ s.infoText }}</p>
-
-                                                <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id,'slug':stadt.slug}) }}"
-                                                   class="waves-effect loadContent btn btn-outline-primary">{% trans %}Kind anmelden{% endtrans %}</a>
-
+                                                {% if isEdit == false %}
+                                                    <a href="{{ path('loerrach_workflow_schulen_kind_neu', {'schule_id':s.id,'slug':stadt.slug}) }}"
+                                                       class="waves-effect loadContent btn btn-outline-primary">{% trans %}Kind anmelden{% endtrans %}</a>
+                                                {% endif %}
                                                 <br>
                                                 {% if kinder[s.id] is defined and kinder[s.id] is not null %}
                                                     {% for k in kinder[s.id] %}
