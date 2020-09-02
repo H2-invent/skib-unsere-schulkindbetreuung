@@ -21,7 +21,7 @@
                                 <th>{% trans %}Severety{% endtrans %}</th>
                                 <th>{% trans %}Zeit{% endtrans %}</th>
                                 <th>{% trans %}Description{% endtrans %}</th>
-
+                                <th>{% trans %}Betreff{% endtrans %}</th>
                                 <th>{% trans %}Message{% endtrans %}</th>
                             </tr>
                             </thead>
@@ -48,7 +48,7 @@
                                     <td>{{ m.severity }}</td>
                                     <td>{{ m.createdAt|date('d.m.Y-H:i:s') }}</td>
                                     <td>{{ m.description }}</td>
-
+                                    <td>{{ m.payload|json_decode['event-data']['message']['headers']['subject'] }}</td>
                                     <td>{{ m.message|nl2br }}</td>
                                 </tr>
                             {% endfor %}
