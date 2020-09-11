@@ -64,13 +64,19 @@ class SepaCreateService
          *                                             Suche an welchem Created At kleiner als t0 und Ended at >t0 OR Ended_at == 0
          *                                                  Objekt mit Created_at2 wird ausgewählt
          */
+
+        /*     Createdat1            Createdat2  Ended_at1     von    bis  Created_at3    Ended_at2   Ended_at3=null
+         * =====|=====================|===========|============|======|========|=============|=============>>>>>>>>
+         *                                             Suche an welchem Created At kleiner als t0 und Ended at >t0 OR Ended_at == 0
+         *                                                  Objekt mit Created_at2 wird ausgewählt
+         */
         $qb->innerJoin('s.kinds', 'k') // suche alles stammdaten
         ->innerJoin('k.zeitblocks', 'zeitblocks')// welche
         ->innerJoin('zeitblocks.schule', 'schule')
             ->andWhere('schule.organisation = :organisation')// wo die schule meine organisation ist
             ->andWhere('zeitblocks.active = :active')// suche alle Blöcke, wo im aktuellen SChuljahr sind
             ->andWhere('s.saved = 1')// alle Eltern sie das flag gesaved haben
-            ->andWhere('s.created_at <= :bis')// created ist vor dem jetzigen Zeitpunkt //Todo: Hier müssten wir nochmal schauen. Habe auf bis von von geändert
+            ->andWhere('s.created_at <= :von')// created ist vor dem jetzigen Zeitpunkt
             ->andWhere(
                 $qb->expr()->orX(
                     $qb->expr()->isNull('s.endedAt'),// ended ist noch offen
@@ -79,8 +85,8 @@ class SepaCreateService
             )
             ->setParameter('active', $active)
             ->setParameter('organisation', $sepa->getOrganisation())
-            ->setParameter('von', $sepa->getVon())
-            ->setParameter('bis', $sepa->getBis());
+            ->setParameter('von', $sepa->getVon());
+
         $eltern = $qb->getQuery()->getResult();
 
         $rechnungen = array();
