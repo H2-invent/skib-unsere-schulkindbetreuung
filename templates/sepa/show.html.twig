@@ -34,8 +34,8 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     {{ form_label(form.von) }}
-                                                    {{ form_widget(form.von.day, {'attr': {'class': 'd-none'}}) }}
-                                                    {{ form_widget(form.von.month) }}
+                                                    {{ form_widget(form.von.day, {'attr': {'class': 'd-none '}}) }}
+                                                    {{ form_widget(form.von.month, {'attr': {'class': 'dropdown '}}) }}
 
                                                     {{ form_widget(form.von.year) }}
                                                 </div>
@@ -48,7 +48,7 @@
                                                     {{ form_widget(form.einzugsDatum.year) }}
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row mt-4">
                                                 <div class="col-lg-12">
                                                     {{ form_row(form.save) }}
                                                 </div>

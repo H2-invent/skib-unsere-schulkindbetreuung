@@ -43,9 +43,13 @@ class SepaCreateService
             return $this->translator->trans('Fehler: Bis-Datum liegt vor dem Von-Datum');
         }
 
-        if ($sepa->getBis() > $today) {
-            return $this->translator->trans('Fehler: Es sind nur Abrechnungen für Vergangene Monate zulässig');
+        $controleDate = clone $today;
+        $controleDate->modify('+2 month');
+        $controleDate->modify('first day of this month');
+        if ($sepa->getBis() > $controleDate) {
+            return $this->translator->trans('Fehler: Es sind nur Abrechnungen für vergangene, diesen und nächsten Monat zulässig');
         }
+
         if (!$active) {
             return $this->translator->trans('Fehler: Kein Schuljahr in diesem Zeitraum gefunden');
         }
@@ -66,7 +70,7 @@ class SepaCreateService
             ->andWhere('schule.organisation = :organisation')// wo die schule meine organisation ist
             ->andWhere('zeitblocks.active = :active')// suche alle Blöcke, wo im aktuellen SChuljahr sind
             ->andWhere('s.saved = 1')// alle Eltern sie das flag gesaved haben
-            ->andWhere('s.created_at <= :von')// created ist vor dem jetzigen Zeitpunkt
+            ->andWhere('s.created_at <= :bis')// created ist vor dem jetzigen Zeitpunkt //Todo: Hier müssten wir nochmal schauen. Habe auf bis von von geändert
             ->andWhere(
                 $qb->expr()->orX(
                     $qb->expr()->isNull('s.endedAt'),// ended ist noch offen
@@ -75,7 +79,8 @@ class SepaCreateService
             )
             ->setParameter('active', $active)
             ->setParameter('organisation', $sepa->getOrganisation())
-            ->setParameter('von', $sepa->getVon());
+            ->setParameter('von', $sepa->getVon())
+            ->setParameter('bis', $sepa->getBis());
         $eltern = $qb->getQuery()->getResult();
 
         $rechnungen = array();
