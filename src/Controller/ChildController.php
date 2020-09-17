@@ -100,7 +100,7 @@ class ChildController extends AbstractController
         $parameter = null;
         if ($request->isMethod('POST')) {
             $parameter = $request->request->all();
-        }else{
+        } else {
             $parameter = $request->query->all();
         }
 
@@ -124,7 +124,7 @@ class ChildController extends AbstractController
             $text .= $translator->trans(' in der Klasse: %klasse%', array('%klasse%' => $request->get('klasse')));
         }
 
-        $kinderU = $childSearchService->searchChild($parameter,$organisation,false,$this->getUser());
+        $kinderU = $childSearchService->searchChild($parameter, $organisation, false, $this->getUser());
 
 
         if ($request->get('print')) {
@@ -155,15 +155,16 @@ class ChildController extends AbstractController
         if ($kind->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $title = $translator->trans('Email mit Sicherheitscode');
-        $content = $this->renderView('email/resendSecCode.html.twig', array('eltern' => $kind->getEltern(), 'stadt'=>$kind->getSchule()->getStadt()));
         try {
-            $mailerService->sendEmail($kind->getSchule()->getOrganisation()->getName(),$kind->getSchule()->getOrganisation()->getEmail(),$kind->getEltern()->getEmail(),$title,$content);
+            $title = $translator->trans('Email mit Sicherheitscode');
+            $content = $this->renderView('email/resendSecCode.html.twig', array('eltern' => $kind->getEltern(), 'stadt' => $kind->getSchule()->getStadt()));
+
+            $mailerService->sendEmail($kind->getSchule()->getOrganisation()->getName(), $kind->getSchule()->getOrganisation()->getEmail(), $kind->getEltern()->getEmail(), $title, $content);
             $text = $translator->trans('Sicherheitscode erneut zugesendet');
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             $text = $translator->trans('Sicherheitscode konnte nicht erneut zugesendet');
         }
 
-        return $this->redirectToRoute('child_show',['id'=>$kind->getSchule()->getOrganisation()->getId(),'snack'=>$text]);
+        return $this->redirectToRoute('child_show', ['id' => $kind->getSchule()->getOrganisation()->getId(), 'snack' => $text]);
     }
 }
