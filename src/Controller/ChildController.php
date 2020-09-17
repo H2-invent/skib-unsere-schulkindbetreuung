@@ -8,8 +8,10 @@ use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Service\ChildExcelService;
 use App\Service\ChildSearchService;
+use App\Service\MailerService;
 use App\Service\PrintService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
@@ -141,5 +143,27 @@ class ChildController extends AbstractController
         }
 
 
+    }
+
+    /**
+     * @Route("/org_child/resend", name="child_resend_SecCode")
+     */
+    public function resendSecCodeChild(Request $request, TranslatorInterface $translator, PrintService $printService, TCPDFController $TCPDFController, MailerService $mailerService)
+    {
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
+
+        if ($kind->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        $title = $translator->trans('Email mit Sicherheitscode');
+        $content = $this->renderView('email/resendSecCode.html.twig', array('eltern' => $kind->getEltern(), 'stadt'=>$kind->getSchule()->getStadt()));
+        try {
+            $mailerService->sendEmail($kind->getSchule()->getOrganisation()->getName(),$kind->getSchule()->getOrganisation()->getEmail(),$kind->getEltern()->getEmail(),$title,$content);
+            $text = $translator->trans('Sicherheitscode erneut zugesendet');
+        }catch (\Exception $exception) {
+            $text = $translator->trans('Sicherheitscode konnte nicht erneut zugesendet');
+        }
+
+        return $this->redirectToRoute('child_show',['id'=>$kind->getSchule()->getOrganisation()->getId(),'snack'=>$text]);
     }
 }
