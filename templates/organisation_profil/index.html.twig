@@ -10,29 +10,21 @@
     <div class="example-wrapper">
 
         <div class="row">
-            <div class="col-md-6 text-center mb-3">
+            <div class="offset-md-6 col-md-6 text-center mb-3">
                 {% if organisation.image is not empty %}
                     <img src="{{ vich_uploader_asset(organisation,'imageFile') }}" class="rounded img-fluid"
-                          alt="{{ organisation.name }} Logo" style="max-width: 90%; max-height: 200px">
+                         alt="{{ organisation.name }} Logo" style="max-width: 90%; max-height: 200px">
                 {% else %}
-                    <img class="overlay skib-card-image img-fluid rounded" src="{{ asset('images/logo-breit-mittig.png') }}" alt="Unsere SKiB" style="max-width: 90%; max-height: 200px">
+                    <img class="overlay skib-card-image img-fluid rounded"
+                         src="{{ asset('images/logo-breit-mittig.png') }}" alt="Unsere SKiB"
+                         style="max-width: 90%; max-height: 200px">
                 {% endif %}
 
-
-
-                <h4 class="mt-4 text-md-left">
-                    {% trans %}Angebote{% endtrans %} der {{ organisation.name }}
-                </h4>
-
-                <p class="text-center text-md-left">
-                    {% if organisation.ferienprogramm %}
-                    {% trans with {'%org':organisation.name} %} %org bietet ein Ferienprogramm an{% endtrans %}<br>
-                    {% endif %}
-                    {% trans with {'%org':organisation.name} %} %org bietet Schulkindbetreuung an{% endtrans %}
-                </p>
             </div>
-            <div class="col-md-6">
+        </div>
+        <div class="row mt-5">
 
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
                         <h3>{{ 'Kontakt'|trans }}</h3>
@@ -107,9 +99,9 @@
                         </ul>
                     </div>
                 </div>
-                <div class="mt-5">
-                    {{ organisation.infoText }}
-                </div>
+            </div>
+            <div class="col-md-6 mt-5">
+                {{ organisation.infoText|nl2br }}
             </div>
         </div>
     </div>
