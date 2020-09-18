@@ -6,6 +6,7 @@ use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
+use App\Entity\Zeitblock;
 use App\Service\ChildExcelService;
 use App\Service\ChildSearchService;
 use App\Service\MailerService;
@@ -104,6 +105,7 @@ class ChildController extends AbstractController
             $parameter = $request->query->all();
         }
 
+        $fileName = (new \DateTime())->format('d.m.Y_H.i');
 
         $text = $translator->trans('Kinder betreut vom Träger %organisation%', array('%organisation%' => $organisation->getName()));
         if ($request->get('schule')) {
@@ -118,7 +120,9 @@ class ChildController extends AbstractController
             $text .= $translator->trans(' am Wochentag %wochentag%', array('%wochentag%' => $this->wochentag[$request->get('wochentag')]));
         }
         if ($request->get('block')) {
-            $text .= $translator->trans(' im ausgewählten Betreuungszeitfenster');
+            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block'));
+            $fileName = $block->getSchule()->getName() . '-' . $block->getWochentagString() . '-' . $block->getVon()->format('H:i') . '-' . $block->getBis()->format('H:i');
+            $text .= $translator->trans(' am %d% von %s% bis %e% Uhr', array('%d%' => $block->getWochentagString(), '%s%' =>$block->getVon()->format('H:i'), '%e%' =>$block->getBis()->format('H:i') ));
         }
         if ($request->get('klasse')) {
             $text .= $translator->trans(' in der Klasse: %klasse%', array('%klasse%' => $request->get('klasse')));
@@ -128,13 +132,10 @@ class ChildController extends AbstractController
 
 
         if ($request->get('print')) {
-
-            $fileName = (new \DateTime())->format('d.m.Y_H.i');
-
             return $printService->printChildList($kinderU, $organisation, $text, $fileName, $TCPDFController, 'D');
 
         } elseif ($request->get('spread')) {
-            return $this->file($childExcelService->generateExcel($kinderU), 'Kinder.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
+            return $this->file($childExcelService->generateExcel($kinderU), $fileName . '.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
         } else {
             return $this->render('child/childTable.html.twig', [
                 'kinder' => $kinderU,
