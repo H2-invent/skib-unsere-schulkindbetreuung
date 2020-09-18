@@ -105,7 +105,7 @@ class ChildController extends AbstractController
             $parameter = $request->query->all();
         }
 
-        $fileName = (new \DateTime())->format('d.m.Y_H.i');
+        $fileName = $translator->trans('Kinder') .' - ' . (new \DateTime())->format('d.m.Y_H.i');
 
         $text = $translator->trans('Kinder betreut vom Träger %organisation%', array('%organisation%' => $organisation->getName()));
         if ($request->get('schule')) {
