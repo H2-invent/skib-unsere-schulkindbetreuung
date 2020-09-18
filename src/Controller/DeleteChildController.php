@@ -30,7 +30,7 @@ class DeleteChildController extends AbstractController
         if ($child->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $res = $this->deleteChildService->deleteChild($child)?$this->translator->trans('Erfolgreich gelöscht'):$this->translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+        $res = $this->deleteChildService->deleteChild($child,$this->getUser())?$this->translator->trans('Erfolgreich gelöscht'):$this->translator->trans('Fehler. Bitte versuchen Sie es erneut.');
         return new JsonResponse(array('redirect'=>$this->generateUrl('child_show',array('id'=>$child->getSchule()->getOrganisation()->getId(),'snack'=>$res))));
     }
 }
