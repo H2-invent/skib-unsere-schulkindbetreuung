@@ -148,7 +148,7 @@ class ChildController extends AbstractController
     /**
      * @Route("/org_child/resend", name="child_resend_SecCode")
      */
-    public function resendSecCodeChild(Request $request, TranslatorInterface $translator, PrintService $printService, TCPDFController $TCPDFController, MailerService $mailerService)
+    public function resendSecCodeChild(Request $request, TranslatorInterface $translator, MailerService $mailerService)
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
 
