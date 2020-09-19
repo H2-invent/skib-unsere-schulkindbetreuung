@@ -147,7 +147,7 @@ class ChildController extends AbstractController
     }
 
     /**
-     * @Route("/org_child/resend", name="child_resend_SecCode")
+     * @Route("/org_child/change/resend", name="child_resend_SecCode")
      */
     public function resendSecCodeChild(Request $request, TranslatorInterface $translator, MailerService $mailerService)
     {
@@ -159,13 +159,11 @@ class ChildController extends AbstractController
         try {
             $title = $translator->trans('Email mit Sicherheitscode');
             $content = $this->renderView('email/resendSecCode.html.twig', array('eltern' => $kind->getEltern(), 'stadt' => $kind->getSchule()->getStadt()));
-
             $mailerService->sendEmail($kind->getSchule()->getOrganisation()->getName(), $kind->getSchule()->getOrganisation()->getEmail(), $kind->getEltern()->getEmail(), $title, $content);
             $text = $translator->trans('Sicherheitscode erneut zugesendet');
         } catch (\Exception $exception) {
             $text = $translator->trans('Sicherheitscode konnte nicht erneut zugesendet');
         }
-
         return $this->redirectToRoute('child_show', ['id' => $kind->getSchule()->getOrganisation()->getId(), 'snack' => $text]);
     }
 }
