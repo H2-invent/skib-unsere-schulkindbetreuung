@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Rechnung;
 use App\Entity\Sepa;
 use App\Service\PrintRechnungService;
+use App\Service\SepaCreateService;
 use App\Service\SepaExcel;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,13 +19,14 @@ class SepaDetailController extends AbstractController
     /**
      * @Route("/org_accounting/sepa/detail", name="accounting_sepa_detail")
      */
-    public function index(Request $request)
+    public function index(Request $request,SepaCreateService $sepaCreateService)
     {
        $sepa = $this->getDoctrine()->getRepository(Sepa::class)->find($request->get('id'));
        if($sepa->getOrganisation() != $this->getUser()->getOrganisation()){
            throw new \Exception('Wrong Organisation');
        }
-       return $this->render('sepa_detail/detail.html.twig',array('sepa'=>$sepa));
+       $stammdatenChange = $sepaCreateService->diffToThisMonth($sepa);
+       return $this->render('sepa_detail/detail.html.twig',array('sepa'=>$sepa,'diffs'=>$stammdatenChange));
     }
     /**
      * @Route("/org_accounting/print/detail", name="accounting_sepa_print")

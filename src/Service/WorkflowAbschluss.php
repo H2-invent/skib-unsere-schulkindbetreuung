@@ -31,6 +31,7 @@ class WorkflowAbschluss
             $adresse->setTracing(md5(uniqid('stammdaten', true)));
         }
         $kundennummern = array();
+        $adresse->setCreatedAt(new \DateTime());
         if ($adresse->getHistory() > 0) {// es gibt bereits eine alte Historie, diese bsitzt schon ein Fin
             $adresseOld = $this->em->getRepository(Stammdaten::class)->findOneBy(array('tracing' => $adresse->getTracing(), 'fin' => true));
             $adresseOld->setFin(false);
@@ -39,7 +40,7 @@ class WorkflowAbschluss
             $kundennummern = $adresseOld->getKundennummerns();
         }
 
-        $adresse->setCreatedAt(new \DateTime());
+
         foreach ($kundennummern as $data) {
             $kn = clone $data;
             $kn->setStammdaten($adresse);
