@@ -10,6 +10,7 @@ use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
+use function Doctrine\ORM\QueryBuilder;
 
 
 // <- Add this
@@ -43,9 +44,13 @@ class SepaCreateService
             return $this->translator->trans('Fehler: Bis-Datum liegt vor dem Von-Datum');
         }
 
-        if ($sepa->getBis() > $today) {
-            return $this->translator->trans('Fehler: Es sind nur Abrechnungen für Vergangene Monate zulässig');
+        $controleDate = clone $today;
+        $controleDate->modify('+1 month');
+        $controleDate->modify('first day of this month');
+        if ($sepa->getBis() > $controleDate) {
+            return $this->translator->trans('Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig');
         }
+
         if (!$active) {
             return $this->translator->trans('Fehler: Kein Schuljahr in diesem Zeitraum gefunden');
         }
@@ -60,6 +65,8 @@ class SepaCreateService
          *                                             Suche an welchem Created At kleiner als t0 und Ended at >t0 OR Ended_at == 0
          *                                                  Objekt mit Created_at2 wird ausgewählt
          */
+
+
         $qb->innerJoin('s.kinds', 'k') // suche alles stammdaten
         ->innerJoin('k.zeitblocks', 'zeitblocks')// welche
         ->innerJoin('zeitblocks.schule', 'schule')
@@ -76,6 +83,7 @@ class SepaCreateService
             ->setParameter('active', $active)
             ->setParameter('organisation', $sepa->getOrganisation())
             ->setParameter('von', $sepa->getVon());
+
         $eltern = $qb->getQuery()->getResult();
 
         $rechnungen = array();
@@ -194,6 +202,51 @@ class SepaCreateService
         $mailContent = $this->environment->render('email/rechnungEmail.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
         $betreff = $this->translator->trans('Rechnung') . ' ' . $rechnung->getRechnungsnummer();
         $this->mailerService->sendEmail($organisation->getName(), $organisation->getEmail(), $rechnung->getStammdaten()->getEmail(), $betreff, $mailContent, $attachment);
+
+    }
+
+    public function diffToThisMonth(Sepa $sepa)
+    {
+        $active = $this->em->getRepository(Active::class)->findSchuleBetweentwoDates($sepa->getVon(), $sepa->getBis(), $sepa->getOrganisation()->getStadt());
+
+        $qb = $this->em->getRepository(Stammdaten::class)->createQueryBuilder('s');
+
+        $qb->innerJoin('s.kinds', 'k') // suche alles stammdaten
+        ->innerJoin('k.zeitblocks', 'zeitblocks')// welche
+        ->innerJoin('zeitblocks.schule', 'schule')
+            ->andWhere('schule.organisation = :organisation')// wo die schule meine organisation ist
+            ->andWhere('zeitblocks.active = :active')// suche alle Blöcke, wo im aktuellen SChuljahr sind
+            ->andWhere('s.fin = 1')// alle Eltern sie das flag fin haben
+            ->andWhere(
+                $qb->expr()->between('s.created_at', ':von', ':bis')
+            )// created ist vor dem jetzigen Zeitpunkt
+            ->setParameter('active', $active)
+            ->setParameter('organisation', $sepa->getOrganisation())
+            ->setParameter('von', $sepa->getVon())
+            ->setParameter('bis', $sepa->getBis());
+
+        $eltern = $qb->getQuery()->getResult();
+
+
+        $rechnungen = array();
+        foreach ($eltern as $data){
+            $rechnungTmp = new Rechnung();
+            $rechnungTmp->setBis($sepa->getBis());
+            $rechnungTmp->setVon($sepa->getVon());
+            $rechnungTmp->setCreatedAt(new \DateTime());
+            $rechnungTmp->setStammdaten($data);
+            $summe = 0.0;
+            foreach ($data->getKinds() as $data2){
+                if ($data2->getSchule()->getOrganisation() == $sepa->getOrganisation()){
+                    $summe += $data2->getPreisforBetreuung();
+                    $rechnungTmp->addKinder($data2);
+                }
+            }
+            $rechnungTmp->setSumme($summe);
+            $rechnungen[] = $rechnungTmp;
+        }
+
+        return $rechnungen;
 
     }
 

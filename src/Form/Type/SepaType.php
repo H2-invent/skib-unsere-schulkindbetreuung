@@ -29,9 +29,9 @@ class SepaType extends AbstractType
 
         $today = new \DateTime();
         $firstDay = clone $today;
-        $firstDay->modify('first day of last month');
+        $firstDay->modify('first day of this month');
         $lastDay = clone $today;
-        $lastDay->modify('last day of last month');
+        $lastDay->modify('last day of this month');
         $einzugsdatum = $today->modify('+6 days');
         $einzugsdatum = $einzugsdatum->modify('next monday');
         $builder
