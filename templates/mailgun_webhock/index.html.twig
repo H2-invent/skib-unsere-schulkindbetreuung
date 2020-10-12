@@ -17,11 +17,12 @@
                             <tr>
                                 <th></th>
                                 <th>{% trans %}Name{% endtrans %}</th>
+                                <th>{% trans %}Absender{% endtrans %}</th>
                                 <th>{% trans %}Status{% endtrans %}</th>
                                 <th>{% trans %}Severety{% endtrans %}</th>
                                 <th>{% trans %}Zeit{% endtrans %}</th>
                                 <th>{% trans %}Description{% endtrans %}</th>
-
+                                <th>{% trans %}Betreff{% endtrans %}</th>
                                 <th>{% trans %}Message{% endtrans %}</th>
                             </tr>
                             </thead>
@@ -44,11 +45,12 @@
                                         </div>
                                     </td>
                                     <td>{{ m.reciever }}</td>
+                                    <td>{{ m.payload|json_decode['event-data']['message']['headers']['from'] }}</td>
                                     <td>{{ m.event }}</td>
                                     <td>{{ m.severity }}</td>
                                     <td>{{ m.createdAt|date('d.m.Y-H:i:s') }}</td>
                                     <td>{{ m.description }}</td>
-
+                                    <td>{{ m.payload|json_decode['event-data']['message']['headers']['subject'] }}</td>
                                     <td>{{ m.message|nl2br }}</td>
                                 </tr>
                             {% endfor %}

@@ -8,8 +8,11 @@ use App\Entity\Organisation;
 use App\Entity\Stadt;
 
 use App\Entity\Stammdaten;
+use App\Entity\User;
 use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -36,22 +39,41 @@ class ChildDeleteService
     private $translator;
     private $templating;
     private $mailer;
-
-    public function __construct(MailerService $mailer, Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager)
+    private $abschluss;
+    private  $parameterBag;
+    private $logger;
+    public function __construct(LoggerInterface $logger, ParameterBagInterface $parameterBag, WorkflowAbschluss $workflowAbschluss, MailerService $mailer, Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
         $this->translator = $translator;
         $this->templating = $environment;
         $this->mailer = $mailer;
+        $this->abschluss = $workflowAbschluss;
+        $this->parameterBag = $parameterBag;
+        $this->logger = $logger;
     }
 
-    public function deleteChild(Kind $kind)
+    public function deleteChild(Kind $kind,User $user)
     {
         try {
-            $kind->setFin(false);
-            $this->em->persist($kind);
+            $parents = $kind->getEltern();
+            $parentsNew = $this->em->getRepository(Stammdaten::class)->findOneBy(array('fin'=>false,'saved'=>false,'tracing'=>$parents->getTracing()));
+            $kinds = $parentsNew->getKinds();
+            $this->abschluss->abschluss($parentsNew,$kinds);
+            $kindAct = $this->em->getRepository(Kind::class)->findOneBy(array('saved'=>true,'fin'=>true,'tracing'=>$kind->getTracing()));
+            $this->em->remove($kindAct);
+            $kindClone = $this->em->getRepository(Kind::class)->findOneBy(array('saved'=>false,'fin'=>false,'tracing'=>$kind->getTracing()));
+            $this->em->remove($kindClone);
+            $parentsNew->setSecCode($parents->getSecCode());
+            $this->em->persist($parentsNew);
             $this->em->flush();
-            $this->sendEmail($kind->getEltern(), $kind, $kind->getSchule()->getOrganisation());
+            $this->logger->log(1,'DELETE CHILD '.$kind->getId());
+            $this->logger->log(1,'DELETE TRACING ID '.$kind->getTracing());
+            $this->logger->log(1,'DELETED FROM '.$user->getVorname() .' '.$user->getNachname());
+            if($this->parameterBag->get('noEmailOnDelete') == 0){
+                $this->sendEmail($kind->getEltern(), $kind, $kind->getSchule()->getOrganisation());
+            }
+
             return true;
         } catch (\Exception $exception) {
             return false;

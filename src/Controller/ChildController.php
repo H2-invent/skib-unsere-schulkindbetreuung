@@ -6,10 +6,13 @@ use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
+use App\Entity\Zeitblock;
 use App\Service\ChildExcelService;
 use App\Service\ChildSearchService;
+use App\Service\MailerService;
 use App\Service\PrintService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
@@ -95,7 +98,15 @@ class ChildController extends AbstractController
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $parameter = $request->request->all();
+        $parameter = null;
+        if ($request->isMethod('POST')) {
+            $parameter = $request->request->all();
+        } else {
+            $parameter = $request->query->all();
+        }
+
+        $fileName = $translator->trans('Kinder') .' - ' . (new \DateTime())->format('d.m.Y_H.i');
+
         $text = $translator->trans('Kinder betreut vom Träger %organisation%', array('%organisation%' => $organisation->getName()));
         if ($request->get('schule')) {
             $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule'));
@@ -109,22 +120,22 @@ class ChildController extends AbstractController
             $text .= $translator->trans(' am Wochentag %wochentag%', array('%wochentag%' => $this->wochentag[$request->get('wochentag')]));
         }
         if ($request->get('block')) {
-            $text .= $translator->trans(' im ausgewählten Betreuungszeitfenster');
+            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block'));
+            $fileName = $block->getSchule()->getName() . '-' . $block->getWochentagString() . '-' . $block->getVon()->format('H:i') . '-' . $block->getBis()->format('H:i');
+            $text .= $translator->trans(' am %d% von %s% bis %e% Uhr', array('%d%' => $block->getWochentagString(), '%s%' =>$block->getVon()->format('H:i'), '%e%' =>$block->getBis()->format('H:i') ));
         }
         if ($request->get('klasse')) {
             $text .= $translator->trans(' in der Klasse: %klasse%', array('%klasse%' => $request->get('klasse')));
         }
 
-        $kinderU = $childSearchService->searchChild($parameter,$organisation,false,$this->getUser());
+        $kinderU = $childSearchService->searchChild($parameter, $organisation, false, $this->getUser());
 
 
         if ($request->get('print')) {
-
-            $fileName = (new \DateTime())->format('d.m.Y_H.i');
             return $printService->printChildList($kinderU, $organisation, $text, $fileName, $TCPDFController, 'D');
 
         } elseif ($request->get('spread')) {
-            return $this->file($childExcelService->generateExcel($kinderU), 'Kinder.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
+            return $this->file($childExcelService->generateExcel($kinderU), $fileName . '.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
         } else {
             return $this->render('child/childTable.html.twig', [
                 'kinder' => $kinderU,
@@ -133,5 +144,26 @@ class ChildController extends AbstractController
         }
 
 
+    }
+
+    /**
+     * @Route("/org_child/change/resend", name="child_resend_SecCode")
+     */
+    public function resendSecCodeChild(Request $request, TranslatorInterface $translator, MailerService $mailerService)
+    {
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
+
+        if ($kind->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        try {
+            $title = $translator->trans('Email mit Sicherheitscode');
+            $content = $this->renderView('email/resendSecCode.html.twig', array('eltern' => $kind->getEltern(), 'stadt' => $kind->getSchule()->getStadt()));
+            $mailerService->sendEmail($kind->getSchule()->getOrganisation()->getName(), $kind->getSchule()->getOrganisation()->getEmail(), $kind->getEltern()->getEmail(), $title, $content);
+            $text = $translator->trans('Sicherheitscode erneut zugesendet');
+        } catch (\Exception $exception) {
+            $text = $translator->trans('Sicherheitscode konnte nicht erneut zugesendet');
+        }
+        return $this->redirectToRoute('child_show', ['id' => $kind->getSchule()->getOrganisation()->getId(), 'snack' => $text]);
     }
 }

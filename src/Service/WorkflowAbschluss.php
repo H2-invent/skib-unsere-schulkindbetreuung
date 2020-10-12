@@ -46,6 +46,7 @@ class WorkflowAbschluss
         }
         $this->em->flush();
 
+        $adresse->setCreatedAt(new \DateTime());
         foreach ($kundennummern as $data) {
             $kn = clone $data;
             $kn->setStammdaten($adresseAktuell);
