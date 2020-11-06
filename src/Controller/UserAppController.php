@@ -254,6 +254,7 @@ class UserAppController extends AbstractController
                     'name' => $kind->getNachname(),
                     'phone'=>$kind->getEltern()->getPhoneNumber(),
                     'emergency'=>$kind->getEltern()->getNotfallkontakt(),
+                    'parentsName'=>$kind->getEltern()->getVorname().' '.$kind->getEltern()->getName(),
                     'info' => array(
                         array('name' => 'Geburtstag', 'value' => $kind->getGeburtstag()->format('d.m.Y')),
                         array('name' => 'Eltern', 'value' => $kind->getEltern()->getVorname() . ' ' . $kind->getEltern()->getName()),
