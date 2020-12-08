@@ -25,7 +25,6 @@ class WorkflowAbschluss
     public
     function abschluss(Stammdaten $adresseAktuell, $kind)
     {
-        $adresseAktuell->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
 
         if (!$adresseAktuell->getTracing()) {
             $adresseAktuell->setTracing(md5(uniqid('stammdaten', true)));
@@ -45,6 +44,12 @@ class WorkflowAbschluss
             }
         }
         $this->em->flush();
+
+        if ($adresseAktuell->getHistory() === 0) {
+            $adresseAktuell->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
+        }else {
+            $adresseAktuell->setSecCode($adresseOld->getSecCode());
+        }
 
         foreach ($kundennummern as $data) {
             $kn = clone $data;
