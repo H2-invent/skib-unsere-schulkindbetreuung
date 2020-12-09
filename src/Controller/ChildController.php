@@ -55,6 +55,7 @@ class ChildController extends AbstractController
 
         return $this->render('child/child.html.twig', [
 
+
             'organisation' => $organisation,
             'schuljahre' => $schuljahre,
             'text' => $text
@@ -159,7 +160,13 @@ class ChildController extends AbstractController
         try {
             $title = $translator->trans('Email mit Sicherheitscode');
             $content = $this->renderView('email/resendSecCode.html.twig', array('eltern' => $kind->getEltern(), 'stadt' => $kind->getSchule()->getStadt()));
-            $mailerService->sendEmail($kind->getSchule()->getOrganisation()->getName(), $kind->getSchule()->getOrganisation()->getEmail(), $kind->getEltern()->getEmail(), $title, $content);
+            $mailerService->sendEmail(
+                $kind->getSchule()->getOrganisation()->getName(),
+                $kind->getSchule()->getOrganisation()->getEmail(),
+                $kind->getEltern()->getEmail(),
+                $title,
+                $content,
+                $kind->getSchule()->getOrganisation()->getEmail());
             $text = $translator->trans('Sicherheitscode erneut zugesendet');
         } catch (\Exception $exception) {
             $text = $translator->trans('Sicherheitscode konnte nicht erneut zugesendet');

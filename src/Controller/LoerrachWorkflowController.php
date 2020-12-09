@@ -456,7 +456,7 @@ class LoerrachWorkflowController extends AbstractController
 
 // Daten speichern und fixieren
         $adresse->setLanguage($request->getLocale());
-       $workflowAbschluss->abschluss($adresse, $kind);
+       $workflowAbschluss->abschluss($adresse, $kind,$stadt);
 //Emails an die Eltern senden
         foreach ($kind as $data) {
            $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $this->beruflicheSituation);

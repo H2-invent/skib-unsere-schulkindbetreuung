@@ -70,6 +70,8 @@ class StadtType extends AbstractType
             ->add('minBlocksPerDay', NumberType::class, ['required' => true, 'label' => 'Mindestanzahl an Blöcken pro Tag', 'translation_domain' => 'form'])
             ->add('minDaysperWeek', NumberType::class, ['required' => true, 'label' => 'Mindestanzahl an Blöcken pro Woche', 'translation_domain' => 'form'])
             ->add('preiskategorien', NumberType::class, ['required' => true, 'label' => 'Anzahl der Preiskategorien', 'translation_domain' => 'form'])
+            ->add('secCodeAlwaysNew', CheckboxType::class, ['required' => false, 'label' => 'Der Security-Code soll bei jeder Änderung geändert werden', 'translation_domain' => 'form'])
+
             ->add('gehaltsklassen', CollectionType::class, [
                 'entry_type' => TextType::class,
                 'entry_options' => array('label' => 'Bezeichnung der Gehaltsklassen', 'translation_domain' => 'form')

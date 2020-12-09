@@ -59,7 +59,7 @@ class ChildDeleteService
             $parents = $kind->getEltern();
             $parentsNew = $this->em->getRepository(Stammdaten::class)->findOneBy(array('fin'=>false,'saved'=>false,'tracing'=>$parents->getTracing()));
             $kinds = $parentsNew->getKinds();
-            $this->abschluss->abschluss($parentsNew,$kinds);
+            $this->abschluss->abschluss($parentsNew,$kinds,$kind->getSchule()->getStadt());
             $kindAct = $this->em->getRepository(Kind::class)->findOneBy(array('saved'=>true,'fin'=>true,'tracing'=>$kind->getTracing()));
             $this->em->remove($kindAct);
             $kindClone = $this->em->getRepository(Kind::class)->findOneBy(array('saved'=>false,'fin'=>false,'tracing'=>$kind->getTracing()));
@@ -85,7 +85,14 @@ class ChildDeleteService
     {
         $mailBetreff = $this->translator->trans('Abmeldung der Schulkindbetreuung für ') . $kind->getVorname() . ' ' . $kind->getNachname();
         $mailContent = $this->templating->render('email/abmeldebestatigung.html.twig', array('eltern' => $stammdaten, 'kind' => $kind, 'org' => $organisation, 'stadt' => $organisation->getStadt()));
-        $this->mailer->sendEmail($kind->getSchule()->getOrganisation()->getName(), $kind->getSchule()->getOrganisation()->getEmail(), $stammdaten->getEmail(), $mailBetreff, $mailContent);
+        $this->mailer->sendEmail(
+            $kind->getSchule()->getOrganisation()->getName(),
+            $kind->getSchule()->getOrganisation()->getEmail(),
+            $stammdaten->getEmail(),
+            $mailBetreff,
+            $mailContent,
+            $kind->getSchule()->getOrganisation()->getEmail()
+        );
 
     }
 }

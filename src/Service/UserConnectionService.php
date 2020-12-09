@@ -39,7 +39,16 @@ class UserConnectionService
             $this->em->persist($user);
             $this->em->flush();
             $stadt = $user->getStadt();
-            $this->mailer->sendEmail('Unsere Schulkindbetreuung', 'test@local.com', $user->getEmail(), 'Bestätigungscode für die SKIBin App', $this->twig->render('email/appConfirmationCode.html.twig', array('user' => $user, 'stadt' => $stadt)));
+            $this->mailer->sendEmail(
+                'Unsere Schulkindbetreuung',
+                'test@local.com',
+                $user->getEmail(),
+                'Bestätigungscode für die SKIBin App',
+                $this->twig->render('email/appConfirmationCode.html.twig',
+                    array('user' => $user, 'stadt' => $stadt)),
+                $stadt->getEmail(),
+                null
+            );
             return array(
                 'type' => 'USER',
                 'error' => false,

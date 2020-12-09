@@ -78,12 +78,26 @@ class AnmeldeEmailService
 
             $mailBetreff = $this->translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $kind->getVorname() . ' ' . $kind->getNachname();
             $mailContent = $this->templating->render('email/anmeldebestatigung.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt));
-            $this->mailer->sendEmail($kind->getSchule()->getOrganisation()->getName(), $kind->getSchule()->getOrganisation()->getEmail(), $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
+            $this->mailer->sendEmail(
+                $kind->getSchule()->getOrganisation()->getName(),
+                $kind->getSchule()->getOrganisation()->getEmail(),
+                $adresse->getEmail(),
+                $mailBetreff,
+                $mailContent,
+                $kind->getSchule()->getOrganisation()->getEmail(),
+                $attachment);
 
         } else {// es gibt noch beworbene Zeitblöcke
             $mailBetreff = $this->translator->trans('Anmeldeinformation der Schulkindbetreuung für ') . $kind->getVorname() . ' ' . $kind->getNachname();
             $mailContent = $this->templating->render('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt));
-            $this->mailer->sendEmail($kind->getSchule()->getOrganisation()->getName(), $kind->getSchule()->getOrganisation()->getEmail(), $adresse->getEmail(), $mailBetreff, $mailContent, $attachment);
+            $this->mailer->sendEmail(
+                $kind->getSchule()->getOrganisation()->getName(),
+                $kind->getSchule()->getOrganisation()->getEmail(),
+                $adresse->getEmail(),
+                $mailBetreff,
+                $mailContent,
+                $kind->getSchule()->getOrganisation()->getEmail(),
+                $attachment);
 
         }
     }

@@ -106,7 +106,7 @@ class FerienAbschluss
 
 
         $attachment = array();
-        foreach ($programm as $data) {
+        foreach ($programm as $data){
             //pdf mit dem Tiket
             $ferienblock = $data->getFerienblock();
             $kind = $data->getKind();
@@ -130,11 +130,13 @@ class FerienAbschluss
             );
         }
         $attachment[] = array('type' => 'text/calendar', 'filename' => 'Ferienprogramm.ics', 'body' => $this->ics->toString());
-        $this->mailer->sendEmail('SKIB Ferienprogramm',
+        $this->mailer->sendEmail(
+            'SKIB Ferienprogramm',
             'info@h2-invent.com',
             $adresse->getEmail(),
             'Tickets zu dem gebuchten Ferienprogramm',
             $this->twig->render('email/anmeldebestatigungFerien.html.twig', array('stammdaten' => $adresse)),
+            'info@h2-invent.com',
             $attachment);
         return 0;
     }
