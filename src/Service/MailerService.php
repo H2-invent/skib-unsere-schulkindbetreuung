@@ -33,22 +33,23 @@ class MailerService
 
     }
 
-    public function sendEmail($sender, $from, $to, $betreff,$content,$attachment = array())
+    public function sendEmail($sender, $from, $to, $betreff,$content,$replyTo,$attachment = array())
     {
         $from = $this->parameter->get('confirmEmailSender');
         if($this->parameter->get('mailprovider') == 'MAILGUN'){
-            $this->sendViaMailgun($sender,$from,$to,$betreff,$content,$attachment);
+            $this->sendViaMailgun($sender,$from,$to,$betreff,$content,$replyTo,$attachment);
         }elseif ($this->parameter->get('mailprovider')=='SWIFTMAILER'){
-            $this->sendViaSwiftMailer($sender,$to,$betreff,$content,$attachment);
+            $this->sendViaSwiftMailer($sender,$to,$betreff,$content,$replyTo,$attachment);
 
         }
 
     }
 
-    private function sendViaSwiftMailer($sender,  $to, $betreff,$content,$attachment = array()){
+    private function sendViaSwiftMailer($sender,  $to, $betreff,$content,$replyTo,$attachment = array()){
         $message = (new \Swift_Message($betreff))
             ->setFrom(array('noreply@unsere-schulkindbetreuung.de'=>$sender))
             ->setTo($to)
+            ->setReplyTo($replyTo)
             ->setBody(
 
                 $content
@@ -61,10 +62,11 @@ class MailerService
         };
         $this->swift->send($message);
     }
-    private function sendViaMailgun($sender, $from, $to, $betreff,$content,$attachment = array()){
+    private function sendViaMailgun($sender, $from, $to, $betreff,$content,$replyTo,$attachment = array()){
         $email = (new Email())
             ->from(new Address($from, $sender))
             ->to($to)
+            ->replyTo($replyTo)
             ->subject($betreff)
             ->html($content);
         foreach ($attachment as $data){

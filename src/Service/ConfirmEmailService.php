@@ -77,7 +77,14 @@ class ConfirmEmailService
             $mailBetreff = $this->translator->trans('Bestätigung der E-Mail-Adresse');
             $mailContent = $this->twig->render('email/bestaetigungscode.html.twig', array('eltern' => $stammdaten, 'stadt'=>$stadt));
             if ($stammdaten->getConfirmEmailSend() === false) {
-                $this->mailer->sendEmail('Unsere Schulkindbetreuung', $this->parameterbag->get('confirmEmailSender'), $stammdaten->getEmail(), $mailBetreff, $mailContent);
+                $this->mailer->sendEmail(
+                    'Unsere Schulkindbetreuung',
+                    $this->parameterbag->get('confirmEmailSender'),
+                    $stammdaten->getEmail(),
+                    $mailBetreff,
+                    $mailContent,
+                    $stadt->getEmail()
+                    );
                 $stammdaten->setConfirmEmailSend(true);
                 $stammdaten->setResendEmail(md5(uniqid()));
                 $this->em->persist($stammdaten);

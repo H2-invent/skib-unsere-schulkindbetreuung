@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Kind;
+use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -23,7 +24,7 @@ class WorkflowAbschluss
     }
 
     public
-    function abschluss(Stammdaten $adresseAktuell, $kind)
+    function abschluss(Stammdaten $adresseAktuell, $kind, Stadt $stadt)
     {
 
         if (!$adresseAktuell->getTracing()) {
@@ -38,18 +39,22 @@ class WorkflowAbschluss
             $this->em->persist($adresseOld);
             $kundennummern = $adresseOld->getKundennummerns();
             $kindOld = $adresseOld->getKinds();
-            foreach ($kindOld as $data){
+            foreach ($kindOld as $data) {
                 $data->setFin(false);
                 $this->em->persist($data);
             }
         }
         $this->em->flush();
-
-        if ($adresseAktuell->getHistory() === 0) {
+        if ($stadt->getSecCodeAlwaysNew()) {
             $adresseAktuell->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
-        }else {
-            $adresseAktuell->setSecCode($adresseOld->getSecCode());
+        } else {
+            if ($adresseAktuell->getHistory() === 0) {
+                $adresseAktuell->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
+            } else {
+                $adresseAktuell->setSecCode($adresseOld->getSecCode());
+            }
         }
+
 
         foreach ($kundennummern as $data) {
             $kn = clone $data;

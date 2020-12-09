@@ -264,6 +264,11 @@ class Stadt
      */
     private $onlineCheckinEnable;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $secCodeAlwaysNew;
+
 
     public function __construct()
     {
@@ -882,6 +887,18 @@ class Stadt
     public function setOnlineCheckinEnable(?bool $onlineCheckinEnable): self
     {
         $this->onlineCheckinEnable = $onlineCheckinEnable;
+
+        return $this;
+    }
+
+    public function getSecCodeAlwaysNew(): ?bool
+    {
+        return $this->secCodeAlwaysNew;
+    }
+
+    public function setSecCodeAlwaysNew(bool $secCodeAlwaysNew): self
+    {
+        $this->secCodeAlwaysNew = $secCodeAlwaysNew;
 
         return $this;
     }
