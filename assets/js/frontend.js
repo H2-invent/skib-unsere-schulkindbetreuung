@@ -54,15 +54,15 @@ $(document).ready(function () {
         });
     }
     if($('#loerrach_eltern_kinderImKiga').prop('checked')){
-        $('#kigaOfKids').removeClass('d-none')
+        $('#kigaOfKids').collapse('show')
     }else {
-        $('#kigaOfKids').addClass('d-none')
+        $('#kigaOfKids').collapse('hide')
     }
     $('#loerrach_eltern_kinderImKiga').change(function () {
         if($('#loerrach_eltern_kinderImKiga').prop('checked')){
-            $('#kigaOfKids').removeClass('d-none')
+            $('#kigaOfKids').collapse('show')
         }else {
-            $('#kigaOfKids').addClass('d-none')
+            $('#kigaOfKids').collapse('hide')
         }
     });
 });
