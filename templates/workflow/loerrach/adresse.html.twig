@@ -89,7 +89,18 @@
                         <div class="col-sm-1">
                             <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
                                title="{{ 'Information'|trans }}"
-                               data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf die Gebühr des ältesten Kindes{% endtrans %}"></i>
+                               data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten Rabatt auf die Gebühr des ältesten Kindes{% endtrans %}"></i>
+                        </div>
+                    </div>
+                    <div class="row mt-2 d-none" id="kigaOfKids">
+                        <div class="col-sm-11">
+                            {{ form_row(form.kigaOfKids) }}
+
+                        </div>
+                        <div class="col-sm-1">
+                            <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+                               title="{{ 'Information'|trans }}"
+                               data-content="{% trans %}Geben Sie hier den Namen des kostenpflichtigen Kindergartens an{% endtrans %}"></i>
                         </div>
                     </div>
                     <div class="row mt-2">

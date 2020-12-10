@@ -53,8 +53,19 @@ $(document).ready(function () {
             toastr[errors[i].type](errors[i].text);
         });
     }
-
-})
+    if($('#loerrach_eltern_kinderImKiga').prop('checked')){
+        $('#kigaOfKids').removeClass('d-none')
+    }else {
+        $('#kigaOfKids').addClass('d-none')
+    }
+    $('#loerrach_eltern_kinderImKiga').change(function () {
+        if($('#loerrach_eltern_kinderImKiga').prop('checked')){
+            $('#kigaOfKids').removeClass('d-none')
+        }else {
+            $('#kigaOfKids').addClass('d-none')
+        }
+    });
+});
 
 
 $(document).on('click', '.deleteBtn', function (e) {
