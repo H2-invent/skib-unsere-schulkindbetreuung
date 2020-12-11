@@ -104,7 +104,7 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getFotos());
             $gebucht = array();
             foreach ($data->getZeitblocks() as $data2){
-                if($data2->getDeleted(false)){
+                if($data2->getDeleted() == false){
                     $gebucht[]=$data2->getWochentagString().': '.$data2->getVon()->format('H:i').'-'.$data2->getBis()->format('H:i');
                 }
 
