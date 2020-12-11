@@ -65,7 +65,16 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/adresse",name="loerrach_workflow_adresse",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function adresseAction(ParameterBagInterface $parameterBag, ErrorService $errorService, SchulkindBetreuungAdresseService $schulkindBetreuungAdresseService, AuthorizationCheckerInterface $authorizationChecker, TranslatorInterface $translator, Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function adresseAction(ParameterBagInterface $parameterBag,
+                                  ErrorService $errorService,
+                                  SchulkindBetreuungAdresseService $schulkindBetreuungAdresseService,
+                                  AuthorizationCheckerInterface $authorizationChecker,
+                                  TranslatorInterface $translator,
+                                  Stadt $stadt,
+                                  Request $request,
+                                  ValidatorInterface $validator,
+                                  StamdatenFromCookie $stamdatenFromCookie,
+                                  SchuljahrService $schuljahrService)
     {
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
 
@@ -82,14 +91,23 @@ class LoerrachWorkflowController extends AbstractController
         }
         //Add SecCode into if to create a SecCode the first time to be not "null"
         $adresse = $schulkindBetreuungAdresseService->setUID($adresse);
-        $form = $this->createForm(LoerrachEltern::class, $adresse, array('einkommen' => array_flip($stadt->getGehaltsklassen()), 'beruflicheSituation' => $this->beruflicheSituation));
+        $formArr = array('einkommen' => array_flip($stadt->getGehaltsklassen()), 'beruflicheSituation' => $this->beruflicheSituation);
 
+        $form = $this->createForm(LoerrachEltern::class, $adresse,$formArr);
+        if(!$authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE')){
+            $form->remove('emailDoubleInput');
+        }
         $form->handleRequest($request);
         $errors = array();
         $errorsString = array();
         if ($form->isSubmitted()) {
             $adresse = $form->getData();
-            $errors = $validator->validate($adresse);
+            if($authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE')){
+                $errors = $validator->validate($adresse,null,['Default','internal']);
+            }else{
+                $errors = $validator->validate($adresse);
+            }
+
             $errorsString = $errorService->createError($errors,$form);
             if (count($errors) == 0) {
                 $schulkindBetreuungAdresseService->setAdress($adresse,$authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE'),$request->getClientIp());

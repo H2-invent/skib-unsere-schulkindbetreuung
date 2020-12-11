@@ -259,6 +259,14 @@ class Stammdaten
      */
     private $kundennummerns;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotBlank(groups={"internal"})
+     * @Assert\IdenticalTo(groups={"internal"},propertyPath="email")
+      * @Assert\Email()
+     */
+    private $emailDoubleInput;
+
 
     public function __construct()
     {
@@ -867,6 +875,18 @@ class Stammdaten
                 return $data;
             }
         }
+    }
+
+    public function getEmailDoubleInput(): ?string
+    {
+        return $this->emailDoubleInput;
+    }
+
+    public function setEmailDoubleInput(?string $emailDoubleInput): self
+    {
+        $this->emailDoubleInput = $emailDoubleInput;
+
+        return $this;
     }
 
 
