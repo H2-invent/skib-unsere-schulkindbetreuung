@@ -85,12 +85,18 @@ class AnmeldeEmailService
                 );
             }
             $this->attachment[] = array('type' => 'text/calendar', 'filename' => $kind->getVorname() . ' ' . $kind->getNachname() . '.ics', 'body' => $this->ics->toString());
-            $this->content = $this->templating->render('email/anmeldebestatigung.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt,'text'=>$text));
+            $sessionLocale = $this->translator->getLocale();
 
+            $this->translator->setLocale($adresse->getLanguage());
+            $this->content = $this->templating->render('email/anmeldebestatigung.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt,'text'=>$text));
+            $this->translator->setLocale($sessionLocale);
 
         } else {// es gibt noch beworbene Zeitblöcke
-            $this->content = $this->templating->render('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt));
+            $sessionLocale = $this->translator->getLocale();
 
+            $this->translator->setLocale($adresse->getLanguage());
+            $this->content = $this->templating->render('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt));
+            $this->translator->setLocale($sessionLocale);
         }
     }
 

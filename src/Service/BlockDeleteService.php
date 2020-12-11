@@ -70,9 +70,9 @@ class BlockDeleteService
                 '%to%' => $block->getBis()->format('H:i'),
                 '%shool%' => $block->getSchule()->getName()
             );
-            $this->anmeldeService->sendEmail($data, $data->getEltern(), $block->getSchule()->getStadt(), $this->translator->trans('Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:', $transArray));
-            $this->anmeldeService->setBetreff($this->translator->trans('Absage des Zeitblocks: %day% von %from% bis %to% der Schule %shool%', $transArray));
-         //   $this->anmeldeService->send($data, $data->getEltern());
+            $this->anmeldeService->sendEmail($data, $data->getEltern(), $block->getSchule()->getStadt(), $this->translator->trans('Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:', $transArray,null,$data->getEltern()->getLanguage()));
+            $this->anmeldeService->setBetreff($this->translator->trans('Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%', $transArray,null,$data->getEltern()->getLanguage()));
+            $this->anmeldeService->send($data, $data->getEltern());
 
         }
 
@@ -95,10 +95,10 @@ class BlockDeleteService
                 '%to%' => $block->getBis()->format('H:i'),
                 '%shool%' => $block->getSchule()->getName()
             );
-            $this->anmeldeService->sendEmail($data, $data->getEltern(), $block->getSchule()->getStadt(), $this->translator->trans('Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:', $transArray));
-            $this->anmeldeService->setBetreff($this->translator->trans('Wiederherstellung des Zeitblocks: %day% von %from% bis %to% der Schule %shool%', $transArray));
+            $this->anmeldeService->sendEmail($data, $data->getEltern(), $block->getSchule()->getStadt(), $this->translator->trans('Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:', $transArray,null,$data->getEltern()->getLanguage()));
+            $this->anmeldeService->setBetreff($this->translator->trans('Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%', $transArray,null,$data->getEltern()->getLanguage()));
 
-//            $this->anmeldeService->send($data, $data->getEltern());
+            $this->anmeldeService->send($data, $data->getEltern());
 
         }
 

@@ -2579,19 +2579,19 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       </trans-unit>
       <trans-unit id="O50zxfL" resname="Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:">
         <source>Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:</source>
-        <target>__Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:</target>
+        <target>Malheureusement, le créneau de garde d'enfants du %day% de %from% à %to% à %shool% a été annulé pour l'enfant suivant:</target>
       </trans-unit>
-      <trans-unit id="wzbitdt" resname="Absage des Zeitblocks: %day% von %from% bis %to% der Schule %shool%">
-        <source>Absage des Zeitblocks: %day% von %from% bis %to% der Schule %shool%</source>
-        <target>__Absage des Zeitblocks: %day% von %from% bis %to% der Schule %shool%</target>
+      <trans-unit id="wzbitdt" resname="Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
+        <source>Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
+        <target>Annulation du créneau horaire de la garde d'enfants : %jour% de %de% à %à% l'école %shool%.</target>
       </trans-unit>
       <trans-unit id="pqaJS.R" resname="Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:">
         <source>Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:</source>
-        <target>__Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:</target>
+        <target>Il a rétabli le créneau horaire de la garde d'enfants sur %day% de %from% à %to% dans le %shool% pour l'enfant suivant :</target>
       </trans-unit>
-      <trans-unit id="E.pZ62D" resname="Wiederherstellung des Zeitblocks: %day% von %from% bis %to% der Schule %shool%">
-        <source>Wiederherstellung des Zeitblocks: %day% von %from% bis %to% der Schule %shool%</source>
-        <target>__Wiederherstellung des Zeitblocks: %day% von %from% bis %to% der Schule %shool%</target>
+      <trans-unit id="E.pZ62D" resname="Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
+        <source>Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
+        <target>Restauration du créneau horaire de la garde d'enfants : %jour% de %de%à %à%l'école %shool%.</target>
       </trans-unit>
       <trans-unit id="ewdRqId" resname="Erfolgreich wiederhergestellt">
         <source>Erfolgreich wiederhergestellt</source>
