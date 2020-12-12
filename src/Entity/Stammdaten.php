@@ -7,14 +7,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\GroupSequence;
+use Symfony\Component\Validator\GroupSequenceProviderInterface;
 
 // importing @Encrypted annotation
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StammdatenRepository")
+ * @Assert\GroupSequenceProvider()
  */
-class Stammdaten
+class Stammdaten implements GroupSequenceProviderInterface
 {
 
     /**
@@ -261,12 +264,17 @@ class Stammdaten
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotBlank(groups = {"kindInKiga"})
+     */
+    private $kigaOfKids;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank(groups={"internal"})
      * @Assert\IdenticalTo(groups={"internal"},propertyPath="email")
-      * @Assert\Email()
+     * @Assert\Email()
      */
     private $emailDoubleInput;
-
 
     public function __construct()
     {
@@ -877,6 +885,17 @@ class Stammdaten
         }
     }
 
+    public function getKigaOfKids(): ?string
+    {
+        return $this->kigaOfKids;
+    }
+
+    public function setKigaOfKids(?string $kigaOfKids): self
+    {
+        $this->kigaOfKids = $kigaOfKids;
+        return $this;
+    }
+
     public function getEmailDoubleInput(): ?string
     {
         return $this->emailDoubleInput;
@@ -889,5 +908,13 @@ class Stammdaten
         return $this;
     }
 
-
+    /**
+     * @inheritDoc
+     */
+    public function getGroupSequence()
+    {
+        return [
+            $this->kinderImKiga === true ? 'kindInKiga' : 'notKindinKiga',
+        ];
+    }
 }

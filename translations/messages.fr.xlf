@@ -2649,6 +2649,10 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Verbindung zu der App trennen</source>
         <target>__Verbindung zu der App trennen</target>
       </trans-unit>
+      <trans-unit id="s.hK6rP" resname="Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.">
+                           <source>Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.</source>
+                           <target>Indiquez ici le nom de l'école maternelle payante.</target>
+                         </trans-unit>
     </body>
   </file>
 </xliff>

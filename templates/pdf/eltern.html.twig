@@ -35,7 +35,9 @@
             </tr>
             <tr>
                 <td>{% trans %}Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung{% endtrans %}</td>
-                <td>{{ eltern.kinderImKiga?"Ja"|trans:'Nein'|trans }}</td>
+                <td>{{ eltern.kinderImKiga?"Ja"|trans:'Nein'|trans }}<br>
+                    {{ eltern.kigaOfKids }}
+                </td>
             </tr>
 
             <tr>

@@ -44,6 +44,11 @@
                                     <td>{{ beruflicheSituation[eltern.beruflicheSituation] }}</td>
                                 </tr>
                                 <tr>
+                                    <td>{{ 'Kinder im KiGa'|trans }}</td>
+                                    <td>{% if eltern.kinderImKiga %}{{ eltern.kigaOfKids }}{% else %}{{ 'Nein'|trans }}{% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>{% trans %} Name und Beziehung des Notfallkontakt {% endtrans %}</td>
                                     <td>{{ eltern.notfallName }}</td>
                                 </tr>

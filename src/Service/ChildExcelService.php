@@ -13,6 +13,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function Composer\Autoload\includeFile;
 
 class ChildExcelService
 {
@@ -65,6 +66,8 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('E-Mail Adresse'));
 
         if($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')){
+           $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kinder im KiGa'));
+           $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Brutto Haushaltseinkommen pro Monat'));
            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kundennummer'));
            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('IBAN'));
            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('BIC'));
@@ -112,6 +115,12 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] .$counter,implode(' | ', $gebucht));
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getEmail());
             if($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')){
+                if ($data->getEltern()->getKinderImKiga()){
+                    $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getKigaOfKids());
+                }else {
+                    $kindSheet->setCellValue($alphas[$count++] .  $counter, $this->translator->trans('Nein'));
+                }
+                $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getSchule()->getStadt()->getGehaltsklassen()[$data->getEltern()->getEinkommen()]);
                 $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())?$data->getEltern()->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())->getKundennummer():"");
                 $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getIban());
                 $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getBic());
