@@ -2561,6 +2561,94 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Zeitblöcke und Preise</source>
         <target>Blocs horaires et prix</target>
       </trans-unit>
+      <trans-unit id="lBV5YKD" resname=" am %d% von %s% bis %e% Uhr">
+        <source> am %d% von %s% bis %e% Uhr</source>
+        <target>__ am %d% von %s% bis %e% Uhr</target>
+      </trans-unit>
+      <trans-unit id="_S8zNXy" resname="Email mit Sicherheitscode">
+        <source>Email mit Sicherheitscode</source>
+        <target>__Email mit Sicherheitscode</target>
+      </trans-unit>
+      <trans-unit id="EnnkoaW" resname="Sicherheitscode erneut zugesendet">
+        <source>Sicherheitscode erneut zugesendet</source>
+        <target>__Sicherheitscode erneut zugesendet</target>
+      </trans-unit>
+      <trans-unit id="OqifTIq" resname="Sicherheitscode konnte nicht erneut zugesendet">
+        <source>Sicherheitscode konnte nicht erneut zugesendet</source>
+        <target>__Sicherheitscode konnte nicht erneut zugesendet</target>
+      </trans-unit>
+      <trans-unit id="O50zxfL" resname="Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:">
+        <source>Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:</source>
+        <target>Malheureusement, le créneau de garde d'enfants du %day% de %from% à %to% à %shool% a été annulé pour l'enfant suivant:</target>
+      </trans-unit>
+      <trans-unit id="wzbitdt" resname="Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
+        <source>Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
+        <target>Annulation du créneau horaire de la garde d'enfants : %jour% de %de% à %à% l'école %shool%.</target>
+      </trans-unit>
+      <trans-unit id="pqaJS.R" resname="Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:">
+        <source>Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:</source>
+        <target>Il a rétabli le créneau horaire de la garde d'enfants sur %day% de %from% à %to% dans le %shool% pour l'enfant suivant :</target>
+      </trans-unit>
+      <trans-unit id="E.pZ62D" resname="Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
+        <source>Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
+        <target>Restauration du créneau horaire de la garde d'enfants : %jour% de %de%à %à%l'école %shool%.</target>
+      </trans-unit>
+      <trans-unit id="ewdRqId" resname="Erfolgreich wiederhergestellt">
+        <source>Erfolgreich wiederhergestellt</source>
+        <target>__Erfolgreich wiederhergestellt</target>
+      </trans-unit>
+      <trans-unit id="RHI5AOs" resname="Ganztag">
+        <source>Ganztag</source>
+        <target>__Ganztag</target>
+      </trans-unit>
+      <trans-unit id="HoWFEFd" resname="Halbtag">
+        <source>Halbtag</source>
+        <target>__Halbtag</target>
+      </trans-unit>
+      <trans-unit id="Y3Cn2Fa" resname="Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig">
+        <source>Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig</source>
+        <target>__Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig</target>
+      </trans-unit>
+      <trans-unit id="lbGxc1S" resname="App Verbindung">
+        <source>App Verbindung</source>
+        <target>__App Verbindung</target>
+      </trans-unit>
+      <trans-unit id="qA0e0QA" resname="Sicherheitscode erneut senden">
+        <source>Sicherheitscode erneut senden</source>
+        <target>__Sicherheitscode erneut senden</target>
+      </trans-unit>
+      <trans-unit id="dM1xpTv" resname="Bestätigungscode zur Anmeldung bei der SKIBin App">
+        <source>Bestätigungscode zur Anmeldung bei der SKIBin App</source>
+        <target>__Bestätigungscode zur Anmeldung bei der SKIBin App</target>
+      </trans-unit>
+      <trans-unit id="_PoH7Ws" resname="Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK">
+        <source>Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK</source>
+        <target>__Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK</target>
+      </trans-unit>
+      <trans-unit id="if6t1lm" resname="Sicherheitscode für Ihre Anmeldung bei SKiB">
+        <source>Sicherheitscode für Ihre Anmeldung bei SKiB</source>
+        <target>__Sicherheitscode für Ihre Anmeldung bei SKiB</target>
+      </trans-unit>
+      <trans-unit id="vwEUKgL" resname="Mit dieser Email erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung">
+        <source>Mit dieser Email erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung</source>
+        <target>__Mit dieser Email erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung</target>
+      </trans-unit>
+      <trans-unit id=".sA.Buo" resname="Absender">
+        <source>Absender</source>
+        <target>__Absender</target>
+      </trans-unit>
+      <trans-unit id="7JO.aFA" resname="Betreff">
+        <source>Betreff</source>
+        <target>__Betreff</target>
+      </trans-unit>
+      <trans-unit id="QHGpDcF" resname="Änderungen nächsten Monat">
+        <source>Änderungen nächsten Monat</source>
+        <target>__Änderungen nächsten Monat</target>
+      </trans-unit>
+      <trans-unit id="pWbM_xE" resname="Verbindung zu der App trennen">
+        <source>Verbindung zu der App trennen</source>
+        <target>__Verbindung zu der App trennen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

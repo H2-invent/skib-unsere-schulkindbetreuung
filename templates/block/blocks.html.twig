@@ -48,17 +48,10 @@
             })
         });
         $('#blockContent').load(LoadContentUrl);
-        $(document).on('click', '.deleteAjax', function (e) {
-            e.preventDefault();
-            var url = $(this).attr('href');
-            $.ajax({
-                url: url,
-                success: function (data) {
-                    $.snackbar({content: data.snack});
-                    $('#blockContent').load(LoadContentUrl)
-                }
-            });
-        });
+        function reloadBlocks(){
+            $('#blockContent').load(LoadContentUrl);
+        }
+
     </script>
 
 {% endblock %}
