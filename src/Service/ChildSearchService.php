@@ -64,10 +64,13 @@ class ChildSearchService
                 ->setParameter('wochentag', $parameters['wochentag']);
         }
         //block ausgewählt
-        if (isset($parameters['block']) && $parameters['block'] !== "") {
+
+        if (isset($parameters['block']) && $parameters['block'] !== "") {   // wenn der Block angezeigt werden soll, dann auch von gelöschten Blöcken
             $qb->andWhere('b.id = :block')
                 ->setParameter('block', $parameters['block']);
 
+        }else{// sonst immer nur die Kinder anzeigen die an activen Blöcken hängen
+            $qb->andWhere('b.deleted = false');
         }
         //Jahrgangsstufe uasgewält
         if (isset($parameters['klasse']) && $parameters['klasse'] !== "") {
