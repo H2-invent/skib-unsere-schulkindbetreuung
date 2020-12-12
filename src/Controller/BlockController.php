@@ -112,38 +112,7 @@ class BlockController extends AbstractController
         return $this->render('block/blockForm.html.twig',array('block'=>$block,'form'=>$form->createView()));
 
     }
-    /**
-     * @Route("/org_block/schule/block/deleteBlock", name="block_schule_deleteBlocks",methods={"GET"})
-     */
-    public function deleteBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator,AnmeldeEmailService $anmeldeEmailService)
-    {
-       $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('id'));
-        if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
-            $text = $translator->trans('Fehler: Falsche Organisation');
-            return new JsonResponse(array('error'=>1,'snack'=>$text));
-        }
-        $block->setDeleted(true);
-        foreach ($block->getNachfolger() as $data){
-            $block->removeNachfolger($data);
-        }
-        foreach ($block->getVorganger() as $data){
-            $block->removeVorganger($data);
-        }
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($block);
-        $em->flush();
-        $kinder = $block->getKindwithFin();
-        foreach ($kinder as $data){
-
-            $anmeldeEmailService->sendEmail($data,$data->getEltern(),$block->getSchule()->getStadt(),$block->getSchule()->getStadt()->getGehaltsklassen());
-
-        }
-
-        $text = $translator->trans('Erfolgreich gelöscht');
-        return new JsonResponse(array('error'=>0,'snack'=>$text));
-    }
-    // Rest of your original controller
 
 
 

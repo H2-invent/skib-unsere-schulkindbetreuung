@@ -43,6 +43,7 @@ class SchulkindBetreuungAdresseService
             $adresse->setIpAdresse($ipAdress);
             $adresse->setConfirmDate(new \DateTime());
         }
+        $adresse->setEmailDoubleInput($adresse->getEmail());
         $adresse->setFin(false);
         $this->em->persist($adresse);
         $this->em->flush();
