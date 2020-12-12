@@ -31,7 +31,11 @@
                 <td>{% trans %}Adresse des Erziehungsberechtigten{% endtrans %}</td>
                 <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
             </tr>
-
+            <tr>
+                <td>{% trans %}Kind in öffentlicher Kindergarteneinrichtung{% endtrans %}</td>
+                <td>{% if eltern.kinderImKiga %}{{ 'Ja. Name der Kindertageseinrichtung:'|trans }} {{ eltern.kigaOfKids }} {% else %}{{ 'Nein'|trans }}{% endif %}
+                </td>
+            </tr>
 
             <tr>
                 <td>{% trans %}Name des Notfallkontakt{% endtrans %}</td>
