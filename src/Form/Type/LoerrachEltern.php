@@ -27,6 +27,7 @@ class LoerrachEltern extends AbstractType
 
         $builder
             ->add('email', EmailType::class, ['label' => 'E-Mail', 'translation_domain' => 'form'])
+            ->add('emailDoubleInput', EmailType::class, ['label' => 'E-Mail wiederholt eingeben', 'translation_domain' => 'form','attr'=>array('class'=>'disablecopypaste')])
             ->add('phoneNumber', TextType::class, ['label' => 'Telefonnummer', 'translation_domain' => 'form'])
             ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
             ->add('name', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
