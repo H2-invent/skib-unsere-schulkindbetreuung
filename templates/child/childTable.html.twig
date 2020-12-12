@@ -34,6 +34,10 @@
                                 <a class="dropdown-item"
                                    href="{{ path('child_resend_SecCode',{'kind_id':k.id}) }}">{% trans %}Sicherheitscode erneut senden{% endtrans %}</a>
                             {% endif %}
+                            {% if is_granted('ROLE_ORG_CHILD_EMAIL_CHANGE') %}
+                                <a class="dropdown-item"
+                                   href="{{ path('org_child_email_change',{'kind_id':k.id}) }}">{% trans %}Email Adresse ändern{% endtrans %}</a>
+                            {% endif %}
                             {% if is_granted('ROLE_ORG_CHILD_DELETE') %}
                                 <a class="dropdown-item deleteBtn" type="DELETE"
                                    href="{{ path('delete_child_delete',{'kind_id':k.id}) }}">{% trans %}Löschen{% endtrans %}</a>
