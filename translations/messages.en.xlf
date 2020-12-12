@@ -2573,6 +2573,26 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Sicherheitscode konnte nicht erneut zugesendet</source>
         <target>__Sicherheitscode konnte nicht erneut zugesendet</target>
       </trans-unit>
+      <trans-unit id="O50zxfL" resname="Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:">
+        <source>Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:</source>
+        <target>Unfortunately, the childcare time slot on %day% from %from% to %to% in the %shool% has been cancelled for the following child:</target>
+      </trans-unit>
+      <trans-unit id="wzbitdt" resname="Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
+        <source>Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
+        <target>Cancellation of care time slot: %day% from %from% to %to% the school %shool%.</target>
+      </trans-unit>
+      <trans-unit id="pqaJS.R" resname="Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:">
+        <source>Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:</source>
+        <target>It was restored the care time slot on %day% from %from% to %to% in the %shool% for the following child:</target>
+      </trans-unit>
+      <trans-unit id="E.pZ62D" resname="Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
+        <source>Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
+        <target>Restoration of care time slot: %day% from %from% to %to% the school %shool%.</target>
+      </trans-unit>
+      <trans-unit id="ewdRqId" resname="Erfolgreich wiederhergestellt">
+        <source>Erfolgreich wiederhergestellt</source>
+        <target>__Erfolgreich wiederhergestellt</target>
+      </trans-unit>
       <trans-unit id="RHI5AOs" resname="Ganztag">
         <source>Ganztag</source>
         <target>__Ganztag</target>
@@ -2626,9 +2646,9 @@ The web application enables direct networking between parent or legal guardian, 
         <target>__Verbindung zu der App trennen</target>
       </trans-unit>
       <trans-unit id="s.hK6rP" resname="Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.">
-        <source>Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.</source>
-        <target>Enter here the name of the kindergarten</target>
-      </trans-unit>
+                           <source>Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.</source>
+                           <target>Enter here the name of the kindergarten</target>
+                         </trans-unit>
     </body>
   </file>
 </xliff>
