@@ -35,17 +35,14 @@
             </tr>
             <tr>
                 <td>{% trans %}Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung{% endtrans %}</td>
-                <td>{{ eltern.kinderImKiga?"Ja"|trans:'Nein'|trans }}</td>
+                <td>{{ eltern.kinderImKiga?"Ja"|trans:'Nein'|trans }}<br>
+                    {{ eltern.kigaOfKids }}
+                </td>
             </tr>
 
             <tr>
                 <td>{% trans %}Berufliche Situation des Erziehungsberechtigten{% endtrans %}</td>
                 <td>{{ beruflicheSituation[eltern.beruflicheSituation] }}</td>
-            </tr>
-            <tr>
-                <td>{{ 'Kinder im KiGa'|trans }}</td>
-                <td>{% if eltern.kinderImKiga %}{{ eltern.kigaOfKids }} {% else %}{{ 'Nein'|trans }}{% endif %}
-                </td>
             </tr>
             <tr>
                 <td>{% trans %}Kontakt für evtl. Notfälle{% endtrans %}</td>
