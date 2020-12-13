@@ -2581,7 +2581,7 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:</source>
         <target>Malheureusement, le créneau de garde d'enfants du %day% de %from% à %to% à %shool% a été annulé pour l'enfant suivant:</target>
       </trans-unit>
-      <trans-unit id="wzbitdt" resname="Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
+      <trans-unit id=".iQZfNt" resname="Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
         <source>Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
         <target>Annulation du créneau horaire de la garde d'enfants : %jour% de %de% à %à% l'école %shool%.</target>
       </trans-unit>
@@ -2589,7 +2589,7 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:</source>
         <target>Il a rétabli le créneau horaire de la garde d'enfants sur %day% de %from% à %to% dans le %shool% pour l'enfant suivant :</target>
       </trans-unit>
-      <trans-unit id="E.pZ62D" resname="Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
+      <trans-unit id="ZXQY7Nz" resname="Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
         <source>Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
         <target>Restauration du créneau horaire de la garde d'enfants : %jour% de %de%à %à%l'école %shool%.</target>
       </trans-unit>
@@ -2649,10 +2649,42 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Verbindung zu der App trennen</source>
         <target>__Verbindung zu der App trennen</target>
       </trans-unit>
-      <trans-unit id="s.hK6rP" resname="Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.">
-                           <source>Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.</source>
-                           <target>Indiquez ici le nom de l'école maternelle payante.</target>
-                         </trans-unit>
+      <trans-unit id=".1MWVud" resname="Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.">
+        <source>Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.</source>
+        <target>Indiquez ici le nom de l'école maternelle payante.</target>
+      </trans-unit>
+      <trans-unit id="34R6VMk" resname="Keine Berechtigung">
+        <source>Keine Berechtigung</source>
+        <target>__Keine Berechtigung</target>
+      </trans-unit>
+      <trans-unit id="2M_gsdT" resname="Email Adressen stimmen nicht überein.">
+        <source>Email Adressen stimmen nicht überein.</source>
+        <target>__Email Adressen stimmen nicht überein.</target>
+      </trans-unit>
+      <trans-unit id="PZtkwfX" resname="Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:">
+        <source>Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:</source>
+        <target>Votre adresse électronique a été modifiée par un membre du personnel de l'organisation de soins. C'est pourquoi nous vous envoyons à nouveau la confirmation de réservation de cet enfant :</target>
+      </trans-unit>
+      <trans-unit id="6qMlHHn" resname="Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Oranisation geändert.">
+        <source>Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Oranisation geändert.</source>
+        <target>Votre adresse électronique a été modifiée par un employé de l'organisation responsable.</target>
+      </trans-unit>
+      <trans-unit id="ojEwBSz" resname="Email adresse geändert">
+        <source>Email adresse geändert</source>
+        <target>__Email adresse geändert</target>
+      </trans-unit>
+      <trans-unit id="PBmNL.F" resname="Email Adresse ändern">
+        <source>Email Adresse ändern</source>
+        <target>__Email Adresse ändern</target>
+      </trans-unit>
+      <trans-unit id="FRTUpLP" resname="Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.">
+        <source>Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.</source>
+        <target>__Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.</target>
+      </trans-unit>
+      <trans-unit id="XFHrdAT" resname="Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten Rabatt auf die Gebühr des ältesten Kindes">
+        <source>Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten Rabatt auf die Gebühr des ältesten Kindes</source>
+        <target>__Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten Rabatt auf die Gebühr des ältesten Kindes</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

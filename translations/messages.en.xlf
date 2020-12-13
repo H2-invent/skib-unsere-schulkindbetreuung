@@ -2577,7 +2577,7 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:</source>
         <target>Unfortunately, the childcare time slot on %day% from %from% to %to% in the %shool% has been cancelled for the following child:</target>
       </trans-unit>
-      <trans-unit id="wzbitdt" resname="Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
+      <trans-unit id=".iQZfNt" resname="Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
         <source>Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
         <target>Cancellation of care time slot: %day% from %from% to %to% the school %shool%.</target>
       </trans-unit>
@@ -2585,7 +2585,7 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:</source>
         <target>It was restored the care time slot on %day% from %from% to %to% in the %shool% for the following child:</target>
       </trans-unit>
-      <trans-unit id="E.pZ62D" resname="Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
+      <trans-unit id="ZXQY7Nz" resname="Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
         <source>Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
         <target>Restoration of care time slot: %day% from %from% to %to% the school %shool%.</target>
       </trans-unit>
@@ -2645,10 +2645,38 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Verbindung zu der App trennen</source>
         <target>__Verbindung zu der App trennen</target>
       </trans-unit>
-      <trans-unit id="s.hK6rP" resname="Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.">
-                           <source>Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.</source>
-                           <target>Enter here the name of the kindergarten</target>
-                         </trans-unit>
+      <trans-unit id=".1MWVud" resname="Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.">
+        <source>Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.</source>
+        <target>Enter here the name of the kindergarten</target>
+      </trans-unit>
+      <trans-unit id="34R6VMk" resname="Keine Berechtigung">
+        <source>Keine Berechtigung</source>
+        <target>__Keine Berechtigung</target>
+      </trans-unit>
+      <trans-unit id="2M_gsdT" resname="Email Adressen stimmen nicht überein.">
+        <source>Email Adressen stimmen nicht überein.</source>
+        <target>__Email Adressen stimmen nicht überein.</target>
+      </trans-unit>
+      <trans-unit id="PZtkwfX" resname="Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:">
+        <source>Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:</source>
+        <target>Your email address has been changed by an employee of the caring organization. For this reason we will send you the booking confirmation of this child again:</target>
+      </trans-unit>
+      <trans-unit id="6qMlHHn" resname="Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Oranisation geändert.">
+        <source>Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Oranisation geändert.</source>
+        <target>Your e-mail address has been changed by an employee of the organization in charge.</target>
+      </trans-unit>
+      <trans-unit id="ojEwBSz" resname="Email adresse geändert">
+        <source>Email adresse geändert</source>
+        <target>__Email adresse geändert</target>
+      </trans-unit>
+      <trans-unit id="PBmNL.F" resname="Email Adresse ändern">
+        <source>Email Adresse ändern</source>
+        <target>__Email Adresse ändern</target>
+      </trans-unit>
+      <trans-unit id="FRTUpLP" resname="Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.">
+        <source>Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.</source>
+        <target>__Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
