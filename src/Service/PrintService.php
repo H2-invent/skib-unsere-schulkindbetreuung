@@ -11,6 +11,7 @@ namespace App\Service;
 
 use App\Entity\Kind;
 use App\Entity\Organisation;
+use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use League\Flysystem\FilesystemInterface;
@@ -43,7 +44,7 @@ class PrintService
     {
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
-        $pdf = $this->preparePDF($pdf, $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), $organisation->getName(),  $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), null, $organisation);
+        $pdf = $this->preparePDF($pdf, $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), $organisation->getName(), $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), null, $organisation);
 
         $adressComp = '<p><small>' . $organisation->getName() . ' | ' . $organisation->getAdresse() . $organisation->getAdresszusatz() . ' | ' . $organisation->getPlz() . (' ') . $organisation->getOrt() . '</small><br><br>';
 
@@ -113,43 +114,7 @@ class PrintService
         $pdf->AddPage('L', 'A4');
         $blocks = $kind->getRealZeitblocks()->toArray();
         $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
-        $render = array();
-        foreach ($blocks as $data) {
-            $render[$data->getWochentag()][] = $data;
-        }
-
-        $table = '';
-        $t = 0;
-        do {
-            $table .= '<tr>';
-            for ($i = 0; $i < 7; $i++) {
-                $table .= '<td>';
-                if (isset($render[$i])) {
-                    $block = $render[$i][0];
-                    $table .= '<p>' . ($block->getGanztag() == 0 ? $this->translator->trans('Mittagessen') : '') . '</p>';
-                    $table .= '<p>' . (($block->getMin() || $block->getMax()) ? $this->translator->trans('Warten auf Bestätigung') : '') . '</p>';
-                    $table .= $block->getVon()->format('H:i');
-                    $table .= ' - ' . $block->getBis()->format('H:i');
-
-                    \array_splice($render[$i], 0, 1);
-
-                    if (count($render[$i]) == 0) {
-                        unset($render[$i]);
-
-                    }
-                }
-                $table .= '</td>';
-
-            }
-
-            $table .= '</tr>';
-
-            if (count($render) == 0) {
-                break;
-            }
-            $t++;
-        } while ($t < 100);
-
+        $table = $this->generateTimeTable($blocks);
         $kindData = $this->templating->render('pdf/kind.html.twig', array('kind' => $kind, 'table' => $table));
         $pdf->writeHTMLCell(
             0,
@@ -354,5 +319,136 @@ class PrintService
         $pdf->write2DBarcode($this->generator->generate('checkin_schulkindbetreuung', array('kindID' => $kind->getId()), UrlGeneratorInterface::ABSOLUTE_URL), 'QRCODE,H', 25, 65, 31, 31, $style, 'N');
 
         return $pdf;
+    }
+
+    function printAnmeldeformular(Schule $schule, TCPDFController $tcpdf, $fileName, $beruflicheSituation,$gehaltsklassen, $type = 'D')
+    {
+        $pdf = $tcpdf->create();
+        $organisation = $schule->getOrganisation();
+        $pdf->setOrganisation($schule->getOrganisation());
+        $pdf = $this->preparePDF($pdf, $this->translator->trans('Änderungsformular für die Schulkindbetreuung'), $organisation->getName(), $this->translator->trans('Änderungsformular für die Schulkindbetreuung'), null, $schule->getOrganisation());
+        $adressComp = '<p><small>' . $organisation->getName() . ' | ' . $organisation->getAdresse() . $organisation->getAdresszusatz() . ' | ' . $organisation->getPlz() . (' ') . $organisation->getOrt() . '</small><br><br>';
+
+        $adressComp = $adressComp . '</p>';
+
+        $pdf->writeHTMLCell(
+            0,
+            0,
+            20,
+            50,
+            $adressComp,
+            0,
+            1,
+            0,
+            true,
+            '',
+            true
+        );
+
+        $ganztag = array();
+        foreach ($schule->getZeitblocks() as $data) {
+            if ($data->getGanztag() == 1) {
+                $ganztag[] = $data;
+            }
+        }
+        if (sizeof($ganztag) > 0) {
+            $pdf->AddPage();
+            $table = $this->generateTimeTable($ganztag);
+            $pdf->writeHTMLCell(
+                0,
+                0,
+                20,
+                30,
+                $this->templating->render('download_formular/index.html.twig', array('schule' => $schule, 'table' => $table,'type'=>$this->translator->trans('Ganztag'))),
+                0,
+                1,
+                0,
+                true,
+                '',
+                true
+            );
+        }
+
+
+        $ganztag = array();
+        foreach ($schule->getZeitblocks() as $data) {
+            if ($data->getGanztag() == 0) {
+                $ganztag[] = $data;
+            }
+        }
+        if (sizeof($ganztag) > 0) {
+            $pdf->AddPage();
+            $table = $this->generateTimeTable($ganztag);
+            $pdf->writeHTMLCell(
+                0,
+                0,
+                20,
+                30,
+                $this->templating->render('download_formular/index.html.twig', array('schule' => $schule, 'table' => $table,'type'=>$this->translator->trans('Halbtag'))),
+                0,
+                1,
+                0,
+                true,
+                '',
+                true
+            );
+        }
+        $pdf->AddPage();
+        $pdf->writeHTMLCell(
+            0,
+            0,
+            20,
+            30,
+            $this->templating->render('download_formular/elter.html.twig',array('gehaltsklassen'=>$gehaltsklassen)),
+            0,
+            1,
+            0,
+            true,
+            '',
+            true
+        );
+
+        return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
+
+    }
+
+
+    function generateTimeTable($blocks)
+    {
+        foreach ($blocks as $data) {
+            $render[$data->getWochentag()][] = $data;
+        }
+        $table = '';
+        $t = 0;
+        do {
+            $table .= '<tr>';
+            for ($i = 0; $i < 7; $i++) {
+                $table .= '<td>';
+                if (isset($render[$i])) {
+                    $block = $render[$i][0];
+                    $table .= '<p>' . ($block->getGanztag() == 0 ? $this->translator->trans('Mittagessen') : '') . '</p>';
+                    $table .= '<p>' . (($block->getMin() || $block->getMax()) ? $this->translator->trans('Warten auf Bestätigung') : '') . '</p>';
+                    $table .= $block->getVon()->format('H:i');
+                    $table .= ' - ' . $block->getBis()->format('H:i');
+
+                    \array_splice($render[$i], 0, 1);
+
+                    if (count($render[$i]) == 0) {
+                        unset($render[$i]);
+
+                    }
+                }
+                $table .= '</td>';
+
+            }
+
+            $table .= '</tr>';
+
+            if (count($render) == 0) {
+                break;
+            }
+            $t++;
+        } while ($t < 100);
+        return $table;
     }
 }

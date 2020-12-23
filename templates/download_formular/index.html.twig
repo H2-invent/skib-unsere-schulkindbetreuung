@@ -1,0 +1,33 @@
+
+<style>
+    td {
+        border: 1px solid black;
+
+        font-weight: bold;
+        margin: 10px;
+    }
+
+    tr {
+        margin: 5px;
+    }
+</style>
+
+<!-- Daten der Kinder in einer for Schleife -->
+<h2>{{ schule.name }}</h2>
+<h3>{{ type }}</h3>
+<table cellpadding="3px">
+    <thead>
+    <tr>
+        <th>{{ 'Montag'|trans }}</th>
+        <th>{{ 'Dienstag'|trans }}</th>
+        <th>{{ 'Mittwoch'|trans }}</th>
+        <th>{{ 'Donnerstag'|trans }}</th>
+        <th>{{ 'Freitag'|trans }}</th>
+        <th>{{ 'Samstag'|trans }}</th>
+        <th>{{ 'Sonntag'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{ table|raw }}
+    </tbody>
+</table>
