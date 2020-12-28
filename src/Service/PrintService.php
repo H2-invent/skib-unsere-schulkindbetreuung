@@ -344,7 +344,7 @@ class PrintService
             '',
             true
         );
-
+        // hier werden alle Ganztagsblöcke gesammelt und dann auf eine Seite zum ANkreuzen ausgedruckt
         $ganztag = array();
         foreach ($schule->getZeitblocks() as $data) {
             if ($data->getGanztag() == 1) {
@@ -353,7 +353,7 @@ class PrintService
         }
         if (sizeof($ganztag) > 0) {
             $pdf->AddPage();
-            $table = $this->generateTimeTable($ganztag);
+            $table = $this->generateTimeTable($ganztag,true);
             $pdf->writeHTMLCell(
                 0,
                 0,
@@ -369,16 +369,17 @@ class PrintService
             );
         }
 
+        // hier werden alle Halbtagsblöcke gesammelt und dann auf eine Seite zum ANkreuzen ausgedruckt
 
         $ganztag = array();
         foreach ($schule->getZeitblocks() as $data) {
-            if ($data->getGanztag() == 0) {
+            if ($data->getGanztag() == 2) {
                 $ganztag[] = $data;
             }
         }
         if (sizeof($ganztag) > 0) {
             $pdf->AddPage();
-            $table = $this->generateTimeTable($ganztag);
+            $table = $this->generateTimeTable($ganztag,true);
             $pdf->writeHTMLCell(
                 0,
                 0,
@@ -393,13 +394,14 @@ class PrintService
                 true
             );
         }
+        // hier die ELterndaten
         $pdf->AddPage();
         $pdf->writeHTMLCell(
             0,
             0,
             20,
             30,
-            $this->templating->render('download_formular/elter.html.twig',array('gehaltsklassen'=>$gehaltsklassen)),
+            $this->templating->render('download_formular/__elter.html.twig',array('gehaltsklassen'=>$gehaltsklassen,'beruflicheSitutuation'=>$beruflicheSituation)),
             0,
             1,
             0,
@@ -407,13 +409,27 @@ class PrintService
             '',
             true
         );
-
+        // hier die Kinderdaten
+        $pdf->AddPage();
+        $pdf->writeHTMLCell(
+            0,
+            0,
+            20,
+            30,
+            $this->templating->render('download_formular/__kinder.html.twig',array('gehaltsklassen'=>$gehaltsklassen)),
+            0,
+            1,
+            0,
+            true,
+            '',
+            true
+        );
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
 
     }
 
 
-    function generateTimeTable($blocks)
+    function generateTimeTable($blocks,$cross=false)
     {
         foreach ($blocks as $data) {
             $render[$data->getWochentag()][] = $data;
@@ -423,15 +439,22 @@ class PrintService
         do {
             $table .= '<tr>';
             for ($i = 0; $i < 7; $i++) {
-                $table .= '<td>';
+                $table .= '<td align="center" valign="middle">';
                 if (isset($render[$i])) {
                     $block = $render[$i][0];
-                    $table .= '<p>' . ($block->getGanztag() == 0 ? $this->translator->trans('Mittagessen') : '') . '</p>';
-                    $table .= '<p>' . (($block->getMin() || $block->getMax()) ? $this->translator->trans('Warten auf Bestätigung') : '') . '</p>';
+                    if($block->getGanztag() == 0){
+                        $table .= '<p>' .  $this->translator->trans('Mittagessen')  . '</p>';
+
+                    }
+                    if (($block->getMin() || $block->getMax())){
+                        $table .= '<p>' .  $this->translator->trans('Warten auf Bestätigung') . '</p>';
+                    }
                     $table .= $block->getVon()->format('H:i');
                     $table .= ' - ' . $block->getBis()->format('H:i');
-
-                    \array_splice($render[$i], 0, 1);
+                    if($cross){
+                        $table.='<br><div><table width="100%" style="border:none"><tr style="border: none"><td style="border: none"></td><td style="width:18px"></td><td style="border: none"></td></tr></table></div>';
+                    }
+                    array_splice($render[$i], 0, 1);
 
                     if (count($render[$i]) == 0) {
                         unset($render[$i]);
