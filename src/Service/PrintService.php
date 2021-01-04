@@ -353,13 +353,14 @@ class PrintService
         }
         if (sizeof($ganztag) > 0) {
             $pdf->AddPage();
+            $blocks = $this->getBlocks($ganztag);
             $table = $this->generateTimeTable($ganztag,true);
             $pdf->writeHTMLCell(
                 0,
                 0,
                 20,
                 30,
-                $this->templating->render('download_formular/index.html.twig', array('schule' => $schule, 'table' => $table,'type'=>$this->translator->trans('Ganztag'))),
+                $this->templating->render('download_formular/index.html.twig', array('schule' => $schule, 'table' => $table,'type'=>$this->translator->trans('Ganztag'),'blocks'=>$blocks)),
                 0,
                 1,
                 0,
@@ -379,13 +380,14 @@ class PrintService
         }
         if (sizeof($ganztag) > 0) {
             $pdf->AddPage();
+            $blocks = $this->getBlocks($ganztag);
             $table = $this->generateTimeTable($ganztag,true);
             $pdf->writeHTMLCell(
                 0,
                 0,
                 20,
                 30,
-                $this->templating->render('download_formular/index.html.twig', array('schule' => $schule, 'table' => $table,'type'=>$this->translator->trans('Halbtag'))),
+                $this->templating->render('download_formular/index.html.twig', array('schule' => $schule, 'table' => $table,'type'=>$this->translator->trans('Halbtag'),'blocks'=>$blocks)),
                 0,
                 1,
                 0,
@@ -410,13 +412,26 @@ class PrintService
             true
         );
         // hier die Kinderdaten
+        $blocks = array();
+        $blocks[0]['type'] = 'Ganztag';
+        $blocks[1]['type'] = 'Halbtag';
+        foreach ($schule->getZeitblocks() as $data) {
+            if ($data->getGanztag() == 1) {
+                $blocks[0]['data'][] = $data;
+            }elseif ($data->getGanztag() == 2) {
+                $blocks[1]['data'][] = $data;
+            }
+        }
+        $blocks[0]['table'] = $this->generateTimeTable($blocks[0]['data'],true);
+        $blocks[1]['table'] = $this->generateTimeTable($blocks[1]['data'],true);
+
         $pdf->AddPage();
         $pdf->writeHTMLCell(
             0,
             0,
             20,
             30,
-            $this->templating->render('download_formular/__kinder.html.twig',array('gehaltsklassen'=>$gehaltsklassen)),
+            $this->templating->render('download_formular/__kinder.html.twig',['schule'=>$schule,'blocks'=>$blocks]),
             0,
             1,
             0,
@@ -434,12 +449,14 @@ class PrintService
         foreach ($blocks as $data) {
             $render[$data->getWochentag()][] = $data;
         }
+
+
         $table = '';
         $t = 0;
         do {
             $table .= '<tr>';
             for ($i = 0; $i < 7; $i++) {
-                $table .= '<td align="center" valign="middle">';
+                $table .= '<td align="center" valign="middle" style="border: 1px solid black">';
                 if (isset($render[$i])) {
                     $block = $render[$i][0];
                     if($block->getGanztag() == 0){
@@ -452,7 +469,7 @@ class PrintService
                     $table .= $block->getVon()->format('H:i');
                     $table .= ' - ' . $block->getBis()->format('H:i');
                     if($cross){
-                        $table.='<br><div><table width="100%" style="border:none"><tr style="border: none"><td style="border: none"></td><td style="width:18px"></td><td style="border: none"></td></tr></table></div>';
+                        $table.='<br><div><table width="100%" style="border:none"><tr style="border: none"><td style="border: 1px solid black; width:18px"></td><td style="border: none">'. $this->translator->trans('buchen') .'</td></tr></table></div>';
                     }
                     array_splice($render[$i], 0, 1);
 
@@ -473,5 +490,12 @@ class PrintService
             $t++;
         } while ($t < 100);
         return $table;
+    }
+
+    function getBlocks ($blocks) {
+        foreach ($blocks as $data) {
+            $render[$data->getWochentag()][] = $data;
+        }
+        return $render;
     }
 }

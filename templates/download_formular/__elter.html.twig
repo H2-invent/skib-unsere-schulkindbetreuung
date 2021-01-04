@@ -1,4 +1,3 @@
-
 <style>
     td {
         border: none;
@@ -21,61 +20,49 @@
 
 
     <tbody>
-    <tr >
-        <td><h3>{{'Sicherheitscode bei Änderung'|trans}}:</h3></td>
-        <td style=" border-bottom: 1px black solid"></td>
+    <tr>
+        <td><h3>{{ 'Sicherheitscode bei Änderung'|trans }}:</h3></td>
+        <td>____ ____ ____ ____ ____ ____
+        </td>
     </tr>
     <tr>
-        <td colspan="4"></td>
-    </tr>
-    <tr >
-        <td style=" border-bottom: 1px black solid">{{'Email'|trans}}:</td>
-        <td style=" border-bottom: 1px black solid"></td>
-        <td style=" border-bottom: 1px black solid">{{'Telefonnummer'|trans}}:</td>
-        <td style=" border-bottom: 1px black solid"></td>
+        <td colspan="2"></td>
     </tr>
     <tr>
-        <td colspan="4"></td>
-    </tr>
-    <tr >
-        <td style=" border-bottom: 1px black solid">{{'Vorname'|trans}}:</td>
-        <td style=" border-bottom: 1px black solid"></td>
-        <td style=" border-bottom: 1px black solid">{{'Nachname'|trans}}:</td>
-        <td style=" border-bottom: 1px black solid"></td>
+        <td colspan="2" style=" border-bottom: 1px black solid">{{ 'Email'|trans }}:</td>
     </tr>
     <tr>
-        <td colspan="4"></td>
+        <td colspan="2" style=" border-bottom: 1px black solid">{{ 'Telefonnummer'|trans }}:</td>
+    </tr>
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <td style=" border-bottom: 1px black solid">{{ 'Vorname'|trans }}:</td>
+        <td style=" border-bottom: 1px black solid">{{ 'Nachname'|trans }}:</td>
+    </tr>
+    <tr>
+        <td style=" border-bottom: 1px black solid">{{ 'Straße'|trans }}:</td>
+        <td style=" border-bottom: 1px black solid">{{ 'Adresszusatz'|trans }}:</td>
+    </tr>
+    <tr>
+        <td style=" border-bottom: 1px black solid">{{ 'Postleitzahl'|trans }}:</td>
+        <td style=" border-bottom: 1px black solid">{{ 'Stadt'|trans }}:</td>
     </tr>
 
     <tr>
-        <td style=" border-bottom: 1px black solid">{{'Straße'|trans}}:</td>
-        <td style=" border-bottom: 1px black solid"></td>
-        <td style=" border-bottom: 1px black solid">{{'Adresszusatz'|trans}}:</td>
-        <td style=" border-bottom: 1px black solid"></td>
+        <td colspan="2"></td>
     </tr>
 
     <tr>
-        <td colspan="4"></td>
-    </tr>
-    <tr>
-        <td style=" border-bottom: 1px black solid">{{'Postleitzahl'|trans}}:</td>
-        <td style=" border-bottom: 1px black solid"></td>
-        <td style=" border-bottom: 1px black solid">{{'Stadt'|trans}}:</td>
-        <td style=" border-bottom: 1px black solid"></td>
-    </tr>
-
-    <tr>
-        <td colspan="4"></td>
-    </tr>
-    <tr>
-        <td colspan="2">{{'Brutto Haushaltseinkommen pro Monat'|trans}}:</td>
-        <td colspan="2">
+        <td>{{ 'Brutto Haushaltseinkommen pro Monat'|trans }}:</td>
+        <td>
             <table cellspacing="3px">
                 {% for g in gehaltsklassen %}
-                 <tr>
-                     <td style="width: 20px; border: 2px black solid"></td>
-                     <td > {{ g }}</td>
-                 </tr>
+                    <tr>
+                        <td style="width: 20px; border: 2px black solid"></td>
+                        <td> {{ g }}</td>
+                    </tr>
 
                 {% endfor %}
             </table>
@@ -83,20 +70,21 @@
         </td>
     </tr>
     <tr>
-        <td colspan="4"></td>
+        <td colspan="2"></td>
     </tr>
     <tr>
-        <td colspan="2">{{'Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung'|trans}}:</td>
-        <td >
+        <td>{{ 'Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung'|trans }}:
+        </td>
+        <td>
             <table cellspacing="3px">
 
                 <tr>
                     <td style="width: 20px; border: 2px black solid"></td>
-                    <td > Ja</td>
+                    <td> {{ 'Ja'|trans }}</td>
                 </tr>
                 <tr>
                     <td style="width: 20px; border: 2px black solid"></td>
-                    <td > Nein</td>
+                    <td> {{ 'Nein'|trans }}</td>
                 </tr>
 
 
@@ -104,19 +92,13 @@
         </td>
     </tr>
     <tr>
-        <td colspan="4"></td>
-    </tr>
-    <tr>
-        <td style=" border-bottom: 1px black solid" colspan="2">{{'Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.'|trans}}:</td>
-        <td style=" border-bottom: 1px black solid"colspan="2"></td>
-    </tr>
-    <tr>
-        <td colspan="4"></td>
+        <td style=" border-bottom: 1px black solid">{{ 'Wenn ja, geben Sie hier den Namen des kostenpflichtigen Kindergartens an'|trans }}:</td>
+        <td style=" border-bottom: 1px black solid"></td>
     </tr>
 
     <tr>
-        <td>{{'Berufliche Situation'|trans}}:</td>
-        <td colspan="3">
+        <td>{{ 'Berufliche Situation'|trans }}:</td>
+        <td>
             <table cellspacing="3px" style="width: 100%">
                 {% for key,g in beruflicheSitutuation %}
                     <tr>
@@ -135,37 +117,34 @@
         </td>
     </tr>
     <tr>
-        <td colspan="4"></td>
+        <td colspan="2"></td>
     </tr>
     <tr>
-        <td colspan="2">{{'Ich bin alleinerziehend'|trans}}:</td>
-        <td >
+        <td>{{ 'Ich bin alleinerziehend'|trans }}:</td>
+        <td>
             <table cellspacing="3px">
 
-                    <tr>
-                        <td style="width: 20px; border: 2px black solid"></td>
-                        <td > Ja</td>
-                    </tr>
                 <tr>
                     <td style="width: 20px; border: 2px black solid"></td>
-                    <td > Nein</td>
+                    <td> {{ 'Ja'|trans }}</td>
+                </tr>
+                <tr>
+                    <td style="width: 20px; border: 2px black solid"></td>
+                    <td> {{ 'Nein'|trans }}</td>
                 </tr>
 
 
             </table>
         </td>
     </tr>
-
     <tr>
-        <td style=" border-bottom: 1px black solid">{{'Name des Notfallkontakt'|trans}}:</td>
-        <td style=" border-bottom: 1px black solid" colspan="3"></td>
+        <td colspan="2"></td>
     </tr>
     <tr>
-        <td colspan="4"></td>
+        <td colspan="2" style=" border-bottom: 1px black solid">{{ 'Name des Notfallkontakt'|trans }}:</td>
     </tr>
     <tr>
-        <td style=" border-bottom: 1px black solid">{{'Telefonnummer für evtl. Notfälle'|trans}}:</td>
-        <td style=" border-bottom: 1px black solid" colspan="3"></td>
+        <td colspan="2" style=" border-bottom: 1px black solid">{{ 'Telefonnummer für evtl. Notfälle'|trans }}:</td>
     </tr>
     </tbody>
 </table>

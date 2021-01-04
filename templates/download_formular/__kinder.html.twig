@@ -22,27 +22,20 @@
     <tbody>
     <tr>
         <td style=" border-bottom: 1px black solid">{{ 'Vorname'|trans }}:</td>
-        <td style=" border-bottom: 1px black solid"></td>
         <td style=" border-bottom: 1px black solid">{{ 'Nachname'|trans }}:</td>
-        <td style=" border-bottom: 1px black solid"></td>
     </tr>
 
-    <tr>
-        <td colspan="4"></td>
-    </tr>
     <tr>
         <td style=" border-bottom: 1px black solid">{{ 'Jahrgangsstufe'|trans }}:</td>
-        <td style=" border-bottom: 1px black solid"></td>
         <td style=" border-bottom: 1px black solid">{{ 'Geburtstag'|trans }}:</td>
-        <td style=" border-bottom: 1px black solid"></td>
     </tr>
 
 
     <tr>
-        <td colspan="4"></td>
+        <td colspan="2"></td>
     </tr>
     <tr>
-        <td colspan="2">{{ 'Mein Kind ist gegen Masern geimpft / bereits immun'|trans }}:</td>
+        <td>{{ 'Mein Kind ist gegen Masern geimpft / bereits immun'|trans }}:</td>
         <td>
             <table cellspacing="3px">
 
@@ -60,28 +53,23 @@
         </td>
     </tr>
     <tr>
-        <td colspan="4"></td>
+        <td colspan="2"></td>
     </tr>
     <tr>
         <td style=" border-bottom: 1px black solid" colspan="2">{{ 'Allergien'|trans }}:</td>
-        <td style=" border-bottom: 1px black solid" colspan="2"></td>
     </tr>
 
     <tr>
-        <td colspan="4"></td>
+        <td style=" border-bottom: 1px black solid" colspan="2">{{ 'Medikamente'|trans }}:</td>
     </tr>
     <tr>
-        <td style=" border-bottom: 1px black solid">{{ 'Medikamente'|trans }}:</td>
-        <td style=" border-bottom: 1px black solid" colspan="3"></td>
+        <td colspan="2"></td>
     </tr>
     <tr>
-        <td colspan="4"></td>
+        <td colspan="2">{{ 'Zutreffendes bitte ankreuzen'|trans }}:</td>
     </tr>
     <tr>
-        <td colspan="4">{{ 'Zutreffendes bitte ankreuzen'|trans }}:</td>
-    </tr>
-    <tr>
-        <td colspan="2">
+        <td>
             <table>
                 <tr>
                     <td style="width: 30px">
@@ -95,7 +83,7 @@
                 </tr>
             </table>
         </td>
-        <td colspan="2">
+        <td>
             <table>
                 <tr>
                     <td style="width: 30px">
@@ -111,7 +99,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2">
+        <td>
             <table>
                 <tr>
                     <td style="width: 30px">
@@ -125,7 +113,7 @@
                 </tr>
             </table>
         </td>
-        <td colspan="2">
+        <td>
             <table>
                 <tr>
                     <td style="width: 30px">
@@ -141,7 +129,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2">
+        <td>
             <table>
                 <tr>
                     <td style="width: 30px">
@@ -155,7 +143,7 @@
                 </tr>
             </table>
         </td>
-        <td colspan="2">
+        <td>
             <table>
                 <tr>
                     <td style="width: 30px">
@@ -171,7 +159,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2">
+        <td>
             <table>
                 <tr>
                     <td style="width: 30px">
@@ -185,7 +173,7 @@
                 </tr>
             </table>
         </td>
-        <td colspan="2">
+        <td>
             <table>
                 <tr>
                     <td style="width: 30px">
@@ -202,3 +190,30 @@
     </tr>
     </tbody>
 </table>
+
+<h2>{{ schule.name }}</h2>
+{% for block in blocks %}
+    <h3>{{ block['type'] }}</h3>
+    <table cellpadding="5px" >
+        <thead>
+        <tr>
+            <th>{{ 'Montag'|trans }}</th>
+            <th>{{ 'Dienstag'|trans }}</th>
+            <th>{{ 'Mittwoch'|trans }}</th>
+            <th>{{ 'Donnerstag'|trans }}</th>
+            <th>{{ 'Freitag'|trans }}</th>
+            {% if blocks['data'][6] is defined %}
+                <th>{{ 'Samstag'|trans }}</th>
+            {% endif %}
+            {% if blocks['data'][7] is defined %}
+                <th>{{ 'Sonntag'|trans }}</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {{ block['table']|raw }}
+
+
+        </tbody>
+    </table>
+{% endfor %}
