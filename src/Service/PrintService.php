@@ -15,6 +15,7 @@ use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use League\Flysystem\FilesystemInterface;
+
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Templating\EngineInterface;
@@ -29,6 +30,7 @@ class PrintService
     protected $parameterBag;
     private $fileSystem;
     private $generator;
+
 
     public function __construct(UrlGeneratorInterface $urlGenerator, FilesystemInterface $publicUploadsFilesystem, EngineInterface $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
@@ -321,8 +323,9 @@ class PrintService
         return $pdf;
     }
 
-    function printAnmeldeformular(Schule $schule, TCPDFController $tcpdf, $fileName, $beruflicheSituation, $gehaltsklassen, $type = 'D')
+    function printAnmeldeformular(Schule $schule, TCPDFController $tcpdf, $fileName, $beruflicheSituation, $gehaltsklassen, $cat, $type = 'D')
     {
+        $catArr = array(1=>$this->translator->trans('Ganztag'),2=>$this->translator->trans('Halbtag'));
         $pdf = $tcpdf->create();
         $organisation = $schule->getOrganisation();
         $pdf->setOrganisation($schule->getOrganisation());
@@ -397,17 +400,15 @@ class PrintService
         );
         // hier die Kinderdaten
         $blocks = array();
-        $blocks[0]['type'] = 'Ganztag';
-        $blocks[1]['type'] = 'Halbtag';
+        $block['type'] = $catArr[$cat];
+
         foreach ($schule->getZeitblocks() as $data) {
-            if ($data->getGanztag() == 1) {
-                $blocks[0]['data'][] = $data;
-            } elseif ($data->getGanztag() == 2) {
-                $blocks[1]['data'][] = $data;
+            if ($data->getGanztag() == $cat) {
+                $block['data'][] = $data;
             }
         }
-        $blocks[0]['table'] = $this->generateTimeTable($blocks[0]['data'], true);
-        $blocks[1]['table'] = $this->generateTimeTable($blocks[1]['data'], true);
+        $block['table'] = $this->generateTimeTable($block['data'], true);
+
 
         $pdf->AddPage();
         $pdf->writeHTMLCell(
@@ -415,7 +416,7 @@ class PrintService
             0,
             20,
             30,
-            $this->templating->render('download_formular/__kinder.html.twig', ['schule' => $schule, 'blocks' => $blocks]),
+            $this->templating->render('download_formular/__kinder.html.twig', ['schule' => $schule, 'block' => $block]),
             0,
             1,
             0,
@@ -442,6 +443,7 @@ class PrintService
             for ($i = 0; $i < 7; $i++) {
                 $table .= '<td align="center" valign="middle" style="border: 1px solid black">';
                 if (isset($render[$i])) {
+
                     $block = $render[$i][0];
                     if ($block->getGanztag() == 0) {
                         $table .= '<p>' . $this->translator->trans('Mittagessen') . '</p>';
@@ -450,8 +452,7 @@ class PrintService
                     if (($block->getMin() || $block->getMax())) {
                         $table .= '<p>' . $this->translator->trans('Warten auf Bestätigung') . '</p>';
                     }
-                    $table .= $block->getVon()->format('H:i');
-                    $table .= ' - ' . $block->getBis()->format('H:i');
+                    $table .= $block->getVon()->format('H:i') . ' - ' . $block->getBis()->format('H:i');
                     if ($cross) {
                         $table .= '<br><div><table width="100%" style="border:none"><tr style="border: none"><td style="border: 1px solid black; width:18px"></td><td style="border: none">' . $this->translator->trans('buchen') . '</td></tr></table></div>';
                     }
@@ -461,9 +462,9 @@ class PrintService
                         unset($render[$i]);
 
                     }
+
                 }
                 $table .= '</td>';
-
             }
 
             $table .= '</tr>';

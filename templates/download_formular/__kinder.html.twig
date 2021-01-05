@@ -192,7 +192,6 @@
 </table>
 
 <h2>{{ schule.name }}</h2>
-{% for block in blocks %}
     <h3>{{ block['type'] }}</h3>
     <table cellpadding="5px" >
         <thead>
@@ -202,10 +201,10 @@
             <th>{{ 'Mittwoch'|trans }}</th>
             <th>{{ 'Donnerstag'|trans }}</th>
             <th>{{ 'Freitag'|trans }}</th>
-            {% if blocks['data'][6] is defined %}
+            {% if block['data'][6] is defined %}
                 <th>{{ 'Samstag'|trans }}</th>
             {% endif %}
-            {% if blocks['data'][7] is defined %}
+            {% if block['data'][7] is defined %}
                 <th>{{ 'Sonntag'|trans }}</th>
             {% endif %}
         </tr>
@@ -216,4 +215,3 @@
 
         </tbody>
     </table>
-{% endfor %}
