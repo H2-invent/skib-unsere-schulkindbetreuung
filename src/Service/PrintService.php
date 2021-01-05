@@ -334,14 +334,14 @@ class PrintService
             $im = $this->fileSystem->read($schule->getOrganisation()->getImage());
             $imdata = base64_encode($im);
             $imgdata = base64_decode($imdata);
-            $pdf->Image('@' . $imgdata, 75, 30, 60, 0);
+            $pdf->Image('@' . $imgdata, 25, 30, 50,0 );
         }
 
         if ($schule->getStadt()->getLogoStadt()) {
             $im = $this->fileSystem->read($schule->getStadt()->getLogoStadt());
             $imdata = base64_encode($im);
             $imgdata = base64_decode($imdata);
-            $pdf->Image('@' . $imgdata, 75, 120, 60, 0);
+            $pdf->Image('@' . $imgdata, 100, 30, 50,0 );
         }
 
         $title = '<h1 style="text-align: center; font-size: 25px">Nachträgliche Anmeldung oder Änderung für die Ganztagsbetreuung an der '. $schule->getName() .'</h1>';
@@ -350,7 +350,7 @@ class PrintService
             170,
             0,
             20,
-            85,
+            100,
             $title,
             0,
             1,
@@ -365,21 +365,35 @@ class PrintService
             $im = $this->fileSystem->read($schule->getImage());
             $imdata = base64_encode($im);
             $imgdata = base64_decode($imdata);
-            $pdf->Image('@' . $imgdata, 30, 150, 150, 0);
+            $pdf->Image('@' . $imgdata, 30, 130, 150, 0);
+        }else{
+            $pdf->writeHTMLCell(
+                170,
+                0,
+                20,
+                150,
+                '<h1 style="font-size: 45px">'.$schule->getName().'</h1>',
+                0,
+                1,
+                0,
+                true,
+                'C',
+                true
+            );
         }
         $text = '<div> <p style="font-size: 12px">Bitte geben Sie das Ausgefüllte Formular an die betreuende Organisation, damit die Anmeldung oder Änderung durchgeführt werden. Kann.</p></div>';
 
         $pdf->writeHTMLCell(
-            60,
+            170,
             0,
             20,
-            200,
+            240,
             $text,
             0,
             1,
-            1,
+            0,
             true,
-            'L',
+            'C',
             true
         );
 
