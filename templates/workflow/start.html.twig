@@ -246,11 +246,11 @@
                                                                aria-expanded="false">{{ 'Änderungsformular'|trans }}</a>
                                                             <!--Menu-->
                                                             <div class="dropdown-menu dropdown-primary">
-                                                                {% if s.blocksforThisYearAndType(1,schuljahr)|length > 0 %}
+                                                                {% if s.blocksforThisYearAndType(1,activeSchuljahr)|length > 0 %}
                                                                     <a class="dropdown-item"
                                                                        href="{{ path('download_formular_schule',{'cat':1,'schule':s.id}) }}">{{ 'Ganztag'|trans }}</a>
                                                                 {% endif %}
-                                                                {% if s.blocksforThisYearAndType(2,schuljahr)|length > 0 %}
+                                                                {% if s.blocksforThisYearAndType(2,activeSchuljahr)|length > 0 %}
                                                                     <a class="dropdown-item"
                                                                        href="{{ path('download_formular_schule',{'cat':2,'schule':s.id}) }}">{{ 'Halbtag'|trans }}</a>
                                                                 {% endif %}

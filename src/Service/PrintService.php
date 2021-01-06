@@ -325,7 +325,7 @@ class PrintService
 
     function printAnmeldeformular(Schule $schule, TCPDFController $tcpdf, $fileName, $beruflicheSituation, $gehaltsklassen, $cat, $type = 'D')
     {
-        $catArr = array(1=>$this->translator->trans('Ganztag'),2=>$this->translator->trans('Halbtag'));
+        $catArr = array(1 => $this->translator->trans('Ganztag'), 2 => $this->translator->trans('Halbtag'));
         $pdf = $tcpdf->create();
         $organisation = $schule->getOrganisation();
         $pdf->setOrganisation($schule->getOrganisation());
@@ -334,17 +334,17 @@ class PrintService
             $im = $this->fileSystem->read($schule->getOrganisation()->getImage());
             $imdata = base64_encode($im);
             $imgdata = base64_decode($imdata);
-            $pdf->Image('@' . $imgdata, 25, 30, 50,0 );
+            $pdf->Image('@' . $imgdata, 25, 30, 50, 0);
         }
 
         if ($schule->getStadt()->getLogoStadt()) {
             $im = $this->fileSystem->read($schule->getStadt()->getLogoStadt());
             $imdata = base64_encode($im);
             $imgdata = base64_decode($imdata);
-            $pdf->Image('@' . $imgdata, 100, 30, 50,0 );
+            $pdf->Image('@' . $imgdata, 100, 30, 50, 0);
         }
 
-        $title = '<h1 style="text-align: center; font-size: 25px">Nachträgliche Anmeldung oder Änderung für die Ganztagsbetreuung an der '. $schule->getName() .'</h1>';
+        $title = '<h1 style="text-align: center; font-size: 25px">Nachträgliche Anmeldung oder Änderung für die Ganztagsbetreuung an der ' . $schule->getName() . '</h1>';
 
         $pdf->writeHTMLCell(
             170,
@@ -366,13 +366,13 @@ class PrintService
             $imdata = base64_encode($im);
             $imgdata = base64_decode($imdata);
             $pdf->Image('@' . $imgdata, 30, 130, 150, 0);
-        }else{
+        } else {
             $pdf->writeHTMLCell(
                 170,
                 0,
                 20,
                 150,
-                '<h1 style="font-size: 45px">'.$schule->getName().'</h1>',
+                '<h1 style="font-size: 45px">' . $schule->getName() . '</h1>',
                 0,
                 1,
                 0,
@@ -422,8 +422,8 @@ class PrintService
             }
         }
         $block['table'] = $this->generateTimeTable($block['data'], true);
-
-
+        $block['data'] = $this->getBlocks($block['data']);
+        dump($block);
         $pdf->AddPage();
         $pdf->writeHTMLCell(
             0,
@@ -438,6 +438,7 @@ class PrintService
             '',
             true
         );
+
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
 
     }
