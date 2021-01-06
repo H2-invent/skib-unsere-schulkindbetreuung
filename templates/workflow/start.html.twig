@@ -237,9 +237,24 @@
                                                            class="loadContent btn-rounded btn-outline-primary btn btn-sm">{{ 'Zeitblöcke und Preise'|trans }}</a>
                                                         <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"
                                                            class="btn-rounded btn-outline-primary btn  btn-sm">{{ 'Kind anmelden'|trans }}</a>
-                                                        {% if schuljahr is null or is_granted('IS_AUTHENTICATED_FULLY')%}
-                                                            <a href="{{ path('download_formular_schule',{'schule':s.id}) }}"
-                                                               class="btn-rounded btn-outline-primary btn  btn-sm">{{ 'Änderungsformular'|trans }}</a>
+
+                                                        {% if schuljahr is null or is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                            <!--Trigger-->
+                                                            <a class="btn-rounded btn-outline-primary btn-sm btn dropdown"
+                                                               type="button" id="dropdownMenu1" data-toggle="dropdown"
+                                                               aria-haspopup="true"
+                                                               aria-expanded="false">{{ 'Änderungsformular'|trans }}</a>
+                                                            <!--Menu-->
+                                                            <div class="dropdown-menu dropdown-primary">
+                                                                {% if s.blocksforThisYearAndType(1,schuljahr)|length > 0 %}
+                                                                    <a class="dropdown-item"
+                                                                       href="{{ path('download_formular_schule',{'cat':1,'schule':s.id}) }}">{{ 'Ganztag'|trans }}</a>
+                                                                {% endif %}
+                                                                {% if s.blocksforThisYearAndType(2,schuljahr)|length > 0 %}
+                                                                    <a class="dropdown-item"
+                                                                       href="{{ path('download_formular_schule',{'cat':2,'schule':s.id}) }}">{{ 'Halbtag'|trans }}</a>
+                                                                {% endif %}
+                                                            </div>
                                                         {% endif %}
                                                     </div>
                                                 </div>

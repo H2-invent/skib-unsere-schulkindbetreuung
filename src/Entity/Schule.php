@@ -35,7 +35,6 @@ class Schule
     private $organisation;
 
 
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="schules")
      */
@@ -270,6 +269,7 @@ class Schule
 
         return $this;
     }
+
     public function setImageFile(File $image = null)
     {
         $this->imageFile = $image;
@@ -433,4 +433,14 @@ class Schule
         return $this;
     }
 
+    public function getBlocksforThisYearAndType($art,?Active $active)
+    {
+        $res = array();
+        foreach ($this->zeitblocks as $data){
+            if($data->getActive() == $active && $data->getGanztag() == $art){
+                $res[] = $data;
+            }
+        }
+        return $res;
+    }
 }
