@@ -10,7 +10,6 @@
         margin: 5px;
     }
 </style>
-
 <!-- Daten der Kinder in einer for Schleife -->
 <h2>{{ schule.name }}</h2>
 <h3>{{ type }}</h3>
@@ -22,8 +21,12 @@
         <th>{{ 'Mittwoch'|trans }}</th>
         <th>{{ 'Donnerstag'|trans }}</th>
         <th>{{ 'Freitag'|trans }}</th>
-        <th>{{ 'Samstag'|trans }}</th>
+        {% if blocks[6] is defined %}
+            <th>{{ 'Samstag'|trans }}</th>
+        {% endif %}
+        {% if blocks[7] is defined %}
         <th>{{ 'Sonntag'|trans }}</th>
+        {% endif %}
     </tr>
     </thead>
     <tbody>

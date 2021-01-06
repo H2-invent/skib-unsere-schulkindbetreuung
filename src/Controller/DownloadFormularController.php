@@ -15,13 +15,13 @@ class DownloadFormularController extends AbstractController
 
 
     /**
-     * @Route("/download/anmeldung/{schule}", name="download_formular_schule")
+     * @Route("/download/anmeldung/{schule}/{cat}", name="download_formular_schule")
      * @ParamConverter("schule",class="App\Entity\Schule", options={"mapping"={"schule"="id"}})
      */
-    public function index(Schule $schule,PrintService $printService,TCPDFController $TCPDFController,TranslatorInterface $translator)
+    public function index(Schule $schule, PrintService $printService, TCPDFController $TCPDFController, TranslatorInterface $translator, $cat)
     {
 
-        return $printService->printAnmeldeformular($schule,$TCPDFController,'Änderung',(new LoerrachWorkflowController($translator))->beruflicheSituation, $schule->getStadt()->getGehaltsklassen(),'I');
+        return $printService->printAnmeldeformular($schule,$TCPDFController,'Änderung',(new LoerrachWorkflowController($translator))->beruflicheSituation, $schule->getStadt()->getGehaltsklassen(),$cat,'I');
 
     }
 }

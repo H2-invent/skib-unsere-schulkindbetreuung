@@ -49,10 +49,8 @@ class pdfFooter extends \TCPDF
             $this->Ln(4);
             $this->MultiCell($this->getRemainingWidth(), 8,  'Tel.: '.$this->organisation->getTelefon().' | E-Mail:'.$this->organisation->getEmail(), 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
             $this->Ln(4);
-            $this->MultiCell($this->getRemainingWidth(), 8,  'Steuernummer: '.$this->organisation->getSteuernummer().' | UmSt.Id '.$this->organisation->getUmstid() , 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
-            $this->Ln(4);
-            $this->SetFont('helvetica', '', 10);
-            $this->MultiCell($this->getRemainingWidth(), 10,   'IBAN: '.$this->organisation->getIban() .' | BIC: '.$this->organisation->getBic(). '| Bank: '.$this->organisation->getBankName(), 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
+            $this->SetFont('helvetica', '', 8);
+            $this->MultiCell($this->getRemainingWidth(), 8,   'IBAN: '.$this->organisation->getIban() .' | BIC: '.$this->organisation->getBic(). '| Bank: '.$this->organisation->getBankName(), 0, 'C', 0, 0, '', '', true, 0, false, true, 10, 'M');
         }
 
 

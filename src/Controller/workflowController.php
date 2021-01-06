@@ -8,6 +8,7 @@ namespace App\Controller;
  * Time: 12:21
  */
 
+use App\Entity\Active;
 use App\Entity\News;
 use App\Entity\Organisation;
 use App\Entity\Schule;
@@ -39,6 +40,7 @@ class workflowController extends AbstractController
         }
 
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
+        $activeSchuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
         $cityInfoText = $stadt->translate()->getInfoText();
         // Load all schools from the city into the controller as $schulen
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
@@ -54,7 +56,7 @@ class workflowController extends AbstractController
         $text = $stadt->translate()->getInfoText();
         $array = explode('. ', $text);
         $metaDescription = $this->buildMeta($array);
-        return $this->render('workflow/start.html.twig', array('metaDescription' => $metaDescription, 'title' => $title, 'schule' => $schule,'news'=>$news, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'schuljahr' => $schuljahr));
+        return $this->render('workflow/start.html.twig', array('metaDescription' => $metaDescription, 'title' => $title, 'schule' => $schule,'news'=>$news, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'schuljahr' => $schuljahr,'activeSchuljahr'=>$activeSchuljahr));
     }
 
 
