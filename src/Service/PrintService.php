@@ -423,7 +423,7 @@ class PrintService
         }
         $block['table'] = $this->generateTimeTable($block['data'], true);
         $block['data'] = $this->getBlocks($block['data']);
-        dump($block);
+
         $pdf->AddPage();
         $pdf->writeHTMLCell(
             0,
