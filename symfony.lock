@@ -102,9 +102,6 @@
     "doctrine/sql-formatter": {
         "version": "1.1.0"
     },
-    "dompdf/dompdf": {
-        "version": "v1.0.1"
-    },
     "egulias/email-validator": {
         "version": "2.1.11"
     },
@@ -226,12 +223,6 @@
     "paragonie/sodium_compat": {
         "version": "v1.12.1"
     },
-    "phenx/php-font-lib": {
-        "version": "0.5.2"
-    },
-    "phenx/php-svg-lib": {
-        "version": "v0.3.3"
-    },
     "php": {
         "version": "7.3"
     },
@@ -273,9 +264,6 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
-    },
-    "sabberworm/php-css-parser": {
-        "version": "8.3.1"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
