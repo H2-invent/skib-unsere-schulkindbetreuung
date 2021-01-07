@@ -218,7 +218,7 @@
             <th>{{ 'Mittwoch'|trans }}</th>
             <th>{{ 'Donnerstag'|trans }}</th>
             <th>{{ 'Freitag'|trans }}</th>
-            {% if block['data'][5] is defined %}
+            {% if block['data'][5] is defined or block['data'][6] is defined  %}
                 <th>{{ 'Samstag'|trans }}</th>
             {% endif %}
             {% if block['data'][6] is defined %}
