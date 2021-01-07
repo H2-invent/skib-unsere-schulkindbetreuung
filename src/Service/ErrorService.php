@@ -25,7 +25,7 @@ class ErrorService
 
     public function createError($error, FormInterface $form)
     {
-        dump($error);
+
         $ele = $form->all();
         $arr = array();
         foreach ($ele as $data) {
@@ -35,7 +35,7 @@ class ErrorService
         foreach ($error as $data) {
             $errorString[]= array('type'=>'error','text'=>$this->translator->trans($arr[$data->getPropertyPath()]) . ': ' . str_replace('"','\"',$data->getMessage()));
         }
-        dump($errorString);
+
         return $errorString;
     }
 }

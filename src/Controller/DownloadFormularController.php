@@ -21,7 +21,7 @@ class DownloadFormularController extends AbstractController
     public function index(Schule $schule, PrintService $printService, TCPDFController $TCPDFController, TranslatorInterface $translator, $cat)
     {
 
-        return $printService->printAnmeldeformular($schule,$TCPDFController,'Änderung',(new LoerrachWorkflowController($translator))->beruflicheSituation, $schule->getStadt()->getGehaltsklassen(),$cat,'I');
+        return $printService->printAnmeldeformular($schule,$TCPDFController,'Änderung',(new LoerrachWorkflowController($translator))->beruflicheSituation, $schule->getStadt()->getGehaltsklassen(),$cat,'D');
 
     }
 }
