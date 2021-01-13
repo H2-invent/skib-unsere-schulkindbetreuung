@@ -21,8 +21,16 @@
 
     <tbody>
     <tr>
-        <td style=" border-bottom: 1px black solid">{{ 'Vorname'|trans }}:</td>
-        <td style=" border-bottom: 1px black solid">{{ 'Nachname'|trans }}:</td>
+        <td><h3 style="color: red">{{ 'Sicherheitscode bei Änderung'|trans }}:</h3></td>
+        <td>____ ____ ____ ____ ____ ____<br>{% trans %}Diesen finden Sie in der Buchungsbestätigung, die Sie per Email erhalten haben.{% endtrans %}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <td style=" border-bottom: 1px black solid; color: red">{{ 'Vorname'|trans }}:</td>
+        <td style=" border-bottom: 1px black solid; color: red">{{ 'Nachname'|trans }}:</td>
     </tr>
 
     <tr>
@@ -49,9 +57,6 @@
     </tr>
 
     <tr>
-        <td colspan="2"></td>
-    </tr>
-    <tr>
         <td>{{ 'Mein Kind ist gegen Masern geimpft / bereits immun'|trans }}:</td>
         <td>
             <table cellspacing="3px">
@@ -60,17 +65,8 @@
                     <td style="width: 20px; border: 2px black solid"></td>
                     <td> Ja</td>
                 </tr>
-                <tr>
-                    <td style="width: 20px; border: 2px black solid"></td>
-                    <td> Nein</td>
-                </tr>
-
-
             </table>
         </td>
-    </tr>
-    <tr>
-        <td colspan="2"></td>
     </tr>
     <tr>
         <td style=" border-bottom: 1px black solid" colspan="2">{{ 'Allergien'|trans }}:</td>
@@ -208,8 +204,7 @@
     </tbody>
 </table>
 
-<h2>{{ schule.name }}</h2>
-    <h3>{{ block['type'] }}</h3>
+<h2>{{ schule.name }} - {{ block['type'] }}</h2>
     <table cellpadding="5px" >
         <thead>
         <tr>

@@ -21,23 +21,18 @@
 
     <tbody>
     <tr>
-        <td><h3>{{ 'Sicherheitscode bei Änderung'|trans }}:</h3></td>
-        <td>____ ____ ____ ____ ____ ____
-        </td>
-    </tr>
-    <tr>
         <td colspan="2"></td>
     </tr>
     <tr>
-        <td colspan="2" style=" border-bottom: 1px black solid">{{ 'Email'|trans }}:</td>
+        <td colspan="2" style=" border-bottom: 1px black solid; color: red">{{ 'Email'|trans }}:</td>
     </tr>
     <tr>
-        <td colspan="2" style=" border-bottom: 1px black solid">{{ 'Telefonnummer'|trans }}:</td>
+        <td colspan="2" style=" border-bottom: 1px black solid; color: red">{{ 'Telefonnummer'|trans }}:</td>
     </tr>
 
     <tr>
-        <td style=" border-bottom: 1px black solid">{{ 'Vorname'|trans }}:</td>
-        <td style=" border-bottom: 1px black solid">{{ 'Nachname'|trans }}:</td>
+        <td style=" border-bottom: 1px black solid; color: red">{{ 'Vorname'|trans }}:</td>
+        <td style=" border-bottom: 1px black solid; color: red">{{ 'Nachname'|trans }}:</td>
     </tr>
     <tr>
         <td style=" border-bottom: 1px black solid">{{ 'Straße'|trans }}:</td>
@@ -71,7 +66,8 @@
         <td colspan="2"></td>
     </tr>
     <tr>
-        <td>{{ 'Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung'|trans }}:
+        <td>{{ 'Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung'|trans }}
+            :
         </td>
         <td>
             <table cellspacing="3px">
@@ -90,10 +86,14 @@
         </td>
     </tr>
     <tr>
-        <td style=" border-bottom: 1px black solid">{{ 'Wenn ja, geben Sie hier den Namen des kostenpflichtigen Kindergartens an'|trans }}:</td>
+        <td style=" border-bottom: 1px black solid">{{ 'Wenn ja, geben Sie hier den Namen des kostenpflichtigen Kindergartens an'|trans }}
+            :
+        </td>
         <td style=" border-bottom: 1px black solid"></td>
     </tr>
-
+    <tr>
+        <td colspan="2"></td>
+    </tr>
     <tr>
         <td>{{ 'Berufliche Situation'|trans }}:</td>
         <td>
@@ -134,16 +134,103 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2"></td>
-    </tr>
-    <tr>
-        <td colspan="2" style=" border-bottom: 1px black solid">{{ 'Name des Notfallkontakt'|trans }}:</td>
+        <td colspan="2" style=" border-bottom: 1px black solid">{{ 'Name des Notfallkontakts'|trans }}:</td>
     </tr>
     <tr>
         <td colspan="2" style=" border-bottom: 1px black solid">{{ 'Telefonnummer für evtl. Notfälle'|trans }}:</td>
     </tr>
     <tr>
         <td colspan="2" style=" border-bottom: 1px black solid">{{ 'Weitere abholberechtigte Personen'|trans }}:</td>
+    </tr>
+
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <td colspan="2" style=" border-bottom: 1px black solid">{{ 'Kontoinhaber'|trans }}:</td>
+    </tr>
+    <tr>
+        <td style=" border-bottom: 1px black solid">{{ 'IBAN'|trans }}:</td>
+        <td style=" border-bottom: 1px black solid">{{ 'BIC'|trans }}:</td>
+    </tr>
+    </tbody>
+</table>
+<table>
+    <tbody>
+    <tr>
+        <td colspan="6"></td>
+    </tr>
+    <tr>
+        <td>
+            <table cellspacing="3px">
+                <tr>
+                    <td style="width: 20px; border: 2px black solid"></td>
+                </tr>
+            </table>
+        </td>
+        <td colspan="5">{% trans %}Ich ermächtige die betreuende Organisation{% endtrans %} {{ organisation.name }}
+            {% trans %}Zahlungen von meinem  Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der betreuenden Organisation{% endtrans %} {{ organisation.name }}
+            {% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
+        </td>
+
+    </tr>
+    <tr>
+        <td colspan="6"></td>
+    </tr>
+    <tr>
+        <td>
+            <table cellspacing="3px">
+                <tr>
+                    <td style="width: 20px; border: 2px black solid"></td>
+                </tr>
+            </table>
+        </td>
+        <td style="color: red" colspan="5">{% trans with {'%stadt%':organisation.stadt.name} %}Ich habe die allgemeinen Vertragsbedingungen der %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese.{% endtrans %}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6"></td>
+    </tr>
+    <tr>
+        <td>
+            <table cellspacing="3px">
+                <tr>
+                    <td style="width: 20px; border: 2px black solid"></td>
+                </tr>
+            </table>
+        </td>
+        <td style="color: red" colspan="5">{% trans %}Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen widerrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.{% endtrans %}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6"></td>
+    </tr>
+    <tr>
+        <td>
+            <table cellspacing="3px">
+                <tr>
+                    <td style="width: 20px; border: 2px black solid"></td>
+                </tr>
+            </table>
+        </td>
+        <td style="color: red" colspan="5">{% trans with{'%s%':organisation.stadt.name} %}Ich habe die Datenschutzerklärung der %s%  gelesen und bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet und an die betreuende Organisation weitergegeben werden.{% endtrans %}
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<table>
+    <tbody>
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <td style="border: 2px black solid; height: 100px"></td>
+        <td style="border: 2px black solid"></td>
+    </tr>
+    <tr>
+        <td style="border: 2px black solid">Datum</td>
+        <td style="border: 2px black solid">Unterschrift</td>
     </tr>
     </tbody>
 </table>

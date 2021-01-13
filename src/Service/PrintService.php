@@ -344,7 +344,7 @@ class PrintService
             $pdf->Image('@' . $imgdata, 100, 30, 50, 0);
         }
 
-        $title = '<h1 style="text-align: center; font-size: 25px">Nachträgliche Anmeldung oder Änderung für die Ganztagsbetreuung an der ' . $schule->getName() . '</h1>';
+        $title = '<h1 style="text-align: center; font-size: 25px">Änderung der Anmeldung für die Schulkindbetreuung an der ' . $schule->getName() . '</h1>';
 
         $pdf->writeHTMLCell(
             170,
@@ -381,35 +381,19 @@ class PrintService
                 true
             );
         }
-        $text = '<div> <p style="font-size: 12px">Bitte geben Sie das Ausgefüllte Formular an die betreuende Organisation, damit die Anmeldung oder Änderung durchgeführt werden. Kann.</p></div>';
+        $text = '<div> <p style="font-size: 12px; color: red"><b>Bei nachträglichen Änderungen in der Anmeldung müssen mindestens die roten Felder ausgefüllt sein.</b></p></div>';
 
         $pdf->writeHTMLCell(
             170,
             0,
             20,
-            240,
+            230,
             $text,
             0,
             1,
             0,
             true,
             'C',
-            true
-        );
-
-        // hier die ELterndaten
-        $pdf->AddPage();
-        $pdf->writeHTMLCell(
-            0,
-            0,
-            20,
-            30,
-            $this->templating->render('download_formular/__elter.html.twig', array('gehaltsklassen' => $gehaltsklassen, 'beruflicheSitutuation' => $beruflicheSituation)),
-            0,
-            1,
-            0,
-            true,
-            '',
             true
         );
         // hier die Kinderdaten
@@ -438,6 +422,24 @@ class PrintService
             '',
             true
         );
+
+        // hier die ELterndaten
+        $pdf->AddPage();
+        $pdf->writeHTMLCell(
+            0,
+            0,
+            20,
+            30,
+            $this->templating->render('download_formular/__elter.html.twig', array('gehaltsklassen' => $gehaltsklassen, 'beruflicheSitutuation' => $beruflicheSituation, 'organisation' => $organisation)),
+            0,
+            1,
+            0,
+            true,
+            '',
+            true
+        );
+
+
 
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
 
