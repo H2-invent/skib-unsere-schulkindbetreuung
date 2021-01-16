@@ -2631,7 +2631,7 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       </trans-unit>
       <trans-unit id="vwEUKgL" resname="Mit dieser Email erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung">
         <source>Mit dieser Email erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung</source>
-        <target>__Mit dieser Email erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung</target>
+        <target>Avec cet e-mail, vous recevrez à nouveau le code de sécurité pour modifier votre inscription dans notre garderie scolaire.</target>
       </trans-unit>
       <trans-unit id=".sA.Buo" resname="Absender">
         <source>Absender</source>
@@ -2659,7 +2659,7 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       </trans-unit>
       <trans-unit id="2M_gsdT" resname="Email Adressen stimmen nicht überein.">
         <source>Email Adressen stimmen nicht überein.</source>
-        <target>__Email Adressen stimmen nicht überein.</target>
+        <target>Les adresses électroniques ne correspondent pas.</target>
       </trans-unit>
       <trans-unit id="PZtkwfX" resname="Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:">
         <source>Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:</source>
@@ -2671,19 +2671,63 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       </trans-unit>
       <trans-unit id="ojEwBSz" resname="Email adresse geändert">
         <source>Email adresse geändert</source>
-        <target>__Email adresse geändert</target>
+        <target>Changement d'adresse électronique</target>
       </trans-unit>
       <trans-unit id="PBmNL.F" resname="Email Adresse ändern">
         <source>Email Adresse ändern</source>
-        <target>__Email Adresse ändern</target>
+        <target>Changement d'adresse électronique</target>
       </trans-unit>
       <trans-unit id="FRTUpLP" resname="Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.">
         <source>Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.</source>
-        <target>__Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.</target>
+        <target>Veuillez confirmer l'adresse électronique en la saisissant à nouveau.</target>
       </trans-unit>
       <trans-unit id="XFHrdAT" resname="Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten Rabatt auf die Gebühr des ältesten Kindes">
         <source>Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten Rabatt auf die Gebühr des ältesten Kindes</source>
-        <target>__Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten Rabatt auf die Gebühr des ältesten Kindes</target>
+        <target>Les familles qui ont des enfants supplémentaires dans un jardin d'enfants public payant bénéficient d'une réduction sur le tarif de l'enfant le plus âgé.</target>
+      </trans-unit>
+      <trans-unit id="x9cMUQ_" resname="Änderungsformular für die Schulkindbetreuung">
+        <source>Änderungsformular für die Schulkindbetreuung</source>
+        <target>Formulaire de changement pour la garde d'enfants à l'école</target>
+      </trans-unit>
+      <trans-unit id="mZ5doOd" resname="buchen">
+        <source>buchen</source>
+        <target>livre</target>
+      </trans-unit>
+      <trans-unit id="QTjlAaM" resname="Aenderungsformular_%n%">
+        <source>Aenderungsformular_%n%</source>
+        <target>Aenderungsformular_%n%</target>
+      </trans-unit>
+      <trans-unit id="Jznf_ZI" resname="Adresszusatz">
+        <source>Adresszusatz</source>
+        <target>Suffixe de l'adresse</target>
+      </trans-unit>
+      <trans-unit id="PoJDHKh" resname="Wenn ja, geben Sie hier den Namen des kostenpflichtigen Kindergartens an">
+        <source>Wenn ja, geben Sie hier den Namen des kostenpflichtigen Kindergartens an</source>
+        <target>Si oui, veuillez indiquer ici le nom de l'école maternelle payante</target>
+      </trans-unit>
+      <trans-unit id="qhLfgH2" resname="Name des Notfallkontakts">
+        <source>Name des Notfallkontakts</source>
+        <target>Nom de la personne à contacter en cas d'urgence</target>
+      </trans-unit>
+      <trans-unit id="9Th.m7b" resname="Kind">
+        <source>Kind</source>
+        <target>Enfant</target>
+      </trans-unit>
+      <trans-unit id="FR7kpRA" resname="Sicherheitscode bei Änderung">
+        <source>Sicherheitscode bei Änderung</source>
+        <target>Code de sécurité sur le changement</target>
+      </trans-unit>
+      <trans-unit id=".kM4BWQ" resname="Diesen finden Sie in der Buchungsbestätigung, die Sie per Email erhalten haben.">
+        <source>Diesen finden Sie in der Buchungsbestätigung, die Sie per Email erhalten haben.</source>
+        <target>Vous le trouverez dans la confirmation de réservation que vous avez reçue par courrier électronique.</target>
+      </trans-unit>
+      <trans-unit id="WLVmQ48" resname="Zutreffendes bitte ankreuzen">
+        <source>Zutreffendes bitte ankreuzen</source>
+        <target>Veuillez marquer d'une croix le cas échéant</target>
+      </trans-unit>
+      <trans-unit id="lUGZl8W" resname="Änderungsformular">
+        <source>Änderungsformular</source>
+        <target>Formulaire de modification</target>
       </trans-unit>
     </body>
   </file>
