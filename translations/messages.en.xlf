@@ -2627,7 +2627,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="vwEUKgL" resname="Mit dieser Email erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung">
         <source>Mit dieser Email erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung</source>
-        <target>__Mit dieser Email erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung</target>
+        <target>With this email you will receive again the security code to change your registration in our school childcare</target>
       </trans-unit>
       <trans-unit id=".sA.Buo" resname="Absender">
         <source>Absender</source>
@@ -2667,15 +2667,59 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="ojEwBSz" resname="Email adresse geändert">
         <source>Email adresse geändert</source>
-        <target>__Email adresse geändert</target>
+        <target>Email address changed</target>
       </trans-unit>
       <trans-unit id="PBmNL.F" resname="Email Adresse ändern">
         <source>Email Adresse ändern</source>
-        <target>__Email Adresse ändern</target>
+        <target>Change email address</target>
       </trans-unit>
       <trans-unit id="FRTUpLP" resname="Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.">
         <source>Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.</source>
-        <target>__Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.</target>
+        <target>Please confirm the e-mail address by entering it again.</target>
+      </trans-unit>
+      <trans-unit id="x9cMUQ_" resname="Änderungsformular für die Schulkindbetreuung">
+        <source>Änderungsformular für die Schulkindbetreuung</source>
+        <target>Change form for school childcare</target>
+      </trans-unit>
+      <trans-unit id="mZ5doOd" resname="buchen">
+        <source>buchen</source>
+        <target>book</target>
+      </trans-unit>
+      <trans-unit id="QTjlAaM" resname="Aenderungsformular_%n%">
+        <source>Aenderungsformular_%n%</source>
+        <target>Aenderungsformular_%n%</target>
+      </trans-unit>
+      <trans-unit id="Jznf_ZI" resname="Adresszusatz">
+        <source>Adresszusatz</source>
+        <target>Address suffix</target>
+      </trans-unit>
+      <trans-unit id="PoJDHKh" resname="Wenn ja, geben Sie hier den Namen des kostenpflichtigen Kindergartens an">
+        <source>Wenn ja, geben Sie hier den Namen des kostenpflichtigen Kindergartens an</source>
+        <target>If yes, enter the name of the fee-paying kindergarten here</target>
+      </trans-unit>
+      <trans-unit id="qhLfgH2" resname="Name des Notfallkontakts">
+        <source>Name des Notfallkontakts</source>
+        <target>Name of the emergency contact</target>
+      </trans-unit>
+      <trans-unit id="9Th.m7b" resname="Kind">
+        <source>Kind</source>
+        <target>Child</target>
+      </trans-unit>
+      <trans-unit id="FR7kpRA" resname="Sicherheitscode bei Änderung">
+        <source>Sicherheitscode bei Änderung</source>
+        <target>Security code on change</target>
+      </trans-unit>
+      <trans-unit id=".kM4BWQ" resname="Diesen finden Sie in der Buchungsbestätigung, die Sie per Email erhalten haben.">
+        <source>Diesen finden Sie in der Buchungsbestätigung, die Sie per Email erhalten haben.</source>
+        <target>You will find this in the booking confirmation you received by email.</target>
+      </trans-unit>
+      <trans-unit id="WLVmQ48" resname="Zutreffendes bitte ankreuzen">
+        <source>Zutreffendes bitte ankreuzen</source>
+        <target>Please mark with a cross where applicable</target>
+      </trans-unit>
+      <trans-unit id="lUGZl8W" resname="Änderungsformular">
+        <source>Änderungsformular</source>
+        <target>Change form</target>
       </trans-unit>
     </body>
   </file>
