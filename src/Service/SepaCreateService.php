@@ -201,7 +201,14 @@ class SepaCreateService
 
         $mailContent = $this->environment->render('email/rechnungEmail.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
         $betreff = $this->translator->trans('Rechnung') . ' ' . $rechnung->getRechnungsnummer();
-        $this->mailerService->sendEmail($organisation->getName(), $organisation->getEmail(), $rechnung->getStammdaten()->getEmail(), $betreff, $mailContent, $attachment);
+        $this->mailerService->sendEmail(
+            $organisation->getName(),
+            $organisation->getEmail(),
+            $rechnung->getStammdaten()->getEmail(),
+            $betreff,
+            $mailContent,
+            $organisation->getEmail(),
+            $attachment);
 
     }
 

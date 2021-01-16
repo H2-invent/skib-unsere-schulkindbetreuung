@@ -2561,6 +2561,174 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Zeitblöcke und Preise</source>
         <target>Blocs horaires et prix</target>
       </trans-unit>
+      <trans-unit id="lBV5YKD" resname=" am %d% von %s% bis %e% Uhr">
+        <source> am %d% von %s% bis %e% Uhr</source>
+        <target>__ am %d% von %s% bis %e% Uhr</target>
+      </trans-unit>
+      <trans-unit id="_S8zNXy" resname="Email mit Sicherheitscode">
+        <source>Email mit Sicherheitscode</source>
+        <target>__Email mit Sicherheitscode</target>
+      </trans-unit>
+      <trans-unit id="EnnkoaW" resname="Sicherheitscode erneut zugesendet">
+        <source>Sicherheitscode erneut zugesendet</source>
+        <target>__Sicherheitscode erneut zugesendet</target>
+      </trans-unit>
+      <trans-unit id="OqifTIq" resname="Sicherheitscode konnte nicht erneut zugesendet">
+        <source>Sicherheitscode konnte nicht erneut zugesendet</source>
+        <target>__Sicherheitscode konnte nicht erneut zugesendet</target>
+      </trans-unit>
+      <trans-unit id="O50zxfL" resname="Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:">
+        <source>Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:</source>
+        <target>Malheureusement, le créneau de garde d'enfants du %day% de %from% à %to% à %shool% a été annulé pour l'enfant suivant:</target>
+      </trans-unit>
+      <trans-unit id=".iQZfNt" resname="Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
+        <source>Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
+        <target>Annulation du créneau horaire de la garde d'enfants : %jour% de %de% à %à% l'école %shool%.</target>
+      </trans-unit>
+      <trans-unit id="pqaJS.R" resname="Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:">
+        <source>Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:</source>
+        <target>Il a rétabli le créneau horaire de la garde d'enfants sur %day% de %from% à %to% dans le %shool% pour l'enfant suivant :</target>
+      </trans-unit>
+      <trans-unit id="ZXQY7Nz" resname="Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
+        <source>Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
+        <target>Restauration du créneau horaire de la garde d'enfants : %jour% de %de%à %à%l'école %shool%.</target>
+      </trans-unit>
+      <trans-unit id="ewdRqId" resname="Erfolgreich wiederhergestellt">
+        <source>Erfolgreich wiederhergestellt</source>
+        <target>__Erfolgreich wiederhergestellt</target>
+      </trans-unit>
+      <trans-unit id="RHI5AOs" resname="Ganztag">
+        <source>Ganztag</source>
+        <target>__Ganztag</target>
+      </trans-unit>
+      <trans-unit id="HoWFEFd" resname="Halbtag">
+        <source>Halbtag</source>
+        <target>__Halbtag</target>
+      </trans-unit>
+      <trans-unit id="Y3Cn2Fa" resname="Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig">
+        <source>Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig</source>
+        <target>__Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig</target>
+      </trans-unit>
+      <trans-unit id="lbGxc1S" resname="App Verbindung">
+        <source>App Verbindung</source>
+        <target>__App Verbindung</target>
+      </trans-unit>
+      <trans-unit id="qA0e0QA" resname="Sicherheitscode erneut senden">
+        <source>Sicherheitscode erneut senden</source>
+        <target>__Sicherheitscode erneut senden</target>
+      </trans-unit>
+      <trans-unit id="dM1xpTv" resname="Bestätigungscode zur Anmeldung bei der SKIBin App">
+        <source>Bestätigungscode zur Anmeldung bei der SKIBin App</source>
+        <target>__Bestätigungscode zur Anmeldung bei der SKIBin App</target>
+      </trans-unit>
+      <trans-unit id="_PoH7Ws" resname="Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK">
+        <source>Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK</source>
+        <target>__Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK</target>
+      </trans-unit>
+      <trans-unit id="if6t1lm" resname="Sicherheitscode für Ihre Anmeldung bei SKiB">
+        <source>Sicherheitscode für Ihre Anmeldung bei SKiB</source>
+        <target>__Sicherheitscode für Ihre Anmeldung bei SKiB</target>
+      </trans-unit>
+      <trans-unit id="vwEUKgL" resname="Mit dieser Email erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung">
+        <source>Mit dieser Email erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung</source>
+        <target>Avec cet e-mail, vous recevrez à nouveau le code de sécurité pour modifier votre inscription dans notre garderie scolaire.</target>
+      </trans-unit>
+      <trans-unit id=".sA.Buo" resname="Absender">
+        <source>Absender</source>
+        <target>__Absender</target>
+      </trans-unit>
+      <trans-unit id="7JO.aFA" resname="Betreff">
+        <source>Betreff</source>
+        <target>__Betreff</target>
+      </trans-unit>
+      <trans-unit id="QHGpDcF" resname="Änderungen nächsten Monat">
+        <source>Änderungen nächsten Monat</source>
+        <target>__Änderungen nächsten Monat</target>
+      </trans-unit>
+      <trans-unit id="pWbM_xE" resname="Verbindung zu der App trennen">
+        <source>Verbindung zu der App trennen</source>
+        <target>__Verbindung zu der App trennen</target>
+      </trans-unit>
+      <trans-unit id=".1MWVud" resname="Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.">
+        <source>Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.</source>
+        <target>Indiquez ici le nom de l'école maternelle payante.</target>
+      </trans-unit>
+      <trans-unit id="34R6VMk" resname="Keine Berechtigung">
+        <source>Keine Berechtigung</source>
+        <target>__Keine Berechtigung</target>
+      </trans-unit>
+      <trans-unit id="2M_gsdT" resname="Email Adressen stimmen nicht überein.">
+        <source>Email Adressen stimmen nicht überein.</source>
+        <target>Les adresses électroniques ne correspondent pas.</target>
+      </trans-unit>
+      <trans-unit id="PZtkwfX" resname="Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:">
+        <source>Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:</source>
+        <target>Votre adresse électronique a été modifiée par un membre du personnel de l'organisation de soins. C'est pourquoi nous vous envoyons à nouveau la confirmation de réservation de cet enfant :</target>
+      </trans-unit>
+      <trans-unit id="6qMlHHn" resname="Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Oranisation geändert.">
+        <source>Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Oranisation geändert.</source>
+        <target>Votre adresse électronique a été modifiée par un employé de l'organisation responsable.</target>
+      </trans-unit>
+      <trans-unit id="ojEwBSz" resname="Email adresse geändert">
+        <source>Email adresse geändert</source>
+        <target>Changement d'adresse électronique</target>
+      </trans-unit>
+      <trans-unit id="PBmNL.F" resname="Email Adresse ändern">
+        <source>Email Adresse ändern</source>
+        <target>Changement d'adresse électronique</target>
+      </trans-unit>
+      <trans-unit id="FRTUpLP" resname="Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.">
+        <source>Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.</source>
+        <target>Veuillez confirmer l'adresse électronique en la saisissant à nouveau.</target>
+      </trans-unit>
+      <trans-unit id="XFHrdAT" resname="Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten Rabatt auf die Gebühr des ältesten Kindes">
+        <source>Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten Rabatt auf die Gebühr des ältesten Kindes</source>
+        <target>Les familles qui ont des enfants supplémentaires dans un jardin d'enfants public payant bénéficient d'une réduction sur le tarif de l'enfant le plus âgé.</target>
+      </trans-unit>
+      <trans-unit id="x9cMUQ_" resname="Änderungsformular für die Schulkindbetreuung">
+        <source>Änderungsformular für die Schulkindbetreuung</source>
+        <target>Formulaire de changement pour la garde d'enfants à l'école</target>
+      </trans-unit>
+      <trans-unit id="mZ5doOd" resname="buchen">
+        <source>buchen</source>
+        <target>livre</target>
+      </trans-unit>
+      <trans-unit id="QTjlAaM" resname="Aenderungsformular_%n%">
+        <source>Aenderungsformular_%n%</source>
+        <target>Aenderungsformular_%n%</target>
+      </trans-unit>
+      <trans-unit id="Jznf_ZI" resname="Adresszusatz">
+        <source>Adresszusatz</source>
+        <target>Suffixe de l'adresse</target>
+      </trans-unit>
+      <trans-unit id="PoJDHKh" resname="Wenn ja, geben Sie hier den Namen des kostenpflichtigen Kindergartens an">
+        <source>Wenn ja, geben Sie hier den Namen des kostenpflichtigen Kindergartens an</source>
+        <target>Si oui, veuillez indiquer ici le nom de l'école maternelle payante</target>
+      </trans-unit>
+      <trans-unit id="qhLfgH2" resname="Name des Notfallkontakts">
+        <source>Name des Notfallkontakts</source>
+        <target>Nom de la personne à contacter en cas d'urgence</target>
+      </trans-unit>
+      <trans-unit id="9Th.m7b" resname="Kind">
+        <source>Kind</source>
+        <target>Enfant</target>
+      </trans-unit>
+      <trans-unit id="FR7kpRA" resname="Sicherheitscode bei Änderung">
+        <source>Sicherheitscode bei Änderung</source>
+        <target>Code de sécurité sur le changement</target>
+      </trans-unit>
+      <trans-unit id=".kM4BWQ" resname="Diesen finden Sie in der Buchungsbestätigung, die Sie per Email erhalten haben.">
+        <source>Diesen finden Sie in der Buchungsbestätigung, die Sie per Email erhalten haben.</source>
+        <target>Vous le trouverez dans la confirmation de réservation que vous avez reçue par courrier électronique.</target>
+      </trans-unit>
+      <trans-unit id="WLVmQ48" resname="Zutreffendes bitte ankreuzen">
+        <source>Zutreffendes bitte ankreuzen</source>
+        <target>Veuillez marquer d'une croix le cas échéant</target>
+      </trans-unit>
+      <trans-unit id="lUGZl8W" resname="Änderungsformular">
+        <source>Änderungsformular</source>
+        <target>Formulaire de modification</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

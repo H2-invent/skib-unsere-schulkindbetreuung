@@ -24,9 +24,11 @@ class EmployeeOrganisationController extends AbstractController
         $this->availRole = array(
             'ROLE_ORG_REPORT' => 'ROLE_ORG_REPORT',
             'ROLE_ORG_CHILD_CHANGE' => 'ROLE_ORG_CHILD_CHANGE',
+            'ROLE_ORG_CHILD_EMAIL_CHANGE' => 'ROLE_ORG_CHILD_EMAIL_CHANGE',
             'ROLE_ORG_CHILD_SHOW' => 'ROLE_ORG_CHILD_SHOW',
             'ROLE_ORG_ACCOUNTING'=>'ROLE_ORG_ACCOUNTING',
             'ROLE_ORG_BLOCK_MANAGEMENT'=>'ROLE_ORG_BLOCK_MANAGEMENT',
+            'ROLE_ORG_BLOCK_DELETE'=>'ROLE_ORG_BLOCK_DELETE',
             'ROLE_ORG_SHOOL'=>'ROLE_ORG_SHOOL',
             'ROLE_ORG_NEWS'=>'ROLE_ORG_NEWS',
             'ROLE_ORG_CHILD_DELETE'=>'ROLE_ORG_CHILD_DELETE',

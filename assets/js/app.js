@@ -9,6 +9,7 @@
 import '../css/app.css';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
+
 global.$ = global.jQuery = $;
 import Popper from 'popper.js';
 import 'datatables.net-dt';
@@ -41,7 +42,9 @@ import ('trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste');
 import ('trumbowyg/dist/plugins/template/trumbowyg.template');
 import ('formBuilder/dist/form-builder.min');
 import snackbar from 'snackbarjs';
+
 let formBuilderLoc;
+var sucessFkt;
 $(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
 
 $('#toggle-btn').on('click', function (e) {
@@ -77,7 +80,7 @@ $(document).ready(function () {
 })
 
 $(window).on('load', function () {
-    if(typeof survey != 'undefined') {
+    if (typeof survey != 'undefined') {
         var options = {
             i18n: {
                 locale: 'de-DE'
@@ -201,34 +204,6 @@ $(window).on('load', function () {
     });
 
 
-    $(document).on('click', '.deleteBtn', function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        var type = $(this).attr('type');
-
-        $.confirm({
-            title: confirmTitle,
-            content: confirmText,
-            theme: 'material',
-            buttons: {
-                confirm: function () {
-                    $.ajax({
-                        url: url,
-                        type: type,
-                        success: function (data) {
-                            if (data.redirect) {
-                                window.location.href = data.redirect;
-                            }
-                        }
-                    });
-                },
-                cancel: function () {
-
-                },
-
-            }
-        });
-    });
 });
 
 function sendSurveyToServer($orgId, $id, $question) {
@@ -237,7 +212,7 @@ function sendSurveyToServer($orgId, $id, $question) {
         type: "POST",
         data: {org_id: $orgId, id: $id, survey: $question},
         success: function (data) {
-            let $options= {
+            let $options = {
                 content: data.text, // text of the snackbar
                 timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
             };
@@ -245,4 +220,43 @@ function sendSurveyToServer($orgId, $id, $question) {
         },
 
     });
+}
+
+$(document).on('click', '.deleteBtn', function (e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
+    var type = $(this).attr('type');
+    sucessFkt = undefined;
+    sucessFkt = $(this).attr('successFKT');
+
+    $.confirm({
+        title: confirmTitle,
+        content: confirmText,
+        theme: 'material',
+        buttons: {
+            confirm: function () {
+                $.ajax({
+                    url: url,
+                    type: type,
+                    success: success,
+                });
+            },
+            cancel: function () {
+            },
+
+        }
+    });
+});
+
+function success(data) {
+    if (typeof data.redirect !== 'undefined') {
+        window.location.href = data.redirect;
+    } else {
+        $.snackbar({content: data.snack});
+        console.log('test');
+        if (typeof sucessFkt !== 'undefined') {
+            var fn = window[sucessFkt];
+            if (typeof fn === "function") fn();
+        }
+    }
 }

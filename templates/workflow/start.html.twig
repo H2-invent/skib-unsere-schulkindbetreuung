@@ -71,7 +71,7 @@
                         <div class="col-md-12 mb-4 white-text text-center">
                             <p class="lead align-content-center">
                                 <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"
-                                class="btn btn-primary btn-lg">
+                                   class="btn btn-primary btn-lg">
                                     {% if app.request.cookies.has('SecID') %}
                                         {% trans %}Kind bearbeiten{% endtrans %}
                                     {% else %}
@@ -143,13 +143,17 @@
                                                 <div class="col-md-12">
 
                                                     <!-- Excerpt -->
-                                                    <p class="font-weight-bold dark-grey-text">{{ n.date|date('d.m.Y')}} {{ n.title }}</p>
+                                                    <p class="font-weight-bold dark-grey-text">{{ n.date|date('d.m.Y') }} {{ n.title }}</p>
                                                     <div class="d-flex justify-content-between">
                                                         <div class="col-11 text-truncate pl-0 mb-lg-0 mb-3">
 
-                                                            <a class="loadContent" href="{{ path('news_show_all', {'id': n.id, 'slug': stadt.slug}) }}" class="dark-grey-text"> {{ n.message|striptags('<br>')|raw }}</a>
+                                                            <a class="loadContent"
+                                                               href="{{ path('news_show_all', {'id': n.id, 'slug': stadt.slug}) }}"
+                                                               class="dark-grey-text"> {{ n.message|striptags('<br>')|raw }}</a>
                                                         </div>
-                                                        <a class="loadContent" href="{{ path('news_show_all', {'id': n.id, 'slug': stadt.slug}) }}"><i class="fas fa-angle-double-right"></i></a>
+                                                        <a class="loadContent"
+                                                           href="{{ path('news_show_all', {'id': n.id, 'slug': stadt.slug}) }}"><i
+                                                                    class="fas fa-angle-double-right"></i></a>
                                                     </div>
 
                                                 </div>
@@ -157,7 +161,7 @@
 
                                             </div>
                                             <!-- Grid row -->
-                                        <hr class="hr-bold">
+                                            <hr class="hr-bold">
                                         </div>
                                         <!-- Small news -->
 
@@ -206,7 +210,7 @@
                                                                 data-src="{{ asset('images/logo-breit-mittig.png')|imagine_filter('my_cards')|makeHttps }}"
                                                                 alt="SKiB Logo"
                                                             {% endif %}
-                                                          style="max-height: 300px"
+                                                         style="max-height: 300px"
                                                     />
                                                     <noscript>
                                                         <img class="card-img-top"
@@ -221,18 +225,39 @@
                                                         />
                                                     </noscript>
 
-                                                        <div class="mask rgba-white-slight"></div>
+                                                    <div class="mask rgba-white-slight"></div>
 
                                                 </div>
 
                                                 <div class="card-body text-center">
                                                     <h5 class="card-title">{{ s.name }}</h5>
-                                                    <div class="btn-group-vertical" role="group" aria-label="Basic example">
-                                                        <a href="{{ path('trager_preisliste',{'schule':s.id,'slug':stadt.slug}) }}" class="loadContent btn-rounded btn-outline-primary btn btn-sm">{{'Zeitblöcke und Preise'|trans}}</a>
-                                                        <a href="{{path('loerrach_workflow_adresse',{'slug':stadt.slug})}}" class="btn-rounded btn-outline-primary btn  btn-sm">{{ 'Kind anmelden'|trans }}</a>
+                                                    <div class="btn-group-vertical" role="group"
+                                                         aria-label="Basic example">
+                                                        <a href="{{ path('trager_preisliste',{'schule':s.id,'slug':stadt.slug}) }}"
+                                                           class="loadContent btn-rounded btn-outline-primary btn btn-sm">{{ 'Zeitblöcke und Preise'|trans }}</a>
+                                                        <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"
+                                                           class="btn-rounded btn-outline-primary btn  btn-sm">{{ 'Kind anmelden'|trans }}</a>
 
+                                                        {% if schuljahr is null or is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                            <!--Trigger-->
+                                                            <a class="btn-rounded btn-outline-primary btn-sm btn dropdown"
+                                                               type="button" id="dropdownMenu1" data-toggle="dropdown"
+                                                               aria-haspopup="true"
+                                                               aria-expanded="false">{{ 'Änderungsformular'|trans }}</a>
+                                                            <!--Menu-->
+                                                            <div class="dropdown-menu dropdown-primary">
+                                                                {% if s.blocksforThisYearAndType(1,activeSchuljahr)|length > 0 %}
+                                                                    <a class="dropdown-item"
+                                                                       href="{{ path('download_formular_schule',{'cat':1,'schule':s.id}) }}">{{ 'Ganztag'|trans }}</a>
+                                                                {% endif %}
+                                                                {% if s.blocksforThisYearAndType(2,activeSchuljahr)|length > 0 %}
+                                                                    <a class="dropdown-item"
+                                                                       href="{{ path('download_formular_schule',{'cat':2,'schule':s.id}) }}">{{ 'Halbtag'|trans }}</a>
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endif %}
                                                     </div>
-                                                 </div>
+                                                </div>
                                                 <div class="card-footer">
                                                     {% trans %}Betreuende Organisation{% endtrans %}
                                                     : {{ s.organisation.name }}
@@ -259,14 +284,14 @@
 
                                                     <img class="card-img-top lazy" style="max-height: 300px"
 
-                                                                data-src="{{ vich_uploader_asset(o,'imageFile')|imagine_filter('my_cards')|makeHttps }}"
-                                                                alt="{{ o.name }} Logo" style="max-height: 300px"
+                                                         data-src="{{ vich_uploader_asset(o,'imageFile')|imagine_filter('my_cards')|makeHttps }}"
+                                                         alt="{{ o.name }} Logo" style="max-height: 300px"
 
                                                     />
                                                     <noscript>
                                                         <img class="card-img-top lazy" style="max-height: 300px"
-                                                                    src="{{ vich_uploader_asset(o,'imageFile')|imagine_filter('my_cards')|makeHttps }}"
-                                                                    alt="{{ o.name }} Logo" style="max-height: 300px"
+                                                             src="{{ vich_uploader_asset(o,'imageFile')|imagine_filter('my_cards')|makeHttps }}"
+                                                             alt="{{ o.name }} Logo" style="max-height: 300px"
 
                                                         />
                                                     </noscript>
@@ -282,7 +307,6 @@
 
 
                                                 </div>
-
 
 
                                             </div>
@@ -348,13 +372,14 @@
                                             <div class="col-md-4 text-center">
                                                 {% if o.image is not empty %}
                                                     <img src="{{ vich_uploader_asset(o,'imageFile')|imagine_filter('my_logos')|makeHttps }}"
-                                                         style="max-height: 110px; max-width: 100%"  alt="{{ o.name }} Logo">
+                                                         style="max-height: 110px; max-width: 100%"
+                                                         alt="{{ o.name }} Logo">
                                                 {% endif %}
                                             </div>
                                         </div>
                                         {% if not loop.last %}
-                                        <hr class="hr-bold">
-                                            {% endif %}
+                                            <hr class="hr-bold">
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>

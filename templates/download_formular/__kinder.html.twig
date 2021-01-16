@@ -1,0 +1,229 @@
+<style>
+    td {
+        border: none;
+
+        font-weight: bold;
+        margin: 10px;
+        padding-top: 20px;
+    }
+
+    tr {
+        padding-top: 20px;
+        margin: 5px;
+    }
+</style>
+
+<!-- Daten der Kinder in einer for Schleife -->
+<h2>{{ 'Kind'|trans }}</h2>
+
+<table cellpadding="5px">
+
+
+    <tbody>
+    <tr>
+        <td><h3 style="color: red">{{ 'Sicherheitscode bei Änderung'|trans }}:</h3></td>
+        <td>____ ____ ____ ____ ____ ____<br>{% trans %}Diesen finden Sie in der Buchungsbestätigung, die Sie per Email erhalten haben.{% endtrans %}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <td style=" border-bottom: 1px black solid; color: red">{{ 'Vorname'|trans }}:</td>
+        <td style=" border-bottom: 1px black solid; color: red">{{ 'Nachname'|trans }}:</td>
+    </tr>
+
+    <tr>
+        <td style=" border-bottom: 1px black solid">{{ 'Jahrgangsstufe'|trans }}:</td>
+        <td style=" border-bottom: 1px black solid">{{ 'Geburtstag'|trans }}:</td>
+    </tr>
+    <tr>
+        <td>{{ 'Schulform'|trans }}:
+
+        </td>
+        <td>
+            <table cellspacing="3px">
+
+                <tr>
+                    <td style="width: 20px; border: 2px black solid"></td>
+                    <td> Halbtag</td>
+                </tr>
+                <tr>
+                    <td style="width: 20px; border: 2px black solid"></td>
+                    <td> Ganztag</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>{{ 'Mein Kind ist gegen Masern geimpft / bereits immun'|trans }}:</td>
+        <td>
+            <table cellspacing="3px">
+
+                <tr>
+                    <td style="width: 20px; border: 2px black solid"></td>
+                    <td> Ja</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style=" border-bottom: 1px black solid" colspan="2">{{ 'Allergien'|trans }}:</td>
+    </tr>
+
+    <tr>
+        <td style=" border-bottom: 1px black solid" colspan="2">{{ 'Medikamente'|trans }}:</td>
+    </tr>
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <td colspan="2">{{ 'Zutreffendes bitte ankreuzen'|trans }}:</td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 30px">
+                        <table style="width: 18px">
+                            <tr>
+                                <td style="width: 18px; border: 2px black solid"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 90%">{{ 'Mein Kind ist glutenintolerant'|trans }}</td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 30px">
+                        <table style="width: 18px">
+                            <tr>
+                                <td style="width: 18px; border: 2px black solid"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 90%">{{ 'Mein Kind ist laktoseintolerant'|trans }}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 30px">
+                        <table style="width: 18px">
+                            <tr>
+                                <td style="width: 18px; border: 2px black solid"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 90%">{{ 'Mein Kind isst kein Schweinefleisch'|trans }}</td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 30px">
+                        <table style="width: 18px">
+                            <tr>
+                                <td style="width: 18px; border: 2px black solid"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 100%">{{ 'Mein Kind ernährt sich vegetarisch'|trans }}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 30px">
+                        <table style="width: 18px">
+                            <tr>
+                                <td style="width: 18px; border: 2px black solid"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 90%">{{ 'Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause'|trans }}</td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 30px">
+                        <table style="width: 18px">
+                            <tr>
+                                <td style="width: 18px; border: 2px black solid"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 90%">{{ 'Mein Kind darf an Ausflügen teilnehmen'|trans }}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 30px">
+                        <table style="width: 18px">
+                            <tr>
+                                <td style="width: 18px; border: 2px black solid"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 90%">{{ 'Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden'|trans }}</td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 30px">
+                        <table style="width: 18px">
+                            <tr>
+                                <td style="width: 18px; border: 2px black solid"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 90%">{{ 'Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.'|trans }}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>{{ schule.name }} - {{ block['type'] }}</h2>
+    <table cellpadding="5px" >
+        <thead>
+        <tr>
+            <th>{{ 'Montag'|trans }}</th>
+            <th>{{ 'Dienstag'|trans }}</th>
+            <th>{{ 'Mittwoch'|trans }}</th>
+            <th>{{ 'Donnerstag'|trans }}</th>
+            <th>{{ 'Freitag'|trans }}</th>
+            {% if block['data'][5] is defined or block['data'][6] is defined  %}
+                <th>{{ 'Samstag'|trans }}</th>
+            {% endif %}
+            {% if block['data'][6] is defined %}
+                <th>{{ 'Sonntag'|trans }}</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {{ block['table']|raw }}
+
+
+        </tbody>
+    </table>

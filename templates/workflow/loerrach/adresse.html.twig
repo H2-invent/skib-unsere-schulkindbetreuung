@@ -33,7 +33,21 @@
                                data-content="{% trans %}Die E-Mail Adresse ist wichtig, da alle Dokumente, Bestätigungen und Rechnungen automatisch an diese E-Mail geschickt werden.{% endtrans %}"></i>
                         </div>
                     </div>
+                    {% if form.emailDoubleInput is defined %}
+                    <div class="row">
+                        <div class="col-sm-11">
 
+                            {{ form_row(form.emailDoubleInput) }}
+
+
+                        </div>
+                        <div class="col-sm-1">
+                            <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+                               title="{{ 'Information'|trans }}"
+                               data-content="{% trans %}Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.{% endtrans %}"></i>
+                        </div>
+                    </div>
+                    {% endif %}
                     <div class="row mt-3">
                         <div class="col-sm-11">
 
@@ -89,7 +103,18 @@
                         <div class="col-sm-1">
                             <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
                                title="{{ 'Information'|trans }}"
-                               data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten 25 % Rabatt auf die Gebühr des ältesten Kindes{% endtrans %}"></i>
+                               data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten Rabatt auf die Gebühr des ältesten Kindes{% endtrans %}"></i>
+                        </div>
+                    </div>
+                    <div class="row mt-2 collapse" id="kigaOfKids">
+                        <div class="col-sm-11">
+                            {{ form_row(form.kigaOfKids) }}
+
+                        </div>
+                        <div class="col-sm-1">
+                            <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+                               title="{{ 'Information'|trans }}"
+                               data-content="{% trans %}Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.{% endtrans %}"></i>
                         </div>
                     </div>
                     <div class="row mt-2">

@@ -33,7 +33,7 @@ class ErrorService
         }
         $errorString = array();
         foreach ($error as $data) {
-            $errorString[]= array('type'=>'error','text'=>$this->translator->trans($arr[$data->getPropertyPath()]) . ': ' . $data->getMessage());
+            $errorString[]= array('type'=>'error','text'=>$this->translator->trans($arr[$data->getPropertyPath()]) . ': ' . str_replace('"','\"',$data->getMessage()));
         }
 
         return $errorString;

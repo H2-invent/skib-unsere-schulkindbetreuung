@@ -14,7 +14,7 @@ import moment from 'moment';
 import {jarallax, jarallaxElement, jarallaxVideo} from 'jarallax';
 
 global.$ = global.jQuery = $;
-global.moment =moment;
+global.moment = moment;
 import('snackbarjs');
 import ('morecontent-js/dist/jquery.morecontent');
 import('jquery-confirm');
@@ -48,13 +48,30 @@ $(document).ready(function () {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     };
-    if(typeof errors !=='undefined'){
+    if (typeof errors !== 'undefined') {
         $(errors).each(function (i) {
             toastr[errors[i].type](errors[i].text);
         });
     }
+    if($('#loerrach_eltern_kinderImKiga').prop('checked')){
+        $('#kigaOfKids').collapse('show')
+    }else {
+        $('#kigaOfKids').collapse('hide')
+    }
+    $('#loerrach_eltern_kinderImKiga').change(function () {
+        if($('#loerrach_eltern_kinderImKiga').prop('checked')){
+            $('#kigaOfKids').collapse('show')
+        }else {
+            $('#kigaOfKids').collapse('hide')
+        }
+    });
 
-})
+    $('input.disablecopypaste').bind('copy paste', function (e) {
+        e.preventDefault();
+        alert('Please typ and dont Copy/Paste');
+    });
+
+});
 
 
 $(document).on('click', '.deleteBtn', function (e) {
@@ -120,13 +137,13 @@ $('#loadContentModal').on('show.bs.modal', function (e) {
 
 $(window).on('load', function () {
 
-        $(function() {
+        $(function () {
             $('.lazy').show().Lazy({
                 // your configuration goes here
                 scrollDirection: 'vertical',
                 effect: 'fadeIn',
                 visibleOnly: true,
-                onError: function(element) {
+                onError: function (element) {
                     console.log('error loading ' + element.data('src'));
                 }
             });
@@ -137,43 +154,45 @@ $(window).on('load', function () {
             $('[data-toggle="popover"]').popover()
         });
 // here is the daterangepicker stuff
-    $('input[type="date"]').daterangepicker({
-        "singleDatePicker": true,
-        autoUpdateInput: false,
-        locale: {
-            "format": "YYYY-MM-DD",
-            "separator": " - ",
-        }
-    }, function (chosen_date) {
-        $(this).val(chosen_date.format('YYYY-MM-DD'));
-    })
-        .on('apply.daterangepicker', function (ev, picker) {
-            //do something, like clearing an input
-            var ele = $(this);
-            ele.val(picker.startDate.format('YYYY-MM-DD'))
-        });
+        $('input[type="date"]').daterangepicker({
+            "singleDatePicker": true,
+            autoUpdateInput: false,
+            locale: {
+                "format": "YYYY-MM-DD",
+                "separator": " - ",
+            }
+        }, function (chosen_date) {
+            $(this).val(chosen_date.format('YYYY-MM-DD'));
+        })
+            .on('apply.daterangepicker', function (ev, picker) {
+                //do something, like clearing an input
+                var ele = $(this);
+                ele.val(picker.startDate.format('YYYY-MM-DD'))
+            });
 
 // here is the clockpicker stuff
-    $('input[type="time"]').jqclockpicker({
-        autoclose: true,
-        donetext: "OK"
-    });
-    $('body').bsgdprcookies(bssettings);
+        $('input[type="time"]').jqclockpicker({
+            autoclose: true,
+            donetext: "OK"
+        });
+        $('body').bsgdprcookies(bssettings);
 
-    $('#cookiesBtn').on('click', function () {
-        $('body').bsgdprcookies(settings, 'reinit');
-    });
+        $('#cookiesBtn').on('click', function () {
+            $('body').bsgdprcookies(settings, 'reinit');
+        });
     }
 );
 
 $(document).on('change', '.preisliste_trigger', function (e) {
     e.preventDefault();
     var $url = $('#preisliste_schule option:checked').val();
-    var $gehalt = $('#preisliste_gehalt option:checked').val() ;
-    var $art = $("input[name='preisliste_schulart']:checked").val(); ;
-    $('#preislisteWrappre').load($url+'?'+$.param({
+    var $gehalt = $('#preisliste_gehalt option:checked').val();
+    var $art = $("input[name='preisliste_schulart']:checked").val();
+    ;
+    $('#preislisteWrappre').load($url + '?' + $.param({
         art: $art,
-        gehalt: $gehalt})+' #preisliste_content',function () {
+        gehalt: $gehalt
+    }) + ' #preisliste_content', function () {
 
     })
 });

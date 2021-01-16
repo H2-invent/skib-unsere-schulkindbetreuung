@@ -1,0 +1,33 @@
+<page>
+<style>
+    td {
+        border: none;
+
+        font-weight: bold;
+        margin: 10px;
+        padding-top: 20px;
+    }
+
+    tr {
+        padding-top: 20px;
+        margin: 5px;
+    }
+</style>
+
+<!-- Daten der Kinder in einer for Schleife -->
+<div style="width: 50%">
+    <img height="75px" src="@{{ orgLogo }}"/>
+    <img height="75px" src="@{{ stadtLogo }}"/>
+</div>
+<div style="width: 50%">
+
+</div>
+<h1 style="text-align: center; font-size: 25px">{{ title }}</h1>
+
+<div style="width: 100%; position: relative">
+    <img src="@{{ schuleBild }}"/>
+    <div style="width: 50%; position: absolute; background-color: #121212; color: white;top: 0px">
+        <p >{{ infoText }}</p>
+    </div>
+</div>
+</page>
