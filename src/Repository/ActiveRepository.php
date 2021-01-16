@@ -54,7 +54,7 @@ class ActiveRepository extends ServiceEntityRepository
     /**
      * @return Active[]
      */
-    public function findActiveSchuljahrFromCity($stadt)
+    public function findActiveSchuljahrFromCity(Stadt $stadt)
     {
         $today = new \DateTime();
         $qb = $this->createQueryBuilder('a')
