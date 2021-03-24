@@ -13,7 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ChangeEmailController extends AbstractController
 {
     /**
-     * @Route("/org_child/email_change/", name="org_child_email_change")
+     * @Route("/org_child/email_change", name="org_child_email_change")
      */
     public function index(TranslatorInterface $translator, Request $request, AnmeldeEmailService $anmeldeEmailService, ChildEmailChangeService $childChangeEmailService)
     {
