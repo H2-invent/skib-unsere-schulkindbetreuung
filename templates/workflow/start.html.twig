@@ -115,7 +115,7 @@
                         </div>
                         <div class="row card-body">
                             <div class="col-md-8" style="border-right: solid lightgrey 1px">
-                                <span class="more">
+                                <span {% if stadt.showShowMoreToggleOnHomescreen == true %}class="more"{% endif %}>
                                    {{ cityInfoText|markdown_to_html }}
                                </span>
 
@@ -173,6 +173,13 @@
                                        class="btn btn-primary">
                                         {{ 'Alle Neuigkeiten'|trans }}
                                     </a>
+                                {% endif %}
+                                {% if stadt.translate.coverText %}
+                                <div class="card mt-3">
+                                    <div class="card-body">
+                                        {{ stadt.translate.coverText|raw }}
+                                    </div>
+                                </div>
                                 {% endif %}
                             </div>
                         </div>

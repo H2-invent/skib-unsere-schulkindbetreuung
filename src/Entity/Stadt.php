@@ -269,6 +269,12 @@ class Stadt
      */
     private $secCodeAlwaysNew;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $showShowMoreToggleOnHomescreen;
+
+
 
     public function __construct()
     {
@@ -902,5 +908,19 @@ class Stadt
 
         return $this;
     }
+
+    public function getShowShowMoreToggleOnHomescreen(): ?bool
+    {
+        return $this->showShowMoreToggleOnHomescreen;
+    }
+
+    public function setShowShowMoreToggleOnHomescreen(?bool $showShowMoreToggleOnHomescreen): self
+    {
+        $this->showShowMoreToggleOnHomescreen = $showShowMoreToggleOnHomescreen;
+
+        return $this;
+    }
+
+
 
 }
