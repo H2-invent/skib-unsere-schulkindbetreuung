@@ -106,6 +106,11 @@ class SchuljahrController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
         $em = $this->getDoctrine()->getManager();
+        foreach ($activity->getBlocks() as $data){
+            $data->setActive(null);
+            $em->persist($data);
+        }
+        $em->flush();
         $em->remove($activity);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');

@@ -37,7 +37,10 @@ class StadtTranslation
      * @ORM\Column(type="text", nullable=true)
      */
     private $careBlockInfo;
-
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $coverText;
 
 
     public function getInfoText(): ?string
@@ -99,7 +102,17 @@ class StadtTranslation
 
         return $this;
     }
+    public function getCoverText(): ?string
+    {
+        return $this->coverText;
+    }
 
+    public function setCoverText(?string $coverText): self
+    {
+        $this->coverText = $coverText;
+
+        return $this;
+    }
 
     
 }

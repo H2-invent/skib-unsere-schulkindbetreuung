@@ -57,6 +57,7 @@
                                 {% if form.slug is defined %}
                                     {{ form_row(form.slug) }}
                                 {% endif %}
+
                                 {{ form_row(form.name) }}
                                 {{ form_row(form.email) }}
                                 {{ form_row(form.adresse) }}
@@ -66,6 +67,7 @@
                                 {{ form_row(form.telefon) }}
                                 {{ form_row(form.ansprechpartner) }}
                                 {{ form_row(form.stadtHomepage) }}
+                                {{ a2lixTranslations.partialTranslations(form.translations, ['coverText']) }}
 
                             </div>
                             <div class="tab-pane fade" id="module" role="tabpanel" aria-labelledby="profile-tab"><h2>
@@ -83,6 +85,7 @@
                                 {% if form.ferienprogramm is defined %}
                                     {{ form_row(form.ferienprogramm) }}
                                 {% endif %}
+
                             </div>
 
                             <div class="tab-pane fade" id="texte" role="tabpanel" aria-labelledby="profile-tab"><h2>
@@ -101,7 +104,8 @@
 
                             </div>
                             <div class="tab-pane fade" id="bilder" role="tabpanel" aria-labelledby="profile-tab"><h2>
-                                    Bilder</h2>
+                                    Aussehen</h2>
+                                {{ form_row(form.showShowMoreToggleOnHomescreen) }}
                                 {{ form_row(form.imageFile) }}
                                 {{ form_row(form.logoStadtFile) }}
                                 {{ form_row(form.logoUrl) }}
