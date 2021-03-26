@@ -71,6 +71,7 @@ class StadtType extends AbstractType
             ->add('minDaysperWeek', NumberType::class, ['required' => true, 'label' => 'Mindestanzahl an Blöcken pro Woche', 'translation_domain' => 'form'])
             ->add('preiskategorien', NumberType::class, ['required' => true, 'label' => 'Anzahl der Preiskategorien', 'translation_domain' => 'form'])
             ->add('secCodeAlwaysNew', CheckboxType::class, ['required' => false, 'label' => 'Der Security-Code soll bei jeder Änderung geändert werden', 'translation_domain' => 'form'])
+            ->add('showShowMoreToggleOnHomescreen', CheckboxType::class, ['required' => false, 'label' => 'Zeige den "Mehr lesen" Button auf der Startseite an', 'translation_domain' => 'form'])
 
             ->add('gehaltsklassen', CollectionType::class, [
                 'entry_type' => TextType::class,
@@ -126,7 +127,14 @@ class StadtType extends AbstractType
                             'attr' => array('rows' => 6,),
                             'label' => 'Information zum Caterer',
                             'translation_domain' => 'form'
+                        ],
+                        'coverText' => [
+
+                            'attr' => array('rows' => 6,'class' => 'onlineEditor'),
+                            'label' => 'Text in der "Wichtig" Box auf der Startseite',
+                            'translation_domain' => 'form'
                         ]
+
 
                     ]
                 ]
