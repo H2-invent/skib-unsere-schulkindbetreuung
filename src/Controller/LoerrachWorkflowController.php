@@ -105,10 +105,14 @@ class LoerrachWorkflowController extends AbstractController
             if($authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE')){
                 $errors = $validator->validate($adresse,null,['Default','internal']);
             }else{
+
                 $errors = $validator->validate($adresse);
+
             }
 
             $errorsString = $errorService->createError($errors,$form);
+
+
             if (count($errors) == 0) {
                 $schulkindBetreuungAdresseService->setAdress($adresse, $authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE'), $request->getClientIp());
 
