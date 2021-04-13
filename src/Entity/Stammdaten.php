@@ -28,7 +28,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     private $id;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text", nullable=true)
      * @Encrypted()
      * @var int
@@ -36,14 +36,14 @@ class Stammdaten implements GroupSequenceProviderInterface
     private $name;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text",nullable=true)
      * @Encrypted()
      */
     private $vorname;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text",nullable=true)
      * @Encrypted()
      */
@@ -90,7 +90,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     private $beruflicheSituation;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text",nullable=true)
      * @Encrypted()
      */
@@ -136,19 +136,19 @@ class Stammdaten implements GroupSequenceProviderInterface
     private $fin;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="boolean",nullable=true)
      */
     private $gdpr;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="integer",nullable=true)
      */
     private $plz;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text",nullable=true)
      */
     private $stadt;
@@ -159,8 +159,8 @@ class Stammdaten implements GroupSequenceProviderInterface
     private $secCode;
 
     /**
-     * @Assert\Email()
-     * @Assert\NotBlank()
+     * @Assert\Email(groups = {"all"})
+     * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text",nullable=true)
      * @Encrypted()
      */
@@ -178,7 +178,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     private $abholberechtigter;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text", nullable=true)
      * @Encrypted()
      */
@@ -251,7 +251,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     private $language;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text", nullable=true)
      * @Encrypted()
      */
@@ -914,7 +914,8 @@ class Stammdaten implements GroupSequenceProviderInterface
     public function getGroupSequence()
     {
         return [
-            $this->kinderImKiga === true ? 'kindInKiga' : 'notKindinKiga',
+        ['all',
+            $this->kinderImKiga === true ? 'kindInKiga' : 'notKindinKiga'],
         ];
     }
 }
