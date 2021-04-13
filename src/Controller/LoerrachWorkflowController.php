@@ -278,7 +278,13 @@ class LoerrachWorkflowController extends AbstractController
         $schule = $kind->getSchule();
 
         // Load the data from the city into the controller as $stadt
-        $schuljahr = $schuljahrService->getSchuljahr($stadt);
+        // When more then one active year is available and an old Kind has to be changed, we need to set the schuljahr back to the original schuljahr of one of the time slots.
+        if (count($kind->getRealZeitblocks()) > 0) {
+            $schuljahr = $kind->getRealZeitblocks()[0]->getActive();
+        }else {
+            $schuljahr = $schuljahrService->getSchuljahr($stadt);
+        }
+
         $req = array(
             'deleted' => false,
             'active' => $schuljahr,
@@ -302,7 +308,7 @@ class LoerrachWorkflowController extends AbstractController
             $renderBlocks[$data->getWochentag()][] = $data;
         }
 
-        return $this->render('workflow/loerrach/blockKinder.html.twig', array('stadt' => $stadt, 'kind' => $kind, 'blocks' => $renderBlocks));
+        return $this->render('workflow/loerrach/blockKinder.html.twig', array('stadt' => $stadt, 'kind' => $kind, 'blocks' => $renderBlocks, 'schuljahr' => $schuljahr));
     }
 
     /**
