@@ -3,6 +3,7 @@
 
         <div class="modal-header  light-blue darken-3 white-text">
             <h5 class="modal-title">{% trans %}Betreuungszeitfenster zum Auswählen anklicken{% endtrans %}</h5>
+            <h5>{{ 'Schuljahre'|trans }}: {{ schuljahr.von|date('d.m.Y') }} - {{ schuljahr.bis|date('d.m.Y') }}</h5>
 
         </div>
         <div class="modal-body">
