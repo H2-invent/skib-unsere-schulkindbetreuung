@@ -103,7 +103,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     private $sepaInfo;
 
     /**
-     * @Assert\Iban(groups={"Schulkind","all"})
+     * @Assert\Iban(groups={"Schulkind"})
      * @Assert\NotBlank(groups={"Schulkind"})
      * @ORM\Column(type="text",nullable=true)
      * @Encrypted()
