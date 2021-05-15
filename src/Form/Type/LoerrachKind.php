@@ -36,8 +36,7 @@ class LoerrachKind extends AbstractType
                     'Klasse 2' => 2,
                     'Klasse 3' => 3,
                     'Klasse 4' => 4,
-                    'Klasse 5' => 5,
-                    'Klasse 6' => 6,
+
                 ],'label'=>'Jahrgangsstufe','translation_domain' => 'form'])
             ->add('art', ChoiceType::class, [
                 'choices'  => [
