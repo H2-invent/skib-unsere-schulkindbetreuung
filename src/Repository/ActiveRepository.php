@@ -59,10 +59,11 @@ class ActiveRepository extends ServiceEntityRepository
         $today = new \DateTime();
         $qb = $this->createQueryBuilder('a')
             ->andWhere('a.stadt = :stadt')
-            ->andWhere('a.von <= :today')
+            ->andWhere('a.anmeldeStart <= :today')
             ->andWhere('a.bis >= :today')
             ->setParameter('today', $today)
             ->setParameter('stadt', $stadt)
+            ->orderBy('a.von','ASC')
             ->getQuery()
             ->setMaxResults(1);
 
