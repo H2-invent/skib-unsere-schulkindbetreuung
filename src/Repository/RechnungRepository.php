@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Rechnung;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Rechnung|null find($id, $lockMode = null, $lockVersion = null)
