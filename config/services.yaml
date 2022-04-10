@@ -16,7 +16,10 @@ parameters:
     osTicketApi: '%env(osTicketApi)%'
     wartung: '%env(WARTUNG)%'
     noEmailOnDelete: '%env(NOEMAILONDELETE)%'
-
+    KEYCLOAK_URL: '%env(OAUTH_KEYCLOAK_SERVER)%'
+    KEYCLOAK_REALM: '%env(OAUTH_KEYCLOAK_REALM)%'
+    KEYCLOAK_SECRETE: '%env(OAUTH_KEYCLOAK_CLIENT_SECRET)%'
+    KEYCLOAK_ID: '%env(OAUTH_KEYCLOAK_CLIENT_ID)%'
 
 services:
     # default configuration for services in *this* file

@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Stadt;
 use App\Entity\User;
 use App\Form\Type\UserType;
-use FOS\UserBundle\Model\UserManagerInterface;
+use App\Security\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -56,7 +56,7 @@ class StadtadminController extends AbstractController
     public function neu(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
         $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
-        $defaultData = $this->manager->createUser();;
+        $defaultData = $this->manager->createUser();
         $errors = array();
         $form = $this->createForm(UserType::class, $defaultData);
 

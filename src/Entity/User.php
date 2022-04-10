@@ -6,13 +6,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
+
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
  */
-class User extends BaseUser
+class User extends UserBase
 {
     /**
      * @ORM\Id
@@ -90,12 +90,48 @@ class User extends BaseUser
      */
     private $schulen;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $auth0Id;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $email;
+
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastLogin;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $keycloakId;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    protected $roles = [];
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $enabled = false;
+
+
     public function __construct()
     {
         parent::__construct();
-// your own logic
-
-$this->schulen = new ArrayCollection();    }
+        $this->schulen = new ArrayCollection();
+    }
 
     public function getVorname(): ?string
     {
@@ -283,4 +319,88 @@ $this->schulen = new ArrayCollection();    }
 
         return $this;
     }
+
+    public function getAuth0Id(): ?string
+    {
+        return $this->auth0Id;
+    }
+
+    public function setAuth0Id(?string $auth0Id): self
+    {
+        $this->auth0Id = $auth0Id;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+
+    public function getLastLogin(): ?\DateTimeInterface
+    {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(?\DateTimeInterface $lastLogin): self
+    {
+        $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    public function getKeycloakId(): ?string
+    {
+        return $this->keycloakId;
+    }
+
+    public function setKeycloakId(?string $keycloakId): self
+    {
+        $this->keycloakId = $keycloakId;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+    public function getUserIdentifier()
+    {
+        return $this->email;
+    }
+
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+    public function isEnabled(): bool
+    {
+       return $this->enabled;
+
+
+    }
+
 }

@@ -1,3 +1,4 @@
+
 security:
     encoders:
         FOS\UserBundle\Model\UserInterface: bcrypt
@@ -13,8 +14,12 @@ security:
         ROLE_CITY_SCHOOL: ROLE_ORG_SHOOL
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        fos_userbundle:
-            id: fos_user.user_provider.username_email
+        # used to reload user from session & other features (e.g. switch_user)
+        users:
+            entity:
+                class: App\Entity\User
+                property: keycloakId
+
 
     firewalls:
         dev:
@@ -22,20 +27,15 @@ security:
             security: false
         main:
             pattern: ^/
-            form_login:
-                provider: fos_userbundle
-                csrf_token_generator: security.csrf.token_manager
-                check_path: fos_user_security_check
-                login_path: fos_user_security_login
-            logout:
-                path: fos_user_security_logout
-            remember_me:
-                secret:   '%kernel.secret%'
-                lifetime: 604800 # 1 week in seconds
-                path:     /login
-
-            anonymous:    true
+            anonymous: true
             switch_user: true
+            logout:
+                path: app_logout
+                target: logout_keycloak
+            guard:
+                authenticators:
+                    - App\Security\GuardServiceKeycloak
+
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
