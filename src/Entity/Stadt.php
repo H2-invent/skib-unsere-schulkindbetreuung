@@ -5,18 +5,21 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable as Translatable;
+
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StadtRepository")
  * @Vich\Uploadable
  */
-class Stadt
+class Stadt implements TranslatableInterface
 {
-    use Translatable;
+    use TranslatableTrait;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -90,7 +93,7 @@ class Stadt
     private $deleted = false;
 
     /**
-     *  @Assert\NotBlank()
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $email;
@@ -166,7 +169,6 @@ class Stadt
     private $akzentfarbeFehler;
 
 
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Active", mappedBy="stadt")
      */
@@ -196,7 +198,7 @@ class Stadt
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $berechnungsFormel='
+    private $berechnungsFormel = '
         $adresse = $this->getEltern();
         $summe = 0;
         $kind = $this;
@@ -252,7 +254,7 @@ class Stadt
     /**
      * @ORM\Column(type="integer")
      */
-    private $minDaysperWeek=1;
+    private $minDaysperWeek = 1;
 
     /**
      * @ORM\Column(type="integer")
@@ -273,7 +275,6 @@ class Stadt
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $showShowMoreToggleOnHomescreen;
-
 
 
     public function __construct()
@@ -459,6 +460,7 @@ class Stadt
     {
         return $this->image;
     }
+
     public function setLogoStadtFile(File $logoStadtFile = null)
     {
         $this->logoStadtFile = $logoStadtFile;
@@ -486,6 +488,7 @@ class Stadt
     {
         return $this->logoStadt;
     }
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -655,7 +658,6 @@ class Stadt
     }
 
 
-
     /**
      * @return Collection|Active[]
      */
@@ -791,9 +793,6 @@ class Stadt
     }
 
 
-
-
-
     /**
      * @return Collection|Ferienblock[]
      */
@@ -920,7 +919,6 @@ class Stadt
 
         return $this;
     }
-
 
 
 }

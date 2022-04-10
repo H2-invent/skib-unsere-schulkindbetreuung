@@ -5,7 +5,9 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable as Translatable;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -14,9 +16,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\OrganisationRepository")
  * @Vich\Uploadable
  */
-class Organisation
+class Organisation implements TranslatableInterface
 {
-    use Translatable;
+    use TranslatableTrait;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -300,8 +303,6 @@ class Organisation
     private $sepaOrganisation;
 
 
-
-
     public function __construct()
     {
         $this->schule = new ArrayCollection();
@@ -339,11 +340,11 @@ class Organisation
     {
         $schuleRet = array();
         foreach ($this->schule as $data) {
-          if($data->getDeleted() === false){
-            $schuleRet[] = $data;
-          }
+            if ($data->getDeleted() === false) {
+                $schuleRet[] = $data;
+            }
         }
-        $this->schule= (new ArrayCollection($schuleRet));
+        $this->schule = (new ArrayCollection($schuleRet));
         return $this->schule;
     }
 
@@ -585,6 +586,7 @@ class Organisation
 
         return $this;
     }
+
     public function setImageFile(File $image = null)
     {
         $this->imageFile = $image;
@@ -1063,8 +1065,6 @@ class Organisation
 
         return $this;
     }
-
-
 
 
 }

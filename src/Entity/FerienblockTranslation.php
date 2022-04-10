@@ -3,14 +3,22 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslationTrait;
 
 /**
  * @ORM\Entity
  */
-class FerienblockTranslation
+class FerienblockTranslation implements TranslationInterface
 {
-    use ORMBehaviors\Translatable\Translation;
+    use TranslationTrait;
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -21,7 +29,10 @@ class FerienblockTranslation
      * @ORM\Column(type="text", nullable=true)
      */
     private $infoText;
-
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
     public function getTitel(): ?string
     {
         return $this->titel;

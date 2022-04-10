@@ -3,14 +3,22 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslationTrait;
 
 /**
  * @ORM\Entity
  */
-class ContentTranslation
+class ContentTranslation implements TranslationInterface
 {
-    use ORMBehaviors\Translatable\Translation;
+    use TranslationTrait;
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -27,6 +35,11 @@ class ContentTranslation
      */
     private $meta;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getTitle(): ?string
     {
         return $this->title;
@@ -38,6 +51,7 @@ class ContentTranslation
 
         return $this;
     }
+
     public function getMeta(): ?string
     {
         return $this->meta;
@@ -49,6 +63,7 @@ class ContentTranslation
 
         return $this;
     }
+
     public function getContent(): ?string
     {
         return $this->content;
