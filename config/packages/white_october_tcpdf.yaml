@@ -1,2 +1,2 @@
-white_october_tcpdf:
+qipsius_tcpdf:
     class: 'App\Service\pdfFooter'

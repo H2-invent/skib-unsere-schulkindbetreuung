@@ -13,10 +13,11 @@ use App\Controller\LoerrachWorkflowController;
 use App\Entity\Kind;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
+use Twig\Environment;
+
 
 class AnmeldeEmailService
 {
@@ -33,7 +34,7 @@ class AnmeldeEmailService
     private $content;
 
 
-    public function __construct(ParameterBagInterface $parameterBag, PrintAGBService $printAGBService, PrintService $print, TCPDFController $tcpdf, TranslatorInterface $translator, IcsService $icsService, EngineInterface $templating, MailerService $mailer)
+    public function __construct(ParameterBagInterface $parameterBag, PrintAGBService $printAGBService, PrintService $print, TCPDFController $tcpdf, TranslatorInterface $translator, IcsService $icsService, Environment $templating, MailerService $mailer)
     {
         $this->print = $print;
         $this->tcpdf = $tcpdf;

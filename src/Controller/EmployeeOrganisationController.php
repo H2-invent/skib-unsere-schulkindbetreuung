@@ -5,7 +5,8 @@ namespace App\Controller;
 use App\Entity\Organisation;
 use App\Entity\User;
 use App\Form\Type\UserType;
-use FOS\UserBundle\Model\UserManagerInterface;
+
+use App\Security\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

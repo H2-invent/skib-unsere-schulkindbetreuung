@@ -43,4 +43,4 @@ services:
 
     # add more service defiitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    WhiteOctober\TCPDFBundle\Controller\TCPDFController: '@white_october.tcpdf'
+    Qipsius\TCPDFBundle\Controller\TCPDFController: '@qipsius.tcpdf'

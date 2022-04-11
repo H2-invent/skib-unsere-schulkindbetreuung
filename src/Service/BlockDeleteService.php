@@ -16,9 +16,9 @@ use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
+use Twig\Environment;
 
 class BlockDeleteService
 {
@@ -34,7 +34,7 @@ class BlockDeleteService
     private $anmeldeService;
 
 
-    public function __construct(AnmeldeEmailService $anmeldeEmailService, EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag, PrintAGBService $printAGBService, PrintService $print, TCPDFController $tcpdf, TranslatorInterface $translator, IcsService $icsService, EngineInterface $templating, MailerService $mailer)
+    public function __construct(AnmeldeEmailService $anmeldeEmailService, EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag, PrintAGBService $printAGBService, PrintService $print, TCPDFController $tcpdf, TranslatorInterface $translator, IcsService $icsService, Environment $templating, MailerService $mailer)
     {
         $this->print = $print;
         $this->tcpdf = $tcpdf;

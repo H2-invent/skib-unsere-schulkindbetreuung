@@ -8,7 +8,6 @@ use App\Entity\Stadt;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 // <- Add this
 

@@ -13,8 +13,8 @@ use App\Entity\Organisation;
 use App\Entity\Stadt;
 use League\Flysystem\FilesystemInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Templating\EngineInterface;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
+use Twig\Environment;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
 class PrintAGBService
 {
@@ -26,7 +26,7 @@ class PrintAGBService
     private $fileSystem;
     private $printService;
     private $tcpdf;
-    public function __construct(FilesystemInterface $publicUploadsFilesystem,TCPDFController $tcpdf, EngineInterface $templating,ParameterBagInterface $parameterBag, PrintService $printService)
+    public function __construct(FilesystemInterface $publicUploadsFilesystem,TCPDFController $tcpdf, Environment $templating,ParameterBagInterface $parameterBag, PrintService $printService)
     {
 
         $this->templating = $templating;
