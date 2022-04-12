@@ -87,7 +87,7 @@
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('dashboard') }}">{% if is_granted('IS_AUTHENTICATED_FULLY') %}<i class="fa fa-user "></i> {{ app.user.username }}{% else %}{% trans %}Mitarbeiterlogin{% endtrans %}{% endif %}</a>
+                    <a class="nav-link" href="{{ path('dashboard') }}">{% if is_granted('IS_AUTHENTICATED_FULLY') %}<i class="fa fa-user "></i> {{ app.user.vorname }} {{ app.user.nachname }}{% else %}{% trans %}Mitarbeiterlogin{% endtrans %}{% endif %}</a>
                 </li>
             </ul>
 

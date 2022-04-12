@@ -118,8 +118,6 @@ class EmployeeController extends AbstractController
         $city = $defaultData->getStadt();
         $errors = array();
         $form = $this->createForm(UserType::class, $defaultData);
-        $form->remove('plainPassword');
-        $form->remove('username');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

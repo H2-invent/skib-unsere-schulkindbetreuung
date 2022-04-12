@@ -16,7 +16,7 @@
                     <thead>
                     <tr>
                         <th></th>
-                        <th>{% trans %}Username{% endtrans %}</th>
+                        <th>{% trans %}E-Mail{% endtrans %}</th>
                         <th>{% trans %}Vorname{% endtrans %}</th>
                         <th>{% trans %}Nachname{% endtrans %}</th>
                         <th>{% trans %}Geburtstag{% endtrans %}</th>
@@ -41,7 +41,7 @@
 
                                 </div>
                             </div></td>
-                        <td>{{ u.username }}</td>
+                        <td>{{ u.email }}</td>
                         <td>{{ u.vorname }}</td>
                         <td>{{ u.nachname }}</td>
                         <td>{{ u.birthday|date('d.m.Y') }}</td>

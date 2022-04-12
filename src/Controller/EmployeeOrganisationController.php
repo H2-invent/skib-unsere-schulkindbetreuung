@@ -12,8 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Translation\TranslatorInterface;
+
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmployeeOrganisationController extends AbstractController
 {
@@ -78,8 +79,6 @@ class EmployeeOrganisationController extends AbstractController
         $city = $defaultData->getStadt();
         $errors = array();
         $form = $this->createForm(UserType::class, $defaultData,array('schulen'=>$this->getUser()->getOrganisation()->getSchule()));
-        $form->remove('plainPassword');
-        $form->remove('username');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -123,7 +122,7 @@ class EmployeeOrganisationController extends AbstractController
         $defaultData->setOrganisation($organisation);
         $defaultData->setStadt($organisation->getStadt());
         $errors = array();
-        $form = $this->createForm(UserType::class, $defaultData,array('schulen'=>$this->getUser()->getOrganisation()->getSchule()));
+        $form = $this->createForm(UserType::class, $defaultData,array('schulen'=>$organisation->getSchule()));
 
         $form->handleRequest($request);
 

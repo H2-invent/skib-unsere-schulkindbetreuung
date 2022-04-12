@@ -92,20 +92,18 @@ class GuardServiceKeycloak extends SocialAuthenticator
         }
 
         // the user never logged in with this email adress
-        $user = new User();
-        $user->setEmail($email);
 
         $myUser = new User();
+        $myUser->setEmail($email);
         $myUser->setCreatedAt(new \DateTime());
         $myUser->setAuth0Id(md5(uniqid()));
         $myUser->setVorname($firstName);
         $myUser->setNachname($lastName);
         $myUser->setKeycloakId($id);
         $myUser->setLastLogin(new \DateTime());
-
-        $this->em->persist($user);
+        $this->em->persist($myUser);
         $this->em->flush();
-        return $user;
+        return $myUser;
     }
 
     /**
