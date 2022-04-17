@@ -16,6 +16,8 @@ class UserManager implements UserManagerInterface
     public function createUser()
     {
        $user = new User();
+       $user->setCreatedAt(new \DateTime());
+       $user->setEnabled(true);
        return $user;
     }
 
@@ -31,17 +33,24 @@ class UserManager implements UserManagerInterface
 
     public function findUserByUsername($username)
     {
-        // TODO: Implement findUserByUsername() method.
+        return $this->em->getRepository(User::class)->findOneBy(array('uuid'=>$username));
+
     }
 
     public function findUserByEmail($email)
     {
-        // TODO: Implement findUserByEmail() method.
+        return $this->em->getRepository(User::class)->findOneBy(array('email'=>$email));
+
     }
 
     public function findUserByUsernameOrEmail($usernameOrEmail)
     {
-        // TODO: Implement findUserByUsernameOrEmail() method.
+
+            $user = $this->findUserByEmail($usernameOrEmail);
+
+            return $user;
+
+
     }
 
     public function findUserByConfirmationToken($token)
@@ -66,8 +75,13 @@ class UserManager implements UserManagerInterface
 
     public function updateUser(User $user)
     {
-        $this->em->persist($user);
-        $this->em->flush();
+        $userTest = $this->findUserByUsernameOrEmail($user->getEmail());
+        if (!$userTest){
+            $this->em->persist($user);
+            $this->em->flush();
+            return true;
+        }
+        throw new \Exception('User already Exitsts with this username or E-Mail');
     }
 
     public function updateCanonicalFields(User $user)

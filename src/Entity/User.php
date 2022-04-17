@@ -126,6 +126,11 @@ class User extends UserBase
      */
     private $enabled = false;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $invitationToken;
+
 
     public function __construct()
     {
@@ -401,6 +406,18 @@ class User extends UserBase
        return $this->enabled;
 
 
+    }
+
+    public function getInvitationToken(): ?string
+    {
+        return $this->invitationToken;
+    }
+
+    public function setInvitationToken(?string $invitationToken): self
+    {
+        $this->invitationToken = $invitationToken;
+
+        return $this;
     }
 
 }

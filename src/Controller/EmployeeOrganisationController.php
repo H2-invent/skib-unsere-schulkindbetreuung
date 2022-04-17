@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\Type\UserType;
 
 use App\Security\UserManagerInterface;
+use App\Service\InvitationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -112,7 +113,7 @@ class EmployeeOrganisationController extends AbstractController
     /**
      * @Route("/org_edit/mitarbeiter/organisation/neu", name="organisation_employee_new")
      */
-    public function newUser(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
+    public function newUser(Request $request, TranslatorInterface $translator, ValidatorInterface $validator,InvitationService $invitationService)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation->getStadt() != $this->getUser()->getStadt()) {
@@ -132,6 +133,7 @@ class EmployeeOrganisationController extends AbstractController
                 $defaultData->setEnabled(true);
                 $userManager = $this->manager;
                 $userManager->updateUser($defaultData);
+                $invitationService->inviteNewUser($defaultData,$this->getUser());
                 $text = $translator->trans('Erfolgreich gespeichert');
                 return $this->redirectToRoute('city_employee_org_show', array('snack'=>$text,'id' => $organisation->getId()));
             } catch (\Exception $e) {

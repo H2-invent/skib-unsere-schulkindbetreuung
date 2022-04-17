@@ -8,7 +8,6 @@ parameters:
     app.path.uploads: /uploads
     secret: '%env(APP_SECRET)%'
     locale: 'de'
-    mailprovider: '%env(MAILPROVIDER)%'
     confirmEmailSender: '%env(CONFIRMEMAIL)%'
     alarmEmail: '%env(ALLERTMAIL)%'
     mailgunApiKEy: '%env(MAILGUNAPIKEY)%'

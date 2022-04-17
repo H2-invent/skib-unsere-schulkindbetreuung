@@ -6,6 +6,7 @@ use App\Entity\Stadt;
 use App\Entity\User;
 use App\Form\Type\UserType;
 use App\Security\UserManagerInterface;
+use App\Service\InvitationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -53,7 +54,7 @@ class StadtadminController extends AbstractController
     /**
      * @Route("/admin/stadtUser/neu", name="admin_stadtadmin_neu")
      */
-    public function neu(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
+    public function neu(Request $request,TranslatorInterface $translator,ValidatorInterface $validator,InvitationService $invitationService)
     {
         $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         $defaultData = $this->manager->createUser();
@@ -70,6 +71,7 @@ class StadtadminController extends AbstractController
                 $defaultData->addRole('ROLE_CTY_ADMIN');
                 $this->manager->updateUser($defaultData);
                 $text = $translator->trans('Erfolgreich angelegt');
+                $invitationService->inviteNewUser($defaultData,$this->getUser());
                 return $this->redirectToRoute('admin_stadtadmin',array('snack'=>$text,'id'=>$city->getId()));
             }catch ( \Exception $e) {
                 $errorText = $translator->trans('Die E-Mail existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse');
