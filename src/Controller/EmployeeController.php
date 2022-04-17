@@ -91,7 +91,6 @@ class EmployeeController extends AbstractController
                     );
                 }
 
-
                 return $this->render(
                     'administrator/error.html.twig',
                     array('error' => $errorText)
