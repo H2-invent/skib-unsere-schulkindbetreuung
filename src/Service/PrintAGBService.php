@@ -11,7 +11,7 @@ namespace App\Service;
 
 use App\Entity\Organisation;
 use App\Entity\Stadt;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Environment;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
@@ -26,7 +26,7 @@ class PrintAGBService
     private $fileSystem;
     private $printService;
     private $tcpdf;
-    public function __construct(FilesystemInterface $publicUploadsFilesystem,TCPDFController $tcpdf, Environment $templating,ParameterBagInterface $parameterBag, PrintService $printService)
+    public function __construct(FilesystemOperator $publicUploadsFilesystem,TCPDFController $tcpdf, Environment $templating,ParameterBagInterface $parameterBag, PrintService $printService)
     {
 
         $this->templating = $templating;

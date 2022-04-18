@@ -16,7 +16,7 @@ use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -31,7 +31,7 @@ class PrintRechnungService
     private $pdf;
     private $fileSystem;
 
-    public function __construct(FilesystemInterface $publicUploadsFilesystem, TCPDFController $tcpdf,  TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(FilesystemOperator $publicUploadsFilesystem, TCPDFController $tcpdf,  TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
 
 

@@ -5,10 +5,11 @@
 {% endblock %}
 
 {% block content %}
-    <h4 class="text-center">{% trans %}Sie wurden von einem Administrator als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt.
+<center>
+    <p class="text-center">{% trans %}Sie wurden von einem Administrator als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt.
             <br>Um den Registrierungsvorgang abzuschließen klicken Sie bitte auf den nachfolgenden Link oder kopieren Sie den Link in Ihren Browser:{% endtrans %}
-    </h4>
+    </p>
     <a href="{{ url }}">{{ 'Hier die Registrierung abschließen.'|trans }}</a><br>
     {% trans with {'%url%':url } %}Oder kopieren Sie diesen Link in Ihren Browser:<br> %url%{% endtrans %}.
-
+</center>
 {% endblock %}

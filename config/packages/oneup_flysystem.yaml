@@ -9,3 +9,4 @@ oneup_flysystem:
             adapter: asset_adapter
             alias: League\Flysystem\Asset
             mount: asset_filesystem
+

@@ -174,7 +174,7 @@ class BlockController extends AbstractController
         $blocks1 = $this->getDoctrine()->getRepository('App:Zeitblock')->findBy(
             array('schule'=>$block->getSchule(),
                 'ganztag'=>$block->getGanztag(),
-                'active'=>$block->getActive()),array('von'=>'ASC'));
+                'active'=>$block->getActive(),'deleted'=>false),array('von'=>'ASC'),);
         $blocks = array();
         foreach ($blocks1 as $data){
             if($data != $block){

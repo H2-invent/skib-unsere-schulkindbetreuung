@@ -50,7 +50,7 @@ $(document).on('click', '.chooseBlock', function (e) {
 function changeState(id, state, data) {
     var ele = $('#block-' + id);
     if (state == 0) {
-        ele.addClass('bg-warning');
+        ele.addClass('bg-success');
         ele.find('.gebucht-text').text(data.cardText);
     } else if (state == 1) {
         ele.addClass('bg-success');

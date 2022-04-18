@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Kind;
+use App\Entity\Zeitblock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -47,4 +48,16 @@ class KindRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findBeworbenByZeitblock(Zeitblock $zeitblock)
+    {
+        return $this->createQueryBuilder('k')
+            ->innerJoin('k.beworben','beworben')
+            ->andWhere('beworben = :beworben')
+            ->andWhere('k.fin = :true')
+            ->setParameter('true', true)
+            ->setParameter('beworben',$zeitblock)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

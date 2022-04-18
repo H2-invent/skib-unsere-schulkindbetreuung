@@ -45,6 +45,22 @@ class StadtType extends AbstractType
             $stadt->translate('en')->setCareBlockInfo('');
             $stadt->translate('fr')->setCareBlockInfo('');
 
+            $stadt->translate('de')->setSettingGehaltsklassenHelp('');
+            $stadt->translate('en')->setSettingGehaltsklassenHelp('');
+            $stadt->translate('fr')->setSettingGehaltsklassenHelp('');
+
+            $stadt->translate('de')->setSettingKinderimKigaHelp('');
+            $stadt->translate('en')->setSettingKinderimKigaHelp('');
+            $stadt->translate('fr')->setSettingKinderimKigaHelp('');
+
+            $stadt->translate('de')->setSettingsAnzahlKindergeldempfangerHelp('');
+            $stadt->translate('en')->setSettingsAnzahlKindergeldempfangerHelp('');
+            $stadt->translate('fr')->setSettingsAnzahlKindergeldempfangerHelp('');
+
+            $stadt->translate('de')->setSettingsSozielHilfeEmpfangerHelp('');
+            $stadt->translate('en')->setSettingsSozielHilfeEmpfangerHelp('');
+            $stadt->translate('fr')->setSettingsSozielHilfeEmpfangerHelp('');
+
             foreach ($stadt->getNewTranslations() as $newTranslation) {
                 if (!$stadt->getTranslations()->contains($newTranslation) && !$stadt->getNewTranslations()->isEmpty()) {
                     $stadt->addTranslation($newTranslation);
@@ -71,8 +87,21 @@ class StadtType extends AbstractType
             ->add('minDaysperWeek', NumberType::class, ['required' => true, 'label' => 'Mindestanzahl an Blöcken pro Woche', 'translation_domain' => 'form'])
             ->add('preiskategorien', NumberType::class, ['required' => true, 'label' => 'Anzahl der Preiskategorien', 'translation_domain' => 'form'])
             ->add('secCodeAlwaysNew', CheckboxType::class, ['required' => false, 'label' => 'Der Security-Code soll bei jeder Änderung geändert werden', 'translation_domain' => 'form'])
-            ->add('showShowMoreToggleOnHomescreen', CheckboxType::class, ['required' => false, 'label' => 'Zeige den "Mehr lesen" Button auf der Startseite an', 'translation_domain' => 'form'])
 
+            //SKIB Stammdaten einstallungen
+            ->add('settingsAnzahlKindergeldempfanger', CheckboxType::class, ['required' => false, 'label' => 'Abfrage Anzahl Kindergeldpflichtiger Kinder im Hausahlt', 'translation_domain' => 'form'])
+            ->add('settingsAnzahlKindergeldempfangerRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
+            ->add('settingsSozielHilfeEmpfanger', CheckboxType::class, ['required' => false, 'label' => 'Abfrage Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?', 'translation_domain' => 'form'])
+            ->add('settingsSozielHilfeEmpfangerRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
+            ->add('settingGehaltsklassen', CheckboxType::class, ['required' => false, 'label' => 'Gehaltsklassen abfragen?', 'translation_domain' => 'form'])
+            ->add('settingGehaltsklassenRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
+
+            ->add('settingKinderimKiga', CheckboxType::class, ['required' => false, 'label' => 'Abfrage ob weiteres Kind im KiGa?', 'translation_domain' => 'form'])
+
+
+            //SKIB Stammdateneinstallungen
+
+            ->add('showShowMoreToggleOnHomescreen', CheckboxType::class, ['required' => false, 'label' => 'Zeige den "Mehr lesen" Button auf der Startseite an', 'translation_domain' => 'form'])
             ->add('gehaltsklassen', CollectionType::class, [
                 'entry_type' => TextType::class,
                 'entry_options' => array('label' => 'Bezeichnung der Gehaltsklassen', 'translation_domain' => 'form')
@@ -101,8 +130,8 @@ class StadtType extends AbstractType
                         'datenschutz' => [
 
                             'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
-                                'label' => 'Datenschutz',
-                                'translation_domain' => 'form'
+                            'label' => 'Datenschutz',
+                            'translation_domain' => 'form'
                         ],
                         'infoText' => [
 
@@ -130,12 +159,35 @@ class StadtType extends AbstractType
                         ],
                         'coverText' => [
 
-                            'attr' => array('rows' => 6,'class' => 'onlineEditor'),
+                            'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
                             'label' => 'Text in der "Wichtig" Box auf der Startseite',
                             'translation_domain' => 'form'
+                        ],
+
+                        'settingKinderimKigaHelp' => [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingGehaltsklassenHelp' => [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingsSozielHilfeEmpfangerHelp' => [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingsAnzahlKindergeldempfangerHelp' => [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
                         ]
-
-
                     ]
                 ]
             )

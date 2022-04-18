@@ -179,6 +179,25 @@ class StadtadminController extends AbstractController
         ->get('referer');
         return $this->redirect($referer);
     }
+
+    /**
+     * @Route("/admin/stadtUser/toggleSuperAdmin", name="admin_stadtadmin_toggleSuperAdmin")
+     */
+    public function toggleSuperAdmin(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
+    {
+        $user = $this->manager->findUserBy(array('id' => $request->get('id')));
+        if($user->hasRole('ROLE_ADMIN')){
+            $user->removeRole('ROLE_ADMIN');
+        }else{
+            $user->addRole('ROLE_ADMIN');
+        }
+        $this->manager->updateUser($user);
+        $referer = $request
+            ->headers
+            ->get('referer');
+        return $this->redirect($referer);
+    }
+
     /**
      * @Route("/admin/stadtUser/deactivate", name="admin_stadtadmin_deactivate")
      */

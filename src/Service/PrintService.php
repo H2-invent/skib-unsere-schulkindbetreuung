@@ -14,8 +14,7 @@ use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
-use League\Flysystem\FilesystemInterface;
-
+use League\Flysystem\FilesystemOperator;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -32,7 +31,7 @@ class PrintService
     private $generator;
 
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, FilesystemInterface $publicUploadsFilesystem, Environment $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(UrlGeneratorInterface $urlGenerator, FilesystemOperator $publicUploadsFilesystem, Environment $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
 
         $this->templating = $templating;

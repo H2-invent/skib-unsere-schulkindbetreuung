@@ -18,8 +18,8 @@ security:
         users:
             entity:
                 class: App\Entity\User
-                property: keycloakId
-
+                #property: keycloakId
+                property: email
 
     firewalls:
         dev:

@@ -42,6 +42,7 @@ import ('trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste');
 import ('trumbowyg/dist/plugins/template/trumbowyg.template');
 import ('formBuilder/dist/form-builder.min');
 import snackbar from 'snackbarjs';
+import {initTabs} from 'h2-invent-material-tabs';
 
 let formBuilderLoc;
 var sucessFkt;

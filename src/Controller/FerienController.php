@@ -71,7 +71,7 @@ class FerienController extends AbstractController
             return $this->redirect($this->generateUrl('workflow_start', array('slug' => $stadt->getSlug())));
         }
 
-        $form = $this->createForm(LoerrachEltern::class, $adresse);
+        $form = $this->createForm(LoerrachEltern::class, $adresse,array('stadt'=>$stadt));
         $form->remove('alleinerziehend', 'kinderImKiga', 'beruflicheSituation', 'einkommen');
         $form->handleRequest($request);
 

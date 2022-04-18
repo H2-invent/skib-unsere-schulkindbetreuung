@@ -57,7 +57,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @ORM\Column(type="integer",nullable=true)
      */
-    private $einkommen;
+    private $einkommen=0;
 
     /**
      * @ORM\Column(type="datetime")
@@ -275,6 +275,16 @@ class Stammdaten implements GroupSequenceProviderInterface
      * @Assert\Email()
      */
     private $emailDoubleInput;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $anzahlKindergeldempfanger=0;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $sozialhilfeEmpanger=false;
 
     public function __construct()
     {
@@ -917,5 +927,29 @@ class Stammdaten implements GroupSequenceProviderInterface
         ['all',
             $this->kinderImKiga === true ? 'kindInKiga' : 'notKindinKiga'],
         ];
+    }
+
+    public function getAnzahlKindergeldempfanger(): ?int
+    {
+        return $this->anzahlKindergeldempfanger;
+    }
+
+    public function setAnzahlKindergeldempfanger(?int $anzahlKindergeldempfanger): self
+    {
+        $this->anzahlKindergeldempfanger = $anzahlKindergeldempfanger;
+
+        return $this;
+    }
+
+    public function getSozialhilfeEmpanger(): ?bool
+    {
+        return $this->sozialhilfeEmpanger;
+    }
+
+    public function setSozialhilfeEmpanger(?bool $sozialhilfeEmpanger): self
+    {
+        $this->sozialhilfeEmpanger = $sozialhilfeEmpanger;
+
+        return $this;
     }
 }

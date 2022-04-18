@@ -277,6 +277,42 @@ class Stadt implements TranslatableInterface
      */
     private $showShowMoreToggleOnHomescreen;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $settingsAnzahlKindergeldempfanger=false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $settingsSozielHilfeEmpfanger=false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $settingsAnzahlKindergeldempfangerRequired=false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $settingsSozielHilfeEmpfangerRequired=false;
+
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $settingKinderimKiga=false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $settingGehaltsklassen=false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $settingGehaltsklassenRequired=false;
+
 
 
     public function __construct()
@@ -920,6 +956,138 @@ class Stadt implements TranslatableInterface
     public function setShowShowMoreToggleOnHomescreen(?bool $showShowMoreToggleOnHomescreen): self
     {
         $this->showShowMoreToggleOnHomescreen = $showShowMoreToggleOnHomescreen;
+
+        return $this;
+    }
+
+    public function getSettingsAnzahlKindergeldempfanger(): ?bool
+    {
+        return $this->settingsAnzahlKindergeldempfanger;
+    }
+
+    public function setSettingsAnzahlKindergeldempfanger(bool $settingsAnzahlKindergeldempfanger): self
+    {
+        $this->settingsAnzahlKindergeldempfanger = $settingsAnzahlKindergeldempfanger;
+
+        return $this;
+    }
+
+    public function getSettingsSozielHilfeEmpfanger(): ?bool
+    {
+        return $this->settingsSozielHilfeEmpfanger;
+    }
+
+    public function setSettingsSozielHilfeEmpfanger(bool $settingsSozielHilfeEmpfanger): self
+    {
+        $this->settingsSozielHilfeEmpfanger = $settingsSozielHilfeEmpfanger;
+
+        return $this;
+    }
+
+    public function getSettingsAnzahlKindergeldempfangerRequired(): ?bool
+    {
+        return $this->settingsAnzahlKindergeldempfangerRequired;
+    }
+
+    public function setSettingsAnzahlKindergeldempfangerRequired(bool $settingsAnzahlKindergeldempfangerRequired): self
+    {
+        $this->settingsAnzahlKindergeldempfangerRequired = $settingsAnzahlKindergeldempfangerRequired;
+
+        return $this;
+    }
+
+    public function getSettingsSozielHilfeEmpfangerRequired(): ?bool
+    {
+        return $this->settingsSozielHilfeEmpfangerRequired;
+    }
+
+    public function setSettingsSozielHilfeEmpfangerRequired(bool $settingsSozielHilfeEmpfangerRequired): self
+    {
+        $this->settingsSozielHilfeEmpfangerRequired = $settingsSozielHilfeEmpfangerRequired;
+
+        return $this;
+    }
+
+    public function getSettingsAnzahlKindergeldempfangerHelp(): ?string
+    {
+        return $this->settingsAnzahlKindergeldempfangerHelp;
+    }
+
+    public function setSettingsAnzahlKindergeldempfangerHelp(?string $settingsAnzahlKindergeldempfangerHelp): self
+    {
+        $this->settingsAnzahlKindergeldempfangerHelp = $settingsAnzahlKindergeldempfangerHelp;
+
+        return $this;
+    }
+
+    public function getSettingsSozielHilfeEmpfangerHelp(): ?string
+    {
+        return $this->settingsSozielHilfeEmpfangerHelp;
+    }
+
+    public function setSettingsSozielHilfeEmpfangerHelp(?string $settingsSozielHilfeEmpfangerHelp): self
+    {
+        $this->settingsSozielHilfeEmpfangerHelp = $settingsSozielHilfeEmpfangerHelp;
+
+        return $this;
+    }
+
+    public function getSettingKinderimKiga(): ?bool
+    {
+        return $this->settingKinderimKiga;
+    }
+
+    public function setSettingKinderimKiga(?bool $settingKinderimKiga): self
+    {
+        $this->settingKinderimKiga = $settingKinderimKiga;
+
+        return $this;
+    }
+
+    public function getSettingKinderimKigaHelp(): ?string
+    {
+        return $this->settingKinderimKigaHelp;
+    }
+
+    public function setSettingKinderimKigaHelp(?string $settingKinderimKigaHelp): self
+    {
+        $this->settingKinderimKigaHelp = $settingKinderimKigaHelp;
+
+        return $this;
+    }
+
+    public function getSettingGehaltsklassen(): ?bool
+    {
+        return $this->settingGehaltsklassen;
+    }
+
+    public function setSettingGehaltsklassen(?bool $settingGehaltsklassen): self
+    {
+        $this->settingGehaltsklassen = $settingGehaltsklassen;
+
+        return $this;
+    }
+
+    public function getSettingGehaltsklassenRequired(): ?bool
+    {
+        return $this->settingGehaltsklassenRequired;
+    }
+
+    public function setSettingGehaltsklassenRequired(?bool $settingGehaltsklassenRequired): self
+    {
+        $this->settingGehaltsklassenRequired = $settingGehaltsklassenRequired;
+
+        return $this;
+    }
+
+    public function getSettingGehaltsklassenHelp(): ?string
+    {
+        return $this->settingGehaltsklassenHelp;
+    }
+
+    public function setSettingGehaltsklassenHelp(?string $settingGehaltsklassenHelp): self
+    {
+        $this->settingGehaltsklassenHelp = $settingGehaltsklassenHelp;
 
         return $this;
     }

@@ -50,8 +50,13 @@ class InvitationService
         if (!$user) {
             return null;
         }
+        $user = $this->em->getRepository(User::class)->findOneBy(array('invitationToken' => $token));
         $user->setInvitationToken(null);
         $user->setKeycloakId($tempUser->getKeycloakId());
+        $this->em->persist($user);
+        $this->em->flush();
+        $tempUser->setKeycloakId(null);
+        $this->em->remove($tempUser);
         $this->em->persist($user);
         $this->em->flush();
         return $user;

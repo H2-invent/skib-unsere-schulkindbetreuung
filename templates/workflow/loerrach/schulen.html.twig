@@ -79,7 +79,7 @@
                                                             </div>
                                                         </div>
                                                         {{ k.vorname }} {{ k.nachname }}
-                                                        <b><span class="price">{% if k.tageWithBlocks>=2 %}{{ k.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></b>
+                                                        <b><span class="price">{% if k.tageWithBlocks>=s.stadt.minDaysperWeek %}{{ k.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></b>
 
                                                         <br>
                                                     {% endfor %}

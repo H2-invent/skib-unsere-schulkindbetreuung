@@ -11,7 +11,6 @@ namespace App\Service;
 
 
 use App\Entity\Organisation;
-use League\Flysystem\FilesystemInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 use Qipsius\TCPDFBundle\Controller\TCPDFController;

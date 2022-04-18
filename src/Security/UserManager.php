@@ -76,7 +76,7 @@ class UserManager implements UserManagerInterface
     public function updateUser(User $user)
     {
         $userTest = $this->findUserByUsernameOrEmail($user->getEmail());
-        if (!$userTest){
+        if (!$userTest || $userTest = $user){
             $this->em->persist($user);
             $this->em->flush();
             return true;

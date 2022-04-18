@@ -25,6 +25,7 @@
                         <th>{% trans %}Nachname{% endtrans %}</th>
                         <th>{% trans %}Geburtstag{% endtrans %}</th>
                         <th>{% trans %}Rolle{% endtrans %}</th>
+                        <th>{% trans %}Last Login{% endtrans %}</th>
                         <th>{% trans %}Status{% endtrans %}</th>
                     </tr>
                     </thead>
@@ -36,8 +37,10 @@
                                     <i class="material-icons">more_vert</i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                    <a class="dropdown-item" href="{{ path('dashboard',{'_switch_user':u.email}) }}">{% trans %}Zu diesem User wechseln{% endtrans %}</a>
                                     <a class="dropdown-item" href="{{ path('admin_stadtadmin_edit',{'id':u.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
                                     <a class="dropdown-item" href="{{ path('admin_stadtadmin_toggleAdmin',{'id':u.id}) }}">{{ u.hasRole('ROLE_CITY_ADMIN')?"Admin entfernen":"Admin ernennen"|trans }}</a>
+                                    <a class="dropdown-item" href="{{ path('admin_stadtadmin_toggleSuperAdmin',{'id':u.id}) }}">{{ u.hasRole('ROLE_ADMIN')?"Super Admin entfernen":"Super Admin ernennen"|trans }}</a>
                                     <a class="dropdown-item" href="{{ path('admin_stadtadmin_deactivate',{'id':u.id}) }}">{% trans %}Account Deaktivieren{% endtrans %}</a>
                                 </div>
                             </div></td>
@@ -45,8 +48,10 @@
                         <td>{{ u.vorname }}</td>
                         <td>{{ u.nachname }}</td>
                         <td>{{ u.birthday|date('d.m.Y') }}</td>
-                        <td>{{ u.hasRole('ROLE_CITY_ADMIN')?"Stadt Admin":u.hasRole('ROLE_ORG_ADMIN')?"Organisation Admin":"Kein Admin"|trans }}</td>
-                        <td>{{ u.enabled?"Aktiv":"Deaktiviert"|trans }}</td>
+                        <td>{{ u.hasRole('ROLE_CITY_ADMIN')?"Stadt Admin":u.hasRole('ROLE_ORG_ADMIN')?"Organisation Admin":"Kein Admin"|trans }}<br>
+                            {{ u.hasRole('ROLE_ADMIN')?"Super Admin":""|trans }}</td>
+                        <td>{{ u.lastLogin is null?'Kein Login':u.lastLogin|date('d.m.Y H:i:s') }}</td>
+                        <td>{{ u.invitationToken is not null?'Eingeladen':u.enabled?"Aktiv":'Deaktiviert'|trans }}</td>
 
                     </tr>
                     {% endfor %}

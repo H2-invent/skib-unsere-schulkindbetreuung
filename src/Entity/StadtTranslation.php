@@ -50,6 +50,27 @@ class StadtTranslation implements TranslationInterface
      */
     private $coverText;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingGehaltsklassenHelp;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingKinderimKigaHelp;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingsAnzahlKindergeldempfangerHelp;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingsSozielHilfeEmpfangerHelp;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -114,6 +135,7 @@ class StadtTranslation implements TranslationInterface
 
         return $this;
     }
+
     public function getCoverText(): ?string
     {
         return $this->coverText;
@@ -126,5 +148,73 @@ class StadtTranslation implements TranslationInterface
         return $this;
     }
 
-    
+    /**
+     * @return mixed
+     */
+    public function getSettingGehaltsklassenHelp()
+    {
+        return $this->settingGehaltsklassenHelp;
+    }
+
+    /**
+     * @param mixed $settingGehaltsklassenHelp
+     */
+    public function setSettingGehaltsklassenHelp($settingGehaltsklassenHelp): self
+    {
+        $this->settingGehaltsklassenHelp = $settingGehaltsklassenHelp;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingKinderimKigaHelp():string
+    {
+        return $this->settingKinderimKigaHelp;
+    }
+
+    /**
+     * @param mixed $settingKinderimKigaHelp
+     */
+    public function setSettingKinderimKigaHelp($settingKinderimKigaHelp): self
+    {
+        $this->settingKinderimKigaHelp = $settingKinderimKigaHelp;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsAnzahlKindergeldempfangerHelp():string
+    {
+        return $this->settingsAnzahlKindergeldempfangerHelp;
+    }
+
+    /**
+     * @param mixed $settingsAnzahlKindergeldempfangerHelp
+     */
+    public function setSettingsAnzahlKindergeldempfangerHelp($settingsAnzahlKindergeldempfangerHelp): self
+    {
+        $this->settingsAnzahlKindergeldempfangerHelp = $settingsAnzahlKindergeldempfangerHelp;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsSozielHilfeEmpfangerHelp():string
+    {
+        return $this->settingsSozielHilfeEmpfangerHelp;
+    }
+
+    /**
+     * @param mixed $settingsSozielHilfeEmpfangerHelp
+     */
+    public function setSettingsSozielHilfeEmpfangerHelp($settingsSozielHilfeEmpfangerHelp): self
+    {
+        $this->settingsSozielHilfeEmpfangerHelp = $settingsSozielHilfeEmpfangerHelp;
+        return $this;
+    }
+
+
 }
