@@ -76,6 +76,7 @@ class GuardServiceKeycloak extends SocialAuthenticator
             $this->em->persist($existingUser);
             $this->em->flush();
             if ($existingUser->getEnabled() == false){
+                echo "This user is disabled. Please contact your admin or support@h2-invent.com";
                 return null;
             }
             return $existingUser;
@@ -93,13 +94,13 @@ class GuardServiceKeycloak extends SocialAuthenticator
             $this->em->persist($existingUser);
             $this->em->flush();
             if ($existingUser->getEnabled() == false){
+                echo "This user is disabled. Please contact your admin or support@h2-invent.com";
                 return null;
             }
             return $existingUser;
         }
 
         // the user never logged in with this email adress
-
         $myUser = new User();
         $myUser->setEmail($email);
         $myUser->setCreatedAt(new \DateTime());

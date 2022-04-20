@@ -149,7 +149,7 @@
 
                                             <div class="view overlay skib-card-image">
                                                 <img alt="{{ s.name }}" class="card-img-top"
-                                                     src="{{ vich_uploader_asset(s,'imageFile')|imagine_filter('my_cards')|makeHttps }}">
+                                                     src="{% if s.image is not null %}{{ vich_uploader_asset(s,'imageFile')|imagine_filter('my_cards')|makeHttps }}{% else %}{{ asset('images/logo-skib.png') }}{% endif %}">
                                             </div>
                                             <div class="card-body">
 
