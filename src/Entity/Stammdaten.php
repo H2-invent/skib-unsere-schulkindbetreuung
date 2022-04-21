@@ -143,6 +143,7 @@ class Stammdaten implements GroupSequenceProviderInterface
 
     /**
      * @Assert\NotBlank(groups = {"all"})
+     * @Assert\Regex(pattern="/\b(?!01000|99999)(0[1-9]\d{3}|[1-9]\d{4})\b/i",groups = {"all"})
      * @ORM\Column(type="integer",nullable=true)
      */
     private $plz;
@@ -555,7 +556,7 @@ class Stammdaten implements GroupSequenceProviderInterface
         return $this->plz;
     }
 
-    public function setPlz(?int $plz): self
+    public function setPlz(?string $plz): self
     {
         $this->plz = $plz;
 

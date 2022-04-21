@@ -50,36 +50,7 @@
                     <td>{% trans %}Berufliche Situation des Erziehungsberechtigten{% endtrans %}</td>
                     <td>{{ beruflicheSituation[eltern.beruflicheSituation] }}</td>
                 </tr>
-
-                {% if stadt.settingGehaltsklassen %}
-                    <tr>
-                        <td>{% trans %}Brutto Haushaltseinkommen pro Monat{% endtrans %}</td>
-                        <td>{{ stadt.gehaltsklassen[eltern.einkommen] }}</td>
-                    </tr>
-                {% endif %}
-                {% if stadt.settingKinderimKiga %}
-                    <tr>
-                        <td>{% trans %}Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung{% endtrans %}</td>
-                        <td>{{ eltern.kinderImKiga?"Ja"|trans:'Nein'|trans }}<br>
-                            {{ eltern.kigaOfKids }}
-                        </td>
-                    </tr>
-                {% endif %}
-                {% if stadt.settingsSozielHilfeEmpfanger %}
-                    <tr>
-                        <td>{% trans %}Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?{% endtrans %}</td>
-                        <td>{{ eltern.sozialhilfeEmpanger?"Ja"|trans:'Nein'|trans }}</td>
-                    </tr>
-                {% endif %}
-                {% if stadt.settingsAnzahlKindergeldempfanger %}
-                    <tr>
-                        <td>{% trans %}Anzahl der Geschwister, die kindergeldberechtigt sind und im selben Haushalt leben?{% endtrans %}</td>
-                        <td>{{ eltern.anzahlKindergeldempfanger}}</td>
-                    </tr>
-                {% endif %}
-
-
-
+                {% include 'widget/__elternTabelle_Vollstandig.html.twig' with {'stadt':stadt,'eltern':eltern} %}
                 <tr>
                     <td>{% trans %}Kontakt für evtl. Notfälle{% endtrans %}</td>
                     <td>{{ eltern.notfallName }}</td>
