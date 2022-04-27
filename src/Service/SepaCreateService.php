@@ -8,6 +8,7 @@ use App\Entity\Rechnung;
 use App\Entity\Sepa;
 use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FilesystemOperator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use function Doctrine\ORM\QueryBuilder;
@@ -25,8 +26,9 @@ class SepaCreateService
     private $printRechnungService;
     private $mailerService;
     private $environment;
+    private FilesystemOperator $internFileSystem;
 
-    public function __construct(Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager, SEPASimpleService $sepaSimpleService, PrintRechnungService $printRechnungService, MailerService $mailerService)
+    public function __construct(FilesystemOperator $internFileSystem, Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager, SEPASimpleService $sepaSimpleService, PrintRechnungService $printRechnungService, MailerService $mailerService)
     {
         $this->em = $entityManager;
         $this->translator = $translator;
@@ -34,6 +36,7 @@ class SepaCreateService
         $this->printRechnungService = $printRechnungService;
         $this->mailerService = $mailerService;
         $this->environment = $environment;
+        $this->internFileSystem = $internFileSystem;
     }
 
     public function calcSepa(Sepa $sepa)
@@ -201,6 +204,13 @@ class SepaCreateService
 
         $mailContent = $this->environment->render('email/rechnungEmail.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
         $betreff = $this->translator->trans('Rechnung') . ' ' . $rechnung->getRechnungsnummer();
+        foreach ($organisation->getStadt()->getEmailDokumenteRechnung() as $att) {
+            $attachment[] = array(
+                'body' => $this->internFileSystem->read($att->getFileName()),
+                'filename' => $att->getOriginalName(),
+                'type' => $att->getType()
+            );
+        }
         $this->mailerService->sendEmail(
             $organisation->getName(),
             $organisation->getEmail(),
@@ -208,7 +218,8 @@ class SepaCreateService
             $betreff,
             $mailContent,
             $organisation->getEmail(),
-            $attachment);
+            $attachment
+        );
 
     }
 
@@ -236,15 +247,15 @@ class SepaCreateService
 
 
         $rechnungen = array();
-        foreach ($eltern as $data){
+        foreach ($eltern as $data) {
             $rechnungTmp = new Rechnung();
             $rechnungTmp->setBis($sepa->getBis());
             $rechnungTmp->setVon($sepa->getVon());
             $rechnungTmp->setCreatedAt(new \DateTime());
             $rechnungTmp->setStammdaten($data);
             $summe = 0.0;
-            foreach ($data->getKinds() as $data2){
-                if ($data2->getSchule()->getOrganisation() == $sepa->getOrganisation()){
+            foreach ($data->getKinds() as $data2) {
+                if ($data2->getSchule()->getOrganisation() == $sepa->getOrganisation()) {
                     $summe += $data2->getPreisforBetreuung();
                     $rechnungTmp->addKinder($data2);
                 }

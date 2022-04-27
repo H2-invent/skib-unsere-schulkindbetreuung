@@ -313,6 +313,49 @@ class Stadt implements TranslatableInterface
      */
     private $settingGehaltsklassenRequired=false;
 
+    /**
+     * @ORM\OneToMany(targetEntity=\App\Entity\File::class, mappedBy="stadt")
+     */
+    private $uploads;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=\App\Entity\File::class )
+     * @ORM\JoinTable(name="dokumente_confirm")
+     */
+    private $emailDokumente_confirm;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=\App\Entity\File::class)
+     * @ORM\JoinTable(name="dokumete_skib_anmeldung")
+     */
+    private $emailDokumente_schulkindbetreuung_anmeldung;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=\App\Entity\File::class)
+     * @ORM\JoinTable(name="dokumete_skib_buchung")
+     */
+    private $emailDokumente_schulkindbetreuung_buchung;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=\App\Entity\File::class)
+     * @ORM\JoinTable(name="dokumete_skib_anderung")
+     */
+    private $emailDokumente_schulkindbetreuung_anderung;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=\App\Entity\File::class)
+     * @ORM\JoinTable(name="dokumete_rechnung")
+     */
+    private $emailDokumente_rechnung;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=\App\Entity\File::class)
+     * @ORM\JoinTable(name="dokumete_skib_abmeldung")
+     */
+    private $emailDokumente_schulkindbetreuung_abmeldung;
+
+
+
 
 
     public function __construct()
@@ -323,6 +366,13 @@ class Stadt implements TranslatableInterface
         $this->actives = new ArrayCollection();
         $this->news = new ArrayCollection();
         $this->ferienblocks = new ArrayCollection();
+        $this->uploads = new ArrayCollection();
+        $this->emailDokumente_confirm = new ArrayCollection();
+        $this->emailDokumente_schulkindbetreuung_anmeldung = new ArrayCollection();
+        $this->emailDokumente_schulkindbetreuung_buchung = new ArrayCollection();
+        $this->emailDokumente_schulkindbetreuung_anderung = new ArrayCollection();
+        $this->emailDokumente_rechnung = new ArrayCollection();
+        $this->emailDokumente_schulkindbetreuung_abmeldung = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1091,6 +1141,182 @@ class Stadt implements TranslatableInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, \App\Entity\File>
+     */
+    public function getUploads(): Collection
+    {
+        return $this->uploads;
+    }
+
+    public function addUpload(\App\Entity\File $upload): self
+    {
+        if (!$this->uploads->contains($upload)) {
+            $this->uploads[] = $upload;
+            $upload->setStadt($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUpload(\App\Entity\File $upload): self
+    {
+        if ($this->uploads->removeElement($upload)) {
+            // set the owning side to null (unless already changed)
+            if ($upload->getStadt() === $this) {
+                $upload->setStadt(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, \App\Entity\File>
+     */
+    public function getEmailDokumenteConfirm(): Collection
+    {
+        return $this->emailDokumente_confirm;
+    }
+
+    public function addEmailDokumenteConfirm(\App\Entity\File $emailDokumenteConfirm): self
+    {
+        if (!$this->emailDokumente_confirm->contains($emailDokumenteConfirm)) {
+            $this->emailDokumente_confirm[] = $emailDokumenteConfirm;
+        }
+
+        return $this;
+    }
+
+    public function removeEmailDokumenteConfirm(\App\Entity\File $emailDokumenteConfirm): self
+    {
+        $this->emailDokumente_confirm->removeElement($emailDokumenteConfirm);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, \App\Entity\File>
+     */
+    public function getEmailDokumenteSchulkindbetreuungAnmeldung(): Collection
+    {
+        return $this->emailDokumente_schulkindbetreuung_anmeldung;
+    }
+
+    public function addEmailDokumenteSchulkindbetreuungAnmeldung(\App\Entity\File $emailDokumenteSchulkindbetreuungAnmeldung): self
+    {
+        if (!$this->emailDokumente_schulkindbetreuung_anmeldung->contains($emailDokumenteSchulkindbetreuungAnmeldung)) {
+            $this->emailDokumente_schulkindbetreuung_anmeldung[] = $emailDokumenteSchulkindbetreuungAnmeldung;
+        }
+
+        return $this;
+    }
+
+    public function removeEmailDokumenteSchulkindbetreuungAnmeldung(\App\Entity\File $emailDokumenteSchulkindbetreuungAnmeldung): self
+    {
+        $this->emailDokumente_schulkindbetreuung_anmeldung->removeElement($emailDokumenteSchulkindbetreuungAnmeldung);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, \App\Entity\File>
+     */
+    public function getEmailDokumenteSchulkindbetreuungBuchung(): Collection
+    {
+        return $this->emailDokumente_schulkindbetreuung_buchung;
+    }
+
+    public function addEmailDokumenteSchulkindbetreuungBuchung(\App\Entity\File $emailDokumenteSchulkindbetreuungBuchung): self
+    {
+        if (!$this->emailDokumente_schulkindbetreuung_buchung->contains($emailDokumenteSchulkindbetreuungBuchung)) {
+            $this->emailDokumente_schulkindbetreuung_buchung[] = $emailDokumenteSchulkindbetreuungBuchung;
+        }
+
+        return $this;
+    }
+
+    public function removeEmailDokumenteSchulkindbetreuungBuchung(\App\Entity\File $emailDokumenteSchulkindbetreuungBuchung): self
+    {
+        $this->emailDokumente_schulkindbetreuung_buchung->removeElement($emailDokumenteSchulkindbetreuungBuchung);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, \App\Entity\File>
+     */
+    public function getEmailDokumenteSchulkindbetreuungAnderung(): Collection
+    {
+        return $this->emailDokumente_schulkindbetreuung_anderung;
+    }
+
+    public function addEmailDokumenteSchulkindbetreuungAnderung(\App\Entity\File $emailDokumenteSchulkindbetreuungAnderung): self
+    {
+        if (!$this->emailDokumente_schulkindbetreuung_anderung->contains($emailDokumenteSchulkindbetreuungAnderung)) {
+            $this->emailDokumente_schulkindbetreuung_anderung[] = $emailDokumenteSchulkindbetreuungAnderung;
+        }
+
+        return $this;
+    }
+
+    public function removeEmailDokumenteSchulkindbetreuungAnderung(\App\Entity\File $emailDokumenteSchulkindbetreuungAnderung): self
+    {
+        $this->emailDokumente_schulkindbetreuung_anderung->removeElement($emailDokumenteSchulkindbetreuungAnderung);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, \App\Entity\File>
+     */
+    public function getEmailDokumenteRechnung(): Collection
+    {
+        return $this->emailDokumente_rechnung;
+    }
+
+    public function addEmailDokumenteRechnung(\App\Entity\File $emailDokumenteRechnung): self
+    {
+        if (!$this->emailDokumente_rechnung->contains($emailDokumenteRechnung)) {
+            $this->emailDokumente_rechnung[] = $emailDokumenteRechnung;
+        }
+
+        return $this;
+    }
+
+    public function removeEmailDokumenteRechnung(\App\Entity\File $emailDokumenteRechnung): self
+    {
+        $this->emailDokumente_rechnung->removeElement($emailDokumenteRechnung);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, \App\Entity\File>
+     */
+    public function getEmailDokumenteSchulkindbetreuungAbmeldung(): Collection
+    {
+        return $this->emailDokumente_schulkindbetreuung_abmeldung;
+    }
+
+    public function addEmailDokumenteSchulkindbetreuungAbmeldung(\App\Entity\File $emailDokumenteSchulkindbetreuungAbmeldung): self
+    {
+        if (!$this->emailDokumente_schulkindbetreuung_abmeldung->contains($emailDokumenteSchulkindbetreuungAbmeldung)) {
+            $this->emailDokumente_schulkindbetreuung_abmeldung[] = $emailDokumenteSchulkindbetreuungAbmeldung;
+        }
+
+        return $this;
+    }
+
+    public function removeEmailDokumenteSchulkindbetreuungAbmeldung(\App\Entity\File $emailDokumenteSchulkindbetreuungAbmeldung): self
+    {
+        $this->emailDokumente_schulkindbetreuung_abmeldung->removeElement($emailDokumenteSchulkindbetreuungAbmeldung);
+
+        return $this;
+    }
+
+
 
 
 

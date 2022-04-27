@@ -6,6 +6,7 @@ use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Form\Type\ConfirmType;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FilesystemOperator;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,7 +30,8 @@ class ConfirmEmailService
     private $twig;
     private $mailer;
     private $parameterbag;
-   public function __construct(ParameterBagInterface $parameterBag, MailerService $mailerService,Environment $twig, FormFactoryInterface $formBuilder,RouterInterface $router,TranslatorInterface $translator,Security $security,EntityManagerInterface $entityManager)
+    private FilesystemOperator $internFileSystem;
+   public function __construct(FilesystemOperator $internFileSystem, ParameterBagInterface $parameterBag, MailerService $mailerService,Environment $twig, FormFactoryInterface $formBuilder,RouterInterface $router,TranslatorInterface $translator,Security $security,EntityManagerInterface $entityManager)
    {
        $this->em = $entityManager;
        $this->user = $security;
@@ -39,6 +41,7 @@ class ConfirmEmailService
        $this->twig = $twig;
        $this->mailer= $mailerService;
        $this->parameterbag = $parameterBag;
+       $this->internFileSystem = $internFileSystem;
    }
 
     public
@@ -76,6 +79,16 @@ class ConfirmEmailService
             }
             $mailBetreff = $this->translator->trans('Bestätigung der E-Mail-Adresse');
             $mailContent = $this->twig->render('email/bestaetigungscode.html.twig', array('eltern' => $stammdaten, 'stadt'=>$stadt));
+            $attachment = array();
+
+
+            foreach ($stadt->getEmailDokumenteConfirm() as $att){
+                $attachment[] =array(
+                    'body'=>$this->internFileSystem->read($att->getFileName()),
+                    'filename'=>$att->getOriginalName(),
+                    'type'=>$att->getType()
+                );
+            }
             if ($stammdaten->getConfirmEmailSend() === false) {
                 $this->mailer->sendEmail(
                     'Unsere Schulkindbetreuung',
@@ -83,7 +96,8 @@ class ConfirmEmailService
                     $stammdaten->getEmail(),
                     $mailBetreff,
                     $mailContent,
-                    $stadt->getEmail()
+                    $stadt->getEmail(),
+                    $attachment
                     );
                 $stammdaten->setConfirmEmailSend(true);
                 $stammdaten->setResendEmail(md5(uniqid()));

@@ -10,7 +10,10 @@ namespace App\Form\Type;
 
 
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
+use App\Entity\File;
 use App\Entity\Stadt;
+use App\Repository\FileRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -68,6 +71,7 @@ class StadtType extends AbstractType
                 }
             }
         }
+
         $builder
             ->add('name', TextType::class, ['label' => 'Name der Stadt', 'translation_domain' => 'form'])
             ->add('slug', TextType::class, ['label' => 'Slug der Stadt', 'translation_domain' => 'form'])
@@ -95,12 +99,81 @@ class StadtType extends AbstractType
             ->add('settingsSozielHilfeEmpfangerRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
             ->add('settingGehaltsklassen', CheckboxType::class, ['required' => false, 'label' => 'Gehaltsklassen abfragen?', 'translation_domain' => 'form'])
             ->add('settingGehaltsklassenRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
-
             ->add('settingKinderimKiga', CheckboxType::class, ['required' => false, 'label' => 'Abfrage ob weiteres Kind im KiGa?', 'translation_domain' => 'form'])
-
+            ->add('emailDokumente_confirm', EntityType::class, [
+                // looks for choices from this entity
+                'class' => File::class,
+                'label' => 'Dokumente für die E-Mail-Bestätigungsmail',
+                // uses the User.username property as the visible option string
+                'choice_label' => 'originalName',
+                'choices' => $stadt->getUploads(),
+                // used to render a select box, check boxes or radios
+                'multiple' => true,
+                'expanded' => true,
+                'required'=>false
+            ])
+            ->add('emailDokumente_schulkindbetreuung_anmeldung', EntityType::class, [
+                // looks for choices from this entity
+                'class' => File::class,
+                'label' => 'Dokumente für die Anmeldemail',
+                // uses the User.username property as the visible option string
+                'choice_label' => 'originalName',
+                'choices' => $stadt->getUploads(),
+                // used to render a select box, check boxes or radios
+                'multiple' => true,
+                'expanded' => true,
+                'required'=>false
+            ])
+            ->add('emailDokumente_schulkindbetreuung_anderung', EntityType::class, [
+                // looks for choices from this entity
+                'class' => File::class,
+                'label' => 'Dokumente für die Änderungsmail',
+                // uses the User.username property as the visible option string
+                'choice_label' => 'originalName',
+                'choices' => $stadt->getUploads(),
+                // used to render a select box, check boxes or radios
+                'multiple' => true,
+                'expanded' => true,
+                'required'=>false
+            ])
+            ->add('emailDokumente_schulkindbetreuung_buchung', EntityType::class, [
+                // looks for choices from this entity
+                'class' => File::class,
+                'label' => 'Dokumente für die Buchungsmail',
+                // uses the User.username property as the visible option string
+                'choice_label' => 'originalName',
+                'choices' => $stadt->getUploads(),
+                // used to render a select box, check boxes or radios
+                'multiple' => true,
+                'expanded' => true,
+                'required'=>false
+            ])
+            ->add('emailDokumente_schulkindbetreuung_abmeldung', EntityType::class, [
+                // looks for choices from this entity
+                'class' => File::class,
+                'label' => 'Dokumente für die Abmeldungsmail',
+                // uses the User.username property as the visible option string
+                'choice_label' => 'originalName',
+                'choices' => $stadt->getUploads(),
+                // used to render a select box, check boxes or radios
+                'multiple' => true,
+                'expanded' => true,
+                'required'=>false
+            ])
 
             //SKIB Stammdateneinstallungen
-
+            ->add('emailDokumente_rechnung', EntityType::class, [
+                // looks for choices from this entity
+                'class' => File::class,
+                'label' => 'Dokumente für die Rechnungsmail',
+                // uses the User.username property as the visible option string
+                'choice_label' => 'originalName',
+                'choices' => $stadt->getUploads(),
+                // used to render a select box, check boxes or radios
+                'multiple' => true,
+                'expanded' => true,
+                'required'=>false
+            ])
             ->add('showShowMoreToggleOnHomescreen', CheckboxType::class, ['required' => false, 'label' => 'Zeige den "Mehr lesen" Button auf der Startseite an', 'translation_domain' => 'form'])
             ->add('gehaltsklassen', CollectionType::class, [
                 'entry_type' => TextType::class,

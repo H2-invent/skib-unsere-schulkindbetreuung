@@ -43,7 +43,7 @@ import ('trumbowyg/dist/plugins/template/trumbowyg.template');
 import ('formBuilder/dist/form-builder.min');
 import snackbar from 'snackbarjs';
 import {initTabs} from 'h2-invent-material-tabs';
-
+import { Dropzone } from "dropzone";
 let formBuilderLoc;
 var sucessFkt;
 $(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
@@ -78,6 +78,7 @@ $(document).ready(function () {
     if (typeof optionsSnack !== 'undefined') {
         $.snackbar(optionsSnack);
     }
+    let myDropzone = new Dropzone(".dropzone");
 })
 
 $(window).on('load', function () {

@@ -24,6 +24,7 @@
     "datatables.net-bs4": "^1.10.21",
     "datatables.net-dt": "^1.10.21",
     "daterangepicker": "^3.1.0",
+    "dropzone": "^6.0.0-beta.2",
     "es6-promise": "^4.2.8",
     "formBuilder": "^3.4.2",
     "h2-invent-material-tabs": "^1.15.0",

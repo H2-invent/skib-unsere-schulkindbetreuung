@@ -229,6 +229,19 @@
             "./config/packages/oneup_flysystem.yaml"
         ]
     },
+    "oneup/uploader-bundle": {
+        "version": "3.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.0",
+            "ref": "b19678d1535b9fe7cdf4647fd3483455e4fca458"
+        },
+        "files": [
+            "./config/packages/oneup_uploader.yaml",
+            "./config/routes/oneup_uploader.yaml"
+        ]
+    },
     "paragonie/constant_time_encoding": {
         "version": "v2.3.0"
     },
@@ -696,6 +709,9 @@
         "version": "v4.3.4"
     },
     "symfony/string": {
+        "version": "v5.4.3"
+    },
+    "symfony/templating": {
         "version": "v5.4.3"
     },
     "symfony/translation": {

@@ -68,7 +68,8 @@
                                 {{ form_row(form.ansprechpartner) }}
                                 {{ form_row(form.stadtHomepage) }}
                                 {{ a2lixTranslations.partialTranslations(form.translations, ['coverText']) }}
-
+                                {{ form_row(form.emailDokumente_rechnung) }}
+                                {{ form_row(form.emailDokumente_confirm) }}
                             </div>
                             <div class="tab-pane fade" id="module" role="tabpanel" aria-labelledby="profile-tab"><h2>
                                     Module</h2>
@@ -163,9 +164,26 @@
                                         {{ a2lixTranslations.partialTranslations(form.translations, ['settingGehaltsklassenHelp']) }}
                                     </div>
                                 </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-12">
+                                        <h3>Dokumente welche an die E-Mails angehängt werden können</h3>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        {{ form_row(form.emailDokumente_schulkindbetreuung_anmeldung) }}
+                                    </div>
+                                    <div class="col-lg-3">
+                                        {{ form_row(form.emailDokumente_schulkindbetreuung_buchung) }}
+                                    </div>
+                                    <div class="col-lg-3">
+                                        {{ form_row(form.emailDokumente_schulkindbetreuung_anderung) }}
+                                    </div>
+                                    <div class="col-lg-3">
+                                        {{ form_row(form.emailDokumente_schulkindbetreuung_abmeldung) }}
+                                    </div>
+                                </div>
 
                                 {{ a2lixTranslations.partialTranslations(form.translations, ['agb','catererInfo','careBlockInfo']) }}
-
 
 
                             </div>
@@ -176,6 +194,23 @@
                         </div>
                         {{ form_widget(form) }}
                         {{ form_end(form) }}
+                        <hr>
+                        <h3 class="h3-responsive">{{ 'Dateien hochladen'|trans }}</h3>
+                        <form action="{{ path('upload_stadt',{'id':stadt.id}) }}"
+                              class="dropzone"
+                              id="my-awesome-dropzone"></form>
+
+                        <ul class="list-group">
+                            {% for f in stadt.uploads %}
+                                <li class="list-group-item">
+                                    <a href="{{ path('login_download_file',{'fileName':f.fileName}) }}"> <i
+                                                class="fa fa-download"></i></a><span>{{ f.originalName }}</span>
+                                    <a href="{{ path('login_remove_file',{'fileName':f.fileName}) }}"><i
+                                                class="fa fa-trash"></i> </a>
+                                </li>
+
+                            {% endfor %}
+                        </ul>
                     </div>
 
 

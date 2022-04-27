@@ -4,9 +4,20 @@ oneup_flysystem:
         asset_adapter:
             local:
                 location: '%kernel.project_dir%/public%app.path.product_images%'
+
+        intern_adapter:
+            local:
+                location: '%kernel.project_dir%/data'
+
     filesystems:
         asset_filesystem:
             adapter: asset_adapter
             alias: League\Flysystem\Asset
             mount: asset_filesystem
+
+        intern_fileSystem:
+            adapter: intern_adapter
+            alias: League\Flysystem\Intern
+            mount: intern_fileSystem
+
 
