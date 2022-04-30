@@ -69,6 +69,14 @@ class StadtTranslation implements TranslationInterface
      * @ORM\Column(type="text", nullable=true)
      */
     private $settingsSozielHilfeEmpfangerHelp;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingsEingabeDerGeschwisterHelp;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingsweiterePersonenberechtigteHelp;
 
 
     public function getId(): ?int
@@ -168,7 +176,7 @@ class StadtTranslation implements TranslationInterface
     /**
      * @return mixed
      */
-    public function getSettingKinderimKigaHelp():string
+    public function getSettingKinderimKigaHelp(): string
     {
         return $this->settingKinderimKigaHelp;
     }
@@ -185,7 +193,7 @@ class StadtTranslation implements TranslationInterface
     /**
      * @return mixed
      */
-    public function getSettingsAnzahlKindergeldempfangerHelp():string
+    public function getSettingsAnzahlKindergeldempfangerHelp(): string
     {
         return $this->settingsAnzahlKindergeldempfangerHelp;
     }
@@ -202,7 +210,7 @@ class StadtTranslation implements TranslationInterface
     /**
      * @return mixed
      */
-    public function getSettingsSozielHilfeEmpfangerHelp():string
+    public function getSettingsSozielHilfeEmpfangerHelp(): string
     {
         return $this->settingsSozielHilfeEmpfangerHelp;
     }
@@ -214,6 +222,38 @@ class StadtTranslation implements TranslationInterface
     {
         $this->settingsSozielHilfeEmpfangerHelp = $settingsSozielHilfeEmpfangerHelp;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsEingabeDerGeschwisterHelp()
+    {
+        return $this->settingsEingabeDerGeschwisterHelp;
+    }
+
+    /**
+     * @param mixed $settingsEingabeDerGeschwisterHelp
+     */
+    public function setSettingsEingabeDerGeschwisterHelp($settingsEingabeDerGeschwisterHelp): void
+    {
+        $this->settingsEingabeDerGeschwisterHelp = $settingsEingabeDerGeschwisterHelp;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsweiterePersonenberechtigteHelp()
+    {
+        return $this->settingsweiterePersonenberechtigteHelp;
+    }
+
+    /**
+     * @param mixed $settingsweiterePersonenberechtigteHelp
+     */
+    public function setSettingsweiterePersonenberechtigteHelp($settingsweiterePersonenberechtigteHelp): void
+    {
+        $this->settingsweiterePersonenberechtigteHelp = $settingsweiterePersonenberechtigteHelp;
     }
 
 

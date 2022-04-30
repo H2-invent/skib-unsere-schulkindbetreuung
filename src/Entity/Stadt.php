@@ -354,6 +354,16 @@ class Stadt implements TranslatableInterface
      */
     private $emailDokumente_schulkindbetreuung_abmeldung;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $settingsEingabeDerGeschwister = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $settingsweiterePersonenberechtigte = false;
+
 
 
 
@@ -1312,6 +1322,30 @@ class Stadt implements TranslatableInterface
     public function removeEmailDokumenteSchulkindbetreuungAbmeldung(\App\Entity\File $emailDokumenteSchulkindbetreuungAbmeldung): self
     {
         $this->emailDokumente_schulkindbetreuung_abmeldung->removeElement($emailDokumenteSchulkindbetreuungAbmeldung);
+
+        return $this;
+    }
+
+    public function getSettingsEingabeDerGeschwister(): ?bool
+    {
+        return $this->settingsEingabeDerGeschwister;
+    }
+
+    public function setSettingsEingabeDerGeschwister(bool $settingsEingabeDerGeschwister): self
+    {
+        $this->settingsEingabeDerGeschwister = $settingsEingabeDerGeschwister;
+
+        return $this;
+    }
+
+    public function getSettingsweiterePersonenberechtigte(): ?bool
+    {
+        return $this->settingsweiterePersonenberechtigte;
+    }
+
+    public function setSettingsweiterePersonenberechtigte(?bool $settingsweiterePersonenberechtigte): self
+    {
+        $this->settingsweiterePersonenberechtigte = $settingsweiterePersonenberechtigte;
 
         return $this;
     }

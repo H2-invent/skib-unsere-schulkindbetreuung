@@ -90,7 +90,7 @@ class LoerrachWorkflowController extends AbstractController
         }
         //Add SecCode into if to create a SecCode the first time to be not "null"
         $adresse = $schulkindBetreuungAdresseService->setUID($adresse);
-        $formArr = array('einkommen' => array_flip($stadt->getGehaltsklassen()), 'beruflicheSituation' => $this->beruflicheSituation,'stadt'=>$stadt);
+        $formArr = array('einkommen' => array_flip($stadt->getGehaltsklassen()), 'beruflicheSituation' => $this->beruflicheSituation, 'stadt' => $stadt);
 
         $form = $this->createForm(LoerrachEltern::class, $adresse, $formArr);
         if (!$authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE')) {
@@ -106,6 +106,12 @@ class LoerrachWorkflowController extends AbstractController
             } else {
 
                 $errors = $validator->validate($adresse);
+                foreach ($adresse->getGeschwisters() as $data) {
+                    $errors->addAll($validator->validate($data));
+                }
+                foreach ($adresse->getPersonenberechtigters() as $data) {
+                    $errors->addAll($validator->validate($data));
+                }
 
             }
 

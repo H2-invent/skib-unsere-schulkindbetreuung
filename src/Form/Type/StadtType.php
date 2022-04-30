@@ -64,6 +64,15 @@ class StadtType extends AbstractType
             $stadt->translate('en')->setSettingsSozielHilfeEmpfangerHelp('');
             $stadt->translate('fr')->setSettingsSozielHilfeEmpfangerHelp('');
 
+            $stadt->translate('de')->setSettingsweiterePersonenberechtigteHelp('');
+            $stadt->translate('en')->setSettingsweiterePersonenberechtigteHelp('');
+            $stadt->translate('fr')->setSettingsweiterePersonenberechtigteHelp('');
+
+            $stadt->translate('de')->setSettingsEingabeDerGeschwisterHelp('');
+            $stadt->translate('en')->setSettingsEingabeDerGeschwisterHelp('');
+            $stadt->translate('fr')->setSettingsEingabeDerGeschwisterHelp('');
+
+
             foreach ($stadt->getNewTranslations() as $newTranslation) {
                 if (!$stadt->getTranslations()->contains($newTranslation) && !$stadt->getNewTranslations()->isEmpty()) {
                     $stadt->addTranslation($newTranslation);
@@ -100,6 +109,8 @@ class StadtType extends AbstractType
             ->add('settingGehaltsklassen', CheckboxType::class, ['required' => false, 'label' => 'Gehaltsklassen abfragen?', 'translation_domain' => 'form'])
             ->add('settingGehaltsklassenRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
             ->add('settingKinderimKiga', CheckboxType::class, ['required' => false, 'label' => 'Abfrage ob weiteres Kind im KiGa?', 'translation_domain' => 'form'])
+            ->add('settingsweiterePersonenberechtigte', CheckboxType::class, ['required' => false, 'label' => 'Weitere Personenberechtigte hinzufügen.', 'translation_domain' => 'form'])
+            ->add('settingsEingabeDerGeschwister', CheckboxType::class, ['required' => false, 'label' => 'Die Geschwisterkinder müssen aufgelistet werden.', 'translation_domain' => 'form'])
             ->add('emailDokumente_confirm', EntityType::class, [
                 // looks for choices from this entity
                 'class' => File::class,
@@ -110,7 +121,7 @@ class StadtType extends AbstractType
                 // used to render a select box, check boxes or radios
                 'multiple' => true,
                 'expanded' => true,
-                'required'=>false
+                'required' => false
             ])
             ->add('emailDokumente_schulkindbetreuung_anmeldung', EntityType::class, [
                 // looks for choices from this entity
@@ -122,7 +133,7 @@ class StadtType extends AbstractType
                 // used to render a select box, check boxes or radios
                 'multiple' => true,
                 'expanded' => true,
-                'required'=>false
+                'required' => false
             ])
             ->add('emailDokumente_schulkindbetreuung_anderung', EntityType::class, [
                 // looks for choices from this entity
@@ -134,7 +145,7 @@ class StadtType extends AbstractType
                 // used to render a select box, check boxes or radios
                 'multiple' => true,
                 'expanded' => true,
-                'required'=>false
+                'required' => false
             ])
             ->add('emailDokumente_schulkindbetreuung_buchung', EntityType::class, [
                 // looks for choices from this entity
@@ -146,7 +157,7 @@ class StadtType extends AbstractType
                 // used to render a select box, check boxes or radios
                 'multiple' => true,
                 'expanded' => true,
-                'required'=>false
+                'required' => false
             ])
             ->add('emailDokumente_schulkindbetreuung_abmeldung', EntityType::class, [
                 // looks for choices from this entity
@@ -158,7 +169,7 @@ class StadtType extends AbstractType
                 // used to render a select box, check boxes or radios
                 'multiple' => true,
                 'expanded' => true,
-                'required'=>false
+                'required' => false
             ])
 
             //SKIB Stammdateneinstallungen
@@ -172,7 +183,7 @@ class StadtType extends AbstractType
                 // used to render a select box, check boxes or radios
                 'multiple' => true,
                 'expanded' => true,
-                'required'=>false
+                'required' => false
             ])
             ->add('showShowMoreToggleOnHomescreen', CheckboxType::class, ['required' => false, 'label' => 'Zeige den "Mehr lesen" Button auf der Startseite an', 'translation_domain' => 'form'])
             ->add('gehaltsklassen', CollectionType::class, [
@@ -256,6 +267,18 @@ class StadtType extends AbstractType
                             'translation_domain' => 'form'
                         ],
                         'settingsAnzahlKindergeldempfangerHelp' => [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingsEingabeDerGeschwisterHelp' => [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingsweiterePersonenberechtigteHelp' => [
 
                             'attr' => array('rows' => 1,),
                             'label' => 'Hilfetext (Text in den Fragezeigen)',

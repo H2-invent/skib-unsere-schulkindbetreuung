@@ -288,12 +288,12 @@ class Stammdaten implements GroupSequenceProviderInterface
     private $sozialhilfeEmpanger=false;
 
     /**
-     * @ORM\OneToMany(targetEntity=Personenberechtigter::class, mappedBy="stammdaten", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Personenberechtigter::class, mappedBy="stammdaten", orphanRemoval=true,cascade={"persist"})
      */
     private $personenberechtigters;
 
     /**
-     * @ORM\OneToMany(targetEntity=Geschwister::class, mappedBy="stammdaten", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Geschwister::class, mappedBy="stammdaten", orphanRemoval=true,cascade={"persist"})
      */
     private $geschwisters;
 
