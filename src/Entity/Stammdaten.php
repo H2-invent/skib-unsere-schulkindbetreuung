@@ -287,6 +287,16 @@ class Stammdaten implements GroupSequenceProviderInterface
      */
     private $sozialhilfeEmpanger=false;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Personenberechtigter::class, mappedBy="stammdaten", orphanRemoval=true)
+     */
+    private $personenberechtigters;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Geschwister::class, mappedBy="stammdaten", orphanRemoval=true)
+     */
+    private $geschwisters;
+
     public function __construct()
     {
 
@@ -296,6 +306,8 @@ class Stammdaten implements GroupSequenceProviderInterface
         $this->paymentsFerien = new ArrayCollection();
         $this->paymentFerien = new ArrayCollection();
         $this->kundennummerns = new ArrayCollection();
+        $this->personenberechtigters = new ArrayCollection();
+        $this->geschwisters = new ArrayCollection();
 
     }
 
@@ -950,6 +962,66 @@ class Stammdaten implements GroupSequenceProviderInterface
     public function setSozialhilfeEmpanger(?bool $sozialhilfeEmpanger): self
     {
         $this->sozialhilfeEmpanger = $sozialhilfeEmpanger;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Personenberechtigter>
+     */
+    public function getPersonenberechtigters(): Collection
+    {
+        return $this->personenberechtigters;
+    }
+
+    public function addPersonenberechtigter(Personenberechtigter $personenberechtigter): self
+    {
+        if (!$this->personenberechtigters->contains($personenberechtigter)) {
+            $this->personenberechtigters[] = $personenberechtigter;
+            $personenberechtigter->setStammdaten($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonenberechtigter(Personenberechtigter $personenberechtigter): self
+    {
+        if ($this->personenberechtigters->removeElement($personenberechtigter)) {
+            // set the owning side to null (unless already changed)
+            if ($personenberechtigter->getStammdaten() === $this) {
+                $personenberechtigter->setStammdaten(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Geschwister>
+     */
+    public function getGeschwisters(): Collection
+    {
+        return $this->geschwisters;
+    }
+
+    public function addGeschwister(Geschwister $geschwister): self
+    {
+        if (!$this->geschwisters->contains($geschwister)) {
+            $this->geschwisters[] = $geschwister;
+            $geschwister->setStammdaten($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGeschwister(Geschwister $geschwister): self
+    {
+        if ($this->geschwisters->removeElement($geschwister)) {
+            // set the owning side to null (unless already changed)
+            if ($geschwister->getStammdaten() === $this) {
+                $geschwister->setStammdaten(null);
+            }
+        }
 
         return $this;
     }

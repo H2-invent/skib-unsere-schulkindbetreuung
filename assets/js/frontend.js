@@ -22,7 +22,9 @@ import('./jquery.bs.gdpr.cookies');
 import('jquery-clockpicker');
 import('daterangepicker');
 import ('jquery-lazy');
+import {initKeycloakGroups} from "./PersonenberechtigterInit";
 
+('./PersonenberechtigterInit');
 
 jarallaxVideo();
 jarallaxElement();
@@ -31,6 +33,7 @@ jarallax(document.querySelectorAll('.jarallax'), {
 });
 
 $(document).ready(function () {
+
     toastr.options = {
         "closeButton": false,
         "debug": false,
@@ -53,15 +56,15 @@ $(document).ready(function () {
             toastr[errors[i].type](errors[i].text);
         });
     }
-    if($('#loerrach_eltern_kinderImKiga').prop('checked')){
+    if ($('#loerrach_eltern_kinderImKiga').prop('checked')) {
         $('#kigaOfKids').collapse('show')
-    }else {
+    } else {
         $('#kigaOfKids').collapse('hide')
     }
     $('#loerrach_eltern_kinderImKiga').change(function () {
-        if($('#loerrach_eltern_kinderImKiga').prop('checked')){
+        if ($('#loerrach_eltern_kinderImKiga').prop('checked')) {
             $('#kigaOfKids').collapse('show')
-        }else {
+        } else {
             $('#kigaOfKids').collapse('hide')
         }
     });
@@ -70,7 +73,7 @@ $(document).ready(function () {
         e.preventDefault();
         alert('Please typ and dont Copy/Paste');
     });
-
+    initKeycloakGroups();
 });
 
 
