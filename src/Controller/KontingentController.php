@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Kind;
 use App\Entity\Zeitblock;
+use App\Service\KontingentAcceptService;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -20,6 +21,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class KontingentController extends AbstractController
 {
+    private KontingentAcceptService $acceptService;
+    private LoggerInterface $logger;
+    public function __construct(KontingentAcceptService $kontingentAcceptService, LoggerInterface $logger)
+    {
+        $this->acceptService = $kontingentAcceptService;
+        $this->logger = $logger;
+    }
+
     /**
      * @Route("/org_accept/accept_all", name="kontingent_accept_all_kids",methods={"GET"})
      */
@@ -30,16 +39,11 @@ class KontingentController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
         try {
-            $kind = $this->getDoctrine()->getRepository(Kind::class)->findBeworbenByZeitblock($block);
-            $em = $this->getDoctrine()->getManager();
-            foreach ($kind as $data) {
-                $data->addZeitblock($block);
-                $data->removeBeworben($block);
-                $em->persist($data);
-            }
-            $em->flush();
+            $this->acceptService->acceptAllkindOfZeitblock($block);
+
             return new JsonResponse(array('error' => 0, 'snack' => $translator->trans('Erfolgreich gespeichert')));
         } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
             return new JsonResponse(array('error' => 1, 'snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
         }
     }
@@ -71,16 +75,10 @@ class KontingentController extends AbstractController
         }
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
         try {
-            if (in_array($block, $kind->getBeworben()->toArray())) {
-                $kind->removeBeworben($block);
-                $kind->addZeitblock($block);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($kind);
-                $em->flush();
-                return new JsonResponse(array('snack' => $translator->trans('Erfolgreich gespeichert')));
-
-            }
+            $this->acceptService->acceptKind($block, $kind);
+            return new JsonResponse(array('snack' => $translator->trans('Erfolgreich gespeichert')));
         } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
             return new JsonResponse(array('snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
         }
     }

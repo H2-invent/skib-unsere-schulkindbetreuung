@@ -23,8 +23,8 @@ import('jquery-clockpicker');
 import('daterangepicker');
 import ('jquery-lazy');
 import {initKeycloakGroups} from "./PersonenberechtigterInit";
+import {Dropzone} from "dropzone";
 
-('./PersonenberechtigterInit');
 
 jarallaxVideo();
 jarallaxElement();
@@ -33,7 +33,13 @@ jarallax(document.querySelectorAll('.jarallax'), {
 });
 
 $(document).ready(function () {
-
+    let drop= [];
+    if($('.dropzone').length){
+        $('.dropzone').each(function () {
+            console.log($(this));
+           drop.push(new Dropzone('#'+($(this).attr('id'))));
+        })
+    }
     toastr.options = {
         "closeButton": false,
         "debug": false,

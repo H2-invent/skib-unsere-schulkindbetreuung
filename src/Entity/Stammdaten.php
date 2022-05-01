@@ -98,13 +98,13 @@ class Stammdaten implements GroupSequenceProviderInterface
 
     /**
      * @ORM\Column(type="boolean",nullable=true)
-     * @Assert\NotBlank(groups={"Schulkind"})
+     * @Assert\NotBlank(groups={"SchulkindSepa"})
      */
     private $sepaInfo;
 
     /**
      * @Assert\Iban(groups={"Schulkind"})
-     * @Assert\NotBlank(groups={"Schulkind"})
+     * @Assert\NotBlank(groups={"Schulkind","SchulkindSepa"})
      * @ORM\Column(type="text",nullable=true)
      * @Encrypted()
      */
@@ -118,14 +118,14 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @Assert\Bic(groups={"Schulkind"})
      * @ORM\Column(type="text",nullable=true)
-     * @Assert\NotBlank(groups={"Schulkind"})
+     * @Assert\NotBlank(groups={"Schulkind","SchulkindSepa"})
      * @Encrypted()
      */
     private $bic;
 
     /**
      * @ORM\Column(type="text",nullable=true)
-     * @Assert\NotBlank(groups={"Schulkind"})
+     * @Assert\NotBlank(groups={"Schulkind","SchulkindSepa"})
      * @Encrypted()
      */
     private $kontoinhaber;

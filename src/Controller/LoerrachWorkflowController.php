@@ -107,12 +107,17 @@ class LoerrachWorkflowController extends AbstractController
 
                 $errors = $validator->validate($adresse);
                 foreach ($adresse->getGeschwisters() as $data) {
-                    $errors->addAll($validator->validate($data));
-                }
-                foreach ($adresse->getPersonenberechtigters() as $data) {
-                    $errors->addAll($validator->validate($data));
-                }
+                    $tmpErr = $validator->validate($data,null, ['Default']);
 
+                    $errors->addAll($tmpErr);
+
+                }
+                foreach ($adresse->getPersonenberechtigters() as $data2) {
+                    $tmpErr = $validator->validate($data2,null, ['Default']);
+
+                    $errors->addAll($tmpErr);
+
+                }
             }
 
             $errorsString = $errorService->createError($errors, $form);
@@ -379,14 +384,15 @@ class LoerrachWorkflowController extends AbstractController
             return $this->redirectToRoute('loerrach_workflow_adresse', array('slug' => $stadt->getSlug()));
         }
         $renderOrganisation = $schulkindBetreuungKindSEPAService->findOrg($adresse);
-        $form = $this->createForm(SepaStammdatenType::class, $adresse);
+        $form = $this->createForm(SepaStammdatenType::class, $adresse,['stadt'=>$stadt]);
 
         $form->handleRequest($request);
         $errors = array();
         $errorString = array();
         if ($form->isSubmitted()) {
             $adresse = $form->getData();
-            $errors = $validator->validate($adresse, null, ['Schulkind']);
+            $valdation = [$stadt->getSettingsSkibSepaElektronisch()?'SchulkindSepa':',Schulkind'];
+            $errors = $validator->validate($adresse, null, $valdation);
             $errorString = $errorService->createError($errors, $form);
             if (count($errors) == 0) {
                 $em = $this->getDoctrine()->getManager();

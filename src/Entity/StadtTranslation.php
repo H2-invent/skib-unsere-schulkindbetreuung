@@ -77,7 +77,10 @@ class StadtTranslation implements TranslationInterface
      * @ORM\Column(type="text", nullable=true)
      */
     private $settingsweiterePersonenberechtigteHelp;
-
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingsEingabeDerGeschwisterHelpUpload;
 
     public function getId(): ?int
     {
@@ -254,6 +257,22 @@ class StadtTranslation implements TranslationInterface
     public function setSettingsweiterePersonenberechtigteHelp($settingsweiterePersonenberechtigteHelp): void
     {
         $this->settingsweiterePersonenberechtigteHelp = $settingsweiterePersonenberechtigteHelp;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsEingabeDerGeschwisterHelpUpload()
+    {
+        return $this->settingsEingabeDerGeschwisterHelpUpload;
+    }
+
+    /**
+     * @param mixed $settingsEingabeDerGeschwisterHelpUpload
+     */
+    public function setSettingsEingabeDerGeschwisterHelpUpload($settingsEingabeDerGeschwisterHelpUpload): void
+    {
+        $this->settingsEingabeDerGeschwisterHelpUpload = $settingsEingabeDerGeschwisterHelpUpload;
     }
 
 

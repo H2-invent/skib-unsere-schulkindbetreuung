@@ -364,6 +364,11 @@ class Stadt implements TranslatableInterface
      */
     private $settingsweiterePersonenberechtigte = false;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $settings_skib_sepaElektronisch;
+
 
 
 
@@ -1346,6 +1351,18 @@ class Stadt implements TranslatableInterface
     public function setSettingsweiterePersonenberechtigte(?bool $settingsweiterePersonenberechtigte): self
     {
         $this->settingsweiterePersonenberechtigte = $settingsweiterePersonenberechtigte;
+
+        return $this;
+    }
+
+    public function getSettingsSkibSepaElektronisch(): ?bool
+    {
+        return $this->settings_skib_sepaElektronisch;
+    }
+
+    public function setSettingsSkibSepaElektronisch(?bool $settings_skib_sepaElektronisch): self
+    {
+        $this->settings_skib_sepaElektronisch = $settings_skib_sepaElektronisch;
 
         return $this;
     }

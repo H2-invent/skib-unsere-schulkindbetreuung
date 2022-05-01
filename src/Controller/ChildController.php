@@ -169,6 +169,7 @@ class ChildController extends AbstractController
                 $kind->getSchule()->getOrganisation()->getEmail());
             $text = $translator->trans('Sicherheitscode erneut zugesendet');
         } catch (\Exception $exception) {
+
             $text = $translator->trans('Sicherheitscode konnte nicht erneut zugesendet');
         }
         return $this->redirectToRoute('child_show', ['id' => $kind->getSchule()->getOrganisation()->getId(), 'snack' => $text]);

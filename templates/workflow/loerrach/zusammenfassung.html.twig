@@ -11,62 +11,64 @@
 
 {% block content %}
 
-    <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
+<h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
 
-    {% trans %}
-        Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.
-    {% endtrans %}
+{% trans %}
+    Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.
+{% endtrans %}
 
-    <div class="card mb-3 mt-3">
+<div class="card mb-2 mt-3">
 
-        <div class="card-header">
-            <h3 class="cover-heading">{% trans %}Daten des Erziehungsberechtigten{% endtrans %} <a
-                        href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"> <i
-                            class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
-        </div>
-        <div class="card-body">
-            <table class="table table-responsive">
-                <tbody>
-                <td style="width: 50%">{% trans %}Name des Erziehungsberechtigten{% endtrans %}</td>
-                <td>{{ eltern.vorname }} {{ eltern.name }}</td>
-                </tr>
-                <tr>
-                    <td>{% trans %}E-Mail{% endtrans %}</td>
-                    <td>{{ eltern.email }}</td>
-                </tr>
-                <tr>
-                    <td>{{ 'Telefonnummer'|trans }}</td>
-                    <td>{{ eltern.phoneNumber }}</td>
-                </tr>
-                <tr>
-                    <td>{% trans %}Adresse des Erziehungsberechtigten{% endtrans %}</td>
-                    <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
-                </tr>
-                <tr>
-                    <td>{% trans %}Ich bin alleinerziehend{% endtrans %}</td>
-                    <td>{{ eltern.alleinerziehend?"Ja"|trans:'Nein'|trans }}</td>
-                </tr>
-                <tr>
-                    <td>{% trans %}Berufliche Situation des Erziehungsberechtigten{% endtrans %}</td>
-                    <td>{{ beruflicheSituation[eltern.beruflicheSituation] }}</td>
-                </tr>
-                {% include 'widget/__elternTabelle_Vollstandig.html.twig' with {'stadt':stadt,'eltern':eltern} %}
-                <tr>
-                    <td>{% trans %}Kontakt für evtl. Notfälle{% endtrans %}</td>
-                    <td>{{ eltern.notfallName }}</td>
-                </tr>
-                <tr>
-                    <td>{% trans %}Telefonnummer für evtl. Notfälle{% endtrans %}</td>
-                    <td>{{ eltern.notfallkontakt }}</td>
-                </tr>
-                <tr>
-                    <td>{% trans %}Weitere abholberechtigte Personen{% endtrans %}</td>
-                    <td>{{ eltern.abholberechtigter }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="card-header">
+        <h3 class="cover-heading">{% trans %}Daten des Erziehungsberechtigten{% endtrans %} <a
+                    href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"> <i
+                        class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
     </div>
+    <div class="card-body">
+        <table class="table table-responsive">
+            <tbody>
+            <td style="width: 50%">{% trans %}Name des Erziehungsberechtigten{% endtrans %}</td>
+            <td>{{ eltern.vorname }} {{ eltern.name }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}E-Mail{% endtrans %}</td>
+                <td>{{ eltern.email }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'Telefonnummer'|trans }}</td>
+                <td>{{ eltern.phoneNumber }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Adresse des Erziehungsberechtigten{% endtrans %}</td>
+                <td>{{ eltern.strasse }}<br>{{ eltern.adresszusatz }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Ich bin alleinerziehend{% endtrans %}</td>
+                <td>{{ eltern.alleinerziehend?"Ja"|trans:'Nein'|trans }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Berufliche Situation des Erziehungsberechtigten{% endtrans %}</td>
+                <td>{{ beruflicheSituation[eltern.beruflicheSituation] }}</td>
+            </tr>
+
+
+            {% include 'widget/__elternTabelle_Vollstandig.html.twig' with {'stadt':stadt,'eltern':eltern} %}
+            <tr>
+                <td>{% trans %}Kontakt für evtl. Notfälle{% endtrans %}</td>
+                <td>{{ eltern.notfallName }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Telefonnummer für evtl. Notfälle{% endtrans %}</td>
+                <td>{{ eltern.notfallkontakt }}</td>
+            </tr>
+            <tr>
+                <td>{% trans %}Weitere abholberechtigte Personen{% endtrans %}</td>
+                <td>{{ eltern.abholberechtigter }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
     <!-- Daten der Kinder in einer for Schleife -->
     <div class="card mb-2">
@@ -260,8 +262,8 @@
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header mb-2">
+    <div class="card mb-2">
+        <div class="card-header ">
             <h3 class="cover-heading">{% trans %}Bankverbindung für Lastschrift{% endtrans %} <a
                         href="{{ path('loerrach_workflow_bezahlen', {'slug':stadt.slug}) }}"> <i
                             class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
@@ -270,24 +272,26 @@
             {% trans %}Kontoinhaber{% endtrans %}: {{ eltern.kontoinhaber }}<br/>
             {% trans %}IBAN{% endtrans %}: {{ eltern.iban }}<br/>
             {% trans %}BIC{% endtrans %}: {{ eltern.bic }}<br/>
-            <p class="mt-2">
-                {% set text = 'betreuende Organisation'|trans %}
-                {% trans %}Ich ermächtige{% endtrans %}
-                {% for o in organisation %}
-                    {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:text~' '~o.name } %}die %org% {% endtrans %},
-                {% endfor %}
-                {% trans %}Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von{% endtrans %}
-                {% for o in organisation %}
-                    {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:text~' '~o.name } %}der %org% {% endtrans %}{% if not loop.last %},{% endif %}
-                {% endfor %}
-                {% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
-            </p>
-            <p>
-                {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
-            </p>
-            <p>
-                {% trans %}Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.{% endtrans %}
-            </p>
+            {% if eltern.sepaInfo %}
+                <p class="mt-2">
+                    {% set text = 'betreuende Organisation'|trans %}
+                    {% trans %}Ich ermächtige{% endtrans %}
+                    {% for o in organisation %}
+                        {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:text~' '~o.name } %}die %org% {% endtrans %},
+                    {% endfor %}
+                    {% trans %}Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von{% endtrans %}
+                    {% for o in organisation %}
+                        {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:text~' '~o.name } %}der %org% {% endtrans %}{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                    {% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
+                </p>
+                <p>
+                    {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
+                </p>
+                <p>
+                    {% trans %}Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.{% endtrans %}
+                </p>
+            {% endif %}
         </div>
     </div>
 
@@ -314,7 +318,6 @@
     </div>
 
 
-
     <div class="form-check">
         <input id="checkboxAgb" type="checkbox" class="checkboxSelect form-check-input" name="AGB" value="AGB">
         <label class="form-check-label" for="checkboxAgb"><a target="_blank"
@@ -329,29 +332,29 @@
            class="btn btn-outline-primary">{% trans %}Weitere Betreuungszeitfenster hinzufügen{% endtrans %}</a>
     {% endif %}
 
-{% endblock %}
-{% block jquery %}
-    <script>
-        var url = "{{ path('loerrach_workflow_abschluss',{'slug':stadt.slug}) }}";
-        $('.checkboxSelect').on('change', function () {
-            var cbS = $('.checkboxSelect');
-            var all = true;
-            cbS.each(function (index) {
-                if (!this.checked) {
-                    all = false;
+    {% endblock %}
+    {% block jquery %}
+        <script>
+            var url = "{{ path('loerrach_workflow_abschluss',{'slug':stadt.slug}) }}";
+            $('.checkboxSelect').on('change', function () {
+                var cbS = $('.checkboxSelect');
+                var all = true;
+                cbS.each(function (index) {
+                    if (!this.checked) {
+                        all = false;
+                    }
+                });
+                if (all == true) {
+                    $('.sendButton').wrap('<a href="{{ path('loerrach_workflow_abschluss',{'slug':stadt.slug}) }}">');
+                    $('.sendButton').prop('disabled', false);
+
+                } else {
+                    if ($('.sendButton').parent().is("a")) {
+                        $('.sendButton').unwrap();
+                    }
+                    $('.sendButton').prop('disabled', true);
                 }
             });
-            if (all == true) {
-                $('.sendButton').wrap('<a href="{{ path('loerrach_workflow_abschluss',{'slug':stadt.slug}) }}">');
-                $('.sendButton').prop('disabled', false);
+        </script>
 
-            } else {
-                if ($('.sendButton').parent().is("a")) {
-                    $('.sendButton').unwrap();
-                }
-                $('.sendButton').prop('disabled', true);
-            }
-        });
-    </script>
-
-{% endblock %}
+    {% endblock %}

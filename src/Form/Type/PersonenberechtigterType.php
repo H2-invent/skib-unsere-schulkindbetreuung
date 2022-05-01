@@ -28,14 +28,14 @@ class PersonenberechtigterType extends AbstractType
 
         $builder
             ->add('email', EmailType::class, ['label' => 'E-Mail', 'translation_domain' => 'form'])
-            ->add('phone', TextType::class, ['label' => 'Telefonnummer', 'translation_domain' => 'form'])
-            ->add('vorname', TextType::class, ['label' => 'Telefonnummer', 'translation_domain' => 'form'])
-            ->add('nachname', TextType::class, ['label' => 'Telefonnummer', 'translation_domain' => 'form'])
+            ->add('phone', TextType::class, ['required'=>false, 'label' => 'Telefonnummer', 'translation_domain' => 'form'])
+            ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
+            ->add('nachname', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
             ->add('strasse', TextType::class, ['label' => 'Straße', 'translation_domain' => 'form'])
             ->add('adresszusatz', TextType::class, ['required'=>false, 'label' => 'Adresszusatz', 'translation_domain' => 'form'])
             ->add('plz', TextType::class, ['label' => 'Postleitzahl', 'translation_domain' => 'form'])
             ->add('stadt', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form', 'help' => 'Bitte Ihren Wohnort angeben'])
-            ->add('notfallkontakt', TextType::class, ['required' => true, 'label' => 'Telefonnummer des Notfallkontakts', 'translation_domain' => 'form']);
+            ->add('notfallkontakt', TextType::class, ['required' => false, 'label' => 'Telefonnummer des Notfallkontakts', 'translation_domain' => 'form']);
     }
 
 

@@ -1,101 +1,120 @@
 {% extends 'adminBase.html.twig' %}
 
 {% block content %}
-<section class="dashboard-counts section-padding">
-    <div class="container-fluid ">
-        <div class="row">
-            <!-- Count item widget-->
-            <div class=" col-12 card">
-                <div class="card-header">
-                  <h1> {{ text }}
-                  </h1>
-                    <h3>{{ block.schule.name }}: {{ block.wochentagString }} {{ block.von|date('H:i') }} - {{ block.bis|date('H:i') }}</h3>
-                </div>
-                <div class="row" id="blockContent">
-                    <div class="col-lg-12">
-                        <h3>{{ 'Mindest Anzahl'|trans }}: {{ block.min }}</h3>
-                        <h3>{{ 'Maximal Anzahl'|trans }}: {{ block.max }}</h3>
-                        <h3>{{ 'Aktuell'|trans }}: {{ block.kindwithFin|length }}</h3>
-                        <ul class="list-group">
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <!-- Count item widget-->
+                <div class=" col-12 card">
+                    <div class="card-header">
+                        <h1> {{ text }}
+                        </h1>
+                        <h3>{{ block.schule.name }}: {{ block.wochentagString }} {{ block.von|date('H:i') }}
+                            - {{ block.bis|date('H:i') }}</h3>
+                    </div>
+                    <div class="row" id="blockContent">
+                        <div class="col-lg-12">
+                            <h3>{{ 'Mindest Anzahl'|trans }}: {{ block.min }}</h3>
+                            <h3>{{ 'Maximal Anzahl'|trans }}: {{ block.max }}</h3>
+                            <h3>{{ 'Aktuell'|trans }}: {{ block.kindwithFin|length }}</h3>
+                            <ul class="list-group">
 
-                            {% for k in kinder %}
-<li class="list-group-item d-flex  align-items-center">
-    <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}" class="deleteAjax"><i class="material-icons">check</i></a>
- <a href="{{ path('kontingent_remove_kid',{'block_id':block.id,'kind_id':k.id}) }}" class="deleteAjax"><i class="material-icons">delete</i> </a>
+                                {% for k in kinder %}
+                                    <li class="list-group-item d-flex  align-items-center">
+                                        <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}"
+                                           class="deleteAjax"><i class="material-icons">check</i></a>
+                                        <a href="{{ path('kontingent_remove_kid',{'block_id':block.id,'kind_id':k.id}) }}"
+                                           class="deleteAjax"><i class="material-icons">delete</i> </a>
 
-    <!-- Button trigger modal -->
-    <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#kind{{ k.id }}">
-        {{ k.vorname }} {{ k.nachname }} ( {{ k.eltern.beruflicheSituation== 0?'Keine Angabe': (k.eltern.beruflicheSituation== 1?'Berufstätig':'Arbeitssuchend')|trans }}, {{ k.eltern.alleinerziehend?"Alleinerziehend":'Nicht alleinerziehend'|trans }})
-    </a>
+                                        <!-- Button trigger modal -->
+                                        <a type="button" class="btn btn-primary" data-toggle="modal"
+                                           data-target="#kind{{ k.id }}">
+                                            {{ k.vorname }} {{ k.nachname }}
+                                            ( {{ k.eltern.beruflicheSituation== 0?'Keine Angabe': (k.eltern.beruflicheSituation== 1?'Berufstätig':'Arbeitssuchend')|trans }}
+                                            , {{ k.eltern.alleinerziehend?"Alleinerziehend":'Nicht alleinerziehend'|trans }}
+                                            )
+                                        </a>
 
-    <!-- Modal -->
+                                        <!-- Modal -->
 
-</li>    <div class="modal fade" id="kind{{ k.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">{{ 'Infos zu dem Kind'|trans }}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
+                                    </li>
+                                    <div class="modal fade" id="kind{{ k.id }}" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        id="exampleModalLabel">{{ 'Infos zu dem Kind'|trans }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
 
-                                            <p> <b>{{ 'Name'|trans }}:</b>
-                                            {{ k.vorname }} {{ k.nachname }}</p>
-                                            <p><b>{{ 'Geburtstag'|trans }}:</b> {{ k.geburtstag|date('d.m.Y') }}</p>
-                                            <p><b>{{ 'Jahrgangsstufe'|trans }}:</b> {{ k.klasse }}</p>
-                                            <p><b>{{ 'Info'|trans }}:</b> {{ k.bemerkung }}</p>
-                                        </div>
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">{{ 'Infos des Erziehungsberechtigten'|trans }}</h5>
+                                                    <p><b>{{ 'Name'|trans }}:</b>
+                                                        {{ k.vorname }} {{ k.nachname }}</p>
+                                                    <p><b>{{ 'Geburtstag'|trans }}:</b> {{ k.geburtstag|date('d.m.Y') }}
+                                                    </p>
+                                                    <p><b>{{ 'Jahrgangsstufe'|trans }}:</b> {{ k.klasse }}</p>
+                                                    <p><b>{{ 'Info'|trans }}:</b> {{ k.bemerkung }}</p>
+                                                </div>
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        id="exampleModalLabel">{{ 'Infos des Erziehungsberechtigten'|trans }}</h5>
 
-                                        </div>
-                                        <div class="modal-body">
+                                                </div>
+                                                <div class="modal-body">
 
-                                            <p> <b>{{ 'Name'|trans }}:</b>
-                                                {{ k.eltern.vorname}} {{ k.eltern.name }}</p>
-                                            <p><b>{{ 'Bildungs- und Teilhabepaket (BUT) Empfänger'|trans }}:</b> {{ k.eltern.buk ? 'Ja': 'Nein'|trans}}</p>
-                                            <p><b>{{ 'Berufliche Situation'|trans }}:</b> {{ k.eltern.beruflicheSituation== 0?'Keine Angabe': (k.eltern.beruflicheSituation== 1?'Berufstätig':'Arbeitssuchend')|trans }}</p>
-                                            <p><b>{{ 'Alleinerziehend'|trans }}:</b> {{ k.eltern.alleinerziehend?"Ja":'Nein'|trans }}</p>
+                                                    <p><b>{{ 'Name'|trans }}:</b>
+                                                        {{ k.eltern.vorname }} {{ k.eltern.name }}</p>
+                                                    <p><b>{{ 'Berufliche Situation'|trans }}
+                                                            :</b> {{ k.eltern.beruflicheSituation== 0?'Keine Angabe': (k.eltern.beruflicheSituation== 1?'Berufstätig':'Arbeitssuchend')|trans }}
+                                                    </p>
+                                                    <p><b>{{ 'Alleinerziehend'|trans }}
+                                                            :</b> {{ k.eltern.alleinerziehend?"Ja":'Nein'|trans }}</p>
+                                                    <table class="table table-responsive">
+                                                        <tbody>
+                                                        {% include 'widget/__elternTabelle_reduced.html.twig' with {'stadt':k.schule.stadt, 'eltern':k.eltern} %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">{{ 'Schließen'|trans }}</button>
 
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Schließen'|trans}}</button>
-
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
 
-                            {% endfor %}
-                        </ul>
+                                {% endfor %}
+                            </ul>
 
+                        </div>
                     </div>
+
+
                 </div>
-
-
-
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 {% endblock %}
 {% block jquery %}
-<script>
+    <script>
 
-    var loadUrl = '{{ app.request.uri }} #blockContent';
-    $(document).on('click','.deleteAjax',function(e){
-        e.preventDefault();
-        var url = $(this).attr('href');
-        $.ajax({
-            url: url,
-            success:function (data) {
-                $.snackbar({content: data.snack});
-                $('#blockContent').load(loadUrl )
-            }
+        var loadUrl = '{{ app.request.uri }} #blockContent';
+        $(document).on('click', '.deleteAjax', function (e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+            $.ajax({
+                url: url,
+                success: function (data) {
+                    $.snackbar({content: data.snack});
+                    $('#blockContent').load(loadUrl)
+                }
+            });
         });
-    });
-</script>
+    </script>
 {% endblock %}

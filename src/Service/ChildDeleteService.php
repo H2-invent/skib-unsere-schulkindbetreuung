@@ -106,6 +106,17 @@ class ChildDeleteService
             $kind->getSchule()->getOrganisation()->getEmail(),
             $attachment
         );
+        foreach ($stammdaten->getPersonenberechtigters() as $data){
+            $this->mailer->sendEmail(
+                $kind->getSchule()->getOrganisation()->getName(),
+                $kind->getSchule()->getOrganisation()->getEmail(),
+                $data->getEmail(),
+                $mailBetreff,
+                $mailContent,
+                $kind->getSchule()->getOrganisation()->getEmail(),
+                $attachment
+            );
+        }
 
     }
 }

@@ -1,4 +1,3 @@
-
 {% if stadt.settingGehaltsklassen %}
     <tr>
         <td>{% trans %}Brutto Haushaltseinkommen pro Monat{% endtrans %}</td>
@@ -22,6 +21,91 @@
             {% if stadt.settingsAnzahlKindergeldempfanger %}
                 <tr>
                     <td>{% trans %}Anzahl der Geschwister, die kindergeldberechtigt sind und im selben Haushalt leben?{% endtrans %}</td>
-                    <td>{{ eltern.anzahlKindergeldempfanger}}</td>
+                    <td>{{ eltern.anzahlKindergeldempfanger }}</td>
                 </tr>
             {% endif %}
+{% if eltern.geschwisters|length > 0 %}
+    <tr>
+        <td>
+            {{ 'Geschwister'|trans }}:
+        </td>
+        <td>
+            <ul class="list-group">
+                {% for gesch in  eltern.geschwisters %}
+                    <li class="list-group-item">
+                        {{ 'Name'|trans }}: {{ gesch.vorname }} {{ gesch.nachname }}<br>
+                        {{ 'Geburtstag'|trans }}: {{ gesch.geburtsdatum|date('d.m.Y') }}
+
+                        {% if stadt.translate.settingsEingabeDerGeschwisterHelpUpload !='' %}
+
+                            <form action="{{ path('upload_kind',{'uid':gesch.uid}) }}" id="dropzone_{{ loop.index }}"
+                                  class="dropzone"
+                            >
+                                <div style="display: none" class="dz-message" data-dz-message>
+                                    <span>{{ stadt.translate.settingsEingabeDerGeschwisterHelpUpload }}</span></div>
+                            </form>
+                        {% endif %}
+                        <ul class="list-group">
+                            {% for doc in gesch.file %}
+                                <li class="list-group-item">
+                                    <a href="{{ path('login_remove_file',{ 'fileName':doc.fileName }) }}"><i
+                                                class="fa fa-trash"></i></a> {{ doc.originalName }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                    </li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+{% endif %}
+{% if eltern.personenberechtigters|length > 0 %}
+    <tr>
+    <td colspan="2">
+        <h3 class="cover-heading">{% trans %}Weitere personenberechtigte Personen{% endtrans %} </h3>
+    </td>
+    {% for pers in  eltern.personenberechtigters %}
+        <tr>
+            <td>
+                {{ 'Name'|trans }}
+            </td>
+            <td>
+                {{ pers.vorname }} {{ pers.nachname }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ 'Email'|trans }}
+            </td>
+            <td>
+                {{ pers.email }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ 'Adresse'|trans }}
+            </td>
+            <td>
+                {{ pers.strasse }}<br>{{ pers.adresszusatz }}<br>{{ pers.plz }} {{ pers.stadt }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ 'Telefon'|trans }}
+            </td>
+            <td>
+                {{ pers.phone }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ 'Notfallkontakt'|trans }}
+            </td>
+            <td>
+                {{ pers.notfallkontakt }}
+            </td>
+        </tr>
+    {% endfor %}
+
+{% endif %}

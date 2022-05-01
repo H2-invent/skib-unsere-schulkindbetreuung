@@ -20,19 +20,19 @@ class Personenberechtigter
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(groups={"all"})
+     * @Assert\NotBlank()
      */
     private $vorname;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(groups={"all"})
+     * @Assert\NotBlank()
      */
     private $nachname;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(groups={"all"})
+     * @Assert\NotBlank()
      */
     private $strasse;
 
@@ -43,14 +43,14 @@ class Personenberechtigter
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(groups={"all"})
-     * @Assert\Regex(pattern="/\b(?!01000|99999)(0[1-9]\d{3}|[1-9]\d{4})\b/i",groups = {"all"})
+     * @Assert\NotBlank()
+     * @Assert\Regex(pattern="/\b(?!01000|99999)(0[1-9]\d{3}|[1-9]\d{4})\b/i")
      */
     private $plz;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(groups={"all"})
+     * @Assert\NotBlank()
      */
     private $stadt;
 
@@ -60,9 +60,9 @@ class Personenberechtigter
     private $phone;
 
     /**
+     * @Assert\Email()
+     * @Assert\NotBlank()
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank(groups={"all"})
-     * @Assert\Email(groups={"all"})
      */
     private $email;
 
@@ -87,7 +87,7 @@ class Personenberechtigter
         return $this->vorname;
     }
 
-    public function setVorname(string $vorname): self
+    public function setVorname(?string $vorname): self
     {
         $this->vorname = $vorname;
 
@@ -99,7 +99,7 @@ class Personenberechtigter
         return $this->nachname;
     }
 
-    public function setNachname(string $nachname): self
+    public function setNachname(?string $nachname): self
     {
         $this->nachname = $nachname;
 
@@ -111,7 +111,7 @@ class Personenberechtigter
         return $this->strasse;
     }
 
-    public function setStrasse(string $strasse): self
+    public function setStrasse(?string $strasse): self
     {
         $this->strasse = $strasse;
 
@@ -135,7 +135,7 @@ class Personenberechtigter
         return $this->plz;
     }
 
-    public function setPlz(string $plz): self
+    public function setPlz(?string $plz): self
     {
         $this->plz = $plz;
 
@@ -147,7 +147,7 @@ class Personenberechtigter
         return $this->stadt;
     }
 
-    public function setStadt(string $stadt): self
+    public function setStadt(?string $stadt): self
     {
         $this->stadt = $stadt;
 

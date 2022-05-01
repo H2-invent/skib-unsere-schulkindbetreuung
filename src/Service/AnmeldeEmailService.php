@@ -148,5 +148,15 @@ class AnmeldeEmailService
             $this->content,
             $kind->getSchule()->getOrganisation()->getEmail(),
             $this->attachment);
+        foreach ($adresse->getPersonenberechtigters() as $data){
+            $this->mailer->sendEmail(
+                $kind->getSchule()->getOrganisation()->getName(),
+                $kind->getSchule()->getOrganisation()->getEmail(),
+                $data->getEmail(),
+                $this->betreff,
+                $this->content,
+                $kind->getSchule()->getOrganisation()->getEmail(),
+                $this->attachment);
+        }
     }
 }

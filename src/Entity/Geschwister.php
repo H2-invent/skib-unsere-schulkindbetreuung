@@ -22,19 +22,19 @@ class Geschwister
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank() (groups={"all"})
+     * @Assert\NotBlank()
      */
     private $vorname;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank(groups={"all"})
+     * @Assert\NotBlank()
      */
     private $nachname;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Assert\NotBlank(groups={"all"})
+     * @Assert\NotBlank()
      */
     private $geburtsdatum;
 
@@ -49,8 +49,16 @@ class Geschwister
      */
     private $file;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $uid;
+
     public function __construct()
     {
+        if (!$this->uid || $this->uid =''){
+            $this->uid = md5(uniqid());
+        }
         $this->file = new ArrayCollection();
     }
 
@@ -127,6 +135,18 @@ class Geschwister
     public function removeFile(File $file): self
     {
         $this->file->removeElement($file);
+
+        return $this;
+    }
+
+    public function getUid(): ?string
+    {
+        return $this->uid;
+    }
+
+    public function setUid(string $uid): self
+    {
+        $this->uid = $uid;
 
         return $this;
     }

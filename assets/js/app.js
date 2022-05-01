@@ -78,7 +78,11 @@ $(document).ready(function () {
     if (typeof optionsSnack !== 'undefined') {
         $.snackbar(optionsSnack);
     }
-    let myDropzone = new Dropzone(".dropzone");
+
+    if($('.dropzone').length){
+        let myDropzone = new Dropzone(".dropzone");
+    }
+
 })
 
 $(window).on('load', function () {

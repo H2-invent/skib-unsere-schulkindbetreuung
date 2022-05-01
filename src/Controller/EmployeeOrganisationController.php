@@ -8,6 +8,7 @@ use App\Form\Type\UserType;
 
 use App\Security\UserManagerInterface;
 use App\Service\InvitationService;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -21,8 +22,10 @@ class EmployeeOrganisationController extends AbstractController
 {
     private $manager;
     private $availRole;
-    public function __construct(UserManagerInterface $manager)
+    private LoggerInterface $logger;
+    public function __construct(UserManagerInterface $manager, LoggerInterface $logger)
     {
+        $this->logger = $logger;
         $this->manager = $manager;
         $this->availRole = array(
             'ROLE_ORG_REPORT' => 'ROLE_ORG_REPORT',
@@ -90,6 +93,7 @@ class EmployeeOrganisationController extends AbstractController
                 $text = $translator->trans('Erfolgreich gespeichert');
                 return $this->redirectToRoute('city_employee_org_show', array('snack'=>$text,'id' => $defaultData->getOrganisation()->getId()));
             } catch (\Exception $e) {
+                $this->logger->error($e->getMessage());
                 $errorText = $translator->trans(
                     'Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse'
                 );
@@ -137,6 +141,7 @@ class EmployeeOrganisationController extends AbstractController
                 $text = $translator->trans('Erfolgreich gespeichert');
                 return $this->redirectToRoute('city_employee_org_show', array('snack'=>$text,'id' => $organisation->getId()));
             } catch (\Exception $e) {
+                $this->logger->error($e->getMessage());
                 $userManager = $this->manager;
                 $errorText = $translator->trans(
                     'Unbekannter Fehler'

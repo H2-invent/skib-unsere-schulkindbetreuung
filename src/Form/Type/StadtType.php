@@ -72,6 +72,9 @@ class StadtType extends AbstractType
             $stadt->translate('en')->setSettingsEingabeDerGeschwisterHelp('');
             $stadt->translate('fr')->setSettingsEingabeDerGeschwisterHelp('');
 
+            $stadt->translate('de')->setSettingsEingabeDerGeschwisterHelpUpload('');
+            $stadt->translate('en')->setSettingsEingabeDerGeschwisterHelpUpload('');
+            $stadt->translate('fr')->setSettingsEingabeDerGeschwisterHelpUpload('');
 
             foreach ($stadt->getNewTranslations() as $newTranslation) {
                 if (!$stadt->getTranslations()->contains($newTranslation) && !$stadt->getNewTranslations()->isEmpty()) {
@@ -111,6 +114,7 @@ class StadtType extends AbstractType
             ->add('settingKinderimKiga', CheckboxType::class, ['required' => false, 'label' => 'Abfrage ob weiteres Kind im KiGa?', 'translation_domain' => 'form'])
             ->add('settingsweiterePersonenberechtigte', CheckboxType::class, ['required' => false, 'label' => 'Weitere Personenberechtigte hinzufügen.', 'translation_domain' => 'form'])
             ->add('settingsEingabeDerGeschwister', CheckboxType::class, ['required' => false, 'label' => 'Die Geschwisterkinder müssen aufgelistet werden.', 'translation_domain' => 'form'])
+            ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])
             ->add('emailDokumente_confirm', EntityType::class, [
                 // looks for choices from this entity
                 'class' => File::class,
@@ -276,6 +280,12 @@ class StadtType extends AbstractType
 
                             'attr' => array('rows' => 1,),
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingsEingabeDerGeschwisterHelpUpload'=> [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Hilfetext für den Upload von Dateien. Als verifikation für den Erhalt von Kindergeld. Leerlassen wenn es keinen Upload geben soll.)',
                             'translation_domain' => 'form'
                         ],
                         'settingsweiterePersonenberechtigteHelp' => [

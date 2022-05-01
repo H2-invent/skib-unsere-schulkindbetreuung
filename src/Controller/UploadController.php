@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Geschwister;
 use App\Entity\Stadt;
 use App\Service\UploadService;
 use Doctrine\ORM\EntityManager;
@@ -47,9 +48,26 @@ class UploadController extends AbstractController
         $entityManager->flush();
         return $file ? new JsonResponse(array('error' => 0)) : new JsonResponse(array('error' => 1));
     }
+    /**
+     * @Route("/upload/kind/{uid}/file", name="upload_kind",methods={"POST"})
+     * @ParamConverter ("geschwister", options={"mapping": {"uid": "uid"}})
+     */
+    public function geschwister(Request $request, UploadService $uploadService, Geschwister $geschwister, EntityManagerInterface $entityManager)
+    {
+        set_time_limit(300);
+
+
+        /** @var UploadedFile $uploadedFile */
+        $uploadedFile = $request->files->get('file');
+        $file = $uploadService->uploadFile($uploadedFile);
+        $geschwister->addFile($file);
+        $entityManager->persist($geschwister);
+        $entityManager->flush();
+        return $file ? new JsonResponse(array('error' => 0)) : new JsonResponse(array('error' => 1));
+    }
 
     /**
-     * @Route("/login/download/{fileName}", name="login_download_file", methods={"GET"})
+     * @Route("/download/{fileName}", name="login_download_file", methods={"GET"})
      * @ParamConverter("file", options={"mapping": {"fileName": "fileName"}})
      */
     public function downloadArticleReference(\App\Entity\File $file, FilesystemOperator $internFileSystem)
@@ -70,7 +88,7 @@ class UploadController extends AbstractController
     }
 
     /**
-     * @Route("/login/removeFile/{fileName}", name="login_remove_file", methods={"GET"})
+     * @Route("/removeFile/{fileName}", name="login_remove_file", methods={"GET"})
      * @ParamConverter("file", options={"mapping": {"fileName": "fileName"}})
      */
     public function removeFile(\App\Entity\File $file, FilesystemOperator $internFileSystem, Request $request)

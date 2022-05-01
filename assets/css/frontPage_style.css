@@ -396,3 +396,6 @@ height: auto;
 .gebucht-text{
   word-break: break-word;
 }
+.dz-message{
+  display: block!important;
+}

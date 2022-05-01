@@ -133,6 +133,19 @@
 
                         </div>
                     </div>
+                    {% if  form.sozialhilfeEmpanger is defined %}
+                        <div class="row mt-2">
+                            <div class="col-sm-11">
+                                {{ form_row(form.sozialhilfeEmpanger) }}
+
+                            </div>
+                            <div class="col-sm-1">
+                                <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+                                   title="{{ 'Information'|trans }}"
+                                   data-content="{{ stadt.translate.settingsSozielHilfeEmpfangerHelp }}"></i>
+                            </div>
+                        </div>
+                    {% endif %}
                     {% if  form.anzahlKindergeldempfanger is defined %}
                         <div class="row mt-2">
                             <div class="col-sm-11">
@@ -165,7 +178,7 @@
                                 </div>
                                 '>
                                     {% for gesch in form.geschwisters %}
-                                        <div class="card card-body">
+                                        <div class="card card-body mb-3">
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     {{ form_row(gesch.vorname) }}
@@ -191,19 +204,7 @@
                             </div>
                         </div>
                     {% endif %}
-                    {% if  form.sozialhilfeEmpanger is defined %}
-                        <div class="row mt-2">
-                            <div class="col-sm-11">
-                                {{ form_row(form.sozialhilfeEmpanger) }}
 
-                            </div>
-                            <div class="col-sm-1">
-                                <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
-                                   title="{{ 'Information'|trans }}"
-                                   data-content="{{ stadt.translate.settingsSozielHilfeEmpfangerHelp }}"></i>
-                            </div>
-                        </div>
-                    {% endif %}
                 </div>
             </div>
             {% if form.personenberechtigters is defined %}
@@ -223,13 +224,13 @@
                                 {{ form_row(form.personenberechtigters.vars.prototype.email)|e('html_attr') }}
                                 </div>
                                 <div class="col-lg-12">
-                                {{ form_row(form.personenberechtigters.vars.prototype.phone)|e('html_attr') }}
-                                   </div>
-                                <div class="col-lg-12">
                                 {{ form_row(form.personenberechtigters.vars.prototype.vorname)|e('html_attr') }}
                                    </div>
                                 <div class="col-lg-12">
                                 {{ form_row(form.personenberechtigters.vars.prototype.nachname)|e('html_attr') }}
+                                   </div>
+                                <div class="col-lg-12">
+                                {{ form_row(form.personenberechtigters.vars.prototype.phone)|e('html_attr') }}
                                    </div>
                                 <div class="col-lg-12">
                                 {{ form_row(form.personenberechtigters.vars.prototype.strasse)|e('html_attr') }}

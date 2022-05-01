@@ -10,6 +10,7 @@ namespace App\Service;
 
 
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ErrorService
@@ -17,25 +18,32 @@ class ErrorService
 
 
     private $translator;
-
+    private $arr;
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
+        $this->arr = array();
     }
 
     public function createError($error, FormInterface $form)
     {
-
-        $ele = $form->all();
-        $arr = array();
-        foreach ($ele as $data) {
-            $arr[$data->getName()] = $data->getConfig()->getOption('label');
-        }
+        $view = $form->createView();
+        $this->getLabel($view);
+        dump($this->arr);
         $errorString = array();
         foreach ($error as $data) {
-            $errorString[]= array('type'=>'error','text'=>$this->translator->trans($arr[$data->getPropertyPath()]) . ': ' . str_replace('"','\"',$data->getMessage()));
+            $errorString[]= array('type'=>'error','text'=>$this->translator->trans($this->arr[$data->getPropertyPath()]) . ': ' . str_replace('"','\"',$data->getMessage()));
         }
-
         return $errorString;
+    }
+
+    function getLabel(FormView $form){
+        foreach ($form->children as $data){
+            if (sizeof($data->children)>0){
+                $this->getLabel($data);
+            }else{
+                $this->arr[$data->vars['name']]=$data->vars['label'];
+            }
+        }
     }
 }

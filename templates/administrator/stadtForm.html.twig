@@ -178,8 +178,17 @@
                                         {{ form_row(form.settingsEingabeDerGeschwister) }}
                                     </div>
 
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-4">
                                         {{ a2lixTranslations.partialTranslations(form.translations, ['settingsEingabeDerGeschwisterHelp']) }}
+                                    </div>
+                                    <div class="col-lg-4">
+                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settingsEingabeDerGeschwisterHelpUpload']) }}
+                                    </div>
+
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-4">
+                                        {{ form_row(form.settings_skib_sepaElektronisch) }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
