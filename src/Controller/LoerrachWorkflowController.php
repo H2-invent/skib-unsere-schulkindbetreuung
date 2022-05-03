@@ -450,6 +450,7 @@ class LoerrachWorkflowController extends AbstractController
             'stadt' => $stadt,
             'preis' => $preis,
             'error' => $error,
+            'noPrintout'=>true,
             'organisation' => $renderOrganisation));
     }
 

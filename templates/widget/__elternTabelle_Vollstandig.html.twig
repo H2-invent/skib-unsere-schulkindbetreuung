@@ -37,13 +37,15 @@
                         {{ 'Geburtstag'|trans }}: {{ gesch.geburtsdatum|date('d.m.Y') }}
 
                         {% if stadt.translate.settingsEingabeDerGeschwisterHelpUpload !='' %}
-
-                            <form action="{{ path('upload_kind',{'uid':gesch.uid}) }}" id="dropzone_{{ loop.index }}"
-                                  class="dropzone"
-                            >
-                                <div style="display: none" class="dz-message" data-dz-message>
-                                    <span>{{ stadt.translate.settingsEingabeDerGeschwisterHelpUpload }}</span></div>
-                            </form>
+                            {% if noPrintout is defined %}
+                                <form action="{{ path('upload_kind',{'uid':gesch.uid}) }}"
+                                      id="dropzone_{{ loop.index }}"
+                                      class="dropzone"
+                                >
+                                    <div style="display: none" class="dz-message" data-dz-message>
+                                        <span>{{ stadt.translate.settingsEingabeDerGeschwisterHelpUpload }}</span></div>
+                                </form>
+                            {% endif %}
                         {% endif %}
                         <ul class="list-group">
                             {% for doc in gesch.file %}
@@ -65,6 +67,7 @@
     <td colspan="2">
         <h3 class="cover-heading">{% trans %}Weitere personenberechtigte Personen{% endtrans %} </h3>
     </td>
+    </tr>
     {% for pers in  eltern.personenberechtigters %}
         <tr>
             <td>

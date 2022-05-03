@@ -42,8 +42,10 @@ class KontingentAcceptService
     }
     public function beworbenCheck(Kind $kind){
         if(sizeof($kind->getBeworben()->toArray()) === 0){// es gibt keine beworbenen Zeitblöcke mehr. Das kind soll nun eine Buchungsbestätigung erhalten
+        foreach ($kind->getBeworben() as $data){
+            $kind->removeBeworben($data);
+        }
             $this->anmeldeEmailService->sendEmail($kind, $kind->getEltern(), $kind->getZeitblocks()[0]->getSchule()->getStadt(), $this->translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:'));
-            //$anmeldeEmailService->setBetreff($translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname());
             $this->anmeldeEmailService->send($kind, $kind->getEltern());
         }
         return false;

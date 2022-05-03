@@ -9,66 +9,73 @@
         margin: 5px;
     }
 </style>
-        <h2>{% trans %}Zusammenfassung{% endtrans %}</h2>
+<h2>{% trans %}Zusammenfassung{% endtrans %}</h2>
 
 
-    <h3>{% trans %}Daten des Erziehungsberechtigten{% endtrans %}</h3>
+<h3>{% trans %}Daten des Erziehungsberechtigten{% endtrans %}</h3>
 
 
-        <table cellpadding="5px" >
-            <tbody>
-            <tr>
-                <td>{% trans %}Name des Erziehungsberechtigten{% endtrans %}</td>
-                <td>{{ eltern.vorname }} {{ eltern.name }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %}Adresse des Erziehungsberechtigten{% endtrans %}</td>
-                <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
-            </tr>
-            <tr>
-                <td>{{ 'Telefonnummer'|trans }}</td>
-                <td>{{ eltern.phoneNumber }}</td>
-            </tr>
+<table cellpadding="5px">
+    <tbody>
+    <tr>
+        <td>{% trans %}Name des Erziehungsberechtigten{% endtrans %}</td>
+        <td>{{ eltern.vorname }} {{ eltern.name }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Adresse des Erziehungsberechtigten{% endtrans %}</td>
+        <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
+    </tr>
+    <tr>
+        <td>{{ 'Telefonnummer'|trans }}</td>
+        <td>{{ eltern.phoneNumber }}</td>
+    </tr>
 
-            {% set stadt = eltern.kinds[0].schule.stadt %}
-             {% include 'widget/__elternTabelle_Vollstandig.html.twig' with {'stadt':stadt,'eltern':eltern} %}
+    {% set stadt = eltern.kinds[0].schule.stadt %}
 
-            <tr>
-                <td>{% trans %}Berufliche Situation des Erziehungsberechtigten{% endtrans %}</td>
-                <td>{{ beruflicheSituation[eltern.beruflicheSituation] }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %}Kontakt für evtl. Notfälle{% endtrans %}</td>
-                <td>{{ eltern.notfallName }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %}Telefonnummer für evtl. Notfälle{% endtrans %}</td>
-                <td>{{ eltern.notfallkontakt }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %}Weitere abholberechtigte Personen{% endtrans %}</td>
-                <td>{{ eltern.abholberechtigter }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %}Bankverbindung für Lastschrift{% endtrans %}</td>
-                <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}<br/>{{ eltern.sepaInfo?"Ich erteile der betreuenden Organisation (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags"|trans:""|trans }} </td>
-            </tr>
-            <tr>
-                <td>{% trans %}E-Mail Adresse{% endtrans %}</td>
-                <td>{{ eltern.email }}</td>
-            </tr>
-            {% if kind is defined and kind is not null %}
-            <tr>
-                <td>{% trans %}Monatliche Gebühren{% endtrans %}</td>
-                <td>{{ kind.preisforBetreuung|number_format(2,',','.') }} €</td>
-            </tr>
-            {% endif %}
-            {% if eltern.secCode is not null %}
-            <tr>
-                <td>{% trans %}Sicherheitscode (Dieser Code wird bei jeder Kommunikation mit dem Träger abgefragt){% endtrans %}</td>
-                <td>{{ eltern.secCode }}</td>
-            </tr>
-            {% endif %}
-            </tbody>
-        </table>
+    <tr>
+        <td>{% trans %}Berufliche Situation des Erziehungsberechtigten{% endtrans %}</td>
+        <td>{{ beruflicheSituation[eltern.beruflicheSituation] }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Kontakt für evtl. Notfälle{% endtrans %}</td>
+        <td>{{ eltern.notfallName }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Telefonnummer für evtl. Notfälle{% endtrans %}</td>
+        <td>{{ eltern.notfallkontakt }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Weitere abholberechtigte Personen{% endtrans %}</td>
+        <td>{{ eltern.abholberechtigter }}</td>
+    </tr>
+    <tr>
+        <td>{% trans %}Bankverbindung für Lastschrift{% endtrans %}</td>
+        <td>{{ eltern.kontoinhaber }}<br/>{{ eltern.iban }}<br/>{{ eltern.bic }}
+            <br/>{{ eltern.sepaInfo?"Ich erteile der betreuenden Organisation (den betreuenden Organisationen) ein SEPA Lastschrift Mandant für die Dauer des Betreuungsvertrags"|trans:""|trans }}
+        </td>
+    </tr>
+    <tr>
+        <td>{% trans %}E-Mail Adresse{% endtrans %}</td>
+        <td>{{ eltern.email }}</td>
+    </tr>
+    {% if kind is defined and kind is not null %}
+        <tr>
+            <td>{% trans %}Monatliche Gebühren{% endtrans %}</td>
+            <td>{{ kind.preisforBetreuung|number_format(2,',','.') }} €</td>
+        </tr>
+    {% endif %}
+    {% if eltern.secCode is not null %}
+        <tr>
+            <td>{% trans %}Sicherheitscode (Dieser Code wird bei jeder Kommunikation mit dem Träger abgefragt){% endtrans %}</td>
+            <td>{{ eltern.secCode }}</td>
+        </tr>
+    {% endif %}
+    <tr>
+        <td colspan="2">
+            <h5>{{ 'Weitere Informationen'|trans }}</h5>
+        </td>
+    </tr>
+    {% include 'widget/__elternTabelle_Vollstandig.html.twig' with {'stadt':stadt,'eltern':eltern} %}
+    </tbody>
+</table>
 
