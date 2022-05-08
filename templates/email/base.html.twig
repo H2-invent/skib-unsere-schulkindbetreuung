@@ -42,11 +42,14 @@
 
                 {% endblock %}
                 <center>
-                    {% trans with {'%s%':stadt.name} %}Diese Email wurde im Auftrag der %s% versandt{% endtrans %}
-
+                    {% if stadt is defined %}
+                        {% trans with {'%s%':stadt.name} %}Diese Email wurde im Auftrag der %s% versandt{% endtrans %}
+                    {% endif %}
                     <menu>
                         -
-                        <small>Powered by <item href="https://unsere-schulkindbetreuung.de">unsere-Schulkindbetreuung.de</item> </small>
+                        <small>Powered by
+                            <item href="https://unsere-schulkindbetreuung.de">unsere-Schulkindbetreuung.de</item>
+                        </small>
                         -
                     </menu>
 
