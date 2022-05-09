@@ -29,7 +29,7 @@ class ErrorService
     {
         $view = $form->createView();
         $this->getLabel($view);
-        dump($this->arr);
+
         $errorString = array();
         foreach ($error as $data) {
             $errorString[]= array('type'=>'error','text'=>$this->translator->trans($this->arr[$data->getPropertyPath()]) . ': ' . str_replace('"','\"',$data->getMessage()));
