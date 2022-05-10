@@ -63,7 +63,7 @@
     "@symfony/webpack-encore": "^0.28.3",
     "copy-webpack-plugin": "^5.1.1",
     "font-awesome": "^4.7.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^6.0.0",
     "sass-loader": "^7.3.1",
     "webpack-material-design-icons": "^0.1.0"
   }
