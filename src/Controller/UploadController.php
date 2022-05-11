@@ -104,25 +104,4 @@ class UploadController extends AbstractController
                 ->get('referer')
         );
     }
-
-//    /**
-//     * @Route("/login/idea/markDeprected/{id}", name="login_idea_file_markDeprecated", methods={"POST"})
-//     * @ParamConverter("file", class="App\Entity\File")
-//     */
-//    public function markDeprecatedFile(\App\Entity\File $file, IdeaService $ideaService)
-//    {
-//        if (!$ideaService->UserIsAdminOrOwner($file->getIdea(), $this->getUser()->getMyUser()) && !$file->getUser() == $this->getUser()->getMyUser()) {
-//            return new JsonResponse(array('error' => true));
-//        }
-//        if ($file->getDeprecated()) {
-//            $file->setDeprecated(false);
-//        } else {
-//            $file->setDeprecated(true);
-//        }
-//        $em = $this->getDoctrine()->getManager();
-//        $em->persist($file);
-//        $em->flush();
-//        return new JsonResponse(array('error' => false));
-//
-//    }
 }

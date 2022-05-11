@@ -500,16 +500,13 @@ class LoerrachWorkflowController extends AbstractController
 //Emails an die Eltern senden
         foreach ($kind as $data) {
             $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:'));
-            //$anmeldeEmailService->setBetreff($translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname());
             $anmeldeEmailService->send($data, $adresse);
         }
-
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
         $response->headers->clearCookie('UserID');
         $response->headers->clearCookie('SecID');
         $response->headers->clearCookie('KindID');
         return $response;
-
     }
 
     /**
