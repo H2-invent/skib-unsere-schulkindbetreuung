@@ -12,13 +12,13 @@
 {% block content %}
     <div class="row">
         <div class="col-md-8 offset-md-2">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
             <div class="card mb-3">
                 <div class="card-header">
                     <h4> {% trans %}Daten eines Erziehungsberechtigten{% endtrans %}</h4>
                 </div>
                 <div class="card-body">
 
-                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
                     <div class="row">
                         <div class="col-sm-11">
@@ -34,19 +34,19 @@
                         </div>
                     </div>
                     {% if form.emailDoubleInput is defined %}
-                    <div class="row">
-                        <div class="col-sm-11">
+                        <div class="row">
+                            <div class="col-sm-11">
 
-                            {{ form_row(form.emailDoubleInput) }}
+                                {{ form_row(form.emailDoubleInput) }}
 
 
+                            </div>
+                            <div class="col-sm-1">
+                                <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+                                   title="{{ 'Information'|trans }}"
+                                   data-content="{% trans %}Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.{% endtrans %}"></i>
+                            </div>
                         </div>
-                        <div class="col-sm-1">
-                            <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
-                               title="{{ 'Information'|trans }}"
-                               data-content="{% trans %}Bitte bestätigen Sie die E-Mail Adresse durch erneutes eingeben.{% endtrans %}"></i>
-                        </div>
-                    </div>
                     {% endif %}
                     <div class="row mt-3">
                         <div class="col-sm-11">
@@ -69,20 +69,21 @@
 
                         </div>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col-sm-11">
+                    {% if  form.einkommen is defined %}
+                        <div class="row mt-2">
+                            <div class="col-sm-11">
 
-                            {{ form_label(form.einkommen) }}
-                            {{ form_widget(form.einkommen) }}
+                                {{ form_label(form.einkommen) }}
+                                {{ form_widget(form.einkommen) }}
 
+                            </div>
+                            <div class="col-sm-1">
+                                <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+                                   title="{{ 'Information'|trans }}"
+                                   data-content="{{ stadt.translate.settingGehaltsklassenHelp }}"></i>
+                            </div>
                         </div>
-                        <div class="col-sm-1">
-                            <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
-                               title="{{ 'Information'|trans }}"
-                               data-content="{% trans %}Die Gebühren sind einkommensabhängig. Angerechnet wird das Brutto Haushaltseinkommen (Gehalt, Lohn, Kindergeld, Unterhalt, Überbrückungsgeld, Lohnersatzleistungen und alle sonstigen Einkünfte).{% endtrans %}"></i>
-                        </div>
-                    </div>
-
+                    {% endif %}
                     <div class="row mt-2">
                         <div class="col-sm-11">
                             {{ form_row(form.beruflicheSituation) }}
@@ -94,29 +95,31 @@
                                data-content="{% trans %}Vorrangig aufgenommen werden Kinder von alleinerziehenden und berufstätigen Erziehungsberechtigten. Ein Rechtsanspruch auf Aufnahme besteht nicht.{% endtrans %}"></i>
                         </div>
                     </div>
+                    {% if form.kinderImKiga is defined %}
+                        <div class="row mt-2">
+                            <div class="col-sm-11">
+                                {{ form_row(form.kinderImKiga) }}
 
-                    <div class="row mt-2">
-                        <div class="col-sm-11">
-                            {{ form_row(form.kinderImKiga) }}
+                            </div>
+                            <div class="col-sm-1">
+                                <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+                                   title="{{ 'Information'|trans }}"
+                                   data-content="{{ stadt.translate.settingKinderimKigaHelp }}"></i>
+                            </div>
+                        </div>
 
-                        </div>
-                        <div class="col-sm-1">
-                            <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
-                               title="{{ 'Information'|trans }}"
-                               data-content="{% trans %}Familien mit weiteren Kindern in einem kostenpflichtigen öffentlichen Kindergarten erhalten Rabatt auf die Gebühr des ältesten Kindes{% endtrans %}"></i>
-                        </div>
-                    </div>
-                    <div class="row mt-2 collapse" id="kigaOfKids">
-                        <div class="col-sm-11">
-                            {{ form_row(form.kigaOfKids) }}
+                        <div class="row mt-2 collapse" id="kigaOfKids">
+                            <div class="col-sm-11">
+                                {{ form_row(form.kigaOfKids) }}
 
+                            </div>
+                            <div class="col-sm-1">
+                                <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+                                   title="{{ 'Information'|trans }}"
+                                   data-content="{% trans %}Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.{% endtrans %}"></i>
+                            </div>
                         </div>
-                        <div class="col-sm-1">
-                            <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
-                               title="{{ 'Information'|trans }}"
-                               data-content="{% trans %}Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.{% endtrans %}"></i>
-                        </div>
-                    </div>
+                    {% endif %}
                     <div class="row mt-2">
                         <div class="col-sm-11">
 
@@ -130,9 +133,170 @@
 
                         </div>
                     </div>
+                    {% if  form.sozialhilfeEmpanger is defined %}
+                        <div class="row mt-2">
+                            <div class="col-sm-11">
+                                {{ form_row(form.sozialhilfeEmpanger) }}
+
+                            </div>
+                            <div class="col-sm-1">
+                                <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+                                   title="{{ 'Information'|trans }}"
+                                   data-content="{{ stadt.translate.settingsSozielHilfeEmpfangerHelp }}"></i>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if  form.anzahlKindergeldempfanger is defined %}
+                        <div class="row mt-2">
+                            <div class="col-sm-11">
+                                {{ form_row(form.anzahlKindergeldempfanger) }}
+
+                            </div>
+                            <div class="col-sm-1">
+                                <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+                                   title="{{ 'Information'|trans }}"
+                                   data-content="{{ stadt.translate.settingsAnzahlKindergeldempfangerHelp }}"></i>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if form.geschwisters is defined %}
+                        <div class="row mt-2">
+                            <div class="col-sm-11">
+                                <div class="geschwisterHolder"
+                                     data-index="{{ form.geschwisters|length }}"
+                                     data-prototype='
+                                <div class="row">
+                                <div class="col-lg-12">
+                                {{ form_row(form.geschwisters.vars.prototype.vorname)|e('html_attr') }}
+                                </div>
+                                <div class="col-lg-12">
+                                {{ form_row(form.geschwisters.vars.prototype.nachname)|e('html_attr') }}
+                                   </div>
+                                <div class="col-lg-12">
+                                {{ form_row(form.geschwisters.vars.prototype.geburtsdatum)|e('html_attr') }}
+                                   </div>
+                                </div>
+                                '>
+                                    {% for gesch in form.geschwisters %}
+                                        <div class="card card-body mb-3">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    {{ form_row(gesch.vorname) }}
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    {{ form_row(gesch.nachname) }}
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    {{ form_row(gesch.geburtsdatum) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <button type="button" class="add_item_link btn btn-primary add_item_link"
+                                        data-collection-holder-class="geschwisterHolder">{{ 'Ein weiteres Geschwisterkind hinzufügen'|trans }}
+                                </button>
+                            </div>
+                            <div class="col-sm-1">
+                                <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+                                   title="{{ 'Information'|trans }}"
+                                   data-content="{{ stadt.translate.settingsEingabeDerGeschwisterHelp }}"></i>
+                            </div>
+                        </div>
+                    {% endif %}
 
                 </div>
             </div>
+            {% if form.personenberechtigters is defined %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h4 class="card-title">{{ 'Weitere personenberechtigte Personen'|trans }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-11">
+
+                                <div class="persHolder"
+                                     data-index="{{ form.personenberechtigters|length }}"
+                                     data-prototype='
+                                <div class="row">
+                                <div class="col-lg-12">
+                                {{ form_row(form.personenberechtigters.vars.prototype.email)|e('html_attr') }}
+                                </div>
+                                <div class="col-lg-12">
+                                {{ form_row(form.personenberechtigters.vars.prototype.vorname)|e('html_attr') }}
+                                   </div>
+                                <div class="col-lg-12">
+                                {{ form_row(form.personenberechtigters.vars.prototype.nachname)|e('html_attr') }}
+                                   </div>
+                                <div class="col-lg-12">
+                                {{ form_row(form.personenberechtigters.vars.prototype.phone)|e('html_attr') }}
+                                   </div>
+                                <div class="col-lg-12">
+                                {{ form_row(form.personenberechtigters.vars.prototype.strasse)|e('html_attr') }}
+                                   </div>
+                                <div class="col-lg-12">
+                                {{ form_row(form.personenberechtigters.vars.prototype.adresszusatz)|e('html_attr') }}
+                                   </div>
+                                <div class="col-lg-12">
+                                {{ form_row(form.personenberechtigters.vars.prototype.plz)|e('html_attr') }}
+                                   </div>
+                                <div class="col-lg-12">
+                                {{ form_row(form.personenberechtigters.vars.prototype.stadt)|e('html_attr') }}
+                                   </div>
+                                <div class="col-lg-12">
+                                {{ form_row(form.personenberechtigters.vars.prototype.notfallkontakt)|e('html_attr') }}
+                                </div>
+                                </div>
+                                '>
+                                    {% for pers in form.personenberechtigters %}
+                                        <div class="card card-body mb-3">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    {{ form_row(pers.email) }}
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    {{ form_row(pers.phone) }}
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    {{ form_row(pers.vorname) }}
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    {{ form_row(pers.nachname) }}
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    {{ form_row(pers.strasse) }}
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    {{ form_row(pers.adresszusatz) }}
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    {{ form_row(pers.plz) }}
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    {{ form_row(pers.stadt) }}
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    {{ form_row(pers.notfallkontakt) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    {% endfor %}
+                                </div>
+                                <button type="button" class="add_item_link btn btn-primary add_item_link"
+                                        data-collection-holder-class="persHolder">{{ 'Eine weitere personenberechtigte Person hinzufügen'|trans }}
+                                </button>
+                            </div>
+                            <div class="col-sm-1">
+                                <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+                                   title="{{ 'Information'|trans }}"
+                                   data-content="{{ stadt.translate.settingsweiterePersonenberechtigteHelp }}"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
             <div class="card">
                 <div class="card-header">
                     <h4> {% trans %}Weitere Informationen und Kontaktdaten{% endtrans %}</h4>
@@ -152,6 +316,8 @@
                                 {{ form_row(form.abholberechtigter) }}
 
                             </div>
+
+
                             {{ form_row(form.gdpr) }}
 
                             <p>
@@ -160,15 +326,19 @@
                                         rel="noopener noreferrer">{{ 'Datenschutzhinweis'|trans }}</a>
                             </p>
 
+
+                        </div>
+                        <div class="col-lg-12">
                             {{ form_rest(form) }}
-                            {{ form_end(form) }}
                         </div>
                     </div>
                 </div>
             </div>
 
+            {{ form_end(form) }}
         </div>
     </div>
+
 
 
 {% endblock %}

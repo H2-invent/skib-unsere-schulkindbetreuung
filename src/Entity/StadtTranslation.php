@@ -4,14 +4,22 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslationTrait;
 
 /**
  * @ORM\Entity
  */
-class StadtTranslation
+class StadtTranslation implements TranslationInterface
 {
-    use ORMBehaviors\Translatable\Translation;
+    use TranslationTrait;
 
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -42,6 +50,42 @@ class StadtTranslation
      */
     private $coverText;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingGehaltsklassenHelp;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingKinderimKigaHelp;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingsAnzahlKindergeldempfangerHelp;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingsSozielHilfeEmpfangerHelp;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingsEingabeDerGeschwisterHelp;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingsweiterePersonenberechtigteHelp;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingsEingabeDerGeschwisterHelpUpload;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getInfoText(): ?string
     {
@@ -102,6 +146,7 @@ class StadtTranslation
 
         return $this;
     }
+
     public function getCoverText(): ?string
     {
         return $this->coverText;
@@ -114,5 +159,121 @@ class StadtTranslation
         return $this;
     }
 
-    
+    /**
+     * @return mixed
+     */
+    public function getSettingGehaltsklassenHelp()
+    {
+        return $this->settingGehaltsklassenHelp;
+    }
+
+    /**
+     * @param mixed $settingGehaltsklassenHelp
+     */
+    public function setSettingGehaltsklassenHelp($settingGehaltsklassenHelp): self
+    {
+        $this->settingGehaltsklassenHelp = $settingGehaltsklassenHelp;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingKinderimKigaHelp(): string
+    {
+        return $this->settingKinderimKigaHelp;
+    }
+
+    /**
+     * @param mixed $settingKinderimKigaHelp
+     */
+    public function setSettingKinderimKigaHelp($settingKinderimKigaHelp): self
+    {
+        $this->settingKinderimKigaHelp = $settingKinderimKigaHelp;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsAnzahlKindergeldempfangerHelp(): string
+    {
+        return $this->settingsAnzahlKindergeldempfangerHelp;
+    }
+
+    /**
+     * @param mixed $settingsAnzahlKindergeldempfangerHelp
+     */
+    public function setSettingsAnzahlKindergeldempfangerHelp($settingsAnzahlKindergeldempfangerHelp): self
+    {
+        $this->settingsAnzahlKindergeldempfangerHelp = $settingsAnzahlKindergeldempfangerHelp;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsSozielHilfeEmpfangerHelp(): string
+    {
+        return $this->settingsSozielHilfeEmpfangerHelp;
+    }
+
+    /**
+     * @param mixed $settingsSozielHilfeEmpfangerHelp
+     */
+    public function setSettingsSozielHilfeEmpfangerHelp($settingsSozielHilfeEmpfangerHelp): self
+    {
+        $this->settingsSozielHilfeEmpfangerHelp = $settingsSozielHilfeEmpfangerHelp;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsEingabeDerGeschwisterHelp()
+    {
+        return $this->settingsEingabeDerGeschwisterHelp;
+    }
+
+    /**
+     * @param mixed $settingsEingabeDerGeschwisterHelp
+     */
+    public function setSettingsEingabeDerGeschwisterHelp($settingsEingabeDerGeschwisterHelp): void
+    {
+        $this->settingsEingabeDerGeschwisterHelp = $settingsEingabeDerGeschwisterHelp;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsweiterePersonenberechtigteHelp()
+    {
+        return $this->settingsweiterePersonenberechtigteHelp;
+    }
+
+    /**
+     * @param mixed $settingsweiterePersonenberechtigteHelp
+     */
+    public function setSettingsweiterePersonenberechtigteHelp($settingsweiterePersonenberechtigteHelp): void
+    {
+        $this->settingsweiterePersonenberechtigteHelp = $settingsweiterePersonenberechtigteHelp;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsEingabeDerGeschwisterHelpUpload()
+    {
+        return $this->settingsEingabeDerGeschwisterHelpUpload;
+    }
+
+    /**
+     * @param mixed $settingsEingabeDerGeschwisterHelpUpload
+     */
+    public function setSettingsEingabeDerGeschwisterHelpUpload($settingsEingabeDerGeschwisterHelpUpload): void
+    {
+        $this->settingsEingabeDerGeschwisterHelpUpload = $settingsEingabeDerGeschwisterHelpUpload;
+    }
+
+
 }

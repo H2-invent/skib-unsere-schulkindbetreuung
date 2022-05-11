@@ -1,0 +1,24 @@
+{% extends 'email/base.html.twig' %}
+{% block header %}
+    {% trans with {'%firstName%':user.vorname,'%lastName%':user.nachname} %}Hallo %firstName% %lastName%{% endtrans %}<br>
+
+{% endblock %}
+
+{% block content %}
+<center>
+    <b>SKIB - Unsere Schulkindbetreuung erhält einige neue Funktionen und eine neue Anmeldung.</b>
+        <br><br>
+        Hier haben wir auf die neueste Technologie gesetzt, um den bestmöglichen Schutz für Ihre und die Daten der Kinder zu gewährleisten.
+        <br>
+        Hierfür ist jedoch Ihre Aktion notwendig.<br>
+        Klicken Sie auf den nachfolgenden Link, dort können Sie sich direkt neu registrieren und Sie werden nach dem erfolgreichen registrieren direkt auf das bekannte Dashboard weitergeleitet.<br>
+        <a href="{{ url ~ path('invitation_accept',{'token':user.invitationToken})  }}">Hier einen neuen Account erstellen</a><br>
+        Oder kopieren Sie diesen Link in Ihren Browser: {{ url ~ path('invitation_accept',{'token':user.invitationToken}) }}
+        <br>
+        <br>
+        Wenn Sie nicht auf einen Link klicken wollen, können Sie wie gewohnt auf die Webseite <a href="https://unsere-schulkindbetreuung.de">https://unsere-schulkindbetreuung.de</a> gehen und dort auf Mitarbeiterlogin klicken
+                                                                                                                                                                                      und sich direkt registrieren.<br>
+        In diesem Fall ist es aber <b>unbedingt notwendig dieselbe E-Mail-Adresse</b> wie bisher zu verwenden. Dieses lautete in Ihrem Fall: {{ user.email }}
+
+</center>
+{% endblock %}

@@ -16,12 +16,11 @@ use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
 class PrintRechnungService
 {
@@ -32,7 +31,7 @@ class PrintRechnungService
     private $pdf;
     private $fileSystem;
 
-    public function __construct(FilesystemInterface $publicUploadsFilesystem, TCPDFController $tcpdf,  TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(FilesystemOperator $publicUploadsFilesystem, TCPDFController $tcpdf,  TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
 
 

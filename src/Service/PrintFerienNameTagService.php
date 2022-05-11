@@ -11,10 +11,10 @@ namespace App\Service;
 
 
 use App\Entity\Organisation;
-use League\Flysystem\FilesystemInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Templating\EngineInterface;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
+
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
+use Twig\Environment;
 
 class PrintFerienNameTagService
 {
@@ -23,7 +23,7 @@ class PrintFerienNameTagService
     protected $parameterBag;
     private $pdf;
 
-    public function __construct(TCPDFController $tcpdf, EngineInterface $templating,ParameterBagInterface $parameterBag)
+    public function __construct(TCPDFController $tcpdf, Environment $templating,ParameterBagInterface $parameterBag)
     {
 
         $this->templating = $templating;

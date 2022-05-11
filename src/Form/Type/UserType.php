@@ -29,11 +29,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class,array('label'=>'Username','required'=>true,'translation_domain' => 'form'))
             ->add('email', EmailType::class,array('label'=>'Email','required'=>true,'translation_domain' => 'form'))
-            ->add('plainPassword', TextType::class,array('required'=>true,'label'=>'Password','translation_domain' => 'form'))
-            ->add('vorname', EmailType::class,array('label'=>'Vorname','required'=>true,'translation_domain' => 'form'))
-            ->add('nachname', EmailType::class,array('label'=>'Name','required'=>true,'translation_domain' => 'form'))
             ->add('schulen', EntityType::class, [
                 'class' => Schule::class,
                 'choice_label' => function (Schule $schule) {
@@ -46,8 +42,8 @@ class UserType extends AbstractType
                 'choices' => $options['schulen'],
 
             ])
-            ->add('birthday', BirthdayType::class,array('required'=>false,'label'=>'Geburtstag','translation_domain' => 'form'))
-            ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
+            ->add('birthday', BirthdayType::class,array('widget'=>'single_text', 'required'=>false,'label'=>'Geburtstag','translation_domain' => 'form'))
+            ->add('save', SubmitType::class, [ 'label' => 'Speichern','translation_domain' => 'form'])
         ;
     }
     public function configureOptions(OptionsResolver $resolver)

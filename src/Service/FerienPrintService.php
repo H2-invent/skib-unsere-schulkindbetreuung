@@ -12,12 +12,11 @@ namespace App\Service;
 use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
-
-use League\Flysystem\FilesystemInterface;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Templating\EngineInterface;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
+use Twig\Environment;
+
 
 class FerienPrintService
 {
@@ -26,7 +25,7 @@ class FerienPrintService
     protected $parameterBag;
     private $router;
     private $tcpdfController;
-    public function __construct(TCPDFController $tcpdf, EngineInterface $templating, ParameterBagInterface $parameterBag, UrlGeneratorInterface $router)
+    public function __construct(TCPDFController $tcpdf, Environment $templating, ParameterBagInterface $parameterBag, UrlGeneratorInterface $router)
 
     {
 

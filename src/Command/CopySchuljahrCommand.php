@@ -17,7 +17,7 @@ class CopySchuljahrCommand extends Command
     protected static $defaultName = 'app:copySchuljahr';
     private $copySchuljahr;
     private $em;
-    public function __construct(string $name = null, CopySchuljahr $copySchuljahr,EntityManagerInterface $entityManager)
+    public function __construct( CopySchuljahr $copySchuljahr,EntityManagerInterface $entityManager, string $name = null)
     {
         parent::__construct($name);
         $this->copySchuljahr = $copySchuljahr;

@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Active;
 use App\Entity\Stadt;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use function Doctrine\ORM\QueryBuilder;
 
 /**

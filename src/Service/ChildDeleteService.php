@@ -11,6 +11,7 @@ use App\Entity\Stammdaten;
 use App\Entity\User;
 use Beelab\Recaptcha2Bundle\Form\Type\RecaptchaType;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FilesystemOperator;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -40,9 +41,11 @@ class ChildDeleteService
     private $templating;
     private $mailer;
     private $abschluss;
-    private  $parameterBag;
+    private $parameterBag;
     private $logger;
-    public function __construct(LoggerInterface $logger, ParameterBagInterface $parameterBag, WorkflowAbschluss $workflowAbschluss, MailerService $mailer, Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager)
+    private FilesystemOperator $internFileSystem;
+
+    public function __construct(FilesystemOperator $internFileSystem, LoggerInterface $logger, ParameterBagInterface $parameterBag, WorkflowAbschluss $workflowAbschluss, MailerService $mailer, Environment $environment, TranslatorInterface $translator, EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
         $this->translator = $translator;
@@ -51,26 +54,27 @@ class ChildDeleteService
         $this->abschluss = $workflowAbschluss;
         $this->parameterBag = $parameterBag;
         $this->logger = $logger;
+        $this->internFileSystem = $internFileSystem;
     }
 
-    public function deleteChild(Kind $kind,User $user)
+    public function deleteChild(Kind $kind, User $user)
     {
         try {
             $parents = $kind->getEltern();
-            $parentsNew = $this->em->getRepository(Stammdaten::class)->findOneBy(array('fin'=>false,'saved'=>false,'tracing'=>$parents->getTracing()));
+            $parentsNew = $this->em->getRepository(Stammdaten::class)->findOneBy(array('fin' => false, 'saved' => false, 'tracing' => $parents->getTracing()));
             $kinds = $parentsNew->getKinds();
-            $this->abschluss->abschluss($parentsNew,$kinds,$kind->getSchule()->getStadt());
-            $kindAct = $this->em->getRepository(Kind::class)->findOneBy(array('saved'=>true,'fin'=>true,'tracing'=>$kind->getTracing()));
+            $this->abschluss->abschluss($parentsNew, $kinds, $kind->getSchule()->getStadt());
+            $kindAct = $this->em->getRepository(Kind::class)->findOneBy(array('saved' => true, 'fin' => true, 'tracing' => $kind->getTracing()));
             $this->em->remove($kindAct);
-            $kindClone = $this->em->getRepository(Kind::class)->findOneBy(array('saved'=>false,'fin'=>false,'tracing'=>$kind->getTracing()));
+            $kindClone = $this->em->getRepository(Kind::class)->findOneBy(array('saved' => false, 'fin' => false, 'tracing' => $kind->getTracing()));
             $this->em->remove($kindClone);
             $parentsNew->setSecCode($parents->getSecCode());
             $this->em->persist($parentsNew);
             $this->em->flush();
-            $this->logger->log(1,'DELETE CHILD '.$kind->getId());
-            $this->logger->log(1,'DELETE TRACING ID '.$kind->getTracing());
-            $this->logger->log(1,'DELETED FROM '.$user->getVorname() .' '.$user->getNachname());
-            if($this->parameterBag->get('noEmailOnDelete') == 0){
+            $this->logger->log(1, 'DELETE CHILD ' . $kind->getId());
+            $this->logger->log(1, 'DELETE TRACING ID ' . $kind->getTracing());
+            $this->logger->log(1, 'DELETED FROM ' . $user->getVorname() . ' ' . $user->getNachname());
+            if ($this->parameterBag->get('noEmailOnDelete') == 0) {
                 $this->sendEmail($kind->getEltern(), $kind, $kind->getSchule()->getOrganisation());
             }
 
@@ -85,14 +89,34 @@ class ChildDeleteService
     {
         $mailBetreff = $this->translator->trans('Abmeldung der Schulkindbetreuung für ') . $kind->getVorname() . ' ' . $kind->getNachname();
         $mailContent = $this->templating->render('email/abmeldebestatigung.html.twig', array('eltern' => $stammdaten, 'kind' => $kind, 'org' => $organisation, 'stadt' => $organisation->getStadt()));
+        $attachment = array();
+        foreach ($organisation->getStadt()->getEmailDokumenteSchulkindbetreuungAbmeldung() as $att) {
+            $attachment[] = array(
+                'body' => $this->internFileSystem->read($att->getFileName()),
+                'filename' => $att->getOriginalName(),
+                'type' => $att->getType()
+            );
+        }
         $this->mailer->sendEmail(
             $kind->getSchule()->getOrganisation()->getName(),
             $kind->getSchule()->getOrganisation()->getEmail(),
             $stammdaten->getEmail(),
             $mailBetreff,
             $mailContent,
-            $kind->getSchule()->getOrganisation()->getEmail()
+            $kind->getSchule()->getOrganisation()->getEmail(),
+            $attachment
         );
+        foreach ($stammdaten->getPersonenberechtigters() as $data){
+            $this->mailer->sendEmail(
+                $kind->getSchule()->getOrganisation()->getName(),
+                $kind->getSchule()->getOrganisation()->getEmail(),
+                $data->getEmail(),
+                $mailBetreff,
+                $mailContent,
+                $kind->getSchule()->getOrganisation()->getEmail(),
+                $attachment
+            );
+        }
 
     }
 }

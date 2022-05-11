@@ -3,14 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable as Translatable;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ContentRepository")
  */
-class Content
+class Content implements TranslatableInterface
 {
-    use Translatable;
+    use TranslatableTrait;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

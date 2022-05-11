@@ -57,7 +57,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @ORM\Column(type="integer",nullable=true)
      */
-    private $einkommen;
+    private $einkommen=0;
 
     /**
      * @ORM\Column(type="datetime")
@@ -98,13 +98,13 @@ class Stammdaten implements GroupSequenceProviderInterface
 
     /**
      * @ORM\Column(type="boolean",nullable=true)
-     * @Assert\NotBlank(groups={"Schulkind"})
+     * @Assert\NotBlank(groups={"SchulkindSepa"})
      */
     private $sepaInfo;
 
     /**
      * @Assert\Iban(groups={"Schulkind"})
-     * @Assert\NotBlank(groups={"Schulkind"})
+     * @Assert\NotBlank(groups={"Schulkind","SchulkindSepa"})
      * @ORM\Column(type="text",nullable=true)
      * @Encrypted()
      */
@@ -118,14 +118,14 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @Assert\Bic(groups={"Schulkind"})
      * @ORM\Column(type="text",nullable=true)
-     * @Assert\NotBlank(groups={"Schulkind"})
+     * @Assert\NotBlank(groups={"Schulkind","SchulkindSepa"})
      * @Encrypted()
      */
     private $bic;
 
     /**
      * @ORM\Column(type="text",nullable=true)
-     * @Assert\NotBlank(groups={"Schulkind"})
+     * @Assert\NotBlank(groups={"Schulkind","SchulkindSepa"})
      * @Encrypted()
      */
     private $kontoinhaber;
@@ -143,6 +143,7 @@ class Stammdaten implements GroupSequenceProviderInterface
 
     /**
      * @Assert\NotBlank(groups = {"all"})
+     * @Assert\Regex(pattern="/\b(?!01000|99999)(0[1-9]\d{3}|[1-9]\d{4})\b/i",groups = {"all"})
      * @ORM\Column(type="integer",nullable=true)
      */
     private $plz;
@@ -276,6 +277,26 @@ class Stammdaten implements GroupSequenceProviderInterface
      */
     private $emailDoubleInput;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $anzahlKindergeldempfanger=0;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $sozialhilfeEmpanger=false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Personenberechtigter::class, mappedBy="stammdaten", orphanRemoval=true,cascade={"persist"})
+     */
+    private $personenberechtigters;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Geschwister::class, mappedBy="stammdaten", orphanRemoval=true,cascade={"persist"})
+     */
+    private $geschwisters;
+
     public function __construct()
     {
 
@@ -285,6 +306,8 @@ class Stammdaten implements GroupSequenceProviderInterface
         $this->paymentsFerien = new ArrayCollection();
         $this->paymentFerien = new ArrayCollection();
         $this->kundennummerns = new ArrayCollection();
+        $this->personenberechtigters = new ArrayCollection();
+        $this->geschwisters = new ArrayCollection();
 
     }
 
@@ -545,7 +568,7 @@ class Stammdaten implements GroupSequenceProviderInterface
         return $this->plz;
     }
 
-    public function setPlz(?int $plz): self
+    public function setPlz(?string $plz): self
     {
         $this->plz = $plz;
 
@@ -917,5 +940,89 @@ class Stammdaten implements GroupSequenceProviderInterface
         ['all',
             $this->kinderImKiga === true ? 'kindInKiga' : 'notKindinKiga'],
         ];
+    }
+
+    public function getAnzahlKindergeldempfanger(): ?int
+    {
+        return $this->anzahlKindergeldempfanger;
+    }
+
+    public function setAnzahlKindergeldempfanger(?int $anzahlKindergeldempfanger): self
+    {
+        $this->anzahlKindergeldempfanger = $anzahlKindergeldempfanger;
+
+        return $this;
+    }
+
+    public function getSozialhilfeEmpanger(): ?bool
+    {
+        return $this->sozialhilfeEmpanger;
+    }
+
+    public function setSozialhilfeEmpanger(?bool $sozialhilfeEmpanger): self
+    {
+        $this->sozialhilfeEmpanger = $sozialhilfeEmpanger;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Personenberechtigter>
+     */
+    public function getPersonenberechtigters(): Collection
+    {
+        return $this->personenberechtigters;
+    }
+
+    public function addPersonenberechtigter(Personenberechtigter $personenberechtigter): self
+    {
+        if (!$this->personenberechtigters->contains($personenberechtigter)) {
+            $this->personenberechtigters[] = $personenberechtigter;
+            $personenberechtigter->setStammdaten($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonenberechtigter(Personenberechtigter $personenberechtigter): self
+    {
+        if ($this->personenberechtigters->removeElement($personenberechtigter)) {
+            // set the owning side to null (unless already changed)
+            if ($personenberechtigter->getStammdaten() === $this) {
+                $personenberechtigter->setStammdaten(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Geschwister>
+     */
+    public function getGeschwisters(): Collection
+    {
+        return $this->geschwisters;
+    }
+
+    public function addGeschwister(Geschwister $geschwister): self
+    {
+        if (!$this->geschwisters->contains($geschwister)) {
+            $this->geschwisters[] = $geschwister;
+            $geschwister->setStammdaten($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGeschwister(Geschwister $geschwister): self
+    {
+        if ($this->geschwisters->removeElement($geschwister)) {
+            // set the owning side to null (unless already changed)
+            if ($geschwister->getStammdaten() === $this) {
+                $geschwister->setStammdaten(null);
+            }
+        }
+
+        return $this;
     }
 }

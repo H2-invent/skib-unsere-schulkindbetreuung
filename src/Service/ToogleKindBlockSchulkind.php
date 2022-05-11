@@ -36,7 +36,7 @@ class ToogleKindBlockSchulkind
     function toggleKind(Stadt $stadt, Kind $kind, Zeitblock $block)
     {
         $result = array(
-            'snack'=>array(),
+            'snack' => array(),
             'text' => $this->translator->trans('Betreuungszeitfenster erfolgreich gespeichert'),
             'error' => 0,
             'blocks' => array(),
@@ -47,19 +47,19 @@ class ToogleKindBlockSchulkind
             $blocks2 = $kind->getTageWithBlocks();
 
             if ($blocks2 < $stadt->getMinDaysperWeek()) {
-                $result['snack'][] = array('type'=>'warning','text'=>$this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)',array('%d%'=>$stadt->getMinDaysperWeek())));
-                $result['text'] = $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)',array('%d%'=>$stadt->getMinDaysperWeek()));
+                $result['snack'][] = array('type' => 'warning', 'text' => $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)', array('%d%' => $stadt->getMinDaysperWeek())));
+                $result['text'] = $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)', array('%d%' => $stadt->getMinDaysperWeek()));
                 $result['error'] = 2;
-            }else{
+            } else {
                 $result['preisUrl'] = $this->router->generate('loerrach_workflow_preis_einKind', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()));
 
             }
         } catch (\Exeption $e) {
-            $result['snack'][] = array('type'=>'error','text'=>$this->translator->trans('Fehler. Bitte versuchen Sie es erneut.'));
+            $result['snack'][] = array('type' => 'error', 'text' => $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.'));
             $result['error'] = 1;
         }
-        if(sizeof($result['blocks'])>1){
-            $result['snack'][]=array('type'=>'info','text'=>$this->translator->trans('Es wurden weitere Blöcke bearbeitet, da keine unbetreuten Zeiten in der Tagesbetreuung vorhanden sein dürfen'));
+        if (sizeof($result['blocks']) > 1) {
+            $result['snack'][] = array('type' => 'info', 'text' => $this->translator->trans('Es wurden weitere Blöcke bearbeitet, da keine unbetreuten Zeiten in der Tagesbetreuung vorhanden sein dürfen'));
         }
         return $result;
     }
@@ -68,7 +68,7 @@ class ToogleKindBlockSchulkind
     {
 
         $res = array();
-        if ($block->getMin() || $block->getMax()) {
+        if ($block->getMin() !== null || $block->getMax() !== null) {
             if (in_array($block, $kind->getBeworben()->toArray())) {
                 $res = $this->blockDelete($kind, $block);
 
@@ -98,7 +98,7 @@ class ToogleKindBlockSchulkind
             'cardText' => $this->translator->trans('Gebucht'),
         );
 
-        if ($block->getMin() || $block->getMax()) {
+        if ($block->getMin()!== null || $block->getMax() !== null) {
             $blockRes['kontingent'] = true;
             if (in_array($block, $kind->getBeworben()->toArray())) {
                 $kind->removeBeworben($block);
@@ -137,7 +137,7 @@ class ToogleKindBlockSchulkind
             'id' => $block->getId(),
             'cardText' => $this->translator->trans('Gebucht'),
         );
-        if ($block->getMin() || $block->getMax()) {
+        if ($block->getMin() !== null || $block->getMax() !== null) {
             $blockRes['kontingent'] = true;
             if (!in_array($block, $kind->getBeworben()->toArray())) {
                 $kind->addBeworben($block);
@@ -145,7 +145,6 @@ class ToogleKindBlockSchulkind
                 $state = 0;
                 $blockRes['cardText'] = $this->translator->trans('Angemeldet');
             }
-
         } else {
             if (!in_array($block, $kind->getZeitblocks()->toArray())) {
                 $kind->addZeitblock($block);
@@ -153,7 +152,6 @@ class ToogleKindBlockSchulkind
                 $state = 1;
                 $blockRes['cardText'] = $this->translator->trans('Gebucht');
             }
-
         }
 
         if ($state === null) {

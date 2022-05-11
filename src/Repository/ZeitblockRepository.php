@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Active;
+use App\Entity\Schule;
 use App\Entity\Zeitblock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Zeitblock|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,25 @@ class ZeitblockRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Zeitblock::class);
+    }
+
+       /**
+        * @return Zeitblock[] Returns an array of Zeitblock objects
+        */
+
+    public function findBeworbenBlocksBySchuleAndSchulfahr(Schule $schule, Active $active)
+    {
+        return $this->createQueryBuilder('z')
+            ->innerJoin('z.schule','schule')
+            ->innerJoin('z.active', 'active')
+            ->andWhere('active =:schuljahr')
+            ->andWhere('schule =:schule')
+            ->andWhere('SIZE(z.kinderBeworben) > 0')
+            ->setParameter('schule', $schule)
+            ->setParameter('schuljahr', $active)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     // /**
@@ -47,4 +68,5 @@ class ZeitblockRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }

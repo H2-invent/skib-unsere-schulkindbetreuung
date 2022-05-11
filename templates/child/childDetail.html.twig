@@ -43,11 +43,10 @@
                                     <td>{% trans %} Berufliche Situation des Erziehungsberechtigten {% endtrans %}</td>
                                     <td>{{ beruflicheSituation[eltern.beruflicheSituation] }}</td>
                                 </tr>
-                                <tr>
-                                    <td>{{ 'Kinder im KiGa'|trans }}</td>
-                                    <td>{% if eltern.kinderImKiga %}{{ eltern.kigaOfKids }}{% else %}{{ 'Nein'|trans }}{% endif %}
-                                    </td>
-                                </tr>
+
+                                {% include 'widget/__elternTabelle_reduced.html.twig' with {'stadt':k.schule.stadt,'eltern':eltern} %}
+
+
                                 <tr>
                                     <td>{% trans %} Name und Beziehung des Notfallkontakt {% endtrans %}</td>
                                     <td>{{ eltern.notfallName }}</td>

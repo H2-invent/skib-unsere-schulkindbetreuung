@@ -20,10 +20,10 @@ class MailgunWebhockService
     private $mailer;
     private $parameterBag;
 
-    public function __construct(ParameterBagInterface $parameterBag, EntityManagerInterface $entityManager, \Swift_Mailer $swift_Mailer)
+    public function __construct(ParameterBagInterface $parameterBag, EntityManagerInterface $entityManager, MailerService  $mailer)
     {
         $this->em = $entityManager;
-        $this->mailer = $swift_Mailer;
+        $this->mailer = $mailer;
         $this->parameterBag = $parameterBag;
     }
 
@@ -89,13 +89,9 @@ class MailgunWebhockService
 
     function sendMail($to, $betreff, $text, $sender)
     {
-        $message = (new \Swift_Message($betreff))
-            ->setFrom(array('alarm@unsere-schulkindbetreuung.de' => $sender))
-            ->setTo($to)
-            ->setBody(
-                $text
-            );
-        $this->mailer->send($message);
+
+        $this->mailer->sendEmail($sender,'alarm@unsere-schulkindbetreuung.de', $to,$betreff,$text );
+
     }
 
     public function checkHash($hash,$data){

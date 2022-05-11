@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Ferienblock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\Constraints\DateTime;
 use function Doctrine\ORM\QueryBuilder;
 

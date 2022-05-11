@@ -24,6 +24,7 @@
                     {{ form_row(form.kontoinhaber) }}
                 </div>
             </div>
+            {% if stadt.settingsSkibSepaElektronisch %}
             <div class="mb-3">
                 <div class="col-sm-11">
                     {{ form_row(form.sepaInfo) }}
@@ -47,6 +48,7 @@
                     </p>
                 </div>
             </div>
+            {% endif %}
             <div class="text-center stickyBottom">
                 <hr class="hr-bold">
                 <a href="{{ path('loerrach_workflow_mittagessen', {'slug':stadt.slug}) }}"

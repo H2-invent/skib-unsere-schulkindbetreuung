@@ -10,7 +10,10 @@ namespace App\Form\Type;
 
 
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
+use App\Entity\File;
 use App\Entity\Stadt;
+use App\Repository\FileRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -45,6 +48,34 @@ class StadtType extends AbstractType
             $stadt->translate('en')->setCareBlockInfo('');
             $stadt->translate('fr')->setCareBlockInfo('');
 
+            $stadt->translate('de')->setSettingGehaltsklassenHelp('');
+            $stadt->translate('en')->setSettingGehaltsklassenHelp('');
+            $stadt->translate('fr')->setSettingGehaltsklassenHelp('');
+
+            $stadt->translate('de')->setSettingKinderimKigaHelp('');
+            $stadt->translate('en')->setSettingKinderimKigaHelp('');
+            $stadt->translate('fr')->setSettingKinderimKigaHelp('');
+
+            $stadt->translate('de')->setSettingsAnzahlKindergeldempfangerHelp('');
+            $stadt->translate('en')->setSettingsAnzahlKindergeldempfangerHelp('');
+            $stadt->translate('fr')->setSettingsAnzahlKindergeldempfangerHelp('');
+
+            $stadt->translate('de')->setSettingsSozielHilfeEmpfangerHelp('');
+            $stadt->translate('en')->setSettingsSozielHilfeEmpfangerHelp('');
+            $stadt->translate('fr')->setSettingsSozielHilfeEmpfangerHelp('');
+
+            $stadt->translate('de')->setSettingsweiterePersonenberechtigteHelp('');
+            $stadt->translate('en')->setSettingsweiterePersonenberechtigteHelp('');
+            $stadt->translate('fr')->setSettingsweiterePersonenberechtigteHelp('');
+
+            $stadt->translate('de')->setSettingsEingabeDerGeschwisterHelp('');
+            $stadt->translate('en')->setSettingsEingabeDerGeschwisterHelp('');
+            $stadt->translate('fr')->setSettingsEingabeDerGeschwisterHelp('');
+
+            $stadt->translate('de')->setSettingsEingabeDerGeschwisterHelpUpload('');
+            $stadt->translate('en')->setSettingsEingabeDerGeschwisterHelpUpload('');
+            $stadt->translate('fr')->setSettingsEingabeDerGeschwisterHelpUpload('');
+
             foreach ($stadt->getNewTranslations() as $newTranslation) {
                 if (!$stadt->getTranslations()->contains($newTranslation) && !$stadt->getNewTranslations()->isEmpty()) {
                     $stadt->addTranslation($newTranslation);
@@ -52,6 +83,7 @@ class StadtType extends AbstractType
                 }
             }
         }
+
         $builder
             ->add('name', TextType::class, ['label' => 'Name der Stadt', 'translation_domain' => 'form'])
             ->add('slug', TextType::class, ['label' => 'Slug der Stadt', 'translation_domain' => 'form'])
@@ -71,8 +103,93 @@ class StadtType extends AbstractType
             ->add('minDaysperWeek', NumberType::class, ['required' => true, 'label' => 'Mindestanzahl an Blöcken pro Woche', 'translation_domain' => 'form'])
             ->add('preiskategorien', NumberType::class, ['required' => true, 'label' => 'Anzahl der Preiskategorien', 'translation_domain' => 'form'])
             ->add('secCodeAlwaysNew', CheckboxType::class, ['required' => false, 'label' => 'Der Security-Code soll bei jeder Änderung geändert werden', 'translation_domain' => 'form'])
-            ->add('showShowMoreToggleOnHomescreen', CheckboxType::class, ['required' => false, 'label' => 'Zeige den "Mehr lesen" Button auf der Startseite an', 'translation_domain' => 'form'])
 
+            //SKIB Stammdaten einstallungen
+            ->add('settingsAnzahlKindergeldempfanger', CheckboxType::class, ['required' => false, 'label' => 'Abfrage Anzahl Kindergeldpflichtiger Kinder im Hausahlt', 'translation_domain' => 'form'])
+            ->add('settingsAnzahlKindergeldempfangerRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
+            ->add('settingsSozielHilfeEmpfanger', CheckboxType::class, ['required' => false, 'label' => 'Abfrage Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?', 'translation_domain' => 'form'])
+            ->add('settingsSozielHilfeEmpfangerRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
+            ->add('settingGehaltsklassen', CheckboxType::class, ['required' => false, 'label' => 'Gehaltsklassen abfragen?', 'translation_domain' => 'form'])
+            ->add('settingGehaltsklassenRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
+            ->add('settingKinderimKiga', CheckboxType::class, ['required' => false, 'label' => 'Abfrage ob weiteres Kind im KiGa?', 'translation_domain' => 'form'])
+            ->add('settingsweiterePersonenberechtigte', CheckboxType::class, ['required' => false, 'label' => 'Weitere Personenberechtigte hinzufügen.', 'translation_domain' => 'form'])
+            ->add('settingsEingabeDerGeschwister', CheckboxType::class, ['required' => false, 'label' => 'Die Geschwisterkinder müssen aufgelistet werden.', 'translation_domain' => 'form'])
+            ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])
+            ->add('emailDokumente_confirm', EntityType::class, [
+                // looks for choices from this entity
+                'class' => File::class,
+                'label' => 'Dokumente für die E-Mail-Bestätigungsmail',
+                // uses the User.username property as the visible option string
+                'choice_label' => 'originalName',
+                'choices' => $stadt->getUploads(),
+                // used to render a select box, check boxes or radios
+                'multiple' => true,
+                'expanded' => true,
+                'required' => false
+            ])
+            ->add('emailDokumente_schulkindbetreuung_anmeldung', EntityType::class, [
+                // looks for choices from this entity
+                'class' => File::class,
+                'label' => 'Dokumente für die Anmeldemail',
+                // uses the User.username property as the visible option string
+                'choice_label' => 'originalName',
+                'choices' => $stadt->getUploads(),
+                // used to render a select box, check boxes or radios
+                'multiple' => true,
+                'expanded' => true,
+                'required' => false
+            ])
+            ->add('emailDokumente_schulkindbetreuung_anderung', EntityType::class, [
+                // looks for choices from this entity
+                'class' => File::class,
+                'label' => 'Dokumente für die Änderungsmail',
+                // uses the User.username property as the visible option string
+                'choice_label' => 'originalName',
+                'choices' => $stadt->getUploads(),
+                // used to render a select box, check boxes or radios
+                'multiple' => true,
+                'expanded' => true,
+                'required' => false
+            ])
+            ->add('emailDokumente_schulkindbetreuung_buchung', EntityType::class, [
+                // looks for choices from this entity
+                'class' => File::class,
+                'label' => 'Dokumente für die Buchungsmail',
+                // uses the User.username property as the visible option string
+                'choice_label' => 'originalName',
+                'choices' => $stadt->getUploads(),
+                // used to render a select box, check boxes or radios
+                'multiple' => true,
+                'expanded' => true,
+                'required' => false
+            ])
+            ->add('emailDokumente_schulkindbetreuung_abmeldung', EntityType::class, [
+                // looks for choices from this entity
+                'class' => File::class,
+                'label' => 'Dokumente für die Abmeldungsmail',
+                // uses the User.username property as the visible option string
+                'choice_label' => 'originalName',
+                'choices' => $stadt->getUploads(),
+                // used to render a select box, check boxes or radios
+                'multiple' => true,
+                'expanded' => true,
+                'required' => false
+            ])
+
+            //SKIB Stammdateneinstallungen
+            ->add('emailDokumente_rechnung', EntityType::class, [
+                // looks for choices from this entity
+                'class' => File::class,
+                'label' => 'Dokumente für die Rechnungsmail',
+                // uses the User.username property as the visible option string
+                'choice_label' => 'originalName',
+                'choices' => $stadt->getUploads(),
+                // used to render a select box, check boxes or radios
+                'multiple' => true,
+                'expanded' => true,
+                'required' => false
+            ])
+            ->add('showShowMoreToggleOnHomescreen', CheckboxType::class, ['required' => false, 'label' => 'Zeige den "Mehr lesen" Button auf der Startseite an', 'translation_domain' => 'form'])
             ->add('gehaltsklassen', CollectionType::class, [
                 'entry_type' => TextType::class,
                 'entry_options' => array('label' => 'Bezeichnung der Gehaltsklassen', 'translation_domain' => 'form')
@@ -101,8 +218,8 @@ class StadtType extends AbstractType
                         'datenschutz' => [
 
                             'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
-                                'label' => 'Datenschutz',
-                                'translation_domain' => 'form'
+                            'label' => 'Datenschutz',
+                            'translation_domain' => 'form'
                         ],
                         'infoText' => [
 
@@ -130,12 +247,53 @@ class StadtType extends AbstractType
                         ],
                         'coverText' => [
 
-                            'attr' => array('rows' => 6,'class' => 'onlineEditor'),
+                            'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
                             'label' => 'Text in der "Wichtig" Box auf der Startseite',
                             'translation_domain' => 'form'
+                        ],
+
+                        'settingKinderimKigaHelp' => [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingGehaltsklassenHelp' => [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingsSozielHilfeEmpfangerHelp' => [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingsAnzahlKindergeldempfangerHelp' => [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingsEingabeDerGeschwisterHelp' => [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingsEingabeDerGeschwisterHelpUpload'=> [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Hilfetext für den Upload von Dateien. Als verifikation für den Erhalt von Kindergeld. Leerlassen wenn es keinen Upload geben soll.)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingsweiterePersonenberechtigteHelp' => [
+
+                            'attr' => array('rows' => 1,),
+                            'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
                         ]
-
-
                     ]
                 ]
             )

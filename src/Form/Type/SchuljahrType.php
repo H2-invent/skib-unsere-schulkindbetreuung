@@ -26,10 +26,10 @@ class SchuljahrType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('von', DateType::class,array('label'=>'Schuljahresbegin','required'=>true,'translation_domain' => 'form'))
-            ->add('bis', DateType::class,array('label'=>'Schuljahresende','required'=>true,'translation_domain' => 'form'))
-            ->add('anmeldeStart', DateType::class,array('label'=>'Beginn der Anmeldung','required'=>true,'translation_domain' => 'form'))
-            ->add('anmeldeEnde', DateType::class,array('label'=>'Ende der Anmeldung','required'=>true,'translation_domain' => 'form'))
+            ->add('von', DateType::class,array('widget'=>'single_text','label'=>'Schuljahresbegin','required'=>true,'translation_domain' => 'form'))
+            ->add('bis', DateType::class,array('widget'=>'single_text','label'=>'Schuljahresende','required'=>true,'translation_domain' => 'form'))
+            ->add('anmeldeStart', DateType::class,array('widget'=>'single_text','label'=>'Beginn der Anmeldung','required'=>true,'translation_domain' => 'form'))
+            ->add('anmeldeEnde', DateType::class,array('widget'=>'single_text','label'=>'Ende der Anmeldung','required'=>true,'translation_domain' => 'form'))
             ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
     }

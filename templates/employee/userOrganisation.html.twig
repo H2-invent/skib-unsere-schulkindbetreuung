@@ -16,7 +16,7 @@
                     <thead>
                     <tr>
                         <th></th>
-                        <th>{% trans %}Username{% endtrans %}</th>
+                        <th>{% trans %}E-Mail{% endtrans %}</th>
                         <th>{% trans %}Vorname{% endtrans %}</th>
                         <th>{% trans %}Nachname{% endtrans %}</th>
                         <th>{% trans %}Organisation{% endtrans %}</th>
@@ -37,7 +37,7 @@
                                     <a class="dropdown-item" href="{{ path('city_admin_mitarbeiter_delete',{'id':u.id}) }}">{% trans %}Löschen{% endtrans %}</a>
                                 </div>
                             </div></td>
-                        <td>{{ u.username }}</td>
+                        <td>{{ u.email }}</td>
                         <td>{{ u.vorname }}</td>
                         <td>{{ u.nachname }}</td>
                         <td>{{ u.organisation.name }}</td>

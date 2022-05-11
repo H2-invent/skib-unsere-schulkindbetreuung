@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Kind;
+use App\Entity\Zeitblock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Kind|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +48,27 @@ class KindRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findBeworbenByZeitblock(Zeitblock $zeitblock)
+    {
+        return $this->createQueryBuilder('k')
+            ->innerJoin('k.beworben', 'beworben')
+            ->andWhere('beworben = :beworben')
+            ->andWhere('k.fin = :true')
+            ->setParameter('true', true)
+            ->setParameter('beworben', $zeitblock)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findActualWorkingCopybyKind(Kind $kind): ?Kind
+    {
+        return $this->createQueryBuilder('k')
+            ->andWhere('k.tracing = :tracingId')
+            ->andWhere('k.fin = :false')
+            ->andWhere('k.saved = :false')
+            ->setParameter('false', false)
+            ->setParameter('tracingId', $kind->getTracing())
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

@@ -393,3 +393,9 @@ height: auto;
 .modal-dialog.cascading-modal {
   margin-top: 5%;
 }
+.gebucht-text{
+  word-break: break-word;
+}
+.dz-message{
+  display: block!important;
+}

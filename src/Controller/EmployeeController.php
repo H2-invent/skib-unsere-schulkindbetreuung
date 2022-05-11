@@ -5,7 +5,8 @@ namespace App\Controller;
 use App\Entity\Stadt;
 use App\Entity\User;
 use App\Form\Type\UserType;
-use FOS\UserBundle\Model\UserManagerInterface;
+use App\Security\UserManagerInterface;
+use App\Service\InvitationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -53,7 +54,7 @@ class EmployeeController extends AbstractController
     /**
      * @Route("/city_admin/mitarbeiter/stadt/neu", name="city_employee_new")
      */
-    public function newUser(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
+    public function newUser(Request $request, TranslatorInterface $translator, ValidatorInterface $validator,InvitationService $invitationService)
     {
         $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
         if ($city != $this->getUser()->getStadt()) {
@@ -73,6 +74,7 @@ class EmployeeController extends AbstractController
                 $userManager = $this->manager;
                 $userManager->updateUser($defaultData);
                 $text = $translator->trans('Erfolgreich angelegt');
+                $invitationService->inviteNewUser($defaultData,$this->getUser());
                 return $this->redirectToRoute('city_employee_show', array('snack' => $text, 'id' => $city->getId()));
             } catch (\Exception $e) {
                 $userManager = $this->manager;
@@ -88,7 +90,6 @@ class EmployeeController extends AbstractController
                         'Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername'
                     );
                 }
-
 
                 return $this->render(
                     'administrator/error.html.twig',
@@ -118,8 +119,6 @@ class EmployeeController extends AbstractController
         $city = $defaultData->getStadt();
         $errors = array();
         $form = $this->createForm(UserType::class, $defaultData);
-        $form->remove('plainPassword');
-        $form->remove('username');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

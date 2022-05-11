@@ -31,12 +31,7 @@
                 <td>{% trans %}Adresse des Erziehungsberechtigten{% endtrans %}</td>
                 <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
             </tr>
-            <tr>
-                <td>{{ 'Kinder im KiGa'|trans }}</td>
-                <td>{% if eltern.kinderImKiga %}{{ eltern.kigaOfKids }} {% else %}{{ 'Nein'|trans }}{% endif %}
-                </td>
-            </tr>
-
+            {% include 'widget/__elternTabelle_reduced.html.twig' with {'stadt':eltern.kinds[0].schule.stadt,'eltern':eltern} %}
             <tr>
                 <td>{% trans %}Name des Notfallkontakt{% endtrans %}</td>
                 <td>{{ eltern.notfallName }}</td>

@@ -14,11 +14,10 @@ use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
-use League\Flysystem\FilesystemInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment;
 
 class PreisListeService
 {
@@ -26,17 +25,16 @@ class PreisListeService
     private $templating;
     private $translator;
     protected $parameterBag;
-    private $fileSystem;
+
     private $generator;
     private $schuljahrService;
     private $em;
-    public function __construct(EntityManagerInterface $entityManager,SchuljahrService $schuljahrService, UrlGeneratorInterface $urlGenerator, FilesystemInterface $publicUploadsFilesystem, EngineInterface $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(EntityManagerInterface $entityManager,SchuljahrService $schuljahrService, UrlGeneratorInterface $urlGenerator, Environment $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
         $this->em = $entityManager;
         $this->templating = $templating;
         $this->translator = $translator;
         $this->parameterBag = $parameterBag;
-        $this->fileSystem = $publicUploadsFilesystem;
         $this->generator = $urlGenerator;
         $this->schuljahrService = $schuljahrService;
     }

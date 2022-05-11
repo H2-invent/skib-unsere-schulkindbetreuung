@@ -41,8 +41,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
-
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
 class LoerrachWorkflowController extends AbstractController
 {
@@ -65,16 +64,16 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/adresse",name="loerrach_workflow_adresse",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function adresseAction(ParameterBagInterface $parameterBag,
-                                  ErrorService $errorService,
+    public function adresseAction(ParameterBagInterface            $parameterBag,
+                                  ErrorService                     $errorService,
                                   SchulkindBetreuungAdresseService $schulkindBetreuungAdresseService,
-                                  AuthorizationCheckerInterface $authorizationChecker,
-                                  TranslatorInterface $translator,
-                                  Stadt $stadt,
-                                  Request $request,
-                                  ValidatorInterface $validator,
-                                  StamdatenFromCookie $stamdatenFromCookie,
-                                  SchuljahrService $schuljahrService)
+                                  AuthorizationCheckerInterface    $authorizationChecker,
+                                  TranslatorInterface              $translator,
+                                  Stadt                            $stadt,
+                                  Request                          $request,
+                                  ValidatorInterface               $validator,
+                                  StamdatenFromCookie              $stamdatenFromCookie,
+                                  SchuljahrService                 $schuljahrService)
     {
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
 
@@ -91,10 +90,10 @@ class LoerrachWorkflowController extends AbstractController
         }
         //Add SecCode into if to create a SecCode the first time to be not "null"
         $adresse = $schulkindBetreuungAdresseService->setUID($adresse);
-        $formArr = array('einkommen' => array_flip($stadt->getGehaltsklassen()), 'beruflicheSituation' => $this->beruflicheSituation);
+        $formArr = array('einkommen' => array_flip($stadt->getGehaltsklassen()), 'beruflicheSituation' => $this->beruflicheSituation, 'stadt' => $stadt);
 
-        $form = $this->createForm(LoerrachEltern::class, $adresse,$formArr);
-        if(!$authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE')){
+        $form = $this->createForm(LoerrachEltern::class, $adresse, $formArr);
+        if (!$authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE')) {
             $form->remove('emailDoubleInput');
         }
         $form->handleRequest($request);
@@ -102,15 +101,26 @@ class LoerrachWorkflowController extends AbstractController
         $errorsString = array();
         if ($form->isSubmitted()) {
             $adresse = $form->getData();
-            if($authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE')){
-                $errors = $validator->validate($adresse,null,['Default','internal']);
-            }else{
+            if ($authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE')) {
+                $errors = $validator->validate($adresse, null, ['Default', 'internal']);
+            } else {
 
                 $errors = $validator->validate($adresse);
+                foreach ($adresse->getGeschwisters() as $data) {
+                    $tmpErr = $validator->validate($data,null, ['Default']);
 
+                    $errors->addAll($tmpErr);
+
+                }
+                foreach ($adresse->getPersonenberechtigters() as $data2) {
+                    $tmpErr = $validator->validate($data2,null, ['Default']);
+
+                    $errors->addAll($tmpErr);
+
+                }
             }
 
-            $errorsString = $errorService->createError($errors,$form);
+            $errorsString = $errorService->createError($errors, $form);
 
 
             if (count($errors) == 0) {
@@ -285,7 +295,7 @@ class LoerrachWorkflowController extends AbstractController
         // When more then one active year is available and an old Kind has to be changed, we need to set the schuljahr back to the original schuljahr of one of the time slots.
         if (count($kind->getRealZeitblocks()) > 0) {
             $schuljahr = $kind->getRealZeitblocks()[0]->getActive();
-        }else {
+        } else {
             $schuljahr = $schuljahrService->getSchuljahr($stadt);
         }
 
@@ -374,14 +384,15 @@ class LoerrachWorkflowController extends AbstractController
             return $this->redirectToRoute('loerrach_workflow_adresse', array('slug' => $stadt->getSlug()));
         }
         $renderOrganisation = $schulkindBetreuungKindSEPAService->findOrg($adresse);
-        $form = $this->createForm(SepaStammdatenType::class, $adresse);
+        $form = $this->createForm(SepaStammdatenType::class, $adresse,['stadt'=>$stadt]);
 
         $form->handleRequest($request);
         $errors = array();
         $errorString = array();
         if ($form->isSubmitted()) {
             $adresse = $form->getData();
-            $errors = $validator->validate($adresse, null, ['Schulkind']);
+            $valdation = [$stadt->getSettingsSkibSepaElektronisch()?'SchulkindSepa':',Schulkind'];
+            $errors = $validator->validate($adresse, null, $valdation);
             $errorString = $errorService->createError($errors, $form);
             if (count($errors) == 0) {
                 $em = $this->getDoctrine()->getManager();
@@ -426,7 +437,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $error = false;
         foreach ($kind as $data) {
-            if ($data->getTageWithBlocks() < 2) {
+            if ($data->getTageWithBlocks() < $stadt->getMinDaysperWeek()) {
                 $error = true;
                 break;
             }
@@ -439,6 +450,7 @@ class LoerrachWorkflowController extends AbstractController
             'stadt' => $stadt,
             'preis' => $preis,
             'error' => $error,
+            'noPrintout'=>true,
             'organisation' => $renderOrganisation));
     }
 
@@ -446,19 +458,19 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/abschluss",name="loerrach_workflow_abschluss",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function abschlussAction(Request $request,
-                                    ValidatorInterface $validator,
+    public function abschlussAction(Request             $request,
+                                    ValidatorInterface  $validator,
                                     TranslatorInterface $translator,
-                                    MailerService $mailer,
-                                    TCPDFController $tcpdf,
-                                    PrintService $print,
-                                    IcsService $icsService,
-                                    PrintAGBService $printAGBService,
+                                    MailerService       $mailer,
+                                    TCPDFController     $tcpdf,
+                                    PrintService        $print,
+                                    IcsService          $icsService,
+                                    PrintAGBService     $printAGBService,
                                     AnmeldeEmailService $anmeldeEmailService,
                                     StamdatenFromCookie $stamdatenFromCookie,
-                                    SchuljahrService $schuljahrService,
-                                    WorkflowAbschluss $workflowAbschluss,
-                                    Stadt $stadt)
+                                    SchuljahrService    $schuljahrService,
+                                    WorkflowAbschluss   $workflowAbschluss,
+                                    Stadt               $stadt)
     {
 
         //Check for Anmeldung open
@@ -487,17 +499,14 @@ class LoerrachWorkflowController extends AbstractController
         $workflowAbschluss->abschluss($adresse, $kind, $stadt);
 //Emails an die Eltern senden
         foreach ($kind as $data) {
-            $anmeldeEmailService->sendEmail($data, $adresse, $stadt,$translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:'));
-            $anmeldeEmailService->setBetreff($translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $data->getVorname() . ' ' . $data->getNachname());
-            $anmeldeEmailService->send($data,$adresse);
+            $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:'));
+            $anmeldeEmailService->send($data, $adresse);
         }
-
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
         $response->headers->clearCookie('UserID');
         $response->headers->clearCookie('SecID');
         $response->headers->clearCookie('KindID');
         return $response;
-
     }
 
     /**

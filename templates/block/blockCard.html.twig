@@ -75,7 +75,7 @@
                     {% if is_granted('ROLE_ORG_ACCEPT_CHILD') and (b.min is not null or b.max is not null) and b.BeworbenwithFin|length>0 %}
 
                         {% if (b.max is not null and (b.beworbenwithFin|length + b.kindwithFin|length) <= b.max) or b.min is not null %}
-                            <a href="{{ path('kontingent_accept_all_kids',{'block_id':b.id}) }}" class="deleteAjax"><i
+                            <a href="{{ path('kontingent_accept_all_kids',{'block_id':b.id}) }}" class="deleteBtn" successFKT="reloadBlocks"><i
                                         class="material-icons">check</i> </a>
                         {% endif %}
 

@@ -9,18 +9,17 @@
 
         <b>{{ kind.vorname }} {{ kind.nachname }}</b> </p>
     <p class="text-center">{% trans %}Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.
-            Dieser ist nur einmalig gültig und wird Ihnen mit der Bestätigung neu zugeandt.
-            Dieser Mechanismus verhindert einen Missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.{% endtrans %}</p>
+            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.{% endtrans %}</p>
     <h3 class="text-center">
         {{ 'Sicherheitscode'|trans }}: {{ eltern.secCode }}
     </h3>
-    <p class="text-center">{% trans %}Dies ist eine vorläufige Inforamtion über die Anmeldung Ihres Kindes.
+    <p class="text-center">{% trans %}Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.
             Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.{% endtrans %}
     </p>
     <br>
     <br>
     <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}<br>
-        <b>{{ kind.zeitblocks[0].schule.organisation.name }}</b></p>
+        <b>{{ kind.beworben[0].schule.organisation.name }}</b></p>
 
 
 {% endblock %}

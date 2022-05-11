@@ -5,21 +5,27 @@ namespace App\Controller;
 use App\Entity\Organisation;
 use App\Entity\User;
 use App\Form\Type\UserType;
-use FOS\UserBundle\Model\UserManagerInterface;
+
+use App\Security\UserManagerInterface;
+use App\Service\InvitationService;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Translation\TranslatorInterface;
+
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmployeeOrganisationController extends AbstractController
 {
     private $manager;
     private $availRole;
-    public function __construct(UserManagerInterface $manager)
+    private LoggerInterface $logger;
+    public function __construct(UserManagerInterface $manager, LoggerInterface $logger)
     {
+        $this->logger = $logger;
         $this->manager = $manager;
         $this->availRole = array(
             'ROLE_ORG_REPORT' => 'ROLE_ORG_REPORT',
@@ -77,8 +83,6 @@ class EmployeeOrganisationController extends AbstractController
         $city = $defaultData->getStadt();
         $errors = array();
         $form = $this->createForm(UserType::class, $defaultData,array('schulen'=>$this->getUser()->getOrganisation()->getSchule()));
-        $form->remove('plainPassword');
-        $form->remove('username');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -89,6 +93,7 @@ class EmployeeOrganisationController extends AbstractController
                 $text = $translator->trans('Erfolgreich gespeichert');
                 return $this->redirectToRoute('city_employee_org_show', array('snack'=>$text,'id' => $defaultData->getOrganisation()->getId()));
             } catch (\Exception $e) {
+                $this->logger->error($e->getMessage());
                 $errorText = $translator->trans(
                     'Die Email existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse'
                 );
@@ -112,7 +117,7 @@ class EmployeeOrganisationController extends AbstractController
     /**
      * @Route("/org_edit/mitarbeiter/organisation/neu", name="organisation_employee_new")
      */
-    public function newUser(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
+    public function newUser(Request $request, TranslatorInterface $translator, ValidatorInterface $validator,InvitationService $invitationService)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation->getStadt() != $this->getUser()->getStadt()) {
@@ -122,7 +127,7 @@ class EmployeeOrganisationController extends AbstractController
         $defaultData->setOrganisation($organisation);
         $defaultData->setStadt($organisation->getStadt());
         $errors = array();
-        $form = $this->createForm(UserType::class, $defaultData,array('schulen'=>$this->getUser()->getOrganisation()->getSchule()));
+        $form = $this->createForm(UserType::class, $defaultData,array('schulen'=>$organisation->getSchule()));
 
         $form->handleRequest($request);
 
@@ -132,9 +137,11 @@ class EmployeeOrganisationController extends AbstractController
                 $defaultData->setEnabled(true);
                 $userManager = $this->manager;
                 $userManager->updateUser($defaultData);
+                $invitationService->inviteNewUser($defaultData,$this->getUser());
                 $text = $translator->trans('Erfolgreich gespeichert');
                 return $this->redirectToRoute('city_employee_org_show', array('snack'=>$text,'id' => $organisation->getId()));
             } catch (\Exception $e) {
+                $this->logger->error($e->getMessage());
                 $userManager = $this->manager;
                 $errorText = $translator->trans(
                     'Unbekannter Fehler'

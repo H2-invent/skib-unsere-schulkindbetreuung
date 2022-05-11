@@ -8,7 +8,6 @@ parameters:
     app.path.uploads: /uploads
     secret: '%env(APP_SECRET)%'
     locale: 'de'
-    mailprovider: '%env(MAILPROVIDER)%'
     confirmEmailSender: '%env(CONFIRMEMAIL)%'
     alarmEmail: '%env(ALLERTMAIL)%'
     mailgunApiKEy: '%env(MAILGUNAPIKEY)%'
@@ -16,7 +15,10 @@ parameters:
     osTicketApi: '%env(osTicketApi)%'
     wartung: '%env(WARTUNG)%'
     noEmailOnDelete: '%env(NOEMAILONDELETE)%'
-
+    KEYCLOAK_URL: '%env(OAUTH_KEYCLOAK_SERVER)%'
+    KEYCLOAK_REALM: '%env(OAUTH_KEYCLOAK_REALM)%'
+    KEYCLOAK_SECRETE: '%env(OAUTH_KEYCLOAK_CLIENT_SECRET)%'
+    KEYCLOAK_ID: '%env(OAUTH_KEYCLOAK_CLIENT_ID)%'
 
 services:
     # default configuration for services in *this* file
@@ -40,4 +42,4 @@ services:
 
     # add more service defiitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    WhiteOctober\TCPDFBundle\Controller\TCPDFController: '@white_october.tcpdf'
+    Qipsius\TCPDFBundle\Controller\TCPDFController: '@qipsius.tcpdf'

@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use function Doctrine\ORM\QueryBuilder;
 
 class ChildController extends AbstractController
@@ -169,6 +169,7 @@ class ChildController extends AbstractController
                 $kind->getSchule()->getOrganisation()->getEmail());
             $text = $translator->trans('Sicherheitscode erneut zugesendet');
         } catch (\Exception $exception) {
+
             $text = $translator->trans('Sicherheitscode konnte nicht erneut zugesendet');
         }
         return $this->redirectToRoute('child_show', ['id' => $kind->getSchule()->getOrganisation()->getId(), 'snack' => $text]);
