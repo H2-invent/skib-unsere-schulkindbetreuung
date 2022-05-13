@@ -27,8 +27,13 @@ class SchulenExtension extends AbstractExtension
     public function getAnzahlBeworben(Schule $schule)
     {
 
-        $schuljahr = $this->em->getRepository(Active::class)->findAnmeldeSchuljahrFromCity($schule->getStadt());
-        $blocks = $this->em->getRepository(Zeitblock::class)->findBeworbenBlocksBySchuleAndSchulfahr($schule,$schuljahr);
+        try {
+            $schuljahr = $this->em->getRepository(Active::class)->findAnmeldeSchuljahrFromCity($schule->getStadt());
+            $blocks = $this->em->getRepository(Zeitblock::class)->findBeworbenBlocksBySchuleAndSchulfahr($schule,$schuljahr);
+        }catch (\Exception $exception){
+            $blocks = array();
+        }
+
         return $blocks;
     }
 }

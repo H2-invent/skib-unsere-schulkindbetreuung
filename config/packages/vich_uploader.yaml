@@ -4,7 +4,7 @@ vich_uploader:
     mappings:
         profil_picture:
             uri_prefix: '%app.path.product_images%'
-            upload_destination: asset_filesystem
+            upload_destination: oneup_flysystem.asset_filesystem_filesystem
             namer: vich_uploader.namer_uniqid
 
 

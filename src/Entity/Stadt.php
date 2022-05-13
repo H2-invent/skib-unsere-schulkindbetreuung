@@ -14,12 +14,15 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StadtRepository")
- * @Vich\Uploadable
+
  */
 class Stadt implements TranslatableInterface
 {
     use TranslatableTrait;
-
+    public function __serialize(): array
+    {
+        return array('id'=>$this->id);
+    }
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
