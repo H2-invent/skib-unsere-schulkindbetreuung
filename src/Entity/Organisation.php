@@ -19,6 +19,11 @@ class Organisation implements TranslatableInterface
 {
     use TranslatableTrait;
 
+    public function __serialize(): array
+    {
+        return array('id'=>$this->id);
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -302,8 +307,6 @@ class Organisation implements TranslatableInterface
     private $sepaOrganisation;
 
 
-
-
     public function __construct()
     {
         $this->schule = new ArrayCollection();
@@ -341,11 +344,11 @@ class Organisation implements TranslatableInterface
     {
         $schuleRet = array();
         foreach ($this->schule as $data) {
-          if($data->getDeleted() === false){
-            $schuleRet[] = $data;
-          }
+            if ($data->getDeleted() === false) {
+                $schuleRet[] = $data;
+            }
         }
-        $this->schule= (new ArrayCollection($schuleRet));
+        $this->schule = (new ArrayCollection($schuleRet));
         return $this->schule;
     }
 
@@ -587,6 +590,7 @@ class Organisation implements TranslatableInterface
 
         return $this;
     }
+
     public function setImageFile(File $image = null)
     {
         $this->imageFile = $image;
@@ -1065,8 +1069,6 @@ class Organisation implements TranslatableInterface
 
         return $this;
     }
-
-
 
 
 }

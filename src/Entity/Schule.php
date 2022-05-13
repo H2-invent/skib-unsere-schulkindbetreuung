@@ -15,6 +15,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Schule
 {
+    public function __serialize(): array
+    {
+        return array('id'=>$this->id);
+    }
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

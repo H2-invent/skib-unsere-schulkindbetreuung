@@ -67,7 +67,7 @@ class LoerrachEltern extends AbstractType
                     'translation_domain' => 'form',]);
         }
         if ($options['stadt']->getSettingsAnzahlKindergeldempfanger()) {
-            $builder->add('anzahlKindergeldempfanger', NumberType::class, array('required' => $options['stadt']->getSettingsAnzahlKindergeldempfangerRequired(), 'label' => 'Anzahl der Geschwister, die kindergeldberechtigt sind und im selben Haushalt leben?'));
+            $builder->add('anzahlKindergeldempfanger', NumberType::class, array('required' => $options['stadt']->getSettingsAnzahlKindergeldempfangerRequired(), 'label' => 'Anzahl der kindergeldberechtigten Kinder im selben Haushalt?'));
         }
         if ($options['stadt']->getsettingsSozielHilfeEmpfanger()) {
             $builder->add('sozialhilfeEmpanger', CheckboxType::class, array('required' => $options['stadt']->getsettingsSozielHilfeEmpfangerRequired(), 'label' => 'Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?'));
