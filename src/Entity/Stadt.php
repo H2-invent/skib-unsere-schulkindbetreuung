@@ -14,7 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StadtRepository")
-
+ * @Vich\Uploadable
  */
 class Stadt implements TranslatableInterface
 {
