@@ -399,3 +399,6 @@ height: auto;
 .dz-message{
   display: block!important;
 }
+.view{
+  background-position: center;
+}

@@ -105,7 +105,7 @@ class StadtType extends AbstractType
             ->add('secCodeAlwaysNew', CheckboxType::class, ['required' => false, 'label' => 'Der Security-Code soll bei jeder Änderung geändert werden', 'translation_domain' => 'form'])
 
             //SKIB Stammdaten einstallungen
-            ->add('settingsAnzahlKindergeldempfanger', CheckboxType::class, ['required' => false, 'label' => 'Abfrage Anzahl Kindergeldpflichtiger Kinder im Hausahlt', 'translation_domain' => 'form'])
+            ->add('settingsAnzahlKindergeldempfanger', CheckboxType::class, ['required' => false, 'label' => 'Abfrage Anzahl Kindergeldberechtigter Kinder im Haushalt', 'translation_domain' => 'form'])
             ->add('settingsAnzahlKindergeldempfangerRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
             ->add('settingsSozielHilfeEmpfanger', CheckboxType::class, ['required' => false, 'label' => 'Abfrage Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?', 'translation_domain' => 'form'])
             ->add('settingsSozielHilfeEmpfangerRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])

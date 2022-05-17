@@ -136,7 +136,7 @@ class ChildController extends AbstractController
             return $printService->printChildList($kinderU, $organisation, $text, $fileName, $TCPDFController, 'D');
 
         } elseif ($request->get('spread')) {
-            return $this->file($childExcelService->generateExcel($kinderU), $fileName . '.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
+            return $this->file($childExcelService->generateExcel($kinderU,$organisation->getStadt()), $fileName . '.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
         } else {
             return $this->render('child/childTable.html.twig', [
                 'kinder' => $kinderU,
