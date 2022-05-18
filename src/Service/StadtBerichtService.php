@@ -11,6 +11,7 @@ namespace App\Service;
 
 use App\Controller\LoerrachWorkflowController;
 use App\Entity\Stadt;
+use App\Entity\Stammdaten;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -21,14 +22,15 @@ class StadtBerichtService
 
     private $translator;
     private $beruflicheSituationString;
-    public function __construct(TranslatorInterface $translator,LoerrachWorkflowController $loerrachWorkflowController)
+
+    public function __construct(TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController)
     {
         $this->spreadsheet = new Spreadsheet();
         $this->translator = $translator;
         $this->beruflicheSituationString = array_flip($loerrachWorkflowController->beruflicheSituation);
     }
 
-    public function generateExcel($blocks, $kinder, $eltern,Stadt $stadt)
+    public function generateExcel($blocks, $kinder, $eltern, Stadt $stadt)
     {
 
         $writer = new Xlsx($this->spreadsheet);
@@ -100,26 +102,54 @@ class StadtBerichtService
         $elternSheet->setTitle($this->translator->trans('Erziehungsberechtigter'));
         $count = 0;
         $elternSheet->setCellValue($alphas[$count++] . '1', 'Erziehungsberechtigter_ID');
-        $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kinder im KiGa'));
         $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Berufliche Situation'));
         $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Berufliche Situation numerisch'));
         $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Alleinerziehend'));
-        $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Einkommensgruppe numerisch'));
-        $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Einkommensgruppe'));
-        $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Anzahl an Kindern'));
+        if ($stadt->getSettingKinderimKiga()) {
+            $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kinder im KiGa'));
+        }
+        if ($stadt->getSettingGehaltsklassen()) {
+            $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Einkommensgruppe numerisch'));
+            $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Einkommensgruppe'));
+        }
+        if ($stadt->getSettingsAnzahlKindergeldempfanger()) {
+            $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Anzahl der Kindergeldberechtigten Kinder im Haushalt'));
+        }
+        if ($stadt->getSettingsSozielHilfeEmpfanger()) {
+            $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Ist Sozielhilfeempfänger'));
+        }
+        if ($stadt->getSettingsweiterePersonenberechtigte()) {
+            $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Anzahl weitere personenberechtigte Personen'));
+        }
+        $elternSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Anzahl an Kindern in der Schulkindbetreuung'));
         $counter = 2;
-    
+
         foreach ($eltern as $data) {
             $count = 0;
-
-
             $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getId());
-            $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getKinderImKiga());
+
             $elternSheet->setCellValue($alphas[$count++] . $counter, $this->beruflicheSituationString[$data->getBeruflicheSituation()]);
             $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getBeruflicheSituation());
             $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getAlleinerziehend());
-            $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getEinkommen());
-            $elternSheet->setCellValue($alphas[$count++] . $counter, $stadt->getGehaltsklassen()[$data->getEinkommen()]);
+            if ($stadt->getSettingKinderimKiga()) {
+                $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getKinderImKiga());
+            }
+            if ($stadt->getSettingGehaltsklassen()) {
+                $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getEinkommen());
+                $elternSheet->setCellValue($alphas[$count++] . $counter, $stadt->getGehaltsklassen()[$data->getEinkommen()]);
+            }
+            if ($stadt->getSettingsAnzahlKindergeldempfanger()) {
+                $elternSheet->setCellValue($alphas[$count++] . $counter,  $data->getSozialhilfeEmpanger());
+
+            }
+            if ($stadt->getSettingsSozielHilfeEmpfanger()) {
+
+                $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getSozialhilfeEmpanger());
+            }
+            if ($stadt->getSettingsweiterePersonenberechtigte()) {
+                $elternSheet->setCellValue($alphas[$count++] . $counter, sizeof($data->getPersonenberechtigters()));
+            }
+
             $elternSheet->setCellValue($alphas[$count++] . $counter, sizeof($data->getKinds()));
             $counter++;
         }
@@ -138,7 +168,6 @@ class StadtBerichtService
         return $temp_file;
 
     }
-
 
 
 }

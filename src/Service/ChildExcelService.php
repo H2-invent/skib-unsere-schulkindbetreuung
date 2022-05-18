@@ -9,6 +9,8 @@
 namespace App\Service;
 
 
+use App\Entity\Kind;
+use App\Entity\Stadt;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -21,15 +23,16 @@ class ChildExcelService
     private $writer;
     private $translator;
     private $tokenStorage;
-    public function __construct(TranslatorInterface $translator,TokenStorageInterface $tokenStorage)
+
+    public function __construct(TranslatorInterface $translator, TokenStorageInterface $tokenStorage)
     {
         $this->spreadsheet = new Spreadsheet();
         $this->writer = new Xlsx($this->spreadsheet);
         $this->translator = $translator;
-        $this->tokenStorage= $tokenStorage;
+        $this->tokenStorage = $tokenStorage;
     }
 
-    public function generateExcel($kinder)
+    public function generateExcel($kinder, Stadt $stadt)
     {
         $alphas = $this->createColumnsArray('ZZ');
         $count = 0;
@@ -64,15 +67,32 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Fotos dürfen veröffentlicht werden'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Gebuchte Betreuungszeitfenster'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('E-Mail Adresse'));
+        if ($stadt->getSettingsweiterePersonenberechtigte()) {
+            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Weitere personenberechtigte Personen'));
+        }
 
-        if($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')){
-           $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kinder im KiGa'));
-           $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Brutto Haushaltseinkommen pro Monat'));
-           $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kundennummer'));
-           $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('IBAN'));
-           $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('BIC'));
-           $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kontoinhaber'));
-           $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Gebühr pro Monat für gebuchte Betreuung'));
+        if ($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')) {
+            //here are the configurable inputs from the parents
+            if ($stadt->getSettingKinderimKiga()) {
+                $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kinder im KiGa'));
+            }
+
+            if ($stadt->getSettingGehaltsklassen()) {
+                $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Brutto Haushaltseinkommen pro Monat'));
+            }
+            if ($stadt->getSettingsAnzahlKindergeldempfanger()) {
+                $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Anzahl der Kindergeldberechtigten Kinder im Haushalt'));
+            }
+            if ($stadt->getSettingsSozielHilfeEmpfanger()) {
+                $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Ist Sozielhilfeempfänger'));
+            }
+
+
+            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kundennummer'));
+            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('IBAN'));
+            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('BIC'));
+            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kontoinhaber'));
+            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Gebühr pro Monat für gebuchte Betreuung'));
 
         }
         $counter = 2;
@@ -85,7 +105,7 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getArt());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getArtString());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getName());
-            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getVorname().' '.$data->getEltern()->getName());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getVorname() . ' ' . $data->getEltern()->getName());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getStrasse());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getAdresszusatz());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getPlz());
@@ -106,25 +126,52 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getAlleineHause());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getFotos());
             $gebucht = array();
-            foreach ($data->getZeitblocks() as $data2){
-                if($data2->getDeleted() == false){
-                    $gebucht[]=$data2->getWochentagString().': '.$data2->getVon()->format('H:i').'-'.$data2->getBis()->format('H:i');
+            foreach ($data->getZeitblocks() as $data2) {
+                if ($data2->getDeleted() == false) {
+                    $gebucht[] = $data2->getWochentagString() . ': ' . $data2->getVon()->format('H:i') . '-' . $data2->getBis()->format('H:i');
                 }
 
             }
-            $kindSheet->setCellValue($alphas[$count++] .$counter,implode(' | ', $gebucht));
+            $kindSheet->setCellValue($alphas[$count++] . $counter, implode(' | ', $gebucht));
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getEmail());
-            if($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')){
-                if ($data->getEltern()->getKinderImKiga()){
-                    $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getKigaOfKids());
-                }else {
-                    $kindSheet->setCellValue($alphas[$count++] .  $counter, $this->translator->trans('Nein'));
+
+            if ($stadt->getSettingsweiterePersonenberechtigte()) {
+                $persBErechtiger = array();
+                foreach ($data->getEltern()->getPersonenberechtigters() as $data3){
+                    $persBErechtiger[] = $data3->getVorname()." ".$data3->getNachname()."\n".$data3->getStrasse()."\n".$data3->getPlz().' '.$data3->getStadt()."\n".' Tel: '.$data3->getPhone()."\n".' Notfallkotakt: '.$data3->getNotfallkontakt();
                 }
-                $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getSchule()->getStadt()->getGehaltsklassen()[$data->getEltern()->getEinkommen()]);
-                $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())?$data->getEltern()->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())->getKundennummer():"");
-                $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getIban());
-                $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getBic());
-                $kindSheet->setCellValue($alphas[$count++] .  $counter, $data->getEltern()->getKontoinhaber());
+                $kindSheet->setCellValue($alphas[$count] . $counter, implode( "\n\n", $persBErechtiger));
+                $kindSheet->getStyle($alphas[$count++] . $counter)->getAlignment()->setWrapText(true);
+            }
+
+
+            if ($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')) {
+
+                if ($stadt->getSettingKinderimKiga()) {
+                    if ($data->getEltern()->getKinderImKiga()) {
+                        $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getKigaOfKids());
+                    } else {
+                        $kindSheet->setCellValue($alphas[$count++] . $counter, $this->translator->trans('Nein'));
+                    }
+                }
+
+
+                if ($stadt->getSettingGehaltsklassen()) {
+                    $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getStadt()->getGehaltsklassen()[$data->getEltern()->getEinkommen()]);
+                }
+
+                if ($stadt->getSettingsAnzahlKindergeldempfanger()) {
+                    $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getAnzahlKindergeldempfanger());
+                }
+                if ($stadt->getSettingsSozielHilfeEmpfanger()) {
+                    $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getSozialhilfeEmpanger());
+                }
+
+
+                $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId()) ? $data->getEltern()->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())->getKundennummer() : "");
+                $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getIban());
+                $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getBic());
+                $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getKontoinhaber());
                 $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getPreisforBetreuung());
             }
             $counter++;
@@ -145,6 +192,7 @@ class ChildExcelService
         return $temp_file;
 
     }
+
     private function createColumnsArray($end_column, $first_letters = '')
     {
         $columns = array();

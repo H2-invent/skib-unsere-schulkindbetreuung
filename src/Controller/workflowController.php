@@ -17,6 +17,7 @@ use App\Entity\Stammdaten;
 use App\Service\ConfirmEmailService;
 use App\Service\MailerService;
 use App\Service\PrintAGBService;
+use App\Service\PrintDatenschutzService;
 use App\Service\SchuljahrService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,11 +53,11 @@ class workflowController extends AbstractController
         } elseif ($stadt->getFerienprogramm()) {
             $title = $translator->trans('Ferienprogramm buchen') . ' ' . $stadt->getName() . ' | ' . $translator->trans(' Hier anmelden');
         }
-        $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt'=>$stadt,'activ'=>true),array('date'=>'DESC'));
+        $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true), array('date' => 'DESC'));
         $text = $stadt->translate()->getInfoText();
         $array = explode('. ', $text);
         $metaDescription = $this->buildMeta($array);
-        return $this->render('workflow/start.html.twig', array('metaDescription' => $metaDescription, 'title' => $title, 'schule' => $schule,'news'=>$news, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'schuljahr' => $schuljahr,'activeSchuljahr'=>$activeSchuljahr));
+        return $this->render('workflow/start.html.twig', array('metaDescription' => $metaDescription, 'title' => $title, 'schule' => $schule, 'news' => $news, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'schuljahr' => $schuljahr, 'activeSchuljahr' => $activeSchuljahr));
     }
 
 
@@ -78,12 +79,13 @@ class workflowController extends AbstractController
 
         return $this->render('workflow/noCity.html.twig');
     }
+
     /**
      * @Route("/wartung",name="workflow_wartung",methods={"GET"})
      */
     public function wartungAction(Request $request)
     {
-        return $this->render('workflow/wartung.html.twig',array('referer'=>$request->get('redirect')));
+        return $this->render('workflow/wartung.html.twig', array('referer' => $request->get('redirect')));
     }
 
     /**
@@ -157,10 +159,19 @@ class workflowController extends AbstractController
     /**
      * @Route("/{slug}/{org_id}/datenschutz/pdf",name="workflow_datenschutz_pdf",methods={"GET"})
      */
-    public function datenschutzpdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService)
+    public function datenschutzpdf(Request $request, TranslatorInterface $translator, PrintDatenschutzService $printDatenschutzService, $slug, $org_id)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        return $printAGBService->printAGB($organisation->translate()->getDatenschutz(), 'D', null, $organisation);
+        if ($org_id == 'city') {
+
+            $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+            return $printDatenschutzService->printDatenschutz($stadt->translate()->getDatenschutz(), 'D', $stadt, null);
+        } else {
+            $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+            $stadt = $organisation->getStadt();
+            return $printDatenschutzService->printDatenschutz($organisation->translate()->getDatenschutz(), 'D', null, $organisation);
+        }
+
+
 
     }
 

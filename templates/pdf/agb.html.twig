@@ -5,6 +5,8 @@
 </head>
 <body>
 <h1>{{ 'Vertragsbedingungen'|trans }}</h1>
+{%if text is not null%}
 {{ text|markdown_to_html|raw}}
+{%endif%}
 </body>
 </html>
