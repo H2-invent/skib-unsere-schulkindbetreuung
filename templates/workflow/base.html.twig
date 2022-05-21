@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
 <head>
-    {% include 'workflow/_head.html.twig' with {'stadt':null} %}
+    {% if stadt is not defined %}
+        {% set stadt = null %}
+
+    {% endif %}
+
+    {% include 'workflow/_head.html.twig' with {'stadt':stadt} %}
     {% include 'workflow/inlineCSS.html.twig' with {'height':'70%'} %}
 </head>
 
