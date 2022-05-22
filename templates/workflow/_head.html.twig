@@ -16,7 +16,7 @@
 
 <meta property="og:image" content="
 {% if stadt is defined and stadt is not null %}
-{{  vich_uploader_asset(stadt.image)| imagine_filter('my_cards')|makeHttps }}
+{{ vich_uploader_asset(stadt,'imageFile')| imagine_filter('my_cards')|makeHttps }}
 {% else %}
 {{ asset('images/logo-breit-mittig.png')| imagine_filter('my_cards')|makeHttps }}
 {% endif %}"/>
@@ -34,22 +34,27 @@ SKiB ist bisher die einzige Onlinelösung für die Anmeldung und die Verwaltung 
 <meta property="og:site_name" content="SKiB unsere-Schulkindbetreuung.de"/>
 {{ encore_entry_link_tags('frontend') }}
 <!-- Matomo -->
-
-<script type="text/javascript">
-    var _paq = window._paq || [];
-    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-    _paq.push(["setDomains", [".unsere-schulkindbetreuung.de",".skib-loerrach.de"]]);
-    _paq.push(["enableCrossDomainLinking"]);
-    _paq.push(["setDoNotTrack", true]);
-    _paq.push(["disableCookies"]);
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-        var u="//analytics.h2-invent.com/";
-        _paq.push(['setTrackerUrl', u+'matomo.php']);
-        _paq.push(['setSiteId', '3']);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-    })();
-</script>
+{% if stadt is null %}
+    <script type="text/javascript">
+        var _paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(["setDomains", [".unsere-schulkindbetreuung.de"]]);
+        _paq.push(["enableCrossDomainLinking"]);
+        _paq.push(["setDoNotTrack", true]);
+        _paq.push(["disableCookies"]);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "//analytics.h2-invent.com/";
+            _paq.push(['setTrackerUrl', u + 'matomo.php']);
+            _paq.push(['setSiteId', '3']);
+            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+            g.type = 'text/javascript';
+            g.async = true;
+            g.defer = true;
+            g.src = u + 'matomo.js';
+            s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+{% endif %}
 <!-- End Matomo Code -->
