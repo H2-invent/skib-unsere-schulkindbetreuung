@@ -82,6 +82,7 @@ class StadtverwaltungController extends AbstractController
            $form->remove('schulkindBetreung');
            $form->remove('ferienprogramm');
             $form->remove('active');
+            $form->remove('settingEncryptEmailAttachment');
        }
 
         $form->handleRequest($request);

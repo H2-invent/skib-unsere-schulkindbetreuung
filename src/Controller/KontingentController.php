@@ -38,14 +38,14 @@ class KontingentController extends AbstractController
         if ($this->getUser()->getOrganisation() != $block->getSchule()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        try {
+//        try {
             $this->acceptService->acceptAllkindOfZeitblock($block);
 
             return new JsonResponse(array('error' => 0, 'snack' => $translator->trans('Erfolgreich gespeichert')));
-        } catch (\Exception $e) {
-            $this->logger->error($e->getMessage());
-            return new JsonResponse(array('error' => 1, 'snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
-        }
+//        } catch (\Exception $e) {
+//            $this->logger->error($e->getMessage());
+//            return new JsonResponse(array('error' => 1, 'snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
+//        }
     }
 
     /**

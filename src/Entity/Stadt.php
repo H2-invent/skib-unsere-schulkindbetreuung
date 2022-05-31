@@ -372,6 +372,11 @@ class Stadt implements TranslatableInterface
      */
     private $settings_skib_sepaElektronisch;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $settingEncryptEmailAttachment;
+
 
 
 
@@ -1366,6 +1371,18 @@ class Stadt implements TranslatableInterface
     public function setSettingsSkibSepaElektronisch(?bool $settings_skib_sepaElektronisch): self
     {
         $this->settings_skib_sepaElektronisch = $settings_skib_sepaElektronisch;
+
+        return $this;
+    }
+
+    public function getSettingEncryptEmailAttachment(): ?bool
+    {
+        return $this->settingEncryptEmailAttachment;
+    }
+
+    public function setSettingEncryptEmailAttachment(?bool $settingEncryptEmailAttachment): self
+    {
+        $this->settingEncryptEmailAttachment = $settingEncryptEmailAttachment;
 
         return $this;
     }

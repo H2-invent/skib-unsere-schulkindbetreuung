@@ -55,6 +55,7 @@ class AnmeldeEmailService
     {
         $this->attachment = array();
         $sessionLocale = $this->translator->getLocale();
+
         if (count($kind->getBeworben()->toArray()) == 0) {//Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
             $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName();
             $beruflicheSituation = (new LoerrachWorkflowController($this->translator))->beruflicheSituation;
@@ -66,10 +67,20 @@ class AnmeldeEmailService
                 $fileName,
                 $beruflicheSituation,
                 $kind->getZeitblocks()[0]->getSchule()->getOrganisation(),
-                'S'
+                'S',
+                $stadt->getSettingEncryptEmailAttachment()
             );
             $this->attachment[] = array('type' => 'application/pdf', 'filename' => $fileName . '.pdf', 'body' => $pdf);
-            $this->attachment[] = array('type' => 'application/pdf', 'filename' => $this->translator->trans('Vertragsbedingungen ') . ' ' . $stadt->getSlug() . '.pdf', 'body' => $this->abgService->printAGB($stadt->translate()->getAgb(), 'S', $stadt, null));
+            $this->attachment[] = array(
+                'type' => 'application/pdf',
+                'filename' => $this->translator->trans('Vertragsbedingungen ') . ' ' . $stadt->getSlug() . '.pdf',
+                'body' => $this->abgService->printAGB(
+                    $stadt->translate()->getAgb(),
+                    'S',
+                    $stadt,
+                    null
+                )
+            );
 
             // here we build the ics to import into a calendar
             foreach ($kind->getZeitblocks() as $data2) {
@@ -148,7 +159,7 @@ class AnmeldeEmailService
             $this->content,
             $kind->getSchule()->getOrganisation()->getEmail(),
             $this->attachment);
-        foreach ($adresse->getPersonenberechtigters() as $data){
+        foreach ($adresse->getPersonenberechtigters() as $data) {
             $this->mailer->sendEmail(
                 $kind->getSchule()->getOrganisation()->getName(),
                 $kind->getSchule()->getOrganisation()->getEmail(),

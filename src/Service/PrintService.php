@@ -41,12 +41,15 @@ class PrintService
         $this->generator = $urlGenerator;
     }
 
-    public function printAnmeldebestaetigung(Kind $kind, Stammdaten $elter, Stadt $stadt, TCPDFController $tcpdf, $fileName, $beruflicheSituation, Organisation $organisation, $type = 'D')
+    public function printAnmeldebestaetigung(Kind $kind, Stammdaten $elter, Stadt $stadt, TCPDFController $tcpdf, $fileName, $beruflicheSituation, Organisation $organisation, $type = 'D', $encyption=false)
     {
         $pdf = $tcpdf->create();
+
         $pdf->setOrganisation($organisation);
         $pdf = $this->preparePDF($pdf, $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), $organisation->getName(), $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), null, $organisation);
-
+        if ($encyption){
+            $pdf->setProtection(array('modify'),$kind->getGeburtstag()->format('d.m.Y'),'h2inventSkibIsTheBest',3);
+        }
         $adressComp = '<p><small>' . $organisation->getName() . ' | ' . $organisation->getAdresse() . $organisation->getAdresszusatz() . ' | ' . $organisation->getPlz() . (' ') . $organisation->getOrt() . '</small><br><br>';
 
         $adressComp = $adressComp . $elter->getVorname() . ' ' . $elter->getName();

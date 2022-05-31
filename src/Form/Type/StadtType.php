@@ -89,6 +89,7 @@ class StadtType extends AbstractType
             ->add('slug', TextType::class, ['label' => 'Slug der Stadt', 'translation_domain' => 'form'])
             ->add('active', CheckboxType::class, ['required' => false, 'label' => 'Stadt aktiv', 'translation_domain' => 'form'])
             ->add('onlineCheckinEnable', CheckboxType::class, ['required' => false, 'label' => 'Online Checkin aktivieren', 'translation_domain' => 'form'])
+            ->add('settingEncryptEmailAttachment', CheckboxType::class, ['required' => false, 'label' => 'Alle E-Mail-Anhänge sollen verschlüsselt werden', 'translation_domain' => 'form'])
             ->add('ferienprogramm', CheckboxType::class, ['required' => false, 'label' => 'Wir bieten eine Ferienbetreuung über dieses Portal an', 'translation_domain' => 'form'])
             ->add('schulkindBetreung', CheckboxType::class, ['required' => false, 'label' => 'Wir bieten eine Schulkindbetreuung über dieses Portal an', 'translation_domain' => 'form'])
             ->add('email', TextType::class, ['label' => 'Email', 'translation_domain' => 'form'])
