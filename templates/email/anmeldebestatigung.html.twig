@@ -10,6 +10,12 @@
     <p class="text-center">{% trans %}Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.
             Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.
             Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.{% endtrans %}</p>
+
+    {%if stadt.settingEncryptEmailAttachment%}
+        <p class="text-center">
+            <b>{{'Das Passswort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (z.B. 01.01.2010)'|trans}}</b>
+        </p>
+    {%endif%}
     <h3 class="text-center">
         {{ 'Sicherheitscode'|trans }}: {{ eltern.secCode }}
     </h3>
@@ -25,7 +31,6 @@
     <br>
     <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}<br>
     <b>{{ kind.zeitblocks[0].schule.organisation.name }}</b></p>
-    </div>
 
 
 {% endblock %}
