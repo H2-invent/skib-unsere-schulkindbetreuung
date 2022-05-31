@@ -2721,6 +2721,116 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Änderungsformular</source>
         <target>Change form</target>
       </trans-unit>
+      <trans-unit id="54USnWt" resname="Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname% %nachname%">
+        <source>Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname% %nachname%</source>
+        <target>Preliminary information about registering for school child care for %firstname% %lastname%</target>
+      </trans-unit>
+      <trans-unit id="lRPQnJ2" resname="Weitere personenberechtigte Personen">
+        <source>Weitere personenberechtigte Personen</source>
+        <target>Other authorized persons</target>
+      </trans-unit>
+      <trans-unit id="vpnFBwt" resname="Anzahl der Kindergeldberechtigten Kinder im Haushalt">
+        <source>Anzahl der Kindergeldberechtigten Kinder im Haushalt</source>
+        <target>Number of children entitled to child benefit in household</target>
+      </trans-unit>
+      <trans-unit id="Oe4JE5j" resname="Ist Sozielhilfeempfänger">
+        <source>Ist Sozielhilfeempfänger</source>
+        <target>Is on welfare</target>
+      </trans-unit>
+      <trans-unit id="VE7IzRh" resname="Sie wurden als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt">
+        <source>Sie wurden als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt</source>
+        <target>You have been added as an employee to SKIB-Unsere Schulkinderbetreuung</target>
+      </trans-unit>
+      <trans-unit id=".1m.g7w" resname="Anzahl weitere personenberechtigte Personen">
+        <source>Anzahl weitere personenberechtigte Personen</source>
+        <target>Number of other authorized persons</target>
+      </trans-unit>
+      <trans-unit id="HiujKG." resname="Anzahl an Kindern in der Schulkindbetreuung">
+        <source>Anzahl an Kindern in der Schulkindbetreuung</source>
+        <target>Number of children in school child care</target>
+      </trans-unit>
+      <trans-unit id="1KIR9g6" resname="Abfrage Stammdaten">
+        <source>Abfrage Stammdaten</source>
+        <target>Query master data</target>
+      </trans-unit>
+      <trans-unit id="WnlgQc3" resname="Dateien hochladen">
+        <source>Dateien hochladen</source>
+        <target>Upload Data</target>
+      </trans-unit>
+      <trans-unit id="uVMhbvx" resname="Last Login">
+        <source>Last Login</source>
+        <target>Last Login</target>
+      </trans-unit>
+      <trans-unit id="oUcymHK" resname="Super Admin ernennen">
+        <source>Super Admin ernennen</source>
+        <target>Promote Super Admin</target>
+      </trans-unit>
+      <trans-unit id="SzFeSH9" resname="Das Passswort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (01.01.2010)">
+        <source>Das Passswort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (z.B. 01.01.2010)</source>
+        <target>The password for the PDF is the child's date of birth in the format: dd.mm.yyyy (e.g. 01.01.2010)</target>
+      </trans-unit>
+      <trans-unit id="fnI_ZTF" resname="Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.">
+        <source>Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.
+            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.</source>
+        <target>To communicate with the organisation, you must provide this security code.
+            This mechanism prevents improper access to your children's data by third parties.</target>
+      </trans-unit>
+      <trans-unit id="XZyjpkW" resname="Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.&#10;            Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.">
+        <source>Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.
+            Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.</source>
+        <target>This is preliminary information about your child's registration.
+            When the organization has processed your registration, you will receive a summary of your accepted supervision blocks.</target>
+      </trans-unit>
+      <trans-unit id="iB6YnP3" resname="Hallo %firstName% %lastName%">
+        <source>Hallo %firstName% %lastName%</source>
+        <target>Hello %firstName% %lastName%</target>
+      </trans-unit>
+      <trans-unit id="B6fcDma" resname="Sie wurden von einem Administrator als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt.&#10;            &lt;br&gt;Um den Registrierungsvorgang abzuschließen klicken Sie bitte auf den nachfolgenden Link oder kopieren Sie den Link in Ihren Browser:">
+        <source>Sie wurden von einem Administrator als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt.
+            &lt;br&gt;Um den Registrierungsvorgang abzuschließen klicken Sie bitte auf den nachfolgenden Link oder kopieren Sie den Link in Ihren Browser:</source>
+        <target><![CDATA[You have been added as a staff member to SKIB-Unsere Schulkinderbetreuung by an administrator.
+            <br>To complete the registration process, please click on the following link or copy the link into your browser:]]></target>
+      </trans-unit>
+      <trans-unit id="1zqKHaL" resname="Hier die Registrierung abschließen.">
+        <source>Hier die Registrierung abschließen.</source>
+        <target>Complete the registration here.</target>
+      </trans-unit>
+      <trans-unit id="LsT6wMk" resname="Oder kopieren Sie diesen Link in Ihren Browser:&lt;br&gt; %url%">
+        <source>Oder kopieren Sie diesen Link in Ihren Browser:&lt;br&gt; %url%</source>
+        <target><![CDATA[Or copy this link into your browser:<br> %url%]]></target>
+      </trans-unit>
+      <trans-unit id="4iCbPzL" resname="Geschwister">
+        <source>Geschwister</source>
+        <target>siblings</target>
+      </trans-unit>
+      <trans-unit id="deV1Zug" resname="Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?">
+        <source>Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?</source>
+        <target>Do you receive benefits according to SGB II, SGB XII, AsylbLG, housing benefit or youth welfare?</target>
+      </trans-unit>
+      <trans-unit id="um3vjJq" resname="Anzahl der Geschwister, die kindergeldberechtigt sind und im selben Haushalt leben?">
+        <source>Anzahl der Geschwister, die kindergeldberechtigt sind und im selben Haushalt leben?</source>
+        <target>Number of siblings who are entitled to child benefit and live in the same household?</target>
+      </trans-unit>
+      <trans-unit id="Mt32rgu" resname="Anmeldung">
+        <source>Anmeldung</source>
+        <target>Registration</target>
+      </trans-unit>
+      <trans-unit id="kp6qUpo" resname="Für diesen Block gibt es eine manuelle Zuweisung der Betreuungsplätze. Dies geschieht durch die Organisationen.">
+        <source>Für diesen Block gibt es eine manuelle Zuweisung der Betreuungsplätze. Dies geschieht durch die Organisationen.</source>
+        <target>There is a manual allocation of childcare places for this block. This is done by the organizations.</target>
+      </trans-unit>
+      <trans-unit id="UNc7hOn" resname="Ein weiteres Geschwisterkind hinzufügen">
+        <source>Ein weiteres Geschwisterkind hinzufügen</source>
+        <target>Add another sibling</target>
+      </trans-unit>
+      <trans-unit id="dMOth9S" resname="Eine weitere personenberechtigte Person hinzufügen">
+        <source>Eine weitere personenberechtigte Person hinzufügen</source>
+        <target>Add another authorized person</target>
+      </trans-unit>
+      <trans-unit id="2z.pcSK" resname="Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von">
+        <source>Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von</source>
+        <target>to collect payments from my account by direct debit. At the same time, I instruct my bank to</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

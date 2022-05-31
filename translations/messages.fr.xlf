@@ -1827,15 +1827,15 @@
       </trans-unit>
       <trans-unit id="uTIH2Fl" resname="Neues Zeitfenster anlegen am %tag%">
         <source>Neues Zeitfenster anlegen am %tag%</source>
-        <target>__Neues Zeitfenster anlegen am %tag%</target>
+        <target>Neues Zeitfenster anlegen am %tag%</target>
       </trans-unit>
       <trans-unit id="_XKN6zS" resname="Zeitfenster geladen.">
         <source>Zeitfenster geladen.</source>
-        <target>__Zeitfenster geladen.</target>
+        <target>Zeitfenster geladen.</target>
       </trans-unit>
       <trans-unit id="Ur4RCNQ" resname="Gebuchte Betreuungszeitfenster">
         <source>Gebuchte Betreuungszeitfenster</source>
-        <target>__Gebuchte Betreuungszeitfenster</target>
+        <target>Gebuchte Betreuungszeitfenster</target>
       </trans-unit>
       <trans-unit id="R70pB1_" resname="Content">
         <source>Content</source>
@@ -2335,7 +2335,7 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       </trans-unit>
       <trans-unit id="bMLpZqr" resname="Es wurden weitere Blöcke bearbeitet, da keine unbetreuten Zeiten in der Tagesbetreuung vorhanden sein dürfen">
         <source>Es wurden weitere Blöcke bearbeitet, da keine unbetreuten Zeiten in der Tagesbetreuung vorhanden sein dürfen</source>
-        <target>__Es wurden weitere Blöcke bearbeitet, da keine unbetreuten Zeiten in der Tagesbetreuung vorhanden sein dürfen</target>
+        <target>Es wurden weitere Blöcke bearbeitet, da keine unbetreuten Zeiten in der Tagesbetreuung vorhanden sein dürfen</target>
       </trans-unit>
       <trans-unit id="02T3gEN" resname="Neuen Vorgänger anlegen">
         <source>Neuen Vorgänger anlegen</source>
@@ -2499,23 +2499,23 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       </trans-unit>
       <trans-unit id="UhAi66F" resname="Mailgun">
         <source>Mailgun</source>
-        <target>__Mailgun</target>
+        <target>Mailgun</target>
       </trans-unit>
       <trans-unit id="Vwz_KuL" resname="Severety">
         <source>Severety</source>
-        <target>__Severety</target>
+        <target>Severety</target>
       </trans-unit>
       <trans-unit id="dPJJMfT" resname="Zeit">
         <source>Zeit</source>
-        <target>__Zeit</target>
+        <target>Zeit</target>
       </trans-unit>
       <trans-unit id="Um4Ah8w" resname="Description">
         <source>Description</source>
-        <target>__Description</target>
+        <target>Description</target>
       </trans-unit>
       <trans-unit id="L3dmip3" resname="Message">
         <source>Message</source>
-        <target>__Message</target>
+        <target>Message</target>
       </trans-unit>
       <trans-unit id="VqRF6wY" resname="E-Mail Adresse ändern">
         <source>E-Mail Adresse ändern</source>
@@ -2563,19 +2563,19 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       </trans-unit>
       <trans-unit id="lBV5YKD" resname=" am %d% von %s% bis %e% Uhr">
         <source> am %d% von %s% bis %e% Uhr</source>
-        <target>__ am %d% von %s% bis %e% Uhr</target>
+        <target> am %d% von %s% bis %e% Uhr</target>
       </trans-unit>
       <trans-unit id="_S8zNXy" resname="Email mit Sicherheitscode">
         <source>Email mit Sicherheitscode</source>
-        <target>__Email mit Sicherheitscode</target>
+        <target>Email mit Sicherheitscode</target>
       </trans-unit>
       <trans-unit id="EnnkoaW" resname="Sicherheitscode erneut zugesendet">
         <source>Sicherheitscode erneut zugesendet</source>
-        <target>__Sicherheitscode erneut zugesendet</target>
+        <target>Sicherheitscode erneut zugesendet</target>
       </trans-unit>
       <trans-unit id="OqifTIq" resname="Sicherheitscode konnte nicht erneut zugesendet">
         <source>Sicherheitscode konnte nicht erneut zugesendet</source>
-        <target>__Sicherheitscode konnte nicht erneut zugesendet</target>
+        <target>Sicherheitscode konnte nicht erneut zugesendet</target>
       </trans-unit>
       <trans-unit id="O50zxfL" resname="Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:">
         <source>Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:</source>
@@ -2595,39 +2595,39 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       </trans-unit>
       <trans-unit id="ewdRqId" resname="Erfolgreich wiederhergestellt">
         <source>Erfolgreich wiederhergestellt</source>
-        <target>__Erfolgreich wiederhergestellt</target>
+        <target>Erfolgreich wiederhergestellt</target>
       </trans-unit>
       <trans-unit id="RHI5AOs" resname="Ganztag">
         <source>Ganztag</source>
-        <target>__Ganztag</target>
+        <target>Ganztag</target>
       </trans-unit>
       <trans-unit id="HoWFEFd" resname="Halbtag">
         <source>Halbtag</source>
-        <target>__Halbtag</target>
+        <target>Halbtag</target>
       </trans-unit>
       <trans-unit id="Y3Cn2Fa" resname="Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig">
         <source>Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig</source>
-        <target>__Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig</target>
+        <target>Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig</target>
       </trans-unit>
       <trans-unit id="lbGxc1S" resname="App Verbindung">
         <source>App Verbindung</source>
-        <target>__App Verbindung</target>
+        <target>App Verbindung</target>
       </trans-unit>
       <trans-unit id="qA0e0QA" resname="Sicherheitscode erneut senden">
         <source>Sicherheitscode erneut senden</source>
-        <target>__Sicherheitscode erneut senden</target>
+        <target>Sicherheitscode erneut senden</target>
       </trans-unit>
       <trans-unit id="dM1xpTv" resname="Bestätigungscode zur Anmeldung bei der SKIBin App">
         <source>Bestätigungscode zur Anmeldung bei der SKIBin App</source>
-        <target>__Bestätigungscode zur Anmeldung bei der SKIBin App</target>
+        <target>Bestätigungscode zur Anmeldung bei der SKIBin App</target>
       </trans-unit>
       <trans-unit id="_PoH7Ws" resname="Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK">
         <source>Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK</source>
-        <target>__Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK</target>
+        <target>Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK</target>
       </trans-unit>
       <trans-unit id="if6t1lm" resname="Sicherheitscode für Ihre Anmeldung bei SKiB">
         <source>Sicherheitscode für Ihre Anmeldung bei SKiB</source>
-        <target>__Sicherheitscode für Ihre Anmeldung bei SKiB</target>
+        <target>Sicherheitscode für Ihre Anmeldung bei SKiB</target>
       </trans-unit>
       <trans-unit id="vwEUKgL" resname="Mit dieser Email erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung">
         <source>Mit dieser Email erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung</source>
@@ -2635,19 +2635,19 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       </trans-unit>
       <trans-unit id=".sA.Buo" resname="Absender">
         <source>Absender</source>
-        <target>__Absender</target>
+        <target>Absender</target>
       </trans-unit>
       <trans-unit id="7JO.aFA" resname="Betreff">
         <source>Betreff</source>
-        <target>__Betreff</target>
+        <target>Betreff</target>
       </trans-unit>
       <trans-unit id="QHGpDcF" resname="Änderungen nächsten Monat">
         <source>Änderungen nächsten Monat</source>
-        <target>__Änderungen nächsten Monat</target>
+        <target>Änderungen nächsten Monat</target>
       </trans-unit>
       <trans-unit id="pWbM_xE" resname="Verbindung zu der App trennen">
         <source>Verbindung zu der App trennen</source>
-        <target>__Verbindung zu der App trennen</target>
+        <target>Verbindung zu der App trennen</target>
       </trans-unit>
       <trans-unit id=".1MWVud" resname="Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.">
         <source>Geben Sie hier den Namen des kostenpflichtigen Kindergartens an.</source>
@@ -2655,7 +2655,7 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       </trans-unit>
       <trans-unit id="34R6VMk" resname="Keine Berechtigung">
         <source>Keine Berechtigung</source>
-        <target>__Keine Berechtigung</target>
+        <target>Keine Berechtigung</target>
       </trans-unit>
       <trans-unit id="2M_gsdT" resname="Email Adressen stimmen nicht überein.">
         <source>Email Adressen stimmen nicht überein.</source>
@@ -2728,6 +2728,116 @@ L'application web permet une mise en réseau directe entre les parents, les orga
       <trans-unit id="lUGZl8W" resname="Änderungsformular">
         <source>Änderungsformular</source>
         <target>Formulaire de modification</target>
+      </trans-unit>
+      <trans-unit id="54USnWt" resname="Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname% %nachname%">
+        <source>Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname% %nachname%</source>
+        <target>Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname% %nachname%</target>
+      </trans-unit>
+      <trans-unit id="lRPQnJ2" resname="Weitere personenberechtigte Personen">
+        <source>Weitere personenberechtigte Personen</source>
+        <target>Weitere personenberechtigte Personen</target>
+      </trans-unit>
+      <trans-unit id="vpnFBwt" resname="Anzahl der Kindergeldberechtigten Kinder im Haushalt">
+        <source>Anzahl der Kindergeldberechtigten Kinder im Haushalt</source>
+        <target>Anzahl der Kindergeldberechtigten Kinder im Haushalt</target>
+      </trans-unit>
+      <trans-unit id="Oe4JE5j" resname="Ist Sozielhilfeempfänger">
+        <source>Ist Sozielhilfeempfänger</source>
+        <target>Ist Sozielhilfeempfänger</target>
+      </trans-unit>
+      <trans-unit id="VE7IzRh" resname="Sie wurden als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt">
+        <source>Sie wurden als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt</source>
+        <target>Sie wurden als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt</target>
+      </trans-unit>
+      <trans-unit id=".1m.g7w" resname="Anzahl weitere personenberechtigte Personen">
+        <source>Anzahl weitere personenberechtigte Personen</source>
+        <target>Anzahl weitere personenberechtigte Personen</target>
+      </trans-unit>
+      <trans-unit id="HiujKG." resname="Anzahl an Kindern in der Schulkindbetreuung">
+        <source>Anzahl an Kindern in der Schulkindbetreuung</source>
+        <target>Anzahl an Kindern in der Schulkindbetreuung</target>
+      </trans-unit>
+      <trans-unit id="1KIR9g6" resname="Abfrage Stammdaten">
+        <source>Abfrage Stammdaten</source>
+        <target>Abfrage Stammdaten</target>
+      </trans-unit>
+      <trans-unit id="WnlgQc3" resname="Dateien hochladen">
+        <source>Dateien hochladen</source>
+        <target>Dateien hochladen</target>
+      </trans-unit>
+      <trans-unit id="uVMhbvx" resname="Last Login">
+        <source>Last Login</source>
+        <target>Last Login</target>
+      </trans-unit>
+      <trans-unit id="oUcymHK" resname="Super Admin ernennen">
+        <source>Super Admin ernennen</source>
+        <target>Super Admin ernennen</target>
+      </trans-unit>
+      <trans-unit id="SzFeSH9" resname="Das Passswort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (01.01.2010)">
+        <source>Das Passswort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (01.01.2010)</source>
+        <target>Das Passswort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (01.01.2010)</target>
+      </trans-unit>
+      <trans-unit id="fnI_ZTF" resname="Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.">
+        <source>Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.
+            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.</source>
+        <target>Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.
+            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.</target>
+      </trans-unit>
+      <trans-unit id="XZyjpkW" resname="Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.&#10;            Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.">
+        <source>Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.
+            Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.</source>
+        <target>Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.
+            Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.</target>
+      </trans-unit>
+      <trans-unit id="iB6YnP3" resname="Hallo %firstName% %lastName%">
+        <source>Hallo %firstName% %lastName%</source>
+        <target>Hallo %firstName% %lastName%</target>
+      </trans-unit>
+      <trans-unit id="B6fcDma" resname="Sie wurden von einem Administrator als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt.&#10;            &lt;br&gt;Um den Registrierungsvorgang abzuschließen klicken Sie bitte auf den nachfolgenden Link oder kopieren Sie den Link in Ihren Browser:">
+        <source>Sie wurden von einem Administrator als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt.
+            &lt;br&gt;Um den Registrierungsvorgang abzuschließen klicken Sie bitte auf den nachfolgenden Link oder kopieren Sie den Link in Ihren Browser:</source>
+        <target><![CDATA[Sie wurden von einem Administrator als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt.
+            <br>Um den Registrierungsvorgang abzuschließen klicken Sie bitte auf den nachfolgenden Link oder kopieren Sie den Link in Ihren Browser:]]></target>
+      </trans-unit>
+      <trans-unit id="1zqKHaL" resname="Hier die Registrierung abschließen.">
+        <source>Hier die Registrierung abschließen.</source>
+        <target>Hier die Registrierung abschließen.</target>
+      </trans-unit>
+      <trans-unit id="LsT6wMk" resname="Oder kopieren Sie diesen Link in Ihren Browser:&lt;br&gt; %url%">
+        <source>Oder kopieren Sie diesen Link in Ihren Browser:&lt;br&gt; %url%</source>
+        <target><![CDATA[Oder kopieren Sie diesen Link in Ihren Browser:<br> %url%]]></target>
+      </trans-unit>
+      <trans-unit id="4iCbPzL" resname="Geschwister">
+        <source>Geschwister</source>
+        <target>Geschwister</target>
+      </trans-unit>
+      <trans-unit id="deV1Zug" resname="Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?">
+        <source>Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?</source>
+        <target>Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?</target>
+      </trans-unit>
+      <trans-unit id="um3vjJq" resname="Anzahl der Geschwister, die kindergeldberechtigt sind und im selben Haushalt leben?">
+        <source>Anzahl der Geschwister, die kindergeldberechtigt sind und im selben Haushalt leben?</source>
+        <target>Anzahl der Geschwister, die kindergeldberechtigt sind und im selben Haushalt leben?</target>
+      </trans-unit>
+      <trans-unit id="Mt32rgu" resname="Anmeldung">
+        <source>Anmeldung</source>
+        <target>Anmeldung</target>
+      </trans-unit>
+      <trans-unit id="kp6qUpo" resname="Für diesen Block gibt es eine manuelle Zuweisung der Betreuungsplätze. Dies geschieht durch die Organisationen.">
+        <source>Für diesen Block gibt es eine manuelle Zuweisung der Betreuungsplätze. Dies geschieht durch die Organisationen.</source>
+        <target>Für diesen Block gibt es eine manuelle Zuweisung der Betreuungsplätze. Dies geschieht durch die Organisationen.</target>
+      </trans-unit>
+      <trans-unit id="UNc7hOn" resname="Ein weiteres Geschwisterkind hinzufügen">
+        <source>Ein weiteres Geschwisterkind hinzufügen</source>
+        <target>Ein weiteres Geschwisterkind hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="dMOth9S" resname="Eine weitere personenberechtigte Person hinzufügen">
+        <source>Eine weitere personenberechtigte Person hinzufügen</source>
+        <target>Eine weitere personenberechtigte Person hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="2z.pcSK" resname="Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von">
+        <source>Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von</source>
+        <target>Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von</target>
       </trans-unit>
     </body>
   </file>

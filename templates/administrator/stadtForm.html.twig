@@ -81,12 +81,13 @@
                                 {% endif %}
                                 {% if form.schulkindBetreung is defined %}
                                     {{ form_row(form.schulkindBetreung) }}
-
                                 {% endif %}
                                 {% if form.ferienprogramm is defined %}
                                     {{ form_row(form.ferienprogramm) }}
                                 {% endif %}
-
+                                {% if form.settingEncryptEmailAttachment is defined %}
+                                    {{ form_row(form.settingEncryptEmailAttachment) }}
+                                {% endif %}
                             </div>
 
                             <div class="tab-pane fade" id="texte" role="tabpanel" aria-labelledby="profile-tab"><h2>
