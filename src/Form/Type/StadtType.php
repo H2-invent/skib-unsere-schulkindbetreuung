@@ -76,6 +76,10 @@ class StadtType extends AbstractType
             $stadt->translate('en')->setSettingsEingabeDerGeschwisterHelpUpload('');
             $stadt->translate('fr')->setSettingsEingabeDerGeschwisterHelpUpload('');
 
+            $stadt->translate('de')->setSchulindbetreuungPreiseFreitext('');
+            $stadt->translate('en')->setSchulindbetreuungPreiseFreitext('');
+            $stadt->translate('fr')->setSchulindbetreuungPreiseFreitext('');
+
             foreach ($stadt->getNewTranslations() as $newTranslation) {
                 if (!$stadt->getTranslations()->contains($newTranslation) && !$stadt->getNewTranslations()->isEmpty()) {
                     $stadt->addTranslation($newTranslation);
@@ -255,44 +259,49 @@ class StadtType extends AbstractType
 
                         'settingKinderimKigaHelp' => [
 
-                            'attr' => array('rows' => 1,),
+                            'attr' => array('rows' => 3,),
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
                             'translation_domain' => 'form'
                         ],
                         'settingGehaltsklassenHelp' => [
 
-                            'attr' => array('rows' => 1,),
+                            'attr' => array('rows' => 3,),
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
                             'translation_domain' => 'form'
                         ],
                         'settingsSozielHilfeEmpfangerHelp' => [
 
-                            'attr' => array('rows' => 1,),
+                            'attr' => array('rows' => 3,),
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
                             'translation_domain' => 'form'
                         ],
                         'settingsAnzahlKindergeldempfangerHelp' => [
 
-                            'attr' => array('rows' => 1,),
+                            'attr' => array('rows' => 3,),
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
                             'translation_domain' => 'form'
                         ],
                         'settingsEingabeDerGeschwisterHelp' => [
 
-                            'attr' => array('rows' => 1,),
+                            'attr' => array('rows' => 3,),
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
                             'translation_domain' => 'form'
                         ],
-                        'settingsEingabeDerGeschwisterHelpUpload'=> [
+                        'settingsEingabeDerGeschwisterHelpUpload' => [
 
-                            'attr' => array('rows' => 1,),
+                            'attr' => array('rows' => 3,),
                             'label' => 'Hilfetext (Hilfetext für den Upload von Dateien. Als verifikation für den Erhalt von Kindergeld. Leerlassen wenn es keinen Upload geben soll.)',
                             'translation_domain' => 'form'
                         ],
                         'settingsweiterePersonenberechtigteHelp' => [
 
-                            'attr' => array('rows' => 1,),
+                            'attr' => array('rows' => 3,),
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
+                        ],
+                        'schulindbetreuungPreiseFreitext' => [
+                            'attr' => array('rows' => 3,'class' => 'onlineEditor'),
+                            'label' => 'Freitext, welcher bei der Informationen->Preise unter der Preistabelle angezeigt werden soll ',
                             'translation_domain' => 'form'
                         ]
                     ]

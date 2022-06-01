@@ -82,6 +82,11 @@ class StadtTranslation implements TranslationInterface
      */
     private $settingsEingabeDerGeschwisterHelpUpload;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $schulindbetreuungPreiseFreitext;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -274,6 +279,20 @@ class StadtTranslation implements TranslationInterface
     {
         $this->settingsEingabeDerGeschwisterHelpUpload = $settingsEingabeDerGeschwisterHelpUpload;
     }
+    /**
+     * @return mixed
+     */
+    public function getSchulindbetreuungPreiseFreitext()
+    {
+        return $this->schulindbetreuungPreiseFreitext;
+    }
 
+    /**
+     * @param mixed $schulindbetreuungPreiseFreitext
+     */
+    public function setSchulindbetreuungPreiseFreitext($schulindbetreuungPreiseFreitext): void
+    {
+        $this->schulindbetreuungPreiseFreitext = $schulindbetreuungPreiseFreitext;
+    }
 
 }
