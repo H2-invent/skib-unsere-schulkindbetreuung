@@ -2815,9 +2815,9 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?</source>
         <target>Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?</target>
       </trans-unit>
-      <trans-unit id="um3vjJq" resname="Anzahl der Geschwister, die kindergeldberechtigt sind und im selben Haushalt leben?">
-        <source>Anzahl der Geschwister, die kindergeldberechtigt sind und im selben Haushalt leben?</source>
-        <target>Anzahl der Geschwister, die kindergeldberechtigt sind und im selben Haushalt leben?</target>
+      <trans-unit id="um3vjJq" resname="Anzahl der Kinder, die kindergeldberechtigt sind und im selben Haushalt leben?">
+        <source>Anzahl der Kinder, die kindergeldberechtigt sind und im selben Haushalt leben?</source>
+        <target>Anzahl der Kinder, die kindergeldberechtigt sind und im selben Haushalt leben?</target>
       </trans-unit>
       <trans-unit id="Mt32rgu" resname="Anmeldung">
         <source>Anmeldung</source>

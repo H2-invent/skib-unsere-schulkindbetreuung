@@ -2807,9 +2807,9 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?</source>
         <target>Do you receive benefits according to SGB II, SGB XII, AsylbLG, housing benefit or youth welfare?</target>
       </trans-unit>
-      <trans-unit id="um3vjJq" resname="Anzahl der Geschwister, die kindergeldberechtigt sind und im selben Haushalt leben?">
-        <source>Anzahl der Geschwister, die kindergeldberechtigt sind und im selben Haushalt leben?</source>
-        <target>Number of siblings who are entitled to child benefit and live in the same household?</target>
+      <trans-unit id="um3vjJq" resname="Anzahl der Kinder, die kindergeldberechtigt sind und im selben Haushalt leben?">
+        <source>Anzahl der Kinder, die kindergeldberechtigt sind und im selben Haushalt leben?</source>
+        <target>Number of children who are entitled to child benefit and live in the same household?</target>
       </trans-unit>
       <trans-unit id="Mt32rgu" resname="Anmeldung">
         <source>Anmeldung</source>

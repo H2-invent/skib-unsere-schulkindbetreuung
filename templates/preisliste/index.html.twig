@@ -127,8 +127,14 @@
                     </div>
                 </div>
             </div>
+            {% if schule.organisation.stadt.translate.schulindbetreuungPreiseFreitext %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        {{ schule.organisation.stadt.translate.schulindbetreuungPreiseFreitext|raw }}
+                    </div>
+                </div>
 
-
+            {% endif %}
         </div>
     </div>
 </div>
