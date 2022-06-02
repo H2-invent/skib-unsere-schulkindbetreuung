@@ -3,6 +3,9 @@
         <div class="card">
             <div class="card-body text-center {% if b.deleted == true %}bg-danger collapse{% endif %}"
                  id="deletedCollape-{{ b.id }}">
+                {%if getAnzahlBeworbenKids(b)|length > 0%}
+                    <span class="badge badge-danger">{{getAnzahlBeworbenKids(b)|length }}</span>
+                {%endif%}
                 <p>
                     {{ b.ganztagString }}{% if b.ganztag == 0 %}<i class="material-icons">restaurant</i> {% endif %}
 

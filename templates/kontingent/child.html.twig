@@ -22,10 +22,10 @@
                                 {% for k in kinder %}
                                     <li class="list-group-item d-flex  align-items-center">
                                         <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}"
-                                           class="deleteAjax"><i class="material-icons">check</i></a>
+                                           class="deleteAjaxConfirm"><i class="material-icons">check</i></a>
                                         <a href="{{ path('kontingent_remove_kid',{'block_id':block.id,'kind_id':k.id}) }}"
-                                           class="deleteAjax"><i class="material-icons">delete</i> </a>
-
+                                           class="deleteAjaxConfirm"><i class="material-icons">delete</i> </a>
+                                        <a href="{{ path('child_detail',{'kind_id':k.id}) }}"><i class="material-icons">info</i> </a>
                                         <!-- Button trigger modal -->
                                         <a type="button" class="btn btn-primary" data-toggle="modal"
                                            data-target="#kind{{ k.id }}">
@@ -116,5 +116,31 @@
                 }
             });
         });
+
+        $(document).on('click', '.deleteAjaxConfirm', function (e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+
+            $.confirm({
+                title: confirmTitle,
+                content: confirmText,
+                theme: 'material',
+                buttons: {
+                    confirm: function () {
+                        $.ajax({
+                            url: url,
+                            success: function (data) {
+                                $.snackbar({content: data.snack});
+                                $('#blockContent').load(loadUrl)
+                            }
+                        });
+                    },
+                    cancel: function () {
+                    },
+
+                }
+            });
+        });
+
     </script>
 {% endblock %}

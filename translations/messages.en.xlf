@@ -2819,9 +2819,9 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Für diesen Block gibt es eine manuelle Zuweisung der Betreuungsplätze. Dies geschieht durch die Organisationen.</source>
         <target>There is a manual allocation of childcare places for this block. This is done by the organizations.</target>
       </trans-unit>
-      <trans-unit id="UNc7hOn" resname="Ein weiteres Geschwisterkind hinzufügen">
-        <source>Ein weiteres Geschwisterkind hinzufügen</source>
-        <target>Add another sibling</target>
+      <trans-unit id="UNc7hOn" resname="Geschwisterkind hinzufügen">
+        <source>Geschwisterkind hinzufügen</source>
+        <target>Add a sibling</target>
       </trans-unit>
       <trans-unit id="dMOth9S" resname="Eine weitere personenberechtigte Person hinzufügen">
         <source>Eine weitere personenberechtigte Person hinzufügen</source>

@@ -20,7 +20,11 @@
                                      style="max-height: 300px">
                             {% endif %}
                             <div class="card-body">
-                                <h5 class="card-title">{{ s.name }} <span class="badge badge-danger">{{ getAnzahlBeworben(s)|length }}</span> </h5>
+                                <h5 class="card-title">{{ s.name }}
+                                    {% if getAnzahlBeworben(s)|length > 0 %}
+                                        <span class="badge badge-danger">{{ getAnzahlBeworben(s)|length }}</span>
+                                    {% endif %}
+                                </h5>
 
                                 <a href="{{ path('block_schule_schow',{'id':s.id}) }}"
                                    class="btn btn-primary">{% trans %}Betreuungsblöcke{% endtrans %}</a>
