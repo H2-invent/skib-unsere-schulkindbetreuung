@@ -3,6 +3,7 @@
 namespace App\Twig;
 
 use App\Entity\Active;
+use App\Entity\Kind;
 use App\Entity\Schule;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,6 +22,7 @@ class SchulenExtension extends AbstractExtension
     {
         return array(
             new TwigFunction('getAnzahlBeworben', array($this, 'getAnzahlBeworben')),
+            new TwigFunction('getAnzahlBeworbenKids', array($this, 'getAnzahlBeworbenKids')),
         );
     }
 
@@ -35,5 +37,16 @@ class SchulenExtension extends AbstractExtension
         }
 
         return $blocks;
+    }
+    public function getAnzahlBeworbenKids(Zeitblock $block)
+    {
+
+        try {
+            $kids = $this->em->getRepository(Kind::class)->findBeworbenByZeitblock($block);
+        }catch (\Exception $exception){
+            $kids = array();
+        }
+
+        return $kids;
     }
 }

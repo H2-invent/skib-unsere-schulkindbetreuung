@@ -2827,9 +2827,9 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Für diesen Block gibt es eine manuelle Zuweisung der Betreuungsplätze. Dies geschieht durch die Organisationen.</source>
         <target>Für diesen Block gibt es eine manuelle Zuweisung der Betreuungsplätze. Dies geschieht durch die Organisationen.</target>
       </trans-unit>
-      <trans-unit id="UNc7hOn" resname="Ein weiteres Geschwisterkind hinzufügen">
-        <source>Ein weiteres Geschwisterkind hinzufügen</source>
-        <target>Ein weiteres Geschwisterkind hinzufügen</target>
+      <trans-unit id="UNc7hOn" resname="Geschwisterkind hinzufügen">
+        <source>Geschwisterkind hinzufügen</source>
+        <target>Geschwisterkind hinzufügen</target>
       </trans-unit>
       <trans-unit id="dMOth9S" resname="Eine weitere personenberechtigte Person hinzufügen">
         <source>Eine weitere personenberechtigte Person hinzufügen</source>
