@@ -384,7 +384,7 @@ class NewsController extends AbstractController
                 $news->getTitle(),
                 $mailContent,
                 $news->getOrganisation()->getEmail() );
-            foreach ($stammdaten->getPersonenberechtigters() as $data2) {
+            foreach ($data->getPersonenberechtigters() as $data2) {
                 $mailerService->sendEmail(
                     'Ranzenpost',
                     $news->getOrganisation()->getEmail(),
@@ -429,7 +429,7 @@ class NewsController extends AbstractController
                 $news->getTitle(),
                 $mailContent,
                 $news->getOrganisation()->getEmail());
-            foreach ($stammdaten->getPersonenberechtigters() as $data2) {
+            foreach ($data->getPersonenberechtigters() as $data2) {
                 $mailerService->sendEmail(
                     'Ranzenpost',
                     $news->getStadt()->getEmail(),

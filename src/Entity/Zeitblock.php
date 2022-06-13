@@ -101,6 +101,11 @@ class Zeitblock
      */
     private $vorganger;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $deaktiviert;
+
     public function __construct()
     {
         $this->kind = new ArrayCollection();
@@ -500,6 +505,18 @@ class Zeitblock
             $this->vorganger->removeElement($vorganger);
             $vorganger->removeNachfolger($this);
         }
+
+        return $this;
+    }
+
+    public function getDeaktiviert(): ?bool
+    {
+        return $this->deaktiviert;
+    }
+
+    public function setDeaktiviert(?bool $deaktiviert): self
+    {
+        $this->deaktiviert = $deaktiviert;
 
         return $this;
     }
