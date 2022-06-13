@@ -30,6 +30,7 @@ use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindBlockSchulkind;
 use App\Service\WorkflowAbschluss;
 use App\Service\WorkflowStart;
+use Nette\Utils\Json;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -332,7 +333,6 @@ class LoerrachWorkflowController extends AbstractController
     public function kinderblocktoggleAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, ToogleKindBlockSchulkind $toogleKindBlockSchulkind)
     {
 
-
         //Include Parents in this route
         $adresse = new Stammdaten;
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
@@ -341,6 +341,10 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
         $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        if ($block->getDeaktiviert()){
+            return new JsonResponse(array('error'=>1,'snack'=>'Error, this action is not allowed'));
+        }
+
         $result = $toogleKindBlockSchulkind->toggleKind($stadt, $kind, $block);
         return new JsonResponse($result);
 
