@@ -9,8 +9,10 @@
 namespace App\Service;
 
 
+use App\Controller\LoerrachWorkflowController;
 use App\Entity\Kind;
 use App\Entity\Stadt;
+use App\Entity\Stammdaten;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -34,6 +36,7 @@ class ChildExcelService
 
     public function generateExcel($kinder, Stadt $stadt)
     {
+        $beruflicheSituation = new LoerrachWorkflowController($this->translator);
         $alphas = $this->createColumnsArray('ZZ');
         $count = 0;
         $kindSheet = $this->spreadsheet->createSheet();
@@ -50,6 +53,8 @@ class ChildExcelService
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Adresse'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('PLZ'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Ort'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Alleinerziehend'));
+        $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Berufliche Situation des Erziehungsberechtigten'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Telefonnummer'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Notfallkontakt'));
         $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Notfallnummer'));
@@ -110,6 +115,9 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getAdresszusatz());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getPlz());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getStadt());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getAlleinerziehend());
+            dump($beruflicheSituation->beruflicheSituation);
+            $kindSheet->setCellValue($alphas[$count++] . $counter, array_flip($beruflicheSituation->beruflicheSituation)[$data->getEltern()->getBeruflicheSituation()]);
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getPhoneNumber());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getNotfallName());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getNotfallkontakt());
