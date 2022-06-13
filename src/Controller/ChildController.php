@@ -51,11 +51,10 @@ class ChildController extends AbstractController
         $text = $translator->trans('Kinder betreut vom Träger');
         $schulen = $organisation->getSchule()->toArray();
         $schuljahre = $schulen[0]->getStadt()->getActives()->toArray();
-
+        $actualSchuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($organisation->getStadt());
 
         return $this->render('child/child.html.twig', [
-
-
+            'actualSchuljahr'=>$actualSchuljahr,
             'organisation' => $organisation,
             'schuljahre' => $schuljahre,
             'text' => $text

@@ -17,7 +17,7 @@
                         <div class="btn-group" role="group" aria-label="Basic example">
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {% trans %}Alle Schuljahre{% endtrans %}
+                                {{ actualSchuljahr.von|date('d.m.Y') }} - {{ actualSchuljahr.bis|date('d.m.Y') }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="schuljahrSelector dropdown-item" data-type="schuljahr" data-value="null"  href="#"> {% trans %}Alle Schuljahre{% endtrans %}</a>
@@ -96,7 +96,7 @@
         {
             schule: null,
             wochentag: null,
-            schuljahr: null,
+            schuljahr: {{actualSchuljahr.id}},
             klasse: null,
             {% if app.request.query.get("block") is defined and app.request.query.get("block") is not null %}
             block: {{ app.request.query.get("block") }},
