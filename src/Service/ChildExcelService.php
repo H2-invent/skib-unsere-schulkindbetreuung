@@ -116,7 +116,6 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getPlz());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getStadt());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getAlleinerziehend());
-            dump($beruflicheSituation->beruflicheSituation);
             $kindSheet->setCellValue($alphas[$count++] . $counter, array_flip($beruflicheSituation->beruflicheSituation)[$data->getEltern()->getBeruflicheSituation()]);
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getPhoneNumber());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getNotfallName());
