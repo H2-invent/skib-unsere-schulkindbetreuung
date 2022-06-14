@@ -7,4 +7,9 @@ twig:
         '%kernel.project_dir%/public/mail/css': css
     globals:
         laf_version: '%env(laF_version)%'
+        CHATWOOT_URL: '%env(CHATWOOT_URL)%'
+        CHATWOOT_TOKEN: '%env(CHATWOOT_TOKEN)%'
+        CHATWOOT_POSITION: '%env(CHATWOOT_POSITION)%'
+        CHATWOOT_LANGUAGE: '%env(CHATWOOT_LANGUAGE)%'
+        CHATWOOT_BUBBLE_HOLDER_TEXT: '%env(CHATWOOT_BUBBLE_HOLDER_TEXT)%'
 
