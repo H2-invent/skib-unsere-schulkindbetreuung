@@ -1,8 +1,13 @@
 {% if blocks is defined %}
     {% for b in blocks %}
-        <div class="card card-body">
-            <b>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</b><br>
-            {{ 'Grundgebühr'|trans }}: {{ b.preise[gehaltIst]|number_format(2,',') }}€<br>
+        <div class="card">
+            {% if b.deaktiviert %}
+                <div class="blockdeactiviert">{{ b.schule.organisation.stadt.translate.schulkindbetreuungBlockDeaktiviertText|raw }}</div>
+            {% endif %}
+            <div class="card-body">
+                <b>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</b><br>
+                {{ 'Grundgebühr'|trans }}: {{ b.preise[gehaltIst]|number_format(2,',') }}€<br>
+            </div>
         </div>
 
     {% endfor %}

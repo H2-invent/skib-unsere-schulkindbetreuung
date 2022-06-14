@@ -262,9 +262,7 @@
                             </div>
                         </a></div>
                     <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
-                        <li class="nav-item"><a href="mailto:support@unsere-schulkindbetreuung.de" class="nav-link ">
-                                <span class="d-none d-sm-inline-block">Support</span> <i class="fa fa-question-circle"></i></a>
-                        </li>
+
                         <!-- Languages dropdown    -->
                         <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#"
                                                          data-toggle="dropdown" aria-haspopup="true"
@@ -843,6 +841,46 @@
 {% block webpack %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
+<script>
+
+    (function(d,t) {
+        window.chatwootSettings = {
+            launcherTitle: "{{ CHATWOOT_BUBBLE_HOLDER_TEXT }}",  hideMessageBubble: false,
+            position: "{{ CHATWOOT_POSITION }}", // This can be left or right
+            locale: "{{ CHATWOOT_LANGUAGE }}", // Language to be set
+            type: "expanded_bubble", // [standard, expanded_bubble]
+            darkMode: "auto", // [light, auto]
+        };
+
+        var BASE_URL="{{ CHATWOOT_URL }}";
+        var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=BASE_URL+"/packs/js/sdk.js";
+        g.defer = true;
+        g.async = true;
+        s.parentNode.insertBefore(g,s);
+        g.onload=function(){
+            window.chatwootSDK.run({
+                websiteToken: '{{ CHATWOOT_TOKEN }}',
+                baseUrl: BASE_URL
+            })
+        }
+    })(document,"script");
+    window.addEventListener("chatwoot:ready", function () {
+        // Use window.$chatwoot here
+        // ...
+        console.log('test');
+        window.$chatwoot.setUser("{{ app.user.userIdentifier }}", {
+            email: "{{app.user.email}}",
+            name: "{{ app.user.vorname }} {{app.user.nachname}}",
+
+
+        });window.$chatwoot.setCustomAttributes({
+            url: "{{ app.request.getSchemeAndHttpHost() }}"
+        });
+    });
+
+</script>
+
 {% block jquery %}
 
 {% endblock %}

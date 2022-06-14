@@ -1,6 +1,11 @@
 {% if blocks is defined %}
     {% for b in blocks %}
         <div class=" card " >
+            {%if b.deaktiviert%}
+            <div class="blockdeactiviert">
+                {{ b.schule.organisation.stadt.translate.schulkindbetreuungBlockDeaktiviertText|raw }}
+            </div>
+            {%endif%}
             <div class="loader d-none mask flex-center rgba-black-strong"><span class="spinner-border mr-2" role="status" aria-hidden="true"></span></div>
 
 
@@ -14,7 +19,9 @@
               {% if b.ganztag == 0 %} <b>{% trans %}Mittagessen{% endtrans %}<i class="fas fa-utensils"></i> </b> <br>{% endif %}
                 <b>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</b><br>
                 {{ 'Grundgebühr'|trans }}: {{ b.preise[kind.eltern.einkommen]|number_format(2,',') }}€<br>
+                {%if b.deaktiviert !=  true%}
                 <a href="#" class="btn gebucht-text">{% if b in kind.zeitblocks %}{{ 'Gebucht'|trans }}{% elseif b in kind.beworben %}{{ 'Angemeldet'|trans }} {% else %}{{ 'Hier buchen'|trans }}{% endif %}</a>
+                {%endif%}
             </div>
         </div>
     {% endfor %}

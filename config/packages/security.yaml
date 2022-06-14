@@ -71,4 +71,5 @@ security:
         - { path: /org_ferien/orders/, role: ROLE_ORG_FERIEN_ORDERS}
         - { path: /org_ferien/checkin/, role: ROLE_ORG_FERIEN_CHECKIN}
         - { path: /org_ferien/storno/, role: ROLE_ORG_FERIEN_STORNO}
+        - { path: /org_block_deactivate/, role: ROLE_ORG_BLOCK_DEACTIVATE}
 

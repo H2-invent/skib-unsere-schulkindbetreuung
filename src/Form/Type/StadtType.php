@@ -303,6 +303,11 @@ class StadtType extends AbstractType
                             'attr' => array('rows' => 3,'class' => 'onlineEditor'),
                             'label' => 'Freitext, welcher bei der Informationen->Preise unter der Preistabelle angezeigt werden soll ',
                             'translation_domain' => 'form'
+                        ],
+                        'schulkindbetreuungBlockDeaktiviertText' => [
+                            'attr' => array('rows' => 1,'class' => 'onlineEditor'),
+                            'label' => 'Welche Nachricht soll Eltern angezeigt werden, wenn ein Zeitblock deaktiviert worden ist',
+                            'translation_domain' => 'form'
                         ]
                     ]
                 ]
