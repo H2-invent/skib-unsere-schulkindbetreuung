@@ -30,7 +30,6 @@ use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindBlockSchulkind;
 use App\Service\WorkflowAbschluss;
 use App\Service\WorkflowStart;
-use Nette\Utils\Json;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
