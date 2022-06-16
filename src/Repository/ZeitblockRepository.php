@@ -25,19 +25,16 @@ class ZeitblockRepository extends ServiceEntityRepository
         * @return Zeitblock[] Returns an array of Zeitblock objects
         */
 
-    public function findBeworbenBlocksBySchuleAndSchulfahr(Schule $schule, Active $active)
+    public function findBeworbenBlocksBySchule(Schule $schule)
     {
         return $this->createQueryBuilder('z')
             ->innerJoin('z.schule','schule')
-            ->innerJoin('z.active', 'active')
             ->innerJoin('z.kinderBeworben','kinder_beworben')
             ->andWhere('kinder_beworben.fin = :true')
-            ->andWhere('active =:schuljahr')
             ->andWhere('schule =:schule')
             ->andWhere('z.deleted = :false')
             ->andWhere('SIZE(z.kinderBeworben) > 0')
             ->setParameter('schule', $schule)
-            ->setParameter('schuljahr', $active)
             ->setParameter('false', false)
             ->setParameter('true', true)
             ->getQuery()
