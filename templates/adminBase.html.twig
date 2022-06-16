@@ -193,7 +193,8 @@
                 {% if is_granted('ROLE_ORG_ACCOUNTING') %}
                     <h5 class="sidenav-heading">Buchhaltung</h5>
                     <li><a href="{{ path('accounting_overview',{'id':app.user.organisation.id}) }}"> <i
-                                    class="material-icons">attach_money</i> {% trans %}SEPA Übersicht{% endtrans %}</a></li>
+                                    class="material-icons">attach_money</i> {% trans %}SEPA Übersicht{% endtrans %}</a>
+                    </li>
                     <li><a href="{{ path('accounting_showdata',{'id':app.user.organisation.id}) }}"> <i
                                     class="material-icons">assignment</i> {% trans %}Stammdaten{% endtrans %}</a></li>
                 {% endif %}
@@ -254,7 +255,8 @@
             <div class="container-fluid">
                 <div class="navbar-holder d-flex align-items-center justify-content-between">
                     <div class="navbar-header"><a id="toggle-btn" href="#" class="btn menu-btn"><i
-                                    class="material-icons">menu</i></a><a href="{{ path('dashboard') }}" class="navbar-brand">
+                                    class="material-icons">menu</i></a><a href="{{ path('dashboard') }}"
+                                                                          class="navbar-brand">
                             <div class="brand-text d-none d-md-inline-block">
                                 <strong class="text-primary">
                                     unsere-schulkindbetreuung
@@ -812,7 +814,8 @@
                 </div>
                 <div class="col-sm-6 text-right">
 
-                    <p><a href="https://book.h2-invent.com/books/skib/page/versionen-und-changelog"> v{{ laf_version }}</a></p>
+                    <p><a href="https://book.h2-invent.com/books/skib/page/versionen-und-changelog">
+                            v{{ laf_version }}</a></p>
                     <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions and it helps me to run Bootstrapious. Thank you for understanding :)-->
                 </div>
             </div>
@@ -821,66 +824,67 @@
 </div>
 
 
-
 <script>
 
-        {% block table %}
+    {% block table %}
 
-        {% endblock %}
-        {% if app.request.query.get("snack") is defined and app.request.query.get("snack") is not null %}
-        optionsSnack = {
-            content: "{{ app.request.query.get("snack") }}", // text of the snackbar
-            timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
-        };
-        {% endif %}
+    {% endblock %}
+    {% if app.request.query.get("snack") is defined and app.request.query.get("snack") is not null %}
+    optionsSnack = {
+        content: "{{ app.request.query.get("snack") }}", // text of the snackbar
+        timeout: 10000, // time in milliseconds after the snackbar autohides, 0 is disabled
+    };
+    {% endif %}
 
-        confirmTitle = '{{ 'Bestätigung'|trans }}';
-        confirmText = '{{ 'Wollen Sie diese Aktion durchführen?'|trans }}'
+    confirmTitle = '{{ 'Bestätigung'|trans }}';
+    confirmText = '{{ 'Wollen Sie diese Aktion durchführen?'|trans }}'
 
 </script>
 {% block webpack %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
-<script>
+{% if not is_granted('ROLE_PREVIOUS_ADMIN') %}
+    <script>
 
-    (function(d,t) {
-        window.chatwootSettings = {
-            launcherTitle: "{{ CHATWOOT_BUBBLE_HOLDER_TEXT }}",  hideMessageBubble: false,
-            position: "{{ CHATWOOT_POSITION }}", // This can be left or right
-            locale: "{{ CHATWOOT_LANGUAGE }}", // Language to be set
-            type: "expanded_bubble", // [standard, expanded_bubble]
-            darkMode: "auto", // [light, auto]
-        };
+        (function (d, t) {
+            window.chatwootSettings = {
+                launcherTitle: "{{ CHATWOOT_BUBBLE_HOLDER_TEXT }}", hideMessageBubble: false,
+                position: "{{ CHATWOOT_POSITION }}", // This can be left or right
+                locale: "{{ CHATWOOT_LANGUAGE }}", // Language to be set
+                type: "expanded_bubble", // [standard, expanded_bubble]
+                darkMode: "auto", // [light, auto]
+            };
 
-        var BASE_URL="{{ CHATWOOT_URL }}";
-        var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src=BASE_URL+"/packs/js/sdk.js";
-        g.defer = true;
-        g.async = true;
-        s.parentNode.insertBefore(g,s);
-        g.onload=function(){
-            window.chatwootSDK.run({
-                websiteToken: '{{ CHATWOOT_TOKEN }}',
-                baseUrl: BASE_URL
-            })
-        }
-    })(document,"script");
-    window.addEventListener("chatwoot:ready", function () {
-        // Use window.$chatwoot here
-        // ...
-        console.log('test');
-        window.$chatwoot.setUser("{{ app.user.userIdentifier }}", {
-            email: "{{app.user.email}}",
-            name: "{{ app.user.vorname }} {{app.user.nachname}}",
+            var BASE_URL = "{{ CHATWOOT_URL }}";
+            var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+            g.src = BASE_URL + "/packs/js/sdk.js";
+            g.defer = true;
+            g.async = true;
+            s.parentNode.insertBefore(g, s);
+            g.onload = function () {
+                window.chatwootSDK.run({
+                    websiteToken: '{{ CHATWOOT_TOKEN }}',
+                    baseUrl: BASE_URL
+                })
+            }
+        })(document, "script");
+        window.addEventListener("chatwoot:ready", function () {
+            // Use window.$chatwoot here
+            // ...
+            console.log('test');
+            window.$chatwoot.setUser("{{ app.user.userIdentifier }}", {
+                email: "{{ app.user.email }}",
+                name: "{{ app.user.vorname }} {{ app.user.nachname }}",
 
 
-        });window.$chatwoot.setCustomAttributes({
-            url: "{{ app.request.getSchemeAndHttpHost() }}"
+            });
+            window.$chatwoot.setCustomAttributes({
+                url: "{{ app.request.getSchemeAndHttpHost() }}"
+            });
         });
-    });
 
-</script>
-
+    </script>
+{% endif %}
 {% block jquery %}
 
 {% endblock %}
