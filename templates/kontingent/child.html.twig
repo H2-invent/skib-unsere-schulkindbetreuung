@@ -30,7 +30,7 @@
                                         <a type="button" class="btn btn-primary" data-toggle="modal"
                                            data-target="#kind{{ k.id }}">
                                             {{ k.vorname }} {{ k.nachname }}
-                                            ( {{ k.eltern.beruflicheSituation== 0?'Keine Angabe': (k.eltern.beruflicheSituation== 1?'Berufstätig':'Arbeitssuchend')|trans }}
+                                            ( {{ getBerufstatig(k) }}
                                             , {{ k.eltern.alleinerziehend?"Alleinerziehend":'Nicht alleinerziehend'|trans }}
                                             )
                                         </a>
@@ -69,7 +69,7 @@
                                                     <p><b>{{ 'Name'|trans }}:</b>
                                                         {{ k.eltern.vorname }} {{ k.eltern.name }}</p>
                                                     <p><b>{{ 'Berufliche Situation'|trans }}
-                                                            :</b> {{ k.eltern.beruflicheSituation== 0?'Keine Angabe': (k.eltern.beruflicheSituation== 1?'Berufstätig':'Arbeitssuchend')|trans }}
+                                                            :</b> {{ getBerufstatig(k) }}
                                                     </p>
                                                     <p><b>{{ 'Alleinerziehend'|trans }}
                                                             :</b> {{ k.eltern.alleinerziehend?"Ja":'Nein'|trans }}</p>
