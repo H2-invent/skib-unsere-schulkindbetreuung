@@ -21,11 +21,20 @@
 
                                 {% for k in kinder %}
                                     <li class="list-group-item d-flex  align-items-center">
-                                        <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}"
-                                           class="deleteAjaxConfirm"><i class="material-icons">check</i></a>
-                                        <a href="{{ path('kontingent_remove_kid',{'block_id':block.id,'kind_id':k.id}) }}"
-                                           class="deleteAjaxConfirm"><i class="material-icons">delete</i> </a>
-                                        <a href="{{ path('child_detail',{'kind_id':k.id}) }}"><i class="material-icons">info</i> </a>
+                                        {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
+                                            <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}"
+                                               class="deleteAjaxConfirm"><i class="material-icons">check</i></a>
+                                            <a href="{{ path('kontingent_remove_kid',{'block_id':block.id,'kind_id':k.id}) }}"
+                                               class="deleteAjaxConfirm"><i class="material-icons">delete</i> </a>
+
+                                        {% endif %}
+                                        <a href="{{ path('child_detail',{'kind_id':k.id}) }}"><i
+                                                    class="material-icons">info</i>
+                                        </a>
+                                        {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                                            <a href="{{ path('child_change_seccode',{'kind_id':k.id}) }}"><i
+                                                        class="material-icons">edit</i></a>
+                                        {% endif %}
                                         <!-- Button trigger modal -->
                                         <a type="button" class="btn btn-primary" data-toggle="modal"
                                            data-target="#kind{{ k.id }}">

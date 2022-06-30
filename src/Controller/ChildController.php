@@ -49,7 +49,7 @@ class ChildController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
         $text = $translator->trans('Kinder betreut vom Träger');
-        $schulen = $organisation->getSchule()->toArray();
+        $schulen = sizeof($this->getUser()->getSchulen())=== 0?$organisation->getSchule()->toArray():$this->getUser()->getSchulen();
         $schuljahre = $schulen[0]->getStadt()->getActives()->toArray();
         $actualSchuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($organisation->getStadt());
 
@@ -62,6 +62,7 @@ class ChildController extends AbstractController
             'actualSchuljahr'=>$actualSchuljahr,
             'organisation' => $organisation,
             'schuljahre' => $schuljahre,
+            'schulen'=>$schulen,
             'text' => $text
         ]);
     }
