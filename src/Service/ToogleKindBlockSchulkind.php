@@ -68,26 +68,13 @@ class ToogleKindBlockSchulkind
     {
 
         $res = array();
-        if ($block->getMin() !== null || $block->getMax() !== null) {
-            if (in_array($block, $kind->getBeworben()->toArray())) {
-                $res = $this->blockDelete($kind, $block);
-
-            } else {
-                $res = $this->blockAdd($kind, $block);
-            }
-
+        if (in_array($block, $kind->getBeworben()->toArray()) || in_array($block, $kind->getZeitblocks()->toArray())) {
+            $res = $this->blockDelete($kind, $block);
         } else {
-            if (in_array($block, $kind->getZeitblocks()->toArray())) {
-                $res = $this->blockDelete($kind, $block);
-
-            } else {
-                $res = $this->blockAdd($kind, $block);
-
-            }
-
+            $res = $this->blockAdd($kind, $block);
         }
-
         return $res;
+
     }
 
     private function blockDelete(Kind $kind, Zeitblock $block): array
@@ -98,21 +85,23 @@ class ToogleKindBlockSchulkind
             'cardText' => $this->translator->trans('Gebucht'),
         );
 
-        if ($block->getMin()!== null || $block->getMax() !== null) {
+        if ($block->getMin() !== null || $block->getMax() !== null) {
             $blockRes['kontingent'] = true;
-            if (in_array($block, $kind->getBeworben()->toArray())) {
-                $kind->removeBeworben($block);
-                $blockRes['state'] = 2;
-                $state = 2;
-                $blockRes['cardText'] = $this->translator->trans('Hier buchen');
-            }
-        } else {
-            if (in_array($block, $kind->getZeitblocks()->toArray())) {
+        }
+
+        if (in_array($block, $kind->getBeworben()->toArray())) {
+            $kind->removeBeworben($block);
+            $blockRes['state'] = 2;
+            $state = 2;
+            $blockRes['cardText'] = $this->translator->trans('Hier buchen');
+
+        }
+
+        if (in_array($block, $kind->getZeitblocks()->toArray())) {
                 $kind->removeZeitblock($block);
                 $blockRes['state'] = 2;
                 $state = 2;
                 $blockRes['cardText'] = $this->translator->trans('Hier buchen');
-            }
         }
 
         if ($state === null) {
@@ -137,20 +126,27 @@ class ToogleKindBlockSchulkind
             'id' => $block->getId(),
             'cardText' => $this->translator->trans('Gebucht'),
         );
-        if ($block->getMin() !== null || $block->getMax() !== null) {
-            $blockRes['kontingent'] = true;
-            if (!in_array($block, $kind->getBeworben()->toArray())) {
-                $kind->addBeworben($block);
+
+
+        if (!in_array($block, $kind->getBeworben()->toArray()) && !in_array($block, $kind->getZeitblocks()->toArray())) {
+            if ($block->getMin() !== null || $block->getMax() !== null) {
+                $blockRes['kontingent'] = true;
+                if (!$block->getDeaktiviert()) {
+                    $kind->addBeworben($block);
+                }
+
                 $blockRes['state'] = 0;
                 $state = 0;
                 $blockRes['cardText'] = $this->translator->trans('Angemeldet');
-            }
-        } else {
-            if (!in_array($block, $kind->getZeitblocks()->toArray())) {
-                $kind->addZeitblock($block);
-                $blockRes['state'] = 1;
-                $state = 1;
-                $blockRes['cardText'] = $this->translator->trans('Gebucht');
+            } else {
+                if (!in_array($block, $kind->getZeitblocks()->toArray())) {
+                    if (!$block->getDeaktiviert()) {
+                        $kind->addZeitblock($block);
+                    }
+                    $blockRes['state'] = 1;
+                    $state = 1;
+                    $blockRes['cardText'] = $this->translator->trans('Gebucht');
+                }
             }
         }
 
@@ -161,7 +157,9 @@ class ToogleKindBlockSchulkind
             $this->em->flush();
         }
         $res = array();
-        $res[] = $blockRes;
+        if (!$block->getDeaktiviert()) {
+            $res[] = $blockRes;
+        }
         foreach ($block->getVorganger() as $data) {
             $tmp = $this->blockAdd($kind, $data);
             $res = array_merge($res, $tmp);

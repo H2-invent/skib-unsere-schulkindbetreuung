@@ -34,7 +34,7 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="schuljahrSelector dropdown-item"  data-type="schule"  data-value="null"  href="#"> {% trans %}Alle Schulen{% endtrans %}</a>
 
-                                {% for s in organisation.schule %}
+                                {% for s in schulen %}
                                     <a class="schuljahrSelector dropdown-item" data-type="schule" data-value="{{ s.id }}" data-id="{{ s.id }}" href="#">{{ s.name }}</a>
                                 {% endfor %}
                             </div>

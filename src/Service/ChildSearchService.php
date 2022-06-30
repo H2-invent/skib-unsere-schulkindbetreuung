@@ -42,8 +42,8 @@ class ChildSearchService
                 ->setParameter('schule', $schule);
         } else {
             $orXSchule = $qb->expr()->orX();
-
-            foreach ($organisation->getSchule() as $data) {
+            $schulen = sizeof($user->getSchulen())=== 0?$organisation->getSchule():$user->getSchulen();
+            foreach ($schulen as $data) {
                 $orXSchule->add('b.schule =:schule' . $data->getId());
                 $qb->setParameter('schule' . $data->getId(), $data);
 
