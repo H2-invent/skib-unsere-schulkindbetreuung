@@ -5,9 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NewsRepository")
+ * @Vich\Uploadable
  */
 class News
 {
@@ -58,9 +61,41 @@ class News
      */
     private $schule;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Active::class, inversedBy="news")
+     */
+    private $schuljahre;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $sendHistory = [];
+    /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     * @var string
+     */
+    private $attachment;
+
+    /**
+     * @Vich\UploadableField(mapping="data_upload", fileNameProperty="attachment")
+     * @var File
+     */
+    private $attachmentFile;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $sendToAngemeldet;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $sendToGebucht;
+
     public function __construct()
     {
         $this->schule = new ArrayCollection();
+        $this->schuljahre = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -175,6 +210,95 @@ class News
         if ($this->schule->contains($schule)) {
             $this->schule->removeElement($schule);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Active>
+     */
+    public function getSchuljahre(): Collection
+    {
+        return $this->schuljahre;
+    }
+
+    public function addSchuljahre(Active $schuljahre): self
+    {
+        if (!$this->schuljahre->contains($schuljahre)) {
+            $this->schuljahre[] = $schuljahre;
+        }
+
+        return $this;
+    }
+
+    public function removeSchuljahre(Active $schuljahre): self
+    {
+        $this->schuljahre->removeElement($schuljahre);
+
+        return $this;
+    }
+
+    public function getSendHistory(): ?array
+    {
+        return $this->sendHistory;
+    }
+
+    public function setSendHistory(?array $sendHistory): self
+    {
+        $this->sendHistory = $sendHistory;
+
+        return $this;
+    }
+
+
+    public function setAttachmentFile(File $attachmentFile = null)
+    {
+        $this->attachmentFile = $attachmentFile;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($attachmentFile) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->date = new \DateTime('now');
+        }
+    }
+
+    public function getAttachmentFile()
+    {
+        return $this->attachmentFile;
+    }
+
+    public function setAttachment($attachment)
+    {
+        $this->attachment = $this->attachment;
+    }
+
+    public function getAttachment()
+    {
+        return $this->attachment;
+    }
+
+    public function getSendToAngemeldet(): ?bool
+    {
+        return $this->sendToAngemeldet;
+    }
+
+    public function setSendToAngemeldet(?bool $sendToAngemeldet): self
+    {
+        $this->sendToAngemeldet = $sendToAngemeldet;
+
+        return $this;
+    }
+
+    public function getSendToGebucht(): ?bool
+    {
+        return $this->sendToGebucht;
+    }
+
+    public function setSendToGebucht(?bool $sendToGebucht): self
+    {
+        $this->sendToGebucht = $sendToGebucht;
 
         return $this;
     }

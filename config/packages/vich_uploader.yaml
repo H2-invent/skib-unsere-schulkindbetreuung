@@ -6,6 +6,10 @@ vich_uploader:
             uri_prefix: '%app.path.product_images%'
             upload_destination: oneup_flysystem.asset_filesystem_filesystem
             namer: vich_uploader.namer_uniqid
+        data_upload:
+            uri_prefix: '%app.path.product_images%'
+            upload_destination: oneup_flysystem.intern_fileSystem_filesystem
+            namer: vich_uploader.namer_uniqid
 
 
 
