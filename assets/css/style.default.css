@@ -3081,3 +3081,11 @@ a > code {
   background:none;
 }
 
+.md-form{
+  display: flex;
+  flex-direction: column;
+
+}
+.md-form select{
+  width: 100%;
+}

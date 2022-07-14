@@ -63,7 +63,7 @@ class ActiveRepository extends ServiceEntityRepository
             ->andWhere('a.bis >= :today')
             ->setParameter('today', $today)
             ->setParameter('stadt', $stadt)
-            ->orderBy('a.von','ASC')
+            ->orderBy('a.von', 'ASC')
             ->getQuery()
             ->setMaxResults(1);
 
@@ -110,7 +110,7 @@ class ActiveRepository extends ServiceEntityRepository
     public function findSchuljahrFromCity(Stadt $stadt, \DateTime $today)
     {
         $qb = $this->createQueryBuilder('a');
-        $qb ->andWhere('a.stadt = :stadt')
+        $qb->andWhere('a.stadt = :stadt')
             ->andWhere('a.anmeldeStart <= :today')
             ->andWhere('a.bis >= :today')
             ->orderBy('a.bis', 'DESC')
@@ -119,4 +119,25 @@ class ActiveRepository extends ServiceEntityRepository
             ->setParameter('stadt', $stadt);
         return $qb->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @return Active[] Returns an array of Active objects
+     */
+
+    public function findFutureSchuljahreByCity(Stadt $stadt)
+    {
+        $now = new \DateTime();
+        $now->setTime(23,59);
+        $qb = $this->createQueryBuilder('a');
+        $qb->andWhere('a.stadt = :val')
+            ->setParameter('val', $stadt)
+            ->andWhere($qb->expr()->gt('a.bis',':now'))
+            ->setParameter('now',$now)
+            ->orderBy('a.id', 'ASC')
+            ->setMaxResults(10);
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
 }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
@@ -49,11 +50,17 @@ class Active
      */
     private $blocks;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=News::class, mappedBy="schuljahre")
+     */
+    private $news;
+
 
 
     public function __construct()
     {
         $this->blocks = new ArrayCollection();
+        $this->news = new ArrayCollection();
     }
 
 
@@ -146,6 +153,33 @@ class Active
             if ($block->getActive() === $this) {
                 $block->setActive(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, News>
+     */
+    public function getNews(): Collection
+    {
+        return $this->news;
+    }
+
+    public function addNews(News $news): self
+    {
+        if (!$this->news->contains($news)) {
+            $this->news[] = $news;
+            $news->addSchuljahre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNews(News $news): self
+    {
+        if ($this->news->removeElement($news)) {
+            $news->removeSchuljahre($this);
         }
 
         return $this;

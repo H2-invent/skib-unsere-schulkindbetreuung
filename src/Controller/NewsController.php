@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Active;
 use App\Entity\News;
 use App\Entity\Organisation;
 use App\Entity\Schule;
@@ -50,7 +51,8 @@ class NewsController extends AbstractController
         $activity->setCreatedDate($today);
         $activity->setDate($today);
         $schulen = $stadt->getSchules();
-        $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen));
+        $schuljahre = $this->getDoctrine()->getRepository(Active::class)->findFutureSchuljahreByCity($stadt);
+        $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen, 'schuljahre' => $schuljahre));
         $form->remove('schulen');
         $form->handleRequest($request);
 
@@ -86,7 +88,8 @@ class NewsController extends AbstractController
         $today = new \DateTime();
         $activity->setDate($today);
         $schulen = $activity->getStadt()->getSchules();
-        $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen));
+        $schuljahre = $this->getDoctrine()->getRepository(Active::class)->findFutureSchuljahreByCity($activity->getStadt());
+        $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen, 'schuljahre' => $schuljahre));
         $form->remove('schulen');
         $form->handleRequest($request);
 
@@ -200,7 +203,8 @@ class NewsController extends AbstractController
         $today = new \DateTime();
         $activity->setCreatedDate($today);
         $schulen = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation' => $organisation));
-        $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen));
+        $schuljahre = $this->getDoctrine()->getRepository(Active::class)->findFutureSchuljahreByCity($organisation->getStadt());
+        $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen, 'schuljahre' => $schuljahre));
         $form->remove('activ');
         $form->handleRequest($request);
 
@@ -238,7 +242,8 @@ class NewsController extends AbstractController
         $today = new \DateTime();
         $activity->setDate($today);
         $schulen = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation' => $activity->getOrganisation()));
-        $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen));
+        $schuljahre = $this->getDoctrine()->getRepository(Active::class)->findFutureSchuljahreByCity($activity->getOrganisation()->getStadt());
+        $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen, 'schuljahre' => $schuljahre));
         $form->remove('activ');
         $form->handleRequest($request);
 
@@ -321,14 +326,14 @@ class NewsController extends AbstractController
     /**
      * @Route("/news/city/{slug}",name="news_show_page",methods={"GET"})
      */
-    public function newsPageAction($slug, Request $request,TranslatorInterface $translator)
+    public function newsPageAction($slug, Request $request, TranslatorInterface $translator)
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
-        $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true),array('date'=>'DESC'));
+        $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true), array('date' => 'DESC'));
 
-        $title= $translator->trans('Alle Neuigkeiten der Stadt').' '.$stadt->getName().' | '.$stadt->getName();
+        $title = $translator->trans('Alle Neuigkeiten der Stadt') . ' ' . $stadt->getName() . ' | ' . $stadt->getName();
 
-        return $this->render('news/newsPage.html.twig', array('title'=>$title,'stadt' => $stadt, 'news' => $news));
+        return $this->render('news/newsPage.html.twig', array('title' => $title, 'stadt' => $stadt, 'news' => $news));
 
 
     }
@@ -337,19 +342,19 @@ class NewsController extends AbstractController
     /**
      * @Route("/news/city/{slug}/{id}",name="news_show_all",methods={"GET"})
      */
-    public function showNewsAction(Request $request,TranslatorInterface $translator)
+    public function showNewsAction(Request $request, TranslatorInterface $translator)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug'=>$request->get('slug')));
+        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $request->get('slug')));
         $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
-        $title = $news->getTitle().' | '.$news->getStadt()->getName();
+        $title = $news->getTitle() . ' | ' . $news->getStadt()->getName();
         $metaDescription = $news->getMessage();
 
         if ($request->isXmlHttpRequest()) {
             return $this->render('news/showNews.html.twig', array('stadt' => $stadt, 'news' => $news));
         } else {
 
-            return $this->render('news/showNewsPage.html.twig', array('title'=>$title, 'metaDescription'=>$metaDescription,'stadt' => $stadt, 'news' => $news));
+            return $this->render('news/showNewsPage.html.twig', array('title' => $title, 'metaDescription' => $metaDescription, 'stadt' => $stadt, 'news' => $news));
 
         }
 
@@ -373,30 +378,40 @@ class NewsController extends AbstractController
             return $this->redirectToRoute('org_news_anzeige', array('id' => $news->getOrganisation()->getId(), 'snack' => $text));
         }
 
-        $stammdaten = $this->getStammdatenFromNEws($news,$today);
-
+        $stammdaten = $this->getStammdatenFromNEws($news);
+        $sendReport = $news->getSendHistory() ? $news->getSendHistory() : array();
         $mailContent = $this->renderView('email/news.html.twig', array('sender' => $news->getOrganisation(), 'news' => $news, 'stammdaten' => $stammdaten));
         foreach ($stammdaten as $data) {
-            $mailerService->sendEmail(
-                'Ranzenpost',
-                $news->getOrganisation()->getEmail(),
-                $data->getEmail(),
-                $news->getTitle(),
-                $mailContent,
-                $news->getOrganisation()->getEmail() );
-            foreach ($data->getPersonenberechtigters() as $data2) {
+            if (!in_array($data->getEmail(), $sendReport)) {
                 $mailerService->sendEmail(
                     'Ranzenpost',
                     $news->getOrganisation()->getEmail(),
-                    $data2->getEmail(),
+                    $data->getEmail(),
                     $news->getTitle(),
                     $mailContent,
-                    $news->getOrganisation()->getEmail() );
+                    $news->getOrganisation()->getEmail());
+                $sendReport[] = $data->getEmail();
+            }
+            foreach ($data->getPersonenberechtigters() as $data2) {
+                if (!in_array($data2->getEmail(), $sendReport)) {
+                    $mailerService->sendEmail(
+                        'Ranzenpost',
+                        $news->getOrganisation()->getEmail(),
+                        $data2->getEmail(),
+                        $news->getTitle(),
+                        $mailContent,
+                        $news->getOrganisation()->getEmail());
+                    $sendReport[] = $data2->getEmail();
+                }
             }
 
         }
 
         $text = $translator->trans('Nachricht versendet');
+        $news->setSendHistory($sendReport);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($news);
+        $em->flush();
         return $this->redirectToRoute('org_news_anzeige', array('id' => $news->getOrganisation()->getId(), 'snack' => $text));
     }
 
@@ -411,36 +426,49 @@ class NewsController extends AbstractController
         if ($news->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
-        $today = new \DateTime();
-
         if ($news->getSchule()->isEmpty()) {
-            $text = $translator->trans('Nachricht konnte nicht versendet werden');
+            $text = $translator->trans('Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestend eine Schule aus');
             return $this->redirectToRoute('city_admin_news_anzeige', array('id' => $news->getStadt()->getId(), 'snack' => $text));
         }
-        $stammdaten = $this->getStammdatenFromNEws($news,$today);
+        if ($news->getSchuljahre()->isEmpty()) {
+            $text = $translator->trans('Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestens ein Schuljahr aus');
+            return $this->redirectToRoute('city_admin_news_anzeige', array('id' => $news->getStadt()->getId(), 'snack' => $text));
+        }
 
-
+        $stammdaten = $this->getStammdatenFromNEws($news);
         $mailContent = $this->renderView('email/news.html.twig', array('sender' => $news->getStadt(), 'news' => $news, 'stammdaten' => $stammdaten));
+        $sendReport = $news->getSendHistory() ? $news->getSendHistory() : array();
         foreach ($stammdaten as $data) {
-            $mailerService->sendEmail(
-                'Ranzenpost',
-                $news->getStadt()->getEmail(),
-                $data->getEmail(),
-                $news->getTitle(),
-                $mailContent,
-                $news->getOrganisation()->getEmail());
-            foreach ($data->getPersonenberechtigters() as $data2) {
+            if (!in_array($data->getEmail(), $sendReport)) {
                 $mailerService->sendEmail(
                     'Ranzenpost',
                     $news->getStadt()->getEmail(),
-                    $data2->getEmail(),
+                    $data->getEmail(),
                     $news->getTitle(),
                     $mailContent,
-                    $news->getOrganisation()->getEmail());
+                    $news->getStadt()->getEmail());
+                $sendReport[] = $data->getEmail();
+            }
+            foreach ($data->getPersonenberechtigters() as $data2) {
+                if (!in_array($data2->getEmail(), $sendReport)) {
+                    $mailerService->sendEmail(
+                        'Ranzenpost',
+                        $news->getStadt()->getEmail(),
+                        $data2->getEmail(),
+                        $news->getTitle(),
+                        $mailContent,
+                        $news->getStadt()->getEmail());
+                    $sendReport[] = $data2->getEmail();
+                }
             }
         }
 
         $text = $translator->trans('Nachricht versendet');
+        $news->setSendHistory($sendReport);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($news);
+        $em->flush();
+
         return $this->redirectToRoute('city_admin_news_anzeige', array('id' => $news->getStadt()->getId(), 'snack' => $text));
     }
 
@@ -461,25 +489,33 @@ class NewsController extends AbstractController
         }
     }
 
-    private function getStammdatenFromNEws(News $news, \DateTime $today){
+    private function getStammdatenFromNEws(News $news)
+    {
         $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
 
         $qb->innerJoin('stammdaten.kinds', 'kinds')
-            ->innerJoin('kinds.zeitblocks', 'kind_zeitblocks')
-            ->innerJoin('kind_zeitblocks.active', 'active');
+            ->innerJoin('kinds.zeitblocks', 'kind_zeitblocks');
         $count = 0;
-
+        $subSchule = $qb->expr()->orX();
         foreach ($news->getSchule() as $schule) {
-            $qb->orWhere('kind_zeitblocks.schule = :schule' . $count)
-                ->setParameter('schule' . $count, $schule);
+            $subSchule->add('kind_zeitblocks.schule = :schule' . $count);
+            $qb->setParameter('schule' . $count, $schule);
             $count++;
         }
-        $qb->andWhere('stammdaten.fin = 1')
-            ->andWhere('stammdaten.saved = 1')
-            ->andWhere('active.bis >= :today')
-            ->andWhere('active.von <= :today')
-            ->setParameter('today', $today);
+        $qb->andWhere($subSchule);
+        $subschuljahr = $qb->expr()->orX();
+        foreach ($news->getSchuljahre() as $schuljahr) {
+            $subschuljahr->add('kind_zeitblocks.active = :active' . $count);
+            $qb->setParameter('active' . $count, $schuljahr);
+            $count++;
+        }
+        $qb->andWhere($subschuljahr);
 
+        $qb->andWhere('SIZE(kinds.beworben) = 0');
+
+
+        $qb->andWhere('stammdaten.fin = 1')
+            ->andWhere('stammdaten.saved = 1');
         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
         return $stammdaten;
