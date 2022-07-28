@@ -377,6 +377,11 @@ class Stadt implements TranslatableInterface
      */
     private $settingEncryptEmailAttachment;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $settings_skib_disableIcs;
+
 
 
 
@@ -1383,6 +1388,18 @@ class Stadt implements TranslatableInterface
     public function setSettingEncryptEmailAttachment(?bool $settingEncryptEmailAttachment): self
     {
         $this->settingEncryptEmailAttachment = $settingEncryptEmailAttachment;
+
+        return $this;
+    }
+
+    public function getSettingsSkibDisableIcs(): ?bool
+    {
+        return $this->settings_skib_disableIcs;
+    }
+
+    public function setSettingsSkibDisableIcs(?bool $settings_skib_disableIcs): self
+    {
+        $this->settings_skib_disableIcs = $settings_skib_disableIcs;
 
         return $this;
     }

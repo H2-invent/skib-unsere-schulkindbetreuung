@@ -119,6 +119,8 @@ class StadtType extends AbstractType
             ->add('settingKinderimKiga', CheckboxType::class, ['required' => false, 'label' => 'Abfrage ob weiteres Kind im KiGa?', 'translation_domain' => 'form'])
             ->add('settingsweiterePersonenberechtigte', CheckboxType::class, ['required' => false, 'label' => 'Weitere Personenberechtigte hinzufügen.', 'translation_domain' => 'form'])
             ->add('settingsEingabeDerGeschwister', CheckboxType::class, ['required' => false, 'label' => 'Die Geschwisterkinder müssen aufgelistet werden.', 'translation_domain' => 'form'])
+            ->add('settings_skib_disableIcs', CheckboxType::class, ['required' => false, 'label' => 'Es sollen KEINE Kalenderdatei an die Eltern versandt werden', 'translation_domain' => 'form'])
+
             ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])
             ->add('emailDokumente_confirm', EntityType::class, [
                 // looks for choices from this entity

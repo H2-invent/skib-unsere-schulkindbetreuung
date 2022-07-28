@@ -28,6 +28,8 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
                             <a class="dropdown-item" href="{{ path('child_detail',{'kind_id':k.id}) }}">Detail</a>
+                            <a class="dropdown-item" href="{{ path('child_detail_print',{'kind_id':k.id}) }}">PDF Drucken</a>
+
                             {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
                                 <a class="dropdown-item"
                                    href="{{ path('child_change_seccode',{'kind_id':k.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
