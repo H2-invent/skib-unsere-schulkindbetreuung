@@ -99,7 +99,10 @@ class AnmeldeEmailService
                     )
                 );
             }
-            $this->attachment[] = array('type' => 'text/calendar', 'filename' => $kind->getVorname() . ' ' . $kind->getNachname() . '.ics', 'body' => $this->ics->toString());
+            if ($stadt->getSettingsSkibDisableIcs() !== true){
+                $this->attachment[] = array('type' => 'text/calendar', 'filename' => $kind->getVorname() . ' ' . $kind->getNachname() . '.ics', 'body' => $this->ics->toString());
+            }
+
             foreach ($stadt->getEmailDokumenteSchulkindbetreuungBuchung() as $att) {
                 $this->attachment[] = array(
                     'body' => $this->internFileSystem->read($att->getFileName()),
