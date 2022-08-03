@@ -9,11 +9,14 @@
 namespace App\Service;
 
 
+use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use App\Entity\Zeitblock;
+use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -29,9 +32,9 @@ class PrintService
     protected $parameterBag;
     private $fileSystem;
     private $generator;
+    private $em;
 
-
-    public function __construct(UrlGeneratorInterface $urlGenerator, FilesystemOperator $publicUploadsFilesystem, Environment $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, FilesystemOperator $publicUploadsFilesystem, Environment $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
 
         $this->templating = $templating;
@@ -39,16 +42,17 @@ class PrintService
         $this->parameterBag = $parameterBag;
         $this->fileSystem = $publicUploadsFilesystem;
         $this->generator = $urlGenerator;
+        $this->em = $entityManager;
     }
 
-    public function printAnmeldebestaetigung(Kind $kind, Stammdaten $elter, Stadt $stadt, TCPDFController $tcpdf, $fileName, $beruflicheSituation, Organisation $organisation, $type = 'D', $encyption=false)
+    public function printAnmeldebestaetigung(Kind $kind, Stammdaten $elter, Stadt $stadt, TCPDFController $tcpdf, $fileName, $beruflicheSituation, Organisation $organisation, $type = 'D', $encyption = false)
     {
         $pdf = $tcpdf->create();
 
         $pdf->setOrganisation($organisation);
         $pdf = $this->preparePDF($pdf, $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), $organisation->getName(), $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), null, $organisation);
-        if ($encyption){
-            $pdf->setProtection(array('modify'),$kind->getGeburtstag()->format('d.m.Y'),'h2inventSkibIsTheBest',3);
+        if ($encyption) {
+            $pdf->setProtection(array('modify'), $kind->getGeburtstag()->format('d.m.Y'), 'h2inventSkibIsTheBest', 3);
         }
         $adressComp = '<p><small>' . $organisation->getName() . ' | ' . $organisation->getAdresse() . $organisation->getAdresszusatz() . ' | ' . $organisation->getPlz() . (' ') . $organisation->getOrt() . '</small><br><br>';
 
@@ -332,12 +336,14 @@ class PrintService
         $organisation = $schule->getOrganisation();
         $pdf->setOrganisation($schule->getOrganisation());
         $pdf = $this->preparePDF($pdf, $this->translator->trans('Änderungsformular für die Schulkindbetreuung'), $organisation->getName(), $this->translator->trans('Änderungsformular für die Schulkindbetreuung'), null, null);
+
         if ($schule->getOrganisation()->getImage()) {
             $im = $this->fileSystem->read($schule->getOrganisation()->getImage());
             $imdata = base64_encode($im);
             $imgdata = base64_decode($imdata);
             $pdf->Image('@' . $imgdata, 25, 30, 50, 0);
         }
+
 
         if ($schule->getStadt()->getLogoStadt()) {
             $im = $this->fileSystem->read($schule->getStadt()->getLogoStadt());
@@ -401,9 +407,11 @@ class PrintService
         // hier die Kinderdaten
         $blocks = array();
         $block['type'] = $catArr[$cat];
-
-        foreach ($schule->getZeitblocks() as $data) {
-            if ($data->getGanztag() == $cat) {
+        $schulJahr = $this->em->getRepository(Active::class)->findActiveSchuljahrFromCity($schule->getOrganisation()->getStadt());
+        $blockTmp = $this->em->getRepository(Zeitblock::class)->findBy(array('active'=>$schulJahr,'schule'=>$schule));
+        dump($blockTmp);
+        foreach ($blockTmp as $data) {
+            if ($data->getGanztag() == $cat && !$data->getDeleted() && !$data->getDeaktiviert()) {
                 $block['data'][] = $data;
             }
         }
@@ -432,7 +440,11 @@ class PrintService
             0,
             20,
             30,
-            $this->templating->render('download_formular/__elter.html.twig', array('gehaltsklassen' => $gehaltsklassen, 'beruflicheSitutuation' => $beruflicheSituation, 'organisation' => $organisation)),
+            $this->templating->render('download_formular/__elter.html.twig', array(
+                'gehaltsklassen' => $gehaltsklassen,
+                'beruflicheSitutuation' => $beruflicheSituation,
+                'organisation' => $organisation,
+                'stadt' => $organisation->getStadt())),
             0,
             1,
             0,
@@ -440,7 +452,6 @@ class PrintService
             '',
             true
         );
-
 
 
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download

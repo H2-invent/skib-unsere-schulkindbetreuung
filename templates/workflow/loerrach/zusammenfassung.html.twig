@@ -11,64 +11,64 @@
 
 {% block content %}
 
-<h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
+    <h2 class="cover-heading">{% trans %}Zusammenfassung{% endtrans %}</h2>
 
-{% trans %}
-    Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.
-{% endtrans %}
+    {% trans %}
+        Bitte überprüfen Sie die untenstehenden Details und senden Sie Ihren Betreuungsvertrag kostenpflichtig ab.
+    {% endtrans %}
 
-<div class="card mb-2 mt-3">
+    <div class="card mb-2 mt-3">
 
-    <div class="card-header">
-        <h3 class="cover-heading">{% trans %}Daten des Erziehungsberechtigten{% endtrans %} <a
-                    href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"> <i
-                        class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
+        <div class="card-header">
+            <h3 class="cover-heading">{% trans %}Daten des Erziehungsberechtigten{% endtrans %} <a
+                        href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"> <i
+                            class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-responsive">
+                <tbody>
+                <td style="width: 50%">{% trans %}Name des Erziehungsberechtigten{% endtrans %}</td>
+                <td>{{ eltern.vorname }} {{ eltern.name }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}E-Mail{% endtrans %}</td>
+                    <td>{{ eltern.email }}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'Telefonnummer'|trans }}</td>
+                    <td>{{ eltern.phoneNumber }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}Adresse des Erziehungsberechtigten{% endtrans %}</td>
+                    <td>{{ eltern.strasse }}<br>{{ eltern.adresszusatz }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}Ich bin alleinerziehend{% endtrans %}</td>
+                    <td>{{ eltern.alleinerziehend?"Ja"|trans:'Nein'|trans }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}Berufliche Situation des Erziehungsberechtigten{% endtrans %}</td>
+                    <td>{{ beruflicheSituation[eltern.beruflicheSituation] }}</td>
+                </tr>
+
+
+                {% include 'widget/__elternTabelle_Vollstandig.html.twig' with {'stadt':stadt,'eltern':eltern} %}
+                <tr>
+                    <td>{% trans %}Kontakt für evtl. Notfälle{% endtrans %}</td>
+                    <td>{{ eltern.notfallName }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}Telefonnummer für evtl. Notfälle{% endtrans %}</td>
+                    <td>{{ eltern.notfallkontakt }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}Weitere abholberechtigte Personen{% endtrans %}</td>
+                    <td>{{ eltern.abholberechtigter }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="card-body">
-        <table class="table table-responsive">
-            <tbody>
-            <td style="width: 50%">{% trans %}Name des Erziehungsberechtigten{% endtrans %}</td>
-            <td>{{ eltern.vorname }} {{ eltern.name }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %}E-Mail{% endtrans %}</td>
-                <td>{{ eltern.email }}</td>
-            </tr>
-            <tr>
-                <td>{{ 'Telefonnummer'|trans }}</td>
-                <td>{{ eltern.phoneNumber }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %}Adresse des Erziehungsberechtigten{% endtrans %}</td>
-                <td>{{ eltern.strasse }}<br>{{ eltern.adresszusatz }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %}Ich bin alleinerziehend{% endtrans %}</td>
-                <td>{{ eltern.alleinerziehend?"Ja"|trans:'Nein'|trans }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %}Berufliche Situation des Erziehungsberechtigten{% endtrans %}</td>
-                <td>{{ beruflicheSituation[eltern.beruflicheSituation] }}</td>
-            </tr>
-
-
-            {% include 'widget/__elternTabelle_Vollstandig.html.twig' with {'stadt':stadt,'eltern':eltern} %}
-            <tr>
-                <td>{% trans %}Kontakt für evtl. Notfälle{% endtrans %}</td>
-                <td>{{ eltern.notfallName }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %}Telefonnummer für evtl. Notfälle{% endtrans %}</td>
-                <td>{{ eltern.notfallkontakt }}</td>
-            </tr>
-            <tr>
-                <td>{% trans %}Weitere abholberechtigte Personen{% endtrans %}</td>
-                <td>{{ eltern.abholberechtigter }}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 
     <!-- Daten der Kinder in einer for Schleife -->
     <div class="card mb-2">
@@ -291,6 +291,8 @@
                 <p>
                     {% trans %}Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.{% endtrans %}
                 </p>
+            {% else %}
+                {% trans %}Die Einzugsermächtigung wurde nicht erteilt. Diese muss postalisch erteilt werden. Ein Formular für die Einzugsermächtigung ist der Buchungsbestätigungs-E-Mail angehängt.{% endtrans %}
             {% endif %}
         </div>
     </div>
@@ -332,7 +334,7 @@
            class="btn btn-outline-primary">{% trans %}Weitere Betreuungszeitfenster hinzufügen{% endtrans %}</a>
     {% endif %}
 
-    {% endblock %}
+{% endblock %}
     {% block jquery %}
         <script>
             var url = "{{ path('loerrach_workflow_abschluss',{'slug':stadt.slug}) }}";

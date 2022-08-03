@@ -63,7 +63,7 @@ class WorkflowAbschluss
             $this->em->persist($kn);
         }
 
-        $adressNew = clone $adresseAktuell;//hier erstellen wir nun unsere neue Arbeitsvorlage. Alle späteren änderungen geschen auf dieser vorage.
+        $adressNew = clone $adresseAktuell;//hier erstellen wir nun unsere neue Arbeitsvorlage. Alle späteren änderungen geschen auf dieser vorlage.
         $adressNew->setSaved(false);//die Arbeitskopie erhält das flag saved false, da wir dise noh niht gespeichert ist, sondern lediglich als arbeitskopie verwendet wird.
         $adressNew->setHistory($adressNew->getHistory() + 1);
         $adressNew->setSecCode(null);//die neue Adresse hat noch keinen neuen SecCode

@@ -1,3 +1,4 @@
+
 <style>
     td {
         border: none;
@@ -46,7 +47,7 @@
     <tr>
         <td colspan="2"></td>
     </tr>
-
+{% if stadt.settingGehaltsklassen %}
     <tr>
         <td>{{ 'Brutto Haushaltseinkommen pro Monat'|trans }}:</td>
         <td>
@@ -62,6 +63,8 @@
 
         </td>
     </tr>
+    {% endif %}
+    {% if stadt.settingKinderimKiga %}
     <tr>
         <td colspan="2"></td>
     </tr>
@@ -85,12 +88,14 @@
             </table>
         </td>
     </tr>
+
     <tr>
         <td style=" border-bottom: 1px black solid">{{ 'Wenn ja, geben Sie hier den Namen des kostenpflichtigen Kindergartens an'|trans }}
             :
         </td>
         <td style=" border-bottom: 1px black solid"></td>
     </tr>
+    {% endif %}
     <tr>
         <td colspan="2"></td>
     </tr>
@@ -114,6 +119,7 @@
             </table>
         </td>
     </tr>
+
     <tr>
         <td colspan="2"></td>
     </tr>
@@ -146,6 +152,126 @@
     <tr>
         <td colspan="2"></td>
     </tr>
+    {% if stadt.settingsAnzahlKindergeldempfanger %}
+
+        <tr>
+            <td colspan="2">{{ 'Anzahl der kindergeldberechtigten Kinder im selben Haushalt'|trans }}:</td>
+
+        </tr>
+
+        <tr>
+            <td colspan="2"></td>
+        </tr>
+    {% endif %}
+    {% if stadt.settingsEingabeDerGeschwister %}
+
+        <tr>
+            <td style=" border-bottom: 1px black solid" colspan="2">{{ 'Geschwisterkind'|trans }} 1:</td>
+        </tr>
+        <tr>
+            <td style=" border-bottom: 1px black solid">{{ 'Vorname'|trans }}:</td>
+            <td style=" border-bottom: 1px black solid"></td>
+        </tr>
+        <tr>
+            <td style=" border-bottom: 1px black solid">{{ 'Nachname'|trans }}:</td>
+            <td style=" border-bottom: 1px black solid"></td>
+        </tr>
+        <tr>
+            <td style=" border-bottom: 1px black solid">{{ 'Geburtsdatum'|trans }}:</td>
+            <td style=" border-bottom: 1px black solid"></td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style=" border-bottom: 1px black solid" colspan="2">{{ 'Geschwisterkind'|trans }} 2:</td>
+        </tr>
+        <tr>
+            <td style=" border-bottom: 1px black solid">{{ 'Vorname'|trans }}:</td>
+            <td style=" border-bottom: 1px black solid"></td>
+        </tr>
+        <tr>
+            <td style=" border-bottom: 1px black solid">{{ 'Nachname'|trans }}:</td>
+            <td style=" border-bottom: 1px black solid"></td>
+        </tr>
+        <tr>
+            <td style=" border-bottom: 1px black solid">{{ 'Geburtsdatum'|trans }}:</td>
+            <td style=" border-bottom: 1px black solid"></td>
+        </tr>
+        <tr>
+            <td style=" border-bottom: 1px black solid" colspan="2">{{ 'Geschwisterkind'|trans }} 3:</td>
+        </tr>
+        <tr>
+            <td style=" border-bottom: 1px black solid">{{ 'Vorname'|trans }}:</td>
+            <td style=" border-bottom: 1px black solid"></td>
+        </tr>
+        <tr>
+            <td style=" border-bottom: 1px black solid">{{ 'Nachname'|trans }}:</td>
+            <td style=" border-bottom: 1px black solid"></td>
+        </tr>
+        <tr>
+            <td style=" border-bottom: 1px black solid">{{ 'Geburtsdatum'|trans }}:</td>
+            <td style=" border-bottom: 1px black solid"></td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+        </tr>
+    {% endif %}
+    {% if stadt.settingsSozielHilfeEmpfanger %}
+        <tr>
+            <td>{{ 'Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe'|trans }}:</td>
+            <td>
+                <table cellspacing="3px">
+
+                    <tr>
+                        <td style="width: 20px; border: 2px black solid"></td>
+                        <td> {{ 'Ja'|trans }}</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 20px; border: 2px black solid"></td>
+                        <td> {{ 'Nein'|trans }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    {% endif %}
+
+    {% if stadt.settingsweiterePersonenberechtigte %}
+
+        <tr>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+              <b> {{ 'Weitere personenberechtigte Personen'|trans }}</b>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style=" border-bottom: 1px black solid;">{{ 'Email'|trans }}:</td>
+        </tr>
+        <tr>
+            <td colspan="2" style=" border-bottom: 1px black solid ">{{ 'Telefonnummer'|trans }}:</td>
+        </tr>
+
+        <tr>
+            <td style=" border-bottom: 1px black solid">{{ 'Vorname'|trans }}:</td>
+            <td style=" border-bottom: 1px black solid">{{ 'Nachname'|trans }}:</td>
+        </tr>
+        <tr>
+            <td style=" border-bottom: 1px black solid">{{ 'Straße'|trans }}:</td>
+            <td style=" border-bottom: 1px black solid">{{ 'Adresszusatz'|trans }}:</td>
+        </tr>
+        <tr>
+            <td style=" border-bottom: 1px black solid">{{ 'Postleitzahl'|trans }}:</td>
+            <td style=" border-bottom: 1px black solid">{{ 'Stadt'|trans }}:</td>
+        </tr>
+
+        <tr>
+            <td colspan="2"></td>
+        </tr>
+
+    {% endif %}
+
     <tr>
         <td colspan="2" style=" border-bottom: 1px black solid">{{ 'Kontoinhaber'|trans }}:</td>
     </tr>
@@ -160,6 +286,7 @@
     <tr>
         <td colspan="6"></td>
     </tr>
+    {% if stadt.settingsSkibSepaElektronisch %}
     <tr>
         <td>
             <table cellspacing="3px">
@@ -174,9 +301,11 @@
         </td>
 
     </tr>
+
     <tr>
         <td colspan="6"></td>
     </tr>
+    {% endif %}
     <tr>
         <td>
             <table cellspacing="3px">
