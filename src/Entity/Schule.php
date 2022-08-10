@@ -441,7 +441,7 @@ class Schule
     {
         $res = array();
         foreach ($this->zeitblocks as $data){
-            if($data->getActive() == $active && $data->getGanztag() == $art){
+            if($data->getActive() === $active && $data->getGanztag() === $art && !$data->getDeleted() && !$data->getDeaktiviert()){
                 $res[] = $data;
             }
         }

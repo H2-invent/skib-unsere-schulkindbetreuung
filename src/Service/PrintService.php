@@ -409,7 +409,6 @@ class PrintService
         $block['type'] = $catArr[$cat];
         $schulJahr = $this->em->getRepository(Active::class)->findActiveSchuljahrFromCity($schule->getOrganisation()->getStadt());
         $blockTmp = $this->em->getRepository(Zeitblock::class)->findBy(array('active'=>$schulJahr,'schule'=>$schule));
-        dump($blockTmp);
         foreach ($blockTmp as $data) {
             if ($data->getGanztag() == $cat && !$data->getDeleted() && !$data->getDeaktiviert()) {
                 $block['data'][] = $data;
