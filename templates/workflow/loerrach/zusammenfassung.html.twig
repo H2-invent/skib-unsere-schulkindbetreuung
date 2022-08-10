@@ -349,6 +349,14 @@
                 if (all == true) {
                     $('.sendButton').wrap('<a href="{{ path('loerrach_workflow_abschluss',{'slug':stadt.slug}) }}">');
                     $('.sendButton').prop('disabled', false);
+                    $('.sendButton').click(function (e) {
+                        $(this).html('<i class="fas fa-spinner fa-spin"></i> '+$(this).text());
+                        $(this).prop('disabled', true);
+
+                        if ($('.sendButton').parent().is("a")) {
+                            $('.sendButton').unwrap();
+                        }
+                    })
 
                 } else {
                     if ($('.sendButton').parent().is("a")) {

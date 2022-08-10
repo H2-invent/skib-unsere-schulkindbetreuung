@@ -98,7 +98,9 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('BIC'));
             $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kontoinhaber'));
             $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Gebühr pro Monat für gebuchte Betreuung'));
-
+            if ($stadt->getSettingsEingabeDerGeschwister()) {
+                $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Geschwister'));
+            }
         }
         $counter = 2;
         foreach ($kinder as $data) {
@@ -144,10 +146,10 @@ class ChildExcelService
 
             if ($stadt->getSettingsweiterePersonenberechtigte()) {
                 $persBErechtiger = array();
-                foreach ($data->getEltern()->getPersonenberechtigters() as $data3){
-                    $persBErechtiger[] = $data3->getVorname()." ".$data3->getNachname()."\n".$data3->getStrasse()."\n".$data3->getPlz().' '.$data3->getStadt()."\n".' Tel: '.$data3->getPhone()."\n".' Notfallkotakt: '.$data3->getNotfallkontakt();
+                foreach ($data->getEltern()->getPersonenberechtigters() as $data3) {
+                    $persBErechtiger[] = $data3->getVorname() . " " . $data3->getNachname() . "\n" . $data3->getStrasse() . "\n" . $data3->getPlz() . ' ' . $data3->getStadt() . "\n" . ' Tel: ' . $data3->getPhone() . "\n" . ' Notfallkotakt: ' . $data3->getNotfallkontakt();
                 }
-                $kindSheet->setCellValue($alphas[$count] . $counter, implode( "\n\n", $persBErechtiger));
+                $kindSheet->setCellValue($alphas[$count] . $counter, implode("\n\n", $persBErechtiger));
                 $kindSheet->getStyle($alphas[$count++] . $counter)->getAlignment()->setWrapText(true);
             }
 
@@ -180,6 +182,18 @@ class ChildExcelService
                 $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getBic());
                 $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getKontoinhaber());
                 $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getPreisforBetreuung());
+                if ($stadt->getSettingsEingabeDerGeschwister()) {
+                    $geschwister = '';
+                    foreach ($data->getEltern()->getGeschwisters() as $gesch) {
+                        $geschwister .= ($gesch->getVorname() . ' ' . $gesch->getNachname() . "\n" . $gesch->getGeburtsdatum()->format('d.m.Y') . "\n");
+                        foreach ($gesch->getFile() as $doc) {
+                            $geschwister .= $doc->getOriginalName() . "\n";
+                        }
+                        $geschwister .= "\n";
+                    }
+                    $kindSheet->setCellValue($alphas[$count] . $counter, $geschwister);
+                    $kindSheet->getStyle($alphas[$count++] . $counter)->getAlignment()->setWrapText(true);
+                }
             }
             $counter++;
         }

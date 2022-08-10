@@ -34,6 +34,8 @@ function initKeycloakGroups(){
 
 
     $('.add_item_link').each(function() {
+        var perber = $('.'+$(this).data('collectionHolderClass')).find('div').length+2;
+        $(this).text($(this).text().replace(/[0-9]/gm,perber))
         var $groupsCollectionHolder = $('.'+$(this).data('collectionHolderClass'));
         $groupsCollectionHolder.find('.card').each(function() {
             addTagFormDeleteLink($(this));
@@ -42,6 +44,8 @@ function initKeycloakGroups(){
             e.preventDefault();
             var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
             addFormToCollection($collectionHolderClass);
+            var perber = $('.'+$(this).data('collectionHolderClass')).find('.card').length+2;
+            $(this).text($(this).text().replace(/[0-9]/gm,perber))
         })
     })
 }
