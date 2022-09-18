@@ -1,0 +1,6 @@
+weasyprint:
+  pdf:
+    enabled:    true
+    binary:  py.exe -m weasyprint
+    options:    []
+

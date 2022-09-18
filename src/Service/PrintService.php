@@ -18,6 +18,8 @@ use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
+use Pontedilana\PhpWeasyPrint\Pdf;
+use Pontedilana\WeasyprintBundle\WeasyPrint\Response\PdfResponse;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -33,8 +35,8 @@ class PrintService
     private $fileSystem;
     private $generator;
     private $em;
-
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, FilesystemOperator $publicUploadsFilesystem, Environment $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    private Pdf $weasyPrinfPdf;
+    public function __construct(Pdf $pdf, EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, FilesystemOperator $publicUploadsFilesystem, Environment $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
 
         $this->templating = $templating;
@@ -43,6 +45,7 @@ class PrintService
         $this->fileSystem = $publicUploadsFilesystem;
         $this->generator = $urlGenerator;
         $this->em = $entityManager;
+        $this->weasyPrinfPdf = $pdf;
     }
 
     public function printAnmeldebestaetigung(Kind $kind, Stammdaten $elter, Stadt $stadt, TCPDFController $tcpdf, $fileName, $beruflicheSituation, Organisation $organisation, $type = 'D', $encyption = false)
@@ -147,6 +150,12 @@ class PrintService
 
     public function printChildDetail(Kind $kind, Stammdaten $elter, TCPDFController $tcpdf, $fileName, Organisation $organisation, $type = 'D')
     {
+
+
+        return new PdfResponse(
+            $this->weasyPrinfPdf->getOutputFromHtml('<h1>testme</h1>'),
+            'file.pdf'
+        );
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
         $pdf = $this->preparePDF($pdf, 'Test', 'Kinder Details', 'test', null, $organisation);

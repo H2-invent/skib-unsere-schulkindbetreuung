@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d94ad63a72a2091970d4b166ce9b6e18",
+    "content-hash": "8ea6a46dca17997ab9487cebe0eb83b0",
     "packages": [
         {
             "name": "a2lix/auto-form-bundle",
@@ -4736,6 +4736,121 @@
                 "source": "https://github.com/phpstan/phpdoc-parser/tree/1.4.4"
             },
             "time": "2022-04-14T12:24:06+00:00"
+        },
+        {
+            "name": "pontedilana/php-weasyprint",
+            "version": "0.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pontedilana/php-weasyprint.git",
+                "reference": "4134179cf3514cdb03ed1c214580372773a95e1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pontedilana/php-weasyprint/zipball/4134179cf3514cdb03ed1c214580372773a95e1f",
+                "reference": "4134179cf3514cdb03ed1c214580372773a95e1f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "7.4.* || 8.0.* || 8.1.*",
+                "psr/log": "^1.1 || ^2.0 || ^3.0",
+                "symfony/process": "^4.4 || ^5.4 || ^6.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.4",
+                "phpstan/phpstan": "^1.2",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Pontedilana\\PhpWeasyPrint\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pontedilana Dev Team",
+                    "homepage": "https://www.pontedilana.it"
+                }
+            ],
+            "description": "PHP library allowing PDF generation from an url or a html page. Wrapper for Kozea/WeasyPrint.",
+            "keywords": [
+                "WeasyPrint",
+                "pdf",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/pontedilana/php-weasyprint/issues",
+                "source": "https://github.com/pontedilana/php-weasyprint/tree/0.11.0"
+            },
+            "time": "2022-02-28T17:35:43+00:00"
+        },
+        {
+            "name": "pontedilana/weasyprint-bundle",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pontedilana/WeasyPrintBundle.git",
+                "reference": "630bccf0214e6f0196c8c3cf7d2fdba37ebc8f2f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pontedilana/WeasyPrintBundle/zipball/630bccf0214e6f0196c8c3cf7d2fdba37ebc8f2f",
+                "reference": "630bccf0214e6f0196c8c3cf7d2fdba37ebc8f2f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "7.4.* || 8.0.* || 8.1.*",
+                "pontedilana/php-weasyprint": "^0.10 || ^0.11 || ^1.0",
+                "symfony/framework-bundle": "^5.4 || ^6.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^1.11",
+                "friendsofphp/php-cs-fixer": "^3.4",
+                "phpstan/phpstan": "^1.2",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-symfony": "^1.0",
+                "symfony/asset": "^5.4 || ^6.0",
+                "symfony/finder": "^5.4 || ^6.0",
+                "symfony/phpunit-bridge": "^5.4 || ^6.0",
+                "symfony/security-csrf": "^5.4 || ^6.0",
+                "symfony/templating": "^5.4 || ^6.0",
+                "symfony/validator": "^5.4 || ^6.0",
+                "symfony/yaml": "^5.4 || ^6.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Pontedilana\\WeasyprintBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pontedilana Dev Team",
+                    "homepage": "https://www.pontedilana.it"
+                }
+            ],
+            "description": "Easily create PDF in Symfony by converting Twig/HTML templates.",
+            "keywords": [
+                "WeasyPrint",
+                "bundle",
+                "pdf",
+                "symfony-bundle"
+            ],
+            "support": {
+                "issues": "https://github.com/pontedilana/WeasyPrintBundle/issues",
+                "source": "https://github.com/pontedilana/WeasyPrintBundle/tree/1.2.0"
+            },
+            "time": "2022-02-28T18:03:37+00:00"
         },
         {
             "name": "psr/cache",

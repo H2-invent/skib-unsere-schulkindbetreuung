@@ -307,6 +307,12 @@
             "./tests/bootstrap.php"
         ]
     },
+    "pontedilana/php-weasyprint": {
+        "version": "0.11.0"
+    },
+    "pontedilana/weasyprint-bundle": {
+        "version": "1.2.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
