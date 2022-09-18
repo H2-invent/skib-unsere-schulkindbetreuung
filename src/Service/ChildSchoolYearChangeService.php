@@ -8,7 +8,7 @@ use App\Entity\Log;
 use App\Entity\Stammdaten;
 use App\Entity\User;
 use App\Form\Type\ChildChangeEmailType;
-use App\Form\Type\ChildChangeShoolyearType;
+use App\Form\Type\ChildChangeSchoolyearType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -37,7 +37,7 @@ class ChildSchoolYearChangeService
     {
         $input = array('schoolyear' => $kind->getKlasse());
 
-        $form = $this->form->create(ChildChangeShoolyearType::class, $input,array('kind'=>$kind));
+        $form = $this->form->create(ChildChangeSchoolyearType::class, $input,array('kind'=>$kind));
 
         return $form;
     }

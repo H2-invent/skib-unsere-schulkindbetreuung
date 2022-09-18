@@ -45,6 +45,6 @@ class ChangeSchoolyearController extends AbstractController
             $text = $translator->trans('Schuljahr geändert');
             return $this->redirectToRoute('child_show', array('id' => $this->getUser()->getOrganisation()->getId(), 'snack' => $text));
         }
-        return $this->render('child_change/shoolYear.html.twig', array('form' => $form->createView()));
+        return $this->render('child_change/schoolYear.html.twig', array('form' => $form->createView()));
     }
 }
