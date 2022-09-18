@@ -13,7 +13,7 @@
         <h2>{% trans %}Zusammenfassung{% endtrans %} SKiB</h2>
 
 
-    <h3>{{ kind.vorname }} {{ kind.nachname }} | {% trans %}Geburtstag{% endtrans %}: {{ kind.geburtstag|date('d.m.Y') }} | {% trans %}Klasse{% endtrans %}: {{ kind.klasse }}
+    <h3>{{ kind.vorname }} {{ kind.nachname }} | {% trans %}Geburtstag{% endtrans %}: {{ kind.geburtstag|date('d.m.Y') }} | {% trans %}Klasse{% endtrans %}: {{ kind.klasseString }}
     <p>{{ 'Allergie'|trans }}: {{ kind.allergie }} | {{ 'Medikamente'|trans }}: {{ kind.medikamente }} | {{ 'Sicherheitscode'|trans }}: {{ kind.eltern.secCode }} | {{ 'Monatliche Gebühren'|trans }}: {{ kind.preisforBetreuung|number_format(2,',','.') }}€</p></h3>
 
         <table cellpadding="3px">

@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Kind;
 use App\Service\AnmeldeEmailService;
+use App\Service\ChildSchoolYearChangeService;
 use App\Service\ChildEmailChangeService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ChangeEmailController extends AbstractController
+class ChangeSchoolyearController extends AbstractController
 {
     private $translator;
 
@@ -19,10 +20,11 @@ class ChangeEmailController extends AbstractController
         $this->translator = $translator;
     }
 
+
     /**
-     * @Route("/org_child/email_change", name="org_child_email_change")
+     * @Route("/org_child/schoolyear_change", name="org_child_shoolyear_change")
      */
-    public function index(TranslatorInterface $translator, Request $request, ChildEmailChangeService $childChangeEmailService)
+    public function index(TranslatorInterface $translator, Request $request, AnmeldeEmailService $anmeldeEmailService, ChildSchoolYearChangeService $childChoolYearChangeService)
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
 
@@ -32,22 +34,17 @@ class ChangeEmailController extends AbstractController
         }
 
 
-        $form = $childChangeEmailService->form($kind);
+        $form = $childChoolYearChangeService->form($kind);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $input = $form->getData();
-            if ($input['email'] !== $input['emailDoubleInput']) {
-                $text = $this->translator->trans('Email Adressen stimmen nicht überein.');
-                return $this->redirectToRoute('org_child_email_change', array('kind_id' => $kind->getId(), 'snack' => $text));
-            }
+            $childChoolYearChangeService->changeSchoolyear($kind, $input, $this->getUser());
 
-            $childChangeEmailService->changeEmail($kind, $input, $this->getUser());
-
-            $text = $translator->trans('Email adresse geändert');
+            $text = $translator->trans('Schuljahr geändert');
             return $this->redirectToRoute('child_show', array('id' => $this->getUser()->getOrganisation()->getId(), 'snack' => $text));
         }
-        return $this->render('child_change/email.html.twig', array('form' => $form->createView()));
+        return $this->render('child_change/schoolYear.html.twig', array('form' => $form->createView()));
     }
 }

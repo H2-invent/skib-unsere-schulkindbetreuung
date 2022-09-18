@@ -60,13 +60,10 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value=null href="#"> {% trans %}Alle Jahrgangsstufen{% endtrans %}</a>
-                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="1"  href="#">1. {{ 'Klasse'|trans }}</a>
-                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="2" href="#">2. {{ 'Klasse'|trans }}</a>
-                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="3" href="#">3. {{ 'Klasse'|trans }}</a>
-                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="4" href="#">4. {{ 'Klasse'|trans }}</a>
-                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="5" href="#">5. {{ 'Klasse'|trans }}</a>
-                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="6" href="#">6. {{ 'Klasse'|trans }}</a>
-                                    <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="7" href="#">7. {{ 'Klasse'|trans }}</a>
+                                    {% for key,k in organisation.stadt.translate.settingsSkibShoolyearNamingArray %}
+                                        <a class="schuljahrSelector dropdown-item" data-type="klasse" data-value="{{ key }}"  href="#">{{ k }}</a>
+                                    {% endfor %}
+
                                 </div>
                             </div>
                             <button class="print btn btn-secondary" type="button">

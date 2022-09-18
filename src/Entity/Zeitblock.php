@@ -292,7 +292,36 @@ class Zeitblock
 
        }
     }
+    public function getWochentagStringShort(){
 
+        switch ($this->wochentag){
+            case 0:
+                return "Mo";
+                break;
+            case 1:
+                return "Di";
+                break;
+            case 2:
+                return "Mi";
+                break;
+            case 3:
+                return "Do";
+                break;
+            case 4:
+                return "Fr";
+                break;
+            case 5:
+                return "Sa";
+                break;
+            case 6:
+                return "So";
+                break;
+            default:
+                return "keine Angabe";
+                break;
+
+        }
+    }
 
     public function getGanztag(): ?int
     {

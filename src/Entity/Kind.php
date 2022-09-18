@@ -267,7 +267,16 @@ class Kind
     {
         return $this->klasse;
     }
+    public function getKlasseString(): ?string
+    {
+        $klassArr = $this->schule->getStadt()->translate()->getSettingsSkibShoolyearNamingArray();
+        try {
+            return $klassArr[$this->klasse];
+        }catch (\Exception $exception){
+            return 'error! Contact the Administrator';
+        }
 
+    }
     public function setKlasse(?int $klasse): self
     {
         $this->klasse = $klasse;
