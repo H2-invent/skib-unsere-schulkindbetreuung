@@ -26,18 +26,13 @@ class LoerrachKind extends AbstractType
 
 
         $today = intval((new \DateTime())->format('Y'));
+        $stadt = $options['data']->getSchule()->getStadt();
 
         $builder
             ->add('vorname', TextType::class,['label'=>'Vorname','translation_domain' => 'form'])
             ->add('nachname', TextType::class,['label'=>'Nachname','translation_domain' => 'form'])
             ->add('klasse', ChoiceType::class, [
-                'choices'  => [
-                    'Klasse 1' => 1,
-                    'Klasse 2' => 2,
-                    'Klasse 3' => 3,
-                    'Klasse 4' => 4,
-
-                ],'label'=>'Jahrgangsstufe zu Betreuungsbeginn','translation_domain' => 'form'])
+                'choices'  =>array_flip($stadt->translate()->getSettingsSkibShoolyearNamingArray()),'label'=>'Jahrgangsstufe zu Betreuungsbeginn','translation_domain' => 'form'])
             ->add('art', ChoiceType::class, [
                 'choices'  => [
                     'Ganztag' => 1,

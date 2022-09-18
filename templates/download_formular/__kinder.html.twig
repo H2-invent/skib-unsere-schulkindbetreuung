@@ -22,12 +22,22 @@
     <tbody>
     <tr>
         <td><h3 style="color: red">{{ 'Sicherheitscode bei Änderung'|trans }}:</h3></td>
-        <td>____ ____ ____ ____ ____ ____<br>{% trans %}Diesen finden Sie in der Buchungsbestätigung, die Sie per Email erhalten haben.{% endtrans %}
+        <td>____ ____ ____ ____ ____ ____<br>{% trans %}Diesen finden Sie in der Buchungsbestätigung, die Sie per Email erhalten haben.{% endtrans %}<br>
+            {% if schule.stadt.settingsSkibChangeDocumentChangeDateShow %}
+            __ . __ . ____ <br>{% trans %}Diese Änderung/Neuanmeldung soll am dd.mm.yyyy in Kraft treten{% endtrans %}
+            {% endif %}
+        </td>
+    </tr>{% if schule.stadt.settingsSkibChangeDocumentChangeDateShow %}
+    <tr>
+        <td><h3 style="color: red">{% trans %}Diese Änderung/Neuanmeldung soll am dd.mm.yyyy in Kraft treten{% endtrans %}:</h3></td>
+        <td>__ . __ . ____
         </td>
     </tr>
+    {% endif %}
     <tr>
         <td colspan="2"></td>
     </tr>
+
     <tr>
         <td style=" border-bottom: 1px black solid; color: red">{{ 'Vorname'|trans }}:</td>
         <td style=" border-bottom: 1px black solid; color: red">{{ 'Nachname'|trans }}:</td>

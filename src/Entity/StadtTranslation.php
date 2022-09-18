@@ -92,6 +92,12 @@ class StadtTranslation implements TranslationInterface
      */
     private $schulkindbetreuungBlockDeaktiviertText;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settings_skib_shoolyear_naming;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -315,5 +321,32 @@ class StadtTranslation implements TranslationInterface
     {
         $this->schulkindbetreuungBlockDeaktiviertText = $schulkindbetreuungBlockDeaktiviertText;
     }
+
+    public function getSettingsSkibShoolyearNaming(): ?string
+    {
+        return $this->settings_skib_shoolyear_naming;
+    }
+
+    public function getSettingsSkibShoolyearNamingArray(): ?array
+    {
+        $string = $this->settings_skib_shoolyear_naming;
+        if (!$string) {
+            return array(
+                1 => '1.Klasse',
+                2 => '2.Klasse',
+                3 => '3.Klasse',
+                4 => '4.Klasse'
+            );
+        }
+        return json_decode($this->settings_skib_shoolyear_naming, true);
+    }
+
+    public function setSettingsSkibShoolyearNaming(?string $settings_skib_shoolyear_naming): self
+    {
+        $this->settings_skib_shoolyear_naming = $settings_skib_shoolyear_naming;
+
+        return $this;
+    }
+
 
 }

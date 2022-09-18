@@ -120,202 +120,208 @@ class StadtType extends AbstractType
             ->add('settingsweiterePersonenberechtigte', CheckboxType::class, ['required' => false, 'label' => 'Weitere Personenberechtigte hinzufügen.', 'translation_domain' => 'form'])
             ->add('settingsEingabeDerGeschwister', CheckboxType::class, ['required' => false, 'label' => 'Die Geschwisterkinder müssen aufgelistet werden.', 'translation_domain' => 'form'])
             ->add('settings_skib_disableIcs', CheckboxType::class, ['required' => false, 'label' => 'Es sollen KEINE Kalenderdatei an die Eltern versandt werden', 'translation_domain' => 'form'])
+            ->add('settingsSkibChangeDocumentChangeDateShow', CheckboxType::class, ['required' => false, 'label' => 'In dem Änderungsformular soll ein Änderungsdatum angezeigt werden', 'translation_domain' => 'form'])
 
             ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])
-            ->add('emailDokumente_confirm', EntityType::class, [
-                // looks for choices from this entity
-                'class' => File::class,
-                'label' => 'Dokumente für die E-Mail-Bestätigungsmail',
-                // uses the User.username property as the visible option string
-                'choice_label' => 'originalName',
-                'choices' => $stadt->getUploads(),
-                // used to render a select box, check boxes or radios
-                'multiple' => true,
-                'expanded' => true,
-                'required' => false
-            ])
-            ->add('emailDokumente_schulkindbetreuung_anmeldung', EntityType::class, [
-                // looks for choices from this entity
-                'class' => File::class,
-                'label' => 'Dokumente für die Anmeldemail',
-                // uses the User.username property as the visible option string
-                'choice_label' => 'originalName',
-                'choices' => $stadt->getUploads(),
-                // used to render a select box, check boxes or radios
-                'multiple' => true,
-                'expanded' => true,
-                'required' => false
-            ])
-            ->add('emailDokumente_schulkindbetreuung_anderung', EntityType::class, [
-                // looks for choices from this entity
-                'class' => File::class,
-                'label' => 'Dokumente für die Änderungsmail',
-                // uses the User.username property as the visible option string
-                'choice_label' => 'originalName',
-                'choices' => $stadt->getUploads(),
-                // used to render a select box, check boxes or radios
-                'multiple' => true,
-                'expanded' => true,
-                'required' => false
-            ])
-            ->add('emailDokumente_schulkindbetreuung_buchung', EntityType::class, [
-                // looks for choices from this entity
-                'class' => File::class,
-                'label' => 'Dokumente für die Buchungsmail',
-                // uses the User.username property as the visible option string
-                'choice_label' => 'originalName',
-                'choices' => $stadt->getUploads(),
-                // used to render a select box, check boxes or radios
-                'multiple' => true,
-                'expanded' => true,
-                'required' => false
-            ])
-            ->add('emailDokumente_schulkindbetreuung_abmeldung', EntityType::class, [
-                // looks for choices from this entity
-                'class' => File::class,
-                'label' => 'Dokumente für die Abmeldungsmail',
-                // uses the User.username property as the visible option string
-                'choice_label' => 'originalName',
-                'choices' => $stadt->getUploads(),
-                // used to render a select box, check boxes or radios
-                'multiple' => true,
-                'expanded' => true,
-                'required' => false
-            ])
+        ->add('emailDokumente_confirm', EntityType::class, [
+            // looks for choices from this entity
+            'class' => File::class,
+            'label' => 'Dokumente für die E-Mail-Bestätigungsmail',
+            // uses the User.username property as the visible option string
+            'choice_label' => 'originalName',
+            'choices' => $stadt->getUploads(),
+            // used to render a select box, check boxes or radios
+            'multiple' => true,
+            'expanded' => true,
+            'required' => false
+        ])
+        ->add('emailDokumente_schulkindbetreuung_anmeldung', EntityType::class, [
+            // looks for choices from this entity
+            'class' => File::class,
+            'label' => 'Dokumente für die Anmeldemail',
+            // uses the User.username property as the visible option string
+            'choice_label' => 'originalName',
+            'choices' => $stadt->getUploads(),
+            // used to render a select box, check boxes or radios
+            'multiple' => true,
+            'expanded' => true,
+            'required' => false
+        ])
+        ->add('emailDokumente_schulkindbetreuung_anderung', EntityType::class, [
+            // looks for choices from this entity
+            'class' => File::class,
+            'label' => 'Dokumente für die Änderungsmail',
+            // uses the User.username property as the visible option string
+            'choice_label' => 'originalName',
+            'choices' => $stadt->getUploads(),
+            // used to render a select box, check boxes or radios
+            'multiple' => true,
+            'expanded' => true,
+            'required' => false
+        ])
+        ->add('emailDokumente_schulkindbetreuung_buchung', EntityType::class, [
+            // looks for choices from this entity
+            'class' => File::class,
+            'label' => 'Dokumente für die Buchungsmail',
+            // uses the User.username property as the visible option string
+            'choice_label' => 'originalName',
+            'choices' => $stadt->getUploads(),
+            // used to render a select box, check boxes or radios
+            'multiple' => true,
+            'expanded' => true,
+            'required' => false
+        ])
+        ->add('emailDokumente_schulkindbetreuung_abmeldung', EntityType::class, [
+            // looks for choices from this entity
+            'class' => File::class,
+            'label' => 'Dokumente für die Abmeldungsmail',
+            // uses the User.username property as the visible option string
+            'choice_label' => 'originalName',
+            'choices' => $stadt->getUploads(),
+            // used to render a select box, check boxes or radios
+            'multiple' => true,
+            'expanded' => true,
+            'required' => false
+        ])
 
-            //SKIB Stammdateneinstallungen
-            ->add('emailDokumente_rechnung', EntityType::class, [
-                // looks for choices from this entity
-                'class' => File::class,
-                'label' => 'Dokumente für die Rechnungsmail',
-                // uses the User.username property as the visible option string
-                'choice_label' => 'originalName',
-                'choices' => $stadt->getUploads(),
-                // used to render a select box, check boxes or radios
-                'multiple' => true,
-                'expanded' => true,
-                'required' => false
-            ])
-            ->add('showShowMoreToggleOnHomescreen', CheckboxType::class, ['required' => false, 'label' => 'Zeige den "Mehr lesen" Button auf der Startseite an', 'translation_domain' => 'form'])
-            ->add('gehaltsklassen', CollectionType::class, [
-                'entry_type' => TextType::class,
-                'entry_options' => array('label' => 'Bezeichnung der Gehaltsklassen', 'translation_domain' => 'form')
-            ])
-            ->add('imageFile', VichImageType::class, [
-                'required' => false,
-                'allow_delete' => true,
-                'delete_label' => 'Löschen',
-                'label' => 'Hintergrundbild hochladen',
-                'translation_domain' => 'form'
-            ])
-            ->add('logoStadtFile', VichImageType::class, [
-                'required' => false,
-                'allow_delete' => true,
-                'delete_label' => 'Löschen',
-                'label' => 'Logo hochladen',
-                'translation_domain' => 'form'
-            ])
-            ->add('logoUrl', TextType::class, ['required' => false, 'label' => 'URL für Logo', 'translation_domain' => 'form'])
-            ->add('hauptfarbe', TextType::class, ['required' => false, 'label' => 'Hauptfarbe(HTML Code)', 'translation_domain' => 'form'])
-            ->add('akzentfarbe', TextType::class, ['required' => false, 'label' => 'Akzentfarbe (HTML Code)', 'translation_domain' => 'form'])
-            ->add('akzentfarbeFehler', TextType::class, ['required' => false, 'label' => 'Akzentfarbe Fehler (HTML Code)', 'translation_domain' => 'form'])
-            ->add('translations', TranslationsType::class, [
+        //SKIB Stammdateneinstallungen
+        ->add('emailDokumente_rechnung', EntityType::class, [
+            // looks for choices from this entity
+            'class' => File::class,
+            'label' => 'Dokumente für die Rechnungsmail',
+            // uses the User.username property as the visible option string
+            'choice_label' => 'originalName',
+            'choices' => $stadt->getUploads(),
+            // used to render a select box, check boxes or radios
+            'multiple' => true,
+            'expanded' => true,
+            'required' => false
+        ])
+        ->add('showShowMoreToggleOnHomescreen', CheckboxType::class, ['required' => false, 'label' => 'Zeige den "Mehr lesen" Button auf der Startseite an', 'translation_domain' => 'form'])
+        ->add('gehaltsklassen', CollectionType::class, [
+            'entry_type' => TextType::class,
+            'entry_options' => array('label' => 'Bezeichnung der Gehaltsklassen', 'translation_domain' => 'form')
+        ])
+        ->add('imageFile', VichImageType::class, [
+            'required' => false,
+            'allow_delete' => true,
+            'delete_label' => 'Löschen',
+            'label' => 'Hintergrundbild hochladen',
+            'translation_domain' => 'form'
+        ])
+        ->add('logoStadtFile', VichImageType::class, [
+            'required' => false,
+            'allow_delete' => true,
+            'delete_label' => 'Löschen',
+            'label' => 'Logo hochladen',
+            'translation_domain' => 'form'
+        ])
+        ->add('logoUrl', TextType::class, ['required' => false, 'label' => 'URL für Logo', 'translation_domain' => 'form'])
+        ->add('hauptfarbe', TextType::class, ['required' => false, 'label' => 'Hauptfarbe(HTML Code)', 'translation_domain' => 'form'])
+        ->add('akzentfarbe', TextType::class, ['required' => false, 'label' => 'Akzentfarbe (HTML Code)', 'translation_domain' => 'form'])
+        ->add('akzentfarbeFehler', TextType::class, ['required' => false, 'label' => 'Akzentfarbe Fehler (HTML Code)', 'translation_domain' => 'form'])
+        ->add('translations', TranslationsType::class, [
 
-                    'fields' => [
-                        'datenschutz' => [
+                'fields' => [
+                    'datenschutz' => [
 
-                            'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
-                            'label' => 'Datenschutz',
-                            'translation_domain' => 'form'
-                        ],
-                        'infoText' => [
+                        'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
+                        'label' => 'Datenschutz',
+                        'translation_domain' => 'form'
+                    ],
+                    'infoText' => [
 
-                            'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
-                            'label' => 'Infotext',
-                            'translation_domain' => 'form'
-                        ],
-                        'agb' => [
+                        'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
+                        'label' => 'Infotext',
+                        'translation_domain' => 'form'
+                    ],
+                    'agb' => [
 
-                            'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
-                            'label' => 'Allgemeine Vertragsbedingungen',
-                            'translation_domain' => 'form'
-                        ],
-                        'catererInfo' => [
+                        'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
+                        'label' => 'Allgemeine Vertragsbedingungen',
+                        'translation_domain' => 'form'
+                    ],
+                    'catererInfo' => [
 
-                            'attr' => array('rows' => 6,),
-                            'label' => 'Information zum Caterer',
-                            'translation_domain' => 'form'
-                        ],
-                        'careBlockInfo' => [
+                        'attr' => array('rows' => 6,),
+                        'label' => 'Information zum Caterer',
+                        'translation_domain' => 'form'
+                    ],
+                    'careBlockInfo' => [
 
-                            'attr' => array('rows' => 6,),
-                            'label' => 'Information zum Caterer',
-                            'translation_domain' => 'form'
-                        ],
-                        'coverText' => [
+                        'attr' => array('rows' => 6,),
+                        'label' => 'Information zum Caterer',
+                        'translation_domain' => 'form'
+                    ],
+                    'coverText' => [
 
-                            'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
-                            'label' => 'Text in der "Wichtig" Box auf der Startseite',
-                            'translation_domain' => 'form'
-                        ],
+                        'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
+                        'label' => 'Text in der "Wichtig" Box auf der Startseite',
+                        'translation_domain' => 'form'
+                    ],
 
-                        'settingKinderimKigaHelp' => [
+                    'settingKinderimKigaHelp' => [
 
-                            'attr' => array('rows' => 3,),
-                            'label' => 'Hilfetext (Text in den Fragezeigen)',
-                            'translation_domain' => 'form'
-                        ],
-                        'settingGehaltsklassenHelp' => [
+                        'attr' => array('rows' => 3,),
+                        'label' => 'Hilfetext (Text in den Fragezeigen)',
+                        'translation_domain' => 'form'
+                    ],
+                    'settingGehaltsklassenHelp' => [
 
-                            'attr' => array('rows' => 3,),
-                            'label' => 'Hilfetext (Text in den Fragezeigen)',
-                            'translation_domain' => 'form'
-                        ],
-                        'settingsSozielHilfeEmpfangerHelp' => [
+                        'attr' => array('rows' => 3,),
+                        'label' => 'Hilfetext (Text in den Fragezeigen)',
+                        'translation_domain' => 'form'
+                    ],
+                    'settingsSozielHilfeEmpfangerHelp' => [
 
-                            'attr' => array('rows' => 3,),
-                            'label' => 'Hilfetext (Text in den Fragezeigen)',
-                            'translation_domain' => 'form'
-                        ],
-                        'settingsAnzahlKindergeldempfangerHelp' => [
+                        'attr' => array('rows' => 3,),
+                        'label' => 'Hilfetext (Text in den Fragezeigen)',
+                        'translation_domain' => 'form'
+                    ],
+                    'settingsAnzahlKindergeldempfangerHelp' => [
 
-                            'attr' => array('rows' => 3,),
-                            'label' => 'Hilfetext (Text in den Fragezeigen)',
-                            'translation_domain' => 'form'
-                        ],
-                        'settingsEingabeDerGeschwisterHelp' => [
+                        'attr' => array('rows' => 3,),
+                        'label' => 'Hilfetext (Text in den Fragezeigen)',
+                        'translation_domain' => 'form'
+                    ],
+                    'settingsEingabeDerGeschwisterHelp' => [
 
-                            'attr' => array('rows' => 3,),
-                            'label' => 'Hilfetext (Text in den Fragezeigen)',
-                            'translation_domain' => 'form'
-                        ],
-                        'settingsEingabeDerGeschwisterHelpUpload' => [
+                        'attr' => array('rows' => 3,),
+                        'label' => 'Hilfetext (Text in den Fragezeigen)',
+                        'translation_domain' => 'form'
+                    ],
+                    'settingsEingabeDerGeschwisterHelpUpload' => [
 
-                            'attr' => array('rows' => 3,),
-                            'label' => 'Hilfetext (Hilfetext für den Upload von Dateien. Als verifikation für den Erhalt von Kindergeld. Leerlassen wenn es keinen Upload geben soll.)',
-                            'translation_domain' => 'form'
-                        ],
-                        'settingsweiterePersonenberechtigteHelp' => [
+                        'attr' => array('rows' => 3,),
+                        'label' => 'Hilfetext (Hilfetext für den Upload von Dateien. Als verifikation für den Erhalt von Kindergeld. Leerlassen wenn es keinen Upload geben soll.)',
+                        'translation_domain' => 'form'
+                    ],
+                    'settingsweiterePersonenberechtigteHelp' => [
 
-                            'attr' => array('rows' => 3,),
-                            'label' => 'Hilfetext (Text in den Fragezeigen)',
-                            'translation_domain' => 'form'
-                        ],
-                        'schulindbetreuungPreiseFreitext' => [
-                            'attr' => array('rows' => 3,'class' => 'onlineEditor'),
-                            'label' => 'Freitext, welcher bei der Informationen->Preise unter der Preistabelle angezeigt werden soll ',
-                            'translation_domain' => 'form'
-                        ],
-                        'schulkindbetreuungBlockDeaktiviertText' => [
-                            'attr' => array('rows' => 1,'class' => 'onlineEditor'),
-                            'label' => 'Welche Nachricht soll Eltern angezeigt werden, wenn ein Zeitblock deaktiviert worden ist',
-                            'translation_domain' => 'form'
-                        ]
+                        'attr' => array('rows' => 3,),
+                        'label' => 'Hilfetext (Text in den Fragezeigen)',
+                        'translation_domain' => 'form'
+                    ],
+                    'schulindbetreuungPreiseFreitext' => [
+                        'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
+                        'label' => 'Freitext, welcher bei der Informationen->Preise unter der Preistabelle angezeigt werden soll ',
+                        'translation_domain' => 'form'
+                    ],
+                    'schulkindbetreuungBlockDeaktiviertText' => [
+                        'attr' => array('rows' => 1, 'class' => 'onlineEditor'),
+                        'label' => 'Welche Nachricht soll Eltern angezeigt werden, wenn ein Zeitblock deaktiviert worden ist',
+                        'translation_domain' => 'form'
+                    ],
+                    'settings_skib_shoolyear_naming' => [
+                        'attr' => array('rows' => 1),
+                        'label' => 'Bezeichnung der Schuljahre (JSON-Array)',
+                        'translation_domain' => 'form'
                     ]
                 ]
-            )
-            ->add('imprint', TextareaType::class, ['attr' => ['rows' => 6, 'class' => 'onlineEditor'], 'required' => true, 'label' => 'Impressum der Stadt', 'translation_domain' => 'form'])
-            ->add('submit', SubmitType::class, ['label' => 'Speichern', 'translation_domain' => 'form']);
+            ]
+        )
+        ->add('imprint', TextareaType::class, ['attr' => ['rows' => 6, 'class' => 'onlineEditor'], 'required' => true, 'label' => 'Impressum der Stadt', 'translation_domain' => 'form'])
+        ->add('submit', SubmitType::class, ['label' => 'Speichern', 'translation_domain' => 'form']);
 
     }
 

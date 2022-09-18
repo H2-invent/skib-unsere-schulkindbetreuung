@@ -91,7 +91,7 @@ class StadtBerichtService
 
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getId());
             $kindSheet->setCellValue($alphas[$count++] . $counter, ($data->getGeburtstag()->diff($data->getEltern()->getCreatedAt()))->y);
-            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getKlasse());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getKlasseString());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getArt());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getArtString());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getName());

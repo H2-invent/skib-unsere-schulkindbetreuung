@@ -182,9 +182,21 @@ class PrintService
 
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
-        $pdf = $this->preparePDF($pdf, 'Kinder in Organistaion ' . $organisation->getName(), 'test', 'test', null, $organisation);
-
-
+        $subject = 'Kinder in Organistaion ' . $organisation->getName();
+        $pdf = $this->preparePDF($pdf, $subject, 'test', 'test', null, $organisation);
+        $pdf->writeHTMLCell(0,
+            0,
+            20,
+            100,
+        '<h1>'.$subject.'</h1>',
+            0,
+            1,
+            0,
+            true,
+            '',
+            true
+        );
+        $pdf->AddPage('L');
         $kindData = $this->templating->render('pdf/kinderliste.html.twig', array('text' => $text, 'kinder' => $kinder));
         $pdf->writeHTMLCell(
             0,

@@ -19,10 +19,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Stadt implements TranslatableInterface
 {
     use TranslatableTrait;
+
     public function __serialize(): array
     {
-        return array('id'=>$this->id);
+        return array('id' => $this->id);
     }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -96,7 +98,7 @@ class Stadt implements TranslatableInterface
     private $deleted = false;
 
     /**
-     *  @Assert\NotBlank()
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $email;
@@ -172,7 +174,6 @@ class Stadt implements TranslatableInterface
     private $akzentfarbeFehler;
 
 
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Active", mappedBy="stadt")
      */
@@ -202,7 +203,7 @@ class Stadt implements TranslatableInterface
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $berechnungsFormel='
+    private $berechnungsFormel = '
         $adresse = $this->getEltern();
         $summe = 0;
         $kind = $this;
@@ -258,7 +259,7 @@ class Stadt implements TranslatableInterface
     /**
      * @ORM\Column(type="integer")
      */
-    private $minDaysperWeek=1;
+    private $minDaysperWeek = 1;
 
     /**
      * @ORM\Column(type="integer")
@@ -283,38 +284,38 @@ class Stadt implements TranslatableInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $settingsAnzahlKindergeldempfanger=false;
+    private $settingsAnzahlKindergeldempfanger = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $settingsSozielHilfeEmpfanger=false;
+    private $settingsSozielHilfeEmpfanger = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $settingsAnzahlKindergeldempfangerRequired=false;
+    private $settingsAnzahlKindergeldempfangerRequired = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $settingsSozielHilfeEmpfangerRequired=false;
+    private $settingsSozielHilfeEmpfangerRequired = false;
 
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $settingKinderimKiga=false;
+    private $settingKinderimKiga = false;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $settingGehaltsklassen=false;
+    private $settingGehaltsklassen = false;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $settingGehaltsklassenRequired=false;
+    private $settingGehaltsklassenRequired = false;
 
     /**
      * @ORM\OneToMany(targetEntity=\App\Entity\File::class, mappedBy="stadt")
@@ -382,7 +383,10 @@ class Stadt implements TranslatableInterface
      */
     private $settings_skib_disableIcs;
 
-
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $settings_skib_change_document_change_date_show;
 
 
 
@@ -576,6 +580,7 @@ class Stadt implements TranslatableInterface
     {
         return $this->image;
     }
+
     public function setLogoStadtFile(File $logoStadtFile = null)
     {
         $this->logoStadtFile = $logoStadtFile;
@@ -603,6 +608,7 @@ class Stadt implements TranslatableInterface
     {
         return $this->logoStadt;
     }
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -772,7 +778,6 @@ class Stadt implements TranslatableInterface
     }
 
 
-
     /**
      * @return Collection|Active[]
      */
@@ -906,9 +911,6 @@ class Stadt implements TranslatableInterface
 
         return $this;
     }
-
-
-
 
 
     /**
@@ -1404,8 +1406,17 @@ class Stadt implements TranslatableInterface
         return $this;
     }
 
+    public function getSettingsSkibChangeDocumentChangeDateShow(): ?bool
+    {
+        return $this->settings_skib_change_document_change_date_show;
+    }
 
+    public function setSettingsSkibChangeDocumentChangeDateShow(?bool $settings_skib_change_document_change_date_show): self
+    {
+        $this->settings_skib_change_document_change_date_show = $settings_skib_change_document_change_date_show;
 
+        return $this;
+    }
 
 
 }

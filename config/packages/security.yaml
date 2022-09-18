@@ -56,6 +56,7 @@ security:
         - { path: /org_report/, role: ROLE_ORG_REPORT }
         - { path: /org_child/change/, role: ROLE_ORG_CHILD_CHANGE }
         - { path: /org_child/email_change/, role: ROLE_ORG_CHILD_EMAIL_CHANGE }
+        - { path: /org_child/shoolyear_change/, role: ROLE_ORG_CHILD_SHOOLYEAR_CHANGE}
         - { path: /org_child/show/, role: ROLE_ORG_CHILD_SHOW }
         - { path: /org_checkin/, role: ROLE_ORG_CHECKIN_SHOW }
         - { path: /org_accounting, role: ROLE_ORG_ACCOUNTING }

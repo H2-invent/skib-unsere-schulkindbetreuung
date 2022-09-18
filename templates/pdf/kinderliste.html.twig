@@ -22,7 +22,8 @@
         <th>{% trans %}Schule{% endtrans %}</th>
         <th>{% trans %}Klasse{% endtrans %}</th>
         <th>{% trans %}Alleine nach Hause{% endtrans %}</th>
-        <th>{% trans %}Masernimpfung{% endtrans %}</th>
+        <th>{% trans %}Gebuchte Zeitblöcke{% endtrans %}</th>
+        <th>{% trans %}Notizen{% endtrans %}</th>
     </tr>
     </thead>
     <tbody>
@@ -33,9 +34,10 @@
             <td>{{ k.nachname }}</td>
             <td>{{ k.eltern.notfallkontakt }}</td>
             <td>{{ k.schule.name }}</td>
-            <td>{{ k.klasse }}. {{ 'Klasse'|trans }}</td>
+            <td>{{ k.klasseString }}</td>
             <td>{{ k.alleineHause?'Ja'|trans:'Nein'|trans }}</td>
-            <td>{{ k.masernImpfung?'Ja'|trans:'Nein'|trans }}</td>
+            <td>{% for b in k.zeitblocks %}{{ b.wochentagStringShort }}: {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>{% endfor %}</td>
+            <td></td>
         </tr>
     {% endfor %}
     </tbody>

@@ -15,6 +15,7 @@
             <th>{% trans %}Schule{% endtrans %}</th>
             <th>{% trans %}Klasse{% endtrans %}</th>
             <th>{% trans %}Masernimpfung{% endtrans %}</th>
+            <th>{% trans %}Angemeldet am:{% endtrans %}</th>
         </tr>
         </thead>
         <tbody>
@@ -40,6 +41,10 @@
                                 <a class="dropdown-item"
                                    href="{{ path('org_child_email_change',{'kind_id':k.id}) }}">{% trans %}Email Adresse ändern{% endtrans %}</a>
                             {% endif %}
+                            {% if is_granted('ROLE_ORG_CHILD_SHOOLYEAR_CHANGE') %}
+                                <a class="dropdown-item"
+                                   href="{{ path('org_child_shoolyear_change',{'kind_id':k.id}) }}">{% trans %}Schuljahr ändern{% endtrans %}</a>
+                            {% endif %}
                             {% if is_granted('ROLE_ORG_CHILD_DELETE') %}
                                 <a class="dropdown-item deleteBtn" type="DELETE"
                                    href="{{ path('delete_child_delete',{'kind_id':k.id}) }}">{% trans %}Löschen{% endtrans %}</a>
@@ -52,8 +57,9 @@
                 <td>{{ k.eltern.vorname }} {{ k.eltern.name }}</td>
                 <td>{{ k.eltern.notfallkontakt }}</td>
                 <td>{{ k.schule.name }}</td>
-                <td>{{ k.klasse }}. {{ 'Klasse'|trans }}</td>
+                <td>{{ k.klasseString }}</td>
                 <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
+                <td>{{ k.eltern.createdAt|date('d.m.Y') }}</td>
             </tr>
         {% endfor %}
         </tbody>

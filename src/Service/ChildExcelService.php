@@ -92,7 +92,7 @@ class ChildExcelService
                 $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Ist Sozielhilfeempfänger'));
             }
 
-
+            $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Angemeldet am:'));
             $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('Kundennummer'));
             $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('IBAN'));
             $kindSheet->setCellValue($alphas[$count++] . '1', $this->translator->trans('BIC'));
@@ -108,7 +108,7 @@ class ChildExcelService
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getVorname());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getNachname());
             $kindSheet->setCellValue($alphas[$count++] . $counter, ($data->getGeburtstag()->diff($data->getEltern()->getCreatedAt()))->y);
-            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getKlasse());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getKlasseString());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getArt());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getArtString());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getName());
@@ -176,7 +176,7 @@ class ChildExcelService
                     $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getSozialhilfeEmpanger());
                 }
 
-
+                $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getCreatedAt()->format('d.m.Y'));
                 $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId()) ? $data->getEltern()->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())->getKundennummer() : "");
                 $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getIban());
                 $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getBic());
