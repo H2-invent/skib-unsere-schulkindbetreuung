@@ -4,14 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Kind;
 use App\Service\AnmeldeEmailService;
-use App\Service\ChildChoolYearChangeService;
+use App\Service\ChildSchoolYearChangeService;
 use App\Service\ChildEmailChangeService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ChangeShoolyearController extends AbstractController
+class ChangeSchoolyearController extends AbstractController
 {
     private $translator;
 
@@ -22,9 +22,9 @@ class ChangeShoolyearController extends AbstractController
 
 
     /**
-     * @Route("/org_child/shoolyear_change", name="org_child_shoolyear_change")
+     * @Route("/org_child/schoolyear_change", name="org_child_shoolyear_change")
      */
-    public function index(TranslatorInterface $translator, Request $request, AnmeldeEmailService $anmeldeEmailService, ChildChoolYearChangeService $childChoolYearChangeService)
+    public function index(TranslatorInterface $translator, Request $request, AnmeldeEmailService $anmeldeEmailService, ChildSchoolYearChangeService $childChoolYearChangeService)
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
 

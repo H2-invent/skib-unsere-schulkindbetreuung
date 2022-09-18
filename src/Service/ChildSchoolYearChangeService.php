@@ -18,7 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 // <- Add this
 
-class ChildChoolYearChangeService
+class ChildSchoolYearChangeService
 {
     private $em;
     private $translator;
@@ -35,7 +35,7 @@ class ChildChoolYearChangeService
 
     public function form(Kind $kind)
     {
-        $input = array('shoolyear' => $kind->getKlasse());
+        $input = array('schoolyear' => $kind->getKlasse());
 
         $form = $this->form->create(ChildChangeShoolyearType::class, $input,array('kind'=>$kind));
 
