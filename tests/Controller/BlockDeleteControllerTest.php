@@ -12,7 +12,7 @@ class BlockDeleteControllerTest extends WebTestCase
     public function testBlockDelete(){
         $client = static::createClient();
 
-        $userRepository = static::$container->get(User::class);
+        $userRepository = self::getContainer()->get(User::class);
         $testUser = $userRepository->findOneByEmail('entwicklung@h2-invent.com');
         $client->loginUser($testUser);
         $client->request('GET','/org_block/schule/block/deleteBlock?id=18');
