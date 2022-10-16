@@ -70,7 +70,6 @@ class Kind
     private $geburtstag;
 
 
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Abwesend", mappedBy="kind")
      */
@@ -160,10 +159,8 @@ class Kind
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Rechnung", mappedBy="kinder")
-	 
      */
     private $rechnungen;
-
 
 
     /**
@@ -181,7 +178,6 @@ class Kind
      * @ORM\OneToMany(targetEntity="App\Entity\Anwesenheit", mappedBy="kind")
      */
     private $anwesenheitenSchulkindbetreuung;
-
 
 
     public function __construct()
@@ -267,16 +263,18 @@ class Kind
     {
         return $this->klasse;
     }
+
     public function getKlasseString(): ?string
     {
         $klassArr = $this->schule->getStadt()->translate()->getSettingsSkibShoolyearNamingArray();
         try {
             return $klassArr[$this->klasse];
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return 'error! Contact the Administrator';
         }
 
     }
+
     public function setKlasse(?int $klasse): self
     {
         $this->klasse = $klasse;
@@ -316,21 +314,22 @@ class Kind
 
         return $this->zeitblocks;
     }
+
     /**
      * @return Collection|Zeitblock[]
      */
     public function getRealZeitblocks(): Collection
     {
         $block = array();
-        foreach ($this->zeitblocks->toArray() as $data){
-            if (!$data->getDeleted()){
+        foreach ($this->zeitblocks->toArray() as $data) {
+            if (!$data->getDeleted()) {
                 $block[] = $data;
             }
         }
 
         usort($block, function (Zeitblock $a, Zeitblock $b) {
-        return ($a->getVon()>$b->getVon()?true:false);
-    });
+            return ($a->getVon() > $b->getVon() ? true : false);
+        });
 
         return new ArrayCollection($block);
     }
@@ -409,65 +408,76 @@ class Kind
 
         return $this;
     }
+
     public function getBetreungsblocks()
     {
         $blocks = $this->zeitblocks;
         $summe = 0;
-        foreach ($blocks as $data){
-            if($data->getGanztag()!= 0){
+        foreach ($blocks as $data) {
+            if ($data->getGanztag() != 0) {
                 $summe++;
             }
         }
         return $summe;
     }
-    public function getTageWithBlocks(){
+
+    public function getTageWithBlocks()
+    {
 
         $blocks2 = array();
 
         $blocks = $this->zeitblocks->toArray();
         $blocks = array_merge($blocks, $this->beworben->toArray());
-        
-        foreach ($blocks as $data){
-            if($data->getGanztag() != 0){
+
+        foreach ($blocks as $data) {
+            if ($data->getGanztag() != 0) {
                 $blocks2[$data->getWochentag()][] = $data;
             }
         }
         return sizeof($blocks2);
     }
+
+
+    /**
+     * @return Zeitblock[]
+     */
     public function getBetreungsblocksReal()
-{
-    $blocks = $this->zeitblocks;
-    $summe = array();
-    foreach ($blocks as $data){
-        if($data->getGanztag()!= 0){
-            $summe[]=$data;
+    {
+        $blocks = $this->zeitblocks;
+        $summe = array();
+        foreach ($blocks as $data) {
+            if ($data->getGanztag() != 0) {
+                $summe[] = $data;
+            }
         }
+        return $summe;
     }
-    return $summe;
-}
+
     public function getBetreungsblocksRealKontingent()
     {
         $blocks = $this->beworben;
         $summe = array();
-        foreach ($blocks as $data){
-            if($data->getGanztag()!= 0){
-                $summe[]=$data;
+        foreach ($blocks as $data) {
+            if ($data->getGanztag() != 0) {
+                $summe[] = $data;
             }
         }
         return $summe;
     }
+
     public function getMittagessenblocksReal()
     {
         $blocks = $this->zeitblocks;
         $summe = array();
-        foreach ($blocks as $data){
-            if($data->getGanztag() == 0){
-                $summe[]=$data;
+        foreach ($blocks as $data) {
+            if ($data->getGanztag() == 0) {
+                $summe[] = $data;
             }
         }
         return $summe;
     }
-        public function getPreisforBetreuung()
+
+    public function getPreisforBetreuung()
     {   // Load the data from the city into the controller as $stadt
 
         //Include Parents in this route
@@ -476,21 +486,24 @@ class Kind
         return $summe;
     }
 
-    private function getBetragforKindBetreuung(Kind $kind,Stammdaten $eltern){
+    private function getBetragforKindBetreuung(Kind $kind, Stammdaten $eltern)
+    {
         $summe = 0;
         $blocks = $kind->getZeitblocks()->toArray();
         $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
-        foreach ($blocks as $data){
-            if($data->getGanztag() !== 0 && $data->getDeleted() === false){
+        foreach ($blocks as $data) {
+            if ($data->getGanztag() !== 0 && $data->getDeleted() === false) {
                 $summe += $data->getPreise()[$eltern->getEinkommen()];
             }
         }
         return $summe;
     }
-    private function getBetragforKindMittagessen(Kind $kind,Stammdaten $eltern){
+
+    private function getBetragforKindMittagessen(Kind $kind, Stammdaten $eltern)
+    {
         $summe = 0;
-        foreach ($kind->getZeitblocks() as $data){
-            if($data->getGanztag() === 0 && $data->getDeleted() === false){
+        foreach ($kind->getZeitblocks() as $data) {
+            if ($data->getGanztag() === 0 && $data->getDeleted() === false) {
                 $summe += $data->getPreise()[$eltern->getEinkommen()];
             }
         }
@@ -630,6 +643,7 @@ class Kind
 
         return $this;
     }
+
     public function getAllBlocks()
     {
         return array_merge($this->zeitblocks->toArray(), $this->beworben->toArray());
@@ -699,10 +713,11 @@ class Kind
         return $this;
     }
 
-    public function getArtString(){
+    public function getArtString()
+    {
         $type = array(
-        1=>'Ganztagsbetreuung',
-        2=>'Halbtagsbetreuung',
+            1 => 'Ganztagsbetreuung',
+            2 => 'Halbtagsbetreuung',
         );
         return $type[$this->art];
     }
@@ -714,29 +729,32 @@ class Kind
     {
         return $this->kindFerienblocks;
     }
+
     /**
      * @return Collection|Ferienblock[]
      */
     public function getFerienblocks(): Collection
     {
         $ferien = array();
-        foreach ($this->kindFerienblocks as $data){
+        foreach ($this->kindFerienblocks as $data) {
             $ferien[] = $data->getFerienblock();
         }
         return new ArrayCollection($ferien);
     }
+
     /**
      * @return Collection|KindFerienblock[]
      */
     public function getKindFerienBlock(Ferienblock $ferienblock): ?KindFerienblock
     {
-        foreach ($this->kindFerienblocks as $data){
-            if($data->getFerienblock() == $ferienblock){
-                return  $data;
+        foreach ($this->kindFerienblocks as $data) {
+            if ($data->getFerienblock() == $ferienblock) {
+                return $data;
             }
         }
-        return  null;
+        return null;
     }
+
     /**
      * @return Collection|KindFerienblock[]
      */
@@ -744,13 +762,14 @@ class Kind
     {
         $res = array();
         $ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($ferienblock as $data){
-            if($data->getState() == 0){
+        foreach ($ferienblock as $data) {
+            if ($data->getState() == 0) {
                 $res[] = $data;
             }
         }
         return new ArrayCollection($res);
     }
+
     /**
      * @return Collection|KindFerienblock[]
      */
@@ -758,13 +777,14 @@ class Kind
     {
         $res = array();
         $ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($ferienblock as $data){
-            if($data->getState() == 10){
+        foreach ($ferienblock as $data) {
+            if ($data->getState() == 10) {
                 $res[] = $data;
             }
         }
         return new ArrayCollection($res);
     }
+
     /**
      * @return Collection|KindFerienblock[]
      */
@@ -772,13 +792,14 @@ class Kind
     {
         $res = array();
         $ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($ferienblock as $data){
-            if($data->getState() == 20){
+        foreach ($ferienblock as $data) {
+            if ($data->getState() == 20) {
                 $res[] = $data;
             }
         }
         return new ArrayCollection($res);
     }
+
     /**
      * @return Collection|KindFerienblock[]
      */
@@ -786,13 +807,14 @@ class Kind
     {
         $res = array();
         $ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($ferienblock as $data){
-            if($data->getBezahlt() === true){
+        foreach ($ferienblock as $data) {
+            if ($data->getBezahlt() === true) {
                 $res[] = $data;
             }
         }
         return new ArrayCollection($res);
     }
+
     /**
      * @return Integer|Preis
      */
@@ -800,11 +822,12 @@ class Kind
     {
         $preis = 0.0;
         $ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($ferienblock as $data){
-         $preis += $data->getPreis();
+        foreach ($ferienblock as $data) {
+            $preis += $data->getPreis();
         }
-       return  $preis;
+        return $preis;
     }
+
     /**
      * @return Collection|KindFerienblock[]
      */
@@ -812,13 +835,14 @@ class Kind
     {
         $res = array();
         $ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($ferienblock as $data){
-            if($data->getBezahlt() === false){
+        foreach ($ferienblock as $data) {
+            if ($data->getBezahlt() === false) {
                 $res[] = $data;
             }
         }
         return new ArrayCollection($res);
     }
+
     public function addKindFerienblock(KindFerienblock $kindFerienblock): self
     {
         if (!$this->kindFerienblocks->contains($kindFerienblock)) {
@@ -841,11 +865,13 @@ class Kind
 
         return $this;
     }
-    public function getProgrammFromOrg(Organisation $organisation){
+
+    public function getProgrammFromOrg(Organisation $organisation)
+    {
         $res = array();
-        foreach ($this->kindFerienblocks as $data){
-            if($data->getFerienblock()->getOrganisation() == $organisation){
-                $res[]  = $data;
+        foreach ($this->kindFerienblocks as $data) {
+            if ($data->getFerienblock()->getOrganisation() == $organisation) {
+                $res[] = $data;
             }
 
         }
