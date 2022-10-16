@@ -51,14 +51,15 @@ class ChildExcelService
         $this->writeSpreadsheet($kinder, $this->translator->trans('Mittwoch'), [2]);
         $this->writeSpreadsheet($kinder, $this->translator->trans('Donnerstag'), [3]);
         $this->writeSpreadsheet($kinder, $this->translator->trans('Freitag'), [4]);
-        $this->spreadsheet->getSheetByName('Kinder');
+
 
         $sheetIndex = $this->spreadsheet->getIndex(
             $this->spreadsheet->getSheetByName('Worksheet')
         );
         $this->spreadsheet->removeSheetByIndex($sheetIndex);
-        // Create a Temporary file in the system
+        $this->spreadsheet->getSheetByName('Kinder');
 
+        // Create a Temporary file in the system
         $fileName = 'Kinder.xlsx';
         $temp_file = tempnam(sys_get_temp_dir(), $fileName);
 

@@ -5,9 +5,15 @@ namespace App\Service\ExcelExport;
 use App\Entity\Kind;
 use App\Entity\Zeitblock;
 use App\Helper\ChildDateExcel;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CreateExcelDayService
 {
+    private TranslatorInterface $translator;
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
 
     /**
      * Returns the merged Time for a child for a given Day.
@@ -30,10 +36,7 @@ class CreateExcelDayService
         $tmp = array();
         foreach ($excelBlocks as $data) {
             $tmp[] =
-                str_pad(floor($data->getVon() / 60), 2, 0, STR_PAD_LEFT)
-                . ':' . str_pad($data->getVon() % 60, 2, 0, STR_PAD_LEFT)
-                . ' - ' . str_pad(floor($data->getBis() / 60), 2, 0, STR_PAD_LEFT)
-                . ':' . str_pad($data->getBis() % 60, 2, 0, STR_PAD_LEFT).' Uhr';
+                $data->getVonBisAsStringWithUhr($this->translator->trans('Uhr'));
         }
         return implode("\n", $tmp);
     }
