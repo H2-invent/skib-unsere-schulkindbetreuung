@@ -138,7 +138,7 @@ class ChildController extends AbstractController
 
 
         if ($request->get('print')) {
-            return $printService->printChildList($kinderU, $organisation, $text, $fileName, $TCPDFController, 'D');
+            return $printService->printChildList($kinderU, $organisation, $text, $fileName, $TCPDFController,$request->get('wochentag') !== ""?[$request->get('wochentag')]:[0,1,2,3,4], 'D');
 
         } elseif ($request->get('spread')) {
             return $this->file($childExcelService->generateExcel($kinderU,$organisation->getStadt()), $fileName . '.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
