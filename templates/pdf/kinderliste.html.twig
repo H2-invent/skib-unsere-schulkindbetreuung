@@ -9,34 +9,63 @@
         margin: 5px;
     }
 </style>
-<h2>{{text}}</h2>
+<h2>{{ text }}</h2>
 
 
-<table class="table table-hover"  cellpadding="3px">
+<table class="table table-hover" cellpadding="3px">
     <thead>
     <tr>
-        <th>{{'Anwesend'|trans}}</th>
+        <th>{{ 'Anwesend'|trans }}</th>
         <th>{% trans %}Vorname{% endtrans %}</th>
         <th>{% trans %}Nachname{% endtrans %}</th>
         <th>{% trans %}Notfallkontakt{% endtrans %}</th>
         <th>{% trans %}Schule{% endtrans %}</th>
         <th>{% trans %}Klasse{% endtrans %}</th>
         <th>{% trans %}Alleine nach Hause{% endtrans %}</th>
-        <th>{% trans %}Gebuchte Zeitblöcke{% endtrans %}</th>
+        {% if 0 in wochentag %}
+            <th>{% trans %}Mo{% endtrans %}</th>
+        {% endif %}
+        {% if 1 in wochentag %}
+            <th>{% trans %}Di{% endtrans %}</th>
+        {% endif %}
+        {% if 2 in wochentag %}
+            <th>{% trans %}Mi{% endtrans %}</th>
+        {% endif %}
+        {% if 3 in wochentag %}
+            <th>{% trans %}Do{% endtrans %}</th>
+        {% endif %}
+        {% if 4 in wochentag %}
+            <th>{% trans %}Fr{% endtrans %}</th>
+        {% endif %}
         <th>{% trans %}Notizen{% endtrans %}</th>
     </tr>
     </thead>
     <tbody>
     {% for k in kinder %}
         <tr>
-            <td> </td>
+            <td></td>
             <td>{{ k.vorname }}</td>
             <td>{{ k.nachname }}</td>
             <td>{{ k.eltern.notfallkontakt }}</td>
             <td>{{ k.schule.name }}</td>
             <td>{{ k.klasseString }}</td>
             <td>{{ k.alleineHause?'Ja'|trans:'Nein'|trans }}</td>
-            <td>{% for b in k.zeitblocks %}{{ b.wochentagStringShort }}: {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}<br>{% endfor %}</td>
+
+            {% if 0 in wochentag %}
+                <td>{{ getStringForBlocks(k,0)|nl2br }}</td>
+            {% endif %}
+            {% if 1 in wochentag %}
+                <td>{{ getStringForBlocks(k,1)|nl2br }}</td>
+            {% endif %}
+            {% if 2 in wochentag %}
+                <td>{{ getStringForBlocks(k,2)|nl2br }}</td>
+            {% endif %}
+            {% if 3 in wochentag %}
+                <td>{{ getStringForBlocks(k,3)|nl2br }}</td>
+            {% endif %}
+            {% if 4 in wochentag %}
+                <td>{{ getStringForBlocks(k,4)|nl2br }}</td>
+            {% endif %}
             <td></td>
         </tr>
     {% endfor %}
@@ -44,4 +73,4 @@
 </table>
 
 
-        <!-- Daten der Kinder in einer for Schleife -->
+<!-- Daten der Kinder in einer for Schleife -->
