@@ -243,7 +243,9 @@ class EmployeeController extends AbstractController
         if ($user->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
-        $this->manager->deleteUser($user);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
         if ($user->getStadt() !== null) {
             $text = $translator->trans('Erfolgreich gelöscht');
             return $this->redirectToRoute(

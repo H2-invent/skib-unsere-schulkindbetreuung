@@ -43,7 +43,8 @@ import ('trumbowyg/dist/plugins/template/trumbowyg.template');
 import ('formBuilder/dist/form-builder.min');
 import snackbar from 'snackbarjs';
 import {initTabs} from 'h2-invent-material-tabs';
-import { Dropzone } from "dropzone";
+import {Dropzone} from "dropzone";
+
 let formBuilderLoc;
 var sucessFkt;
 $(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
@@ -58,28 +59,33 @@ $('#toggle-btn').on('click', function (e) {
         $('.page').toggleClass('active-sm');
     }
 });
-
-$('table').DataTable({
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                text: 'Save current page',
-                exportOptions: {
-                    modifier: {
-                        page: 'current'
+try {
+    $('table').DataTable({
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: 'Save current page',
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
                     }
                 }
-            }
-        ]
-    }
-);
+            ]
+        }
+    );
+} catch
+    (e) {
+    console.log(e)
+}
+
 
 $(document).ready(function () {
     if (typeof optionsSnack !== 'undefined') {
         $.snackbar(optionsSnack);
     }
 
-    if($('.dropzone').length){
+    if ($('.dropzone').length) {
         let myDropzone = new Dropzone(".dropzone");
     }
 

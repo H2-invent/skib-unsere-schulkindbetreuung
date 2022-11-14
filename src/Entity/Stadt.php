@@ -388,6 +388,11 @@ class Stadt implements TranslatableInterface
      */
     private $settings_skib_change_document_change_date_show;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $NoSecCodeForChangeChilds;
+
 
 
     public function __construct()
@@ -1414,6 +1419,18 @@ class Stadt implements TranslatableInterface
     public function setSettingsSkibChangeDocumentChangeDateShow(?bool $settings_skib_change_document_change_date_show): self
     {
         $this->settings_skib_change_document_change_date_show = $settings_skib_change_document_change_date_show;
+
+        return $this;
+    }
+
+    public function getNoSecCodeForChangeChilds(): ?bool
+    {
+        return $this->NoSecCodeForChangeChilds;
+    }
+
+    public function setNoSecCodeForChangeChilds(?bool $NoSecCodeForChangeChilds): self
+    {
+        $this->NoSecCodeForChangeChilds = $NoSecCodeForChangeChilds;
 
         return $this;
     }

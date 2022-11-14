@@ -65,7 +65,7 @@ class ChildExcelService
 
         // Create the excel file in the tmp directory of the system
         $this->writer->save($temp_file);
-
+        return  null;
         // Return the excel file as an attachment
         return $temp_file;
 
@@ -174,7 +174,10 @@ class ChildExcelService
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->createExcelDayService->getMergedTime($data, 4));
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, '');
                 }
+                if ($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_VIEW_NOTICE')) {
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, strip_tags($data->getInternalNotice()));
 
+                }
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getEltern()->getEmail());
 
                 if ($this->stadt->getSettingsweiterePersonenberechtigte()) {
@@ -288,6 +291,9 @@ class ChildExcelService
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('AG'));
         }
 
+        if ($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_VIEW_NOTICE')) {
+            $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Notizen'));
+        }
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('E-Mail Adresse'));
         if ($this->stadt->getSettingsweiterePersonenberechtigte()) {
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Weitere personenberechtigte Personen'));

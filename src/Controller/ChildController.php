@@ -7,6 +7,7 @@ use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Zeitblock;
+use App\Form\Type\InternNoticeType;
 use App\Service\ChildExcelService;
 use App\Service\ChildSearchService;
 use App\Service\MailerService;
@@ -49,7 +50,7 @@ class ChildController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
         $text = $translator->trans('Kinder betreut vom Träger');
-        $schulen = sizeof($this->getUser()->getSchulen())=== 0?$organisation->getSchule()->toArray():$this->getUser()->getSchulen();
+        $schulen = sizeof($this->getUser()->getSchulen()) === 0 ? $organisation->getSchule()->toArray() : $this->getUser()->getSchulen();
         $schuljahre = $schulen[0]->getStadt()->getActives()->toArray();
         $actualSchuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($organisation->getStadt());
 
@@ -59,10 +60,10 @@ class ChildController extends AbstractController
         }
 
         return $this->render('child/child.html.twig', [
-            'actualSchuljahr'=>$actualSchuljahr,
+            'actualSchuljahr' => $actualSchuljahr,
             'organisation' => $organisation,
             'schuljahre' => $schuljahre,
-            'schulen'=>$schulen,
+            'schulen' => $schulen,
             'text' => $text
         ]);
     }
@@ -74,12 +75,36 @@ class ChildController extends AbstractController
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
         $history = $this->getDoctrine()->getRepository(Kind::class)->findBy(array('tracing' => $kind->getTracing(), 'saved' => true));
+        $form = $this->createForm(InternNoticeType::class, $kind, array('action' => $this->generateUrl('child_detail_save_internal', array('childId'=>$kind->getId()))));
         if ($kind->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
-        return $this->render('child/childDetail.html.twig', array('beruflicheSituation' => array_flip($loerrachWorkflowController->beruflicheSituation), 'k' => $kind, 'eltern' => $kind->getEltern(), 'history' => $history));
+        return $this->render('child/childDetail.html.twig', array('beruflicheSituation' => array_flip($loerrachWorkflowController->beruflicheSituation), 'k' => $kind, 'eltern' => $kind->getEltern(), 'history' => $history, 'formInternalNotice' => $form->createView()));
     }
+
+    /**
+     * @Route("/org_child/show/detail/save/internal/notice/{childId}", name="child_detail_save_internal")
+     */
+    public function childSaveInternall(Request $request, TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController, $childId)
+    {
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($childId);
+        if (!$kind || $kind->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+
+        $form = $this->createForm(InternNoticeType::class, $kind);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $kind = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($kind);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('child_detail',array('kind_id'=>$kind->getId()));
+    }
+
 
     /**
      * @Route("/org_child/print/detail", name="child_detail_print")
@@ -111,7 +136,7 @@ class ChildController extends AbstractController
             $parameter = $request->query->all();
         }
 
-        $fileName = $translator->trans('Kinder') .' - ' . (new \DateTime())->format('d.m.Y_H.i');
+        $fileName = $translator->trans('Kinder') . ' - ' . (new \DateTime())->format('d.m.Y_H.i');
 
         $text = $translator->trans('Kinder betreut vom Träger %organisation%', array('%organisation%' => $organisation->getName()));
         if ($request->get('schule')) {
@@ -128,7 +153,7 @@ class ChildController extends AbstractController
         if ($request->get('block')) {
             $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block'));
             $fileName = $block->getSchule()->getName() . '-' . $block->getWochentagString() . '-' . $block->getVon()->format('H:i') . '-' . $block->getBis()->format('H:i');
-            $text .= $translator->trans(' am %d% von %s% bis %e% Uhr', array('%d%' => $block->getWochentagString(), '%s%' =>$block->getVon()->format('H:i'), '%e%' =>$block->getBis()->format('H:i') ));
+            $text .= $translator->trans(' am %d% von %s% bis %e% Uhr', array('%d%' => $block->getWochentagString(), '%s%' => $block->getVon()->format('H:i'), '%e%' => $block->getBis()->format('H:i')));
         }
         if ($request->get('klasse')) {
             $text .= $translator->trans(' in der Klasse: %klasse%', array('%klasse%' => $request->get('klasse')));
@@ -138,10 +163,12 @@ class ChildController extends AbstractController
 
 
         if ($request->get('print')) {
-            return $printService->printChildList($kinderU, $organisation, $text, $fileName, $TCPDFController,$request->get('wochentag') !== ""?[$request->get('wochentag')]:[0,1,2,3,4], 'D');
+
+            return $printService->printChildList($kinderU, $organisation, $text, $fileName, $TCPDFController, $request->get('wochentag') !== "" ? [$request->get('wochentag')] : [0, 1, 2, 3, 4], 'D');
 
         } elseif ($request->get('spread')) {
-            return $this->file($childExcelService->generateExcel($kinderU,$organisation->getStadt()), $fileName . '.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
+            return $this->file($childExcelService->generateExcel($kinderU, $organisation->getStadt()), $fileName . '.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
+
         } else {
             return $this->render('child/childTable.html.twig', [
                 'kinder' => $kinderU,

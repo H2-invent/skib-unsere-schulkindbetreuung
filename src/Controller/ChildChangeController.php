@@ -26,35 +26,35 @@ class ChildChangeController extends AbstractController
         $adresse = $kind->getEltern();
 
 
-        $input = array('seccode'=>'');
+        $input = array('seccode' => '');
 
         $form = $this->createFormBuilder($input)
             ->add('seccode', TextType::class, ['label' => 'Sicherheitscode des Erziehungsberechtigten', 'translation_domain' => 'form'])
-           ->add('submit', SubmitType::class, ['attr'=> array('class'=> 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form'])
+            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form'])
             ->getForm();
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (($form->isSubmitted() && $form->isValid()) || $kind->getSchule()->getStadt()->getNoSecCodeForChangeChilds()) {
 
             $input = $form->getData();
 
-            if ($input['seccode'] == $adresse->getSecCode()){
+            if ($input['seccode'] == $adresse->getSecCode() || $kind->getSchule()->getStadt()->getNoSecCodeForChangeChilds()) {
 
-                $kind= $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('tracing'=>$kind->getTracing(),'saved'=>false));
+                $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('tracing' => $kind->getTracing(), 'saved' => false));
                 $adresse = $kind->getEltern();
                 $cookie = new Cookie ('KindID', $kind->getId() . "." . hash("sha256", $kind->getId() . $this->getParameter("secret")));
                 $cookie2 = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")));
                 $cookie_seccode = new Cookie ('SecID', $adresse->getSecCode() . "." . hash("sha256", $adresse->getSecCode() . $this->getParameter("secret")));
 
-                $response = $this->redirectToRoute('workflow_start',array('slug'=>$kind->getSchule()->getStadt()->getSlug()));
+                $response = $this->redirectToRoute('workflow_start', array('slug' => $kind->getSchule()->getStadt()->getSlug()));
                 $response->headers->setCookie($cookie);
                 $response->headers->setCookie($cookie2);
                 $response->headers->setCookie($cookie_seccode);
                 return $response;
-            }else{
+            } else {
                 $text = $translator->trans('Sicherheitscode ungültig');
-                return $this->redirectToRoute('child_change_seccode',array('kind_id'=>$kind->getId(),'snack'=>$text));
+                return $this->redirectToRoute('child_change_seccode', array('kind_id' => $kind->getId(), 'snack' => $text));
 
             }
         }

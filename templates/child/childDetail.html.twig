@@ -167,24 +167,24 @@
                                                         <ul class="list-group">
                                                             {% for z in k.BetreungsblocksReal %}
                                                                 {% if z.deleted == false %}
-                                                                <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }}
-                                                                    - {{ z.bis|date('H:i') }}</li>
+                                                                    <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }}
+                                                                        - {{ z.bis|date('H:i') }}</li>
                                                                 {% endif %}
                                                             {% endfor %}
                                                         </ul>
                                                     </td>
                                                 </tr>
-                                                {% if app.user and is_granted('ROLE_ORG_SEE_PRICE')  %}
-                                                <tr>
-                                                    <td>
-                                                        {% trans %} Preis pro Monat {% endtrans %}
-                                                    </td>
+                                                {% if app.user and is_granted('ROLE_ORG_SEE_PRICE') %}
+                                                    <tr>
+                                                        <td>
+                                                            {% trans %} Preis pro Monat {% endtrans %}
+                                                        </td>
 
-                                                    <td>
-                                                       {{ k.preisforBetreuung }}€
-                                                    </td>
-                                                </tr>
-                                                    {% endif %}
+                                                        <td>
+                                                            {{ k.preisforBetreuung }}€
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
                                             {% endif %}
                                             {% if k.betreungsblocksRealKontingent|length > 0 %}
                                                 <tr>
@@ -215,6 +215,21 @@
                                                     </ul>
                                                 </td>
                                             </tr>
+                                            {% if app.user is not null %}
+                                            <tr>
+                                                <td>
+                                                    {% if app.user is not null and  is_granted('ROLE_ORG_EDIT_NOTICE') %}
+                                                        {{ form_start(formInternalNotice) }}
+
+                                                        {{ form_rest(formInternalNotice) }}
+                                                        {{ form_end(formInternalNotice) }}
+                                                    {% elseif app.user is not null and is_granted('ROLE_ORG_VIEW_NOTICE') %}
+                                                        <h3>{{ 'Notizen'|trans }}</h3>
+                                                        {{ k.internalNotice|raw }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endif %}
                                             <tr>
                                                 <td>{% trans %} Historie{% endtrans %}</td>
                                                 <td>
@@ -231,10 +246,18 @@
                                         </table>
                                     </div>
                                 </div>
+
+
                             </div>
 
+
                         </div>
+
                     </div>
+
+                </div>
+                <div class="col-12 card">
+
                 </div>
             </div>
         </div>

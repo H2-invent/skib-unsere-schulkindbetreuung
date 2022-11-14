@@ -179,6 +179,11 @@ class Kind
      */
     private $anwesenheitenSchulkindbetreuung;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $internalNotice;
+
 
     public function __construct()
     {
@@ -918,6 +923,18 @@ class Kind
                 $anwesenheitenSchulkindbetreuung->setKind(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInternalNotice(): ?string
+    {
+        return $this->internalNotice;
+    }
+
+    public function setInternalNotice(?string $internalNotice): self
+    {
+        $this->internalNotice = $internalNotice;
 
         return $this;
     }

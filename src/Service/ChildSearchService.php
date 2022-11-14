@@ -91,9 +91,8 @@ class ChildSearchService
             }
             $qb->andWhere($orX);
         }
-        $qb->add('orderBy','k.klasse ASC, k.nachname ASC');
-//        $qb->addOrderBy('k.klasse','ASC')
-//            ->addOrderBy('k.nachname','ASC');
+        $qb->addOrderBy('k.klasse','ASC')
+            ->addOrderBy('k.nachname','DESC');
 
         $query = $qb->getQuery();
         $kinder = $query->getResult();

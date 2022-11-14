@@ -120,6 +120,7 @@ class StadtType extends AbstractType
             ->add('settingsweiterePersonenberechtigte', CheckboxType::class, ['required' => false, 'label' => 'Weitere Personenberechtigte hinzufügen.', 'translation_domain' => 'form'])
             ->add('settingsEingabeDerGeschwister', CheckboxType::class, ['required' => false, 'label' => 'Die Geschwisterkinder müssen aufgelistet werden.', 'translation_domain' => 'form'])
             ->add('settings_skib_disableIcs', CheckboxType::class, ['required' => false, 'label' => 'Es sollen KEINE Kalenderdatei an die Eltern versandt werden', 'translation_domain' => 'form'])
+            ->add('noSecCodeForChangeChilds', CheckboxType::class, ['required' => false, 'label' => 'Die Mitarbeitenden benötigen keinen Security-Code für die Änderung', 'translation_domain' => 'form'])
             ->add('settingsSkibChangeDocumentChangeDateShow', CheckboxType::class, ['required' => false, 'label' => 'In dem Änderungsformular soll ein Änderungsdatum angezeigt werden', 'translation_domain' => 'form'])
 
             ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])

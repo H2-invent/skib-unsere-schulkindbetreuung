@@ -37,7 +37,10 @@
         {% if 4 in wochentag %}
             <th>{% trans %}Fr{% endtrans %}</th>
         {% endif %}
-        <th>{% trans %}Notizen{% endtrans %}</th>
+        {% if is_granted('ROLE_ORG_VIEW_NOTICE') %}
+            <th>{% trans %}Notizen{% endtrans %}</th>
+        {% endif %}
+
     </tr>
     </thead>
     <tbody>
@@ -66,7 +69,9 @@
             {% if 4 in wochentag %}
                 <td>{{ getStringForBlocks(k,4)|nl2br }}</td>
             {% endif %}
-            <td></td>
+            {% if is_granted('ROLE_ORG_VIEW_NOTICE') %}
+                <td>{{ k.internalNotice|raw }}</td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>
