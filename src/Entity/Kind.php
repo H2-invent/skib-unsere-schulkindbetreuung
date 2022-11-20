@@ -184,6 +184,11 @@ class Kind
      */
     private $internalNotice;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $startDate;
+
 
     public function __construct()
     {
@@ -935,6 +940,18 @@ class Kind
     public function setInternalNotice(?string $internalNotice): self
     {
         $this->internalNotice = $internalNotice;
+
+        return $this;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(?\DateTimeInterface $startDate): self
+    {
+        $this->startDate = $startDate;
 
         return $this;
     }

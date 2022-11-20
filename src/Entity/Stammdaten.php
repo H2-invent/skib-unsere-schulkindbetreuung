@@ -60,7 +60,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     private $einkommen=0;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $created_at;
 
@@ -77,7 +77,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $angemeldet;
+    private $angemeldet = false;
 
     /**
      * @ORM\Column(type="boolean")
@@ -133,7 +133,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $fin;
+    private $fin = false;
 
     /**
      * @Assert\NotBlank(groups = {"all"})
@@ -381,7 +381,7 @@ class Stammdaten implements GroupSequenceProviderInterface
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(?\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
 

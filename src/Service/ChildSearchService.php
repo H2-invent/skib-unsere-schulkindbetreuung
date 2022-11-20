@@ -29,10 +29,19 @@ class ChildSearchService
         $this->translator = $translator;
     }
 
-    public function searchChild($parameters, Organisation $organisation, $isApp, User $user)
+    public function searchChild($parameters, Organisation $organisation, $isApp, User $user, ?\DateTime $dateFrom = null, ?\DateTime $dateTo = null)
     {
-
-        $qb = $this->em->getRepository(Kind::class)->createQueryBuilder('k')
+        if (!$dateFrom) {
+            $dateFrom = new \DateTime();
+        }
+        $qb = $this->em->getRepository(Kind::class)->createQueryBuilder('k');
+        $qb->andWhere('k.startDate < :fromDate')
+            ->innerJoin('k.eltern', 'eltern')
+            ->andWhere($qb->expr()->isNotNull('eltern.created_at'))
+            ->groupBy('k.tracing')
+            ->addOrderBy('k.startDate','ASC')
+            ->addOrderBy('eltern.created_at','ASC')
+            ->setParameter('fromDate', $dateFrom)
             ->innerJoin('k.zeitblocks', 'b');
         //Schule als FIlter ausgewählt
         if (isset($parameters['schule']) && $parameters['schule'] !== "") {
@@ -42,7 +51,7 @@ class ChildSearchService
                 ->setParameter('schule', $schule);
         } else {
             $orXSchule = $qb->expr()->orX();
-            $schulen = sizeof($user->getSchulen())=== 0?$organisation->getSchule():$user->getSchulen();
+            $schulen = sizeof($user->getSchulen()) === 0 ? $organisation->getSchule() : $user->getSchulen();
             foreach ($schulen as $data) {
                 $orXSchule->add('b.schule =:schule' . $data->getId());
                 $qb->setParameter('schule' . $data->getId(), $data);
@@ -69,7 +78,7 @@ class ChildSearchService
             $qb->andWhere('b.id = :block')
                 ->setParameter('block', $parameters['block']);
 
-        }else{// sonst immer nur die Kinder anzeigen die an activen Blöcken hängen
+        } else {// sonst immer nur die Kinder anzeigen die an activen Blöcken hängen
             $qb->andWhere('b.deleted = false');
         }
         //Jahrgangsstufe uasgewält
@@ -77,7 +86,7 @@ class ChildSearchService
             $qb->andWhere('k.klasse = :klasse')
                 ->setParameter('klasse', $parameters['klasse']);
         }
-        $qb->andWhere('k.fin = 1');
+
         if ($isApp) {
             $orX = $qb->expr()->orX();
 
@@ -91,8 +100,9 @@ class ChildSearchService
             }
             $qb->andWhere($orX);
         }
-        $qb->addOrderBy('k.klasse','ASC')
-            ->addOrderBy('k.nachname','DESC');
+
+        $qb->addOrderBy('k.klasse', 'ASC')
+            ->addOrderBy('k.nachname', 'DESC');
 
         $query = $qb->getQuery();
         $kinder = $query->getResult();

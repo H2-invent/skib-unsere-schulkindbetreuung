@@ -15,7 +15,7 @@
             <th>{% trans %}Schule{% endtrans %}</th>
             <th>{% trans %}Klasse{% endtrans %}</th>
             <th>{% trans %}Masernimpfung{% endtrans %}</th>
-            <th>{% trans %}Angemeldet am:{% endtrans %}</th>
+            <th>{% trans %}Beginnt ab dem{% endtrans %}</th>
             {% if is_granted('ROLE_ORG_VIEW_NOTICE') %}
             <th>{% trans %}Notizen{% endtrans %}</th>
             {% endif %}
@@ -62,7 +62,7 @@
                 <td>{{ k.schule.name }}</td>
                 <td>{{ k.klasseString }}</td>
                 <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
-                <td data-order="{{ k.eltern.createdAt|date('U') }}">{{ k.eltern.createdAt|date('d.m.Y') }}</td>
+                <td data-order="{{ k.startDate|date('U') }}">{{ k.startDate|date('d.m.Y') }}</td>
                 {% if is_granted('ROLE_ORG_VIEW_NOTICE') %}
                 <td>{{ k.internalNotice|raw }}</td>
                 {% endif %}

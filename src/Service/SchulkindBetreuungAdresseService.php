@@ -45,9 +45,7 @@ class SchulkindBetreuungAdresseService
     public function setUID(Stammdaten $adresse)
     {
         if ($adresse->getUid() === null) {
-            $adresse->setUid(md5(uniqid('', true)))
-                ->setAngemeldet(false);
-            $adresse->setCreatedAt(new \DateTime());
+            $adresse->setUid(md5(uniqid('', true)));
         }
         return $adresse;
     }

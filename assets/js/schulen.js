@@ -47,6 +47,13 @@ $(document).on('click', '.chooseBlock', function (e) {
     })
 });
 
+
+    $(document).on('change','#startDate',function () {
+        var start = $(this).val();
+        console.log(start);
+        $.post($(this).data('url'),{startDate:start,kind_id:$(this).data('kindid')})
+    })
+
 function changeState(id, state, data) {
     var ele = $('#block-' + id);
     if (state == 0) {
