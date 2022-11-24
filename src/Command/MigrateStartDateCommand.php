@@ -57,8 +57,14 @@ class MigrateStartDateCommand extends Command
                     }
 
                 }
-                if (!$kind->getFin() && $kind->getSaved()){
+                if (!$kind->getFin() && !$kind->getSaved()){
                     $kind->setStartDate(null);
+
+                }
+                if (!$kind->getEltern()->getFin() && !$kind->getEltern()->getSaved() && !$kind->getStartDate()){
+                    $eltern = $kind->getEltern();
+                    $eltern->setCreatedAt(null);
+                    $this->em->persist($eltern);
                 }
                 $counter++;
                 $this->em->persist($kind);

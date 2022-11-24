@@ -201,43 +201,70 @@
                                         {{ form_row(form.settings_skib_sepaElektronisch) }}
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-4">
-                                        {{ form_row(form.settings_skib_disableIcs) }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-4">
-                                        {{ form_row(form.settingsSkibChangeDocumentChangeDateShow) }}
-                                    </div>
-                                </div>
+
+
                                 <div class="row mb-3">
                                     <div class="col-lg-8">
                                         {{ 'Bezeichnung der Schuljahre (JSON-Objekt)'|trans }}
                                         {{ a2lixTranslations.partialTranslations(form.translations, ['settings_skib_shoolyear_naming']) }}
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-12">
-                                        <h3>Dokumente welche an die E-Mails angehängt werden können</h3>
-                                    </div>
+                                <div class="card">
+                                    <h4 class="card-header">{{ 'Änderungen'|trans }}</h4>
+                                    <div class="card-body">
+                                        <div class="row mb-3">
+                                            <div class="col-lg-8">
+                                                <div class="row">
+                                                    <div class="col-lg-4 mb-3">
+                                                        {{ form_row(form.settingsSkibChangeDocumentChangeDateShow) }}
+                                                    </div>
+                                                    <div class="col-lg-4 mb-3">
+                                                        {{ form_row(form.settingSkibDefaultNextChange) }}
+                                                    </div>
+                                                    <div class="col-lg-4 mb-3">
+                                                        {{ form_row(form.settingsSkibShowSetStartDateOnChange) }}
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settingsSkibTextWhenClosed']) }}
+                                                    </div>
+                                                </div>
 
-                                    <div class="col-lg-3">
-                                        {{ form_row(form.emailDokumente_schulkindbetreuung_anmeldung) }}
-                                    </div>
-                                    <div class="col-lg-3">
-                                        {{ form_row(form.emailDokumente_schulkindbetreuung_buchung) }}
-                                    </div>
-                                    <div class="col-lg-3">
-                                        {{ form_row(form.emailDokumente_schulkindbetreuung_anderung) }}
-                                    </div>
-                                    <div class="col-lg-3">
-                                        {{ form_row(form.emailDokumente_schulkindbetreuung_abmeldung) }}
+
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                {{ a2lixTranslations.partialTranslations(form.translations, ['agb','catererInfo','careBlockInfo','schulindbetreuungPreiseFreitext']) }}
+                                <div class="card">
+                                    <h3 class="card-header">Dokumente welche an die E-Mails angehängt werden
+                                        können</h3>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                {{ form_row(form.settings_skib_disableIcs) }}
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
 
+                                            <div class="col-lg-3">
+                                                {{ form_row(form.emailDokumente_schulkindbetreuung_anmeldung) }}
+                                            </div>
+                                            <div class="col-lg-3">
+                                                {{ form_row(form.emailDokumente_schulkindbetreuung_buchung) }}
+                                            </div>
+                                            <div class="col-lg-3">
+                                                {{ form_row(form.emailDokumente_schulkindbetreuung_anderung) }}
+                                            </div>
+                                            <div class="col-lg-3">
+                                                {{ form_row(form.emailDokumente_schulkindbetreuung_abmeldung) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                {{ a2lixTranslations.partialTranslations(form.translations, ['agb','catererInfo','careBlockInfo','schulindbetreuungPreiseFreitext']) }}
 
 
                             </div>

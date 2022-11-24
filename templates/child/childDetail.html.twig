@@ -181,7 +181,7 @@
                                                         </td>
 
                                                         <td>
-                                                            {{ k.preisforBetreuung }}€
+                                                            {{ getPreisforBetreuung(k)|format(2,',','.') }}€
                                                         </td>
                                                     </tr>
                                                 {% endif %}
@@ -230,13 +230,13 @@
                                                 </td>
                                             </tr>
                                             {% endif %}
+                                            <tr> <td colspan="2"><h3>{% trans %} Historie{% endtrans %}</h3></td></tr>
                                             <tr>
-                                                <td>{% trans %} Historie{% endtrans %}</td>
-                                                <td>
+                                                <td colspan="2">
                                                     <ul class="list-group">
-                                                        {% for k in history|reverse %}
+                                                        {% for k in history %}
                                                             <a href="{{ path('child_detail',{'kind_id':k.id}) }}">
-                                                                <li class="list-group-item">{{ k.eltern.createdAt|date('d.m.Y H:i') }}</li>
+                                                                <li class="list-group-item">Änderung tritt in Kraft: {{ k.startDate|date('d.m.Y') }} (geändert am: {{ k.eltern.createdAt|date('d.m.Y H:i') }})</li>
                                                             </a>
                                                         {% endfor %}
                                                     </ul>

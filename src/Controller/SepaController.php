@@ -41,8 +41,7 @@ class SepaController extends AbstractController
             if (count($errors) == 0) {
                 $sepa = $form->getData();
                 $sepa->setBis((clone $sepa->getVon())->modify('last day of this month'));
-                $result = $sepaCreateService->calcSepa($sepa);
-
+                $result = $sepaCreateService->createSepa($sepa);
                 return $this->redirectToRoute('accounting_overview', array('id' => $organisation->getId(), 'snack' => $result));
             }
         }
@@ -83,19 +82,33 @@ class SepaController extends AbstractController
         $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
         $qb->innerJoin('stammdaten.kinds', 'kinds')
             ->innerJoin('kinds.schule', 'schule')
-            ->andWhere('stammdaten.fin = true')
-            ->andWhere('schule.organisation = :org')
-            ->setParameter('org', $organisation);
+            ->andWhere('schule.organisation = :org')->setParameter('org', $organisation)
+            ->andWhere($qb->expr()->isNotNull('kinds.startDate'));
+
         if ($request->get('year_id')) {
             $year = $this->getDoctrine()->getRepository(Active::class)->find($request->get('year_id'));
             $qb->innerJoin('kinds.zeitblocks', 'zeitbocks')
                 ->andWhere('zeitbocks.active = :year')
                 ->setParameter('year', $year);
         };
+        $qb->orderBy('stammdaten.created_at','ASC');
         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
+        $sRes = array();
+        foreach ($stammdaten as $data){
+            if (!isset($sRes[$data->getTracing()])){
+                $sRes[$data->getTracing()] = $data;
+            }else{
+                if ($data->getCreatedAt() > $sRes[$data->getTracing()]->getCreatedAt()){
+                    $sRes[$data->getTracing()] = $data;
+                }
+            }
 
-        return $this->render('sepa/showData.html.twig', array('organisation' => $organisation, 'stammdaten' => $stammdaten));
+
+        }
+
+
+        return $this->render('sepa/showData.html.twig', array('organisation' => $organisation, 'stammdaten' => $sRes));
     }
 
 

@@ -61,7 +61,7 @@
     {% if kind is defined and kind is not null %}
         <tr>
             <td>{% trans %}Monatliche Gebühren{% endtrans %}</td>
-            <td>{{ kind.preisforBetreuung|number_format(2,',','.') }} €</td>
+            <td>{{ getPreisforBetreuung(kind)|number_format(2,',','.') }} €</td>
         </tr>
     {% endif %}
     {% if eltern.secCode is not null %}

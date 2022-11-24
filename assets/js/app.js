@@ -27,8 +27,9 @@ import('jquery-ui/ui/widgets/sortable');
 global.Popper = Popper;
 import('bootstrap-material-design');
 import('moment');
-import('chart.js');
-import('chartjs-color-string');
+import {Chart} from 'chart.js';
+import 'chartjs-color-string';
+
 import('jquery-clockpicker');
 import('malihu-custom-scrollbar-plugin');
 import('jquery.cookie');
@@ -45,6 +46,7 @@ import snackbar from 'snackbarjs';
 import {initTabs} from 'h2-invent-material-tabs';
 import {Dropzone} from "dropzone";
 
+global.Chart = Chart;
 let formBuilderLoc;
 var sucessFkt;
 $(".side-navbar").niceScroll({cursorcolor: '#0058B0'});

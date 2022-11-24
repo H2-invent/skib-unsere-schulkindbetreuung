@@ -35,8 +35,7 @@ class WorkflowAbschluss
         $adresseAktuell->setCreatedAt(new \DateTime());//setzte die aktuelle Zeit als created At
         // es gibt bereits eine alte Historie, diese besitzt schon ein Fin
         $adresseOld = $this->em->getRepository(Stammdaten::class)->findOneBy(array('tracing' => $adresseAktuell->getTracing()), array('created_at' => 'ASC'));
-        if ( $adresseOld && sizeof($adresseOld) > 0) {
-            $adresseOld = $adresseOld[0];
+        if ( $adresseOld) {
             $kundennummern = $adresseOld->getKundennummerns();
         }
 
@@ -77,7 +76,7 @@ class WorkflowAbschluss
             $kindNew = clone $data;//hier wird nun die Kinder arbitskopie erstellt
             $this->em->persist($data);
             $kindNew->setEltern($adressNew);
-
+            $kindNew->setStartDate(null);
             foreach ($data->getZeitblocks() as $zb) {//alle bisherigen GEBUCHTEN Zietböocke werden zu der Arbeitskopie hinzugefügt
                 $zb->addKind($kindNew);
             }
@@ -99,6 +98,7 @@ class WorkflowAbschluss
                 $this->em->persist($geschNeu);
             }
         }
+
         $this->em->persist($adresseAktuell);
         $this->em->persist($adressNew);
         $this->em->flush();

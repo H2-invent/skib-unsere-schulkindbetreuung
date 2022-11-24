@@ -24,13 +24,14 @@ class ChildSchoolYearChangeService
     private $translator;
     private $email;
     private $form;
-
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager, AnmeldeEmailService $anmeldeEmailService, FormFactoryInterface $formBuilder)
+    private ElternService $elternService;
+    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager, AnmeldeEmailService $anmeldeEmailService, FormFactoryInterface $formBuilder, ElternService $elternService)
     {
         $this->em = $entityManager;
         $this->translator = $translator;
         $this->email = $anmeldeEmailService;
         $this->form = $formBuilder;
+        $this->elternService = $elternService;
     }
 
     public function form(Kind $kind)
@@ -46,7 +47,7 @@ class ChildSchoolYearChangeService
     public function changeSchoolyear(Kind $kind, $input, User $user)
     {
 
-        $elternOne = $kind->getEltern();
+        $elternOne = $this->elternService->getLatestElternFromChild($kind);
         $kindernAll = $this->em->getRepository(Kind::class)->findBy(array('tracing' => $kind->getTracing()));
 
         $message = 'Schoolyear changed from ' . $kind->getKlasse() . ' to ' . $input['schoolyear'] . '; ' .
@@ -66,8 +67,8 @@ class ChildSchoolYearChangeService
         $this->em->flush();
 
         $this->email->sendEmail($kind, $elternOne, $kind->getSchule()->getStadt(), $this->translator->trans('Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:', [], $elternOne->getLanguage()));
-        $this->email->setBetreff($this->translator->trans('Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Oranisation geändert.', [], $elternOne->getLanguage()));
-        $this->email->send($kind, $kind->getEltern());
+        $this->email->setBetreff($this->translator->trans('Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert.', [], $elternOne->getLanguage()));
+        $this->email->send($kind, $this->elternService->getLatestElternFromChild($kind));
 
         return true;
 

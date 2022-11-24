@@ -45,7 +45,7 @@ class PrintService
         $this->em = $entityManager;
     }
 
-    public function printAnmeldebestaetigung(Kind $kind, Stammdaten $elter, Stadt $stadt, TCPDFController $tcpdf, $fileName, $beruflicheSituation, Organisation $organisation, $type = 'D', $encyption = false)
+    public function printAnmeldebestaetigung(Kind $kind, Stammdaten $eltern, Stadt $stadt, TCPDFController $tcpdf, $fileName, $beruflicheSituation, Organisation $organisation, $type = 'D', $encyption = false)
     {
         $pdf = $tcpdf->create();
 
@@ -56,10 +56,10 @@ class PrintService
         }
         $adressComp = '<p><small>' . $organisation->getName() . ' | ' . $organisation->getAdresse() . $organisation->getAdresszusatz() . ' | ' . $organisation->getPlz() . (' ') . $organisation->getOrt() . '</small><br><br>';
 
-        $adressComp = $adressComp . $elter->getVorname() . ' ' . $elter->getName();
-        $adressComp .= '<br>' . $elter->getStrasse();
-        $adressComp = $adressComp . ($elter->getAdresszusatz() ? ('<br>' . $elter->getAdresszusatz()) : '');
-        $adressComp .= '<br>' . $elter->getPlz() . ' ' . $elter->getStadt();
+        $adressComp = $adressComp . $eltern->getVorname() . ' ' . $eltern->getName();
+        $adressComp .= '<br>' . $eltern->getStrasse();
+        $adressComp = $adressComp . ($eltern->getAdresszusatz() ? ('<br>' . $eltern->getAdresszusatz()) : '');
+        $adressComp .= '<br>' . $eltern->getPlz() . ' ' . $eltern->getStadt();
 
         $adressComp = $adressComp . '</p>';
 
@@ -80,8 +80,8 @@ class PrintService
 
         $kontaktDaten = '<table cellspacing="3px">' .
 
-            '<tr>' . '<td align="right">' . $this->translator->trans('Sicherheitscode') . ': </td><td  align="left" >' . $elter->getSecCode() . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Anmeldedatum') . ': </td><td  align="left" >' . $elter->getCreatedAt()->format('d.m.Y') . '</td></tr>' .
+            '<tr>' . '<td align="right">' . $this->translator->trans('Sicherheitscode') . ': </td><td  align="left" >' . $eltern->getSecCode() . '</td></tr>' .
+            '<tr>' . '<td align="right">' . $this->translator->trans('Anmeldedatum') . ': </td><td  align="left" >' . $eltern->getCreatedAt()->format('d.m.Y') . '</td></tr>' .
             '<tr>' . '<td align="right">' . $this->translator->trans('Betreuende Organisation') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getName() . '</td></tr>' .
             '<tr>' . '<td align="right">' . $this->translator->trans('Ansprechpartner') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getAnsprechpartner() . '</td></tr>' .
             '<tr>' . '<td align="right">' . $this->translator->trans('Telefonnummer') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getTelefon() . '</td></tr>';
@@ -100,7 +100,7 @@ class PrintService
             'L',
             true
         );
-        $elternDaten = $this->templating->render('pdf/eltern.html.twig', array('kind' => $kind, 'eltern' => $elter, 'einkommen' => $stadt->getGehaltsklassen(), 'beruflicheSituation' => array_flip($beruflicheSituation)));
+        $elternDaten = $this->templating->render('pdf/eltern.html.twig', array('kind' => $kind, 'eltern' => $eltern, 'einkommen' => $stadt->getGehaltsklassen(), 'beruflicheSituation' => array_flip($beruflicheSituation)));
         $pdf->writeHTMLCell(
             0,
             0,
@@ -472,6 +472,10 @@ class PrintService
 
     function generateTimeTable($blocks, $cross = false)
     {
+        if (sizeof($blocks) === 0){
+            return '<tr><td colspan="7"><h3>'.$this->translator->trans('Keine Betreuungszeitblöcke gebucht') .'</h3></td></tr>';
+        }
+
         foreach ($blocks as $data) {
             $render[$data->getWochentag()][] = $data;
         }

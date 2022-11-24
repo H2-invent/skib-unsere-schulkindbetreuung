@@ -45,11 +45,12 @@
     </thead>
     <tbody>
     {% for k in kinder %}
+        {% set eltern = getEltern(k) %}
         <tr>
             <td></td>
             <td>{{ k.vorname }}</td>
             <td>{{ k.nachname }}</td>
-            <td>{{ k.eltern.notfallkontakt }}</td>
+            <td>{{ eltern.notfallkontakt }}</td>
             <td>{{ k.schule.name }}</td>
             <td>{{ k.klasseString }}</td>
             <td>{{ k.alleineHause?'Ja'|trans:'Nein'|trans }}</td>

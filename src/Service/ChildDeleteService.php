@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Active;
 use App\Entity\Kind;
+use App\Entity\Log;
 use App\Entity\Organisation;
 use App\Entity\Stadt;
 
@@ -59,21 +60,24 @@ class ChildDeleteService
 
     public function deleteChild(Kind $kind, User $user)
     {
+
         try {
-            $parents = $kind->getEltern();
-            $parentsNew = $this->em->getRepository(Stammdaten::class)->findOneBy(array('fin' => false, 'saved' => false, 'tracing' => $parents->getTracing()));
-            $kinds = $parentsNew->getKinds();
-            $this->abschluss->abschluss($parentsNew, $kinds, $kind->getSchule()->getStadt());
-            $kindAct = $this->em->getRepository(Kind::class)->findOneBy(array('saved' => true, 'fin' => true, 'tracing' => $kind->getTracing()));
-            $this->em->remove($kindAct);
-            $kindClone = $this->em->getRepository(Kind::class)->findOneBy(array('saved' => false, 'fin' => false, 'tracing' => $kind->getTracing()));
-            $this->em->remove($kindClone);
-            $parentsNew->setSecCode($parents->getSecCode());
-            $this->em->persist($parentsNew);
+            $childHist = $this->em->getRepository(Kind::class)->findHistoryOfThisChild($kind);
+            foreach ($childHist as $data){
+                $data->setStartDate(null);
+                $this->em->persist($data);
+            }
             $this->em->flush();
-            $this->logger->log(1, 'DELETE CHILD ' . $kind->getId());
-            $this->logger->log(1, 'DELETE TRACING ID ' . $kind->getTracing());
-            $this->logger->log(1, 'DELETED FROM ' . $user->getVorname() . ' ' . $user->getNachname());
+
+            $message = 'child Deleted: Tracing' . $kind->getTracing() .
+                'Name: ' . $kind->getVorname().' '.$kind->getNachname() . '; ' .
+                'fos_user_id: ' . $user->getId() . '; ';
+            $log = new Log();
+            $log->setUser($user->getEmail());
+            $log->setDate(new \DateTime());
+            $log->setMessage($message);
+            $this->em->persist($log);
+            $this->em->flush();
             if ($this->parameterBag->get('noEmailOnDelete') == 0) {
                 $this->sendEmail($kind->getEltern(), $kind, $kind->getSchule()->getOrganisation());
             }
@@ -82,7 +86,6 @@ class ChildDeleteService
         } catch (\Exception $exception) {
             return false;
         }
-
     }
 
     public function sendEmail(Stammdaten $stammdaten, Kind $kind, Organisation $organisation)

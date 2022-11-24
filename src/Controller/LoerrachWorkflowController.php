@@ -17,6 +17,7 @@ use App\Form\Type\LoerrachEltern;
 use App\Form\Type\LoerrachKind;
 use App\Form\Type\SepaStammdatenType;
 use App\Service\AnmeldeEmailService;
+use App\Service\BerechnungsService;
 use App\Service\ErrorService;
 use App\Service\IcsService;
 use App\Service\MailerService;
@@ -30,6 +31,7 @@ use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindBlockSchulkind;
 use App\Service\WorkflowAbschluss;
 use App\Service\WorkflowStart;
+use phpDocumentor\Reflection\DocBlock;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -107,13 +109,13 @@ class LoerrachWorkflowController extends AbstractController
 
                 $errors = $validator->validate($adresse);
                 foreach ($adresse->getGeschwisters() as $data) {
-                    $tmpErr = $validator->validate($data,null, ['Default']);
+                    $tmpErr = $validator->validate($data, null, ['Default']);
 
                     $errors->addAll($tmpErr);
 
                 }
                 foreach ($adresse->getPersonenberechtigters() as $data2) {
-                    $tmpErr = $validator->validate($data2,null, ['Default']);
+                    $tmpErr = $validator->validate($data2, null, ['Default']);
 
                     $errors->addAll($tmpErr);
 
@@ -170,7 +172,14 @@ class LoerrachWorkflowController extends AbstractController
 
         $renderKinder = array();
         foreach ($kinder as $data) {
+            if ($isEdit && !$data->getStartDate()){
+                $data->setStartDate( (new \DateTime())->modify($stadt->getSettingSkibDefaultNextChange()));
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($data);
+                $em->flush();
+            }
             $renderKinder[$data->getSchule()->getId()][] = $data;
+
         }
         return $this->render('workflow/loerrach/schulen.html.twig', array('isEdit' => $isEdit, 'schule' => $schule, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $renderKinder));
     }
@@ -291,7 +300,7 @@ class LoerrachWorkflowController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($kind);
         $em->flush();
-        return new JsonResponse(array('error'=>false));
+        return new JsonResponse(array('error' => false));
     }
 
 
@@ -361,8 +370,8 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
         $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
-        if ($block->getDeaktiviert()){
-            return new JsonResponse(array('error'=>1,'snack'=>'Error, this action is not allowed'));
+        if ($block->getDeaktiviert()) {
+            return new JsonResponse(array('error' => 1, 'snack' => 'Error, this action is not allowed'));
         }
 
         $result = $toogleKindBlockSchulkind->toggleKind($stadt, $kind, $block);
@@ -408,14 +417,14 @@ class LoerrachWorkflowController extends AbstractController
             return $this->redirectToRoute('loerrach_workflow_adresse', array('slug' => $stadt->getSlug()));
         }
         $renderOrganisation = $schulkindBetreuungKindSEPAService->findOrg($adresse);
-        $form = $this->createForm(SepaStammdatenType::class, $adresse,['stadt'=>$stadt]);
+        $form = $this->createForm(SepaStammdatenType::class, $adresse, ['stadt' => $stadt]);
 
         $form->handleRequest($request);
         $errors = array();
         $errorString = array();
         if ($form->isSubmitted()) {
             $adresse = $form->getData();
-            $valdation = [$stadt->getSettingsSkibSepaElektronisch()?'SchulkindSepa':',Schulkind'];
+            $valdation = [$stadt->getSettingsSkibSepaElektronisch() ? 'SchulkindSepa' : ',Schulkind'];
             $errors = $validator->validate($adresse, null, $valdation);
             $errorString = $errorService->createError($errors, $form);
             if (count($errors) == 0) {
@@ -434,7 +443,13 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/zusammenfassung",name="loerrach_workflow_zusammenfassung",methods={"GET"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function zusammenfassungAction(SchulkindBetreuungKindSEPAService $schulkindBetreuungKindSEPAService, Stadt $stadt, Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function zusammenfassungAction(
+        SchulkindBetreuungKindSEPAService $schulkindBetreuungKindSEPAService,
+        Stadt                             $stadt,
+        Request                           $request,
+        StamdatenFromCookie               $stamdatenFromCookie,
+        SchuljahrService                  $schuljahrService,
+        BerechnungsService                $berechnungsService)
     {
         // Load the data from the city into the controller as $stadt
 
@@ -456,7 +471,7 @@ class LoerrachWorkflowController extends AbstractController
         $kind = $adresse->getKinds();
         $preis = 0;
         foreach ($kind as $data) {
-            $preis += $data->getPreisforBetreuung();
+            $preis += $berechnungsService->getPreisforBetreuung($data);
         }
 
         $error = false;
@@ -474,7 +489,7 @@ class LoerrachWorkflowController extends AbstractController
             'stadt' => $stadt,
             'preis' => $preis,
             'error' => $error,
-            'noPrintout'=>true,
+            'noPrintout' => true,
             'organisation' => $renderOrganisation));
     }
 
@@ -516,15 +531,16 @@ class LoerrachWorkflowController extends AbstractController
                 $this->redirectToRoute('loerrach_workflow_zusammenfassung', array('slug' => $stadt->getSlug()));
             }
         }
+        $kindeToEdit = null;
         if ($request->cookies->get('KindID')) {
             $cookie_kind = explode('.', $request->cookies->get('KindID'));
-            $kindeToEdit = $this->getDoctrine()->getRepository(Kind::class)->findBy(array('id' => $cookie_kind[0]));
+            $kindeToEdit = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('id' => $cookie_kind[0]));
             $isEdit = true;
         }
 
 // Daten speichern und fixieren
         $adresse->setLanguage($request->getLocale());
-        $workflowAbschluss->abschluss($adresse, $stadt,$kindeToEdit);
+        $workflowAbschluss->abschluss($adresse, $stadt, $kindeToEdit);
 //Emails an die Eltern senden
         foreach ($kinder as $data) {
             $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:'));
@@ -535,6 +551,7 @@ class LoerrachWorkflowController extends AbstractController
         $response->headers->clearCookie('SecID');
         $response->headers->clearCookie('KindID');
         return $response;
+
     }
 
     /**
@@ -542,7 +559,7 @@ class LoerrachWorkflowController extends AbstractController
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public
-    function berechnungAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
+    function berechnungAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, BerechnungsService $berechnungsService)
     {
         // Load the data from the city into the controller as $stadt
         $result = array(
@@ -570,7 +587,7 @@ class LoerrachWorkflowController extends AbstractController
             $result['text'] = $translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)');
             return new JsonResponse($result);
         }
-        $result['betrag'] = number_format($kind->getPreisforBetreuung(), 2, ',', '.');
+        $result['betrag'] = number_format($berechnungsService->getPreisforBetreuung($kind), 2, ',', '.');
         return new JsonResponse($result);
 
     }

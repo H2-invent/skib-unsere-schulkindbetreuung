@@ -7,6 +7,7 @@ use App\Entity\Kind;
 use App\Entity\User;
 use App\Service\CheckinSchulkindservice;
 use App\Service\ChildSearchService;
+use App\Service\ElternService;
 use App\Service\MailerService;
 use App\Service\SchuljahrService;
 use App\Service\UserConnectionService;
@@ -136,7 +137,7 @@ class UserAppController extends AbstractController
     /**
      * @Route("/get/user/kidsCheckin", name="connect_user_checkinKids", methods={"GET"})
      */
-    public function userCheckinKids(CheckinSchulkindservice $checkinSchulkindservice, Request $request, MailerService $mailerService, TranslatorInterface $translator)
+    public function userCheckinKids(CheckinSchulkindservice $checkinSchulkindservice, Request $request, MailerService $mailerService, TranslatorInterface $translator, ElternService $elternService)
     {
         $user = null;
         if ($request->get('communicationToken')) {
@@ -151,12 +152,13 @@ class UserAppController extends AbstractController
             $kinder = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today, $user);
             $kinderSend = array();
             foreach ($kinder as $data) {
+                $eltern = $elternService->getLatestElternFromChild($data);
                 $tmp = array(
                     'name' => $data->getNachname(),
                     'vorname' => $data->getVorname(),
                     'schule' => $data->getSchule()->getName(),
-                    'erziehungsberechtigter' => $data->getEltern()->getVorname() . ' ' . $data->getEltern()->getName(),
-                    'notfallkontakt' => $data->getEltern()->getNotfallkontakt(),
+                    'erziehungsberechtigter' => $eltern->getVorname() . ' ' . $eltern->getName(),
+                    'notfallkontakt' => $eltern->getNotfallkontakt(),
                     'klasse' => $data->getKlasse(),
                     'checkin' => true,
                     'schuleId' => $data->getSchule()->getId(),
@@ -184,7 +186,7 @@ class UserAppController extends AbstractController
     /**
      * @Route("/get/user/kidsHeuteDa", name="connect_user_kidsDa", methods={"GET"})
      */
-    public function userKidsHeuteDa(SchuljahrService $schuljahrService, ChildSearchService $childSearchService, UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
+    public function userKidsHeuteDa(SchuljahrService $schuljahrService, ChildSearchService $childSearchService,  Request $request, CheckinSchulkindservice $checkinSchulkindservice, ElternService $elternService)
     {
         $user = null;
         if ($request->get('communicationToken')) {
@@ -201,13 +203,13 @@ class UserAppController extends AbstractController
             $kinderCheckin = $checkinSchulkindservice->getAllKidsToday($user->getOrganisation(), $today, $user);
             $kinderSend = array();
             foreach ($kinder as $data) {
-
+                $eltern = $elternService->getLatestElternFromChild($data);
                 $tmp = array(
                     'name' => $data->getNachname(),
                     'vorname' => $data->getVorname(),
                     'schule' => $data->getSchule()->getName(),
-                    'erziehungsberechtigter' => $data->getEltern()->getVorname() . ' ' . $data->getEltern()->getName(),
-                    'notfallkontakt' => $data->getEltern()->getNotfallkontakt(),
+                    'erziehungsberechtigter' => $eltern->getVorname() . ' ' . $eltern->getName(),
+                    'notfallkontakt' => $eltern->getNotfallkontakt(),
                     'klasse' => $data->getKlasse(),
                     'checkin' => in_array($data, $kinderCheckin),
                     'schuleId' => $data->getSchule()->getId(),
@@ -237,7 +239,7 @@ class UserAppController extends AbstractController
     /**
      * @Route("/get/user/kindDetail/{id}", name="connect_user_kidsDetails", methods={"GET"})
      */
-    public function userKidsDetail($id, CheckinSchulkindservice $checkinSchulkindservice, UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator)
+    public function userKidsDetail($id,ElternService $elternService, Request $request)
     {
         $user = null;
         if ($request->get('communicationToken')) {
@@ -248,20 +250,21 @@ class UserAppController extends AbstractController
         }
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($id);
         if ($user && in_array($kind->getSchule(), $user->getSchulen()->toArray())) {
+            $eltern = $elternService->getLatestElternFromChild($kind);
             return new JsonResponse(array(
                     'error' => false,
                     'vorname' => $kind->getVorname(),
                     'name' => $kind->getNachname(),
-                    'phone'=>$kind->getEltern()->getPhoneNumber(),
-                    'emergency'=>$kind->getEltern()->getNotfallkontakt(),
-                    'parentsName'=>$kind->getEltern()->getVorname().' '.$kind->getEltern()->getName(),
+                    'phone'=>$eltern->getPhoneNumber(),
+                    'emergency'=>$eltern->getNotfallkontakt(),
+                    'parentsName'=>$eltern->getVorname().' '.$eltern->getName(),
                     'info' => array(
                         array('name' => 'Geburtstag', 'value' => $kind->getGeburtstag()->format('d.m.Y')),
-                        array('name' => 'Eltern', 'value' => $kind->getEltern()->getVorname() . ' ' . $kind->getEltern()->getName()),
-                        array('name' => 'Abholberechtigter', 'value' => $kind->getEltern()->getAbholberechtigter()),
+                        array('name' => 'Eltern', 'value' => $eltern->getVorname() . ' ' . $eltern->getName()),
+                        array('name' => 'Abholberechtigter', 'value' => $eltern->getAbholberechtigter()),
                         array('name' => 'Allergie', 'value' => $kind->getAllergie()),
-                        array('name' => 'Notfallname', 'value' => $kind->getEltern()->getNotfallName()),
-                        array('name' => 'Notfallkontakt', 'value' => $kind->getEltern()->getNotfallkontakt()),
+                        array('name' => 'Notfallname', 'value' => $eltern->getNotfallName()),
+                        array('name' => 'Notfallkontakt', 'value' => $eltern->getNotfallkontakt()),
                         array('name' => 'Medikamente', 'value' => $kind->getMedikamente()),
                         array('name' => 'Schule', 'value' => $kind->getSchule()->getName()),
                         array('name' => 'Bemerkung', 'value' => $kind->getBemerkung()),

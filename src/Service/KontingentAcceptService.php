@@ -12,14 +12,19 @@ class KontingentAcceptService
     private EntityManagerInterface $em;
     private AnmeldeEmailService $anmeldeEmailService;
     private TranslatorInterface $translator;
-    public function __construct(EntityManagerInterface $entityManager, AnmeldeEmailService $anmeldeEmailService, TranslatorInterface $translator)
+    private ElternService $elternService;
+
+    public function __construct(EntityManagerInterface $entityManager, AnmeldeEmailService $anmeldeEmailService, TranslatorInterface $translator, ElternService $elternService)
     {
         $this->em = $entityManager;
         $this->anmeldeEmailService = $anmeldeEmailService;
         $this->translator = $translator;
+        $this->elternService = $elternService;
     }
-    public function acceptKind(Zeitblock $zeitblock, Kind $kind){
-        if (!in_array($kind,$zeitblock->getKinderBeworben()->toArray())){
+
+    public function acceptKind(Zeitblock $zeitblock, Kind $kind)
+    {
+        if (!in_array($kind, $zeitblock->getKinderBeworben()->toArray())) {
             return false;
         }
         $kindWorkingcopy = $this->em->getRepository(Kind::class)->findActualWorkingCopybyKind($kind);
@@ -33,20 +38,24 @@ class KontingentAcceptService
         $this->beworbenCheck($kind);
         return true;
     }
-    public function acceptAllkindOfZeitblock(Zeitblock $zeitblock){
+
+    public function acceptAllkindOfZeitblock(Zeitblock $zeitblock)
+    {
         $kinder = $this->em->getRepository(Kind::class)->findBeworbenByZeitblock($zeitblock);
-        foreach ($kinder as $data){
-         $this->acceptKind($zeitblock,$data);
+        foreach ($kinder as $data) {
+            $this->acceptKind($zeitblock, $data);
         }
 
     }
-    public function beworbenCheck(Kind $kind){
-        if(sizeof($kind->getBeworben()->toArray()) === 0){// es gibt keine beworbenen Zeitblöcke mehr. Das kind soll nun eine Buchungsbestätigung erhalten
-        foreach ($kind->getBeworben() as $data){
-            $kind->removeBeworben($data);
-        }
-            $this->anmeldeEmailService->sendEmail($kind, $kind->getEltern(), $kind->getZeitblocks()[0]->getSchule()->getStadt(), $this->translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:'));
-            $this->anmeldeEmailService->send($kind, $kind->getEltern());
+
+    public function beworbenCheck(Kind $kind)
+    {
+        if (sizeof($kind->getBeworben()->toArray()) === 0) {// es gibt keine beworbenen Zeitblöcke mehr. Das kind soll nun eine Buchungsbestätigung erhalten
+            foreach ($kind->getBeworben() as $data) {
+                $kind->removeBeworben($data);
+            }
+            $this->anmeldeEmailService->sendEmail($kind, $this->elternService->getLatestElternFromChild($kind), $kind->getZeitblocks()[0]->getSchule()->getStadt(), $this->translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:'));
+            $this->anmeldeEmailService->send($kind, $this->elternService->getLatestElternFromChild($kind));
         }
         return false;
     }

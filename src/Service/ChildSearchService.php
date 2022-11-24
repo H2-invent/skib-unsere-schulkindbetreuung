@@ -7,6 +7,7 @@ use App\Entity\Anwesenheit;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
+use App\Entity\Stadt;
 use App\Entity\User;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,26 +30,30 @@ class ChildSearchService
         $this->translator = $translator;
     }
 
-    public function searchChild($parameters, Organisation $organisation, $isApp, User $user, ?\DateTime $dateFrom = null, ?\DateTime $dateTo = null)
+    /**
+     * @return Kind[]
+     */
+    public function searchChild($parameters, ?Organisation $organisation, $isApp, User $user, ?\DateTime $dateFrom = null, ?\DateTime $dateTo = null, Stadt $stadt = null)
     {
         if (!$dateFrom) {
             $dateFrom = new \DateTime();
         }
         $qb = $this->em->getRepository(Kind::class)->createQueryBuilder('k');
-        $qb->andWhere('k.startDate < :fromDate')
+        $qb
+            ->andWhere('k.startDate <= :fromDate')->setParameter('fromDate', $dateFrom)
             ->innerJoin('k.eltern', 'eltern')
             ->andWhere($qb->expr()->isNotNull('eltern.created_at'))
-            ->groupBy('k.tracing')
-            ->addOrderBy('k.startDate','ASC')
-            ->addOrderBy('eltern.created_at','ASC')
-            ->setParameter('fromDate', $dateFrom)
             ->innerJoin('k.zeitblocks', 'b');
-        //Schule als FIlter ausgewählt
+
+        //Schule als Filter ausgewählt
         if (isset($parameters['schule']) && $parameters['schule'] !== "") {
 
             $schule = $this->em->getRepository(Schule::class)->find($parameters['schule']);
-            $qb->andWhere('b.schule = :schule')
-                ->setParameter('schule', $schule);
+            $qb->andWhere('b.schule = :schule')->setParameter('schule', $schule);
+        } elseif ($stadt) {
+            $qb->innerJoin('b.schule', 'schule')
+                ->innerJoin('schule.stadt', 'stadt')
+                ->andWhere('stadt = :stadt')->setParameter('stadt', $stadt);
         } else {
             $orXSchule = $qb->expr()->orX();
             $schulen = sizeof($user->getSchulen()) === 0 ? $organisation->getSchule() : $user->getSchulen();
@@ -101,13 +106,31 @@ class ChildSearchService
             $qb->andWhere($orX);
         }
 
-        $qb->addOrderBy('k.klasse', 'ASC')
+        $qb->addOrderBy('k.startDate', 'DESC')
+            ->addOrderBy('eltern.created_at', 'ASC')
+            ->addOrderBy('k.klasse', 'ASC')
             ->addOrderBy('k.nachname', 'DESC');
 
         $query = $qb->getQuery();
         $kinder = $query->getResult();
 
-        return $kinder;
+        $kinderRes = array();
+        foreach ($kinder as $data) {
+            $kindTmp = isset($kinderRes[$data->getTracing()]) ? $kinderRes[$data->getTracing()] : null;
+            if (!$kindTmp) {
+                $kinderRes[$data->getTracing()] = $data;
+            } else {
+                if ($kindTmp->getStartDate() < $data->getStartDate()) {
+                    $kinderRes[$data->getTracing()] == $data;
+                } elseif ($kindTmp->getStartDate() == $data->getStartDate()) {
+                    if ($kindTmp->getEltern()->getCreatedAt() < $data->getEltern()->getCreatedAt()) {
+                        $kinderRes[$data->getTracing()] == $data;
+                    }
+                }
+            }
+        }
+
+        return $kinderRes;
 
     }
 }

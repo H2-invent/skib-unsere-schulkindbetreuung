@@ -93,8 +93,8 @@
                                                                 {% for k in s.kinds %}
                                                                     <h4>{{ k.vorname }} {{ k.nachname }}</h4>
                                                                     <p>{{ 'Monatliche Gebühren'|trans }}:
-                                                                        <b>{{ k.preisforBetreuung }}€</b></p>
-                                                                    {% set price = price +  k.preisforBetreuung %}
+                                                                        <b>{{ getPreisforBetreuung(k)|format(2,',','.') }}€</b></p>
+                                                                    {% set price = price +  getPreisforBetreuung(k) %}
                                                                 {% endfor %}
                                                                 <hr>
                                                                 {{ 'Gesamtbetrag'|trans }}: {{ price }}€

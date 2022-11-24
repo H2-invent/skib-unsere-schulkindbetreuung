@@ -57,7 +57,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @ORM\Column(type="integer",nullable=true)
      */
-    private $einkommen=0;
+    private $einkommen = 0;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -280,12 +280,12 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $anzahlKindergeldempfanger=0;
+    private $anzahlKindergeldempfanger = 0;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $sozialhilfeEmpanger=false;
+    private $sozialhilfeEmpanger = false;
 
     /**
      * @ORM\OneToMany(targetEntity=Personenberechtigter::class, mappedBy="stammdaten", orphanRemoval=true,cascade={"persist"})
@@ -309,6 +309,11 @@ class Stammdaten implements GroupSequenceProviderInterface
         $this->personenberechtigters = new ArrayCollection();
         $this->geschwisters = new ArrayCollection();
 
+    }
+
+    public function __toString()
+    {
+        return $this->tracing;
     }
 
     public function getId(): ?int
@@ -937,8 +942,8 @@ class Stammdaten implements GroupSequenceProviderInterface
     public function getGroupSequence()
     {
         return [
-        ['all',
-            $this->kinderImKiga === true ? 'kindInKiga' : 'notKindinKiga'],
+            ['all',
+                $this->kinderImKiga === true ? 'kindInKiga' : 'notKindinKiga'],
         ];
     }
 
@@ -1025,4 +1030,5 @@ class Stammdaten implements GroupSequenceProviderInterface
 
         return $this;
     }
+
 }

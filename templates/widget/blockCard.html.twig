@@ -10,7 +10,7 @@
 
                 <p>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</p>
 
-                    <p>{% trans %}Kinder{% endtrans %}: {{ b.kindwithFin|length }}</p>
+                    <p>{% trans %}Kinder{% endtrans %}: {{ getChildsOnSpecificTime(b,date('now'))|length }}</p>
             </div>
 
             <div class="bmd-card-actions text-center">

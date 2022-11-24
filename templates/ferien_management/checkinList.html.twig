@@ -31,6 +31,7 @@
                             </thead>
                             <tbody>
                             {% for l in list %}
+                                {% set eltern = getEltern(l.kind) %}
                                 <tr>
                                     {% if mode == 'block' or mode == 'order' %}
                                         <td>
@@ -46,7 +47,7 @@
                                                     <a class="dropdown-item"
                                                        href="{{ path('city_admin_news_edit',{'id':l.kind.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
                                                     <a class="dropdown-item"
-                                                       href="{{ path('ferien_management_orders_storno',{'org_id':org.id, 'parent_id':l.kind.eltern.uid}) }}"
+                                                       href="{{ path('ferien_management_orders_storno',{'org_id':org.id, 'parent_id':eltern.uid}) }}"
                                                        target="_blank"
                                                        rel="noopener noreferrer">{% trans %}Stornieren{% endtrans %}</a>
                                                     {% if l.state == 20 %}

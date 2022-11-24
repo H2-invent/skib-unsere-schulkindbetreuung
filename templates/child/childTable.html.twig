@@ -23,6 +23,7 @@
         </thead>
         <tbody>
         {% for k in kinder %}
+            {% set eltern = getEltern(k) %}
             <tr>
                 <td>
                     <div class="btn-group">
@@ -57,8 +58,8 @@
                 </td>
                 <td>{{ k.vorname }}</td>
                 <td>{{ k.nachname }}</td>
-                <td>{{ k.eltern.vorname }} {{ k.eltern.name }}</td>
-                <td>{{ k.eltern.notfallkontakt }}</td>
+                <td>{{ eltern.vorname }} {{ eltern.name }}</td>
+                <td>{{ eltern.notfallkontakt }}</td>
                 <td>{{ k.schule.name }}</td>
                 <td>{{ k.klasseString }}</td>
                 <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>

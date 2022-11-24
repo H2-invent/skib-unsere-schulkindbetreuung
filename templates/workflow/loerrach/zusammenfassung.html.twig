@@ -95,7 +95,7 @@
                                 {% if k.tageWithBlocks < stadt.minDaysperWeek %}<span class="badge badge-danger">
                                     {% trans %}Bitte weiteres Betreuungszeitfenster auswählen{% endtrans %} </span>
                                 {% else %}
-                                    <span>({% trans %}Gebühr pro Monat für gebuchte Betreuung{% endtrans %}: {{ k.preisforBetreuung|number_format(2,',','.') }} €)</span>
+                                    <span>({% trans %}Gebühr pro Monat für gebuchte Betreuung{% endtrans %}: {{ getPreisforBetreuung(k)|number_format(2,',','.') }} €)</span>
                                 {% endif %}
                                 <i class="fas fa-angle-down rotate-icon"></i>
                             </h5>
@@ -188,6 +188,14 @@
                                         <td>{% trans %}Betreuende Organisation{% endtrans %}</td>
                                         <td>{{ k.schule.organisation.name }}</td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            {{ 'Beginn der Betreuung:'|trans }}
+                                        </td>
+                                        <td>
+                                            {{ k.startDate|date('d.m.Y') }}
+                                        </td>
+                                    </tr>
                                     {% if k.betreungsblocksReal|length > 0 %}
                                         <tr>
                                             <td>{% trans %}Bemerkung{% endtrans %}</td>
@@ -248,7 +256,7 @@
                                         </td>
                                         <td>
                                             <h5>
-                                                {% if k.tageWithBlocks < stadt.minDaysperWeek %} {% trans %}Bitte weitere Betreuungszeitfenster auswählen{% endtrans %} {% else %}{{ k.preisforBetreuung|number_format(2,',','.') }} €{% endif %}
+                                                {% if k.tageWithBlocks < stadt.minDaysperWeek %} {% trans %}Bitte weitere Betreuungszeitfenster auswählen{% endtrans %} {% else %}{{ getPreisforBetreuung(k)|number_format(2,',','.') }} €{% endif %}
                                             </h5>
                                         </td>
                                     </tr>

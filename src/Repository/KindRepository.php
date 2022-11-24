@@ -52,9 +52,10 @@ class KindRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('k')
             ->innerJoin('k.beworben', 'beworben')
+            ->innerJoin('k.eltern','eltern')
             ->andWhere('beworben = :beworben')
-            ->andWhere('k.fin = :true')
-            ->setParameter('true', true)
+            ->andWhere('k.startDate is not NULL')
+            ->andWhere('eltern.created_at is not NULL')
             ->setParameter('beworben', $zeitblock)
             ->getQuery()
             ->getResult();
@@ -63,12 +64,31 @@ class KindRepository extends ServiceEntityRepository
     public function findActualWorkingCopybyKind(Kind $kind): ?Kind
     {
         return $this->createQueryBuilder('k')
+            ->innerJoin('k.eltern','eltern')
+            ->andWhere('eltern.created_at is NULL')
             ->andWhere('k.tracing = :tracingId')
-            ->andWhere('k.fin = :false')
-            ->andWhere('k.saved = :false')
-            ->setParameter('false', false)
             ->setParameter('tracingId', $kind->getTracing())
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+     /**
+      * @return Kind[] Returns an array of Kind objects
+      */
+
+    public function findHistoryOfThisChild(Kind $kind)
+    {
+        return $this->createQueryBuilder('k')
+            ->innerJoin('k.eltern','eltern')
+            ->andWhere('k.tracing = :tracing')
+            ->andWhere('k.startDate is not NULL')
+            ->andWhere('eltern.created_at is not null')
+            ->setParameter('tracing', $kind->getTracing())
+            ->orderBy('k.startDate', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
 }

@@ -52,9 +52,9 @@ class ActiveRepository extends ServiceEntityRepository
 
 
     /**
-     * @return Active[]
+     * @return Active
      */
-    public function findActiveSchuljahrFromCity(Stadt $stadt)
+    public function findActiveSchuljahrFromCity(Stadt $stadt):?Active
     {
         $today = new \DateTime();
         $qb = $this->createQueryBuilder('a')
@@ -72,9 +72,9 @@ class ActiveRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Active[]
+     * @return Active
      */
-    public function findAnmeldeSchuljahrFromCity($stadt)
+    public function findAnmeldeSchuljahrFromCity($stadt):?Active
     {
         $today = new \DateTime();
         $qb = $this->createQueryBuilder('a')
@@ -89,7 +89,7 @@ class ActiveRepository extends ServiceEntityRepository
         return $qb->getOneOrNullResult();
     }
 
-    public function findSchuleBetweentwoDates(\DateTime $von, \DateTime $bis, Stadt $stadt)
+    public function findSchuleBetweentwoDates(\DateTime $von, \DateTime $bis, Stadt $stadt):?Active
     {
         $qb = $this->createQueryBuilder('a')
             ->andWhere('a.stadt = :stadt')
@@ -105,9 +105,9 @@ class ActiveRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Active[]
+     * @return Active
      */
-    public function findSchuljahrFromCity(Stadt $stadt, \DateTime $today)
+    public function findSchuljahrFromCity(Stadt $stadt, \DateTime $today):?Active
     {
         $qb = $this->createQueryBuilder('a');
         $qb->andWhere('a.stadt = :stadt')

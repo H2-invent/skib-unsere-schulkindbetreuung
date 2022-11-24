@@ -22,12 +22,15 @@ class StadtBerichtService
 
     private $translator;
     private $beruflicheSituationString;
-
-    public function __construct(TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController)
+    private ChildInBlockService $childInBlockService;
+    private ElternService $elternService;
+    public function __construct(TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController, ChildInBlockService $childInBlockService, ElternService $elternService)
     {
         $this->spreadsheet = new Spreadsheet();
         $this->translator = $translator;
         $this->beruflicheSituationString = array_flip($loerrachWorkflowController->beruflicheSituation);
+        $this->childInBlockService = $childInBlockService;
+        $this->elternService = $elternService;
     }
 
     public function generateExcel($blocks, $kinder, $eltern, Stadt $stadt)
@@ -70,7 +73,7 @@ class StadtBerichtService
             $blocksheet->setCellValue($alphas[$count++] . $counter, json_encode($data->getPreise()));
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getActive()->getVon()->format('d.m.Y'));
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getActive()->getBis()->format('d.m.Y'));
-            $blocksheet->setCellValue($alphas[$count++] . $counter, sizeof($data->getKindwithFin()));
+            $blocksheet->setCellValue($alphas[$count++] . $counter, sizeof($this->childInBlockService->getCurrentChildAndFuturerChildOfZeitblock($data,$data->getVon())));
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getOrganisation()->getName());
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getName());
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getDeleted());
@@ -95,7 +98,7 @@ class StadtBerichtService
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getArt());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getArtString());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getName());
-            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getEltern()->getId());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $this->elternService->getLatestElternFromChild($data)->getId());
             $counter++;
         }
         $elternSheet = $this->spreadsheet->createSheet();

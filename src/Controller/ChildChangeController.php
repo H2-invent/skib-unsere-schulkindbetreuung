@@ -23,7 +23,7 @@ class ChildChangeController extends AbstractController
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
         $adresse = new Stammdaten();
-        $adresse = $kind->getEltern();
+        $adresse = $kind->getEltern(); //todo
 
 
         $input = array('seccode' => '');
@@ -41,7 +41,7 @@ class ChildChangeController extends AbstractController
 
             if ($input['seccode'] == $adresse->getSecCode() || $kind->getSchule()->getStadt()->getNoSecCodeForChangeChilds()) {
 
-                $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('tracing' => $kind->getTracing(), 'saved' => false));
+                $kind = $this->getDoctrine()->getRepository(Kind::class)->findActualWorkingCopybyKind($kind);
                 $adresse = $kind->getEltern();
                 $cookie = new Cookie ('KindID', $kind->getId() . "." . hash("sha256", $kind->getId() . $this->getParameter("secret")));
                 $cookie2 = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")));

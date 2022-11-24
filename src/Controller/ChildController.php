@@ -10,6 +10,7 @@ use App\Entity\Zeitblock;
 use App\Form\Type\InternNoticeType;
 use App\Service\ChildExcelService;
 use App\Service\ChildSearchService;
+use App\Service\ElternService;
 use App\Service\MailerService;
 use App\Service\PrintService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -71,16 +72,16 @@ class ChildController extends AbstractController
     /**
      * @Route("/org_child/show/detail", name="child_detail")
      */
-    public function childDetail(Request $request, TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController)
+    public function childDetail(Request $request, TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController, ElternService $elternService)
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
-        $history = $this->getDoctrine()->getRepository(Kind::class)->findBy(array('tracing' => $kind->getTracing(), 'saved' => true));
+        $history = $this->getDoctrine()->getRepository(Kind::class)->findHistoryOfThisChild($kind);
         $form = $this->createForm(InternNoticeType::class, $kind, array('action' => $this->generateUrl('child_detail_save_internal', array('childId'=>$kind->getId()))));
         if ($kind->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
-        return $this->render('child/childDetail.html.twig', array('beruflicheSituation' => array_flip($loerrachWorkflowController->beruflicheSituation), 'k' => $kind, 'eltern' => $kind->getEltern(), 'history' => $history, 'formInternalNotice' => $form->createView()));
+        return $this->render('child/childDetail.html.twig', array('beruflicheSituation' => array_flip($loerrachWorkflowController->beruflicheSituation), 'k' => $kind, 'eltern' =>$elternService->getLatestElternFromChild($kind), 'history' => $history, 'formInternalNotice' => $form->createView()));
     }
 
     /**
@@ -109,7 +110,7 @@ class ChildController extends AbstractController
     /**
      * @Route("/org_child/print/detail", name="child_detail_print")
      */
-    public function printChild(Request $request, TranslatorInterface $translator, PrintService $printService, TCPDFController $TCPDFController)
+    public function printChild(Request $request, TranslatorInterface $translator, PrintService $printService, TCPDFController $TCPDFController, ElternService $elternService)
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
 
@@ -117,7 +118,7 @@ class ChildController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
         $fileName = $kind->getVorname() . '_' . $kind->getNachname();
-        return $printService->printChildDetail($kind, $kind->getEltern(), $TCPDFController, $fileName, $kind->getSchule()->getOrganisation(), 'D');
+        return $printService->printChildDetail($kind, $elternService->getLatestElternFromChild($kind), $TCPDFController, $fileName, $kind->getSchule()->getOrganisation(), 'D');
     }
 
     /**
@@ -182,7 +183,7 @@ class ChildController extends AbstractController
     /**
      * @Route("/org_child/change/resend", name="child_resend_SecCode")
      */
-    public function resendSecCodeChild(Request $request, TranslatorInterface $translator, MailerService $mailerService)
+    public function resendSecCodeChild(Request $request, TranslatorInterface $translator, MailerService $mailerService,ElternService $elternService)
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
 
@@ -191,11 +192,11 @@ class ChildController extends AbstractController
         }
         try {
             $title = $translator->trans('Email mit Sicherheitscode');
-            $content = $this->renderView('email/resendSecCode.html.twig', array('eltern' => $kind->getEltern(), 'stadt' => $kind->getSchule()->getStadt()));
+            $content = $this->renderView('email/resendSecCode.html.twig', array('eltern' => $elternService->getLatestElternFromChild($kind), 'stadt' => $kind->getSchule()->getStadt()));
             $mailerService->sendEmail(
                 $kind->getSchule()->getOrganisation()->getName(),
                 $kind->getSchule()->getOrganisation()->getEmail(),
-                $kind->getEltern()->getEmail(),
+                $elternService->getLatestElternFromChild($kind)->getEmail(),
                 $title,
                 $content,
                 $kind->getSchule()->getOrganisation()->getEmail());

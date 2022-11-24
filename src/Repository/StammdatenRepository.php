@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Kind;
 use App\Entity\Stammdaten;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -47,4 +48,41 @@ class StammdatenRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findActualStammdatenByUid($uid): ?Stammdaten
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.uid = :uid')
+            ->setParameter('uid', $uid)
+            ->andWhere('s.created_at IS NULL')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findlatestStammdatenfromKind(Kind $kind): ?Stammdaten
+    {
+
+        $tracing = $kind->getEltern()->getTracing();
+
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.tracing = :tracing')->setParameter('tracing',$tracing)
+            ->andWhere('s.created_at IS NOT NULL')
+            ->orderBy('s.created_at','DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    public function findlatestStammdatenfromStammdaten(Stammdaten $stammdaten): ?Stammdaten
+    {
+
+        $tracing = $stammdaten->getTracing();
+
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.tracing = :tracing')->setParameter('tracing',$tracing)
+            ->andWhere('s.created_at IS NOT NULL')
+            ->orderBy('s.created_at','DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

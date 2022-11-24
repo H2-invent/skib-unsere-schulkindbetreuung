@@ -30,17 +30,26 @@ class SchulkindBetreuungKindNeuService
     private $validator;
     private $generator;
     private $error;
-    public function __construct(ErrorService $errorService, EntityManagerInterface $em, TranslatorInterface $translator, ValidatorInterface $validator,UrlGeneratorInterface $urlGenerator)
+    private SchuljahrService  $schuljahrService;
+    public function __construct(ErrorService $errorService, EntityManagerInterface $em, TranslatorInterface $translator, ValidatorInterface $validator,UrlGeneratorInterface $urlGenerator, SchuljahrService  $schuljahrService)
     {
         $this->em = $em;
         $this->translator = $translator;
         $this->validator = $validator;
         $this->generator = $urlGenerator;
         $this->error = $errorService;
+        $this->schuljahrService  = $schuljahrService;
     }
     public function prepareKind(Kind $kind, Schule $schule, Stammdaten $eltern){
         $kind->setEltern($eltern);
         $kind->setSchule($schule);
+        $schuljahr = $this->schuljahrService->getSchuljahr($schule->getStadt());
+        if (new \DateTime() < $schuljahr->getVon()){
+            $kind->setStartDate($schuljahr->getVon());
+        }else{
+            $kind->setStartDate((new \DateTime())->modify($schule->getStadt()->getSettingSkibDefaultNextChange()));
+        }
+
         return $kind;
     }
     public function getGanztagBlocks(Active $schuljahr, Schule $schule){

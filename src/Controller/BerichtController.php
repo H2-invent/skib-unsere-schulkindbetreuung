@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Active;
 use App\Entity\Stadt;
 use App\Entity\Zeitblock;
+use App\Service\ChildSearchService;
+use App\Service\ElternService;
 use App\Service\StadtBerichtService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +49,7 @@ class BerichtController extends AbstractController
     /**
      * @Route("/city_report/export", name="stadt_bericht_export")
      */
-    public function export(Request $request, TranslatorInterface $translator, StadtBerichtService $stadtBerichtService)
+    public function export(Request $request, TranslatorInterface $translator, StadtBerichtService $stadtBerichtService, ChildSearchService $childSearchService, ElternService $elternService)
     {
 
         $blocks = array();
@@ -71,23 +73,20 @@ class BerichtController extends AbstractController
 
         foreach ($schuljahr as $data) {
             $blocks = array_merge($blocks, $data->getBlocks()->toArray());
+            $kinderT = array_merge($kinderT, $kinder = $childSearchService->searchChild(array('schuljahr' => $data->getId()), null, false, $this->getUser(), new \DateTime(), null, $stadt));
         }
 
-        foreach ($blocks as $data) {
 
-            $kinderT = array_merge($kinderT, $data->getKindwithFin());
-        }
+        $kinder = array_unique($kinderT);
 
-        foreach ($kinderT as $data) {
-            $kinder[$data->getId()] = $data;
-        }
 
         foreach ($kinder as $data) {
             $elternT[] = $data->getEltern();
         }
         foreach ($elternT as $data) {
-            $eltern[$data->getId()] = $data;
+            $eltern[] = $elternService->getLatestElternFromCEltern($data);
         }
+        $eltern = array_unique($eltern);
 
 
 
