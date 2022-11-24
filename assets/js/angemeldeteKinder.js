@@ -33,6 +33,19 @@ $('.dropdown-item').click(function () {
             break;
 
     }
+    $('#childTable').html('<div id="childTableSimulation">\n' +
+        '                                <div class="center">\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                </div>    ')
     $('#childTable').load(searchUrl, search);
 });
 
@@ -69,6 +82,19 @@ function getSim(start, end) {
     var searchSim = { ...search};
     searchSim.startDate=start;
     searchSim.endDate = end;
+    $('#childTableSimulation').html('<div id="childTableSimulation">\n' +
+        '                                <div class="center">\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                    <div class="wave"></div>\n' +
+        '                                </div>    ');
     $('#childTableSimulation').load(searchUrl, searchSim);
 }
 
