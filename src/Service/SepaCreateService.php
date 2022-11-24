@@ -75,6 +75,7 @@ class SepaCreateService
      */
     public function calcSepa(Sepa $sepa, $demoMode = false)
     {
+
         $active = $this->em->getRepository(Active::class)->findSchuleBetweentwoDates($sepa->getVon(), $sepa->getBis(), $sepa->getOrganisation()->getStadt());
         $today = new \DateTime();
         if ($sepa->getBis() < $sepa->getVon()) {
@@ -103,7 +104,9 @@ class SepaCreateService
             ->andWhere('schule.organisation = :organisation')->setParameter('organisation', $sepa->getOrganisation())// wo die schule meine organisation ist
             ->andWhere('zeitblocks.active = :active')->setParameter('active', $active)// suche alle Blöcke, wo im aktuellen SChuljahr sind
             ->andWhere('zeitblocks.deleted != TRUE')
-            ->andWhere($qb->expr()->lte('k.startDate', ':von'))->setParameter('von', $sepa->getVon());
+            ->andWhere($qb->expr()->lte('k.startDate', ':von'))->setParameter('von', $sepa->getVon())
+            ->innerJoin('k.eltern', 'eltern')
+            ->andWhere('eltern.created_at IS NOT NULL');
 
 
         $kinder = $qb->getQuery()->getResult();
@@ -145,6 +148,7 @@ class SepaCreateService
 
         $sepa->setCreatedAt(new \DateTime());
         $sepa->setPdf('');
+
         return $sepa;
     }
 
@@ -161,7 +165,15 @@ class SepaCreateService
         }
 
 
-        $rechnung = $this->em->getRepository(Rechnung::class)->findOneBy(array('sepa' => $sepa, 'stammdaten' => $eltern));
+        $rechnung = null;
+
+
+        foreach ($sepa->getRechnungen() as $data) {
+            if ($data->getStammdaten()->getTracing() === $eltern->getTracing()) {
+                $rechnung = $data;
+            }
+        }
+
         if (!$rechnung) {
             $rechnung = new Rechnung();
             $rechnung->setSumme(0.0);
@@ -254,19 +266,49 @@ class SepaCreateService
     {
 
         $sepaDummy = new Sepa();
-        $sepaDummy->setVon(new \DateTime());
+        $sepaDummy->setVon(new \DateTime('01.12.2022'));
         $sepaDummy->setEinzugsDatum(new \DateTime());
         $sepaDummy->setOrganisation($sepa->getOrganisation());
         $sepaDummy->setBis((clone $sepaDummy->getVon())->modify('last day of this month'));
         $sepaDummy = $this->calcSepa($sepaDummy, true);
+        $rechnungenOriginal = $sepa->getRechnungen();
+        $rechnungenDummy = $sepaDummy->getRechnungen();
         $rechnungen = array();
-        $rechnungen = array_udiff($sepaDummy->getRechnungen()->toArray(), $sepa->getRechnungen()->toArray(),
-            function (Rechnung $obj_a, Rechnung $obj_b) {
-                if ($obj_a->getStammdaten()->getTracing() === $obj_b->getStammdaten()->getTracing()) {
-                    return $obj_a->getSumme() - $obj_b->getSumme();
+
+        foreach ($rechnungenOriginal as $data) {
+            $found = false;
+            foreach ($rechnungenDummy as $data2) {
+                if ($data2->getStammdaten()->getTracing() === $data->getStammdaten()->getTracing()) {
+                    $diff = round($data2->getSumme() - $data->getSumme(), 2);
+                    if ($diff !== 0.0) {
+                        $rechnungen[] = $data2;
+                    }
+                    $found = true;
+                    break;
                 }
             }
-        );
+            if (!$found) {
+                $rechnungen[] = $data->setSumme(0);
+            }
+
+        }
+
+        foreach ($rechnungenDummy as $data) {
+            $found = false;
+            foreach ($rechnungenOriginal as $data2) {
+                if ($data2->getStammdaten()->getTracing() === $data->getStammdaten()->getTracing()) {
+                    $found = true;
+                    break;
+
+                }
+            }
+            if (!$found) {
+                $rechnungen[] = $data;
+            }
+
+        }
+
+
         return $rechnungen;
 
     }

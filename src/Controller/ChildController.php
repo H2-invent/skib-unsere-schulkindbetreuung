@@ -159,8 +159,9 @@ class ChildController extends AbstractController
         if ($request->get('klasse')) {
             $text .= $translator->trans(' in der Klasse: %klasse%', array('%klasse%' => $request->get('klasse')));
         }
-
-        $kinderU = $childSearchService->searchChild($parameter, $organisation, false, $this->getUser());
+        $startDate = isset($parameter['startDate'])?new \DateTime($parameter['startDate']):null;
+        $endDate = isset($parameter['endDate'])?new \DateTime($parameter['endDate']):null;
+        $kinderU = $childSearchService->searchChild($parameter, $organisation, false, $this->getUser(),$startDate,$endDate);
 
 
         if ($request->get('print')) {

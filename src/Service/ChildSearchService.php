@@ -39,9 +39,17 @@ class ChildSearchService
             $dateFrom = new \DateTime();
         }
         $qb = $this->em->getRepository(Kind::class)->createQueryBuilder('k');
-        $qb
-            ->andWhere('k.startDate <= :fromDate')->setParameter('fromDate', $dateFrom)
-            ->innerJoin('k.eltern', 'eltern')
+        if (!$dateTo){
+            $qb->andWhere('k.startDate <= :fromDate')->setParameter('fromDate', $dateFrom);
+        }else{
+            dump($dateFrom);
+            dump($dateTo);
+            $qb->andWhere('k.startDate >= :fromDate')->setParameter('fromDate', $dateFrom)
+            ->andWhere('k.startDate <= :endDate')->setParameter('endDate', $dateTo);
+        }
+
+
+        $qb->innerJoin('k.eltern', 'eltern')
             ->andWhere($qb->expr()->isNotNull('eltern.created_at'))
             ->innerJoin('k.zeitblocks', 'b');
 

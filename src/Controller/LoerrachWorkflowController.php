@@ -179,7 +179,6 @@ class LoerrachWorkflowController extends AbstractController
                 $em->flush();
             }
             $renderKinder[$data->getSchule()->getId()][] = $data;
-
         }
         return $this->render('workflow/loerrach/schulen.html.twig', array('isEdit' => $isEdit, 'schule' => $schule, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $renderKinder));
     }
@@ -188,7 +187,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/schulen/kind/neu",name="loerrach_workflow_schulen_kind_neu",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function neukindAction(SchulkindBetreuungKindNeuService $schulkindBetreuungKindNeuService, Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function neukindAction(SchulkindBetreuungKindNeuService $schulkindBetreuungKindNeuService, Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService, ParameterBagInterface $parameterBag)
     {
         $adresse = new Stammdaten;
 
@@ -202,7 +201,12 @@ class LoerrachWorkflowController extends AbstractController
         $kind = $schulkindBetreuungKindNeuService->prepareKind($kind, $schule, $adresse);
         // Load the data from the city into the controller as $stadt
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
-        $form = $this->createForm(LoerrachKind::class, $kind, array('validation_groups' => ['Eltern'], 'action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug' => $stadt->getSlug(), 'schule_id' => $schule->getId()))));
+        $form = $this->createForm(LoerrachKind::class, $kind, array('schuljahr'=>$schuljahr,'validation_groups' => ['Eltern'], 'action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug' => $stadt->getSlug(), 'schule_id' => $schule->getId()))));
+        if ($this->getUser() && in_array('ROLE_ORG_CHILD_CHANGE',$this->getUser()->getRoles(),true) && $stadt->getSettingsSkibShowSetStartDateOnChange()){
+
+        }else{
+            $form->remove('startDate');
+        }
         $form = $schulkindBetreuungKindNeuService->cleanUpForm($form, $schuljahr, $schule);
         $kind = $schulkindBetreuungKindNeuService->cleanUpKind($schuljahr, $schule, $kind);
         try {
@@ -231,7 +235,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/schulen/kind/edit",name="loerrach_workflow_schulen_kind_edit",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function editkindAction(SchulkindBetreuungKindNeuService $schulkindBetreuungKindNeuService, Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
+    public function editkindAction(SchulkindBetreuungKindNeuService $schulkindBetreuungKindNeuService, Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService  $schuljahrService)
     {
         $adresse = new Stammdaten;
 
@@ -240,12 +244,16 @@ class LoerrachWorkflowController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-
+        $schuljahr = $schuljahrService->getSchuljahr($stadt);
         $form = $this->createForm(LoerrachKind::class, $kind, array(
-            'action' => $this->generateUrl('loerrach_workflow_schulen_kind_edit', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()))
+           'schuljahr'=>$schuljahr, 'action' => $this->generateUrl('loerrach_workflow_schulen_kind_edit', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()))
         ));
         $form->remove('art');
+        if ($this->getUser() && in_array('ROLE_ORG_CHILD_CHANGE',$this->getUser()->getRoles(),true) && $stadt->getSettingsSkibShowSetStartDateOnChange()){
 
+        }else{
+            $form->remove('startDate');
+        }
         try {
             $form->handleRequest($request);
         } catch (\Exception $e) {
