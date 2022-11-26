@@ -172,7 +172,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $renderKinder = array();
         foreach ($kinder as $data) {
-            if ($isEdit && !$data->getStartDate()){
+            if (($isEdit && !$data->getStartDate()) || ($isEdit && !$stadt->getSettingsSkibShowSetStartDateOnChange())){
                 $data->setStartDate( (new \DateTime())->modify($stadt->getSettingSkibDefaultNextChange()));
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($data);
@@ -461,7 +461,7 @@ class LoerrachWorkflowController extends AbstractController
     {
         // Load the data from the city into the controller as $stadt
 
-
+        set_time_limit(300);
         //Check for Anmeldung open
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
         if ($schuljahr === null) {
@@ -481,10 +481,12 @@ class LoerrachWorkflowController extends AbstractController
         foreach ($kind as $data) {
             $preis += $berechnungsService->getPreisforBetreuung($data);
         }
-
+        if ($request->cookies->get('KindID')) {
+            $isEdit = true;
+        }
         $error = false;
         foreach ($kind as $data) {
-            if ($data->getTageWithBlocks() < $stadt->getMinDaysperWeek()) {
+            if ($data->getTageWithBlocks() < $stadt->getMinDaysperWeek() && !$isEdit) {
                 $error = true;
                 break;
             }
@@ -521,6 +523,7 @@ class LoerrachWorkflowController extends AbstractController
     {
 
         //Check for Anmeldung open
+        set_time_limit(300);
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
         if (!$schuljahr) {
             return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
@@ -533,18 +536,20 @@ class LoerrachWorkflowController extends AbstractController
             return $this->redirectToRoute('loerrach_workflow_adresse', array('slug' => $stadt->getSlug()));
         }
 
-        $kinder = $adresse->getKinds();
-        foreach ($kinder as $data) {
-            if ($data->getTageWithBlocks() < $stadt->getMinDaysperWeek()) {
-                $this->redirectToRoute('loerrach_workflow_zusammenfassung', array('slug' => $stadt->getSlug()));
-            }
-        }
         $kindeToEdit = null;
         if ($request->cookies->get('KindID')) {
             $cookie_kind = explode('.', $request->cookies->get('KindID'));
             $kindeToEdit = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('id' => $cookie_kind[0]));
             $isEdit = true;
         }
+        $kinder = $adresse->getKinds();
+
+        foreach ($kinder as $data) {
+            if ($data->getTageWithBlocks() < $stadt->getMinDaysperWeek() && !$isEdit) {
+                $this->redirectToRoute('loerrach_workflow_zusammenfassung', array('slug' => $stadt->getSlug()));
+            }
+        }
+
 
 // Daten speichern und fixieren
         $adresse->setLanguage($request->getLocale());

@@ -9,6 +9,7 @@ use App\Entity\Sepa;
 use App\Entity\Stammdaten;
 use App\Form\Type\customerIDStammdatenType;
 use App\Form\Type\SepaType;
+use App\Service\ElternService;
 use App\Service\SepaCreateService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -72,7 +73,7 @@ class SepaController extends AbstractController
     /**
      * @Route("/org_accounting/showdata", name="accounting_showdata",methods={"GET"})
      */
-    public function showStammdaten(Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator)
+    public function showStammdaten(Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator, ElternService $elternService)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
@@ -97,14 +98,8 @@ class SepaController extends AbstractController
         $sRes = array();
         foreach ($stammdaten as $data){
             if (!isset($sRes[$data->getTracing()])){
-                $sRes[$data->getTracing()] = $data;
-            }else{
-                if ($data->getCreatedAt() > $sRes[$data->getTracing()]->getCreatedAt()){
-                    $sRes[$data->getTracing()] = $data;
-                }
+                $sRes[$data->getTracing()] = $elternService->getLatestElternFromCEltern($data);
             }
-
-
         }
 
 

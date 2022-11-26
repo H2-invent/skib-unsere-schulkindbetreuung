@@ -18,7 +18,7 @@
     <h3>{{ 'Betreuungsbeginn mit diesem Stundenplan'|trans }}: {{ kind.startDate|date('d.m.Y') }}</h3>
     <p>{{ 'Allergie'|trans }}: {{ kind.allergie }} | {{ 'Medikamente'|trans }}: {{ kind.medikamente }}
         | {{ 'Sicherheitscode'|trans }}: {{ eltern.secCode }} | {{ 'Monatliche Gebühren'|trans }}
-        : {{ getPreisforBetreuung(kind)|number_format(2,',','.') }}€</p>
+        : {{ getPreisforBetreuungWithoutBeworben(kind)|number_format(2,',','.') }}€</p>
 
     <table cellpadding="3px">
         <thead>

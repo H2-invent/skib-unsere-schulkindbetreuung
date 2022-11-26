@@ -66,7 +66,7 @@ class AnmeldeEmailService
                 $this->tcpdf,
                 $fileName,
                 $beruflicheSituation,
-                $kind->getZeitblocks()[0]->getSchule()->getOrganisation(),
+                $kind->getSchule()->getOrganisation(),
                 'S',
                 $stadt->getSettingEncryptEmailAttachment()
             );

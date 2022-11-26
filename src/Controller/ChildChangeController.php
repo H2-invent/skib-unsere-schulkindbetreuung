@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Kind;
 use App\Entity\Stammdaten;
+use App\Service\ElternService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,13 +18,13 @@ class ChildChangeController extends AbstractController
     /**
      * @Route("/org_child/change/seccode", name="child_change_seccode")
      */
-    public function changeSeccodeAction(Request $request, TranslatorInterface $translator)
+    public function changeSeccodeAction(Request $request, TranslatorInterface $translator, ElternService $elternService)
     {
 
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
         $adresse = new Stammdaten();
-        $adresse = $kind->getEltern(); //todo
+        $adresse = $elternService->getLatestElternFromChild($kind);
 
 
         $input = array('seccode' => '');

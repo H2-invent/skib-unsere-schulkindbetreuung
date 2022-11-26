@@ -28,4 +28,7 @@ class ElternService
             return $stammdaten;
         }
     }
+    public function getKindervonElternMitHistorie(Stammdaten $eltern){
+        return $this->em->getRepository(Kind::class)->findAllChildrenWithHistoryFromParent($eltern);
+    }
 }

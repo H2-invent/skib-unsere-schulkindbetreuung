@@ -193,7 +193,7 @@ class SepaCreateService
         }
 
         $rechnung->addKinder($kind);
-        $rechnung->setSumme($rechnung->getSumme() + $this->berechnungsService->getPreisforBetreuung($kind));
+        $rechnung->setSumme($rechnung->getSumme() + $this->berechnungsService->getPreisforBetreuung($kind,false));
 
 
         $table = $this->environment->render('rechnung/tabelle.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
@@ -262,11 +262,11 @@ class SepaCreateService
 
     }
 
-    public function diffToThisMonth(Sepa $sepa)
+    public function diffToThisMonth(Sepa $sepa, \DateTime  $pickday)
     {
 
         $sepaDummy = new Sepa();
-        $sepaDummy->setVon(new \DateTime('01.12.2022'));
+        $sepaDummy->setVon($pickday);
         $sepaDummy->setEinzugsDatum(new \DateTime());
         $sepaDummy->setOrganisation($sepa->getOrganisation());
         $sepaDummy->setBis((clone $sepaDummy->getVon())->modify('last day of this month'));

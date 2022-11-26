@@ -97,9 +97,17 @@ class ChildController extends AbstractController
         $form = $this->createForm(InternNoticeType::class, $kind);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $kind = $form->getData();
+             $kind = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($kind);
+            $em->flush();
+            $notice = $kind->getInternalNotice();
+            $kinder = $em->getRepository(Kind::class)->findBy(array('tracing'=>$kind->getTracing()));
+            foreach ($kinder as $data){
+                $data->setInternalNotice($notice);
+                $em->persist($data);
+
+            }
             $em->flush();
         }
 
@@ -126,6 +134,7 @@ class ChildController extends AbstractController
      */
     public function buildChildTable(ChildSearchService $childSearchService, Request $request, TranslatorInterface $translator, PrintService $printService, TCPDFController $TCPDFController, ChildExcelService $childExcelService)
     {
+        set_time_limit(300);
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('organisation'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');

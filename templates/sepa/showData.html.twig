@@ -89,20 +89,22 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                {% set price = 0 %}
-                                                                {% for k in s.kinds %}
-                                                                    <h4>{{ k.vorname }} {{ k.nachname }}</h4>
-                                                                    <p>{{ 'Monatliche Gebühren'|trans }}:
-                                                                        <b>{{ getPreisforBetreuung(k)|format(2,',','.') }}€</b></p>
-                                                                    {% set price = price +  getPreisforBetreuung(k) %}
-                                                                {% endfor %}
-                                                                <hr>
-                                                                {{ 'Gesamtbetrag'|trans }}: {{ price }}€
-
-                                                                <hr>
-                                                              <p>{{ 'Alleinerziehend'|trans }}: <b>{{ s.alleinerziehend?'Ja':'Nein' }}</b></p>
+                                                                <p>{{ 'Alleinerziehend'|trans }}: <b>{{ s.alleinerziehend?'Ja':'Nein' }}</b></p>
                                                                 <p>{{ 'SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe'|trans }}: <b>{{ s.sozialhilfeEmpanger?'Ja':'Nein' }}</b></p>
-                                                              <p>{{ 'Anzahl an Kindergelberechtigten Kinder im Haushalt'|trans }}: <b>{{ s.anzahlKindergeldempfanger }}</b></p>
+                                                                <p>{{ 'Anzahl an Kindergelberechtigten Kinder im Haushalt'|trans }}: <b>{{ s.anzahlKindergeldempfanger }}</b></p>
+                                                                <hr>
+                                                                {% for k in getAllKinderWithHistory(s) %}
+                                                                    <h4><a href="{{ path('child_detail',{'kind_id':k.id}) }}">{{ k.vorname }} {{ k.nachname }}</a></h4>
+                                                                    <p>{{ 'Gültig ab'|trans }}: {{ k.startDate|date('d.m.Y') }}</p>
+                                                                    <p>{{ 'Monatliche Gebühren'|trans }}:
+                                                                        <b>{{ getPreisforBetreuungWithoutBeworben(k)|format(2,',','.') }}€</b></p>
+                                                                    <hr>
+                                                                    {% trans with {'{date}':k.startDate|date('d.m.Y')}%}Gesamtbetrag ab {date}{% endtrans %}: {{ getPreisforBetreuungWithoutBeworbenActual(k.eltern,k.startDate) }}€
+                                                                    <hr>
+                                                                {% endfor %}
+
+
+
                                                             </div>
 
                                                             <div class="modal-footer">

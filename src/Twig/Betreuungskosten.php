@@ -6,6 +6,7 @@ use App\Controller\LoerrachWorkflowController;
 use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Schule;
+use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use App\Service\BerechnungsService;
 use App\Service\ElternService;
@@ -30,6 +31,8 @@ class Betreuungskosten extends AbstractExtension
     {
         return array(
             new TwigFunction('getPreisforBetreuung', array($this, 'getPreisforBetreuung')),
+            new TwigFunction('getPreisforBetreuungWithoutBeworben', array($this, 'getPreisforBetreuungWithoutBeworben')),
+            new TwigFunction('getPreisforBetreuungWithoutBeworbenActual', array($this, 'getPreisforBetreuungWithoutBeworbenActual')),
         );
     }
 
@@ -38,5 +41,13 @@ class Betreuungskosten extends AbstractExtension
         return $this->berechnungsService->getPreisforBetreuung($kind);
     }
 
+    public function getPreisforBetreuungWithoutBeworben(Kind $kind)
+    {
+        return $this->berechnungsService->getPreisforBetreuung($kind, false);
+    }
 
+    public function getPreisforBetreuungWithoutBeworbenActual(Stammdaten $stammdaten, \DateTime $dateTime)
+    {
+        return $this->berechnungsService->getGesamtPreisProStammdatenZeitpunk($stammdaten, $dateTime);
+    }
 }

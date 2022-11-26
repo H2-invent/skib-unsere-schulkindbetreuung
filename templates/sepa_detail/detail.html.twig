@@ -57,7 +57,7 @@
 
                 </div>
                 <div class="card-header">
-                    <h1> {{ 'Änderungen zum aktuellen Monat'|trans }}
+                    <h1> {% trans with {'{month}': simDate|format_datetime(pattern='MMMM', locale='de')  }%} Änderungen zum Monat {month} {% endtrans %}
                     </h1>
                 </div>
                 <div class="card-body">

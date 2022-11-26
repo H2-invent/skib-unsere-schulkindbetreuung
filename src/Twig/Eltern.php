@@ -6,6 +6,7 @@ use App\Controller\LoerrachWorkflowController;
 use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Schule;
+use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use App\Service\ElternService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,6 +30,7 @@ class Eltern extends AbstractExtension
     {
         return array(
             new TwigFunction('getEltern', array($this, 'getEltern')),
+            new TwigFunction('getAllKinderWithHistory', array($this, 'getAllKinderWithHistory')),
         );
     }
 
@@ -36,6 +38,9 @@ class Eltern extends AbstractExtension
     {
         return $this->elternService->getLatestElternFromChild($kind);
     }
-
+    public function getAllKinderWithHistory(Stammdaten $stammdaten)
+    {
+        return $this->elternService->getKindervonElternMitHistorie($stammdaten);
+    }
 
 }

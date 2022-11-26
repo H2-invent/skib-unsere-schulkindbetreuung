@@ -92,9 +92,14 @@
                            aria-expanded="false" aria-controls="collapse{{ loop.index }}">
                             <h5 class="mb-0">
                                 {{ k.vorname }} {{ k.nachname }}
-                                {% if k.tageWithBlocks < stadt.minDaysperWeek %}<span class="badge badge-danger">
+
+                                {% if k.tageWithBlocks < stadt.minDaysperWeek and not is_granted('ROLE_ORG_CHILD_CHANGE') %}<span class="badge badge-danger">
                                     {% trans %}Bitte weiteres Betreuungszeitfenster auswählen{% endtrans %} </span>
+                                {% elseif k.tageWithBlocks < stadt.minDaysperWeek and is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                                <span class="badge badge-warning">
+                                    {% trans with {'{selected}':(k.betreungsblocksRealKontingent|length+k.BetreungsblocksReal|length)} %}ACHTUNG! NUR {selected} Betreuungszeitfenster ausgewählt {% endtrans %} </span>
                                 {% else %}
+
                                     <span>({% trans %}Gebühr pro Monat für gebuchte Betreuung{% endtrans %}: {{ getPreisforBetreuung(k)|number_format(2,',','.') }} €)</span>
                                 {% endif %}
                                 <i class="fas fa-angle-down rotate-icon"></i>
@@ -256,7 +261,11 @@
                                         </td>
                                         <td>
                                             <h5>
-                                                {% if k.tageWithBlocks < stadt.minDaysperWeek %} {% trans %}Bitte weitere Betreuungszeitfenster auswählen{% endtrans %} {% else %}{{ getPreisforBetreuung(k)|number_format(2,',','.') }} €{% endif %}
+                                                {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                                                   {{ getPreisforBetreuung(k)|number_format(2,',','.') }} €
+                                                {% else %}
+                                                    {% if k.tageWithBlocks < stadt.minDaysperWeek %} {% trans %}Bitte weitere Betreuungszeitfenster auswählen{% endtrans %} {% else %}{{ getPreisforBetreuung(k)|number_format(2,',','.') }} €{% endif %}
+                                                {% endif %}
                                             </h5>
                                         </td>
                                     </tr>
@@ -335,11 +344,11 @@
     </div>
 
     {% if error == false %}
-        <button class="btn btn-outline-primary sendButton"
+        <button class="btn btn-outline-primary sendButton btn-block mt-4"
                 disabled>{% trans %}Zahlungspflichtigen Vertrag abschließen{% endtrans %}</button>
     {% else %}
         <a href="{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }}"
-           class="btn btn-outline-primary">{% trans %}Weitere Betreuungszeitfenster hinzufügen{% endtrans %}</a>
+           class="btn btn-outline-primary btn-block mt-4">{% trans %}Weitere Betreuungszeitfenster hinzufügen{% endtrans %}</a>
     {% endif %}
 
 {% endblock %}
@@ -358,7 +367,7 @@
                     $('.sendButton').wrap('<a href="{{ path('loerrach_workflow_abschluss',{'slug':stadt.slug}) }}">');
                     $('.sendButton').prop('disabled', false);
                     $('.sendButton').click(function (e) {
-                        $(this).html('<i class="fas fa-spinner fa-spin"></i> '+$(this).text());
+                        $(this).html('<i class="fas fa-spinner fa-spin"></i> ' + $(this).text());
                         $(this).prop('disabled', true);
 
                         if ($('.sendButton').parent().is("a")) {

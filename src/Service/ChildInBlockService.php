@@ -117,7 +117,7 @@ class ChildInBlockService
         $lastChecked = null;
         foreach (array_reverse($kinds) as $data) {
 
-            if ($data->getStartDate() < $date) { // ich befinde mich vor dem start-datum
+            if ($data->getStartDate() <= $date) { // ich befinde mich vor dem start-datum
 
                 if (in_array($zeitblock, $data->getZeitblocks()->toArray())) {
                     return $data;

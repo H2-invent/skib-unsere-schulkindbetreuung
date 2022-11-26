@@ -182,7 +182,7 @@ h2 {
 .btn-primary {
   background-color: var(--main-color) !important;
   border-color: var(--main-color) !important;
-  border-radius: 500px;
+
   color: #fff !important;
   }
   .btn-primary:hover {
@@ -215,7 +215,7 @@ h2 {
 .btn-outline-secondary {
   border-color: var(--sec-color) !important;
   color: var(--sec-color) !important;
-  border-radius: 500px;
+
 }
   .btn-outline-secondary:hover {
     border-color: var(--sec-color-hover) !important;
