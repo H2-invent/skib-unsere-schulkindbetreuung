@@ -19,7 +19,7 @@
                                 <tbody>
                                 <tr>
                                     <td>{% trans %} Letzte Speicherung {% endtrans %}</td>
-                                    <td>{{ eltern.createdAt|date('d.m.Y') }}</td>
+                                    <td>{{ k.eltern.createdAt|date('d.m.Y') }}</td>
                                 </tr>
                                 <tr>
                                     <td>{% trans %} Name des Erziehungsberechtigten {% endtrans %}</td>
@@ -246,12 +246,13 @@
                                             <tr>
                                                 <td colspan="2">
                                                     <ul class="list-group">
-                                                        {% for k in history %}
-                                                            <a href="{{ path('child_detail',{'kind_id':k.id}) }}">
+
+                                                        {% for h in history|reverse %}
+                                                            <a href="{{ path('child_detail',{'kind_id':h.id}) }}">
+
                                                                 <li class="list-group-item">
-                                                                    {% if app.request.requesturi == path('child_detail',{'kind_id':k.id}) %}<i class="fa fa-arrow-right mr-2"></i>{% endif %} Änderung tritt in
-                                                                    Kraft: {{ k.startDate|date('d.m.Y') }} (geändert
-                                                                    am: {{ k.eltern.createdAt|date('d.m.Y H:i') }})
+                                                                    {% if app.request.requesturi == path('child_detail',{'kind_id':h.id}) %}<i class="fa fa-arrow-right mr-2"></i>{% endif %}
+                                                                    Änderung tritt in Kraft: {{ h.startDate|date('d.m.Y') }} (geändert am: {{ h.eltern.createdAt|date('d.m.Y H:i') }})
                                                                 </li>
                                                             </a>
                                                         {% endfor %}
@@ -262,18 +263,11 @@
                                         </table>
                                     </div>
                                 </div>
-
-
                             </div>
-
-
                         </div>
-
                     </div>
-
                 </div>
                 <div class="col-12 card">
-
                 </div>
             </div>
         </div>

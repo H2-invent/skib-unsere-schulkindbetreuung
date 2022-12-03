@@ -18,7 +18,7 @@ class MigrateStartDateCommand extends Command
 {
 
     protected static $defaultName = 'app:migrate:startDate';
-    protected static $defaultDescription = 'Add a short description for your command';
+    protected static $defaultDescription = 'Migrate Startdate from old to new version';
     private $em;
 
     public function __construct(EntityManagerInterface $entityManager, string $name = null)
@@ -27,16 +27,12 @@ class MigrateStartDateCommand extends Command
         $this->em = $entityManager;
     }
 
-    protected function configure(): void
-    {
-        $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description');
-    }
+
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
+        set_time_limit(6000);
         $io = new SymfonyStyle($input, $output);
 
         $kinder = $this->em->getRepository(Kind::class)->findAll();
@@ -49,16 +45,22 @@ class MigrateStartDateCommand extends Command
             $progressBar->advance();
             if ($kind->getZeitblocks()->count() > 0) {
                 if ($kind->getSaved()) {
-                    $kind->setStartDate($kind->getZeitblocks()[0]->getActive()->getVon());
-                    $this->em->persist($kind);
-                    if ($kind->getHistory() > 0) {
-                        $history = $this->em->getRepository(Kind::class)->findOneBy(array('tracing' => $kind->getTracing(),'history'=>$kind->getHistory()-1));
-                        $kind->setStartDate($history->getEltern()->getEndedAt()->modify('first day of next month'));
-                    }
+                    $kind->setStartDate(clone $kind->getZeitblocks()[0]->getActive()->getVon());
 
+                    if ($kind->getHistory() === 0){
+                        if ($kind->getEltern()->getCreatedAt() > $kind->getZeitblocks()[0]->getActive()->getVon()){
+                            $kind->setStartDate((clone  $kind->getEltern()->getCreatedAt())->modify('first day of next month'));
+                        }
+                    } else {
+                        if ($kind->getEltern()->getCreatedAt() > $kind->getZeitblocks()[0]->getActive()->getVon()){
+                            $history = $this->em->getRepository(Kind::class)->findOneBy(array('tracing' => $kind->getTracing(),'history'=>$kind->getHistory()-1));
+                            $kind->setStartDate(( clone  $history->getEltern()->getEndedAt())->modify('first day of next month'));
+                        }
+                    }
+                    $this->em->persist($kind);
                 }
-                if (!$kind->getFin() && !$kind->getSaved()){
-                    $kind->setStartDate(null);
+                if (!$kind->getFin() && !$kind->getSaved()){//kind ist die woking copy
+                    $kind->setStartDate(null);// setze startDate uf null
 
                 }
                 if (!$kind->getEltern()->getFin() && !$kind->getEltern()->getSaved() && !$kind->getStartDate()){
@@ -73,6 +75,43 @@ class MigrateStartDateCommand extends Command
         $progressBar->finish();
         $this->em->flush();
         $io->success(sprintf('we set %d startdates',$counter));
+
+        $progressBar = new ProgressBar($output, sizeof($kinder));
+        $progressBar->start();
+
+        $checked = array();
+        $coutDelete = 0;
+        foreach ($kinder as $kind) {
+            $tracing = $kind->getTracing();
+            if (!in_array($tracing, $checked)) {
+
+
+                $allKindsWithTracing = $this->em->getRepository(Kind::class)->findBy(array('tracing' => $tracing));
+                $checked[] = $tracing;
+                $deleted = true;
+                foreach ($allKindsWithTracing as $data) {
+                    if ($data->getFin() && $data->getSaved()) {
+                        $deleted = false;
+                        break;
+                    }
+                }
+                if ($deleted === true) {
+                    foreach ($allKindsWithTracing as $data) {
+                        $data->setStartDate(null);
+                        $this->em->persist($data);
+                    }
+
+                    $coutDelete++;
+                }
+
+            }
+            $progressBar->advance();
+        }
+        $this->em->flush();
+        $progressBar->finish();
+
+
+        $io->success(sprintf('we delete %d childs', $coutDelete));
 
         return Command::SUCCESS;
     }

@@ -30,6 +30,7 @@ class ChildInBlockService
             if (!in_array($tracing, $checkTracing)) {
                 $currentChild = $this->em->getRepository(Kind::class)->findHistoryOfThisChild($data);
                 $currentChild = $this->sortChilds($currentChild);
+
                 $child = $this->checkIfChildIsNow($currentChild, $zeitblock, $dateToCheck);
                 if ($child) {
                     $res[] = $child;

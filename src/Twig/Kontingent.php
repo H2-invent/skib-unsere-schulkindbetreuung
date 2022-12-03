@@ -44,7 +44,8 @@ class Kontingent extends AbstractExtension
     }
     public function getChildsOnSpecificTime(Zeitblock $zeitblock,\DateTime $dateTime)
     {
-        return $this->childInBlockService->getCurrentChildOfZeitblock($zeitblock,$dateTime);
+        $res = $this->childInBlockService->getCurrentChildOfZeitblock($zeitblock,$dateTime);
+        return $res;
 
     }
     public function getChildsOnSpecificTimeAndFuture(Zeitblock $zeitblock,\DateTime $dateTime)

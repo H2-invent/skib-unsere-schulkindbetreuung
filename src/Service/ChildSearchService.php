@@ -90,10 +90,7 @@ class ChildSearchService
 
 
 
-        $qb->addOrderBy('k.startDate', 'DESC')
-            ->addOrderBy('eltern.created_at', 'ASC')
-            ->addOrderBy('k.klasse', 'ASC')
-            ->addOrderBy('k.nachname', 'DESC');
+        $qb->addOrderBy('k.startDate', 'ASC');
 
         $query = $qb->getQuery();
         $kinder = $query->getResult();
@@ -105,15 +102,14 @@ class ChildSearchService
                 $kinderRes[$data->getTracing()] = $data;
             } else {
                 if ($kindTmp->getStartDate() < $data->getStartDate()) {
-                    $kinderRes[$data->getTracing()] == $data;
+                    $kinderRes[$data->getTracing()] = $data;
                 } elseif ($kindTmp->getStartDate() == $data->getStartDate()) {
                     if ($kindTmp->getEltern()->getCreatedAt() < $data->getEltern()->getCreatedAt()) {
-                        $kinderRes[$data->getTracing()] == $data;
+                        $kinderRes[$data->getTracing()] = $data;
                     }
                 }
             }
         }
-
         foreach ($kinderRes as $key=>$data){
             $check = $this->checkKindOfParameter($parameters,$data,$diff);
             if (!$check){

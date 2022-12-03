@@ -98,7 +98,8 @@ class WidgetController extends AbstractController
         $stadt = $this->getUser()->getStadt();
         $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findOneBy(array('organisation' => $organisation, 'id' => $request->get('schule_id')));
-        $kinder = $childSearchService->searchChild(array('schule' => $request->get('schule_id')), $organisation, false, $this->getUser(), new \DateTime());
+        $kinder = $childSearchService->searchChild(array('schule' => $request->get('schule_id'),'schuljahr'=>$active->getId()), $organisation, false, $this->getUser(), new \DateTime());
+        dump($kinder);
         return new JsonResponse(array('title' => $schule->getName(), 'small' => $translator->trans('Kinder angemeldet'), 'anzahl' => sizeof($kinder), 'symbol' => 'school'));
 
     }
@@ -116,16 +117,13 @@ class WidgetController extends AbstractController
         $stadt = $this->getUser()->getStadt();
         $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
         $qb = $this->getDoctrine()->getRepository(Zeitblock::class)->createQueryBuilder('b')
-            ->andWhere('b.active = :jahr')
+            ->andWhere('b.active = :jahr')->setParameter('jahr', $active)
             ->andWhere('b.deleted = false')
             ->innerJoin('b.schule', 'schule')
-            ->andWhere('schule.organisation =:org')
-            ->setParameter('org', $organisation)
-            ->setParameter('jahr', $active);
+            ->andWhere('schule.organisation =:org') ->setParameter('org', $organisation);
         if ($request->get('schule_id')) {
             $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule_id'));
-            $qb->andWhere('b.schule =:schule')
-                ->setParameter('schule', $schule);
+            $qb->andWhere('b.schule =:schule')->setParameter('schule', $schule);
         }
         $blocks = $qb->getQuery()->getResult();
 
@@ -133,8 +131,8 @@ class WidgetController extends AbstractController
         foreach ($blocks as $data) {
             $blocksRender[$data->getWochentag()][] = $data;
         }
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('deleted' => false, 'organisation' => $organisation));
-        return $this->render('widget/blockContent.html.twig', array('org' => $organisation, 'blocks' => $blocksRender, 'schule' => $schule));
+
+        return $this->render('widget/blockContent.html.twig', array('org' => $organisation, 'blocks' => $blocksRender, 'schule' => $this->getUser()->getSchulen()));
 
     }
 
@@ -149,7 +147,7 @@ class WidgetController extends AbstractController
         }
         $lastMonth = (new \DateTime())->modify('first day of last Month');
         $lastDay = (new \DateTime())->modify('last day of last Month');
-        $active = $this->getDoctrine()->getRepository(Active::class)->findSchuleBetweentwoDates($lastDay, $lastDay, $organisation->getStadt());
+        $active = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrBetweentwoDates($lastDay, $lastDay, $organisation->getStadt());
         $qb = $this->getDoctrine()->getRepository(Sepa::class)->createQueryBuilder('s');
         $qb->andWhere('s.von <= :today')
             ->andWhere('s.bis >= :today')

@@ -76,7 +76,7 @@ class SepaCreateService
     public function calcSepa(Sepa $sepa, $demoMode = false)
     {
 
-        $active = $this->em->getRepository(Active::class)->findSchuleBetweentwoDates($sepa->getVon(), $sepa->getBis(), $sepa->getOrganisation()->getStadt());
+        $active = $this->em->getRepository(Active::class)->findSchuljahrBetweentwoDates($sepa->getVon(), $sepa->getBis(), $sepa->getOrganisation()->getStadt());
         $today = new \DateTime();
         if ($sepa->getBis() < $sepa->getVon()) {
             return $this->translator->trans('Fehler: Bis-Datum liegt vor dem Von-Datum');

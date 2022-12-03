@@ -85,7 +85,8 @@ class KindRepository extends ServiceEntityRepository
             ->andWhere('k.startDate is not NULL')
             ->andWhere('eltern.created_at is not null')
             ->setParameter('tracing', $kind->getTracing())
-            ->orderBy('k.startDate', 'ASC')
+            ->addOrderBy('k.startDate', 'ASC')
+            ->addOrderBy('eltern.created_at', 'ASC')
             ->getQuery()
             ->getResult();
     }

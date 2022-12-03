@@ -89,7 +89,7 @@ class ActiveRepository extends ServiceEntityRepository
         return $qb->getOneOrNullResult();
     }
 
-    public function findSchuleBetweentwoDates(\DateTime $von, \DateTime $bis, Stadt $stadt):?Active
+    public function findSchuljahrBetweentwoDates(\DateTime $von, \DateTime $bis, Stadt $stadt):?Active
     {
         $qb = $this->createQueryBuilder('a')
             ->andWhere('a.stadt = :stadt')

@@ -23,6 +23,7 @@ class BerechnungsService
         $this->withBeworben = $withBeworben;
         $stadt = $kind->getSchule()->getStadt();
         $adresse = $this->elternService->getLatestElternFromChild($kind);
+        $kind = clone $kind;
         $kind->setEltern($adresse);
         $summe = 0;
         eval($stadt->getBerechnungsFormel());
@@ -30,7 +31,7 @@ class BerechnungsService
     }
 
     private function getBetragforKindBetreuung(Kind $kind, Stammdaten $eltern)
-    {//todo prüfen wie man die beiden entkoppeln kann
+    {
         $summe = 0;
         $blocks = $kind->getZeitblocks()->toArray();
         if ($this->withBeworben){
