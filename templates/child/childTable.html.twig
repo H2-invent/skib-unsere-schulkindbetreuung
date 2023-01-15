@@ -17,13 +17,13 @@
             <th>{% trans %}Masernimpfung{% endtrans %}</th>
             <th>{% trans %}Beginnt ab dem{% endtrans %}</th>
             {% if is_granted('ROLE_ORG_VIEW_NOTICE') %}
-            <th>{% trans %}Notizen{% endtrans %}</th>
+                <th>{% trans %}Notizen{% endtrans %}</th>
             {% endif %}
         </tr>
         </thead>
         <tbody>
         {% for k in kinder %}
-            {% set eltern = getEltern(k) %}
+            {% set eltern = getEltern(k,date) %}
             <tr>
                 <td>
                     <div class="btn-group">
@@ -32,14 +32,21 @@
                             <i class="material-icons">more_vert</i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-                            <a class="dropdown-item" href="{{ path('child_detail',{'kind_id':k.id}) }}">Detail</a>
-                            <a class="dropdown-item" href="{{ path('child_detail_print',{'kind_id':k.id}) }}">PDF Drucken</a>
+                            <a class="dropdown-item"
+                               href="{{ path('child_detail',{'kind_id':k.id,'date':date|date('d.m.Y')}) }}">Detail</a>
+                            <a class="dropdown-item"
+                               href="{{ path('child_detail_print',{'kind_id':k.id,'date':date|date('d.m.Y')}) }}">PDF
+                                Drucken</a>
 
                             {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
                                 <a class="dropdown-item"
-                                   href="{{ path('child_change_seccode',{'kind_id':k.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                   href="{{ path('child_change_seccode',{'kind_id':k.id}) }}">{% trans %}Kind bearbeiten{% endtrans %}</a>
+                                <a class="dropdown-item"
+                                   href="{{ path('edit_stammdaten_seccode',{'eltern_id':k.eltern.id}) }}">{% trans %}Stammdaten bearbeiten{% endtrans %}</a>
                                 <a class="dropdown-item"
                                    href="{{ path('child_resend_SecCode',{'kind_id':k.id}) }}">{% trans %}Sicherheitscode erneut senden{% endtrans %}</a>
+
+
                             {% endif %}
                             {% if is_granted('ROLE_ORG_CHILD_EMAIL_CHANGE') %}
                                 <a class="dropdown-item"
@@ -65,7 +72,7 @@
                 <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
                 <td data-order="{{ k.startDate|date('U') }}">{{ k.startDate|date('d.m.Y') }}</td>
                 {% if is_granted('ROLE_ORG_VIEW_NOTICE') %}
-                <td>{{ k.internalNotice|raw }}</td>
+                    <td>{{ k.internalNotice|raw }}</td>
                 {% endif %}
             </tr>
         {% endfor %}

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Stadt;
+use App\Entity\Stammdaten;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -48,4 +49,29 @@ class StadtRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+   public function findStadtByStammdaten(Stammdaten  $stammdaten): ?Stadt
+   {
+       $qb = $this->createQueryBuilder('s');
+
+       $qb
+           ->innerJoin('s.schules', 'schules')
+           ->innerJoin('schules.zeitblocks', 'blocks')
+           ->innerJoin('blocks.kind', 'kind')
+           ->innerJoin('kind.eltern', 'eltern')
+           ->leftJoin('blocks.kinderBeworben', 'kinderBeworben')
+           ->leftJoin('kinderBeworben.eltern', 'elternBeworben')
+           ->orWhere(
+               $qb->expr()->orX(
+                   'eltern.tracing = :eltern', 'elternBeworben.tracing =:eltern'
+               )
+           )
+           ->setParameter('eltern', $stammdaten->getTracing())
+           ->setMaxResults(1);
+
+       return $qb->getQuery()->getOneOrNullResult();
+   }
+
+
 }

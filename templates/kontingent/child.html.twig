@@ -14,13 +14,13 @@
                             - {{ block.bis|date('H:i') }}</h3>
                     </div>
                     <div class="row" id="blockContent">
-                        <div class="col-lg-12">
+                        <div class="col-lg-12" id="blockContentContent">
                             <h3>{{ 'Mindest Anzahl'|trans }}: {{ block.min }}</h3>
                             <h3>{{ 'Maximal Anzahl'|trans }}: {{ block.max }}</h3>
 
                             <div class="row">
                                 {% for k in kinder %}
-                                    {% set eltern = getEltern(k) %}
+                                    {% set eltern = getEltern(k,k.startDate) %}
                                     <div class="col-lg-3">
                                         <div class="card">
                                             <div class="card-header">
@@ -130,7 +130,7 @@
 {% block jquery %}
     <script>
 
-        var loadUrl = '{{ app.request.uri }} #blockContent';
+        var loadUrl = '{{ app.request.uri }} #blockContentContent';
         $(document).on('click', '.deleteAjax', function (e) {
             e.preventDefault();
             var url = $(this).attr('href');

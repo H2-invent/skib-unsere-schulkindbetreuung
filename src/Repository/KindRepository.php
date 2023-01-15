@@ -106,31 +106,71 @@ class KindRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findLatestKindForDate(Kind $kind, \DateTime $dateTime): ?Kind
+    public function findLatestKindForDate(Kind $kind, \DateTime $dateTime, $demo = false): ?Kind
+    {
+        $qb = $this->createQueryBuilder('k')
+            ->andWhere('k.tracing = :tracing')->setParameter('tracing', $kind->getTracing())
+            ->innerJoin('k.eltern', 'eltern');
+        if (!$demo) {
+            $qb->andWhere('eltern.created_at IS NOT NULL');
+        }
+
+        $kind = $qb->andWhere('k.startDate <= :now')->setParameter('now', $dateTime)
+            ->andWhere('k.startDate is NOT NULL')
+            ->orderBy('k.startDate', 'DESC')
+            ->addOrderBy('eltern.created_at','DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+        return $kind;
+
+    }
+
+    public function findLatestKindforKind(Kind $kind): ?Kind
     {
         $kinder = $this->createQueryBuilder('k')
             ->andWhere('k.tracing = :tracing')->setParameter('tracing', $kind->getTracing())
             ->innerJoin('k.eltern', 'eltern')
             ->andWhere('eltern.created_at IS NOT NULL')
-            ->andWhere('k.startDate <= :now')->setParameter('now', $dateTime)
-            ->andWhere('k.startDate is NOT NULL')
+            ->andWhere('k.startDate IS NOT NULL')
             ->orderBy('k.startDate', 'ASC')
             ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
+        return $kinder;
+    }
+
+    /**
+     * @return Kind[] Returns an array of Kind objects
+     */
+    public function findKinderProStammdatenAnStichtag(Stammdaten $stammdaten, \DateTime $dateTime, $demo = false)
+    {
+        $qb = $this->createQueryBuilder('k')
+            ->innerJoin('k.eltern', 'eltern')
+            ->andWhere('eltern.tracing = :tracing')->setParameter('tracing', $stammdaten->getTracing());
+        if (!$demo) {
+            $qb->andWhere('eltern.created_at IS NOT NULL');
+        }
+
+        $kinderHistory = $qb->andWhere('k.startDate <= :now')->setParameter('now', $dateTime)
+            ->andWhere('k.startDate is NOT NULL')
+            ->orderBy('k.startDate', 'ASC')
+            ->orderBy('eltern.created_at', 'DESC')
+            ->getQuery()
             ->getResult();
-        $kind = null;
-        foreach ($kinder as $data) {
-            if (!$kind) {
-                $kind = $data;
-            }
-            if ($kind->getStartDate() < $data->getStartDate()) {
-                $kind = $data;
-            } elseif ($kind->getStartDate() == $data->getStartDate()) {
-                if ($kind->getEltern()->getCreatedAt() < $data->getEltern()->getCreatedAt()) {
-                    $kind = $data;
+        $kinder = array();
+
+        foreach ($kinderHistory as $data) {
+            if (array_key_exists($data->getTracing(), $kinder)) {
+                if ($data->getStartDate() > $kinder[$data->getTracing()]->getStartDate()) {
+                    $kinder[$data->getTracing()] = $data;
                 }
+            } else {
+                $kinder[$data->getTracing()] = $data;
             }
         }
-        return $kind;
+        return $kinder;
     }
+
 
 }

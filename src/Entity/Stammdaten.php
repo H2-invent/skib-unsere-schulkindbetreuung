@@ -297,6 +297,11 @@ class Stammdaten implements GroupSequenceProviderInterface
      */
     private $geschwisters;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $startDate;
+
     public function __construct()
     {
 
@@ -1027,6 +1032,18 @@ class Stammdaten implements GroupSequenceProviderInterface
                 $geschwister->setStammdaten(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(?\DateTimeInterface $startDate): self
+    {
+        $this->startDate = $startDate;
 
         return $this;
     }

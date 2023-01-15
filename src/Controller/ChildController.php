@@ -6,11 +6,13 @@ use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
+use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use App\Form\Type\InternNoticeType;
 use App\Service\ChildExcelService;
 use App\Service\ChildSearchService;
 use App\Service\ElternService;
+use App\Service\HistoryService;
 use App\Service\MailerService;
 use App\Service\PrintService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,6 +48,7 @@ class ChildController extends AbstractController
      */
     public function showAction(Request $request, TranslatorInterface $translator)
     {
+
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
@@ -72,16 +75,24 @@ class ChildController extends AbstractController
     /**
      * @Route("/org_child/show/detail", name="child_detail")
      */
-    public function childDetail(Request $request, TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController, ElternService $elternService)
+    public function childDetail(Request $request, TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController, ElternService $elternService, HistoryService $historyService)
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
-        $history = $this->getDoctrine()->getRepository(Kind::class)->findHistoryOfThisChild($kind);
-        $form = $this->createForm(InternNoticeType::class, $kind, array('action' => $this->generateUrl('child_detail_save_internal', array('childId'=>$kind->getId()))));
+
+        $date = new \DateTime();
+        if ($request->get('date')) {
+            $date = new \DateTime($request->get('date'));
+        }
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findLatestKindForDate($kind, $date);
+        $eltern = $elternService->getElternForSpecificTimeAndKind($kind, $date);
+        $historydate = $historyService->getAllHistoyPointsFromKind($kind);
+
+        $form = $this->createForm(InternNoticeType::class, $kind, array('action' => $this->generateUrl('child_detail_save_internal', array('childId' => $kind->getId()))));
         if ($kind->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
-        return $this->render('child/childDetail.html.twig', array('beruflicheSituation' => array_flip($loerrachWorkflowController->beruflicheSituation), 'k' => $kind, 'eltern' =>$elternService->getLatestElternFromChild($kind), 'history' => $history, 'formInternalNotice' => $form->createView()));
+        return $this->render('child/childDetail.html.twig', array('beruflicheSituation' => array_flip($loerrachWorkflowController->beruflicheSituation), 'k' => $kind, 'eltern' => $eltern, 'his' => $historydate, 'date' => $date, 'history' => $historydate, 'formInternalNotice' => $form->createView()));
     }
 
     /**
@@ -97,13 +108,13 @@ class ChildController extends AbstractController
         $form = $this->createForm(InternNoticeType::class, $kind);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-             $kind = $form->getData();
+            $kind = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($kind);
             $em->flush();
             $notice = $kind->getInternalNotice();
-            $kinder = $em->getRepository(Kind::class)->findBy(array('tracing'=>$kind->getTracing()));
-            foreach ($kinder as $data){
+            $kinder = $em->getRepository(Kind::class)->findBy(array('tracing' => $kind->getTracing()));
+            foreach ($kinder as $data) {
                 $data->setInternalNotice($notice);
                 $em->persist($data);
 
@@ -111,7 +122,7 @@ class ChildController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute('child_detail',array('kind_id'=>$kind->getId()));
+        return $this->redirectToRoute('child_detail', array('kind_id' => $kind->getId()));
     }
 
 
@@ -121,12 +132,18 @@ class ChildController extends AbstractController
     public function printChild(Request $request, TranslatorInterface $translator, PrintService $printService, TCPDFController $TCPDFController, ElternService $elternService)
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
+        $date = new \DateTime();
+        if ($request->get('date')) {
+            $date = new \DateTime($request->get('date'));
+        }
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findLatestKindForDate($kind, $date);
+        $eltern = $elternService->getElternForSpecificTimeAndKind($kind, $date);
 
         if ($kind->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
         $fileName = $kind->getVorname() . '_' . $kind->getNachname();
-        return $printService->printChildDetail($kind, $elternService->getLatestElternFromChild($kind), $TCPDFController, $fileName, $kind->getSchule()->getOrganisation(), 'D');
+        return $printService->printChildDetail($kind, $eltern, $TCPDFController, $fileName, $kind->getSchule()->getOrganisation(), 'D');
     }
 
     /**
@@ -168,10 +185,15 @@ class ChildController extends AbstractController
         if ($request->get('klasse')) {
             $text .= $translator->trans(' in der Klasse: %klasse%', array('%klasse%' => $request->get('klasse')));
         }
-        $startDate = isset($parameter['startDate'])?new \DateTime($parameter['startDate']):null;
-        $endDate = isset($parameter['endDate'])?new \DateTime($parameter['endDate']):null;
-        $kinderU = $childSearchService->searchChild($parameter, $organisation, false, $this->getUser(),$startDate,$endDate);
-
+        $startDate = isset($parameter['startDate']) ? new \DateTime($parameter['startDate']) : null;
+        $endDate = isset($parameter['endDate']) ? new \DateTime($parameter['endDate']) : null;
+        $kinderU = $childSearchService->searchChild($parameter, $organisation, false, $this->getUser(), $startDate, $endDate);
+        usort($kinderU, function (Kind $a, Kind $b): int {
+            if ($a->getKlasse() === $b->getKlasse()) {
+                return strtolower($a->getNachname()) <=> strtolower($b->getNachname());
+            }
+            return $a->getKlasse() <=> $b->getKlasse();
+        });
 
         if ($request->get('print')) {
 
@@ -183,7 +205,8 @@ class ChildController extends AbstractController
         } else {
             return $this->render('child/childTable.html.twig', [
                 'kinder' => $kinderU,
-                'text' => $text
+                'text' => $text,
+                'date' => $endDate ? $endDate : new \DateTime()
             ]);
         }
 
@@ -193,7 +216,7 @@ class ChildController extends AbstractController
     /**
      * @Route("/org_child/change/resend", name="child_resend_SecCode")
      */
-    public function resendSecCodeChild(Request $request, TranslatorInterface $translator, MailerService $mailerService,ElternService $elternService)
+    public function resendSecCodeChild(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
         $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
 

@@ -43,11 +43,11 @@ class ChildChangeController extends AbstractController
             if ($input['seccode'] == $adresse->getSecCode() || $kind->getSchule()->getStadt()->getNoSecCodeForChangeChilds()) {
 
                 $kind = $this->getDoctrine()->getRepository(Kind::class)->findActualWorkingCopybyKind($kind);
+
                 $adresse = $kind->getEltern();
                 $cookie = new Cookie ('KindID', $kind->getId() . "." . hash("sha256", $kind->getId() . $this->getParameter("secret")));
                 $cookie2 = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")));
                 $cookie_seccode = new Cookie ('SecID', $adresse->getSecCode() . "." . hash("sha256", $adresse->getSecCode() . $this->getParameter("secret")));
-
                 $response = $this->redirectToRoute('workflow_start', array('slug' => $kind->getSchule()->getStadt()->getSlug()));
                 $response->headers->setCookie($cookie);
                 $response->headers->setCookie($cookie2);

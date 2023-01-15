@@ -49,7 +49,9 @@ class SchulkindBetreuungKindNeuService
         }else{
             $kind->setStartDate((new \DateTime())->modify($schule->getStadt()->getSettingSkibDefaultNextChange()));
         }
-
+        if (!$kind->getTracing()){
+            $kind->setTracing(md5(uniqid('kinder', true)));
+        }
         return $kind;
     }
     public function getGanztagBlocks(Active $schuljahr, Schule $schule){

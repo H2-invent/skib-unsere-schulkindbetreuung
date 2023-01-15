@@ -6,23 +6,26 @@
                 <!-- Count item widget-->
                 <div class=" col-12 card">
                     <div class="card-header">
-                        <h1>{% trans %}Zusammenfassung{% endtrans %} <a
-                                    href="{{ path('child_detail_print',{'kind_id':k.id}) }}"><i class="material-icons">print</i></a>
+                        <h1>{{ k.vorname }} {{ k.nachname }}<a
+                                    href="{{ path('child_detail_print',{'kind_id':k.id}) }}" class="ml-2"><i
+                                        class="material-icons">print</i></a>
+                            {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                                <a
+                                        href="{{ path('child_change_seccode',{'kind_id':k.id}) }}"><i
+                                            class="material-icons">edit</i></a>
+                            {% endif %}
                         </h1>
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="cover-heading">{{ 'Daten des Erziehungsberechtigten'|trans }}</h2>
+                            <h2 class="cover-heading">{{ 'Daten des Erziehungsberechtigten'|trans }} <small>(Gültig ab: {{ eltern.startDate|date('d.m.Y') }})</small></h2>
                         </div>
                         <div class="card-body">
                             <table class="table">
                                 <tbody>
+
                                 <tr>
-                                    <td>{% trans %} Letzte Speicherung {% endtrans %}</td>
-                                    <td>{{ k.eltern.createdAt|date('d.m.Y') }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans %} Name des Erziehungsberechtigten {% endtrans %}</td>
+                                    <td>{% trans %} Name des Erziehungsberechtigten {% endtrans %} </td>
                                     <td>{{ eltern.vorname }} {{ eltern.name }}</td>
                                 </tr>
                                 <tr>
@@ -69,7 +72,8 @@
                     <!-- Daten der Kinder in einer for Schleife -->
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="cover-heading">{{ 'Daten des Kindes'|trans }}</h2>
+                            <h2 class="cover-heading">{{ 'Daten des Kindes'|trans }} <small>(beginnt
+                                    ab: {{ k.startDate|date('d.m.Y') }})</small></h2>
                         </div>
                         <div class="text-left" id="accordion">
 
@@ -190,7 +194,7 @@
                                                         </td>
 
                                                         <td>
-                                                            {{ getPreisforBetreuungWithoutBeworben(k)|format(2,',','.') }}
+                                                            {{ getPreisforBetreuungWithoutBeworben(k,date)|number_format(2,',','.') }}
                                                             €
                                                         </td>
                                                     </tr>
@@ -245,17 +249,29 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
+
+
                                                     <ul class="list-group">
+                                                        {% for h in his %}
 
-                                                        {% for h in history|reverse %}
-                                                            <a href="{{ path('child_detail',{'kind_id':h.id}) }}">
+                                                            <li class="list-group-item">
+                                                                <a href="{{ path('child_detail',{'kind_id':k.id,'date':h|date('d.m.Y')}) }}">
+                                                                    {% if date >= his[loop.index-1] %}
+                                                                        {% if his[loop.index] is defined %}
+                                                                            {% if  date < his[loop.index] %}
+                                                                                <i class="fa fa-arrow-right mr-2"></i>
+                                                                            {% endif %}
+                                                                        {% else %}
+                                                                            <i class="fa fa-arrow-right mr-2"></i>
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                    Änderung tritt in
+                                                                    Kraft: {{ h|date('d.m.Y') }}
+                                                                </a>
+                                                            </li>
 
-                                                                <li class="list-group-item">
-                                                                    {% if app.request.requesturi == path('child_detail',{'kind_id':h.id}) %}<i class="fa fa-arrow-right mr-2"></i>{% endif %}
-                                                                    Änderung tritt in Kraft: {{ h.startDate|date('d.m.Y') }} (geändert am: {{ h.eltern.createdAt|date('d.m.Y H:i') }})
-                                                                </li>
-                                                            </a>
                                                         {% endfor %}
+
                                                     </ul>
                                                 </td>
                                             </tr>

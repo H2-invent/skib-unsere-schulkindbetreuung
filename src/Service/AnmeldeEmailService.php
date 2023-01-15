@@ -63,7 +63,6 @@ class AnmeldeEmailService
                 $kind,
                 $adresse,
                 $stadt,
-                $this->tcpdf,
                 $fileName,
                 $beruflicheSituation,
                 $kind->getSchule()->getOrganisation(),

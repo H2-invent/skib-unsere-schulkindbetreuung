@@ -11,20 +11,26 @@ class BerechnungsService
 
     private ElternService $elternService;
     private $withBeworben = true;
-    private EntityManagerInterface  $entityManager;
+    private EntityManagerInterface $entityManager;
+
     public function __construct(ElternService $elternService, EntityManagerInterface $entityManager)
     {
         $this->elternService = $elternService;
         $this->entityManager = $entityManager;
     }
 
-    public function getPreisforBetreuung(Kind $kind, $withBeworben = true):float
+    public function getPreisforBetreuung(Kind $kind, $withBeworben = true, \DateTime $stichtag = null, $demo = false): float
     {
         $this->withBeworben = $withBeworben;
         $stadt = $kind->getSchule()->getStadt();
-        $adresse = $this->elternService->getLatestElternFromChild($kind);
-        $kind = clone $kind;
-        $kind->setEltern($adresse);
+        if (!$stichtag) {
+            $stichtag = new \DateTime();
+        }
+        $adresse = $this->elternService->getElternForSpecificTimeAndKind($kind, $stichtag, $demo);
+        $kind = $this->entityManager->getRepository(Kind::class)->findLatestKindForDate($kind, $stichtag, $demo);
+        $geschwister = $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($adresse, $stichtag, $demo);
+        unset($geschwister[$kind->getTracing()]);
+        $kinder = $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($adresse, $stichtag, $demo);
         $summe = 0;
         eval($stadt->getBerechnungsFormel());
         return $summe;
@@ -34,7 +40,7 @@ class BerechnungsService
     {
         $summe = 0;
         $blocks = $kind->getZeitblocks()->toArray();
-        if ($this->withBeworben){
+        if ($this->withBeworben) {
             $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
         }
 
@@ -43,20 +49,17 @@ class BerechnungsService
                 $summe += $data->getPreise()[$eltern->getEinkommen()];
             }
         }
+
         return $summe;
     }
 
-    public function getGesamtPreisProStammdatenZeitpunk(Stammdaten $stammdaten,\DateTime $dateTime){
-        $kinder = array();
-        foreach ( $stammdaten->getKinds() as $kind){
-            $k =  $this->entityManager->getRepository(Kind::class)->findLatestKindForDate($kind,$dateTime);
-            if ($k){
-                $kinder[] = $k;
-            }
-        }
-        $summe  = 0;
-        foreach ($kinder as $data){
-            $summe += $this->getPreisforBetreuung($data,false);
+    public function getGesamtPreisProStammdatenZeitpunk(Stammdaten $stammdaten, \DateTime $dateTime)
+    {
+        $stammdaten = $this->entityManager->getRepository(Stammdaten::class)->findStammdatenFromStammdatenByDate($stammdaten, $dateTime);
+        $kinder = $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($stammdaten, $dateTime);
+        $summe = 0;
+        foreach ($kinder as $data) {
+            $summe += $this->getPreisforBetreuung($data, false, $dateTime);
         }
         return $summe;
     }

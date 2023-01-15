@@ -31,16 +31,36 @@ class Eltern extends AbstractExtension
         return array(
             new TwigFunction('getEltern', array($this, 'getEltern')),
             new TwigFunction('getAllKinderWithHistory', array($this, 'getAllKinderWithHistory')),
+            new TwigFunction('getGetEarliestChildOfStammdaten', array($this, 'getGetEarliestChildOfStammdaten')),
+            new TwigFunction('getKinderFromStammdatenAnStichtag', array($this, 'getKinderFromStammdatenAnStichtag')),
         );
     }
 
-    public function getEltern(Kind $kind)
+    public function getEltern(Kind $kind,\DateTime $dateTime = null)
     {
-        return $this->elternService->getLatestElternFromChild($kind);
+        if (!$dateTime){
+            return $kind->getEltern();
+        }
+
+        $eltern =  $this->elternService->getElternForSpecificTimeAndKind($kind,$dateTime);
+
+        return $eltern;
     }
+
     public function getAllKinderWithHistory(Stammdaten $stammdaten)
     {
         return $this->elternService->getKindervonElternMitHistorie($stammdaten);
+    }
+
+    public function getGetEarliestChildOfStammdaten(Stammdaten $stammdaten)
+    {
+        $res = $this->elternService->getEarliestChildOfStammdaten($stammdaten);
+        return $res;
+    }
+
+    public function getKinderFromStammdatenAnStichtag(Stammdaten $stammdaten, \DateTime $stichtag)
+    {
+        return $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($stammdaten, $stichtag);
     }
 
 }

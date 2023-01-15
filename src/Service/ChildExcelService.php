@@ -55,12 +55,13 @@ class ChildExcelService
         $this->writeSpreadsheet($kinder, $this->translator->trans('Donnerstag'), [3]);
         $this->writeSpreadsheet($kinder, $this->translator->trans('Freitag'), [4]);
 
-
+        $this->spreadsheet->getSheetByName('Kinder');
         $sheetIndex = $this->spreadsheet->getIndex(
             $this->spreadsheet->getSheetByName('Worksheet')
         );
         $this->spreadsheet->removeSheetByIndex($sheetIndex);
-        $this->spreadsheet->getSheetByName('Kinder');
+        $this->spreadsheet->setActiveSheetIndex(0);
+
 
         // Create a Temporary file in the system
         $fileName = 'Kinder.xlsx';
@@ -68,7 +69,7 @@ class ChildExcelService
 
         // Create the excel file in the tmp directory of the system
         $this->writer->save($temp_file);
-        return  null;
+
         // Return the excel file as an attachment
         return $temp_file;
 
@@ -126,7 +127,7 @@ class ChildExcelService
         $counter = 2;
         foreach ($kinder as $data) {
             if ($this->checkIfChildhasBlockOnDayOfArray($data, $weekdays)) {
-                $eltern = $this->elternService->getLatestElternFromChild($data);
+                $eltern = $this->elternService->getElternForSpecificTimeAndKind($data,new \DateTime());
                 $count = 0;
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getVorname());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getNachname());

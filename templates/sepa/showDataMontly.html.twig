@@ -1,0 +1,47 @@
+
+        <div class="modal-header">
+            <h5 class="modal-title"
+                id="exampleModalLabel">{{ 'Infos zu den Stammdaten'|trans }}</h5>
+            <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            {% for s in history %}
+                {% set startDate =  s.date%}
+                <div class="card card-body">
+                    <h5>{{ 'Gültig ab'|trans }}: {{ startDate|date('d.m.Y') }}</h5>
+                    <p>{{ 'Alleinerziehend'|trans }}: <b>{{ s.stammdaten.alleinerziehend?'Ja':'Nein' }}</b></p>
+                    <p>{{ 'SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe'|trans }}:
+                        <b>{{ s.stammdaten.sozialhilfeEmpanger?'Ja':'Nein' }}</b></p>
+                    <p>{{ 'Anzahl an Kindergelberechtigten Kinder im Haushalt'|trans }}:
+                        <b>{{ s.stammdaten.anzahlKindergeldempfanger }}</b></p>
+
+                    <hr>
+                    {% set summe = 0 %}
+                    {% for k in s.kinder %}
+                        <h4>
+                            <a href="{{ path('child_detail',{'kind_id':k.id,'date':startDate|date('d.m.Y')}) }}">{{ k.vorname }} {{ k.nachname }}</a>
+                        </h4>
+
+                        <p>{{ 'Monatliche Gebühren'|trans }}:
+                            <b>{{ getPreisforBetreuungWithoutBeworben(k,startDate)|number_format(2,',','.') }}€</b></p>
+                        {% set summe = summe + getPreisforBetreuungWithoutBeworben(k,startDate) %}
+
+                    {% endfor %}
+                    <hr>
+                    {% trans with {'{date}':startDate|date('d.m.Y') } %}Gesamtbetrag ab {date}{% endtrans %}: {{ getPreisforBetreuungWithoutBeworbenActual(s.stammdaten,startDate)|number_format(2,',','.') }}€
+                </div>
+
+            {% endfor %}
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+                    data-dismiss="modal">{{ 'Schließen'|trans }}</button>
+
+        </div>
+
+

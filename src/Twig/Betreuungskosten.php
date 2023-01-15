@@ -36,18 +36,27 @@ class Betreuungskosten extends AbstractExtension
         );
     }
 
-    public function getPreisforBetreuung(Kind $kind)
+    public function getPreisforBetreuung(Kind $kind=null,\DateTime $dateTime = null)
     {
-        return $this->berechnungsService->getPreisforBetreuung($kind);
+        if (!$dateTime){
+            $dateTime = new \DateTime();
+        }
+
+        return $this->berechnungsService->getPreisforBetreuung($kind, true, $dateTime,true);
     }
 
-    public function getPreisforBetreuungWithoutBeworben(Kind $kind)
+    public function getPreisforBetreuungWithoutBeworben(Kind $kind=null,\DateTime $dateTime = null)
     {
-        return $this->berechnungsService->getPreisforBetreuung($kind, false);
+        if (!$dateTime){
+            $dateTime = new \DateTime();
+        }
+
+        return $this->berechnungsService->getPreisforBetreuung($kind, false, $dateTime);
     }
 
     public function getPreisforBetreuungWithoutBeworbenActual(Stammdaten $stammdaten, \DateTime $dateTime)
     {
         return $this->berechnungsService->getGesamtPreisProStammdatenZeitpunk($stammdaten, $dateTime);
     }
+
 }

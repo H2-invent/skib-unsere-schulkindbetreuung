@@ -33,8 +33,8 @@ class PrintService
     private $fileSystem;
     private $generator;
     private $em;
-
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, FilesystemOperator $publicUploadsFilesystem, Environment $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    private TCPDFController $TCPDFController;
+    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, FilesystemOperator $publicUploadsFilesystem, Environment $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag, TCPDFController $TCPDFController)
     {
 
         $this->templating = $templating;
@@ -43,11 +43,12 @@ class PrintService
         $this->fileSystem = $publicUploadsFilesystem;
         $this->generator = $urlGenerator;
         $this->em = $entityManager;
+        $this->TCPDFController = $TCPDFController;
     }
 
-    public function printAnmeldebestaetigung(Kind $kind, Stammdaten $eltern, Stadt $stadt, TCPDFController $tcpdf, $fileName, $beruflicheSituation, Organisation $organisation, $type = 'D', $encyption = false)
+    public function printAnmeldebestaetigung(Kind $kind, Stammdaten $eltern, Stadt $stadt,$fileName, $beruflicheSituation, Organisation $organisation, $type = 'D', $encyption = false)
     {
-        $pdf = $tcpdf->create();
+        $pdf = $this->TCPDFController->create();
 
         $pdf->setOrganisation($organisation);
         $pdf = $this->preparePDF($pdf, $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), $organisation->getName(), $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), null, $organisation);
@@ -145,6 +146,14 @@ class PrintService
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }
 
+    public function printElternDetail(Stammdaten $stammdaten,Organisation $organisation){
+        $pdf = $this->TCPDFController->create();
+
+        $pdf = $this->preparePDF($pdf, $this->translator->trans('Änderung der Stammdaten'), $organisation->getName(), $this->translator->trans('Änderung der Stammdaten'), null, $organisation);
+        $pdf->AddPage('H','A4');
+        $pdf = $this->addEltern($stammdaten,$pdf);
+        return $pdf->Output($stammdaten->getVorname().' '.$stammdaten->getName().'.pdf','S');
+    }
     public function printChildDetail(Kind $kind, Stammdaten $elter, TCPDFController $tcpdf, $fileName, Organisation $organisation, $type = 'D')
     {
         $pdf = $tcpdf->create();

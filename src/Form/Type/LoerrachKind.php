@@ -11,6 +11,7 @@ namespace App\Form\Type;
 
 use App\Entity\Active;
 use App\Entity\Kind;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -23,6 +24,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LoerrachKind extends AbstractType
 {
+    private $em ;
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->em = $entityManager;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
@@ -30,8 +37,10 @@ class LoerrachKind extends AbstractType
         $today = intval((new \DateTime())->format('Y'));
         $stadt = $options['data']->getSchule()->getStadt();
 
+        $dataMin = $options['schuljahr']->getVon();
+
         if (isset($options['schuljahr'])) {
-            $builder->add('startDate', DateType::class, ['attr' => array('class' => 'pickadate', 'data-min' => $options['schuljahr']->getVon()->format('d.m.Y'), 'data-max' => $options['schuljahr']->getBis()->format('d.m.Y')), 'widget' => 'single_text', 'label' => 'Startdatum', 'translation_domain' => 'form']);
+            $builder->add('startDate', DateType::class, ['attr' => array('class' => 'pickadate', 'data-min' => $dataMin->format('d.m.Y'), 'data-max' => $options['schuljahr']->getBis()->format('d.m.Y')), 'widget' => 'single_text', 'label' => 'Startdatum', 'translation_domain' => 'form']);
         }
 
         $builder->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])

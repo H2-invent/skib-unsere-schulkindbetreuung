@@ -24,7 +24,7 @@ class WorkflowAbschluss
     }
 
     public
-    function abschluss(Stammdaten $adresseAktuell, Stadt $stadt, ?Kind $kindToEdit = null):Stammdaten
+    function abschluss(Stammdaten $adresseAktuell, Stadt $stadt, ?Kind $kindToEdit = null, $stammdatenOnly = false): Stammdaten
     {
 
         if (!$adresseAktuell->getTracing()) {//Die Stammdaten sind neu und es gibt noch keine Tracing ID
@@ -35,19 +35,15 @@ class WorkflowAbschluss
         $adresseAktuell->setCreatedAt(new \DateTime());//setzte die aktuelle Zeit als created At
         // es gibt bereits eine alte Historie, diese besitzt schon ein Fin
         $adresseOld = $this->em->getRepository(Stammdaten::class)->findOneBy(array('tracing' => $adresseAktuell->getTracing()), array('created_at' => 'ASC'));
-        if ( $adresseOld) {
+        if ($adresseOld) {
             $kundennummern = $adresseOld->getKundennummerns();
         }
 
 
-        if ($stadt->getSecCodeAlwaysNew()) {//soll der Sec-Code jedesmal neu gesetzt werde , dann wird hier ein neues Code generiert
+        if (!$adresseOld) {
             $adresseAktuell->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
         } else {
-            if (!$adresseOld) {
-                $adresseAktuell->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
-            } else {
-                $adresseAktuell->setSecCode($adresseOld->getSecCode());
-            }
+            $adresseAktuell->setSecCode($adresseOld->getSecCode());
         }
 
 
@@ -62,13 +58,6 @@ class WorkflowAbschluss
         $adressNew->setCreatedAt(null);//we set the createdAt to null so we know that whit is the working copy
         $this->em->persist($adressNew);
         $kinderAktuell = $adresseAktuell->getKinds();//alle Kinder werden von der aktuellen Arbeitskopie ausgelesen
-        if ($kindToEdit){
-            foreach ($kinderAktuell as $data){
-                if ($data !== $kindToEdit){
-                    $data->setStartDate(null);
-                }
-            }
-        }
         foreach ($kinderAktuell as $data) {
             if (!$data->getTracing()) {
                 $data->setTracing(md5(uniqid('kind', true)));//wir setzten eine tracing ID, falls diese noch nciht vorhanfden ist.
@@ -87,16 +76,34 @@ class WorkflowAbschluss
 
             $this->em->persist($kindNew);
 
-            foreach ($adresseAktuell->getPersonenberechtigters() as $dataP) { // alle personen berechtigten werden kopiert und an die Arbeitskopie der Stammdaten angehängt
-                $persNeu = clone $dataP;
-                $persNeu->setStammdaten($adressNew);
-                $this->em->persist($persNeu);
+        }
+
+        if (!$stammdatenOnly) {//Die kinder ohne ein Startdatem werden von den Eltern entfernt. somi können wir weniger sinnlose Kinder in die DB schrieben
+            if ($kindToEdit) {
+                $adresseAktuell->setStartDate(null);
+                foreach ($kinderAktuell as $data) {
+                    if ($data !== $kindToEdit) {
+                        $this->em->remove($data);
+                    }
+                }
             }
-            foreach ($adresseAktuell->getGeschwisters() as $dataG) {//alle zusätlichen GGeschwister werden kopiert und an die neue Arbeitskopie angehängt
-                $geschNeu = clone $dataG;
-                $geschNeu->setStammdaten($adressNew);
-                $this->em->persist($geschNeu);
+
+        } else {
+            foreach ($kinderAktuell as $data) {
+                $this->em->remove($data);
             }
+        }
+
+
+        foreach ($adresseAktuell->getPersonenberechtigters() as $dataP) { // alle personen berechtigten werden kopiert und an die Arbeitskopie der Stammdaten angehängt
+            $persNeu = clone $dataP;
+            $persNeu->setStammdaten($adressNew);
+            $this->em->persist($persNeu);
+        }
+        foreach ($adresseAktuell->getGeschwisters() as $dataG) {//alle zusätlichen GGeschwister werden kopiert und an die neue Arbeitskopie angehängt
+            $geschNeu = clone $dataG;
+            $geschNeu->setStammdaten($adressNew);
+            $this->em->persist($geschNeu);
         }
 
         $this->em->persist($adresseAktuell);

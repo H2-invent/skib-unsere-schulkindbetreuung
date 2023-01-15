@@ -45,6 +45,7 @@ import ('formBuilder/dist/form-builder.min');
 import snackbar from 'snackbarjs';
 import {initTabs} from 'h2-invent-material-tabs';
 import {Dropzone} from "dropzone";
+import {initKeycloakGroups} from "./PersonenberechtigterInit";
 
 global.Chart = Chart;
 let formBuilderLoc;
@@ -171,7 +172,7 @@ $(window).on('load', function () {
         }
     });
 
-
+initKeycloakGroups();
     $('input[type="date"]').daterangepicker({
         "singleDatePicker": true,
         autoUpdateInput: false,

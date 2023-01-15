@@ -81,7 +81,7 @@
                                                             </div>
                                                         </div>
                                                         {{ k.vorname }} {{ k.nachname }}
-                                                        <b><span class="price">{% if k.tageWithBlocks>=s.stadt.minDaysperWeek %}{{ getPreisforBetreuung(k)|number_format(2,',','.') }}€{% endif %}</span></b>
+                                                        <b><span class="price">{% if k.tageWithBlocks>=s.stadt.minDaysperWeek %}{{ getPreisforBetreuung(k,k.startDate)|number_format(2,',','.') }}€{% endif %}</span></b>
 
                                                         <br>
                                                     {% endfor %}
@@ -92,12 +92,9 @@
                                 </div>
                             {% endfor %}
                         </div>
-
                     </div>
                 </div>
             </section>
-
-
         </div>
     </div>
 
@@ -105,8 +102,13 @@
         <hr class="hr-bold">
         <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"
            class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
+        {% if isEdit %}
+            <a href="{{ path('loerrach_workflow_abschluss', {'slug':stadt.slug}) }}"
+               class="btn btn-outline-primary">{% trans %}Bearbeiten abschließen{% endtrans %}</a>
+        {% else %}
         <a href="{{ path('loerrach_workflow_mittagessen', {'slug':stadt.slug}) }}"
            class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
+        {% endif %}
     </div>
 {% endblock %}
 {% block webpack %}

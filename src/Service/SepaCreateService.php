@@ -97,34 +97,27 @@ class SepaCreateService
             return $this->translator->trans('Fehler: Es ist bereits ein SEPA-Lastschrift in diesem Zeitraum vorhanden');
         }
 
-        $qb = $this->em->getRepository(Kind::class)->createQueryBuilder('k');
 
-        $qb->innerJoin('k.zeitblocks', 'zeitblocks')// welche
-        ->innerJoin('zeitblocks.schule', 'schule')
-            ->andWhere('schule.organisation = :organisation')->setParameter('organisation', $sepa->getOrganisation())// wo die schule meine organisation ist
+        $stammdatenQb = $this->em->getRepository(Stammdaten::class)->createQueryBuilder('s');
+        $stammdatenQb->innerJoin('s.kinds', 'kinds')
+            ->innerJoin('kinds.schule', 'schule')
+            ->andWhere('schule.organisation = :organisation')->setParameter('organisation', $sepa->getOrganisation())
+            ->innerJoin('kinds.zeitblocks', 'zeitblocks')
             ->andWhere('zeitblocks.active = :active')->setParameter('active', $active)// suche alle Blöcke, wo im aktuellen SChuljahr sind
             ->andWhere('zeitblocks.deleted != TRUE')
-            ->andWhere($qb->expr()->lte('k.startDate', ':von'))->setParameter('von', $sepa->getVon())
-            ->innerJoin('k.eltern', 'eltern')
-            ->andWhere('eltern.created_at IS NOT NULL');
+            ->andWhere('s.created_at IS NOT NULL')
+            ->andWhere('s.startDate IS NOT NULL')
+            ->andWhere('s.startDate <= :datetime')->setParameter('datetime', $sepa->getVon());
+        $stamdaten = $stammdatenQb->getQuery()->getResult();
 
-
-        $kinder = $qb->getQuery()->getResult();
-        $kinderRes = array();
-        foreach ($kinder as $data) {
-            $kindTmp = isset($kinderRes[$data->getTracing()]) ? $kinderRes[$data->getTracing()] : null;
-            if (!$kindTmp) {
-                $kinderRes[$data->getTracing()] = $data;
-            } else {
-                if ($kindTmp->getStartDate() < $data->getStartDate()) {
-                    $kinderRes[$data->getTracing()] == $data;
-                } elseif ($kindTmp->getStartDate() == $data->getStartDate()) {
-                    if ($kindTmp->getEltern()->getCreatedAt() < $data->getEltern()->getCreatedAt()) {
-                        $kinderRes[$data->getTracing()] == $data;
-                    }
-                }
+        $stammdatenRes = array();
+        foreach ($stamdaten as $data) {
+            $stammdatenTmp = isset($stammdatenRes[$data->getTracing()]) ? $stammdatenRes[$data->getTracing()] : null;
+            if (!$stammdatenTmp) {
+                $stammdatenRes[$data->getTracing()] = $data;
             }
         }
+
 
         $organisation = $sepa->getOrganisation();
 
@@ -134,10 +127,11 @@ class SepaCreateService
         $sepa->setSepaXML('');
         $sepa->setPdf('');
 
-        foreach ($kinderRes as $data) {// für alle gefunden kinder in diesem Monat
-            $rechnung = $this->createRechnung($data, $sepa, $organisation);
+        foreach ($stammdatenRes as $data) {
+            $rechnung = $this->createRechnungFromStammdaten($data, $sepa, $sepa->getVon());
             $sepa->addRechnungen($rechnung);
         }
+
         $sepa = $this->fillSepa($sepa);
 
         $sepa->setSepaXML(
@@ -153,7 +147,7 @@ class SepaCreateService
     }
 
 
-    private function createRechnung(Kind $kind, Sepa $sepa, Organisation $organisation): Rechnung
+    private function createRechnungFromKind(Kind $kind, Sepa $sepa, Organisation $organisation): Rechnung
     {
         $type = 'FRST'; // setzte SEPA auf First Sepa
         $eltern = $this->elternService->getLatestElternFromChild($kind);
@@ -193,10 +187,51 @@ class SepaCreateService
         }
 
         $rechnung->addKinder($kind);
-        $rechnung->setSumme($rechnung->getSumme() + $this->berechnungsService->getPreisforBetreuung($kind,false));
+        $rechnung->setSumme($rechnung->getSumme() + $this->berechnungsService->getPreisforBetreuung($kind, false));
 
 
         $table = $this->environment->render('rechnung/tabelle.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
+        $rechnung->setPdf($table);
+
+        return $rechnung;
+    }
+
+    private function createRechnungFromStammdaten(Stammdaten $stammdaten, Sepa $sepa, \DateTime $dateTime): Rechnung
+    {
+        $type = 'FRST'; // setzte SEPA auf First Sepa
+
+
+        $otherSepa = $this->em->getRepository(Sepa::class)->findOtherSepaBySepaAndStammdaten($stammdaten, $sepa);
+
+        if (sizeof($otherSepa) > 0) {
+            $type = 'RCUR';// dann setzte SEPA Typ auf folgenden LAstschrift SEPA
+        }
+
+        $rechnung = new Rechnung();
+        $rechnung->setSumme(0.0);
+        $rechnung->setVon($sepa->getVon());
+        $rechnung->setBis($sepa->getBis());
+        $rechnung->setCreatedAt(new \DateTime());
+        $rechnung->setStammdaten($stammdaten);
+        $rechnung->setPdf('');
+        $rechnung->setSepa($sepa);
+        $sepa->addRechnungen($rechnung);
+        $rechnung->setRechnungsnummer('RE' . (new \DateTime())->format('Ymd') . $rechnung->getId());
+        $rechnung->setSepaType($type);
+        $stammdaten = $this->elternService->getElternForSpecificTimeAndStammdaten($stammdaten, $dateTime);
+        $kinder = $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($stammdaten, $dateTime);
+
+        foreach ($kinder as $kind) {
+
+            foreach ($kind->getRealZeitblocks() as $data) {
+                $rechnung->addZeitblock($data);
+            }
+            $rechnung->addKinder($kind);
+            $rechnung->setSumme($rechnung->getSumme() + $this->berechnungsService->getPreisforBetreuung($kind, false, $dateTime));
+        }
+
+
+        $table = $this->environment->render('rechnung/tabelle.html.twig', array('rechnung' => $rechnung, 'organisation' => $sepa->getOrganisation()));
         $rechnung->setPdf($table);
 
         return $rechnung;
@@ -262,7 +297,7 @@ class SepaCreateService
 
     }
 
-    public function diffToThisMonth(Sepa $sepa, \DateTime  $pickday)
+    public function diffToThisMonth(Sepa $sepa, \DateTime $pickday)
     {
 
         $sepaDummy = new Sepa();
@@ -273,6 +308,7 @@ class SepaCreateService
         $sepaDummy = $this->calcSepa($sepaDummy, true);
         $rechnungenOriginal = $sepa->getRechnungen();
         $rechnungenDummy = $sepaDummy->getRechnungen();
+
         $rechnungen = array();
 
         foreach ($rechnungenOriginal as $data) {

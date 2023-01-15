@@ -100,7 +100,7 @@
                                     {% trans with {'{selected}':(k.betreungsblocksRealKontingent|length+k.BetreungsblocksReal|length)} %}ACHTUNG! NUR {selected} Betreuungszeitfenster ausgewählt {% endtrans %} </span>
                                 {% else %}
 
-                                    <span>({% trans %}Gebühr pro Monat für gebuchte Betreuung{% endtrans %}: {{ getPreisforBetreuung(k)|number_format(2,',','.') }} €)</span>
+                                    <span>({% trans %}Gebühr pro Monat für gebuchte Betreuung{% endtrans %}: {{ getPreisforBetreuung(k,k.startDate)|number_format(2,',','.') }} €)</span>
                                 {% endif %}
                                 <i class="fas fa-angle-down rotate-icon"></i>
                             </h5>
@@ -262,9 +262,9 @@
                                         <td>
                                             <h5>
                                                 {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
-                                                   {{ getPreisforBetreuung(k)|number_format(2,',','.') }} €
+                                                   {{ getPreisforBetreuung(k,k.startDate)|number_format(2,',','.') }} €
                                                 {% else %}
-                                                    {% if k.tageWithBlocks < stadt.minDaysperWeek %} {% trans %}Bitte weitere Betreuungszeitfenster auswählen{% endtrans %} {% else %}{{ getPreisforBetreuung(k)|number_format(2,',','.') }} €{% endif %}
+                                                    {% if k.tageWithBlocks < stadt.minDaysperWeek %} {% trans %}Bitte weitere Betreuungszeitfenster auswählen{% endtrans %} {% else %}{{ getPreisforBetreuung(k, k.startDate)|number_format(2,',','.') }} €{% endif %}
                                                 {% endif %}
                                             </h5>
                                         </td>

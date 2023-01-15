@@ -99,7 +99,6 @@ class WidgetController extends AbstractController
         $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
         $schule = $this->getDoctrine()->getRepository(Schule::class)->findOneBy(array('organisation' => $organisation, 'id' => $request->get('schule_id')));
         $kinder = $childSearchService->searchChild(array('schule' => $request->get('schule_id'),'schuljahr'=>$active->getId()), $organisation, false, $this->getUser(), new \DateTime());
-        dump($kinder);
         return new JsonResponse(array('title' => $schule->getName(), 'small' => $translator->trans('Kinder angemeldet'), 'anzahl' => sizeof($kinder), 'symbol' => 'school'));
 
     }

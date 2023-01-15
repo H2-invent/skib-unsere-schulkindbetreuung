@@ -24,6 +24,7 @@ class KontingentAcceptService
 
     public function acceptKind(Zeitblock $zeitblock, Kind $kind)
     {
+
         if (!in_array($kind, $zeitblock->getKinderBeworben()->toArray())) {
             return false;
         }
@@ -43,13 +44,20 @@ class KontingentAcceptService
     {
         $kinder = $this->em->getRepository(Kind::class)->findBeworbenByZeitblock($zeitblock);
         foreach ($kinder as $data) {
-            $this->acceptKind($zeitblock, $data);
+
+            try {
+                $this->acceptKind($zeitblock, $data);
+            }catch (\Exception $exception){
+
+            }
+
         }
 
     }
 
     public function beworbenCheck(Kind $kind)
     {
+
         if (sizeof($kind->getBeworben()->toArray()) === 0) {// es gibt keine beworbenen Zeitblöcke mehr. Das kind soll nun eine Buchungsbestätigung erhalten
             foreach ($kind->getBeworben() as $data) {
                 $kind->removeBeworben($data);
