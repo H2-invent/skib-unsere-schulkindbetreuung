@@ -10,25 +10,29 @@
         margin: 5px;
     }
 </style>
-        <h2>{% trans %}Zusammenfassung{% endtrans %} SKiB</h2>
+<h2>{% trans %}Zusammenfassung{% endtrans %} SKiB</h2>
+{% set eltern = getEltern(kind,kind.startDate) %}
 
+<h3>{{ kind.vorname }} {{ kind.nachname }} | {% trans %}Geburtstag{% endtrans %}: {{ kind.geburtstag|date('d.m.Y') }}
+    | {% trans %}Klasse{% endtrans %}: {{ kind.klasseString }}</h3>
+    <h3>{{ 'Betreuungsbeginn mit diesem Stundenplan'|trans }}: {{ kind.startDate|date('d.m.Y') }}</h3>
+    <p>{{ 'Allergie'|trans }}: {{ kind.allergie }} | {{ 'Medikamente'|trans }}: {{ kind.medikamente }}
+        | {{ 'Sicherheitscode'|trans }}: {{ eltern.secCode }} | {{ 'Monatliche Gebühren'|trans }}
+        : {{ getPreisforBetreuungWithoutBeworben(kind,kind.startDate)|number_format(2,',','.') }}€</p>
 
-    <h3>{{ kind.vorname }} {{ kind.nachname }} | {% trans %}Geburtstag{% endtrans %}: {{ kind.geburtstag|date('d.m.Y') }} | {% trans %}Klasse{% endtrans %}: {{ kind.klasseString }}
-    <p>{{ 'Allergie'|trans }}: {{ kind.allergie }} | {{ 'Medikamente'|trans }}: {{ kind.medikamente }} | {{ 'Sicherheitscode'|trans }}: {{ kind.eltern.secCode }} | {{ 'Monatliche Gebühren'|trans }}: {{ kind.preisforBetreuung|number_format(2,',','.') }}€</p></h3>
-
-        <table cellpadding="3px">
-            <thead>
-            <tr>
-                <th>{{ 'Montag'|trans }}</th>
-                <th>{{ 'Dienstag'|trans }}</th>
-                <th>{{ 'Mittwoch'|trans }}</th>
-                <th>{{ 'Donnerstag'|trans }}</th>
-                <th>{{ 'Freitag'|trans }}</th>
-                <th>{{ 'Samstag'|trans }}</th>
-                <th>{{ 'Sonntag'|trans }}</th>
-            </tr>
-            </thead>
-            <tbody>
-           {{ table|raw }}
-            </tbody>
-        </table>
+    <table cellpadding="3px">
+        <thead>
+        <tr>
+            <th>{{ 'Montag'|trans }}</th>
+            <th>{{ 'Dienstag'|trans }}</th>
+            <th>{{ 'Mittwoch'|trans }}</th>
+            <th>{{ 'Donnerstag'|trans }}</th>
+            <th>{{ 'Freitag'|trans }}</th>
+            <th>{{ 'Samstag'|trans }}</th>
+            <th>{{ 'Sonntag'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{ table|raw }}
+        </tbody>
+    </table>

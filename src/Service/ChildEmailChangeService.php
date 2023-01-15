@@ -23,18 +23,19 @@ class ChildEmailChangeService
     private $translator;
     private $email;
     private $form;
-
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager, AnmeldeEmailService $anmeldeEmailService, FormFactoryInterface $formBuilder)
+    private ElternService $elternService;
+    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager, AnmeldeEmailService $anmeldeEmailService, FormFactoryInterface $formBuilder, ElternService $elternService)
     {
         $this->em = $entityManager;
         $this->translator = $translator;
         $this->email = $anmeldeEmailService;
         $this->form = $formBuilder;
+        $this->elternService = $elternService;
     }
 
     public function form(Kind $kind)
     {
-        $input = array('email' => $kind->getEltern()->getEmail(), 'emailDoubleInput' => '');
+        $input = array('email' => $this->elternService->getLatestElternFromChild($kind)->getEmail(), 'emailDoubleInput' => '');
 
         $form = $this->form->create(ChildChangeEmailType::class,$input);
 
@@ -45,7 +46,7 @@ class ChildEmailChangeService
     public function changeEmail(Kind $kind, $input, User $user)
     {
 
-        $elternOne = $kind->getEltern();
+        $elternOne = $this->elternService->getLatestElternFromChild($kind);
         $elternAll = $this->em->getRepository(Stammdaten::class)->findBy(array('tracing' => $elternOne->getTracing()));
 
         $message = 'Email addresse changed from ' . $elternOne->getEmail() . ' to ' . $input['email'] . '; ' .
@@ -67,7 +68,7 @@ class ChildEmailChangeService
         foreach ($elternOne->getKinds() as $data2) {
             $this->email->sendEmail($data2, $elternOne, $data2->getSchule()->getStadt(), $this->translator->trans('Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:', [], $elternOne->getLanguage()));
             $this->email->setBetreff($this->translator->trans('Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Oranisation geändert.', [], $elternOne->getLanguage()));
-            $this->email->send($data2, $data2->getEltern());
+            $this->email->send($data2,  $this->elternService->getLatestElternFromChild($data2));
         }
 
         return true;

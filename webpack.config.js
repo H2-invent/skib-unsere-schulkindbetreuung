@@ -20,6 +20,7 @@ Encore
     .addEntry('frontend', './assets/js/frontend.js')
     .addEntry('startpage', './assets/js/start.js')
     .addEntry('schulen', './assets/js/schulen.js')
+    .addEntry('angemeldeteKinder', './assets/js/angemeldeteKinder.js')
     .addRule({
         test: /trumbowgy\/dist\/ui\/[^/]+\.svg$/,
         use: [ {

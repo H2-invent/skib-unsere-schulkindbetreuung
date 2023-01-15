@@ -17,6 +17,8 @@ use App\Form\Type\LoerrachEltern;
 use App\Form\Type\LoerrachKind;
 use App\Form\Type\SepaStammdatenType;
 use App\Service\AnmeldeEmailService;
+use App\Service\BerechnungsService;
+use App\Service\ElternService;
 use App\Service\ErrorService;
 use App\Service\IcsService;
 use App\Service\MailerService;
@@ -30,6 +32,7 @@ use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindBlockSchulkind;
 use App\Service\WorkflowAbschluss;
 use App\Service\WorkflowStart;
+use phpDocumentor\Reflection\DocBlock;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -85,6 +88,7 @@ class LoerrachWorkflowController extends AbstractController
         }
         $adresse = new Stammdaten();
 
+
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
@@ -96,24 +100,30 @@ class LoerrachWorkflowController extends AbstractController
         if (!$authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE')) {
             $form->remove('emailDoubleInput');
         }
+        if ($request->cookies->get('KindID')) {
+            return $this->redirectToRoute('loerrach_workflow_schulen', array('slug' => $stadt->getSlug()));
+        }
         $form->handleRequest($request);
-        $errors = array();
         $errorsString = array();
         if ($form->isSubmitted()) {
             $adresse = $form->getData();
+            $adresse->setStartDate($schuljahr->getVon());
+            if (!$adresse->getTracing()) {
+                $adresse->setTracing(md5(uniqid('stammdaten', true)));
+            }
             if ($authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE')) {
                 $errors = $validator->validate($adresse, null, ['Default', 'internal']);
             } else {
 
-                $errors = $validator->validate($adresse);
+                $errors = $validator->validate($adresse, null, ['Default']);
                 foreach ($adresse->getGeschwisters() as $data) {
-                    $tmpErr = $validator->validate($data,null, ['Default']);
+                    $tmpErr = $validator->validate($data, null, ['Default']);
 
                     $errors->addAll($tmpErr);
 
                 }
                 foreach ($adresse->getPersonenberechtigters() as $data2) {
-                    $tmpErr = $validator->validate($data2,null, ['Default']);
+                    $tmpErr = $validator->validate($data2, null, ['Default']);
 
                     $errors->addAll($tmpErr);
 
@@ -170,6 +180,12 @@ class LoerrachWorkflowController extends AbstractController
 
         $renderKinder = array();
         foreach ($kinder as $data) {
+            if (($isEdit && !$data->getStartDate()) || ($isEdit && !$stadt->getSettingsSkibShowSetStartDateOnChange())) {
+                $data->setStartDate((new \DateTime())->modify($stadt->getSettingSkibDefaultNextChange()));
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($data);
+                $em->flush();
+            }
             $renderKinder[$data->getSchule()->getId()][] = $data;
         }
         return $this->render('workflow/loerrach/schulen.html.twig', array('isEdit' => $isEdit, 'schule' => $schule, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $renderKinder));
@@ -179,7 +195,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/schulen/kind/neu",name="loerrach_workflow_schulen_kind_neu",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function neukindAction(SchulkindBetreuungKindNeuService $schulkindBetreuungKindNeuService, Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function neukindAction(SchulkindBetreuungKindNeuService $schulkindBetreuungKindNeuService, Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService, ParameterBagInterface $parameterBag)
     {
         $adresse = new Stammdaten;
 
@@ -190,10 +206,17 @@ class LoerrachWorkflowController extends AbstractController
         $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule_id'));
 
         $kind = new Kind();
+
         $kind = $schulkindBetreuungKindNeuService->prepareKind($kind, $schule, $adresse);
         // Load the data from the city into the controller as $stadt
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
-        $form = $this->createForm(LoerrachKind::class, $kind, array('validation_groups' => ['Eltern'], 'action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug' => $stadt->getSlug(), 'schule_id' => $schule->getId()))));
+        $kind->setStartDate($schuljahr->getVon());
+        $form = $this->createForm(LoerrachKind::class, $kind, array('schuljahr' => $schuljahr, 'validation_groups' => ['Eltern'], 'action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug' => $stadt->getSlug(), 'schule_id' => $schule->getId()))));
+        if ($this->getUser() && in_array('ROLE_ORG_CHILD_CHANGE', $this->getUser()->getRoles(), true) && $stadt->getSettingsSkibShowSetStartDateOnChange()) {
+
+        } else {
+            $form->remove('startDate');
+        }
         $form = $schulkindBetreuungKindNeuService->cleanUpForm($form, $schuljahr, $schule);
         $kind = $schulkindBetreuungKindNeuService->cleanUpKind($schuljahr, $schule, $kind);
         try {
@@ -222,7 +245,7 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/schulen/kind/edit",name="loerrach_workflow_schulen_kind_edit",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function editkindAction(SchulkindBetreuungKindNeuService $schulkindBetreuungKindNeuService, Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
+    public function editkindAction(SchulkindBetreuungKindNeuService $schulkindBetreuungKindNeuService, Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
         $adresse = new Stammdaten;
 
@@ -231,12 +254,16 @@ class LoerrachWorkflowController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-
+        $schuljahr = $schuljahrService->getSchuljahr($stadt);
         $form = $this->createForm(LoerrachKind::class, $kind, array(
-            'action' => $this->generateUrl('loerrach_workflow_schulen_kind_edit', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()))
+            'schuljahr' => $schuljahr, 'action' => $this->generateUrl('loerrach_workflow_schulen_kind_edit', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()))
         ));
         $form->remove('art');
+        if ($this->getUser() && in_array('ROLE_ORG_CHILD_CHANGE', $this->getUser()->getRoles(), true) && $stadt->getSettingsSkibShowSetStartDateOnChange()) {
 
+        } else {
+            $form->remove('startDate');
+        }
         try {
             $form->handleRequest($request);
         } catch (\Exception $e) {
@@ -273,6 +300,27 @@ class LoerrachWorkflowController extends AbstractController
         $em->flush();
         return new JsonResponse(array('redirect' => $this->generateUrl('loerrach_workflow_schulen', array('slug' => $stadt->getSlug()))));
     }
+
+    /**
+     * @Route("/org_child/change/schulen/kind/startDate",name="loerrach_workflow_schulen_kind_startDate",methods={"POST"})
+     */
+    public function kindStartDateAction(Request $request, StamdatenFromCookie $stamdatenFromCookie)
+    {
+        $adresse = new Stammdaten;
+
+        //Include Parents in this route
+        if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
+            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
+        }
+
+        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $kind->setStartDate(new \DateTime($request->get('startDate')));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($kind);
+        $em->flush();
+        return new JsonResponse(array('error' => false));
+    }
+
 
     /**
      * @Route("/{slug}/schulen/kind/zeitblock",name="loerrach_workflow_schulen_kind_zeitblock",methods={"GET"})
@@ -340,8 +388,8 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
         $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
-        if ($block->getDeaktiviert()){
-            return new JsonResponse(array('error'=>1,'snack'=>'Error, this action is not allowed'));
+        if ($block->getDeaktiviert()) {
+            return new JsonResponse(array('error' => 1, 'snack' => 'Error, this action is not allowed'));
         }
 
         $result = $toogleKindBlockSchulkind->toggleKind($stadt, $kind, $block);
@@ -387,14 +435,14 @@ class LoerrachWorkflowController extends AbstractController
             return $this->redirectToRoute('loerrach_workflow_adresse', array('slug' => $stadt->getSlug()));
         }
         $renderOrganisation = $schulkindBetreuungKindSEPAService->findOrg($adresse);
-        $form = $this->createForm(SepaStammdatenType::class, $adresse,['stadt'=>$stadt]);
+        $form = $this->createForm(SepaStammdatenType::class, $adresse, ['stadt' => $stadt]);
 
         $form->handleRequest($request);
         $errors = array();
         $errorString = array();
         if ($form->isSubmitted()) {
             $adresse = $form->getData();
-            $valdation = [$stadt->getSettingsSkibSepaElektronisch()?'SchulkindSepa':',Schulkind'];
+            $valdation = [$stadt->getSettingsSkibSepaElektronisch() ? 'SchulkindSepa' : ',Schulkind'];
             $errors = $validator->validate($adresse, null, $valdation);
             $errorString = $errorService->createError($errors, $form);
             if (count($errors) == 0) {
@@ -413,11 +461,17 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/zusammenfassung",name="loerrach_workflow_zusammenfassung",methods={"GET"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function zusammenfassungAction(SchulkindBetreuungKindSEPAService $schulkindBetreuungKindSEPAService, Stadt $stadt, Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
+    public function zusammenfassungAction(
+        SchulkindBetreuungKindSEPAService $schulkindBetreuungKindSEPAService,
+        Stadt                             $stadt,
+        Request                           $request,
+        StamdatenFromCookie               $stamdatenFromCookie,
+        SchuljahrService                  $schuljahrService,
+        BerechnungsService                $berechnungsService)
     {
         // Load the data from the city into the controller as $stadt
 
-
+        set_time_limit(300);
         //Check for Anmeldung open
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
         if ($schuljahr === null) {
@@ -433,14 +487,18 @@ class LoerrachWorkflowController extends AbstractController
         }
 
         $kind = $adresse->getKinds();
+
+
         $preis = 0;
         foreach ($kind as $data) {
-            $preis += $data->getPreisforBetreuung();
+            $preis += $berechnungsService->getPreisforBetreuung($data, true, $data->getStartDate(), true);
         }
-
+        if ($request->cookies->get('KindID')) {
+            $isEdit = true;
+        }
         $error = false;
         foreach ($kind as $data) {
-            if ($data->getTageWithBlocks() < $stadt->getMinDaysperWeek()) {
+            if ($data->getTageWithBlocks() < $stadt->getMinDaysperWeek() && !$isEdit) {
                 $error = true;
                 break;
             }
@@ -453,7 +511,7 @@ class LoerrachWorkflowController extends AbstractController
             'stadt' => $stadt,
             'preis' => $preis,
             'error' => $error,
-            'noPrintout'=>true,
+            'noPrintout' => true,
             'organisation' => $renderOrganisation));
     }
 
@@ -473,43 +531,56 @@ class LoerrachWorkflowController extends AbstractController
                                     StamdatenFromCookie $stamdatenFromCookie,
                                     SchuljahrService    $schuljahrService,
                                     WorkflowAbschluss   $workflowAbschluss,
-                                    Stadt               $stadt)
+                                    Stadt               $stadt,
+                                    ElternService       $elternService)
     {
 
         //Check for Anmeldung open
+        set_time_limit(600);
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
-        if ($schuljahr === null) {
+        if (!$schuljahr) {
             return $this->redirectToRoute('workflow_closed', array('slug' => $stadt->getSlug()));
         }
 
 //Include Parents in this route
-        $adresse = new Stammdaten;
-        if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
-            $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
-        } else {
+
+        $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
+        if (!$adresse) {
             return $this->redirectToRoute('loerrach_workflow_adresse', array('slug' => $stadt->getSlug()));
         }
 
-        $kind = $adresse->getKinds();
-        foreach ($kind as $data) {
-            if ($data->getTageWithBlocks() < $stadt->getMinDaysperWeek()) {
+        $kindeToEdit = null;
+        if ($request->cookies->get('KindID')) {
+            $cookie_kind = explode('.', $request->cookies->get('KindID'));
+            $kindeToEdit = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('id' => $cookie_kind[0]));
+            $isEdit = true;
+        }
+        $kinder = $adresse->getKinds();
+
+        foreach ($kinder as $data) {
+            if ($data->getTageWithBlocks() < $stadt->getMinDaysperWeek() && !$isEdit) {
                 $this->redirectToRoute('loerrach_workflow_zusammenfassung', array('slug' => $stadt->getSlug()));
             }
         }
 
+
 // Daten speichern und fixieren
         $adresse->setLanguage($request->getLocale());
-        $workflowAbschluss->abschluss($adresse, $kind, $stadt);
+        $workflowAbschluss->abschluss($adresse, $stadt, $kindeToEdit);
+        $kinder = $adresse->getKinds();
 //Emails an die Eltern senden
-        foreach ($kind as $data) {
+
+        foreach ($kinder as $data) {
+            $adresse = $elternService->getElternForSpecificTimeAndKind($data,$data->getStartDate());
             $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:'));
             $anmeldeEmailService->send($data, $adresse);
         }
-        $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kind, 'eltern' => $adresse, 'stadt' => $stadt));
+        $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kinder, 'eltern' => $adresse, 'stadt' => $stadt));
         $response->headers->clearCookie('UserID');
         $response->headers->clearCookie('SecID');
         $response->headers->clearCookie('KindID');
         return $response;
+
     }
 
     /**
@@ -517,7 +588,7 @@ class LoerrachWorkflowController extends AbstractController
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public
-    function berechnungAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie)
+    function berechnungAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, BerechnungsService $berechnungsService)
     {
         // Load the data from the city into the controller as $stadt
         $result = array(
@@ -545,7 +616,7 @@ class LoerrachWorkflowController extends AbstractController
             $result['text'] = $translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens zwei Tage ausgewählt werden)');
             return new JsonResponse($result);
         }
-        $result['betrag'] = number_format($kind->getPreisforBetreuung(), 2, ',', '.');
+        $result['betrag'] = number_format($berechnungsService->getPreisforBetreuung($kind, true, $kind->getStartDate(), true), 2, ',', '.');
         return new JsonResponse($result);
 
     }
@@ -555,7 +626,7 @@ class LoerrachWorkflowController extends AbstractController
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
     public
-    function prinPdf(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, TCPDFController $tcpdf, PrintService $print, StamdatenFromCookie $stamdatenFromCookie)
+    function prinPdf(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, PrintService $print, StamdatenFromCookie $stamdatenFromCookie)
     {
         $elter = $stamdatenFromCookie->getStammdatenFromCookie($request);
         $stadt = $elter->getKinds()[0]->getSchule()->getStadt();
@@ -567,7 +638,7 @@ class LoerrachWorkflowController extends AbstractController
         $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName();
 
 
-        return $print->printAnmeldebestaetigung($kind, $elter, $stadt, $tcpdf, $fileName, $this->beruflicheSituation, $organisation, 'D');
+        return $print->printAnmeldebestaetigung($kind, $elter, $stadt,  $fileName, $this->beruflicheSituation, $organisation, 'D');
 
 
     }

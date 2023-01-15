@@ -16,7 +16,31 @@
                     {% endif %}
                 </div>
             </div>
-
+            {% if schuljahr.stadt.settingsSkibShowSetStartDateOnChange %}
+            {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    {{ 'Ab wann soll diese Buchung gelten'|trans }}
+                    <input
+                            data-min="{{ schuljahr.von|date('d.m.Y') }}"
+                            data-max="{{ schuljahr.bis|date('d.m.Y') }}"
+                            data-kindid="{{ kind.id }}"
+                     placeholder="Selected date"
+                     type="text"
+                     id="startDate"
+                     class="form-control pickadate"
+                     readonly=""
+                            value="{{ kind.startDate|date('d.m.Y') }}"
+                     aria-haspopup="true"
+                     aria-expanded="false"
+                     aria-readonly="false"
+                     aria-owns="date-picker-example_root"
+                            data-url="{{ path('loerrach_workflow_schulen_kind_startDate') }}"
+                     >
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
             <div class="row">
                 <div class="{% if blocks[6] is not defined and blocks[5] is not defined %} offset-lg-1 {% endif %}col-lg-2 text-center">
                     <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
@@ -101,7 +125,7 @@
             <div class="row mt-3">
                 <div class="col-lg-12">
                     <p>{% trans %}Monatliche Gebühr für die Betreuung (inklusive Vergünstigungen){% endtrans %}: <span
-                                class="price red-text">{% if kind.tageWithBlocks>=stadt.minDaysperWeek %}{{ kind.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span>
+                                class="price red-text">{% if kind.tageWithBlocks>=stadt.minDaysperWeek %}{{ getPreisforBetreuung(kind)|number_format(2,',','.') }}€{% endif %}</span>
                     </p>
 
                 </div>

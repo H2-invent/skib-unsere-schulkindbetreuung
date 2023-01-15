@@ -9,6 +9,7 @@ use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Form\Type\NewsType;
+use App\Service\ElternService;
 use App\Service\MailerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -364,7 +365,7 @@ class NewsController extends AbstractController
     /**
      * @Route("org_news/send", name="org_news_send", methods={"GET"})
      */
-    public function orgNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService)
+    public function orgNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
         $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
@@ -382,6 +383,7 @@ class NewsController extends AbstractController
         $sendReport = $news->getSendHistory() ? $news->getSendHistory() : array();
         $mailContent = $this->renderView('email/news.html.twig', array('sender' => $news->getOrganisation(), 'news' => $news, 'stammdaten' => $stammdaten));
         foreach ($stammdaten as $data) {
+            $data = $elternService->getLatestElternFromCEltern($data);
             if (!in_array($data->getEmail(), $sendReport)) {
                 $mailerService->sendEmail(
                     'Ranzenpost',
@@ -419,7 +421,7 @@ class NewsController extends AbstractController
     /**
      * @Route("city_news/send", name="city_news_send", methods={"GET"})
      */
-    public function cityNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService)
+    public function cityNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
         $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
 
@@ -439,6 +441,7 @@ class NewsController extends AbstractController
         $mailContent = $this->renderView('email/news.html.twig', array('sender' => $news->getStadt(), 'news' => $news, 'stammdaten' => $stammdaten));
         $sendReport = $news->getSendHistory() ? $news->getSendHistory() : array();
         foreach ($stammdaten as $data) {
+            $data = $elternService->getLatestElternFromCEltern($data);
             if (!in_array($data->getEmail(), $sendReport)) {
                 $mailerService->sendEmail(
                     'Ranzenpost',
@@ -514,8 +517,8 @@ class NewsController extends AbstractController
         $qb->andWhere('SIZE(kinds.beworben) = 0');
 
 
-        $qb->andWhere('stammdaten.fin = 1')
-            ->andWhere('stammdaten.saved = 1');
+        $qb->andWhere('stammdaten.created_at IS NOT NULL');
+
         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
         return $stammdaten;

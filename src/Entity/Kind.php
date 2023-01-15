@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use Ambta\DoctrineEncryptBundle\Configuration\Encrypted;
+use ContainerM8BJPEV\getDoctrine_Orm_DefaultEntityManager_PropertyInfoExtractorService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -14,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Kind
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -179,6 +183,25 @@ class Kind
      */
     private $anwesenheitenSchulkindbetreuung;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $internalNotice;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $startDate;
+
+
+    public function __serialize(): array
+    {
+        return $this->tracing;
+    }
+    public function __toString()
+    {
+       return $this->tracing;
+    }
 
     public function __construct()
     {
@@ -192,6 +215,7 @@ class Kind
         $this->ferienProgrammStorniert = new ArrayCollection();
         $this->kindFerienblocks = new ArrayCollection();
         $this->anwesenheitenSchulkindbetreuung = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -201,7 +225,7 @@ class Kind
 
     public function getEltern(): ?Stammdaten
     {
-        return $this->eltern;
+            return $this->eltern;
     }
 
     public function setEltern(?Stammdaten $eltern): self
@@ -334,6 +358,25 @@ class Kind
         return new ArrayCollection($block);
     }
 
+    /**
+     * @return Collection|Zeitblock[]
+     */
+    public function getRealBeworben(): Collection
+    {
+        $block = array();
+        foreach ($this->beworben->toArray() as $data) {
+            if (!$data->getDeleted()) {
+                $block[] = $data;
+            }
+        }
+
+        usort($block, function (Zeitblock $a, Zeitblock $b) {
+            return ($a->getVon() > $b->getVon() ? true : false);
+        });
+
+        return new ArrayCollection($block);
+    }
+
     public function addZeitblock(Zeitblock $zeitblock): self
     {
         if (!$this->zeitblocks->contains($zeitblock)) {
@@ -444,71 +487,39 @@ class Kind
     public function getBetreungsblocksReal()
     {
         $blocks = $this->zeitblocks;
-        $summe = array();
+        $realBlocks = array();
         foreach ($blocks as $data) {
             if ($data->getGanztag() != 0) {
-                $summe[] = $data;
+                $realBlocks[] = $data;
             }
         }
-        return $summe;
+        return $realBlocks;
     }
 
     public function getBetreungsblocksRealKontingent()
     {
         $blocks = $this->beworben;
-        $summe = array();
+        $realBlocks = array();
         foreach ($blocks as $data) {
             if ($data->getGanztag() != 0) {
-                $summe[] = $data;
+                $realBlocks[] = $data;
             }
         }
-        return $summe;
+        return $realBlocks;
     }
 
     public function getMittagessenblocksReal()
     {
         $blocks = $this->zeitblocks;
-        $summe = array();
+        $realBlocks = array();
         foreach ($blocks as $data) {
             if ($data->getGanztag() == 0) {
-                $summe[] = $data;
+                $realBlocks[] = $data;
             }
         }
-        return $summe;
+        return $realBlocks;
     }
 
-    public function getPreisforBetreuung()
-    {   // Load the data from the city into the controller as $stadt
-
-        //Include Parents in this route
-        $summe = 0;
-        eval($this->schule->getStadt()->getBerechnungsFormel());
-        return $summe;
-    }
-
-    private function getBetragforKindBetreuung(Kind $kind, Stammdaten $eltern)
-    {
-        $summe = 0;
-        $blocks = $kind->getZeitblocks()->toArray();
-        $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
-        foreach ($blocks as $data) {
-            if ($data->getGanztag() !== 0 && $data->getDeleted() === false) {
-                $summe += $data->getPreise()[$eltern->getEinkommen()];
-            }
-        }
-        return $summe;
-    }
-
-    private function getBetragforKindMittagessen(Kind $kind, Stammdaten $eltern)
-    {
-        $summe = 0;
-        foreach ($kind->getZeitblocks() as $data) {
-            if ($data->getGanztag() === 0 && $data->getDeleted() === false) {
-                $summe += $data->getPreise()[$eltern->getEinkommen()];
-            }
-        }
-        return $summe;
-    }
 
     public function getFin(): ?bool
     {
@@ -918,6 +929,30 @@ class Kind
                 $anwesenheitenSchulkindbetreuung->setKind(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInternalNotice(): ?string
+    {
+        return $this->internalNotice;
+    }
+
+    public function setInternalNotice(?string $internalNotice): self
+    {
+        $this->internalNotice = $internalNotice;
+
+        return $this;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(?\DateTimeInterface $startDate): self
+    {
+        $this->startDate = $startDate;
 
         return $this;
     }

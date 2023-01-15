@@ -69,17 +69,19 @@
                                                             <div class="dropdown-menu dropdown-menu-left"
                                                                  aria-labelledby="ex2">
                                                                 <a href="{{ path('loerrach_workflow_schulen_kind_edit', {'kind_id':k.id,'slug':stadt.slug}) }}"
-                                                                   class=" loadContent dropdown-item">{% trans %}Kinderdaten bearbeiten{% endtrans %}</a>
+                                                                   class=" loadContent dropdown-item"><i class="fa fa-edit"></i> {% trans %}Kinderdaten bearbeiten{% endtrans %}</a>
                                                                 <a href="{{ path('loerrach_workflow_schulen_kind_zeitblock', {'kind_id':k.id,'slug':stadt.slug}) }}"
-                                                                   class=" loadContent dropdown-item">{% trans %}Betreuungszeitfenster bearbeiten{% endtrans %}</a>
+                                                                   class=" loadContent dropdown-item"><i class="fas fa-calendar-alt"></i> {% trans %}Betreuungszeitfenster bearbeiten{% endtrans %}</a>
+                                                                {% if not isEdit %}
                                                                 <a type="DELETE"
                                                                    href="{{ path('loerrach_workflow_kind_delete', {'kind_id':k.id,'slug':stadt.slug}) }}"
-                                                                   class="dropdown-item deleteBtn">{% trans %}Kind entfernen{% endtrans %}</a>
+                                                                   class="dropdown-item deleteBtn"><i class="fa fa-trash"></i> {% trans %}Kind entfernen{% endtrans %}</a>
+                                                                {% endif %}
 
                                                             </div>
                                                         </div>
                                                         {{ k.vorname }} {{ k.nachname }}
-                                                        <b><span class="price">{% if k.tageWithBlocks>=s.stadt.minDaysperWeek %}{{ k.PreisforBetreuung|number_format(2,',','.') }}€{% endif %}</span></b>
+                                                        <b><span class="price">{% if k.tageWithBlocks>=s.stadt.minDaysperWeek %}{{ getPreisforBetreuung(k,k.startDate)|number_format(2,',','.') }}€{% endif %}</span></b>
 
                                                         <br>
                                                     {% endfor %}
@@ -90,12 +92,9 @@
                                 </div>
                             {% endfor %}
                         </div>
-
                     </div>
                 </div>
             </section>
-
-
         </div>
     </div>
 
@@ -103,8 +102,13 @@
         <hr class="hr-bold">
         <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"
            class="btn btn-outline-secondary">{% trans %}Zurück{% endtrans %}</a>
+        {% if isEdit %}
+            <a href="{{ path('loerrach_workflow_abschluss', {'slug':stadt.slug}) }}"
+               class="btn btn-outline-primary">{% trans %}Bearbeiten abschließen{% endtrans %}</a>
+        {% else %}
         <a href="{{ path('loerrach_workflow_mittagessen', {'slug':stadt.slug}) }}"
            class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
+        {% endif %}
     </div>
 {% endblock %}
 {% block webpack %}

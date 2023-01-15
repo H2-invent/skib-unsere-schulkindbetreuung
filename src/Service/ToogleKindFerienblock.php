@@ -42,11 +42,13 @@ class ToogleKindFerienblock
 
     private $em;
     private $translator;
+    private ElternService $elternService;
 
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager)
+    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager, ElternService $elternService)
     {
         $this->em = $entityManager;
         $this->translator = $translator;
+        $this->elternService = $elternService;
     }
 
     public
@@ -62,8 +64,8 @@ class ToogleKindFerienblock
         try {
             // gibt es bereits eine Paymentverbindung zwischen Den Eltern un der Org, dann lösche  diese.
 
-            $payment = $this->em->getRepository(Payment::class)->findOneBy(array('organisation'=>$block->getOrganisation(),'stammdaten'=>$kind->getEltern()));
-            if($payment){
+            $payment = $this->em->getRepository(Payment::class)->findOneBy(array('organisation' => $block->getOrganisation(), 'stammdaten' => $this->elternService->getLatestElternFromChild($kind)));
+            if ($payment) {
                 $this->em->remove($payment);
                 $this->em->flush();
             }
@@ -125,7 +127,7 @@ class ToogleKindFerienblock
             $this->em->persist($kindFerienBlock);
             $this->em->flush();
 
-       } catch (\Exception $e) {
+        } catch (\Exception $e) {
             $result['text'] = $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.');
             $result['error'] = 1;
         }

@@ -45,14 +45,9 @@ class StamdatenFromCookie
 
             $cookie_ar = explode('.', $request->cookies->get($bezeichner));
             $hash = hash("sha256", $cookie_ar[0] . $this->params->get("secret"));
-            $search = array('uid' => $cookie_ar[0], 'saved' => false);
-            if ($request->cookies->get('KindID') && $request->cookies->get('SecID')) {
-            } else {
-                $search['history'] = 0;
-            }
 
             if ($hash == $cookie_ar[1]) {
-                $adresse = $this->em->getRepository(Stammdaten::class)->findOneBy($search);
+                $adresse = $this->em->getRepository(Stammdaten::class)->findActualStammdatenByUid($cookie_ar[0]);
                 return $adresse;
             }
 

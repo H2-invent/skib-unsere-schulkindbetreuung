@@ -182,7 +182,7 @@ h2 {
 .btn-primary {
   background-color: var(--main-color) !important;
   border-color: var(--main-color) !important;
-  border-radius: 500px;
+
   color: #fff !important;
   }
   .btn-primary:hover {
@@ -195,7 +195,7 @@ h2 {
 
 .btn-secondary {
   background-color: var(--sec-color) !important;
-  border-radius: 500px;
+
   color: #fff !important;
 }
   .btn-secondary:hover {
@@ -205,7 +205,7 @@ h2 {
 .btn-outline-primary {
   border-color: #0057B0 !important;
   color: #0057B0 !important;
-  border-radius: 500px;
+
 }
   .btn-outline-primary:hover {
     border-color: var(--main-color-hover) !important;
@@ -215,7 +215,7 @@ h2 {
 .btn-outline-secondary {
   border-color: var(--sec-color) !important;
   color: var(--sec-color) !important;
-  border-radius: 500px;
+
 }
   .btn-outline-secondary:hover {
     border-color: var(--sec-color-hover) !important;
@@ -413,3 +413,4 @@ height: auto;
   color: black;
   font-weight: bold;
 }
+

@@ -22,6 +22,10 @@
         <td>{{ eltern.vorname }} {{ eltern.name }}</td>
     </tr>
     <tr>
+        <td>{% trans %}Diese Daten gelten ab dem{% endtrans %}</td>
+        <td>{{ eltern.startDate|date('d.m.Y') }}</td>
+    </tr>
+    <tr>
         <td>{% trans %}Adresse des Erziehungsberechtigten{% endtrans %}</td>
         <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
     </tr>
@@ -30,7 +34,7 @@
         <td>{{ eltern.phoneNumber }}</td>
     </tr>
 
-    {% set stadt = eltern.kinds[0].schule.stadt %}
+    {% set stadt = kind.schule.stadt %}
 
     <tr>
         <td>{% trans %}Berufliche Situation des Erziehungsberechtigten{% endtrans %}</td>
@@ -61,7 +65,7 @@
     {% if kind is defined and kind is not null %}
         <tr>
             <td>{% trans %}Monatliche Gebühren{% endtrans %}</td>
-            <td>{{ kind.preisforBetreuung|number_format(2,',','.') }} €</td>
+            <td>{{ getPreisforBetreuungWithoutBeworben(kind,kind.startDate)|number_format(2,',','.') }} €</td>
         </tr>
     {% endif %}
     {% if eltern.secCode is not null %}

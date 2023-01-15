@@ -97,6 +97,10 @@ class StadtTranslation implements TranslationInterface
      */
     private $settings_skib_shoolyear_naming;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingsSkibTextWhenClosed;
 
     public function getId(): ?int
     {
@@ -346,6 +350,22 @@ class StadtTranslation implements TranslationInterface
         $this->settings_skib_shoolyear_naming = $settings_skib_shoolyear_naming;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsSkibTextWhenClosed()
+    {
+        return $this->settingsSkibTextWhenClosed;
+    }
+
+    /**
+     * @param mixed $settingsSkibTextWhenClosed
+     */
+    public function setSettingsSkibTextWhenClosed($settingsSkibTextWhenClosed): void
+    {
+        $this->settingsSkibTextWhenClosed = $settingsSkibTextWhenClosed;
     }
 
 

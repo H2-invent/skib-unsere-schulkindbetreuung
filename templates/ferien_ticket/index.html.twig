@@ -11,7 +11,7 @@
     }
 </style>
 
-
+{% set eltern = getEltern(kind) %}
 <table style="width: 100%">
     <tr>
         <td colspan="2" style="background-color: #2096ff">
@@ -57,8 +57,9 @@
             </b>
         </td>
         <td>
-            <b>{{ kind.eltern.notfallName }}<br>
-                {{ kind.eltern.notfallkontakt }}
+
+            <b>{{ eltern.notfallName }}<br>
+                {{ eltern.notfallkontakt }}
             </b>
         </td>
     </tr>
@@ -77,7 +78,7 @@
             <b>{{ 'Preis'|trans }}: {{ ferienblock.preis|number_format('2',',','.') }}€</b>
         </td>
         <td>
-            {{ 'Erziehungsberechtigter'|trans }}: {{ kind.eltern.vorname }} {{ kind.eltern.name }}
+            {{ 'Erziehungsberechtigter'|trans }}: {{ eltern.vorname }} {{ eltern.name }}
         </td>
         <td style="text-align: center; font-size: 10px">
             {{ ferienblock.checkinID }}

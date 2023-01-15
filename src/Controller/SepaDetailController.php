@@ -21,12 +21,15 @@ class SepaDetailController extends AbstractController
      */
     public function index(Request $request,SepaCreateService $sepaCreateService)
     {
+        set_time_limit(600);
        $sepa = $this->getDoctrine()->getRepository(Sepa::class)->find($request->get('id'));
        if($sepa->getOrganisation() != $this->getUser()->getOrganisation()){
            throw new \Exception('Wrong Organisation');
        }
-       $stammdatenChange = $sepaCreateService->diffToThisMonth($sepa);
-       return $this->render('sepa_detail/detail.html.twig',array('sepa'=>$sepa,'diffs'=>$stammdatenChange));
+       $simDate = (clone $sepa->getVon())->modify('first day of next month');
+
+       $stammdatenChange = $sepaCreateService->diffToThisMonth($sepa,$simDate);
+       return $this->render('sepa_detail/detail.html.twig',array('sepa'=>$sepa,'diffs'=>$stammdatenChange,'simDate'=>$simDate));
     }
     /**
      * @Route("/org_accounting/print/detail", name="accounting_sepa_print")

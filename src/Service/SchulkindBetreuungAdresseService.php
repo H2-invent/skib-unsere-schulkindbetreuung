@@ -25,29 +25,27 @@ class SchulkindBetreuungAdresseService
 
     }
 
-    public function setAdress(Stammdaten $adresse, bool $hasRole,$ipAdress)
+    public function setAdress(Stammdaten $addresse, bool $hasRole, $ipAdress)
     {
 
         if ($hasRole) {
-            $adresse->setEmailConfirmed(true);
-            $adresse->setConfirmEmailSend(true);
-            $adresse->setConfirmationCode(str_shuffle(MD5(microtime())), 0, 6);
-            $adresse->setIpAdresse($ipAdress);
-            $adresse->setConfirmDate(new \DateTime());
+            $addresse->setEmailConfirmed(true);
+            $addresse->setConfirmEmailSend(true);
+            $addresse->setConfirmationCode(str_shuffle(MD5(microtime())), 0, 6);
+            $addresse->setIpAdresse($ipAdress);
+            $addresse->setConfirmDate(new \DateTime());
         }
-        $adresse->setEmailDoubleInput($adresse->getEmail());
-        $adresse->setFin(false);
-        $this->em->persist($adresse);
+        $addresse->setEmailDoubleInput($addresse->getEmail());
+        $addresse->setFin(false);
+        $this->em->persist($addresse);
         $this->em->flush();
-        return $adresse;
+        return $addresse;
     }
 
     public function setUID(Stammdaten $adresse)
     {
         if ($adresse->getUid() === null) {
-            $adresse->setUid(md5(uniqid('', true)))
-                ->setAngemeldet(false);
-            $adresse->setCreatedAt(new \DateTime());
+            $adresse->setUid(md5(uniqid('', true)));
         }
         return $adresse;
     }

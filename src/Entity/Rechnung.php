@@ -70,6 +70,11 @@ class Rechnung
      */
     private $bis;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $sepaType;
+
     public function __construct()
     {
         $this->zeitblocks = new ArrayCollection();
@@ -225,6 +230,18 @@ class Rechnung
     public function setBis(\DateTimeInterface $bis): self
     {
         $this->bis = $bis;
+
+        return $this;
+    }
+
+    public function getSepaType(): ?string
+    {
+        return $this->sepaType;
+    }
+
+    public function setSepaType(?string $sepaType): self
+    {
+        $this->sepaType = $sepaType;
 
         return $this;
     }

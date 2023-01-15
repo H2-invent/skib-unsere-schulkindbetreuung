@@ -37,16 +37,20 @@
         {% if 4 in wochentag %}
             <th>{% trans %}Fr{% endtrans %}</th>
         {% endif %}
-        <th>{% trans %}Notizen{% endtrans %}</th>
+        {% if is_granted('ROLE_ORG_VIEW_NOTICE') %}
+            <th>{% trans %}Notizen{% endtrans %}</th>
+        {% endif %}
+
     </tr>
     </thead>
     <tbody>
     {% for k in kinder %}
+        {% set eltern = getEltern(k,date()) %}
         <tr>
             <td></td>
             <td>{{ k.vorname }}</td>
             <td>{{ k.nachname }}</td>
-            <td>{{ k.eltern.notfallkontakt }}</td>
+            <td>{{ eltern.notfallkontakt }}</td>
             <td>{{ k.schule.name }}</td>
             <td>{{ k.klasseString }}</td>
             <td>{{ k.alleineHause?'Ja'|trans:'Nein'|trans }}</td>
@@ -66,7 +70,9 @@
             {% if 4 in wochentag %}
                 <td>{{ getStringForBlocks(k,4)|nl2br }}</td>
             {% endif %}
-            <td></td>
+            {% if is_granted('ROLE_ORG_VIEW_NOTICE') %}
+                <td>{{ k.internalNotice|raw }}</td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>

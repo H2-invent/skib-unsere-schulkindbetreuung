@@ -6,23 +6,26 @@
                 <!-- Count item widget-->
                 <div class=" col-12 card">
                     <div class="card-header">
-                        <h1>{% trans %}Zusammenfassung{% endtrans %} <a
-                                    href="{{ path('child_detail_print',{'kind_id':k.id}) }}"><i class="material-icons">print</i></a>
+                        <h1>{{ k.vorname }} {{ k.nachname }}<a
+                                    href="{{ path('child_detail_print',{'kind_id':k.id}) }}" class="ml-2"><i
+                                        class="material-icons">print</i></a>
+                            {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                                <a
+                                        href="{{ path('child_change_seccode',{'kind_id':k.id}) }}"><i
+                                            class="material-icons">edit</i></a>
+                            {% endif %}
                         </h1>
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="cover-heading">{{ 'Daten des Erziehungsberechtigten'|trans }}</h2>
+                            <h2 class="cover-heading">{{ 'Daten des Erziehungsberechtigten'|trans }} <small>(Gültig ab: {{ eltern.startDate|date('d.m.Y') }})</small></h2>
                         </div>
                         <div class="card-body">
                             <table class="table">
                                 <tbody>
+
                                 <tr>
-                                    <td>{% trans %} Letzte Speicherung {% endtrans %}</td>
-                                    <td>{{ eltern.createdAt|date('d.m.Y') }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans %} Name des Erziehungsberechtigten {% endtrans %}</td>
+                                    <td>{% trans %} Name des Erziehungsberechtigten {% endtrans %} </td>
                                     <td>{{ eltern.vorname }} {{ eltern.name }}</td>
                                 </tr>
                                 <tr>
@@ -69,7 +72,8 @@
                     <!-- Daten der Kinder in einer for Schleife -->
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="cover-heading">{{ 'Daten des Kindes'|trans }}</h2>
+                            <h2 class="cover-heading">{{ 'Daten des Kindes'|trans }} <small>(beginnt
+                                    ab: {{ k.startDate|date('d.m.Y') }})</small></h2>
                         </div>
                         <div class="text-left" id="accordion">
 
@@ -167,24 +171,34 @@
                                                         <ul class="list-group">
                                                             {% for z in k.BetreungsblocksReal %}
                                                                 {% if z.deleted == false %}
-                                                                <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }}
-                                                                    - {{ z.bis|date('H:i') }}</li>
+                                                                    <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }}
+                                                                        - {{ z.bis|date('H:i') }}</li>
                                                                 {% endif %}
                                                             {% endfor %}
                                                         </ul>
                                                     </td>
                                                 </tr>
-                                                {% if app.user and is_granted('ROLE_ORG_SEE_PRICE')  %}
                                                 <tr>
                                                     <td>
-                                                        {% trans %} Preis pro Monat {% endtrans %}
+                                                        {% trans %} Startet ab{% endtrans %}
                                                     </td>
 
                                                     <td>
-                                                       {{ k.preisforBetreuung }}€
+                                                        {{ k.startDate|date('d.m.Y') }}
                                                     </td>
                                                 </tr>
-                                                    {% endif %}
+                                                {% if app.user and is_granted('ROLE_ORG_SEE_PRICE') %}
+                                                    <tr>
+                                                        <td>
+                                                            {% trans %} Preis pro Monat {% endtrans %}
+                                                        </td>
+
+                                                        <td>
+                                                            {{ getPreisforBetreuungWithoutBeworben(k,date)|number_format(2,',','.') }}
+                                                            €
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
                                             {% endif %}
                                             {% if k.betreungsblocksRealKontingent|length > 0 %}
                                                 <tr>
@@ -215,15 +229,49 @@
                                                     </ul>
                                                 </td>
                                             </tr>
+                                            {% if app.user is not null %}
+                                                <tr>
+                                                    <td>
+                                                        {% if app.user is not null and  is_granted('ROLE_ORG_EDIT_NOTICE') %}
+                                                            {{ form_start(formInternalNotice) }}
+
+                                                            {{ form_rest(formInternalNotice) }}
+                                                            {{ form_end(formInternalNotice) }}
+                                                        {% elseif app.user is not null and is_granted('ROLE_ORG_VIEW_NOTICE') %}
+                                                            <h3>{{ 'Notizen'|trans }}</h3>
+                                                            {{ k.internalNotice|raw }}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
                                             <tr>
-                                                <td>{% trans %} Historie{% endtrans %}</td>
-                                                <td>
+                                                <td colspan="2"><h3>{% trans %} Historie{% endtrans %}</h3></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+
+
                                                     <ul class="list-group">
-                                                        {% for k in history|reverse %}
-                                                            <a href="{{ path('child_detail',{'kind_id':k.id}) }}">
-                                                                <li class="list-group-item">{{ k.eltern.createdAt|date('d.m.Y H:i') }}</li>
-                                                            </a>
+                                                        {% for h in his %}
+
+                                                            <li class="list-group-item">
+                                                                <a href="{{ path('child_detail',{'kind_id':k.id,'date':h|date('d.m.Y')}) }}">
+                                                                    {% if date >= his[loop.index-1] %}
+                                                                        {% if his[loop.index] is defined %}
+                                                                            {% if  date < his[loop.index] %}
+                                                                                <i class="fa fa-arrow-right mr-2"></i>
+                                                                            {% endif %}
+                                                                        {% else %}
+                                                                            <i class="fa fa-arrow-right mr-2"></i>
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                    Änderung tritt in
+                                                                    Kraft: {{ h|date('d.m.Y') }}
+                                                                </a>
+                                                            </li>
+
                                                         {% endfor %}
+
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -232,9 +280,10 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
+                </div>
+                <div class="col-12 card">
                 </div>
             </div>
         </div>

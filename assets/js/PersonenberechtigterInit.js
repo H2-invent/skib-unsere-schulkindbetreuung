@@ -21,7 +21,7 @@ import $ from "jquery";
 }
 
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormButton = $('<a href="#" class="deleteKeyCloakGroup" type="remove-group"><i class="text-danger px-1 fas fa-trash" data-toggle="tooltip" title="Löschen" data-original-title="Löschen"></i></a>');
+    var $removeFormButton = $('<a href="#" class="deleteKeyCloakGroup" type="remove-group"><i class="text-danger px-1 fa fa-trash" data-toggle="tooltip" title="Löschen" data-original-title="Löschen"></i></a>');
     $tagFormLi.prepend($removeFormButton);
     $removeFormButton.on('click', function(e) {
         e.preventDefault();

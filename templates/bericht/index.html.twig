@@ -68,7 +68,7 @@
                                         <td>{{ b.ganztagString() }}</td>
                                         <td>{{ b.schule.organisation.name }}</td>
                                         <td>{{ b.schule.name }}</td>
-                                        <td>{{ b.KindwithFin|length }}</td>
+                                        <td>{{ getChildsOnSpecificTimeAndFuture(b,b.von)|length }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

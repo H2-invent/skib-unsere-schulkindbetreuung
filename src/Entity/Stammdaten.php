@@ -57,10 +57,10 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @ORM\Column(type="integer",nullable=true)
      */
-    private $einkommen=0;
+    private $einkommen = 0;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $created_at;
 
@@ -77,7 +77,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $angemeldet;
+    private $angemeldet = false;
 
     /**
      * @ORM\Column(type="boolean")
@@ -133,7 +133,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $fin;
+    private $fin = false;
 
     /**
      * @Assert\NotBlank(groups = {"all"})
@@ -280,12 +280,12 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $anzahlKindergeldempfanger=0;
+    private $anzahlKindergeldempfanger = 0;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $sozialhilfeEmpanger=false;
+    private $sozialhilfeEmpanger = false;
 
     /**
      * @ORM\OneToMany(targetEntity=Personenberechtigter::class, mappedBy="stammdaten", orphanRemoval=true,cascade={"persist"})
@@ -296,6 +296,11 @@ class Stammdaten implements GroupSequenceProviderInterface
      * @ORM\OneToMany(targetEntity=Geschwister::class, mappedBy="stammdaten", orphanRemoval=true,cascade={"persist"})
      */
     private $geschwisters;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $startDate;
 
     public function __construct()
     {
@@ -309,6 +314,11 @@ class Stammdaten implements GroupSequenceProviderInterface
         $this->personenberechtigters = new ArrayCollection();
         $this->geschwisters = new ArrayCollection();
 
+    }
+
+    public function __toString()
+    {
+        return $this->tracing;
     }
 
     public function getId(): ?int
@@ -381,7 +391,7 @@ class Stammdaten implements GroupSequenceProviderInterface
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(?\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
 
@@ -937,8 +947,8 @@ class Stammdaten implements GroupSequenceProviderInterface
     public function getGroupSequence()
     {
         return [
-        ['all',
-            $this->kinderImKiga === true ? 'kindInKiga' : 'notKindinKiga'],
+            ['all',
+                $this->kinderImKiga === true ? 'kindInKiga' : 'notKindinKiga'],
         ];
     }
 
@@ -1025,4 +1035,17 @@ class Stammdaten implements GroupSequenceProviderInterface
 
         return $this;
     }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(?\DateTimeInterface $startDate): self
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
 }

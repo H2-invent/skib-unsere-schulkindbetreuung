@@ -27,8 +27,9 @@ import('jquery-ui/ui/widgets/sortable');
 global.Popper = Popper;
 import('bootstrap-material-design');
 import('moment');
-import('chart.js');
-import('chartjs-color-string');
+import {Chart} from 'chart.js';
+import 'chartjs-color-string';
+
 import('jquery-clockpicker');
 import('malihu-custom-scrollbar-plugin');
 import('jquery.cookie');
@@ -43,7 +44,10 @@ import ('trumbowyg/dist/plugins/template/trumbowyg.template');
 import ('formBuilder/dist/form-builder.min');
 import snackbar from 'snackbarjs';
 import {initTabs} from 'h2-invent-material-tabs';
-import { Dropzone } from "dropzone";
+import {Dropzone} from "dropzone";
+import {initKeycloakGroups} from "./PersonenberechtigterInit";
+
+global.Chart = Chart;
 let formBuilderLoc;
 var sucessFkt;
 $(".side-navbar").niceScroll({cursorcolor: '#0058B0'});
@@ -58,28 +62,33 @@ $('#toggle-btn').on('click', function (e) {
         $('.page').toggleClass('active-sm');
     }
 });
-
-$('table').DataTable({
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                text: 'Save current page',
-                exportOptions: {
-                    modifier: {
-                        page: 'current'
+try {
+    $('table').DataTable({
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: 'Save current page',
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
                     }
                 }
-            }
-        ]
-    }
-);
+            ]
+        }
+    );
+} catch
+    (e) {
+    console.log(e)
+}
+
 
 $(document).ready(function () {
     if (typeof optionsSnack !== 'undefined') {
         $.snackbar(optionsSnack);
     }
 
-    if($('.dropzone').length){
+    if ($('.dropzone').length) {
         let myDropzone = new Dropzone(".dropzone");
     }
 
@@ -163,7 +172,7 @@ $(window).on('load', function () {
         }
     });
 
-
+initKeycloakGroups();
     $('input[type="date"]').daterangepicker({
         "singleDatePicker": true,
         autoUpdateInput: false,

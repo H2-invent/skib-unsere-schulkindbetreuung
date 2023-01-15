@@ -204,9 +204,7 @@ class Stadt implements TranslatableInterface
      * @ORM\Column(type="text", nullable=true)
      */
     private $berechnungsFormel = '
-        $adresse = $this->getEltern();
-        $summe = 0;
-        $kind = $this;
+      
         $kinder = $adresse->getKinds()->toArray();
         usort(
             $kinder,
@@ -218,9 +216,6 @@ class Stadt implements TranslatableInterface
                 return ($a->getGeburtstag() < $b->getGeburtstag()) ? -1 : 1;
             }
         );
-
-        $blocks = $kind->getRealZeitblocks()->toArray();  
-        $blocks = array_merge($blocks, $this->beworben->toArray());
         
         $summe += $this->getBetragforKindBetreuung($kind, $adresse);
        ';
@@ -387,6 +382,23 @@ class Stadt implements TranslatableInterface
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $settings_skib_change_document_change_date_show;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $NoSecCodeForChangeChilds;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $settingSkibDefaultNextChange;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $settingsSkibShowSetStartDateOnChange;
+
+
 
 
 
@@ -1417,6 +1429,43 @@ class Stadt implements TranslatableInterface
 
         return $this;
     }
+
+    public function getNoSecCodeForChangeChilds(): ?bool
+    {
+        return $this->NoSecCodeForChangeChilds;
+    }
+
+    public function setNoSecCodeForChangeChilds(?bool $NoSecCodeForChangeChilds): self
+    {
+        $this->NoSecCodeForChangeChilds = $NoSecCodeForChangeChilds;
+
+        return $this;
+    }
+
+    public function getSettingSkibDefaultNextChange(): ?string
+    {
+        return $this->settingSkibDefaultNextChange;
+    }
+
+    public function setSettingSkibDefaultNextChange(?string $settingSkibDefaultNextChange): self
+    {
+        $this->settingSkibDefaultNextChange = $settingSkibDefaultNextChange;
+
+        return $this;
+    }
+
+    public function getSettingsSkibShowSetStartDateOnChange(): ?bool
+    {
+        return $this->settingsSkibShowSetStartDateOnChange;
+    }
+
+    public function setSettingsSkibShowSetStartDateOnChange(?bool $settingsSkibShowSetStartDateOnChange): self
+    {
+        $this->settingsSkibShowSetStartDateOnChange = $settingsSkibShowSetStartDateOnChange;
+
+        return $this;
+    }
+
 
 
 }

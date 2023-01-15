@@ -45,7 +45,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <th align="right">{{ k.PreisforBetreuung|number_format(2,',','.') }}€</th>
+                <th align="right">{{ getPreisforBetreuungWithoutBeworben(k,rechnung.von)|number_format(2,',','.') }}€</th>
             </tr>
     {% endfor %}
 

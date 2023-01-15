@@ -30,17 +30,28 @@ class SchulkindBetreuungKindNeuService
     private $validator;
     private $generator;
     private $error;
-    public function __construct(ErrorService $errorService, EntityManagerInterface $em, TranslatorInterface $translator, ValidatorInterface $validator,UrlGeneratorInterface $urlGenerator)
+    private SchuljahrService  $schuljahrService;
+    public function __construct(ErrorService $errorService, EntityManagerInterface $em, TranslatorInterface $translator, ValidatorInterface $validator,UrlGeneratorInterface $urlGenerator, SchuljahrService  $schuljahrService)
     {
         $this->em = $em;
         $this->translator = $translator;
         $this->validator = $validator;
         $this->generator = $urlGenerator;
         $this->error = $errorService;
+        $this->schuljahrService  = $schuljahrService;
     }
     public function prepareKind(Kind $kind, Schule $schule, Stammdaten $eltern){
         $kind->setEltern($eltern);
         $kind->setSchule($schule);
+        $schuljahr = $this->schuljahrService->getSchuljahr($schule->getStadt());
+        if (new \DateTime() < $schuljahr->getAnmeldeEnde() && new \DateTime()>$schuljahr->getAnmeldeStart()){//ist im ANmeldezeitraum, alos wahrscheinlich ein Elternteil oder ein Mitarbeiter, der ein Kind so anmelden möchte
+            $kind->setStartDate($schuljahr->getVon());
+        }else{
+            $kind->setStartDate((new \DateTime())->modify($schule->getStadt()->getSettingSkibDefaultNextChange()));
+        }
+        if (!$kind->getTracing()){
+            $kind->setTracing(md5(uniqid('kinder', true)));
+        }
         return $kind;
     }
     public function getGanztagBlocks(Active $schuljahr, Schule $schule){

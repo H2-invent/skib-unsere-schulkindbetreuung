@@ -50,7 +50,7 @@
                                                                     -{{ z.bis|date('H:i') }}
                                                                 </li>
                                                                 <li class="list-group-item" style=" border-bottom: solid 1px lightgrey">
-                                                                    {{ 'Kinder'|trans }}: {{ z.KindwithFin|length }}
+                                                                    {{ 'Kinder'|trans }}: {{ getChildsOnSpecificTime(z,date('now'))|length }}
                                                                 </li>
                                                         {% endfor %}
                                                         </ul>

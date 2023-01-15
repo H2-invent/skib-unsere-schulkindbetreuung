@@ -8,7 +8,6 @@
 
     <b>{{ kind.vorname }} {{ kind.nachname }}</b> </p>
     <p class="text-center">{% trans %}Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.
-            Dieser ist nur einmalig gültig und wird Ihnen nach jeder Änderung neu zugesandt.
             Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.{% endtrans %}</p>
 
     {%if stadt.settingEncryptEmailAttachment%}
@@ -30,7 +29,7 @@
     <br>
     <br>
     <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}<br>
-    <b>{{ kind.zeitblocks[0].schule.organisation.name }}</b></p>
+    <b>{{ kind.schule.organisation.name }}</b></p>
 
 
 {% endblock %}

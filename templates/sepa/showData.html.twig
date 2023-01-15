@@ -41,6 +41,7 @@
                                             <th>{% trans %}Adresse{% endtrans %}</th>
                                             <th>{% trans %}Postleitzahl{% endtrans %}</th>
                                             <th>{% trans %}Stadt{% endtrans %}</th>
+                                            <th>{% trans %}Gültig ab{% endtrans %}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -58,9 +59,14 @@
                                                             <a class="dropdown-item"
                                                                href="{{ path('accounting_showdata_customerid', {'id':organisation.id, 'stammdaten_id':s.id}) }}">{% trans %}Kundennummer zuweisen/ändern{% endtrans %}</a>
                                                             {% if app.user and is_granted('ROLE_ORG_SEE_PRICE') %}
-                                                                <a class="dropdown-item"
-                                                                   href="#stammdaten{{ s.id }}"
+                                                                <a class="dropdown-item loadContent"
+                                                                   href="{{ path('accounting_showdata_montly',{'stammdatenId':s.id}) }}"
                                                                    data-toggle="modal">{% trans %}Monatliche Zahlungen{% endtrans %}</a>
+
+                                                            {% endif %}
+                                                            {% if app.user and is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                                                                <a class="dropdown-item"
+                                                                   href="{{ path('edit_stammdaten_seccode',{'eltern_id':s.id}) }}">{% trans %}Stammdaten bearbeiten{% endtrans %}</a>
 
                                                             {% endif %}
                                                         </div>
@@ -73,47 +79,9 @@
                                                 <td>{{ s.strasse }}</td>
                                                 <td>{{ s.plz }}</td>
                                                 <td>{{ s.stadt }}</td>
+                                                <td>{{ s.startDate|date('d.m.Y') }}</td>
                                             </tr>
-                                            {% if app.user and is_granted('ROLE_ORG_SEE_PRICE') %}
-                                                <div class="modal fade" id="stammdaten{{ s.id }}" tabindex="-1"
-                                                     role="dialog"
-                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title"
-                                                                    id="exampleModalLabel">{{ 'Infos zu den Stammdaten'|trans }}</h5>
-                                                                <button type="button" class="close" data-dismiss="modal"
-                                                                        aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                {% set price = 0 %}
-                                                                {% for k in s.kinds %}
-                                                                    <h4>{{ k.vorname }} {{ k.nachname }}</h4>
-                                                                    <p>{{ 'Monatliche Gebühren'|trans }}:
-                                                                        <b>{{ k.preisforBetreuung }}€</b></p>
-                                                                    {% set price = price +  k.preisforBetreuung %}
-                                                                {% endfor %}
-                                                                <hr>
-                                                                {{ 'Gesamtbetrag'|trans }}: {{ price }}€
 
-                                                                <hr>
-                                                              <p>{{ 'Alleinerziehend'|trans }}: <b>{{ s.alleinerziehend?'Ja':'Nein' }}</b></p>
-                                                                <p>{{ 'SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe'|trans }}: <b>{{ s.sozialhilfeEmpanger?'Ja':'Nein' }}</b></p>
-                                                              <p>{{ 'Anzahl an Kindergelberechtigten Kinder im Haushalt'|trans }}: <b>{{ s.anzahlKindergeldempfanger }}</b></p>
-                                                            </div>
-
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                        data-dismiss="modal">{{ 'Schließen'|trans }}</button>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            {% endif %}
                                         {% endfor %}
                                         </tbody>
                                     </table>

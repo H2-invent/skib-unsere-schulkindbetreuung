@@ -130,12 +130,20 @@ $(document).on('click', '.loadContent', function (e) {
 });
 
 $('#loadContentModal').on('show.bs.modal', function (e) {
+    var minDate = '01.01.2000';
+    var maxDate = new Date();
+    if ($('.pickadate') && $('.pickadate').data('min')){
+        minDate = $('.pickadate').data('min')
+    }
+    if ($('.pickadate') && $('.pickadate').data('max')){
+        maxDate = $('.pickadate').data('max')
+    }
     $('.pickadate').pickadate({
         format: 'dd.mm.yyyy',
         formatSubmit: 'yyyy-mm-dd',
         selectYears: 2010,
-        min: '01.01.2000',
-        max: new Date(),
+        min: minDate,
+        max: maxDate,
     });
     $('input').trigger('change');
     $(this)
