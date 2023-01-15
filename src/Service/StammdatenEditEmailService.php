@@ -110,7 +110,8 @@ class StammdatenEditEmailService
                 $this->betreff,
                 $this->content,
                 $organisation->getEmail(),
-                $this->attachmentt);
+                $this->attachment
+            );
         }
     }
 }
