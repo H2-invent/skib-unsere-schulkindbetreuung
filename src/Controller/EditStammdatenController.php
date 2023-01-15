@@ -73,7 +73,7 @@ class EditStammdatenController extends AbstractController
         ValidatorInterface               $validator,
         SchulkindBetreuungAdresseService $schulkindBetreuungAdresseService,
         WorkflowAbschluss                $abschluss,
-        StammdatenEditEmailService       $stammdatenEditEmailService,
+        StammdatenEditEmailService       $stammdatenEditEmailService
     ): Response
     {
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->find($eltern_id);
