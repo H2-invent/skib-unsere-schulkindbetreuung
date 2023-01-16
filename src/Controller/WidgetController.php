@@ -26,7 +26,7 @@ class WidgetController extends AbstractController
     public function index(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
-        dump($organisation);
+  
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
