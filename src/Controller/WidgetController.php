@@ -25,6 +25,7 @@ class WidgetController extends AbstractController
     public function index(Request $request, TranslatorInterface $translator, ChildSearchService $childSearchService)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        dump($organisation);
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -34,7 +35,8 @@ class WidgetController extends AbstractController
         } else {
             $today = $today - 1;
         }
-        $kinder = $childSearchService->searchChild(array('wochentag' => $today), $organisation, false, $this->getUser(), new \DateTime());
+        $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($organisation->getStadt());
+        $kinder = $childSearchService->searchChild(array('wochentag' => $today,'schuljahr'=>$active), $organisation, false, $this->getUser(), new \DateTime());
 
 
         return new JsonResponse(array('title' => $translator->trans('Anwesende Kinder'), 'small' => 'Nach Liste', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));
@@ -79,7 +81,8 @@ class WidgetController extends AbstractController
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $kinder = $childSearchService->searchChild(array(), $organisation, false, $this->getUser(), new \DateTime());
+        $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($organisation->getStadt());
+        $kinder = $childSearchService->searchChild(array('schuljahr'=>$active), $organisation, false, $this->getUser(), new \DateTime());
 
 
         return new JsonResponse(array('title' => $translator->trans('Kinder dieses Schuljahr'), 'small' => '', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));

@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use Ambta\DoctrineEncryptBundle\Configuration\Encrypted;
 use ContainerM8BJPEV\getDoctrine_Orm_DefaultEntityManager_PropertyInfoExtractorService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -33,27 +32,23 @@ class Kind
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Encrypted()
      */
     private $allergie;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Encrypted()
      */
     private $medikamente;
 
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="text", nullable=true)
-     * @Encrypted()
      */
     private $vorname;
 
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="text", nullable=true)
-     * @Encrypted()
      */
     private $nachname;
 
@@ -86,7 +81,6 @@ class Kind
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Encrypted()
      */
     private $bemerkung;
 
@@ -174,7 +168,6 @@ class Kind
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
-     * @Encrypted()
      */
     private $masernImpfung;
 

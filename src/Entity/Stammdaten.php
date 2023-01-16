@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use Ambta\DoctrineEncryptBundle\Configuration\Encrypted;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -30,7 +29,6 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text", nullable=true)
-     * @Encrypted()
      * @var int
      */
     private $name;
@@ -38,14 +36,12 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text",nullable=true)
-     * @Encrypted()
      */
     private $vorname;
 
     /**
      * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text",nullable=true)
-     * @Encrypted()
      */
     private $strasse;
 
@@ -92,7 +88,6 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text",nullable=true)
-     * @Encrypted()
      */
     private $notfallkontakt;
 
@@ -106,7 +101,6 @@ class Stammdaten implements GroupSequenceProviderInterface
      * @Assert\Iban(groups={"Schulkind"})
      * @Assert\NotBlank(groups={"Schulkind","SchulkindSepa"})
      * @ORM\Column(type="text",nullable=true)
-     * @Encrypted()
      */
     private $iban;
 
@@ -119,14 +113,12 @@ class Stammdaten implements GroupSequenceProviderInterface
      * @Assert\Bic(groups={"Schulkind"})
      * @ORM\Column(type="text",nullable=true)
      * @Assert\NotBlank(groups={"Schulkind","SchulkindSepa"})
-     * @Encrypted()
      */
     private $bic;
 
     /**
      * @ORM\Column(type="text",nullable=true)
      * @Assert\NotBlank(groups={"Schulkind","SchulkindSepa"})
-     * @Encrypted()
      */
     private $kontoinhaber;
 
@@ -163,7 +155,6 @@ class Stammdaten implements GroupSequenceProviderInterface
      * @Assert\Email(groups = {"all"})
      * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text",nullable=true)
-     * @Encrypted()
      */
     private $email;
 
@@ -174,14 +165,12 @@ class Stammdaten implements GroupSequenceProviderInterface
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Encrypted()
      */
     private $abholberechtigter;
 
     /**
      * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text", nullable=true)
-     * @Encrypted()
      */
     private $notfallName;
     /**
@@ -231,7 +220,6 @@ class Stammdaten implements GroupSequenceProviderInterface
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Encrypted()
      */
     private $ipAdresse;
 
@@ -254,7 +242,6 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @Assert\NotBlank(groups = {"all"})
      * @ORM\Column(type="text", nullable=true)
-     * @Encrypted()
      */
     private $phoneNumber;
 
