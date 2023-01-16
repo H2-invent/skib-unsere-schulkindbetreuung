@@ -43,11 +43,11 @@ class ChildSearchService
             ->innerJoin('k.eltern', 'eltern')
             ->andWhere('eltern.created_at IS NOT NULL');
 
-        if (!$dateTo){
+        if (!$dateTo) {
             $qb->andWhere('k.startDate <= :fromDate')->setParameter('fromDate', $dateFrom);
-        }else{
+        } else {
             $qb->andWhere('k.startDate >= :fromDate')->setParameter('fromDate', $dateFrom)
-            ->andWhere('k.startDate <= :endDate')->setParameter('endDate', $dateTo);
+                ->andWhere('k.startDate <= :endDate')->setParameter('endDate', $dateTo);
             $diff = true;
         }
 
@@ -56,7 +56,7 @@ class ChildSearchService
         if (isset($parameters['schule']) && $parameters['schule'] !== "") {
 
             $schule = $this->em->getRepository(Schule::class)->find($parameters['schule']);
-            $qb->innerJoin('k.schule','schule')
+            $qb->innerJoin('k.schule', 'schule')
                 ->andWhere('schule = :schule')->setParameter('schule', $schule);
         } elseif ($stadt) {
             $qb->innerJoin('k.schule', 'schule')
@@ -88,10 +88,7 @@ class ChildSearchService
         }
 
 
-
-
-        $qb->addOrderBy('k.startDate', 'DESC')
-        ->addOrderBy('eltern.created_at','DESC');
+        $qb->addOrderBy('k.startDate', 'ASC');
 
         $query = $qb->getQuery();
         $kinder = $query->getResult();
@@ -101,12 +98,22 @@ class ChildSearchService
             $kindTmp = isset($kinderRes[$data->getTracing()]) ? $kinderRes[$data->getTracing()] : null;
             if (!$kindTmp) {
                 $kinderRes[$data->getTracing()] = $data;
+            } else {
+                if ($kindTmp->getStartDate() < $data->getStartDate()) {
+                    $kinderRes[$data->getTracing()] = $data;
+                } elseif ($kindTmp->getStartDate() == $data->getStartDate()) {
+                    if ($kindTmp->getEltern()->getCreatedAt() < $data->getEltern()->getCreatedAt()) {
+                        $kinderRes[$data->getTracing()] = $data;
+                    }
+                }
             }
         }
-        if (sizeof($parameters) > 0){
-            foreach ($kinderRes as $key=>$data){
-                $check = $this->checkKindOfParameter($parameters,$data,$diff);
-                if (!$check){
+
+
+        if (sizeof($parameters) > 0) {
+            foreach ($kinderRes as $key => $data) {
+                $check = $this->checkKindOfParameter($parameters, $data, $diff);
+                if (!$check) {
                     unset($kinderRes[$key]);
                 }
             }
@@ -116,58 +123,61 @@ class ChildSearchService
         return $kinderRes;
 
     }
-    public function checkKindOfParameter($parameters, Kind $kind, $diff = false){
+
+    public
+    function checkKindOfParameter($parameters, Kind $kind, $diff = false)
+    {
         $result = true;
-        if (sizeof($kind->getRealZeitblocks()) === 0 && !$diff){
+        if (sizeof($kind->getRealZeitblocks()) === 0 && !$diff) {
             return false;
         }
         //        //Schuljahr als Filter
-        if (isset($parameters['schuljahr']) && $parameters['schuljahr'] !== ""&& !$diff) {
+        if (isset($parameters['schuljahr']) && $parameters['schuljahr'] !== "" && !$diff) {
             $jahr = $this->em->getRepository(Active::class)->find($parameters['schuljahr']);
-          if ($kind->getRealZeitblocks()[0]->getActive() !== $jahr){
-              return false;
-          }
+            if ($kind->getRealZeitblocks()[0]->getActive() !== $jahr) {
+                return false;
+            }
         }
 //        //Wochentag als Filter
         if (isset($parameters['wochentag']) && $parameters['wochentag'] !== "") {
-            foreach ($kind->getRealZeitblocks() as $data){
-                if ($data->getWochentag() == $parameters['wochentag']){
+            foreach ($kind->getRealZeitblocks() as $data) {
+                if ($data->getWochentag() == $parameters['wochentag']) {
                     $result = true;
                     break;
                 }
                 $result = false;
             }
         }
-        if ($result === false){
+        if ($result === false) {
 
             return false;
         }
 //        //block ausgewählt
 //
         if (isset($parameters['block']) && $parameters['block'] !== "") {   // wenn der Block angezeigt werden soll, dann auch von gelöschten Blöcken
-            foreach ($kind->getRealZeitblocks() as $data){
-                if ($data->getId() == $parameters['block']){
+            foreach ($kind->getRealZeitblocks() as $data) {
+                if ($data->getId() == $parameters['block']) {
                     $result = true;
                     break;
                 }
                 $result = false;
             }
         } else {// sonst immer nur die Kinder anzeigen die an activen Blöcken hängen
-            foreach ($kind->getRealZeitblocks() as $data){
-                if ($data->getDeleted() === false ){
+            foreach ($kind->getRealZeitblocks() as $data) {
+                if ($data->getDeleted() === false) {
                     $result = true;
                     break;
                 }
-                $result  = false;
+                $result = false;
             }
         }
-        if ($result === false){
+        if ($result === false) {
             return false;
         }
 
         //Jahrgangsstufe uasgewält
         if (isset($parameters['klasse']) && $parameters['klasse'] !== "") {
-            if ($kind->getKlasse() != $parameters['klasse']){
+            if ($kind->getKlasse() != $parameters['klasse']) {
 
                 return false;
             }
