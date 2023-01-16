@@ -10,6 +10,7 @@ use App\Entity\Schule;
 use App\Entity\Sepa;
 use App\Entity\Zeitblock;
 use App\Service\ChildSearchService;
+use App\Service\WidgetService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,24 +23,26 @@ class WidgetController extends AbstractController
     /**
      * @Route("/org_child/show/widget/kidsToday", name="widget_kids_today")
      */
-    public function index(Request $request, TranslatorInterface $translator, ChildSearchService $childSearchService)
+    public function index(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
   
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $today = (new \DateTime())->format('w');
-        if ($today == 0) {
-            $today = 6;
-        } else {
-            $today = $today - 1;
+        $schulen = $this->getUser()->getSchulen();
+        $total = 0;
+        $now = new \DateTime();
+        foreach ($schulen as $data){
+            $total += $widgetService->calculateSchulenToday($data,$now);
         }
-        $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($organisation->getStadt());
-        $kinder = $childSearchService->searchChild(array('wochentag' => $today,'schuljahr'=>$active), $organisation, false, $this->getUser(), new \DateTime());
+
+        $today = (new \DateTime())->format('w');
 
 
-        return new JsonResponse(array('title' => $translator->trans('Anwesende Kinder'), 'small' => 'Nach Liste', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));
+
+
+        return new JsonResponse(array('title' => $translator->trans('Anwesende Kinder'), 'small' => 'Nach Liste', 'anzahl' => $total, 'symbol' => 'people'));
     }
 
     /**
@@ -75,34 +78,36 @@ class WidgetController extends AbstractController
     /**
      * @Route("/org_child/show/widget/kidsSchuljahr", name="widget_kids_schuljahr")
      */
-    public function schuljahr(Request $request, TranslatorInterface $translator, ChildSearchService $childSearchService)
+    public function schuljahr(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($organisation->getStadt());
-        $kinder = $childSearchService->searchChild(array('schuljahr'=>$active), $organisation, false, $this->getUser(), new \DateTime());
+        $schulen = $this->getUser()->getSchulen();
+        $total = 0;
+        $now = new \DateTime();
+        foreach ($schulen as $data){
+            $total += $widgetService->calculateSchulen($data,$now);
+        }
 
-
-        return new JsonResponse(array('title' => $translator->trans('Kinder dieses Schuljahr'), 'small' => '', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));
+        return new JsonResponse(array('title' => $translator->trans('Kinder dieses Schuljahr'), 'small' => '', 'anzahl' => $total, 'symbol' => 'people'));
     }
 
     /**
      * @Route("/org_child/show/widget/kidsinSchule", name="widget_kids_schule")
      */
-    public function childsInSchule(Request $request, TranslatorInterface $translator, ChildSearchService $childSearchService)
+    public function childsInSchule(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        if ($organisation != $this->getUser()->getOrganisation()) {
+        $schule = $this->getDoctrine()->getRepository(Schule::class)->findOneBy(array('organisation' => $organisation, 'id' => $request->get('schule_id')));
+
+        if ($organisation != $this->getUser()->getOrganisation() || !in_array($schule,$this->getUser()->getSchulen()->toArray())){
             throw new \Exception('Wrong Organisation');
         }
 
-        $stadt = $this->getUser()->getStadt();
-        $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findOneBy(array('organisation' => $organisation, 'id' => $request->get('schule_id')));
-        $kinder = $childSearchService->searchChild(array('schule' => $request->get('schule_id'),'schuljahr'=>$active->getId()), $organisation, false, $this->getUser(), new \DateTime());
-        return new JsonResponse(array('title' => $schule->getName(), 'small' => $translator->trans('Kinder angemeldet'), 'anzahl' => sizeof($kinder), 'symbol' => 'school'));
+
+        return new JsonResponse(array('title' => $schule->getName(), 'small' => $translator->trans('Kinder angemeldet'), 'anzahl' =>$widgetService->calculateSchulen($schule,new \DateTime()), 'symbol' => 'school'));
 
     }
 

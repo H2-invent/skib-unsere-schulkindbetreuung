@@ -9,6 +9,7 @@ use App\Entity\Schule;
 use App\Entity\Zeitblock;
 use App\Service\ChildInBlockService;
 use App\Service\ElternService;
+use App\Service\WidgetService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
@@ -20,11 +21,14 @@ class Kontingent extends AbstractExtension
     private $translator;
     private ElternService $elternService;
     private ChildInBlockService $childInBlockService;
-    public function __construct(TranslatorInterface $translator, ElternService $elternService, ChildInBlockService $childInBlockService)
+    private WidgetService $widgetService;
+
+    public function __construct(TranslatorInterface $translator, ElternService $elternService, ChildInBlockService $childInBlockService, WidgetService  $widgetService)
     {
         $this->translator = $translator;
         $this->elternService = $elternService;
         $this->childInBlockService = $childInBlockService;
+        $this->widgetService = $widgetService;
     }
 
     public function getFunctions()
@@ -32,6 +36,7 @@ class Kontingent extends AbstractExtension
         return array(
             new TwigFunction('getBerufstatig', array($this, 'getBerufstatig')),
             new TwigFunction('getChildsOnSpecificTime', array($this, 'getChildsOnSpecificTime')),
+            new TwigFunction('getChildsOnSpecificTimeCached', array($this, 'getChildsOnSpecificTimeCached')),
             new TwigFunction('getChildsOnSpecificTimeAndFuture', array($this, 'getChildsOnSpecificTimeAndFuture')),
         );
     }
@@ -45,6 +50,13 @@ class Kontingent extends AbstractExtension
     public function getChildsOnSpecificTime(Zeitblock $zeitblock,\DateTime $dateTime)
     {
         $res = $this->childInBlockService->getCurrentChildOfZeitblock($zeitblock,$dateTime);
+        return $res;
+
+    }
+    public function getChildsOnSpecificTimeCached(Zeitblock $zeitblock)
+    {
+        $now = new \DateTime();
+        $res = $this->widgetService->calcBlocksNumberNow($zeitblock,$now);
         return $res;
 
     }
