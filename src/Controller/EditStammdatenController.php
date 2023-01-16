@@ -46,7 +46,7 @@ class EditStammdatenController extends AbstractController
 
             $input = $form->getData();
 
-            if ($input['seccode'] == $adresse->getSecCode() || $this->getUser()->getOrganisation()->getStadt()->getNoSecCodeForChangeChilds()) {
+            if ($input['seccode'] == $adresseTmp->getSecCode() || $this->getUser()->getOrganisation()->getStadt()->getNoSecCodeForChangeChilds()) {
 
 
                 return $this->redirectToRoute('edit_stammdaten_edit', array('eltern_id' => $adresse->getId()));
