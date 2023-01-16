@@ -33,7 +33,7 @@ class ChildSearchService
     /**
      * @return Kind[]
      */
-    public function searchChild($parameters, ?Organisation $organisation, $isApp, User $user, ?\DateTime $dateFrom = null, ?\DateTime $dateTo = null, Stadt $stadt = null)
+    public function searchChild($parameters, ?Organisation $organisation, $isApp, ?User $user, ?\DateTime $dateFrom = null, ?\DateTime $dateTo = null, Stadt $stadt = null)
     {
         if (!$dateFrom) {
             $dateFrom = new \DateTime();
@@ -90,7 +90,8 @@ class ChildSearchService
 
 
 
-        $qb->addOrderBy('k.startDate', 'ASC');
+        $qb->addOrderBy('k.startDate', 'DESC')
+        ->addOrderBy('eltern.created_at','DESC');
 
         $query = $qb->getQuery();
         $kinder = $query->getResult();
@@ -100,22 +101,17 @@ class ChildSearchService
             $kindTmp = isset($kinderRes[$data->getTracing()]) ? $kinderRes[$data->getTracing()] : null;
             if (!$kindTmp) {
                 $kinderRes[$data->getTracing()] = $data;
-            } else {
-                if ($kindTmp->getStartDate() < $data->getStartDate()) {
-                    $kinderRes[$data->getTracing()] = $data;
-                } elseif ($kindTmp->getStartDate() == $data->getStartDate()) {
-                    if ($kindTmp->getEltern()->getCreatedAt() < $data->getEltern()->getCreatedAt()) {
-                        $kinderRes[$data->getTracing()] = $data;
-                    }
+            }
+        }
+        if (sizeof($parameters) > 0){
+            foreach ($kinderRes as $key=>$data){
+                $check = $this->checkKindOfParameter($parameters,$data,$diff);
+                if (!$check){
+                    unset($kinderRes[$key]);
                 }
             }
         }
-        foreach ($kinderRes as $key=>$data){
-            $check = $this->checkKindOfParameter($parameters,$data,$diff);
-            if (!$check){
-                unset($kinderRes[$key]);
-            }
-        }
+
 
         return $kinderRes;
 
