@@ -35,12 +35,14 @@
                                                 {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
                                                     <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}"
                                                        class="deleteAjaxConfirm"><i class="material-icons">check</i></a>
+                                                    <a href="{{ path('kontingent_accept_kid_silent',{'block_id':block.id,'kind_id':k.id}) }}"
+                                                       class="deleteAjaxConfirm" data-title="{{ 'Achtung!!! Keine Bestätigungs E-mail'|trans }}" data-text="{{ 'Dieses Kind zulassen aber KEINE E-Mail versenden.'|trans }}"><i class="material-icons">voice_over_off</i></a>
                                                     <a href="{{ path('kontingent_remove_kid',{'block_id':block.id,'kind_id':k.id}) }}"
                                                        class="deleteAjaxConfirm"><i class="material-icons">delete</i>
                                                     </a>
 
                                                 {% endif %}
-                                                <a href="{{ path('child_detail',{'kind_id':k.id}) }}"><i
+                                                <a href="{{ path('child_detail',{'kind_id':k.id,'date':k.startDate|date('d.m.Y')}) }}"><i
                                                             class="material-icons">info</i>
                                                 </a>
                                                 {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
@@ -146,7 +148,14 @@
         $(document).on('click', '.deleteAjaxConfirm', function (e) {
             e.preventDefault();
             var url = $(this).attr('href');
-
+            var $text = $(this).data('text');
+            var $title = $(this).data('title');
+            if ($text){
+                var confirmText = $text
+            }
+            if ($title){
+                confirmTitle = $title;
+            }
             $.confirm({
                 title: confirmTitle,
                 content: confirmText,

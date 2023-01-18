@@ -20,12 +20,13 @@
                                         <button class="btn btn-secondary dropdown-toggle" type="button"
                                                 id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false">
-                                            {% trans %}Alle Schuljahre{% endtrans %}
+                                            {% if active is not null %}{{ active.von|date('d.m.Y') }}
+                                                - {{ active.bis|date('d.m.Y') }}{% else %}{% trans %}Alle Schuljahre{% endtrans %}{% endif %}
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a class="schuljahrSelector dropdown-item" data-type="schuljahr"
                                                data-value="null"
-                                               href="{{ path('stadt_bericht_index',{'stadt_id':stadt.id}) }}"> {% trans %}Alle Schuljahre{% endtrans %}</a>
+                                               href="{{ path('stadt_bericht_index',{'stadt_id':stadt.id,'schuljahr':'all'}) }}"> {% trans %}Alle Schuljahre{% endtrans %}</a>
 
                                             {% for s in schuljahre %}
                                                 <a class="schuljahrSelector dropdown-item" data-type="schuljahr"
@@ -68,7 +69,7 @@
                                         <td>{{ b.ganztagString() }}</td>
                                         <td>{{ b.schule.organisation.name }}</td>
                                         <td>{{ b.schule.name }}</td>
-                                        <td>{{ getChildsOnSpecificTimeAndFuture(b,b.von)|length }}</td>
+                                        <td>{{ getChildsOnSpecificTimeCached(b) }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

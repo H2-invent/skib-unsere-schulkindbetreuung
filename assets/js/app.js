@@ -243,7 +243,10 @@ $(document).on('click', '.deleteBtn', function (e) {
     var type = $(this).attr('type');
     sucessFkt = undefined;
     sucessFkt = $(this).attr('successFKT');
-
+    var $text = $(this).attr('text');
+    if ($text){
+        var confirmText = $text
+    }
     $.confirm({
         title: confirmTitle,
         content: confirmText,

@@ -9,6 +9,7 @@ use App\Entity\Stadt;
 use App\Entity\Zeitblock;
 use App\Service\ChildInBlockService;
 use App\Service\ChildSearchService;
+use App\Service\WidgetService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,7 +66,7 @@ class WidgetStadtController extends AbstractController
     /**
      * @Route("/city_dashboard/show/widget/kidsOverYears", name="widget_stadt_over_years")
      */
-    public function overYears(Request $request, TranslatorInterface $translator, ChildInBlockService $childInBlockService)
+    public function overYears(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
         $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt_id'));
         if ($stadt != $this->getUser()->getStadt()) {
@@ -74,20 +75,14 @@ class WidgetStadtController extends AbstractController
         $active = $this->getDoctrine()->getRepository(Active::class)->findBy(array('stadt' => $stadt));
         $kinder = array();
         foreach ($active as $data) {
-            $child = array();
-            foreach ($stadt->getSchules() as $schule){
-                $child = array_merge($child,$childInBlockService->getChildFOrShoolinFuture($schule,$data,$data->getVon()));
-            }
+            $formatDate = $data->getVon()->format('d.m.Y');
 
-            $kinder[] = array('active' => $data, 'kinder' => sizeof($child));
+
+                $kinder[$formatDate] = $widgetService->calcChildsFromSchuljahrAndCity($data,$data->getBis());
+
         }
 
-        usort($kinder, function ($a, $b) {
-            if ($a['active']->getVon() == $b['active']->getVon()) {
-                return 0;
-            }
-            return ($a['active']->getVon() < $b['active']->getVon()) ? -1 : 1;
-        });
+dump($kinder);
 
         return $this->render('widget_stadt/chartKids.twig', array('kinder' => $kinder));
 

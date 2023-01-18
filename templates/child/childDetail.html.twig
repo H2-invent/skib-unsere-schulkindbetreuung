@@ -7,7 +7,7 @@
                 <div class=" col-12 card">
                     <div class="card-header">
                         <h1>{{ k.vorname }} {{ k.nachname }}<a
-                                    href="{{ path('child_detail_print',{'kind_id':k.id}) }}" class="ml-2"><i
+                                    href="{{ path('child_detail_print',{'kind_id':k.id,'date':date|date('d.m.Y')}) }}" class="ml-2"><i
                                         class="material-icons">print</i></a>
                             {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
                                 <a

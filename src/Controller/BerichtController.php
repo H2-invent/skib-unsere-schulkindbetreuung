@@ -41,9 +41,9 @@ class BerichtController extends AbstractController
         }
 
         $query = $qb->getQuery();
-        $blocks =  $query->getResult();
+        $blocks = $query->getResult();
         $schuljahre = $this->getDoctrine()->getRepository(Active::class)->findBy(array('stadt' => $stadt));
-        return $this->render('bericht/index.html.twig', array('blocks' =>$blocks , 'schuljahre' => $schuljahre, 'active'=>$jahr,'stadt' => $stadt));
+        return $this->render('bericht/index.html.twig', array('blocks' => $blocks, 'schuljahre' => $schuljahre, 'active' => $jahr, 'stadt' => $stadt));
     }
 
     /**
@@ -73,30 +73,16 @@ class BerichtController extends AbstractController
 
         foreach ($schuljahr as $data) {
             $blocks = array_merge($blocks, $data->getBlocks()->toArray());
-            $kinderT = array_merge($kinderT, $kinder = $childSearchService->searchChild(array('schuljahr' => $data->getId()), null, false, $this->getUser(), new \DateTime(), null, $stadt));
+            $kinder = $childSearchService->searchChild(array('schuljahr' => $data->getId()), null, false, null, $data->getBis(), null, $stadt);
+            foreach ($kinder as $data2) {
+                $elternT[] = $elternService->getElternForSpecificTimeAndKind($data2, $data->getBis());
+            }
         }
 
 
-        $kinder = array_unique($kinderT);
+        $eltern = array_unique($elternT);// Return the excel file as an attachment
 
 
-        foreach ($kinder as $data) {
-            $elternT[] = $data->getEltern();
-        }
-        foreach ($elternT as $data) {
-            $eltern[] = $elternService->getLatestElternFromCEltern($data);
-        }
-        $eltern = array_unique($eltern);
-
-
-
-
-        // Return the excel file as an attachment
-        ;
-
-              return $this->file($stadtBerichtService->generateExcel($blocks,$kinder,$eltern,$stadt),'Bericht.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
-
-
-
+        return $this->file($stadtBerichtService->generateExcel($blocks, $kinder, $eltern, $stadt), 'Bericht.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
     }
 }

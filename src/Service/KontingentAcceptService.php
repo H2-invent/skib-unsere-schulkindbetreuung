@@ -22,7 +22,7 @@ class KontingentAcceptService
         $this->elternService = $elternService;
     }
 
-    public function acceptKind(Zeitblock $zeitblock, Kind $kind)
+    public function acceptKind(Zeitblock $zeitblock, Kind $kind,$silent=false)
     {
 
         if (!in_array($kind, $zeitblock->getKinderBeworben()->toArray())) {
@@ -36,7 +36,10 @@ class KontingentAcceptService
         $this->em->persist($kind);
         $this->em->persist($kindWorkingcopy);
         $this->em->flush();
-        $this->beworbenCheck($kind);
+        if (!$silent){
+            $this->beworbenCheck($kind);
+        }
+
         return true;
     }
 
