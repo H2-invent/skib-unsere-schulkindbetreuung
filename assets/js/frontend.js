@@ -87,6 +87,10 @@ $(document).on('click', '.deleteBtn', function (e) {
     e.preventDefault();
     var url = $(this).attr('href');
     var type = $(this).attr('type');
+    var $text = $(this).attr('text');
+    if (text){
+       var confirmText = $text
+    }
     $.confirm({
         title: confirmTitle,
         content: confirmText,
