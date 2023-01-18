@@ -81,6 +81,7 @@ class StatistikGenerateCommand extends Command
         $progressBar->start();
         foreach ($activity as $data3) {
             $now = $data3->getBis();
+            $cache->delete('schuljahr_' . $data3->getId());
             $this->widgetService->calcChildsFromSchuljahrAndCity($data3, $now);
             $progressBar->advance();
         }
