@@ -82,7 +82,6 @@ class WidgetStadtController extends AbstractController
 
         }
 
-dump($kinder);
 
         return $this->render('widget_stadt/chartKids.twig', array('kinder' => $kinder));
 

@@ -35,10 +35,21 @@ class BerichtController extends AbstractController
         }
         $jahr = null;
         if ($request->get('schuljahr')) {
-            $jahr = $this->getDoctrine()->getRepository(Active::class)->find($request->get('schuljahr'));
+            if ($request->get('schuljahr') === 'all') {
+                $jahr = null;
+            } else {
+                $jahr = $this->getDoctrine()->getRepository(Active::class)->find($request->get('schuljahr'));
+            }
+        } else {
+            $jahr = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromCity($stadt, new \DateTime());
+        }
+
+
+        if ($jahr) {
             $qb->andWhere('b.active = :jahr')
                 ->setParameter('jahr', $jahr);
         }
+
 
         $query = $qb->getQuery();
         $blocks = $query->getResult();
