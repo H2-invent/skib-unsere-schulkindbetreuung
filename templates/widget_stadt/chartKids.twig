@@ -21,10 +21,10 @@
 
     var data = [
 
-        {% for k in kinder %}
+        {% for key, k in kinder %}
         {
-            x: '{{ k.active.von|date('Y-m-d') }}',
-            y: {{ k.kinder }}
+            x: '{{ key }}',
+            y: {{ k }}
         },
 
         {% endfor %}

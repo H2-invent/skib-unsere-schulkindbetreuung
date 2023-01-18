@@ -53,22 +53,39 @@ class StatistikGenerateCommand extends Command
 
             $cache->delete('schule_today_' . $data->getId());
 
-            $this->widgetService->calculateSchulen($data,$now);
+            $this->widgetService->calculateSchulen($data, $now);
 
             $this->widgetService->calculateSchulenToday($data, $now);
-           $progressBar->advance();
+            $progressBar->advance();
         }
         $progressBar->finish();
         $zeitblocks = $this->em->getRepository(Zeitblock::class)->findAll();
         $io->info('generate Zeitblocks');
         $progressBar = new ProgressBar($output, sizeof($zeitblocks));
         $progressBar->start();
-        foreach ($zeitblocks as $data2){
-            $cache->delete('zeitblock_' . $data2->getId());
-            $this->widgetService->calcBlocksNumberNow($data2,$now);
+        foreach ($zeitblocks as $data2) {
+            $now = new \DateTime();
+            if ($data2->getActive()->getBis() < $now) {
+                $now = $data2->getActive()->getBis();
+                $cache->delete('zeitblock_' . $data2->getId());
+                $this->widgetService->calcBlocksNumberNow($data2, $now);
+            }
             $progressBar->advance();
         }
         $progressBar->finish();
+
+        $activity = $this->em->getRepository(Active::class)->findAll();
+
+        $io->info('generate All Childs per SchoolPerSchuljahr');
+        $progressBar = new ProgressBar($output, sizeof($activity));
+        $progressBar->start();
+        foreach ($activity as $data3) {
+            $now = $data3->getBis();
+            $this->widgetService->calcChildsFromSchuljahrAndCity($data3, $now);
+            $progressBar->advance();
+        }
+        $progressBar->finish();
+
 
         $io->success('We genearate a lot of cache values ;)');
 

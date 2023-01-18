@@ -67,4 +67,20 @@ class WidgetService
         });
         return $value;
     }
+
+    public function calcChildsFromSchuljahrAndCity(Active $active, \DateTime $dateTime)
+    {
+        $cache = new FilesystemAdapter();
+        $value = $cache->get('schuljahr_' . $active->getId(), function (ItemInterface $item) use ($active, $dateTime) {
+            $total = 0;
+            foreach ($active->getStadt()->getSchules() as $data){
+                $total +=  sizeof($this->childSearchService->searchChild(array( 'schuljahr' => $active->getId(), 'schule' =>$data->getId()), null, false, null, $dateTime));
+            }
+
+
+            return $total;
+        });
+        return $value;
+    }
+
 }
