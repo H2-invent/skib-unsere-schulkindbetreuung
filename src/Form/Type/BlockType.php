@@ -8,14 +8,17 @@
 
 namespace App\Form\Type;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -34,8 +37,8 @@ class BlockType extends AbstractType
     {
 
         $builder
-            ->add('von', TimeType::class, array('widget'=>'single_text','label' => 'Betreuungsbeginn', 'required' => true, 'translation_domain' => 'form','attr'=>array('cl')))
-            ->add('bis', TimeType::class, array('widget'=>'single_text','label' => 'Betreuungsende', 'required' => true, 'translation_domain' => 'form'))
+            ->add('von', TimeType::class, array('widget' => 'single_text', 'label' => 'Betreuungsbeginn', 'required' => true, 'translation_domain' => 'form', 'attr' => array('cl')))
+            ->add('bis', TimeType::class, array('widget' => 'single_text', 'label' => 'Betreuungsende', 'required' => true, 'translation_domain' => 'form'))
             ->add('min', NumberType::class, array('label' => 'Mindestanzahl an Kindern (Leerlassen wenn keine Begrenzung)', 'required' => false, 'translation_domain' => 'form'))
             ->add('max', NumberType::class, array('label' => 'Maximalanzahl an Kindern (Leerlassen wenn keine Begrenzung)', 'required' => false, 'translation_domain' => 'form'))
             ->add('ganztag', ChoiceType::class, [
@@ -49,6 +52,19 @@ class BlockType extends AbstractType
                 'entry_options' => array('label' => 'Preis', 'required' => true, 'translation_domain' => 'form')
 
             ])
+            ->add('hidePrice', CheckboxType::class, ['required' => false, 'label' => 'Preis in der Anzeige verstecken', 'translation_domain' => 'form'])
+            ->add('translations', TranslationsType::class, [
+
+                    'fields' => [
+                        'extraText' => [
+
+                            'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
+                            'label' => 'Text welcher bei einem Zeitblock angezeigt werden soll',
+                            'translation_domain' => 'form'
+                        ]
+                    ]
+                ]
+            )
             ->add('save', SubmitType::class, ['label' => 'Speichern', 'translation_domain' => 'form']);
 
 
@@ -78,7 +94,7 @@ class BlockType extends AbstractType
             'expanded' => false,
             'choices' => $vorganger,
             'group_by' => function (Zeitblock $zeitblock, $key, $value) {
-              return $zeitblock->getWochentagString();
+                return $zeitblock->getWochentagString();
             },
         ]);
 

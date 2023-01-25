@@ -338,7 +338,7 @@ class Organisation implements TranslatableInterface
     }
 
     /**
-     * @return Collection|schule[]
+     * @return Collection|Schule[]
      */
     public function getSchule(): Collection
     {

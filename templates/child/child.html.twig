@@ -8,7 +8,7 @@
                 <div class=" col-12 card">
                     <div class="card-header">
                         <h1> {% if is_granted('ROLE_ORG_CHILD_CHANGE') %} Kind hinzufügen  <a target="_blank"
-                                                                                              href="{{ path('workflow_start',{'slug':organisation.stadt.slug}) }}">
+                                                                                              href="{{ path('child_add_new') }}">
                                     <button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
                                         <i class="material-icons">add</i>
                                     </button></a>{% endif %}

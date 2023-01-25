@@ -27,7 +27,7 @@ class CopySchuljahrCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Add a short description for your command')
+            ->setDescription('Copy a schuljahr with the zeitblocks')
             ->addArgument('id', InputArgument::OPTIONAL, 'This is the Id of the schuljahr you want to copy')
         ;
     }
@@ -38,7 +38,7 @@ class CopySchuljahrCommand extends Command
         $id = $input->getArgument('id');
 
         if ($id) {
-            $io->note(sprintf('You passed an argument: %s', $id));
+            $io->note(sprintf('We copy the Schuljahr with ID: %s', $id));
             $year = $this->em->getRepository(Active::class)->find($id);
             $this->copySchuljahr->copyYear($year);
 

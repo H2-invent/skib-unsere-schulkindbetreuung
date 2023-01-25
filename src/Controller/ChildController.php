@@ -28,6 +28,15 @@ class ChildController extends AbstractController
 {
     private $wochentag;
     private $translator;
+    public static $WEEKDAY = [
+        'Montag',
+        'Dienstag',
+        'Mittwoch',
+        'Donnerstag',
+        'Freitag',
+        'Samstag',
+        'Sonntag',
+    ];
 
     public function __construct(TranslatorInterface $translator)
     {
@@ -200,7 +209,7 @@ class ChildController extends AbstractController
             return $printService->printChildList($kinderU, $organisation, $text, $fileName, $TCPDFController, $request->get('wochentag') !== "" ? [$request->get('wochentag')] : [0, 1, 2, 3, 4], 'D');
 
         } elseif ($request->get('spread')) {
-            return $this->file($childExcelService->generateExcel($kinderU, $organisation->getStadt()), $fileName . '.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
+            return $this->file($childExcelService->generateExcel($kinderU, $organisation->getStadt(), $request->get('wochentag') !== "" ? $request->get('wochentag') : null,), $fileName . '.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
 
         } else {
             return $this->render('child/childTable.html.twig', [
@@ -225,7 +234,18 @@ class ChildController extends AbstractController
         }
         try {
             $title = $translator->trans('Email mit Sicherheitscode');
-            $content = $this->renderView('email/resendSecCode.html.twig', array('eltern' => $elternService->getLatestElternFromChild($kind), 'stadt' => $kind->getSchule()->getStadt()));
+            $eltern = $kind->getEltern();
+            if (!$eltern->getSecCode()){
+                $elternAll = $this->getDoctrine()->getRepository(Stammdaten::class)->findBy(array('tracing'=>$eltern->getTracing()));
+                $secCode = substr(str_shuffle(MD5(microtime())), 0, 6);
+                $em = $this->getDoctrine()->getManager();
+                foreach ($elternAll as $data){
+                    $data->setSecCode($secCode);
+                    $em->persist($data);
+                }
+                $em->flush();
+            }
+            $content = $this->renderView('email/resendSecCode.html.twig', array('eltern' => $eltern, 'stadt' => $kind->getSchule()->getStadt()));
             $mailerService->sendEmail(
                 $kind->getSchule()->getOrganisation()->getName(),
                 $kind->getSchule()->getOrganisation()->getEmail(),
@@ -239,5 +259,16 @@ class ChildController extends AbstractController
             $text = $translator->trans('Sicherheitscode konnte nicht erneut zugesendet');
         }
         return $this->redirectToRoute('child_show', ['id' => $kind->getSchule()->getOrganisation()->getId(), 'snack' => $text]);
+    }
+
+    /**
+     * @Route("/org_child/addNew", name="child_add_new")
+     */
+    public function addNewChild(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
+    {
+
+        $response = $this->redirectToRoute('workflow_start', array('slug' => $this->getUser()->getOrganisation()->getStadt()->getSlug()));
+        $response->headers->clearCookie('KindID');
+        return $response;
     }
 }

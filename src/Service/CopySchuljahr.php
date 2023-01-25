@@ -26,18 +26,22 @@ class CopySchuljahr
         $newYear->setBis($active->getBis());
         $newYear->setVon($active->getVon());
         foreach ($active->getBlocks() as $data) {
-            $newBlock = new Zeitblock();
-            $newBlock->setVon($data->getVon());
-            $newBlock->setBis($data->getBis());
-            $newBlock->setDeleted(false);
-            $newBlock->setGanztag($data->getGanztag());
-            $newBlock->setMax($data->getMax());
-            $newBlock->setMin($data->getMin());
-            $newBlock->setPreise($data->getPreise());
-            $newBlock->setSchule($data->getSchule());
-            $newBlock->setWochentag($data->getWochentag());
-            $this->em->persist($newBlock);
-            $newYear->addBlocks($newBlock);
+            if (!$data->getDeleted()){
+                $newBlock = new Zeitblock();
+                $newBlock->setVon($data->getVon());
+                $newBlock->setBis($data->getBis());
+                $newBlock->setDeleted(false);
+                $newBlock->setGanztag($data->getGanztag());
+                $newBlock->setMax($data->getMax());
+                $newBlock->setMin($data->getMin());
+                $newBlock->setPreise($data->getPreise());
+                $newBlock->setSchule($data->getSchule());
+                $newBlock->setWochentag($data->getWochentag());
+                $newBlock->setCloneOf($data);
+                $this->em->persist($newBlock);
+                $newYear->addBlocks($newBlock);
+            }
+
         }
         $this->em->persist($newYear);
         $this->em->flush();

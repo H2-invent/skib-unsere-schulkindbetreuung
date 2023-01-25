@@ -58,28 +58,36 @@ class PreisListeService
         $req['ganztag'] = $artIst;
 
         $qb = $this->em->getRepository(Zeitblock::class)->createQueryBuilder('zeitblock');
-        $qb->andWhere('zeitblock.deleted = false')
+        $qb
+            ->andWhere('zeitblock.deleted = false')
             ->andWhere('zeitblock.active = :active')
             ->andWhere('zeitblock.schule = :schule')
-            ->groupBy('zeitblock.ganztag')
             ->setParameter('active',$schuljahr)
             ->setParameter('schule',$schule);
         $query = $qb->getQuery();
         $checkBlock =$query->getResult();
-        $onlyOneType=sizeof($checkBlock)>1?false:true;
+        dump($checkBlock[0]);
 
+        $onlyOneType= true;
+        $first = $checkBlock[0]->getGanztag();
+        foreach ( $checkBlock as $data){
+            if ($first != $data->getGanztag() ){
+                $onlyOneType = false;
+                break;
+            }
+        }
 
-         if($onlyOneType==1){
-            $artIst = $checkBlock[0]->getGanztag();
+         if($onlyOneType==true){
+            $artIst = $first;
             $req['ganztag'] = $artIst;
         }
+         dump($req);
         $block = $this->em->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
 
         $renderBlocks = array();
         foreach ($block as $data) {
             $renderBlocks[$data->getWochentag()][] = $data;
         }
-
         return $this->templating->render('preisliste/index.html.twig', [
             'schulen' => $schulen,
             'gehalt' => $gehalt,

@@ -5,13 +5,17 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Yaml\Tests\A;
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
+
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ZeitblockRepository")
  */
-class Zeitblock
+class Zeitblock implements TranslatableInterface
 {
+    use TranslatableTrait;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -106,6 +110,21 @@ class Zeitblock
      */
     private $deaktiviert;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $hidePrice;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Zeitblock::class, inversedBy="parentOf")
+     */
+    private $cloneOf;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Zeitblock::class, mappedBy="cloneOf")
+     */
+    private $parentOf;
+
     public function __construct()
     {
         $this->kind = new ArrayCollection();
@@ -114,6 +133,7 @@ class Zeitblock
         $this->rechnungen = new ArrayCollection();
         $this->nachfolger = new ArrayCollection();
         $this->vorganger = new ArrayCollection();
+        $this->parentOf = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -546,6 +566,60 @@ class Zeitblock
     public function setDeaktiviert(?bool $deaktiviert): self
     {
         $this->deaktiviert = $deaktiviert;
+
+        return $this;
+    }
+
+    public function getHidePrice(): ?bool
+    {
+        return $this->hidePrice;
+    }
+
+    public function setHidePrice(bool $hidePrice): self
+    {
+        $this->hidePrice = $hidePrice;
+
+        return $this;
+    }
+
+    public function getCloneOf(): ?self
+    {
+        return $this->cloneOf;
+    }
+
+    public function setCloneOf(?self $cloneOf): self
+    {
+        $this->cloneOf = $cloneOf;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getParentOf(): Collection
+    {
+        return $this->parentOf;
+    }
+
+    public function addParentOf(self $parentOf): self
+    {
+        if (!$this->parentOf->contains($parentOf)) {
+            $this->parentOf[] = $parentOf;
+            $parentOf->setCloneOf($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParentOf(self $parentOf): self
+    {
+        if ($this->parentOf->removeElement($parentOf)) {
+            // set the owning side to null (unless already changed)
+            if ($parentOf->getCloneOf() === $this) {
+                $parentOf->setCloneOf(null);
+            }
+        }
 
         return $this;
     }

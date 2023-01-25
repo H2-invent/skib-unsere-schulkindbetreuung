@@ -40,10 +40,10 @@ class WorkflowAbschluss
         }
 
 
-        if (!$adresseOld) {
-            $adresseAktuell->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
-        } else {
+        if ($adresseOld) {
             $adresseAktuell->setSecCode($adresseOld->getSecCode());
+        } else {
+            $adresseAktuell->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
         }
 
 

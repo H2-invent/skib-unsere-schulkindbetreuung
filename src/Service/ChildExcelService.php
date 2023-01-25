@@ -9,6 +9,7 @@
 namespace App\Service;
 
 
+use App\Controller\ChildController;
 use App\Controller\LoerrachWorkflowController;
 use App\Entity\Kind;
 use App\Entity\Stadt;
@@ -42,18 +43,17 @@ class ChildExcelService
         $this->berechnungsService = $berechnungsService;
     }
 
-    public function generateExcel($kinder, Stadt $stadt)
+    public function generateExcel($kinder, Stadt $stadt, $wochentag)
     {
         $beruflicheSituation = new LoerrachWorkflowController($this->translator);
         $this->stadt = $stadt;
         $this->alphas = $this->createColumnsArray('ZZ');
         $count = 0;
-        $this->writeSpreadsheet($kinder);
-        $this->writeSpreadsheet($kinder, $this->translator->trans('Montag'), [0]);
-        $this->writeSpreadsheet($kinder, $this->translator->trans('Dienstag'), [1]);
-        $this->writeSpreadsheet($kinder, $this->translator->trans('Mittwoch'), [2]);
-        $this->writeSpreadsheet($kinder, $this->translator->trans('Donnerstag'), [3]);
-        $this->writeSpreadsheet($kinder, $this->translator->trans('Freitag'), [4]);
+        if ($wochentag=== null){
+            $this->writeSpreadsheet($kinder);
+        }else{
+            $this->writeSpreadsheet($kinder, $this->translator->trans(ChildController::$WEEKDAY[$wochentag]), [$wochentag]);
+        }
 
         $this->spreadsheet->getSheetByName('Kinder');
         $sheetIndex = $this->spreadsheet->getIndex(
