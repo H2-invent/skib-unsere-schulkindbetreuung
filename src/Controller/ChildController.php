@@ -225,6 +225,18 @@ class ChildController extends AbstractController
         }
         try {
             $title = $translator->trans('Email mit Sicherheitscode');
+            $eltern = $kind->getEltern();
+            if (!$eltern->getSecCode()){
+                $elternAll = $this->getDoctrine()->getRepository(Stammdaten::class)->findBy(array('tracing'=>$eltern->getTracing()));
+                $secCode = substr(str_shuffle(MD5(microtime())), 0, 6);
+                $em = $this->getDoctrine()->getManager();
+                foreach ($elternAll as $data){
+                    $data->setSecCode($secCode);
+                    $em->persist($data);
+                }
+                $em->flush();
+            }
+
             $content = $this->renderView('email/resendSecCode.html.twig', array('eltern' => $elternService->getLatestElternFromChild($kind), 'stadt' => $kind->getSchule()->getStadt()));
             $mailerService->sendEmail(
                 $kind->getSchule()->getOrganisation()->getName(),

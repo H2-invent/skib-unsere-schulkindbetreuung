@@ -34,7 +34,7 @@ class WorkflowAbschluss
         $kundennummern = array();
         $adresseAktuell->setCreatedAt(new \DateTime());//setzte die aktuelle Zeit als created At
         // es gibt bereits eine alte Historie, diese besitzt schon ein Fin
-        $adresseOld = $this->em->getRepository(Stammdaten::class)->findOneBy(array('tracing' => $adresseAktuell->getTracing()), array('created_at' => 'ASC'));
+        $adresseOld = $this->em->getRepository(Stammdaten::class)->findLatestStammdatenByStartDate( $adresseAktuell);
         if ($adresseOld) {
             $kundennummern = $adresseOld->getKundennummerns();
         }
