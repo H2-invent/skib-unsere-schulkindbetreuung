@@ -1,0 +1,25 @@
+{% extends 'email/base.html.twig' %}
+{% block header %}
+    {% trans %}Ende der Schulkindbetreuung{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    {% if text is defined %}
+    <p class="text-center">{{text}}<br>
+{% endif %}
+    <b> {{ 'Guten Tag'|trans }} {{ stammdaten.vorname }} {{ stammdaten.name }}</b> </p>
+    <p class="text-center">{% trans with {'{date}':schuljahr.bis|date('d.m.Y'),'{klasse}':kind.klasseString, '{name}':kind.vorname~' '~kind.nachname} %}Ihr Kind {name} hat nach diesem Schuljahr das Ende der {klasse} erreicht.
+            Aus diesem Grund ist Ihr Kind nach dem {date} nicht mehr für die Schulkindbetreuung angemeldet.<br>
+            Somit ist der <b>letzte Tag der Betreuung </b> für {name} der <b>{date}</b>{% endtrans %}</p>
+
+
+
+    <br>
+    <br>
+    <p class="text-center">{% trans %}Wir bedanken uns bei Ihnen für das entgegengebrachte Vertrauen und wünschen Ihnen und Ihrem Kind alles Gute für die Zukunft{% endtrans %}<br>
+    <b>{{ kind.schule.organisation.name }}</b></p>
+
+
+{% endblock %}
+
+

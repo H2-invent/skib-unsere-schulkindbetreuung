@@ -6,7 +6,8 @@
             {% endif %}
             <div class="card-body">
                 <b>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</b><br>
-                {{ 'Grundgebühr'|trans }}: {{ b.preise[gehaltIst]|number_format(2,',') }}€<br>
+                {% if not b.hidePrice%}{{ 'Grundgebühr'|trans }}: {{ b.preise[gehaltIst]|number_format(2,',') }}€<br>{% endif %}
+                {% if b.translate.extraText != ''%} {{ b.translate.extraText|raw }}   <br>{% endif %}
             </div>
         </div>
 
