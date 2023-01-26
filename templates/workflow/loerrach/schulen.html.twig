@@ -69,13 +69,19 @@
                                                             <div class="dropdown-menu dropdown-menu-left"
                                                                  aria-labelledby="ex2">
                                                                 <a href="{{ path('loerrach_workflow_schulen_kind_edit', {'kind_id':k.id,'slug':stadt.slug}) }}"
-                                                                   class=" loadContent dropdown-item"><i class="fa fa-edit"></i> {% trans %}Kinderdaten bearbeiten{% endtrans %}</a>
+                                                                   class=" loadContent dropdown-item"><i
+                                                                            class="fa fa-edit"></i> {% trans %}Kinderdaten bearbeiten{% endtrans %}
+                                                                </a>
                                                                 <a href="{{ path('loerrach_workflow_schulen_kind_zeitblock', {'kind_id':k.id,'slug':stadt.slug}) }}"
-                                                                   class=" loadContent dropdown-item"><i class="fas fa-calendar-alt"></i> {% trans %}Betreuungszeitfenster bearbeiten{% endtrans %}</a>
+                                                                   class=" loadContent dropdown-item"><i
+                                                                            class="fas fa-calendar-alt"></i> {% trans %}Betreuungszeitfenster bearbeiten{% endtrans %}
+                                                                </a>
                                                                 {% if not isEdit %}
-                                                                <a type="DELETE"
-                                                                   href="{{ path('loerrach_workflow_kind_delete', {'kind_id':k.id,'slug':stadt.slug}) }}"
-                                                                   class="dropdown-item deleteBtn"><i class="fa fa-trash"></i> {% trans %}Kind entfernen{% endtrans %}</a>
+                                                                    <a type="DELETE"
+                                                                       href="{{ path('loerrach_workflow_kind_delete', {'kind_id':k.id,'slug':stadt.slug}) }}"
+                                                                       class="dropdown-item deleteBtn"><i
+                                                                                class="fa fa-trash"></i> {% trans %}Kind entfernen{% endtrans %}
+                                                                    </a>
                                                                 {% endif %}
 
                                                             </div>
@@ -106,9 +112,37 @@
             <a href="{{ path('loerrach_workflow_abschluss', {'slug':stadt.slug}) }}"
                class="btn btn-outline-primary">{% trans %}Bearbeiten abschließen{% endtrans %}</a>
         {% else %}
-        <a href="{{ path('loerrach_workflow_mittagessen', {'slug':stadt.slug}) }}"
-           class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
+            {% if stadt.translate.popUpTextVorBezahlung != '' %}
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#popup">
+                    {% trans %}Weiter{% endtrans %}
+                </button>
+            {% else %}
+                <a href="{{ path('loerrach_workflow_mittagessen', {'slug':stadt.slug}) }}"
+                   class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
+            {% endif %}
         {% endif %}
+    </div>
+    <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ 'Wichtig'|trans }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ stadt.translate.popUpTextVorBezahlung|raw }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary"
+                            data-dismiss="modal">{{ 'Schließen'|trans }}</button>
+                    <a href="{{ path('loerrach_workflow_mittagessen', {'slug':stadt.slug}) }}"
+                       class="btn btn-outline-primary">{% trans %}Weiter{% endtrans %}</a>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 {% block webpack %}

@@ -186,6 +186,11 @@ class Kind
      */
     private $startDate;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $zeckenEntfernen;
+
 
     public function __serialize(): array
     {
@@ -946,6 +951,18 @@ class Kind
     public function setStartDate(?\DateTimeInterface $startDate): self
     {
         $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getZeckenEntfernen(): ?bool
+    {
+        return $this->zeckenEntfernen;
+    }
+
+    public function setZeckenEntfernen(?bool $zeckenEntfernen): self
+    {
+        $this->zeckenEntfernen = $zeckenEntfernen;
 
         return $this;
     }

@@ -325,6 +325,11 @@ class StadtType extends AbstractType
                         'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
                         'label' => 'Text, welcher den Eltern angezeigt wird, wenn die Anmeldung geschlossen ist',
                         'translation_domain' => 'form'
+                    ],
+                    'popUpTextVorBezahlung'=>[
+                        'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
+                        'label' => 'Text, welcher den Eltern angezeigt wird, bevor diese Ihre Bankdaten eingeben können. Diese Meldung muss quitiert werden bevor sie weitergeleitet werden',
+                        'translation_domain' => 'form'
                     ]
                 ]
             ]
