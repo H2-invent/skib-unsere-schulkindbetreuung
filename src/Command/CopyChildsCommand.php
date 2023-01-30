@@ -13,12 +13,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(
-    name: 'app:copy:childs',
-    description: 'Add a short description for your command',
-)]
+
 class CopyChildsCommand extends Command
 {
+    protected static $defaultName = 'app:copy:childs';
     private $em;
     private CopyChildToNewSchuljahr $copyChildToNewSchuljahr;
 
@@ -32,6 +30,7 @@ class CopyChildsCommand extends Command
     protected function configure(): void
     {
         $this
+            ->setDescription('Add a short description for your command')
             ->addArgument('source', null, InputOption::VALUE_NONE, 'Schuljahr von welchem die Kinder kopiert werden')
             ->addArgument('target', null, InputOption::VALUE_NONE, 'Schuljahr in welches die Kinder kopiert werden')
             ->addArgument('date', null, InputOption::VALUE_NONE, 'Stichtag, zu welchem die Kinder kopiert werden sollen')
