@@ -43,3 +43,7 @@ services:
     # add more service defiitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     Qipsius\TCPDFBundle\Controller\TCPDFController: '@qipsius.tcpdf'
+    app.twig.extension.loader:
+        class: Twig\Extension\StringLoaderExtension
+        tags:
+            - { name: 'twig.extension' }

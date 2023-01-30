@@ -493,6 +493,7 @@ class LoerrachWorkflowController extends AbstractController
         foreach ($kind as $data) {
             $preis += $berechnungsService->getPreisforBetreuung($data, true, $data->getStartDate(), true);
         }
+        $isEdit = false;
         if ($request->cookies->get('KindID')) {
             $isEdit = true;
         }
@@ -572,7 +573,7 @@ class LoerrachWorkflowController extends AbstractController
 
         foreach ($kinder as $data) {
             $adresse = $elternService->getElternForSpecificTimeAndKind($data,$data->getStartDate());
-            $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:'));
+            $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:'));
             $anmeldeEmailService->send($data, $adresse);
         }
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kinder, 'eltern' => $adresse, 'stadt' => $stadt));

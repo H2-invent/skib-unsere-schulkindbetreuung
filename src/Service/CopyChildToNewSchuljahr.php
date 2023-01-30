@@ -4,12 +4,14 @@ namespace App\Service;
 
 use App\Entity\Active;
 use App\Entity\Kind;
+use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Output\Output;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 class CopyChildToNewSchuljahr
@@ -20,8 +22,10 @@ class CopyChildToNewSchuljahr
     private WorkflowAbschluss $workflowAbschluss;
     private MailerService $mailerService;
     private Environment $twig;
+    private AnmeldeEmailService $anmeldeEmailService;
+    private TranslatorInterface $translator;
 
-    public function __construct(ChildSearchService $childSearchService, EntityManagerInterface $entityManager, ElternService $elternService, WorkflowAbschluss $workflowAbschluss, MailerService $mailerService, Environment $environment)
+    public function __construct(ChildSearchService $childSearchService, EntityManagerInterface $entityManager, ElternService $elternService, WorkflowAbschluss $workflowAbschluss, MailerService $mailerService, Environment $environment, AnmeldeEmailService $anmeldeEmailService, TranslatorInterface $translator)
     {
         $this->childSearchService = $childSearchService;
         $this->entityManager = $entityManager;
@@ -29,16 +33,17 @@ class CopyChildToNewSchuljahr
         $this->workflowAbschluss = $workflowAbschluss;
         $this->mailerService = $mailerService;
         $this->twig = $environment;
-
+        $this->anmeldeEmailService = $anmeldeEmailService;
+        $this->translator = $translator;
     }
 
-    public function copyKinderToSchuljahr(Active $source, Active $target, \DateTime $stichtag, $matrix, Output $output):?Active
+    public function copyKinderToSchuljahr(Active $source, Active $target, \DateTime $stichtag, $matrix, Output $output): ?Active
     {
-        $kinderTarget = $this->childSearchService->searchChild(array('schuljahr'=>$target->getId()), null, false, null, $target->getVon(), null, $source->getStadt());
-        if (sizeof($kinderTarget)>0){
+        $kinderTarget = $this->childSearchService->searchChild(array('schuljahr' => $target->getId()), null, false, null, $target->getVon(), null, $source->getStadt());
+        if (sizeof($kinderTarget) > 0) {
             return null;
         }
-        $kinder = $this->childSearchService->searchChild(array('schuljahr'=>$source->getId()), null, false, null, $stichtag, null, $source->getStadt());
+        $kinder = $this->childSearchService->searchChild(array('schuljahr' => $source->getId()), null, false, null, $stichtag, null, $source->getStadt());
         $kinderTmp = array();
         foreach ($kinder as $data) {
             $eltern = $this->elternService->getElternForSpecificTimeAndKind($data, $stichtag);
@@ -78,7 +83,7 @@ class CopyChildToNewSchuljahr
                     $this->entityManager->persist($kindTmp);
 
                 } else {
-                    $this->sendABmeldeEmail($elternAlt,$kind,$source);
+                    $this->sendABmeldeEmail($elternAlt, $kind, $source);
                 }
             }
             if (sizeof($elternNeu->getKinds()) > 0) {
@@ -86,9 +91,14 @@ class CopyChildToNewSchuljahr
                 $this->entityManager->persist($elternNeu);
                 $this->entityManager->flush();
                 $this->workflowAbschluss->abschluss($elternNeu, $target->getStadt());
-            }
+                foreach ($elternNeu->getKinds() as $data2) {
+                    $this->sendAnmedebestaetigung($data2, $elternNeu, $source->getStadt(), '');
+                }
 
+
+            }
         }
+
         $progressBar->finish();
         return $target;
     }
@@ -131,7 +141,7 @@ class CopyChildToNewSchuljahr
             $kind->getSchule()->getOrganisation()->getEmail(),
             $stammdaten->getEmail(),
             'Ende der Schulkindbetreuung nach diesem Schuljahr',
-            $this->twig->render('email/betreuungsEnde.html.twig', array('stammdaten' => $stammdaten, 'kind' => $kind, 'schuljahr' => $active)),
+            $this->twig->render('email/betreuungsEnde.html.twig', array('stammdaten' => $stammdaten, 'kind' => $kind, 'schuljahr' => $active, 'stadt' => $active->getStadt())),
             $kind->getSchule()->getOrganisation()->getEmail());
 
         foreach ($stammdaten->getPersonenberechtigters() as $data2) {
@@ -141,9 +151,15 @@ class CopyChildToNewSchuljahr
                 $kind->getSchule()->getOrganisation()->getEmail(),
                 $data2->getEmail(),
                 'Ende der Schulkindbetreuung nach diesem Schuljahr',
-                $this->twig->render('email/betreuungsEnde.html.twig', array('stammdaten' => $stammdaten, 'kind' => $kind, 'schuljahr' => $active)),
+                $this->twig->render('email/betreuungsEnde.html.twig', array('stammdaten' => $stammdaten, 'kind' => $kind, 'schuljahr' => $active, 'stadt' => $active->getStadt())),
                 $kind->getSchule()->getOrganisation()->getEmail());
 
         }
+    }
+
+    public function sendAnmedebestaetigung(Kind $kind, Stammdaten $stammdaten, Stadt $stadt, $text)
+    {
+        $this->anmeldeEmailService->sendEmail($kind, $stammdaten, $stadt, $this->translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:'));
+        $this->anmeldeEmailService->send($kind, $stammdaten);
     }
 }
