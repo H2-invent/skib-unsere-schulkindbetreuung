@@ -66,7 +66,7 @@ class PreisListeService
             ->setParameter('schule',$schule);
         $query = $qb->getQuery();
         $checkBlock =$query->getResult();
-        dump($checkBlock[0]);
+
 
         $onlyOneType= true;
         $first = $checkBlock[0]->getGanztag();
@@ -81,7 +81,6 @@ class PreisListeService
             $artIst = $first;
             $req['ganztag'] = $artIst;
         }
-         dump($req);
         $block = $this->em->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
 
         $renderBlocks = array();
