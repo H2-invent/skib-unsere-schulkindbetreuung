@@ -99,9 +99,18 @@ class SepaController extends AbstractController
             ->andWhere($qb->expr()->isNotNull('kinds.startDate'))
             ->andWhere($qb->expr()->isNotNull('stammdaten.startDate'))
             ->andWhere($qb->expr()->isNotNull('stammdaten.created_at'));
+        if (!$request->get('year_id')) {
+            $year = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($this->getUser()->getOrganisation()->getStadt());
+        }else {
+            if ($request->get('year_id') == 'all') {
+                $year = null;
+            }else{
+                $year = $this->getDoctrine()->getRepository(Active::class)->find($request->get('year_id'));
+            }
+        }
 
-        if ($request->get('year_id')) {
-            $year = $this->getDoctrine()->getRepository(Active::class)->find($request->get('year_id'));
+        if ($year) {
+
             $qb->innerJoin('kinds.zeitblocks', 'zeitbocks')
                 ->andWhere('zeitbocks.active = :year')
                 ->setParameter('year', $year);
@@ -116,7 +125,7 @@ class SepaController extends AbstractController
             }
         }
 
-        return $this->render('sepa/showData.html.twig', array('organisation' => $organisation, 'stammdaten' => $sRes));
+        return $this->render('sepa/showData.html.twig', array('organisation' => $organisation, 'stammdaten' => $sRes,'schuljahr'=>$year));
     }
 
     /**

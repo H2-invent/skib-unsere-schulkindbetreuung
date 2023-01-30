@@ -227,15 +227,31 @@
                                                     <div class="col-lg-6 mb-3">
                                                         {{ a2lixTranslations.partialTranslations(form.translations, ['settingsSkibTextWhenClosed']) }}
                                                     </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        {{ a2lixTranslations.partialTranslations(form.translations, ['popUpTextVorBezahlung']) }}
+                                                    </div>
+
                                                 </div>
-
-
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
+                                <div class="card">
+                                    <h4 class="card-header">{{ 'Abmeldung der Kinder wenn diese nicht kopiert werden'|trans }}</h4>
+                                    <div class="card-body">
+                                        <div class="row mb-3">
+                                            <div class="col-lg-8">
+                                                <div class="row">
+                                                    <div class="col-lg-4 mb-3">
+                                                        {{ form_row(form.skibSettingsAbmeldungEmailText) }}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="card">
                                     <h3 class="card-header">Dokumente welche an die E-Mails angehängt werden
                                         können</h3>

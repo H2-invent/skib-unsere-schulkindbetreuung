@@ -1,0 +1,13 @@
+{% extends 'email/base.html.twig' %}
+{% block header %}
+    {% trans %}Ende der Schulkindbetreuung{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    {% if text is defined %}
+<p class="text-center">{{ text }}<br>
+    {% endif %}
+    {{ include(template_from_string(stadt.skibSettingsAbmeldungEmailText)) }}
+    {% endblock %}
+
+

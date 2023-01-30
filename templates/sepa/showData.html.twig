@@ -17,13 +17,13 @@
                                     <button class="btn btn-secondary dropdown-toggle" type="button"
                                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                        {{ 'Alle Jahre'|trans }}
+                                        {% if schuljahr is not null %}{{ schuljahr.von|date('d.m.Y') }} - {{ schuljahr.bis|date('d.m.Y') }} {% else %}{{ 'Alle Jahre'|trans }}{% endif %}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item loadInTarget" data-target="#table"
-                                           href="{{ path('accounting_showdata',{'id':organisation.id}) }}">{{ 'Alle Jahre'|trans }}</a>
+                                        <a class="dropdown-item "
+                                           href="{{ path('accounting_showdata',{'id':organisation.id,'year_id':'all'}) }}">{{ 'Alle Jahre'|trans }}</a>
                                         {% for y in organisation.stadt.actives %}
-                                            <a class="dropdown-item loadInTarget" data-target="#table"
+                                            <a class="dropdown-item "
                                                href="{{ path('accounting_showdata',{'id':organisation.id,'year_id':y.id}) }}">{{ y.von|date('d.m.Y') }}</a>
                                         {% endfor %}
 

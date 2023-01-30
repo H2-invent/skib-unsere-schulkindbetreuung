@@ -398,6 +398,11 @@ class Stadt implements TranslatableInterface
      */
     private $settingsSkibShowSetStartDateOnChange;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $skibSettingsAbmeldungEmailText;
+
 
 
 
@@ -1462,6 +1467,18 @@ class Stadt implements TranslatableInterface
     public function setSettingsSkibShowSetStartDateOnChange(?bool $settingsSkibShowSetStartDateOnChange): self
     {
         $this->settingsSkibShowSetStartDateOnChange = $settingsSkibShowSetStartDateOnChange;
+
+        return $this;
+    }
+
+    public function getSkibSettingsAbmeldungEmailText(): ?string
+    {
+        return $this->skibSettingsAbmeldungEmailText;
+    }
+
+    public function setSkibSettingsAbmeldungEmailText(?string $skibSettingsAbmeldungEmailText): self
+    {
+        $this->skibSettingsAbmeldungEmailText = $skibSettingsAbmeldungEmailText;
 
         return $this;
     }

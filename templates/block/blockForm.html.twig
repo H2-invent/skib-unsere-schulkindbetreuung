@@ -1,3 +1,4 @@
+{% import "form/macros.html.twig" as a2lixTranslations %}
 <div class="modal-header">
     <h5 class="modal-title">{% trans with {'%tag%':block.WochentagString|trans} %}Neues Zeitfenster anlegen am %tag%{% endtrans %}</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -36,6 +37,11 @@
        {{ form_row(form.preise) }}
 {% endif %}
 
+    {% if form.hidePrice is defined %}
+        {{ form_row(form.hidePrice) }}
+    {% endif %}
+
+    {{ a2lixTranslations.partialTranslations(form.translations, ['extraText']) }}
     <button type="submit" class="btn btn-primary">{% trans %}Speichern{% endtrans %}</button>
     {{ form_end(form) }}
 </div>

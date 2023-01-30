@@ -116,6 +116,8 @@
                                                             <dd>{{ k.ausfluege?"Ja":'Nein'|trans }}</dd>
                                                             <dt>{% trans %} Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden {% endtrans %}</dt>
                                                             <dd>{{ k.sonnencreme?"Ja"|trans:'Nein'|trans }}</dd>
+                                                            <dt>{% trans %} Betreuer dürfen bei meinem Kind Zecken entfernen {% endtrans %}</dt>
+                                                            <dd>{{ k.zeckenEntfernen?"Ja"|trans:'Nein'|trans }}</dd>
                                                             <dt>{% trans %}Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.{% endtrans %}</dt>
                                                             <dd>{{ k.fotos?"Ja"|trans:'Nein'|trans }}</dd>
                                                         </dl>

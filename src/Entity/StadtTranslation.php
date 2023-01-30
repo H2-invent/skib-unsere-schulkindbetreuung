@@ -102,6 +102,11 @@ class StadtTranslation implements TranslationInterface
      */
     private $settingsSkibTextWhenClosed;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $popUpTextVorBezahlung;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -366,6 +371,22 @@ class StadtTranslation implements TranslationInterface
     public function setSettingsSkibTextWhenClosed($settingsSkibTextWhenClosed): void
     {
         $this->settingsSkibTextWhenClosed = $settingsSkibTextWhenClosed;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPopUpTextVorBezahlung()
+    {
+        return $this->popUpTextVorBezahlung;
+    }
+
+    /**
+     * @param mixed $popUpTextVorBezahlung
+     */
+    public function setPopUpTextVorBezahlung($popUpTextVorBezahlung): void
+    {
+        $this->popUpTextVorBezahlung = $popUpTextVorBezahlung;
     }
 
 
