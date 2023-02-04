@@ -135,6 +135,23 @@ class ActiveRepository extends ServiceEntityRepository
         return $qb->getOneOrNullResult();
     }
 
+    /**
+     * @return Active
+     */
+    public function findSchuljahrfromStadtAndStichtag(Stadt  $stadt, \DateTime $stichtag): ?Active
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.stadt = :stadt')
+            ->andWhere('a.von <= :stichtag')
+            ->andWhere('a.bis >= :stichtag')
+            ->setParameter('stichtag', $stichtag)
+            ->setParameter('stadt', $stadt)
+            ->getQuery()
+            ->setMaxResults(1);
+
+        return $qb->getOneOrNullResult();
+    }
+
     public function findSchuljahrBetweentwoDates(\DateTime $von, \DateTime $bis, Stadt $stadt): ?Active
     {
         $qb = $this->createQueryBuilder('a')

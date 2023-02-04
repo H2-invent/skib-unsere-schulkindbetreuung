@@ -88,7 +88,7 @@ $(document).on('click', '.deleteBtn', function (e) {
     var url = $(this).attr('href');
     var type = $(this).attr('type');
     var $text = $(this).attr('text');
-    if (text){
+    if ($text){
        var confirmText = $text
     }
     $.confirm({
@@ -134,21 +134,26 @@ $(document).on('click', '.loadContent', function (e) {
 });
 
 $('#loadContentModal').on('show.bs.modal', function (e) {
-    var minDate = '01.01.2000';
-    var maxDate = new Date();
-    if ($('.pickadate') && $('.pickadate').data('min')){
-        minDate = $('.pickadate').data('min')
+    var picker = $('.pickadate');
+    for (var pTemp of picker){
+        var p =$(pTemp);
+        var minDate = '01.01.2000';
+        var maxDate = new Date();
+        if (p.data('min')){
+            minDate = p.data('min')
+        }
+        if ( p.data('max')){
+            maxDate = p.data('max')
+        }
+        p.pickadate({
+            format: 'dd.mm.yyyy',
+            formatSubmit: 'yyyy-mm-dd',
+            selectYears: 2010,
+            min: minDate,
+            max: maxDate,
+        });
     }
-    if ($('.pickadate') && $('.pickadate').data('max')){
-        maxDate = $('.pickadate').data('max')
-    }
-    $('.pickadate').pickadate({
-        format: 'dd.mm.yyyy',
-        formatSubmit: 'yyyy-mm-dd',
-        selectYears: 2010,
-        min: minDate,
-        max: maxDate,
-    });
+
     $('input').trigger('change');
     $(this)
         .find('.mdb-select')

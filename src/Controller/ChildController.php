@@ -173,6 +173,8 @@ class ChildController extends AbstractController
         }
 
         $fileName = $translator->trans('Kinder') . ' - ' . (new \DateTime())->format('d.m.Y_H.i');
+        $startDate = isset($parameter['startDate']) ? new \DateTime($parameter['startDate']) : null;
+        $endDate = isset($parameter['endDate']) ? new \DateTime($parameter['endDate']) : null;
 
         $text = $translator->trans('Kinder betreut vom Träger %organisation%', array('%organisation%' => $organisation->getName()));
         if ($request->get('schule')) {
@@ -182,6 +184,9 @@ class ChildController extends AbstractController
         if ($request->get('schuljahr')) {
             $jahr = $this->getDoctrine()->getRepository(Active::class)->find($request->get('schuljahr'));
             $text .= $translator->trans(' im Schuljahr schuljahr', array('schuljahr' => $jahr->getVon()->format('d.m.Y') . '-' . $jahr->getBis()->format('d.m.Y')));
+            if ($jahr && $jahr->getVon() > new \DateTime()){
+                $startDate= $jahr->getVon();
+            }
         }
         if ($request->get('wochentag') !== "") {
             $text .= $translator->trans(' am Wochentag %wochentag%', array('%wochentag%' => $this->wochentag[$request->get('wochentag')]));
@@ -194,8 +199,7 @@ class ChildController extends AbstractController
         if ($request->get('klasse')) {
             $text .= $translator->trans(' in der Klasse: %klasse%', array('%klasse%' => $request->get('klasse')));
         }
-        $startDate = isset($parameter['startDate']) ? new \DateTime($parameter['startDate']) : null;
-        $endDate = isset($parameter['endDate']) ? new \DateTime($parameter['endDate']) : null;
+
         $kinderU = $childSearchService->searchChild($parameter, $organisation, false, $this->getUser(), $startDate, $endDate);
         usort($kinderU, function (Kind $a, Kind $b): int {
             if ($a->getKlasse() === $b->getKlasse()) {
@@ -215,7 +219,7 @@ class ChildController extends AbstractController
             return $this->render('child/childTable.html.twig', [
                 'kinder' => $kinderU,
                 'text' => $text,
-                'date' => $endDate ? $endDate : new \DateTime()
+                'date' => $endDate ?: $startDate
             ]);
         }
 
@@ -269,6 +273,8 @@ class ChildController extends AbstractController
 
         $response = $this->redirectToRoute('workflow_start', array('slug' => $this->getUser()->getOrganisation()->getStadt()->getSlug()));
         $response->headers->clearCookie('KindID');
+        $response->headers->clearCookie('SecID');
+        $response->headers->clearCookie('UserID');
         return $response;
     }
 }
