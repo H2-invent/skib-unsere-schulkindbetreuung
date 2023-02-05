@@ -8,6 +8,7 @@ namespace App\Controller;
  * Time: 12:21
  */
 
+use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Schule;
 use App\Entity\Stadt;
@@ -180,8 +181,13 @@ class LoerrachWorkflowController extends AbstractController
 
         $renderKinder = array();
         foreach ($kinder as $data) {
+            $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromKind($data);
             if (($isEdit && !$data->getStartDate()) || ($isEdit && !$stadt->getSettingsSkibShowSetStartDateOnChange())) {
-                $data->setStartDate((new \DateTime())->modify($stadt->getSettingSkibDefaultNextChange()));
+                if (new \DateTime() < $schuljahr->getVon()){
+                    $data->setStartDate($schuljahr->getVon());
+                }else{
+                    $data->setStartDate((new \DateTime())->modify($stadt->getSettingSkibDefaultNextChange()));
+                }
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($data);
                 $em->flush();
@@ -210,13 +216,14 @@ class LoerrachWorkflowController extends AbstractController
         $kind = $schulkindBetreuungKindNeuService->prepareKind($kind, $schule, $adresse);
         // Load the data from the city into the controller as $stadt
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
-        $kind->setStartDate($schuljahr->getVon());
+
         $form = $this->createForm(LoerrachKind::class, $kind, array('schuljahr' => $schuljahr, 'validation_groups' => ['Eltern'], 'action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug' => $stadt->getSlug(), 'schule_id' => $schule->getId()))));
-        if ($this->getUser() && in_array('ROLE_ORG_CHILD_CHANGE', $this->getUser()->getRoles(), true) && $stadt->getSettingsSkibShowSetStartDateOnChange()) {
+        if ($this->getUser() && $this->getUser()->getOrganisation()->getStadt() === $stadt && in_array('ROLE_ORG_CHILD_CHANGE', $this->getUser()->getRoles(), true) && $stadt->getSettingsSkibShowSetStartDateOnChange()) {
 
         } else {
             $form->remove('startDate');
         }
+        $schuljahr = $schuljahrService->getSchuljahr($stadt);
         $form = $schulkindBetreuungKindNeuService->cleanUpForm($form, $schuljahr, $schule);
         $kind = $schulkindBetreuungKindNeuService->cleanUpKind($schuljahr, $schule, $kind);
         try {
@@ -229,7 +236,6 @@ class LoerrachWorkflowController extends AbstractController
 
         if ($form->isSubmitted()) {
             try {
-
                 $kind = $form->getData();
                 return $schulkindBetreuungKindNeuService->saveKind($kind, $this->isGranted('ROLE_ORG_CHILD_CHANGE'), $stadt, $form);
             } catch (\Exception $e) {
@@ -254,7 +260,15 @@ class LoerrachWorkflowController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
         $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $isEdit = false;
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
+        if ($request->cookies->get('KindID')) {
+            $isEdit = true;
+            $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromKind($kind);
+        }
+
+
+
         $form = $this->createForm(LoerrachKind::class, $kind, array(
             'schuljahr' => $schuljahr, 'action' => $this->generateUrl('loerrach_workflow_schulen_kind_edit', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()))
         ));
@@ -342,9 +356,9 @@ class LoerrachWorkflowController extends AbstractController
         // Load the data from the city into the controller as $stadt
         // When more then one active year is available and an old Kind has to be changed, we need to set the schuljahr back to the original schuljahr of one of the time slots.
         if (count($kind->getRealZeitblocks()) > 0) {
-            $schuljahr = $kind->getRealZeitblocks()[0]->getActive();
+            $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromKind($kind);
         } else {
-            $schuljahr = $schuljahrService->getSchuljahr($stadt);
+            $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrfromStadtAndStichtag($stadt,$kind->getStartDate());
         }
 
         $req = array(
@@ -572,7 +586,7 @@ class LoerrachWorkflowController extends AbstractController
 //Emails an die Eltern senden
 
         foreach ($kinder as $data) {
-            $adresse = $elternService->getElternForSpecificTimeAndKind($data,$data->getStartDate());
+            $adresse = $elternService->getElternForSpecificTimeAndKind($data, $data->getStartDate());
             $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:'));
             $anmeldeEmailService->send($data, $adresse);
         }
@@ -639,7 +653,7 @@ class LoerrachWorkflowController extends AbstractController
         $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName();
 
 
-        return $print->printAnmeldebestaetigung($kind, $elter, $stadt,  $fileName, $this->beruflicheSituation, $organisation, 'D');
+        return $print->printAnmeldebestaetigung($kind, $elter, $stadt, $fileName, $this->beruflicheSituation, $organisation, 'D');
 
 
     }

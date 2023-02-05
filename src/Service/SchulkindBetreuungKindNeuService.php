@@ -44,6 +44,7 @@ class SchulkindBetreuungKindNeuService
         $kind->setEltern($eltern);
         $kind->setSchule($schule);
         $schuljahr = $this->schuljahrService->getSchuljahr($schule->getStadt());
+
         if (new \DateTime() < $schuljahr->getAnmeldeEnde() && new \DateTime()>$schuljahr->getAnmeldeStart()){//ist im ANmeldezeitraum, alos wahrscheinlich ein Elternteil oder ein Mitarbeiter, der ein Kind so anmelden möchte
             $kind->setStartDate($schuljahr->getVon());
         }else{
@@ -72,7 +73,7 @@ class SchulkindBetreuungKindNeuService
         );
         return $this->em->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
     }
-    public function cleanUpForm(Form $form, Active $schuljahr, Schule $schule){
+    public function cleanUpForm(Form $form, ?Active $schuljahr, Schule $schule){
         $ganztag = $this->getGanztagBlocks($schuljahr,$schule);
         $halbtag = $this->getHalbtagBlocks($schuljahr,$schule);
 
