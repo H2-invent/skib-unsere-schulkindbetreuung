@@ -39,8 +39,6 @@ class LoerrachKind extends AbstractType
 
         if ($options['schuljahr']) {
             $builder->add('startDate', DateType::class, ['attr' => array('class' => 'pickadate', 'data-min' => $options['schuljahr']->getVon()->format('d.m.Y'), 'data-max' => $options['schuljahr']->getBis()->format('d.m.Y')), 'widget' => 'single_text', 'label' => 'Startdatum', 'translation_domain' => 'form']);
-        }else{
-            $builder->add('startDate', DateType::class, ['attr' => array('class' => 'pickadate', 'data-min' => '01.01.2020', 'data-max' => "01.01.2100"), 'widget' => 'single_text', 'label' => 'Startdatum', 'translation_domain' => 'form']);
         }
         $builder->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
             ->add('nachname', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
