@@ -37,7 +37,7 @@ class LoerrachKind extends AbstractType
         $today = intval((new \DateTime())->format('Y'));
         $stadt = $options['data']->getSchule()->getStadt();
 
-        if ($options['schuljahr']) {
+        if (isset($options['schuljahr']) && $options['schuljahr']) {
             $builder->add('startDate', DateType::class, ['attr' => array('class' => 'pickadate', 'data-min' => $options['schuljahr']->getVon()->format('d.m.Y'), 'data-max' => $options['schuljahr']->getBis()->format('d.m.Y')), 'widget' => 'single_text', 'label' => 'Startdatum', 'translation_domain' => 'form']);
         }
         $builder->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
