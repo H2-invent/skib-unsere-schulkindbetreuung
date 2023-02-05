@@ -187,6 +187,9 @@ class ChildController extends AbstractController
             if ($jahr && $jahr->getVon() > new \DateTime()){
                 $startDate= $jahr->getVon();
             }
+            if ($jahr && $jahr->getBis() < new \DateTime()){
+                $startDate= $jahr->getBis();
+            }
         }
         if ($request->get('wochentag') !== "") {
             $text .= $translator->trans(' am Wochentag %wochentag%', array('%wochentag%' => $this->wochentag[$request->get('wochentag')]));
