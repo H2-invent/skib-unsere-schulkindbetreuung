@@ -137,7 +137,7 @@ class LoerrachWorkflowController extends AbstractController
             if (count($errors) == 0) {
                 $schulkindBetreuungAdresseService->setAdress($adresse, $authorizationChecker->isGranted('ROLE_ORG_CHILD_CHANGE'), $request->getClientIp());
 
-                $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
+                $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 10);
                 $response = $this->redirectToRoute('workflow_confirm_Email', array('redirect' => $this->generateUrl('loerrach_workflow_schulen', array('slug' => $stadt->getSlug()), UrlGeneratorInterface::ABSOLUTE_URL), 'uid' => $adresse->getUid(), 'stadt' => $stadt->getId()));
                 $response->headers->setCookie($cookie);
                 return $response;
