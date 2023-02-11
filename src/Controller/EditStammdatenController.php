@@ -77,17 +77,19 @@ class EditStammdatenController extends AbstractController
     ): Response
     {
         $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->find($eltern_id);
-        $latestStammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findLatestStammdatenByStartDate($stammdaten);
+        $workingCopyStammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findWorkingCopyStammdatenByStammdaten($stammdaten);
 
 
         $stadt = $this->getUser()->getOrganisation()->getStadt();
-        $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromStamdaten($latestStammdaten);
+        $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromStamdaten($workingCopyStammdaten);
 
         $nextDateTmp = new \DateTime();
-        if ($latestStammdaten->getStartDate() > $nextDateTmp) {
-            $nextDateTmp = $latestStammdaten->getStartDate();
+        if ($nextDateTmp < $schuljahr->getVon()){
+           $nextDate = clone $schuljahr->getVon();
+        }else{
+            $nextDate = (clone $nextDateTmp)->modify($stadt->getSettingSkibDefaultNextChange());
         }
-        $nextDate = (clone $nextDateTmp)->modify($stadt->getSettingSkibDefaultNextChange());
+
         $stammdaten->setStartDate($nextDate);
         $formArr = array('einkommen' => array_flip($stadt->getGehaltsklassen()), 'beruflicheSituation' => $loerrachWorkflowController->beruflicheSituation, 'stadt' => $stadt);
 
