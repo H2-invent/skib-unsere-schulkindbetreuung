@@ -38,7 +38,7 @@
                 </p>
                 <div class="collapse" id="collapse{{ b.id }}">
                     <div class="card card-body">
-                        <p>{% trans %}Kinder{% endtrans %}: {{ b.kindwithFin|length }}</p>
+                        <p>{% trans %}Kinder{% endtrans %}: {{ getChildsOnSpecificTimeCached(b) }}</p>
                         {% if b.min is not null and b.max is not null %}
                             <p>{% trans %}Min{% endtrans %}: {{ b.min }}</p>
                             <p>{% trans %}Max{% endtrans %}: {{ b.max }}</p>

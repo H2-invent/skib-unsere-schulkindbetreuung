@@ -37,12 +37,10 @@ class CopyChildToNewSchuljahr
         $this->translator = $translator;
     }
 
-    public function copyKinderToSchuljahr(Active $source, Active $target, \DateTime $stichtag, $matrix, Output $output): ?Active
+    public function copyKinderToSchuljahr(Active $source, Active $target, \DateTime $stichtag, $matrix, $blockmatrix, Output $output): ?Active
     {
-        $kinderTarget = $this->childSearchService->searchChild(array('schuljahr' => $target->getId()), null, false, null, $target->getVon(), null, $source->getStadt());
-        if (sizeof($kinderTarget) > 0) {
-            return null;
-        }
+
+
         $kinder = $this->childSearchService->searchChild(array('schuljahr' => $source->getId()), null, false, null, $stichtag, null, $source->getStadt());
         $kinderTmp = array();
         foreach ($kinder as $data) {
@@ -73,11 +71,22 @@ class CopyChildToNewSchuljahr
                     $this->entityManager->persist($kindTmp);
 
                     foreach ($kind->getZeitblocks() as $block) {
-                        $tmpBlock = $this->entityManager->getRepository(Zeitblock::class)->findOneBy(array('active' => $target, 'cloneOf' => $block));
-                        if ($tmpBlock) {
-                            $kindTmp->addZeitblock($tmpBlock);
+
+                        if (isset($blockmatrix[$block->getId()])) {
+                            foreach ($blockmatrix[$block->getId()] as $bMat) {
+                                $tmpBlock = $this->entityManager->getRepository(Zeitblock::class)->find($bMat);
+                                if ($tmpBlock) {
+                                    $kindTmp->addZeitblock($tmpBlock);
+                                }
+                            }
+                        } else {
+                            $tmpBlock = $this->entityManager->getRepository(Zeitblock::class)->findOneBy(array('active' => $target, 'cloneOf' => $block));
+                            if ($tmpBlock) {
+                                $kindTmp->addZeitblock($tmpBlock);
+                            }
                         }
                     }
+
                     $kindTmp->setEltern($elternNeu);
                     $elternNeu->addKind($kindTmp);
                     $this->entityManager->persist($kindTmp);
@@ -91,9 +100,9 @@ class CopyChildToNewSchuljahr
                 $this->entityManager->persist($elternNeu);
                 $this->entityManager->flush();
                 $this->workflowAbschluss->abschluss($elternNeu, $target->getStadt());
-                foreach ($elternNeu->getKinds() as $data2) {
-                    $this->sendAnmedebestaetigung($data2, $elternNeu, $source->getStadt(), '');
-                }
+//                foreach ($elternNeu->getKinds() as $data2) {
+//                    $this->sendAnmedebestaetigung($data2, $elternNeu, $source->getStadt(), '');
+//                }
 
 
             }
@@ -103,7 +112,8 @@ class CopyChildToNewSchuljahr
         return $target;
     }
 //{"0":"Grundschulförderklasse","1":"1. Klasse","2":"2. Klasse","3":"3. Klasse","4":"4. Klasse","5":"1. Klasse (A)","6":"1. Klasse (B)","7":"1. Klasse (C)","8":"2. Klasse (A)","9":"2. Klasse (B)","10":"2. Klasse (C)","11":"3. Klasse (A)","12":"3. Klasse (B)","13":"3. Klasse (C)","14":"4. Klasse (A)","15":"4. Klasse (B)","16":"4. Klasse (C)"}
-//{"0":1,"1":2,"2":3,"3":4,"5":8,"6":9,"7":10,"8":11,"9":12,"10":13,"11":14,"12":15,"13":16}
+//Schorndorf: {"0":1,"1":2,"2":3,"3":4,"5":8,"6":9,"7":10,"8":11,"9":12,"10":13,"11":14,"12":15,"13":16}
+//Schorndorf: {"1213":[2631,2491],"1219":[2631,2491],"1222":[2636,2506],"1228":[2636,2506],"1231":[2641,2521],"1237":[2641,2521],"1240":[2646,2536],"1246":[2646,2536],"1249":[2651,2551],"1255":[2651,2551]}
     public function createPeripherie(Stammdaten $source, Stammdaten $target)
     {
 
