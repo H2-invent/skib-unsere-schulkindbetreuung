@@ -203,7 +203,7 @@ class Zeitblock implements TranslatableInterface
         $kind= array();
         foreach($this->kinderBeworben->toArray() as $data) {
 
-            if($data->getFin() === true) {
+            if($data->getEltern()->getCreated()) {
                 $kind[] = $data;
             }
         }
