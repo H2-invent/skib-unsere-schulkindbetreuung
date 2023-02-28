@@ -86,7 +86,9 @@ class CopyChildToNewSchuljahr
                             }
                         }
                     }
-
+                    foreach ($kind->getBeworben() as $beworben) {
+                        $kindTmp->removeBeworben($beworben);
+                    }
                     $kindTmp->setEltern($elternNeu);
                     $elternNeu->addKind($kindTmp);
                     $this->entityManager->persist($kindTmp);
