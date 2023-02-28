@@ -100,9 +100,10 @@ class CopyChildToNewSchuljahr
                 $this->entityManager->persist($elternNeu);
                 $this->entityManager->flush();
                 $this->workflowAbschluss->abschluss($elternNeu, $target->getStadt());
-//                foreach ($elternNeu->getKinds() as $data2) {
-//                    $this->sendAnmedebestaetigung($data2, $elternNeu, $source->getStadt(), '');
-//                }
+                foreach ($elternNeu->getKinds() as $data2) {
+                    $this->entityManager->refresh($elternNeu);
+                    $this->sendAnmedebestaetigung($data2, $elternNeu, $source->getStadt(), '');
+                }
 
 
             }

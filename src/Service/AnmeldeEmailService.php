@@ -153,6 +153,7 @@ class AnmeldeEmailService
 
     public function send(Kind $kind, Stammdaten $adresse)
     {
+
         $this->mailer->sendEmail(
             $kind->getSchule()->getOrganisation()->getName(),
             $kind->getSchule()->getOrganisation()->getEmail(),
@@ -162,6 +163,7 @@ class AnmeldeEmailService
             $kind->getSchule()->getOrganisation()->getEmail(),
             $this->attachment);
         foreach ($adresse->getPersonenberechtigters() as $data) {
+
             $this->mailer->sendEmail(
                 $kind->getSchule()->getOrganisation()->getName(),
                 $kind->getSchule()->getOrganisation()->getEmail(),
