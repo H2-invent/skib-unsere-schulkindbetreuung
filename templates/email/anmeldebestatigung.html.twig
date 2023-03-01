@@ -7,20 +7,7 @@
     <p class="text-center">{{text}}<br>
 
     <b>{{ kind.vorname }} {{ kind.nachname }}</b> </p>
-    <p class="text-center">{% trans %}Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.
-            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.{% endtrans %}</p>
-
-    {%if stadt.settingEncryptEmailAttachment%}
-        <p class="text-center">
-            <b>{{'Das Passswort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (z.B. 01.01.2010)'|trans}}</b>
-        </p>
-    {%endif%}
-    <h3 class="text-center">
-        {{ 'Sicherheitscode'|trans }}: {{ eltern.secCode }}
-    </h3>
-    <h3 class="text-center">
-        {% trans %}Wichtig: Diesen Sicherheitscode gut aufbewahren!{% endtrans %}
-    </h3>
+   {{ include('email/__securityCode.twig') }}
    
     <p class="text-center">{% trans %}Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
             Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.

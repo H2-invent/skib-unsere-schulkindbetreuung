@@ -8,11 +8,7 @@
     <p class="text-center">{% trans %}Sie haben Ihr Kind für die Schulkindbetreuung angemeldet:{% endtrans %}<br>
 
         <b>{{ kind.vorname }} {{ kind.nachname }}</b> </p>
-    <p class="text-center">{% trans %}Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.
-            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.{% endtrans %}</p>
-    <h3 class="text-center">
-        {{ 'Sicherheitscode'|trans }}: {{ eltern.secCode }}
-    </h3>
+    {{ include('email/__securityCode.twig') }}
     <p class="text-center">{% trans %}Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.
             Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.{% endtrans %}
     </p>

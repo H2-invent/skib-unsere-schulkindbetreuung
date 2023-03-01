@@ -104,10 +104,9 @@ class CopyChildToNewSchuljahr
                 $this->workflowAbschluss->abschluss($elternNeu, $target->getStadt());
                 foreach ($elternNeu->getKinds() as $data2) {
                     $this->entityManager->refresh($elternNeu);
-                    $this->sendAnmedebestaetigung($data2, $elternNeu, $source->getStadt(), '');
+                    $this->entityManager->refresh($data2);
+                    $this->sendAnmedebestaetigung($data2, $elternNeu, $source->getStadt(), $this->translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:'));
                 }
-
-
             }
         }
 
@@ -170,9 +169,9 @@ class CopyChildToNewSchuljahr
         }
     }
 
-    public function sendAnmedebestaetigung(Kind $kind, Stammdaten $stammdaten, Stadt $stadt, $text)
+    public function sendAnmedebestaetigung(Kind $kind, Stammdaten $stammdaten, Stadt $stadt, $text, $dontSendBeworben = false)
     {
-        $this->anmeldeEmailService->sendEmail($kind, $stammdaten, $stadt, $this->translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:'));
+        $this->anmeldeEmailService->sendEmail($kind, $stammdaten, $stadt, $text, $dontSendBeworben);
         $this->anmeldeEmailService->send($kind, $stammdaten);
     }
 }
