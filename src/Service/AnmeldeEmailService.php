@@ -51,7 +51,7 @@ class AnmeldeEmailService
         $this->internFileSystem = $internFileSystem;
     }
 
-    public function sendEmail(Kind $kind, Stammdaten $adresse, Stadt $stadt, $text)
+    public function sendEmail(Kind $kind, Stammdaten $adresse, Stadt $stadt, $text, $dontSendBeworben = false)
     {
         $this->attachment = array();
         $sessionLocale = $this->translator->getLocale();
@@ -118,20 +118,21 @@ class AnmeldeEmailService
             $this->translator->setLocale($sessionLocale);
 
         } else {// es gibt noch beworbene Zeitblöcke
-
-            foreach ($stadt->getEmailDokumenteSchulkindbetreuungAnmeldung() as $att) {
-                $this->attachment[] = array(
-                    'body' => $this->internFileSystem->read($att->getFileName()),
-                    'filename' => $att->getOriginalName(),
-                    'type' => $att->getType()
-                );
+            if (!$dontSendBeworben) {
+                foreach ($stadt->getEmailDokumenteSchulkindbetreuungAnmeldung() as $att) {
+                    $this->attachment[] = array(
+                        'body' => $this->internFileSystem->read($att->getFileName()),
+                        'filename' => $att->getOriginalName(),
+                        'type' => $att->getType()
+                    );
+                }
+                if ($adresse->getLanguage()) {
+                    $this->translator->setLocale($adresse->getLanguage());
+                }
+                $this->betreff = $this->translator->trans('Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname% %nachname%', array('%vorname%' => $kind->getVorname(), '%nachname%' => $kind->getNachname()));
+                $this->content = $this->templating->render('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt));
+                $this->translator->setLocale($sessionLocale);
             }
-            if ($adresse->getLanguage()) {
-                $this->translator->setLocale($adresse->getLanguage());
-            }
-            $this->betreff = $this->translator->trans('Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname% %nachname%', array('%vorname%' => $kind->getVorname(), '%nachname%' => $kind->getNachname()));
-            $this->content = $this->templating->render('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt));
-            $this->translator->setLocale($sessionLocale);
         }
     }
 

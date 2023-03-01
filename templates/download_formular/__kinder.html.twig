@@ -20,17 +20,23 @@
 
 
     <tbody>
-    <tr>
-        <td><h3 style="color: red">{{ 'Sicherheitscode bei Änderung'|trans }}:</h3></td>
-        <td>____ ____ ____ ____ ____ ____<br>{% trans %}Diesen finden Sie in der Buchungsbestätigung, die Sie per Email erhalten haben.{% endtrans %}<br>
-        </td>
-    </tr>
+    {% if schule.stadt.noSecCodeForChangeChilds %}
+        <tr>
+            <td><h3 style="color: red">{{ 'Sicherheitscode bei Änderung'|trans }}:</h3></td>
+            <td>____ ____ ____ ____ ____
+                ____<br>{% trans %}Diesen finden Sie in der Buchungsbestätigung, die Sie per Email erhalten haben.{% endtrans %}
+                <br>
+            </td>
+        </tr>
+    {% endif %}
     {% if schule.stadt.settingsSkibChangeDocumentChangeDateShow %}
-    <tr>
-        <td><h3 style="color: red">{% trans %}Diese Änderung/Neuanmeldung soll am dd.mm.yyyy in Kraft treten{% endtrans %}:</h3></td>
-        <td>__ . __ . ____
-        </td>
-    </tr>
+        <tr>
+            <td>
+                <h3 style="color: red">{% trans %}Diese Änderung/Neuanmeldung soll am dd.mm.yyyy in Kraft treten{% endtrans %}
+                    :</h3></td>
+            <td>__ . __ . ____
+            </td>
+        </tr>
     {% endif %}
     <tr>
         <td colspan="2"></td>
@@ -232,25 +238,25 @@
 </table>
 
 <h2>{{ schule.name }} - {{ block['type'] }}</h2>
-    <table cellpadding="5px" >
-        <thead>
-        <tr>
-            <th>{{ 'Montag'|trans }}</th>
-            <th>{{ 'Dienstag'|trans }}</th>
-            <th>{{ 'Mittwoch'|trans }}</th>
-            <th>{{ 'Donnerstag'|trans }}</th>
-            <th>{{ 'Freitag'|trans }}</th>
-            {% if block['data'][5] is defined or block['data'][6] is defined  %}
-                <th>{{ 'Samstag'|trans }}</th>
-            {% endif %}
-            {% if block['data'][6] is defined %}
-                <th>{{ 'Sonntag'|trans }}</th>
-            {% endif %}
-        </tr>
-        </thead>
-        <tbody>
-        {{ block['table']|raw }}
+<table cellpadding="5px">
+    <thead>
+    <tr>
+        <th>{{ 'Montag'|trans }}</th>
+        <th>{{ 'Dienstag'|trans }}</th>
+        <th>{{ 'Mittwoch'|trans }}</th>
+        <th>{{ 'Donnerstag'|trans }}</th>
+        <th>{{ 'Freitag'|trans }}</th>
+        {% if block['data'][5] is defined or block['data'][6] is defined %}
+            <th>{{ 'Samstag'|trans }}</th>
+        {% endif %}
+        {% if block['data'][6] is defined %}
+            <th>{{ 'Sonntag'|trans }}</th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {{ block['table']|raw }}
 
 
-        </tbody>
-    </table>
+    </tbody>
+</table>

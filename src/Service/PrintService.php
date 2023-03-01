@@ -350,7 +350,7 @@ class PrintService
         return $pdf;
     }
 
-    function printAnmeldeformular(Schule $schule, TCPDFController $tcpdf, $fileName, $beruflicheSituation, $gehaltsklassen, $cat, $type = 'D')
+    function printAnmeldeformular(Schule $schule, TCPDFController $tcpdf, $fileName, $beruflicheSituation, $gehaltsklassen, $cat,$schuljahr = null, $type = 'D')
     {
         $catArr = array(1 => $this->translator->trans('Ganztag'), 2 => $this->translator->trans('Halbtag'));
         $pdf = $tcpdf->create();
@@ -428,7 +428,13 @@ class PrintService
         // hier die Kinderdaten
         $blocks = array();
         $block['type'] = $catArr[$cat];
-        $schulJahr = $this->em->getRepository(Active::class)->findActiveSchuljahrFromCity($schule->getOrganisation()->getStadt());
+        if ($schuljahr){
+            $schulJahr = $schuljahr;
+        }else{
+            $schulJahr = $this->em->getRepository(Active::class)->findActiveSchuljahrFromCity($schule->getOrganisation()->getStadt());
+        }
+
+
         $blockTmp = $this->em->getRepository(Zeitblock::class)->findBy(array('active'=>$schulJahr,'schule'=>$schule));
         foreach ($blockTmp as $data) {
             if ($data->getGanztag() == $cat && !$data->getDeleted() && !$data->getDeaktiviert()) {

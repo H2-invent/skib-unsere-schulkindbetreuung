@@ -2725,8 +2725,8 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Zutreffendes bitte ankreuzen</source>
         <target>Veuillez marquer d'une croix le cas échéant</target>
       </trans-unit>
-      <trans-unit id="lUGZl8W" resname="Änderungsformular">
-        <source>Änderungsformular</source>
+      <trans-unit id="lUGZl8W" resname="Anmeldungs-/Änderungsformular">
+        <source>Anmeldungs-/Änderungsformular</source>
         <target>Formulaire de modification</target>
       </trans-unit>
       <trans-unit id="54USnWt" resname="Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname% %nachname%">

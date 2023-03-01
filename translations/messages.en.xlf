@@ -2717,8 +2717,8 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Zutreffendes bitte ankreuzen</source>
         <target>Please mark with a cross where applicable</target>
       </trans-unit>
-      <trans-unit id="lUGZl8W" resname="Änderungsformular">
-        <source>Änderungsformular</source>
+      <trans-unit id="lUGZl8W" resname="Anmeldungs-/Änderungsformular">
+        <source>Anmeldungs-/Änderungsformular</source>
         <target>Change form</target>
       </trans-unit>
       <trans-unit id="54USnWt" resname="Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname% %nachname%">
