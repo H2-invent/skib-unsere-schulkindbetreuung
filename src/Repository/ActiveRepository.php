@@ -72,6 +72,45 @@ class ActiveRepository extends ServiceEntityRepository
         return $qb->getOneOrNullResult();
 
     }
+     /**
+      * @return Active[] Returns an array of Active objects
+      */
+    public function findLaufendeSchuljahreFromCity(Stadt $stadt)
+    {
+        $today = new \DateTime();
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.stadt = :stadt')
+            ->andWhere('a.von <= :today')
+            ->andWhere('a.bis >= :today')
+            ->setParameter('today', $today)
+            ->setParameter('stadt', $stadt)
+            ->orderBy('a.von', 'ASC')
+            ->getQuery();
+
+
+        return $qb->getResult();
+
+    }
+
+    /**
+     * @return Active[] Returns an array of Active objects
+     */
+    public function findAnmeldeSchuljahreFromCity(Stadt $stadt)
+    {
+        $today = new \DateTime();
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.stadt = :stadt')
+            ->andWhere('a.anmeldeStart <= :today')
+            ->andWhere('a.anmeldeEnde >= :today')
+            ->setParameter('today', $today)
+            ->setParameter('stadt', $stadt)
+            ->orderBy('a.von', 'ASC')
+            ->getQuery();
+
+
+        return $qb->getResult();
+
+    }
 
     /**
      * @return Active
