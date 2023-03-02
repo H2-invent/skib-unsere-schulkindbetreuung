@@ -131,7 +131,7 @@ class ChildExcelService
                 $count = 0;
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getVorname());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getNachname());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, ($data->getGeburtstag()->diff($eltern->getCreatedAt()))->y);
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, ($data->getGeburtstag()->diff(new \DateTime()))->y);
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getKlasseString());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getArt());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getArtString());
