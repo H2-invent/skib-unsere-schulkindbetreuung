@@ -289,6 +289,11 @@ class Stammdaten implements GroupSequenceProviderInterface
      */
     private $startDate;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $tracingOfLastYear;
+
     public function __construct()
     {
 
@@ -1031,6 +1036,18 @@ class Stammdaten implements GroupSequenceProviderInterface
     public function setStartDate(?\DateTimeInterface $startDate): self
     {
         $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getTracingOfLastYear(): ?string
+    {
+        return $this->tracingOfLastYear;
+    }
+
+    public function setTracingOfLastYear(?string $tracingOfLastYear): self
+    {
+        $this->tracingOfLastYear = $tracingOfLastYear;
 
         return $this;
     }

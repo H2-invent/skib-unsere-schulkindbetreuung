@@ -45,7 +45,7 @@
     </thead>
     <tbody>
     {% for k in kinder %}
-        {% set eltern = getEltern(k,date()) %}
+        {% set eltern = getEltern(k,stichtag?:date()) %}
         <tr>
             <td></td>
             <td>{{ k.vorname }}</td>

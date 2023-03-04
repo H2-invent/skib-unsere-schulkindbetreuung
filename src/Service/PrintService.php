@@ -186,7 +186,7 @@ class PrintService
     }
 
 
-    public function printChildList($kinder, Organisation $organisation, $text, $fileName, TCPDFController $tcpdf, $wochentag = [0,1,2,3,4], $type = 'I')
+    public function printChildList($kinder, Organisation $organisation, $text, $fileName, TCPDFController $tcpdf, $wochentag = [0,1,2,3,4], $type = 'I', $stichtag = null)
     {
 
         $pdf = $tcpdf->create();
@@ -206,7 +206,7 @@ class PrintService
             true
         );
         $pdf->AddPage('L');
-        $kindData = $this->templating->render('pdf/kinderliste.html.twig', array('text' => $text, 'kinder' => $kinder, 'wochentag'=>$wochentag));
+        $kindData = $this->templating->render('pdf/kinderliste.html.twig', array('text' => $text, 'kinder' => $kinder, 'wochentag'=>$wochentag,'stichtag'=>$stichtag));
         $pdf->writeHTMLCell(
             0,
             0,

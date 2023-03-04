@@ -49,7 +49,7 @@ class StammdatenRepository extends ServiceEntityRepository
     }
     */
 
-    public function findActualStammdatenByUid($uid): ?Stammdaten
+    public function findActualStammdatenByUid($uid, $kindID= null): ?Stammdaten
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.uid = :uid')

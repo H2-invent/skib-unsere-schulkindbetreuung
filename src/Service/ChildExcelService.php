@@ -32,6 +32,7 @@ class ChildExcelService
     private $alphas;
     private ElternService $elternService;
     private BerechnungsService $berechnungsService;
+    private $stichtag = null;
     public function __construct(TranslatorInterface $translator, TokenStorageInterface $tokenStorage, CreateExcelDayService $createExcelDayService, ElternService $elternService, BerechnungsService $berechnungsService)
     {
         $this->spreadsheet = new Spreadsheet();
@@ -43,9 +44,10 @@ class ChildExcelService
         $this->berechnungsService = $berechnungsService;
     }
 
-    public function generateExcel($kinder, Stadt $stadt, $wochentag)
+    public function generateExcel($kinder, Stadt $stadt, $wochentag,$stichtag = null)
     {
         $beruflicheSituation = new LoerrachWorkflowController($this->translator);
+        $this->stichtag = $stichtag;
         $this->stadt = $stadt;
         $this->alphas = $this->createColumnsArray('ZZ');
         $count = 0;
@@ -127,7 +129,7 @@ class ChildExcelService
         $counter = 2;
         foreach ($kinder as $data) {
             if ($this->checkIfChildhasBlockOnDayOfArray($data, $weekdays)) {
-                $eltern = $this->elternService->getElternForSpecificTimeAndKind($data,new \DateTime());
+                $eltern = $this->elternService->getElternForSpecificTimeAndKind($data,$this->stichtag?:new \DateTime());
                 $count = 0;
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getVorname());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getNachname());
@@ -222,7 +224,7 @@ class ChildExcelService
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getIban());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getBic());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getKontoinhaber());
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->berechnungsService->getPreisforBetreuung($data));
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->berechnungsService->getPreisforBetreuung($data,false,$this->stichtag?:null));
                     if ($this->stadt->getSettingsEingabeDerGeschwister()) {
                         $geschwister = '';
                         foreach ($eltern->getGeschwisters() as $gesch) {
