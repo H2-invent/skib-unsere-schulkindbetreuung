@@ -54,7 +54,9 @@ class CopyChildToNewSchuljahr
             $elternNeu = clone $elternAlt;
             $elternNeu->setTracing(md5(uniqid()));
             $elternNeu->setStartDate($target->getVon());
+            $elternNeu->setUid(md5(uniqid()));
             $elternNeu->setSecCode(null);
+            $elternNeu->setTracingOfLastYear($elternAlt->getTracing());
             foreach ($elternNeu->getKinds() as $data) {
                 $elternNeu->removeKind($data);
             }
