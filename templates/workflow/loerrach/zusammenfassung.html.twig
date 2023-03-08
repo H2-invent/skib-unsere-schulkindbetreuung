@@ -93,10 +93,11 @@
                             <h5 class="mb-0">
                                 {{ k.vorname }} {{ k.nachname }}
 
-                                {% if k.tageWithBlocks < stadt.minDaysperWeek and not is_granted('ROLE_ORG_CHILD_CHANGE') %}<span class="badge badge-danger">
+                                {% if k.tageWithBlocks < stadt.minDaysperWeek and not is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                                    <span class="badge badge-danger">
                                     {% trans %}Bitte weiteres Betreuungszeitfenster auswählen{% endtrans %} </span>
                                 {% elseif k.tageWithBlocks < stadt.minDaysperWeek and is_granted('ROLE_ORG_CHILD_CHANGE') %}
-                                <span class="badge badge-warning">
+                                    <span class="badge badge-warning">
                                     {% trans with {'{selected}':(k.betreungsblocksRealKontingent|length+k.BetreungsblocksReal|length)} %}ACHTUNG! NUR {selected} Betreuungszeitfenster ausgewählt {% endtrans %} </span>
                                 {% else %}
 
@@ -266,7 +267,7 @@
                                         <td>
                                             <h5>
                                                 {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
-                                                   {{ getPreisforBetreuung(k,k.startDate)|number_format(2,',','.') }} €
+                                                    {{ getPreisforBetreuung(k,k.startDate)|number_format(2,',','.') }} €
                                                 {% else %}
                                                     {% if k.tageWithBlocks < stadt.minDaysperWeek %} {% trans %}Bitte weitere Betreuungszeitfenster auswählen{% endtrans %} {% else %}{{ getPreisforBetreuung(k, k.startDate)|number_format(2,',','.') }} €{% endif %}
                                                 {% endif %}
@@ -282,42 +283,42 @@
             {% endfor %}
         </div>
     </div>
-
-    <div class="card mb-2">
-        <div class="card-header ">
-            <h3 class="cover-heading">{% trans %}Bankverbindung für Lastschrift{% endtrans %} <a
-                        href="{{ path('loerrach_workflow_bezahlen', {'slug':stadt.slug}) }}"> <i
-                            class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
+    {% if not stadt.skibSettingsBypassBankdaten %}
+        <div class="card mb-2">
+            <div class="card-header ">
+                <h3 class="cover-heading">{% trans %}Bankverbindung für Lastschrift{% endtrans %} <a
+                            href="{{ path('loerrach_workflow_bezahlen', {'slug':stadt.slug}) }}"> <i
+                                class="fa fa-edit"></i> {% trans %}Bearbeiten{% endtrans %}</a></h3>
+            </div>
+            <div class="text-left card-body">
+                {% trans %}Kontoinhaber{% endtrans %}: {{ eltern.kontoinhaber }}<br/>
+                {% trans %}IBAN{% endtrans %}: {{ eltern.iban }}<br/>
+                {% trans %}BIC{% endtrans %}: {{ eltern.bic }}<br/>
+                {% if eltern.sepaInfo %}
+                    <p class="mt-2">
+                        {% set text = 'betreuende Organisation'|trans %}
+                        {% trans %}Ich ermächtige{% endtrans %}
+                        {% for o in organisation %}
+                            {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:text~' '~o.name } %}die %org% {% endtrans %},
+                        {% endfor %}
+                        {% trans %}Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von{% endtrans %}
+                        {% for o in organisation %}
+                            {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:text~' '~o.name } %}der %org% {% endtrans %}{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                        {% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
+                    </p>
+                    <p>
+                        {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
+                    </p>
+                    <p>
+                        {% trans %}Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.{% endtrans %}
+                    </p>
+                {% else %}
+                    {% trans %}Die Einzugsermächtigung wurde nicht erteilt. Diese muss postalisch erteilt werden. Ein Formular für die Einzugsermächtigung ist der Buchungsbestätigungs-E-Mail angehängt.{% endtrans %}
+                {% endif %}
+            </div>
         </div>
-        <div class="text-left card-body">
-            {% trans %}Kontoinhaber{% endtrans %}: {{ eltern.kontoinhaber }}<br/>
-            {% trans %}IBAN{% endtrans %}: {{ eltern.iban }}<br/>
-            {% trans %}BIC{% endtrans %}: {{ eltern.bic }}<br/>
-            {% if eltern.sepaInfo %}
-                <p class="mt-2">
-                    {% set text = 'betreuende Organisation'|trans %}
-                    {% trans %}Ich ermächtige{% endtrans %}
-                    {% for o in organisation %}
-                        {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:text~' '~o.name } %}die %org% {% endtrans %},
-                    {% endfor %}
-                    {% trans %}Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von{% endtrans %}
-                    {% for o in organisation %}
-                        {% trans with {'%org%':o.sepaOrganisation?o.sepaOrganisation:text~' '~o.name } %}der %org% {% endtrans %}{% if not loop.last %},{% endif %}
-                    {% endfor %}
-                    {% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
-                </p>
-                <p>
-                    {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
-                </p>
-                <p>
-                    {% trans %}Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.{% endtrans %}
-                </p>
-            {% else %}
-                {% trans %}Die Einzugsermächtigung wurde nicht erteilt. Diese muss postalisch erteilt werden. Ein Formular für die Einzugsermächtigung ist der Buchungsbestätigungs-E-Mail angehängt.{% endtrans %}
-            {% endif %}
-        </div>
-    </div>
-
+    {% endif %}
     <div class="m-4">
         <h5>{% trans %}Gebühren für alle Kinder pro Monat{% endtrans %}:
             {% if error == false %}
@@ -349,7 +350,7 @@
 
     {% if error == false %}
         <button class="btn btn-outline-primary sendButton btn-block mt-4"
-                disabled>{% trans %}Zahlungspflichtigen Vertrag abschließen{% endtrans %}</button>
+                disabled>{% if stadt.skibSettingsFinishButtonText is not null %}{{ stadt.skibSettingsFinishButtonText }}{% else %}{% trans %}Zahlungspflichtigen Vertrag abschließen{% endtrans %}{% endif %}</button>
     {% else %}
         <a href="{{ path('loerrach_workflow_schulen',{'slug':stadt.slug}) }}"
            class="btn btn-outline-primary btn-block mt-4">{% trans %}Weitere Betreuungszeitfenster hinzufügen{% endtrans %}</a>

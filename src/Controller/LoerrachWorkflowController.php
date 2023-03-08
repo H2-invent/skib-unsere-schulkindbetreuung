@@ -448,6 +448,10 @@ class LoerrachWorkflowController extends AbstractController
         } else {
             return $this->redirectToRoute('loerrach_workflow_adresse', array('slug' => $stadt->getSlug()));
         }
+        if ($stadt->getSkibSettingsBypassBankdaten()){
+            $response = $this->redirectToRoute('loerrach_workflow_zusammenfassung', array('slug' => $stadt->getSlug()));
+            return $response;
+        }
         $renderOrganisation = $schulkindBetreuungKindSEPAService->findOrg($adresse);
         $form = $this->createForm(SepaStammdatenType::class, $adresse, ['stadt' => $stadt]);
 
