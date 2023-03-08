@@ -403,6 +403,16 @@ class Stadt implements TranslatableInterface
      */
     private $skibSettingsAbmeldungEmailText;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $skibSettingsBypassBankdaten;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $skibSettingsFinishButtonText;
+
 
 
 
@@ -1479,6 +1489,30 @@ class Stadt implements TranslatableInterface
     public function setSkibSettingsAbmeldungEmailText(?string $skibSettingsAbmeldungEmailText): self
     {
         $this->skibSettingsAbmeldungEmailText = $skibSettingsAbmeldungEmailText;
+
+        return $this;
+    }
+
+    public function getSkibSettingsBypassBankdaten(): ?bool
+    {
+        return $this->skibSettingsBypassBankdaten;
+    }
+
+    public function setSkibSettingsBypassBankdaten(?bool $skibSettingsBypassBankdaten): self
+    {
+        $this->skibSettingsBypassBankdaten = $skibSettingsBypassBankdaten;
+
+        return $this;
+    }
+
+    public function getSkibSettingsFinishButtonText(): ?string
+    {
+        return $this->skibSettingsFinishButtonText;
+    }
+
+    public function setSkibSettingsFinishButtonText(?string $skibSettingsFinishButtonText): self
+    {
+        $this->skibSettingsFinishButtonText = $skibSettingsFinishButtonText;
 
         return $this;
     }
