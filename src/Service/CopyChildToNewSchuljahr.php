@@ -71,7 +71,9 @@ class CopyChildToNewSchuljahr
                     $kindTmp->setTracing(md5(uniqid()));
 
                     $this->entityManager->persist($kindTmp);
-
+                    foreach ($kindTmp->getZeitblocks() as $oldBlocks) {
+                        $kindTmp->removeZeitblocks($oldBlocks);
+                    }
                     foreach ($kind->getZeitblocks() as $block) {
 
                         if (isset($blockmatrix[$block->getId()])) {
@@ -175,5 +177,38 @@ class CopyChildToNewSchuljahr
     {
         $this->anmeldeEmailService->sendEmail($kind, $stammdaten, $stadt, $text, $dontSendBeworben);
         $this->anmeldeEmailService->send($kind, $stammdaten);
+    }
+    public function fixChildInTwoYears(Kind $kind){
+        $allChilds = $this->entityManager->getRepository(Kind::class)->findBy(array('tracing'=>$kind->getTracing()));
+        $correctChild = null;
+        foreach ($allChilds as $data){
+            $schuljahrTmp = null;
+            $snapIn = true;
+            foreach ($data->getZeitblocks() as $block){
+                if ($block->getActive() !== $schuljahrTmp){
+                    if ($schuljahrTmp !== null){
+                        $snapIn = false;
+                    }
+                    $schuljahrTmp = $block->getActive();
+                }
+            }
+            if ($snapIn){
+                $correctChild = $data;
+            }
+        }
+        foreach ($allChilds as $data){
+            if ($data !== $correctChild){
+                foreach ($data->getZeitblocks() as $data2){
+                    $data->removeZeitblock($data2);
+                }
+
+               $data->setStartDate($correctChild->getStartDate());
+                foreach ($correctChild->getZeitblocks() as $data2){
+                    $data->addZeitblock($data2);
+                }
+            }
+            $this->entityManager->persist($data);
+        }
+       $this->entityManager->flush();
     }
 }
