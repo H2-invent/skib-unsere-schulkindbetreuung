@@ -31,7 +31,7 @@ class FixStartDateoFChildCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('This fixes when a workingcopy is in twoe shoolyears')
+            ->setDescription('This fixes when a workingcopy is in two shoolyears')
             ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
             ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description');
     }
