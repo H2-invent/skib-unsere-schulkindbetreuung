@@ -57,8 +57,16 @@ class WidgetService
         return $value;
     }
 
-    public function calcBlocksNumberNow(Zeitblock $zeitblock, \DateTime $now)
+    public function calcBlocksNumberNow(Zeitblock $zeitblock)
     {
+        $now = new \DateTime();
+        if ($zeitblock->getActive()->getBis() < $now) {
+            $now = $zeitblock->getActive()->getBis();
+        }
+        if ($zeitblock->getActive()->getVon() > $now) {
+            $now = $zeitblock->getActive()->getVon();
+        }
+
         $cache = new FilesystemAdapter();
         $value = $cache->get('zeitblock_' . $zeitblock->getId(), function (ItemInterface $item) use ($zeitblock, $now) {
             $kinder = $this->childInBlockService->getCurrentChildOfZeitblock($zeitblock, $now);

@@ -55,8 +55,7 @@ class Kontingent extends AbstractExtension
     }
     public function getChildsOnSpecificTimeCached(Zeitblock $zeitblock)
     {
-        $now = new \DateTime();
-        $res = $this->widgetService->calcBlocksNumberNow($zeitblock,$now);
+        $res = $this->widgetService->calcBlocksNumberNow($zeitblock);
         return $res;
 
     }
