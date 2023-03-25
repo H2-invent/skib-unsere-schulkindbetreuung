@@ -64,15 +64,9 @@ class StatistikGenerateCommand extends Command
         $progressBar = new ProgressBar($output, sizeof($zeitblocks));
         $progressBar->start();
         foreach ($zeitblocks as $data2) {
-            $now = new \DateTime();
-            if ($data2->getActive()->getBis() < $now) {
-                $now = $data2->getActive()->getBis();
-            }
-            if ($data2->getActive()->getVon() > $now) {
-                $now = $data2->getActive()->getVon();
-            }
+
             $cache->delete('zeitblock_' . $data2->getId());
-            $this->widgetService->calcBlocksNumberNow($data2, $now);
+            $this->widgetService->calcBlocksNumberNow($data);
             $progressBar->advance();
         }
         $progressBar->finish();
