@@ -18,7 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentStripeController extends AbstractController
 {
-    public function __construct()
+    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
     {
 
     }
@@ -32,7 +32,7 @@ class PaymentStripeController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE);
         }
-        $payment = $this->getDoctrine()->getRepository(Payment::class)->findOneBy(array('uid'=>$request->get('id')));
+        $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(array('uid'=>$request->get('id')));
 
         return $this->render('payment_stripe/index.html.twig', array('payment' => $payment, 'stadt' => $stadt,'org'=>$payment->getOrganisation()));
     }
@@ -43,14 +43,14 @@ class PaymentStripeController extends AbstractController
      */
     public function paymentrecieveNonceAction( Stadt $stadt, Request $request)
     {
-        $payment = $this->getDoctrine()->getRepository(Payment::class)->findOneBy(array('uid' => $request->get('paymentId')));
+        $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(array('uid' => $request->get('paymentId')));
         $stripe = new PaymentStripe();
         $stripe->setChargeId($request->get('stripeToken'));
         $payment->setPaymentStripe($stripe);
         $stripe->setStatus(false);
         $payment->setFinished(true);
         $payment->setArtString('Credit Card');
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($stripe);
         $em->persist($payment);
         $em->flush();

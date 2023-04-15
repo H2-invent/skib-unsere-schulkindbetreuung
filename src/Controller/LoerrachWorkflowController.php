@@ -51,7 +51,7 @@ class LoerrachWorkflowController extends AbstractController
 {
     public $beruflicheSituation;
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
     {
         $this->beruflicheSituation = array(
             $translator->trans('Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig') => 1,
@@ -157,7 +157,7 @@ class LoerrachWorkflowController extends AbstractController
     {
 
         // Load all schools from the city into the controller as $schulen
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
+        $schule = $this->managerRegistry->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
         $isEdit = false;
         if ($schuljahr === null) {
@@ -173,7 +173,7 @@ class LoerrachWorkflowController extends AbstractController
         $kinder = array();
         if ($request->cookies->get('KindID')) {
             $cookie_kind = explode('.', $request->cookies->get('KindID'));
-            $kinder = $this->getDoctrine()->getRepository(Kind::class)->findBy(array('id' => $cookie_kind[0]));
+            $kinder = $this->managerRegistry->getRepository(Kind::class)->findBy(array('id' => $cookie_kind[0]));
             $isEdit = true;
         } else {
             $kinder = $adresse->getKinds()->toArray();
@@ -181,14 +181,14 @@ class LoerrachWorkflowController extends AbstractController
 
         $renderKinder = array();
         foreach ($kinder as $data) {
-            $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromKind($data);
+            $schuljahr = $this->managerRegistry->getRepository(Active::class)->findSchuljahrFromKind($data);
             if (($isEdit && !$data->getStartDate()) || ($isEdit && !$stadt->getSettingsSkibShowSetStartDateOnChange())) {
                 if (new \DateTime() < $schuljahr->getVon()){
                     $data->setStartDate($schuljahr->getVon());
                 }else{
                     $data->setStartDate((new \DateTime())->modify($stadt->getSettingSkibDefaultNextChange()));
                 }
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($data);
                 $em->flush();
             }
@@ -209,7 +209,7 @@ class LoerrachWorkflowController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule_id'));
+        $schule = $this->managerRegistry->getRepository(Schule::class)->find($request->get('schule_id'));
 
         $kind = new Kind();
 
@@ -259,12 +259,12 @@ class LoerrachWorkflowController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
         $isEdit = false;
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
         if ($request->cookies->get('KindID')) {
             $isEdit = true;
-            $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromKind($kind);
+            $schuljahr = $this->managerRegistry->getRepository(Active::class)->findSchuljahrFromKind($kind);
         }
 
 
@@ -308,8 +308,8 @@ class LoerrachWorkflowController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-        $em = $this->getDoctrine()->getManager();
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $em = $this->managerRegistry->getManager();
         $em->remove($kind);
         $em->flush();
         return new JsonResponse(array('redirect' => $this->generateUrl('loerrach_workflow_schulen', array('slug' => $stadt->getSlug()))));
@@ -327,9 +327,9 @@ class LoerrachWorkflowController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
 
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
         $kind->setStartDate(new \DateTime($request->get('startDate')));
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($kind);
         $em->flush();
         return new JsonResponse(array('error' => false));
@@ -350,15 +350,15 @@ class LoerrachWorkflowController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
 
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
         $schule = $kind->getSchule();
 
         // Load the data from the city into the controller as $stadt
         // When more then one active year is available and an old Kind has to be changed, we need to set the schuljahr back to the original schuljahr of one of the time slots.
         if (count($kind->getRealZeitblocks()) > 0) {
-            $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromKind($kind);
+            $schuljahr = $this->managerRegistry->getRepository(Active::class)->findSchuljahrFromKind($kind);
         } else {
-            $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrfromStadtAndStichtag($stadt,$kind->getStartDate());
+            $schuljahr = $this->managerRegistry->getRepository(Active::class)->findSchuljahrfromStadtAndStichtag($stadt,$kind->getStartDate());
         }
 
         $req = array(
@@ -369,13 +369,13 @@ class LoerrachWorkflowController extends AbstractController
         $block = array();
         if ($kind->getArt() == 1) {
             $req['ganztag'] = 0;
-            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
+            $block = $this->managerRegistry->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
             $req['ganztag'] = $kind->getArt();
-            $block = array_merge($block, $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc')));
+            $block = array_merge($block, $this->managerRegistry->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc')));
 
         } elseif ($kind->getArt() == 2) {
             $req['ganztag'] = $kind->getArt();
-            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
+            $block = $this->managerRegistry->getRepository(Zeitblock::class)->findBy($req, array('von' => 'asc'));
 
         }
 
@@ -400,8 +400,8 @@ class LoerrachWorkflowController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
 
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
         if ($block->getDeaktiviert()) {
             return new JsonResponse(array('error' => 1, 'snack' => 'Error, this action is not allowed'));
         }
@@ -464,7 +464,7 @@ class LoerrachWorkflowController extends AbstractController
             $errors = $validator->validate($adresse, null, $valdation);
             $errorString = $errorService->createError($errors, $form);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($adresse);
                 $em->flush();
                 $response = $this->redirectToRoute('loerrach_workflow_zusammenfassung', array('slug' => $stadt->getSlug()));
@@ -571,7 +571,7 @@ class LoerrachWorkflowController extends AbstractController
         $kindeToEdit = null;
         if ($request->cookies->get('KindID')) {
             $cookie_kind = explode('.', $request->cookies->get('KindID'));
-            $kindeToEdit = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('id' => $cookie_kind[0]));
+            $kindeToEdit = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('id' => $cookie_kind[0]));
             $isEdit = true;
         }
         $kinder = $adresse->getKinds();
@@ -623,7 +623,7 @@ class LoerrachWorkflowController extends AbstractController
         } else {
             return $this->redirectToRoute('loerrach_workflow_adresse');
         }
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(
             array('id' => $request->get('kind_id'), 'eltern' => $adresse)
         );
 
@@ -650,7 +650,7 @@ class LoerrachWorkflowController extends AbstractController
         $elter = $stamdatenFromCookie->getStammdatenFromCookie($request);
         $stadt = $elter->getKinds()[0]->getSchule()->getStadt();
 
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $elter, 'id' => $request->get(
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $elter, 'id' => $request->get(
             'id')));
         $organisation = $kind->getAllBlocks()[0]->getSchule()->getOrganisation();
 
@@ -668,9 +668,9 @@ class LoerrachWorkflowController extends AbstractController
     public
     function bypassAction(Request $request, ValidatorInterface $validator)
     {
-        $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->find($request->get('id'));
+        $adresse = $this->managerRegistry->getRepository(Stammdaten::class)->find($request->get('id'));
         $cookie = new Cookie ('UserID', $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($adresse);
         $em->flush();
         $response = $this->redirectToRoute('loerrach_workflow_adresse');

@@ -16,14 +16,17 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
 class FerienTicketController extends AbstractController
 {
+    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/ferien/ticket", name="ferien_ticket")
      */
     public function printAction(TranslatorInterface $translator,  FerienPrintService $print, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
 
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('id' => $request->get('kind_id')));
-        $ferienblock = $this->getDoctrine()->getRepository(KindFerienblock::class)->findOneBy(array('id' => $request->get('ferien_id')));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('id' => $request->get('kind_id')));
+        $ferienblock = $this->managerRegistry->getRepository(KindFerienblock::class)->findOneBy(array('id' => $request->get('ferien_id')));
 
         $fileName = 'Ticket' . '_' . $kind->getVorname() . '_' . $kind->getNachname() . '.pdf';
 

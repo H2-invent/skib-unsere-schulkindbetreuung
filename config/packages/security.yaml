@@ -1,7 +1,9 @@
 
 security:
-    encoders:
-        FOS\UserBundle\Model\UserInterface: bcrypt
+    password_hashers:
+        App\Entity\User:
+            algorithm: auto
+    enable_authenticator_manager: true
 
 
     role_hierarchy:
@@ -18,8 +20,8 @@ security:
         users:
             entity:
                 class: App\Entity\User
-                #property: keycloakId
-                property: email
+                property: keycloakId
+
 
     firewalls:
         dev:
@@ -27,22 +29,20 @@ security:
             security: false
         main:
             pattern: ^/
-            anonymous: true
             switch_user: true
             logout:
-                path: app_logout
-                target: logout_keycloak
-            guard:
-                authenticators:
-                    - App\Security\GuardServiceKeycloak
+                path:   app_logout
+                target: index
+            custom_authenticators:
+                - App\Security\KeycloakAuthenticator
 
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: /login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: /register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: /resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /login$, role: PUBLIC_ACCESS }
+        - { path: /register, role: PUBLIC_ACCESS }
+        - { path: /resetting, role: PUBLIC_ACCESS }
         - { path: /login/, role: ROLE_USER }
         - { path: /admin/, role: ROLE_ADMIN }
         - { path: /city_admin/, role: ROLE_CITY_ADMIN }

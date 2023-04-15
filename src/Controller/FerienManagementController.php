@@ -22,17 +22,20 @@ use function Doctrine\ORM\QueryBuilder;
 
 class FerienManagementController extends AbstractController
 {
+    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/org_ferien/edit/show", name="ferien_management_show",methods={"GET"})
      */
     public function index(Request $request)
     {
 
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $blocks = $this->getDoctrine()->getRepository(Ferienblock::class)->findBy(array('organisation' => $organisation), array('startDate' => 'asc'));
+        $blocks = $this->managerRegistry->getRepository(Ferienblock::class)->findBy(array('organisation' => $organisation), array('startDate' => 'asc'));
 
         return $this->render('ferien_management/index.html.twig', array('blocks' => $blocks, 'org' => $organisation));
     }
@@ -43,7 +46,7 @@ class FerienManagementController extends AbstractController
      */
     public function neu(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -59,7 +62,7 @@ class FerienManagementController extends AbstractController
             $block = $form->getData();
             $errors = $validator->validate($block);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($block);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
@@ -78,11 +81,11 @@ class FerienManagementController extends AbstractController
      */
     public function preise(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $ferienblock = $this->getDoctrine()->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
+        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
         if ($ferienblock->getPreis() === null || $ferienblock->getNamePreise() === null || sizeof($ferienblock->getPreis()) != $ferienblock->getAnzahlPreise()) {
             $ferienblock->setNamePreise(array_fill(0, $ferienblock->getAnzahlPreise(), ''));
             $ferienblock->setPreis(array_fill(0, $ferienblock->getAnzahlPreise(), 0));
@@ -95,7 +98,7 @@ class FerienManagementController extends AbstractController
             $block = $form->getData();
             $errors = $validator->validate($block);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($block);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
@@ -115,11 +118,11 @@ class FerienManagementController extends AbstractController
      */
     public function ferienblockVoucher(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $ferienblock = $this->getDoctrine()->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
+        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
 
         if ($ferienblock->getVoucher() === null || $ferienblock->getVoucherPrice() === null) {
             $ferienblock->setVoucher(array_fill(0, $ferienblock->getAmountVoucher(), ''));
@@ -138,7 +141,7 @@ class FerienManagementController extends AbstractController
             $block = $form->getData();
             $errors = $validator->validate($block);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($block);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
@@ -156,12 +159,12 @@ class FerienManagementController extends AbstractController
      */
     public function edit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
-        $ferienblock = $this->getDoctrine()->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
+        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
 
         $form = $this->createForm(FerienBlockType::class, $ferienblock);
 
@@ -173,7 +176,7 @@ class FerienManagementController extends AbstractController
 
             $errors = $validator->validate($block);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($block);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
@@ -192,13 +195,13 @@ class FerienManagementController extends AbstractController
      */
     public function delte(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
-        $ferienblock = $this->getDoctrine()->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
-        $em = $this->getDoctrine()->getManager();
+        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
+        $em = $this->managerRegistry->getManager();
         $em->remove($ferienblock);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
@@ -211,12 +214,12 @@ class FerienManagementController extends AbstractController
      */
     public function duplicate(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
-        $ferienblock = $this->getDoctrine()->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
+        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
         $ferienblockNew = clone $ferienblock;
         $translations = $ferienblock->getTranslations();
         foreach ($translations as $locale => $fields) {
@@ -228,7 +231,7 @@ class FerienManagementController extends AbstractController
         foreach ($ferienblock->getKategorie() as $data){
             $ferienblockNew->addKategorie($data);
         }
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($ferienblockNew);
         $em->flush();
         $text = $translator->trans('Erfolgreich kopiert');
@@ -242,8 +245,8 @@ class FerienManagementController extends AbstractController
      */
     public function checkinListFerien(Request $request, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $block = $this->getDoctrine()->getRepository(Ferienblock::class)->find($request->get('ferien_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
+        $block = $this->managerRegistry->getRepository(Ferienblock::class)->find($request->get('ferien_id'));
 
         if ($organisation != $block->getOrganisation()) {
             throw new \Exception('Organisation not responsible for block');
@@ -255,7 +258,7 @@ class FerienManagementController extends AbstractController
 
         $today = new \DateTime('today');
         $checkinDate = $today->format('Y-m-d');
-        $kinder = $this->getDoctrine()->getRepository(KindFerienblock::class)->findBy(array('ferienblock' => $block));
+        $kinder = $this->managerRegistry->getRepository(KindFerienblock::class)->findBy(array('ferienblock' => $block));
         $titel = $translator->trans('Anwesenheitsliste für Ferienblock');
         $mode = 'block';
 
@@ -274,13 +277,13 @@ class FerienManagementController extends AbstractController
      */
     public function ordersOverview(Request $request, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
 
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
-        $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
+        $qb = $this->managerRegistry->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
         $qb->innerJoin('stammdaten.kinds', 'kinds')
             ->innerJoin('kinds.kindFerienblocks', 'kind_ferienblocks')
             ->innerJoin('kind_ferienblocks.ferienblock', 'ferienblock')
@@ -303,8 +306,8 @@ class FerienManagementController extends AbstractController
      */
     public function storno(Request $request, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
+        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
 
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
@@ -319,7 +322,7 @@ class FerienManagementController extends AbstractController
      */
     public function checkinListTagyFerien(Request $request, TranslatorInterface $translator, AnwesenheitslisteService $anwesenheitslisteService)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -362,12 +365,12 @@ class FerienManagementController extends AbstractController
      */
     public function orderDetails(Request $request, TranslatorInterface $translator, AnwesenheitslisteService $anwesenheitslisteService)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
+        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $qb = $this->getDoctrine()->getRepository('App:Kind')->createQueryBuilder('kind')
+        $qb = $this->managerRegistry->getRepository('App:Kind')->createQueryBuilder('kind')
             ->innerJoin('kind.kindFerienblocks', 'kind_ferienblocks')
             ->innerJoin('kind_ferienblocks.ferienblock', 'ferienblock')
             ->andWhere('ferienblock.organisation = :org')
@@ -393,7 +396,7 @@ class FerienManagementController extends AbstractController
     public function ferienOrgEdit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
 
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation->getStadt() != $this->getUser()->getStadt() && $this->getUser()->getOrganisation() != $organisation) {
             throw new \Exception('Wrong City');
         }
@@ -405,7 +408,7 @@ class FerienManagementController extends AbstractController
             $organisation = $form->getData();
             $errors = $validator->validate($organisation);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($organisation);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');

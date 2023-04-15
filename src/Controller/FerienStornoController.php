@@ -20,13 +20,16 @@ use function Doctrine\ORM\QueryBuilder;
 
 class FerienStornoController extends AbstractController
 {
+    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/{slug}/ferien/storno", name="ferien_storno")
      */
     public function index($slug, Request $request)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
 
         $kind = $stammdaten ->getKinds();
 
@@ -43,8 +46,8 @@ class FerienStornoController extends AbstractController
      */
     public function markAction(TranslatorInterface $translator, Request $request,FerienStornoService $ferienStornoService)
     {
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
-        $kindFerienblock = $this->getDoctrine()->getRepository(KindFerienblock::class)->findOneBy(array('id' => $request->get('block_id')));
+        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
+        $kindFerienblock = $this->managerRegistry->getRepository(KindFerienblock::class)->findOneBy(array('id' => $request->get('block_id')));
         return new JsonResponse($ferienStornoService->toggleBlock($kindFerienblock,$stammdaten));
     }
 
@@ -53,9 +56,9 @@ class FerienStornoController extends AbstractController
      */
     public function stornoAbschluss(LoggerInterface $logger, $slug,TranslatorInterface $translator, Request $request,FerienStornoService $ferienStornoService)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
 
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
+        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
 
          $logger->info('Start Storno for '.$stammdaten->getId());
          $ferienStornoService->stornoAbschluss($stammdaten,$request->getClientIp());
@@ -69,7 +72,7 @@ class FerienStornoController extends AbstractController
      */
     public function payBackAction(CheckoutPaymentService $checkoutPaymentService, TranslatorInterface $translator, Request $request,FerienStornoService $ferienStornoService)
     {
-        $refund = $this->getDoctrine()->getRepository(PaymentRefund::class)->find($request->get('id'));
+        $refund = $this->managerRegistry->getRepository(PaymentRefund::class)->find($request->get('id'));
 
         return new JsonResponse(array('error'=>$checkoutPaymentService->makeRefundPAyment($refund),'redirect'=>$this->generateUrl('ferien_management_order_detail',array('org_id'=>$refund->getPayment()->getOrganisation()->getId(),'id'=>$refund->getPayment()->getStammdaten()->getId()))));
     }

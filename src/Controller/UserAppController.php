@@ -11,6 +11,7 @@ use App\Service\ElternService;
 use App\Service\MailerService;
 use App\Service\SchuljahrService;
 use App\Service\UserConnectionService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,7 +45,7 @@ class UserAppController extends AbstractController
      * Die URL enthält dann weitere URLs mit Informationen sowie die Infos zu dem USer
     *
     */
-    public function __construct()
+    public function __construct(private ManagerRegistry $managerRegistry)
     {
         $this->daymapper = array(
             1 => 0,
@@ -65,7 +66,7 @@ class UserAppController extends AbstractController
         $user = $this->getUser();
 
         $user->setAppToken(md5(uniqid()));
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($user);
         $em->flush();
         return $this->render('user_app/index.html.twig', array('user' => $user));
@@ -77,7 +78,7 @@ class UserAppController extends AbstractController
     public function confirmationToken(UserConnectionService $userConnectionService, MailerService $mailerService, TranslatorInterface $translator, $appToken, CheckinSchulkindservice $checkinSchulkindservice)
     {
         try {
-            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array('appToken' => $appToken));
+            $user = $this->managerRegistry->getRepository(User::class)->findOneBy(array('appToken' => $appToken));
         } catch (\Exception $e) {
             return new JsonResponse(array('error' => true));
         }
@@ -91,7 +92,7 @@ class UserAppController extends AbstractController
     {
 
         try {
-            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(
+            $user = $this->managerRegistry->getRepository(User::class)->findOneBy(
                 array(
                     'confirmationTokenApp' => $request->get('confirmationToken'),
                     'appDetectionToken' => $request->get('requestToken')));
@@ -115,7 +116,7 @@ class UserAppController extends AbstractController
      */
     public function saveToken(UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array('appCommunicationToken' => $request->get('token')));
+        $user = $this->managerRegistry->getRepository(User::class)->findOneBy(array('appCommunicationToken' => $request->get('token')));
         return new JsonResponse($userConnectionService->saveSetting($user));
 
 
@@ -126,7 +127,7 @@ class UserAppController extends AbstractController
      */
     public function userInformation(UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
+        $user = $this->managerRegistry->getRepository(User::class)->findOneBy(array(
                 'appCommunicationToken' => $request->get('communicationToken')
             )
         );
@@ -141,7 +142,7 @@ class UserAppController extends AbstractController
     {
         $user = null;
         if ($request->get('communicationToken')) {
-            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
+            $user = $this->managerRegistry->getRepository(User::class)->findOneBy(array(
                     'appCommunicationToken' => $request->get('communicationToken')
                 )
             );
@@ -190,7 +191,7 @@ class UserAppController extends AbstractController
     {
         $user = null;
         if ($request->get('communicationToken')) {
-            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
+            $user = $this->managerRegistry->getRepository(User::class)->findOneBy(array(
                     'appCommunicationToken' => $request->get('communicationToken')
                 )
             );
@@ -243,12 +244,12 @@ class UserAppController extends AbstractController
     {
         $user = null;
         if ($request->get('communicationToken')) {
-            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
+            $user = $this->managerRegistry->getRepository(User::class)->findOneBy(array(
                     'appCommunicationToken' => $request->get('communicationToken')
                 )
             );
         }
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($id);
+        $kind = $this->managerRegistry->getRepository(Kind::class)->find($id);
         if ($user && in_array($kind->getSchule(), $user->getSchulen()->toArray())) {
             $eltern = $elternService->getLatestElternFromChild($kind);
             return new JsonResponse(array(
@@ -294,14 +295,14 @@ class UserAppController extends AbstractController
     {
         $user = null;
         if ($request->get('communicationToken')) {
-            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
+            $user = $this->managerRegistry->getRepository(User::class)->findOneBy(array(
                     'appCommunicationToken' => $request->get('communicationToken')
                 )
             );
         }
         if ($user) {
             $today = new \DateTime();
-            $kind = $this->getDoctrine()->getRepository(Kind::class)->find($id);
+            $kind = $this->managerRegistry->getRepository(Kind::class)->find($id);
             $anwesenheit = $checkinSchulkindservice->getAnwesenheitToday($kind, $today, $user->getOrganisation());
 
             return new JsonResponse(array(
@@ -328,7 +329,7 @@ class UserAppController extends AbstractController
         $user->setAppDevice(null);
         $user->setAppImei(null);
         $user->setAppSettingsSaved(false);
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($user);
         $em->flush();
         return $this->redirectToRoute('connection_app_start');

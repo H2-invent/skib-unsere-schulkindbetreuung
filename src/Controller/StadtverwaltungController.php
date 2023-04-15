@@ -13,6 +13,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class StadtverwaltungController extends AbstractController
 {
+    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/admin/index", name="admin_index",methods={"GET"})
      */
@@ -28,7 +31,7 @@ class StadtverwaltungController extends AbstractController
      */
     public function stadtverwaltung()
     {
-        $city = $this->getDoctrine()->getRepository(Stadt::class)->findBy(array('deleted' => false));
+        $city = $this->managerRegistry->getRepository(Stadt::class)->findBy(array('deleted' => false));
 
         return $this->render('administrator/stadt.html.twig', [
             'city' => $city
@@ -54,7 +57,7 @@ class StadtverwaltungController extends AbstractController
             $city->setCreatedAt(new \DateTime());
             $errors = $validator->validate($city);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($city);
                 $em->flush();
                 return $this->redirectToRoute('admin_stadt');
@@ -70,7 +73,7 @@ class StadtverwaltungController extends AbstractController
      */
     public function editStadt(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
     {
-        $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
 
         if($city->getGehaltsklassen() === null || $city->getGehaltsklassen() === null || sizeof($city->getGehaltsklassen()) != $city->getPreiskategorien()){
             $city->setGehaltsklassen(array_fill(0,$city->getPreiskategorien(), ''));
@@ -91,7 +94,7 @@ class StadtverwaltungController extends AbstractController
             $city = $form->getData();
             $errors = $validator->validate($city);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($city);
 
                 //wichtig vor dem Flush
@@ -110,9 +113,9 @@ class StadtverwaltungController extends AbstractController
      */
     public function deleteStadt(Request $request)
     {
-        $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
         $city->setDeleted(true);
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($city);
         $em->flush();
         return $this->redirectToRoute('admin_stadt');
@@ -123,14 +126,14 @@ class StadtverwaltungController extends AbstractController
      */
     public function berechnerEdit(Request $request)
     {
-        $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
         $form = $this->createForm(FormelType::class, $city);
         $form->handleRequest($request);
         $error = array();
         if ($form->isSubmitted() && $form->isValid()) {
             $city = $form->getData();
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
             $em->persist($city);
             $em->flush();
             return $this->redirectToRoute('admin_berechner', array('id' => $city->getId()));

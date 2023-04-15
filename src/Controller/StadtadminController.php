@@ -20,7 +20,7 @@ class StadtadminController extends AbstractController
 {
     private $manager;
 
-    public function __construct(UserManagerInterface $manager)
+    public function __construct(UserManagerInterface $manager, private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
     {
         $this->manager = $manager;
     }
@@ -29,8 +29,8 @@ class StadtadminController extends AbstractController
      */
     public function index(Request $request)
     {
-        $city= $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
-        $user = $this->getDoctrine()->getRepository(User::class)->findBy(array('stadt'=>$city));
+        $city= $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
+        $user = $this->managerRegistry->getRepository(User::class)->findBy(array('stadt'=>$city));
 
         return $this->render('administrator/user.html.twig', [
             'user' => $user,
@@ -56,7 +56,7 @@ class StadtadminController extends AbstractController
      */
     public function neu(Request $request,TranslatorInterface $translator,ValidatorInterface $validator,InvitationService $invitationService)
     {
-        $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
         $defaultData = $this->manager->createUser();
         $errors = array();
         $form = $this->createForm(UserType::class, $defaultData);
@@ -92,7 +92,7 @@ class StadtadminController extends AbstractController
      */
     public function edit(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
-        $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
         $defaultData = $this->manager->findUserBy(array('id'=>$request->get('id')));
 
         $errors = array();
@@ -126,7 +126,7 @@ class StadtadminController extends AbstractController
      */
     public function changePw(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
-        $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
         $defaultData = $this->manager->findUserBy(array('id' => $request->get('id')));
         $errors = array();
         $form = $this->createFormBuilder($defaultData)

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Zeitblock;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class DeactivateZeitblockController extends AbstractController
 {
 
+    public function __construct(private ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("deactivate", name="zeitblock_index")
      */
@@ -25,7 +29,7 @@ class DeactivateZeitblockController extends AbstractController
             return new JsonResponse(array('error' => 1, 'snack' => 'Fehler, Keine Berechtigung'));
         }
 
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('id'));
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
             return new JsonResponse(array('error' => 1, 'snack' => $text));
@@ -35,7 +39,7 @@ class DeactivateZeitblockController extends AbstractController
         }else{
             $block->setDeaktiviert(true);
         }
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($block);
         $em->flush();
         $text = $translator->trans('Erfolgreich geändert');

@@ -19,7 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class BlockController extends AbstractController
 {
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
     {
 
 
@@ -29,8 +29,8 @@ class BlockController extends AbstractController
      */
     public function showSchulen(Request $request)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation'=>$organisation,'deleted'=>false));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
+        $schule = $this->managerRegistry->getRepository(Schule::class)->findBy(array('organisation'=>$organisation,'deleted'=>false));
         if($organisation != $this->getUser()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
         }
@@ -41,12 +41,12 @@ class BlockController extends AbstractController
      */
     public function showBlocks(Request $request)
     {
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('id'));
+        $schule = $this->managerRegistry->getRepository(Schule::class)->find($request->get('id'));
         if($schule->getOrganisation() != $this->getUser()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
         }
-        $activity = $this->getDoctrine()->getRepository(Active::class)->findBy(array('stadt'=>$schule->getStadt()),array('bis'=>'desc'));
-        $blocks = $this->getDoctrine()->getRepository(Zeitblock::class)->findAll();
+        $activity = $this->managerRegistry->getRepository(Active::class)->findBy(array('stadt'=>$schule->getStadt()),array('bis'=>'desc'));
+        $blocks = $this->managerRegistry->getRepository(Zeitblock::class)->findAll();
         return $this->render('block/blocks.html.twig',array('schuljahre'=>$activity,'schule'=>$schule,'blocks'=>$blocks));
     }
     /**
@@ -54,12 +54,12 @@ class BlockController extends AbstractController
      */
     public function getBlocks(Request $request)
     {
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('shool'));
+        $schule = $this->managerRegistry->getRepository(Schule::class)->find($request->get('shool'));
         if ($schule->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $activity = $this->getDoctrine()->getRepository(Active::class)->findOneBy(array('id'=>$request->get('id'),'stadt'=>$schule->getStadt()));
-        $blocks = $this->getDoctrine()->getRepository(Zeitblock::class)->findBy(array('schule'=>$schule,'active'=>$activity),array('von'=>'asc'));
+        $activity = $this->managerRegistry->getRepository(Active::class)->findOneBy(array('id'=>$request->get('id'),'stadt'=>$schule->getStadt()));
+        $blocks = $this->managerRegistry->getRepository(Zeitblock::class)->findBy(array('schule'=>$schule,'active'=>$activity),array('von'=>'asc'));
 
         $renderBlock = array();
         foreach ($blocks as $data){
@@ -75,8 +75,8 @@ class BlockController extends AbstractController
      */
     public function newBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $activity = $this->getDoctrine()->getRepository(Active::class)->find($request->get('year'));
-        $shool = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('shool'));
+        $activity = $this->managerRegistry->getRepository(Active::class)->find($request->get('year'));
+        $shool = $this->managerRegistry->getRepository(Schule::class)->find($request->get('shool'));
         if ($shool->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -100,7 +100,7 @@ class BlockController extends AbstractController
             $errors = $validator->validate($block);
 
                 if (count($errors) == 0) {
-                    $em = $this->getDoctrine()->getManager();
+                    $em = $this->managerRegistry->getManager();
                     $em->persist($block);
                     $em->flush();
                     $text = $translator->trans('Erfolgreich gespeichert');
@@ -121,7 +121,7 @@ class BlockController extends AbstractController
      */
     public function editBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('id'));
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
             return new JsonResponse(array('error'=>1,'snack'=>$text));
@@ -146,7 +146,7 @@ class BlockController extends AbstractController
             $errors = $validator->validate($block);
             try {
                 if (count($errors) == 0) {
-                    $em = $this->getDoctrine()->getManager();
+                    $em = $this->managerRegistry->getManager();
                     $em->persist($block);
                     $em->flush();
                     $text = $translator->trans('Erfolgreich gespeichert');
@@ -166,12 +166,12 @@ class BlockController extends AbstractController
      */
     public function linkBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('id'));
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
             return new JsonResponse(array('error'=>1,'snack'=>$text));
         }
-        $blocks1 = $this->getDoctrine()->getRepository('App:Zeitblock')->findBy(
+        $blocks1 = $this->managerRegistry->getRepository('App:Zeitblock')->findBy(
             array('schule'=>$block->getSchule(),
                 'ganztag'=>$block->getGanztag(),
                 'active'=>$block->getActive(),'deleted'=>false),array('von'=>'ASC'),);
@@ -194,7 +194,7 @@ class BlockController extends AbstractController
             $errors = $validator->validate($block);
             try {
                 if (count($errors) == 0) {
-                    $em = $this->getDoctrine()->getManager();
+                    $em = $this->managerRegistry->getManager();
                     $em->persist($block);
                     $em->flush();
                     $text = $translator->trans('Erfolgreich gespeichert');
@@ -213,7 +213,7 @@ class BlockController extends AbstractController
      */
     public function removeLinkBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
             return new JsonResponse(array('error'=>1,'snack'=>$text));
@@ -221,7 +221,7 @@ class BlockController extends AbstractController
         foreach ($block->getVorganger() as $data){
             $block->removeVorganger($data);
         }
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($block);
         $em->flush();
         return new JsonResponse(array('redirect'=>$this->generateUrl('block_schule_schow',array('id'=>$block->getSchule()->getId()))));

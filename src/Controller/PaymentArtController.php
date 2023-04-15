@@ -14,12 +14,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentArtController extends AbstractController
 {
+    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/org_ferien_admin/payment/art", name="org_ferien_admin_payment_art")
      */
     public function index(ValidatorInterface $validator, Request $request, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -30,7 +33,7 @@ class PaymentArtController extends AbstractController
             $organisation = $form->getData();
             $errors = $validator->validate($organisation);
             if(count($errors)== 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($organisation);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');

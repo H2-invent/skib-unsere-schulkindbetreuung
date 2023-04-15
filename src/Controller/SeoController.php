@@ -9,13 +9,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SeoController extends AbstractController
 {
+        public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+        {
+        }
         /**
          * @Route("/sitemap.xml", name="sitemap")
          */
         public function index()
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findBy(array('active'=>true,'deleted'=>false));
-        $content = $this->getDoctrine()->getRepository(Content::class)->findBy(array('activ'=>true));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findBy(array('active'=>true,'deleted'=>false));
+        $content = $this->managerRegistry->getRepository(Content::class)->findBy(array('activ'=>true));
         $res = $this->render('seo/index.xml.twig', [
         'stadt'=>$stadt,
             'content'=>$content

@@ -21,16 +21,19 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class SchuleController extends AbstractController
 {
+    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/city_schule/show", name="city_admin_schule_show",methods={"GET"})
      */
     public function index(Request $request)
     {
-        $city = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('id'=>$request->get('id'),'deleted'=>false));
+        $city = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('id'=>$request->get('id'),'deleted'=>false));
         if($city != $this->getUser()->getStadt()){
             throw new \Exception('Wrong City');
         }
-        $schools = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt'=>$city,'deleted'=>false));
+        $schools = $this->managerRegistry->getRepository(Schule::class)->findBy(array('stadt'=>$city,'deleted'=>false));
 
         return $this->render('cityAdminSchule/schulen.html.twig', [
             'schulen' => $schools,
@@ -42,8 +45,8 @@ class SchuleController extends AbstractController
      */
     public function newSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
-        $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
-        $organisations = $this->getDoctrine()->getRepository(Organisation::class)->findBy(array('stadt'=>$city));
+        $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
+        $organisations = $this->managerRegistry->getRepository(Organisation::class)->findBy(array('stadt'=>$city));
         if($city != $this->getUser()->getStadt()){
             throw new \Exception('Wrong City');
         }
@@ -57,7 +60,7 @@ class SchuleController extends AbstractController
             $school->setStadt($city);
             $errors = $validator->validate($school);
             if(count($errors)== 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($school);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
@@ -75,9 +78,9 @@ class SchuleController extends AbstractController
      */
     public function editSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
-        $school = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('id'));
+        $school = $this->managerRegistry->getRepository(Schule::class)->find($request->get('id'));
         $city = $school->getStadt();
-        $organisations = $this->getDoctrine()->getRepository(Organisation::class)->findBy(array('stadt'=>$city));
+        $organisations = $this->managerRegistry->getRepository(Organisation::class)->findBy(array('stadt'=>$city));
 
         if($city != $this->getUser()->getStadt()){
             throw new \Exception('Wrong City');
@@ -91,7 +94,7 @@ class SchuleController extends AbstractController
             $school = $form->getData();
             $errors = $validator->validate($school);
             if(count($errors)== 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($school);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
@@ -108,14 +111,14 @@ class SchuleController extends AbstractController
      */
     public function deleteSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
-        $school = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('id'));
+        $school = $this->managerRegistry->getRepository(Schule::class)->find($request->get('id'));
         $city = $school->getStadt();
         if($city != $this->getUser()->getStadt()){
             throw new \Exception('Wrong City');
         }
 
         $school->setDeleted(true);
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($school);
         $em->flush();
         return new JsonResponse(array('redirect'=> $this->generateUrl('city_admin_schule_show',array('id'=>$city->getId()))));
@@ -125,7 +128,7 @@ class SchuleController extends AbstractController
      */
     public function detailSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
-        $school = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('id'));
+        $school = $this->managerRegistry->getRepository(Schule::class)->find($request->get('id'));
         $city = $school->getStadt();
         if($city != $this->getUser()->getStadt()){
             throw new \Exception('Wrong City');

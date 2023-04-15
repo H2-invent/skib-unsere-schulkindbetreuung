@@ -17,18 +17,9 @@ class LoginControllerKeycloak extends AbstractController
      */
     public function index(ClientRegistry $clientRegistry): Response
     {
-      return $clientRegistry->getClient('keycloak_main')->redirect(['email']);
+      return $clientRegistry->getClient('keycloak_main')->redirect(['email','openid','profile']);
     }
-    /**
-     * @Route("/register", name="register_keycloak")
-     */
-    public function register(ClientRegistry $clientRegistry): Response
-    {
-        $url = $this->getParameter('KEYCLOAK_URL').'/realms/'.$this->getParameter('KEYCLOAK_REALM').'/protocol/openid-connect/registrations?client_id='.
-            $this->getParameter('KEYCLOAK_ID').
-            '&response_type=code&scope=openid email&redirect_uri='.$this->generateUrl('connect_keycloak_check',array(),UrlGeneratorInterface::ABSOLUTE_URL).'&kc_locale=de';
-        return $this->redirect($url);
-    }
+
 
     public function check(ClientRegistry $clientRegistry, Request $request)
     {

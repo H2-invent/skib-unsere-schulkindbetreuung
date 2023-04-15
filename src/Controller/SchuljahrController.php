@@ -14,16 +14,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SchuljahrController extends AbstractController
 {
+    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("city_admin/stadtschuljahr/show", name="city_admin_schuljahr_anzeige")
      */
     public function index(Request $request)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
         if($stadt != $this->getUser()->getStadt()){
             throw new \Exception('Wrong Organisation');
         }
-        $activity = $this->getDoctrine()->getRepository(Active::class)->findBy(array('stadt'=>$stadt));
+        $activity = $this->managerRegistry->getRepository(Active::class)->findBy(array('stadt'=>$stadt));
 
         return $this->render('schuljahr/schuljahre.html.twig', [
             'city' => $stadt,
@@ -35,7 +38,7 @@ class SchuljahrController extends AbstractController
      */
     public function neu(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
         if ($stadt != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -51,7 +54,7 @@ class SchuljahrController extends AbstractController
             $errors = $validator->validate($activity);
             if(count($errors)== 0) {
                 $activity->setAnmeldeEnde($activity->getAnmeldeEnde()->setTime(23,59,59));
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($activity);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
@@ -68,7 +71,7 @@ class SchuljahrController extends AbstractController
      */
     public function edit(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $activity =  $this->getDoctrine()->getRepository(Active::class)->find($request->get('id'));
+        $activity =  $this->managerRegistry->getRepository(Active::class)->find($request->get('id'));
 
         if ($activity->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong Organisation');
@@ -83,7 +86,7 @@ class SchuljahrController extends AbstractController
             $errors = $validator->validate($activity);
             if(count($errors)== 0) {
                 $activity->setAnmeldeEnde($activity->getAnmeldeEnde()->setTime(23,59,59));
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($activity);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
@@ -100,12 +103,12 @@ class SchuljahrController extends AbstractController
      */
     public function delete(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $activity =  $this->getDoctrine()->getRepository(Active::class)->find($request->get('id'));
+        $activity =  $this->managerRegistry->getRepository(Active::class)->find($request->get('id'));
 
         if ($activity->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong Organisation');
         }
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         foreach ($activity->getBlocks() as $data){
             $data->setActive(null);
             $em->persist($data);

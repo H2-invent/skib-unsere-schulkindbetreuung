@@ -11,6 +11,7 @@ use App\Service\ErrorService;
 use App\Service\SchulkindBetreuungAdresseService;
 use App\Service\StammdatenEditEmailService;
 use App\Service\WorkflowAbschluss;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -25,14 +26,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EditStammdatenController extends AbstractController
 {
+    public function __construct(private ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/org_child/stammdaten/edit/seccode", name="edit_stammdaten_seccode")
      */
     public function index(Request $request, TranslatorInterface $translator): Response
     {
 
-        $adresseTmp = $this->getDoctrine()->getRepository(Stammdaten::class)->find($request->get('eltern_id'));
-        $adresse = $this->getDoctrine()->getRepository(Stammdaten::class)->findWorkingCopyStammdatenByStammdaten($adresseTmp);
+        $adresseTmp = $this->managerRegistry->getRepository(Stammdaten::class)->find($request->get('eltern_id'));
+        $adresse = $this->managerRegistry->getRepository(Stammdaten::class)->findWorkingCopyStammdatenByStammdaten($adresseTmp);
         $input = array('seccode' => '');
 
         $form = $this->createFormBuilder($input)
@@ -76,12 +80,12 @@ class EditStammdatenController extends AbstractController
         StammdatenEditEmailService       $stammdatenEditEmailService
     ): Response
     {
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->find($eltern_id);
-        $workingCopyStammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findWorkingCopyStammdatenByStammdaten($stammdaten);
+        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->find($eltern_id);
+        $workingCopyStammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findWorkingCopyStammdatenByStammdaten($stammdaten);
 
 
         $stadt = $this->getUser()->getOrganisation()->getStadt();
-        $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromStamdaten($workingCopyStammdaten);
+        $schuljahr = $this->managerRegistry->getRepository(Active::class)->findSchuljahrFromStamdaten($workingCopyStammdaten);
 
         $nextDateTmp = new \DateTime();
         if ($nextDateTmp < $schuljahr->getVon()){

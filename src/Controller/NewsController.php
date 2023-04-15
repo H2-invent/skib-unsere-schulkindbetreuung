@@ -20,16 +20,19 @@ use function Doctrine\ORM\QueryBuilder;
 
 class NewsController extends AbstractController
 {
+    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("city_news/show", name="city_admin_news_anzeige")
      */
     public function index(Request $request)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
         if ($stadt != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
-        $activity = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt' => $stadt));
+        $activity = $this->managerRegistry->getRepository(News::class)->findBy(array('stadt' => $stadt));
 
         return $this->render('news/news.html.twig', [
             'city' => $stadt,
@@ -42,7 +45,7 @@ class NewsController extends AbstractController
      */
     public function neu(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
         if ($stadt != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
@@ -52,7 +55,7 @@ class NewsController extends AbstractController
         $activity->setCreatedDate($today);
         $activity->setDate($today);
         $schulen = $stadt->getSchules();
-        $schuljahre = $this->getDoctrine()->getRepository(Active::class)->findFutureSchuljahreByCity($stadt);
+        $schuljahre = $this->managerRegistry->getRepository(Active::class)->findFutureSchuljahreByCity($stadt);
         $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen, 'schuljahre' => $schuljahre));
         $form->remove('schulen');
         $form->handleRequest($request);
@@ -62,7 +65,7 @@ class NewsController extends AbstractController
             $news = $form->getData();
             $errors = $validator->validate($news);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($news);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
@@ -80,7 +83,7 @@ class NewsController extends AbstractController
      */
     public function edit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $activity = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $activity = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         if ($activity->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
@@ -89,7 +92,7 @@ class NewsController extends AbstractController
         $today = new \DateTime();
         $activity->setDate($today);
         $schulen = $activity->getStadt()->getSchules();
-        $schuljahre = $this->getDoctrine()->getRepository(Active::class)->findFutureSchuljahreByCity($activity->getStadt());
+        $schuljahre = $this->managerRegistry->getRepository(Active::class)->findFutureSchuljahreByCity($activity->getStadt());
         $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen, 'schuljahre' => $schuljahre));
         $form->remove('schulen');
         $form->handleRequest($request);
@@ -99,7 +102,7 @@ class NewsController extends AbstractController
             $news = $form->getData();
             $errors = $validator->validate($news);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($news);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
@@ -117,12 +120,12 @@ class NewsController extends AbstractController
      */
     public function delete(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $activity = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $activity = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         if ($activity->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->remove($activity);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
@@ -134,13 +137,13 @@ class NewsController extends AbstractController
      */
     public function deactivateAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
         $news->setActiv(false);
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($news);
         $em->flush();
         $text = $translator->trans('Erfolgreich deaktiviert');
@@ -152,7 +155,7 @@ class NewsController extends AbstractController
      */
     public function activateAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
@@ -161,7 +164,7 @@ class NewsController extends AbstractController
         $news->setActiv(true);
         $news->setDate($today);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($news);
         $em->flush();
         $text = $translator->trans('Erfolgreich aktiviert');
@@ -174,11 +177,11 @@ class NewsController extends AbstractController
      */
     public function orgIndex(Request $request)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $activity = $this->getDoctrine()->getRepository(News::class)->findBy(array('organisation' => $organisation));
+        $activity = $this->managerRegistry->getRepository(News::class)->findBy(array('organisation' => $organisation));
 
         $new = $this->generateUrl('org_news_neu', array('id' => $organisation->getId()));
         return $this->render('news/orgNews.html.twig', [
@@ -194,7 +197,7 @@ class NewsController extends AbstractController
      */
     public function orgNewsNeu(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -203,8 +206,8 @@ class NewsController extends AbstractController
         $activity->setOrganisation($organisation);
         $today = new \DateTime();
         $activity->setCreatedDate($today);
-        $schulen = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation' => $organisation));
-        $schuljahre = $this->getDoctrine()->getRepository(Active::class)->findFutureSchuljahreByCity($organisation->getStadt());
+        $schulen = $this->managerRegistry->getRepository(Schule::class)->findBy(array('organisation' => $organisation));
+        $schuljahre = $this->managerRegistry->getRepository(Active::class)->findFutureSchuljahreByCity($organisation->getStadt());
         $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen, 'schuljahre' => $schuljahre));
         $form->remove('activ');
         $form->handleRequest($request);
@@ -215,7 +218,7 @@ class NewsController extends AbstractController
             $news->setActiv(false);
             $errors = $validator->validate($news);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($news);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
@@ -234,7 +237,7 @@ class NewsController extends AbstractController
      */
     public function orgNewsEdit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $activity = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $activity = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         if ($activity->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
@@ -242,8 +245,8 @@ class NewsController extends AbstractController
 
         $today = new \DateTime();
         $activity->setDate($today);
-        $schulen = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('organisation' => $activity->getOrganisation()));
-        $schuljahre = $this->getDoctrine()->getRepository(Active::class)->findFutureSchuljahreByCity($activity->getOrganisation()->getStadt());
+        $schulen = $this->managerRegistry->getRepository(Schule::class)->findBy(array('organisation' => $activity->getOrganisation()));
+        $schuljahre = $this->managerRegistry->getRepository(Active::class)->findFutureSchuljahreByCity($activity->getOrganisation()->getStadt());
         $form = $this->createForm(NewsType::class, $activity, array('schulen' => $schulen, 'schuljahre' => $schuljahre));
         $form->remove('activ');
         $form->handleRequest($request);
@@ -254,7 +257,7 @@ class NewsController extends AbstractController
             $news->setActiv(false);
             $errors = $validator->validate($news);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($news);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
@@ -272,12 +275,12 @@ class NewsController extends AbstractController
      */
     public function orgNewsDelete(Request $request, TranslatorInterface $translator)
     {
-        $activity = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $activity = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         if ($activity->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->remove($activity);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
@@ -289,13 +292,13 @@ class NewsController extends AbstractController
      */
     public function orgNewsDeactivate(Request $request, TranslatorInterface $translator)
     {
-        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
         $news->setActiv(false);
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($news);
         $em->flush();
         $text = $translator->trans('Erfolgreich deaktiviert');
@@ -307,7 +310,7 @@ class NewsController extends AbstractController
      */
     public function orgNewsActivate(Request $request, TranslatorInterface $translator)
     {
-        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
@@ -317,7 +320,7 @@ class NewsController extends AbstractController
         $news->setActiv(true);
         $news->setDate($today);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($news);
         $em->flush();
         $text = $translator->trans('Erfolgreich aktiviert');
@@ -329,8 +332,8 @@ class NewsController extends AbstractController
      */
     public function newsPageAction($slug, Request $request, TranslatorInterface $translator)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
-        $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true), array('date' => 'DESC'));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        $news = $this->managerRegistry->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true), array('date' => 'DESC'));
 
         $title = $translator->trans('Alle Neuigkeiten der Stadt') . ' ' . $stadt->getName() . ' | ' . $stadt->getName();
 
@@ -345,8 +348,8 @@ class NewsController extends AbstractController
      */
     public function showNewsAction(Request $request, TranslatorInterface $translator)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $request->get('slug')));
-        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $request->get('slug')));
+        $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         $title = $news->getTitle() . ' | ' . $news->getStadt()->getName();
         $metaDescription = $news->getMessage();
@@ -367,7 +370,7 @@ class NewsController extends AbstractController
      */
     public function orgNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
-        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
@@ -411,7 +414,7 @@ class NewsController extends AbstractController
 
         $text = $translator->trans('Nachricht versendet');
         $news->setSendHistory($sendReport);
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($news);
         $em->flush();
         return $this->redirectToRoute('org_news_anzeige', array('id' => $news->getOrganisation()->getId(), 'snack' => $text));
@@ -423,7 +426,7 @@ class NewsController extends AbstractController
      */
     public function cityNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
-        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
@@ -468,7 +471,7 @@ class NewsController extends AbstractController
 
         $text = $translator->trans('Nachricht versendet');
         $news->setSendHistory($sendReport);
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($news);
         $em->flush();
 
@@ -481,7 +484,7 @@ class NewsController extends AbstractController
      */
     public function orgShowNewsAction(Request $request)
     {
-        $news = $this->getDoctrine()->getRepository(News::class)->find($request->get('id'));
+        $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getOrganisation()) {
             $stadt = $news->getOrganisation()->getStadt();
@@ -494,7 +497,7 @@ class NewsController extends AbstractController
 
     private function getStammdatenFromNEws(News $news)
     {
-        $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
+        $qb = $this->managerRegistry->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
 
         $qb->innerJoin('stammdaten.kinds', 'kinds')
             ->innerJoin('kinds.zeitblocks', 'kind_zeitblocks');

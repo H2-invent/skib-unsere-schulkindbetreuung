@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Kind;
 use App\Entity\Zeitblock;
 use App\Service\KontingentAcceptService;
+use Doctrine\Persistence\ManagerRegistry;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -23,7 +24,7 @@ class KontingentController extends AbstractController
 {
     private KontingentAcceptService $acceptService;
     private LoggerInterface $logger;
-    public function __construct(KontingentAcceptService $kontingentAcceptService, LoggerInterface $logger)
+    public function __construct(KontingentAcceptService $kontingentAcceptService, LoggerInterface $logger, private ManagerRegistry $managerRegistry)
     {
         $this->acceptService = $kontingentAcceptService;
         $this->logger = $logger;
@@ -34,7 +35,7 @@ class KontingentController extends AbstractController
      */
     public function acceptAll(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
         if ($this->getUser()->getOrganisation() != $block->getSchule()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -50,12 +51,12 @@ class KontingentController extends AbstractController
      */
     public function schowAllKids(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
         if ($this->getUser()->getOrganisation() != $block->getSchule()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findBeworbenByZeitblock($block);
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findBeworbenByZeitblock($block);
 
         return $this->render('kontingent/child.html.twig', array('text' => $translator->trans('Akzeptieren oder lehnen Sie ein Kind für diesen Block ab'), 'block' => $block, 'kinder' => $kind));
 
@@ -66,11 +67,11 @@ class KontingentController extends AbstractController
      */
     public function acceptKid(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
         if ($this->getUser()->getOrganisation() != $block->getSchule()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
         try {
             $this->acceptService->acceptKind($block, $kind);
             return new JsonResponse(array('snack' => $translator->trans('Erfolgreich gespeichert')));
@@ -85,11 +86,11 @@ class KontingentController extends AbstractController
      */
     public function acceptKidSilent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
         if ($this->getUser()->getOrganisation() != $block->getSchule()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
         try {
             $this->acceptService->acceptKind($block, $kind,true);
             return new JsonResponse(array('snack' => $translator->trans('Erfolgreich gespeichert')));
@@ -103,18 +104,18 @@ class KontingentController extends AbstractController
      */
     public function removeKid(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, LoggerInterface $logger)
     {
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
         if ($this->getUser()->getOrganisation() != $block->getSchule()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
         try {
             if (in_array($block, $kind->getBeworben()->toArray())) {
 
                 $logger->info('Remove Beworbenes Kind from Block:' . json_encode($kind));
 
                 $kind->removeBeworben($block);
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($kind);
                 $em->flush();
                 return new JsonResponse(array('snack' => $translator->trans('Erfolgreich gespeichert')));

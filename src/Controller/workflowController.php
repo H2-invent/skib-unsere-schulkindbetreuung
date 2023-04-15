@@ -19,6 +19,7 @@ use App\Service\MailerService;
 use App\Service\PrintAGBService;
 use App\Service\PrintDatenschutzService;
 use App\Service\SchuljahrService;
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,22 +30,25 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class workflowController extends AbstractController
 {
+    public function __construct(private ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/{slug}/home",name="workflow_start",methods={"GET"})
      */
     public function welcomeAction(TranslatorInterface $translator, Request $request, $slug, SchuljahrService $schuljahrService)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
 
         if ($stadt === null) {
             return $this->redirectToRoute('workflow_city_not_found');
         }
 
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
-        $activeSchuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        $activeSchuljahr = $this->managerRegistry->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
         $cityInfoText = $stadt->translate()->getInfoText();
         // Load all schools from the city into the controller as $schulen
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
+        $schule = $this->managerRegistry->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
         $title = $translator->trans('Anmeldeportal') . ' ' . $stadt->getName();
         if ($stadt->getSchulkindBetreung() && $stadt->getFerienprogramm()) {
             $title = $translator->trans('Schulkindbetreuung und Ferienbetreuung der ') . ' ' . $stadt->getName() . ' | ' . $translator->trans(' Hier anmelden');
@@ -53,7 +57,7 @@ class workflowController extends AbstractController
         } elseif ($stadt->getFerienprogramm()) {
             $title = $translator->trans('Ferienprogramm buchen') . ' ' . $stadt->getName() . ' | ' . $translator->trans(' Hier anmelden');
         }
-        $news = $this->getDoctrine()->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true), array('date' => 'DESC'));
+        $news = $this->managerRegistry->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true), array('date' => 'DESC'));
         $text = $stadt->translate()->getInfoText();
         $array = explode('. ', $text);
         $metaDescription = $this->buildMeta($array);
@@ -93,8 +97,8 @@ class workflowController extends AbstractController
      */
     public function confirmAction(Request $request, MailerService $mailer, TranslatorInterface $translator, ConfirmEmailService $confirmEmailService)
     {
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt'));
+        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('stadt'));
 
         $res = $confirmEmailService->confirm($stammdaten, $stadt, $request->get('redirect'), $request);
         $url = parse_url($request->get('redirect'))['host'];
@@ -116,12 +120,12 @@ class workflowController extends AbstractController
      */
     public function resetAction(Request $request, MailerService $mailer, TranslatorInterface $translator)
     {
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt'));
+        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('stadt'));
         $text = $translator->trans('Die E-Mail konnte nicht erneut vesandt werden');
         if ($request->get('resendEmail') == $stammdaten->getResendEmail()) {
             $stammdaten->setConfirmEmailSend(false);
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
             $em->persist($stammdaten);
             $em->flush();
             $text = $translator->trans('Die E-Mail wurde erfolgreich versandt');
@@ -138,14 +142,14 @@ class workflowController extends AbstractController
 
         if ($org_id == 'city') {
 
-            $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+            $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
             $org_datenschutz = $stadt->translate()->getDatenschutz();
             $titel = $translator->trans('Datenschutzhinweis %organisation%', array('%organisation%' => $stadt->getName())) . ' | ' . $stadt->getName() . ' | unsere-Schulkindbetreuung.de';
             $metaDescrition = $translator->trans('Datenschutzhinweis %organisation%', array('%organisation%' => $stadt->getName()));
 
             return $this->render('workflow/datenschutz.html.twig', array('metaDescription' => $metaDescrition, 'title' => $titel, 'datenschutz' => $org_datenschutz, 'org' => $stadt, 'org_id' => $org_id, 'stadt' => $stadt));
         } else {
-            $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+            $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
             $org_datenschutz = $organisation->translate()->getDatenschutz();
             $stadt = $organisation->getStadt();
             $titel = $translator->trans('Datenschutzhinweis %organisation%', array('%organisation%' => $organisation->getName())) . ' | ' . $stadt->getName() . ' | unsere-Schulkindbetreuung.de';
@@ -163,10 +167,10 @@ class workflowController extends AbstractController
     {
         if ($org_id == 'city') {
 
-            $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+            $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
             return $printDatenschutzService->printDatenschutz($stadt->translate()->getDatenschutz(), 'D', $stadt, null);
         } else {
-            $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+            $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
             $stadt = $organisation->getStadt();
             return $printDatenschutzService->printDatenschutz($organisation->translate()->getDatenschutz(), 'D', null, $organisation);
         }
@@ -208,7 +212,7 @@ class workflowController extends AbstractController
         if ($slug === null) {
             return $this->redirectToRoute('impressum');
         }
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
         $titel = $translator->trans('Impressum') . ' | ' . $stadt->getName() . ' | unsere-Schulkindbetreuung.de';
         $metaDescrition = $translator->trans('Impressum %stadt%', array('%stadt%' => $stadt->getName()));
         if ($stadt->getImprint() !== null) {

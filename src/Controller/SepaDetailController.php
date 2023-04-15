@@ -16,13 +16,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SepaDetailController extends AbstractController
 {
+    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/org_accounting/sepa/detail", name="accounting_sepa_detail")
      */
     public function index(Request $request,SepaCreateService $sepaCreateService)
     {
         set_time_limit(600);
-       $sepa = $this->getDoctrine()->getRepository(Sepa::class)->find($request->get('id'));
+       $sepa = $this->managerRegistry->getRepository(Sepa::class)->find($request->get('id'));
        if($sepa->getOrganisation() != $this->getUser()->getOrganisation()){
            throw new \Exception('Wrong Organisation');
        }
@@ -36,7 +39,7 @@ class SepaDetailController extends AbstractController
      */
     public function print(Request $request,PrintRechnungService $printRechnungService)
     {
-        $rechnung = $this->getDoctrine()->getRepository(Rechnung::class)->find($request->get('id'));
+        $rechnung = $this->managerRegistry->getRepository(Rechnung::class)->find($request->get('id'));
 
         if($rechnung->getKinder()->toArray()[0]->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
@@ -49,7 +52,7 @@ class SepaDetailController extends AbstractController
      */
     public function printXML(Request $request,PrintRechnungService $printRechnungService)
     {
-        $sepa = $this->getDoctrine()->getRepository(Sepa::class)->find($request->get('id'));
+        $sepa = $this->managerRegistry->getRepository(Sepa::class)->find($request->get('id'));
         if($sepa->getOrganisation() != $this->getUser()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
         }
@@ -73,7 +76,7 @@ class SepaDetailController extends AbstractController
      */
     public function printExcel(Request $request,PrintRechnungService $printRechnungService,SepaExcel $sepaExcel)
     {
-        $sepa = $this->getDoctrine()->getRepository(Sepa::class)->find($request->get('sepa_id'));
+        $sepa = $this->managerRegistry->getRepository(Sepa::class)->find($request->get('sepa_id'));
         if($sepa->getOrganisation() != $this->getUser()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
         }

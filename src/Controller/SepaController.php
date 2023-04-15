@@ -27,7 +27,7 @@ class SepaController extends AbstractController
 {
     private $em;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
     {
         $this->em = $entityManager;
     }
@@ -38,7 +38,7 @@ class SepaController extends AbstractController
     public function index(Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator)
     {
         set_time_limit(600);
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -59,7 +59,7 @@ class SepaController extends AbstractController
         }
 
 
-        $sepaData = $this->getDoctrine()->getRepository(Sepa::class)->findBy(array('organisation' => $organisation));
+        $sepaData = $this->managerRegistry->getRepository(Sepa::class)->findBy(array('organisation' => $organisation));
 
         return $this->render('sepa/show.html.twig', array('form' => $form->createView(), 'sepa' => $sepaData));
     }
@@ -71,7 +71,7 @@ class SepaController extends AbstractController
     public function sendBill(TranslatorInterface $translator, Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator)
     {
         set_time_limit(600);
-        $sepa = $this->getDoctrine()->getRepository(Sepa::class)->find($request->get('sepa_id'));
+        $sepa = $this->managerRegistry->getRepository(Sepa::class)->find($request->get('sepa_id'));
         if ($sepa->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -87,12 +87,12 @@ class SepaController extends AbstractController
     public function showStammdaten(Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator, ElternService $elternService)
     {
         set_time_limit(6000);
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
-        $qb = $this->getDoctrine()->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
+        $qb = $this->managerRegistry->getRepository(Stammdaten::class)->createQueryBuilder('stammdaten');
         $qb->innerJoin('stammdaten.kinds', 'kinds')
             ->innerJoin('kinds.schule', 'schule')
             ->andWhere('schule.organisation = :org')->setParameter('org', $organisation)
@@ -100,12 +100,12 @@ class SepaController extends AbstractController
             ->andWhere($qb->expr()->isNotNull('stammdaten.startDate'))
             ->andWhere($qb->expr()->isNotNull('stammdaten.created_at'));
         if (!$request->get('year_id')) {
-            $year = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($this->getUser()->getOrganisation()->getStadt());
+            $year = $this->managerRegistry->getRepository(Active::class)->findActiveSchuljahrFromCity($this->getUser()->getOrganisation()->getStadt());
         }else {
             if ($request->get('year_id') == 'all') {
                 $year = null;
             }else{
-                $year = $this->getDoctrine()->getRepository(Active::class)->find($request->get('year_id'));
+                $year = $this->managerRegistry->getRepository(Active::class)->find($request->get('year_id'));
             }
         }
 
@@ -150,15 +150,15 @@ class SepaController extends AbstractController
      */
     public function customerIDStammdaten(Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
 
-        $stammdaten = $this->getDoctrine()->getRepository(Stammdaten::class)->find($request->get('stammdaten_id'));
+        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->find($request->get('stammdaten_id'));
 
-        $kundennummer = $this->getDoctrine()->getRepository(Kundennummern::class)->findOneBy(array('organisation' => $organisation, 'stammdaten' => $stammdaten));
+        $kundennummer = $this->managerRegistry->getRepository(Kundennummern::class)->findOneBy(array('organisation' => $organisation, 'stammdaten' => $stammdaten));
         if (!$kundennummer) {
             $kundennummer = new Kundennummern();
         }
