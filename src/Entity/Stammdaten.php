@@ -936,7 +936,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @inheritDoc
      */
-    public function getGroupSequence()
+    public function getGroupSequence():array
     {
         return [
             ['all',

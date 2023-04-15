@@ -20,7 +20,7 @@ security:
         users:
             entity:
                 class: App\Entity\User
-                property: keycloakId
+                property: email
 
 
     firewalls:
@@ -29,10 +29,11 @@ security:
             security: false
         main:
             pattern: ^/
-            switch_user: true
+            switch_user: { role: ROLE_ALLOWED_TO_SWITCH }
             logout:
                 path:   app_logout
                 target: index
+
             custom_authenticators:
                 - App\Security\KeycloakAuthenticator
 

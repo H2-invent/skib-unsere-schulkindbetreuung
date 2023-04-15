@@ -14,9 +14,9 @@
         "doctrine/doctrine-bundle": "^2.6",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.11",
-        "endroid/qr-code-bundle": "^3.4",
-        "jms/i18n-routing-bundle": "^3.0",
-        "knplabs/doctrine-behaviors": "2.2.*",
+        "endroid/qr-code-bundle": "^4.3",
+        "gjuric/i18n-routing-bundle": "^3.2",
+        "knplabs/doctrine-behaviors": "^2.6",
         "knpuniversity/oauth2-client-bundle": "^2.10",
         "league/commonmark": "^1.0",
         "liip/imagine-bundle": "^2.3",
@@ -46,6 +46,7 @@
         "symfony/property-access": "6.0.*",
         "symfony/property-info": "6.0.*",
         "symfony/proxy-manager-bridge": "6.0.*",
+        "symfony/runtime": "6.0.*",
         "symfony/security-bundle": "6.0.*",
         "symfony/serializer": "6.0.*",
         "symfony/translation": "6.0.*",
@@ -80,7 +81,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "endroid/installer": true,
-            "symfony/flex": true
+            "symfony/flex": true,
+            "symfony/runtime": true
         }
     },
     "autoload": {

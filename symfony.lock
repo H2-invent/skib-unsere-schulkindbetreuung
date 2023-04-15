@@ -5,23 +5,14 @@
     "a2lix/translation-form-bundle": {
         "version": "3.0.7"
     },
-    "bacon/bacon-qr-code": {
-        "version": "2.0.0"
-    },
     "braintree/braintree_php": {
         "version": "4.5.0"
-    },
-    "brick/math": {
-        "version": "0.9.3"
     },
     "cron/cron": {
         "version": "1.4.1"
     },
     "cron/cron-bundle": {
         "version": "2.2.0"
-    },
-    "dasprid/enum": {
-        "version": "1.0.0"
     },
     "doctrine/annotations": {
         "version": "1.0",
@@ -105,14 +96,8 @@
     "egulias/email-validator": {
         "version": "2.1.11"
     },
-    "endroid/installer": {
-        "version": "1.1.6"
-    },
-    "endroid/qr-code": {
-        "version": "3.7.7"
-    },
     "endroid/qr-code-bundle": {
-        "version": "3.4.2"
+        "version": "4.3.1"
     },
     "ezyang/htmlpurifier": {
         "version": "v4.13.0"
@@ -122,6 +107,9 @@
     },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.7"
+    },
+    "gjuric/i18n-routing-bundle": {
+        "version": "3.2.0"
     },
     "guzzlehttp/guzzle": {
         "version": "6.5.2"
@@ -135,9 +123,6 @@
     "imagine/imagine": {
         "version": "1.2.3"
     },
-    "jms/i18n-routing-bundle": {
-        "version": "3.0.3"
-    },
     "jms/metadata": {
         "version": "2.0.0"
     },
@@ -145,7 +130,7 @@
         "version": "1.0.2"
     },
     "knplabs/doctrine-behaviors": {
-        "version": "1.6.0"
+        "version": "2.6.2"
     },
     "knpuniversity/oauth2-client-bundle": {
         "version": "2.10",
@@ -207,9 +192,6 @@
     },
     "myclabs/php-enum": {
         "version": "1.7.6"
-    },
-    "nette/utils": {
-        "version": "v3.2.7"
     },
     "nikic/php-parser": {
         "version": "v4.2.4"
@@ -327,12 +309,6 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
-    },
-    "ramsey/collection": {
-        "version": "1.2.2"
-    },
-    "ramsey/uuid": {
-        "version": "4.2.3"
     },
     "rector/rector": {
         "version": "0.15.24"

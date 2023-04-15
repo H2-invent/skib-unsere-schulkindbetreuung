@@ -81,81 +81,56 @@ class KeycloakAuthenticator extends OAuth2Authenticator implements Authenticatio
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
                 /** @var KeycloakUser $keycloakUser */
                 $keycloakUser = $client->fetchUserFromToken($accessToken);
-
-                    $email = $keycloakUser->getEmail();
-
                 $id = $keycloakUser->getId();
-                $this->logger->debug($id);
-                $firstName = $keycloakUser->toArray()['given_name'];
-                $this->logger->debug($firstName);
-                $lastName = $keycloakUser->toArray()['family_name'];
-                $this->logger->debug($lastName);
-                $username = isset($keycloakUser->toArray()['preferred_username']) ? $keycloakUser->toArray()['preferred_username'] : null;
-                $this->logger->debug($username);
-                $groups = null;
-                if (isset($keycloakUser->toArray()['groups'])) {
-                    $groups = $keycloakUser->toArray()['groups'];
-                }
-
-
-// 1) have they logged in with keycloak before then login the user
                 $existingUser = $this->em->getRepository(User::class)->findOneBy(array('keycloakId' => $id));
+                $firstName = $keycloakUser->toArray()['given_name'];
+                $lastName = $keycloakUser->toArray()['family_name'];
+                $email = $keycloakUser->getEmail();
                 if ($existingUser) {
-                    if (!$username) {
-                        $username = $email;
-                    }
                     $existingUser->setLastLogin(new \DateTime());
                     $existingUser->setEmail($email);
-                    $existingUser->setFirstName($firstName);
-                    $existingUser->setLastName($lastName);
-                    $existingUser->setUsername($username);
-                    $existingUser->setGroups($groups);
-                    $existingUser->setIndexer($this->indexer->indexUser($existingUser));
+                    $existingUser->setVorname($firstName);
+                    $existingUser->setNachname($lastName);
                     $this->em->persist($existingUser);
                     $this->em->flush();
+                    if ($existingUser->getEnabled() == false){
+                        echo "This user is disabled. Please contact your admin or support@h2-invent.com";
+                        return null;
+                    }
                     return $existingUser;
                 }
 
-                // 2) it is an USer which was invited via the invitiation email or the user is a synced user from the LDAP. This USer tries now to get an access via keycloak
+                // 1) it is an old USer from FOS USer time never loged in from keycloak
                 $existingUser = null;
                 $existingUser = $this->em->getRepository(User::class)->findOneBy(array('email' => $email));
-                if (!$existingUser && $username !== null) {
-                    $existingUser = $this->em->getRepository(User::class)->findOneBy(array('username' => $username));
-                }
                 if ($existingUser) {
-                    if (!$username) {
-                        $username = $email;
-                    }
                     $existingUser->setKeycloakId($id);
                     $existingUser->setLastLogin(new \DateTime());
                     $existingUser->setEmail($email);
-                    $existingUser->setFirstName($firstName);
-                    $existingUser->setLastName($lastName);
-                    $existingUser->setUsername($username);
-                    $existingUser->setGroups($groups);
+                    $existingUser->setVorname($firstName);
+                    $existingUser->setNachname($lastName);
                     $this->em->persist($existingUser);
-                    $existingUser->setIndexer($this->indexer->indexUser($existingUser));
                     $this->em->flush();
+                    if ($existingUser->getEnabled() == false){
+                        echo "This user is disabled. Please contact your admin or support@h2-invent.com";
+                        return null;
+                    }
                     return $existingUser;
                 }
 
-                // the user never logged in with this email adress neither keycloak
-                if ($this->paramterBag->get('strict_allow_user_creation') == 1) {
-                    // if the creation of a user is allowed from the security policies
-                    if (!$username) {
-                        $username = $email;
-                    }
-                    $newUser = $this->userCreatorService->createUser($email, $username, $firstName, $lastName);
-                    $newUser
-                        ->setLastLogin(new \DateTime())
-                        ->setKeycloakId($id)
-                        ->setGroups($groups);
-                    $newUser->setIndexer($this->indexer->indexUser($newUser));
-                    $this->em->persist($newUser);
-                    $this->em->flush();
-                    return $newUser;
-                }
-                return null;
+                // the user never logged in with this email adress
+                $myUser = new User();
+                $myUser->setEmail($email);
+                $myUser->setCreatedAt(new \DateTime());
+                $myUser->setAuth0Id(md5(uniqid()));
+                $myUser->setVorname($firstName);
+                $myUser->setNachname($lastName);
+                $myUser->setKeycloakId($id);
+                $myUser->setLastLogin(new \DateTime());
+                $this->em->persist($myUser);
+                $this->em->flush();
+                return $myUser;
+
             })
         );
         $passport->setAttribute('id_token','null');

@@ -385,7 +385,7 @@ class User extends UserBase
 
         return $this;
     }
-    public function getUserIdentifier()
+    public function getUserIdentifier():string
     {
         return $this->email;
     }
@@ -419,5 +419,6 @@ class User extends UserBase
 
         return $this;
     }
+
 
 }
