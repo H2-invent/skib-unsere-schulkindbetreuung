@@ -33,6 +33,7 @@ use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindBlockSchulkind;
 use App\Service\WorkflowAbschluss;
 use App\Service\WorkflowStart;
+use Doctrine\Persistence\ManagerRegistry;
 use phpDocumentor\Reflection\DocBlock;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,7 +52,7 @@ class LoerrachWorkflowController extends AbstractController
 {
     public $beruflicheSituation;
 
-    public function __construct(TranslatorInterface $translator, private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(TranslatorInterface $translator, private ManagerRegistry $managerRegistry)
     {
         $this->beruflicheSituation = array(
             $translator->trans('Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig') => 1,
@@ -598,6 +599,7 @@ class LoerrachWorkflowController extends AbstractController
         $response->headers->clearCookie('UserID');
         $response->headers->clearCookie('SecID');
         $response->headers->clearCookie('KindID');
+        $request->getSession()->remove('schuljahr_to_add');
         return $response;
 
     }

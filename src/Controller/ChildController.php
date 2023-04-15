@@ -279,7 +279,7 @@ class ChildController extends AbstractController
      */
     public function addNewChild(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
-
+        $request->getSession()->remove('schuljahr_to_add');
         $response = $this->redirectToRoute('workflow_start', array('slug' => $this->getUser()->getOrganisation()->getStadt()->getSlug()));
         $response->headers->clearCookie('KindID');
         $response->headers->clearCookie('SecID');

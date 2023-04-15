@@ -35,7 +35,17 @@ class AnmeldeEmailService
     private $content;
     private FilesystemOperator $internFileSystem;
 
-    public function __construct(FilesystemOperator $internFileSystem, ParameterBagInterface $parameterBag, PrintAGBService $printAGBService, PrintService $print, TCPDFController $tcpdf, TranslatorInterface $translator, IcsService $icsService, Environment $templating, MailerService $mailer)
+    public function __construct(
+        FilesystemOperator                 $internFileSystem,
+        ParameterBagInterface              $parameterBag,
+        PrintAGBService                    $printAGBService,
+        PrintService                       $print,
+        TCPDFController                    $tcpdf,
+        TranslatorInterface                $translator,
+        IcsService                         $icsService,
+        Environment                        $templating,
+        MailerService                      $mailer,
+        private LoerrachWorkflowController $loerrachWorkflowController)
     {
         $this->print = $print;
         $this->tcpdf = $tcpdf;
@@ -58,7 +68,7 @@ class AnmeldeEmailService
 
         if (count($kind->getBeworben()->toArray()) == 0) {//Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
             $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName();
-            $beruflicheSituation = (new LoerrachWorkflowController($this->translator))->beruflicheSituation;
+            $beruflicheSituation = $this->loerrachWorkflowController->beruflicheSituation;
             $pdf = $this->print->printAnmeldebestaetigung(
                 $kind,
                 $adresse,
@@ -98,7 +108,7 @@ class AnmeldeEmailService
                     )
                 );
             }
-            if ($stadt->getSettingsSkibDisableIcs() !== true){
+            if ($stadt->getSettingsSkibDisableIcs() !== true) {
                 $this->attachment[] = array('type' => 'text/calendar', 'filename' => $kind->getVorname() . ' ' . $kind->getNachname() . '.ics', 'body' => $this->ics->toString());
             }
 

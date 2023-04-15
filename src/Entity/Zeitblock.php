@@ -67,7 +67,7 @@ class Zeitblock implements TranslatableInterface
     private $ganztag;
 
     /**
-     * @ORM\Column(type="json_array")
+     * @ORM\Column(type="json")
      */
     private $preise = [];
 

@@ -23,7 +23,12 @@ class Kontingent extends AbstractExtension
     private ChildInBlockService $childInBlockService;
     private WidgetService $widgetService;
 
-    public function __construct(TranslatorInterface $translator, ElternService $elternService, ChildInBlockService $childInBlockService, WidgetService  $widgetService)
+    public function __construct(
+        TranslatorInterface                $translator,
+        ElternService                      $elternService,
+        ChildInBlockService                $childInBlockService,
+        WidgetService                      $widgetService,
+        private LoerrachWorkflowController $loerrachWorkflowController)
     {
         $this->translator = $translator;
         $this->elternService = $elternService;
@@ -43,25 +48,28 @@ class Kontingent extends AbstractExtension
 
     public function getBerufstatig(Kind $kind)
     {
-        $workflow = new LoerrachWorkflowController($this->translator);
+        $workflow = $this->loerrachWorkflowController;
         return array_flip($workflow->beruflicheSituation)[$this->elternService->getLatestElternFromChild($kind)->getBeruflicheSituation()] ?? 'Keine Angabe';
 
     }
-    public function getChildsOnSpecificTime(Zeitblock $zeitblock,\DateTime $dateTime)
+
+    public function getChildsOnSpecificTime(Zeitblock $zeitblock, \DateTime $dateTime)
     {
-        $res = $this->childInBlockService->getCurrentChildOfZeitblock($zeitblock,$dateTime);
+        $res = $this->childInBlockService->getCurrentChildOfZeitblock($zeitblock, $dateTime);
         return $res;
 
     }
+
     public function getChildsOnSpecificTimeCached(Zeitblock $zeitblock)
     {
         $res = $this->widgetService->calcBlocksNumberNow($zeitblock);
         return $res;
 
     }
-    public function getChildsOnSpecificTimeAndFuture(Zeitblock $zeitblock,\DateTime $dateTime)
+
+    public function getChildsOnSpecificTimeAndFuture(Zeitblock $zeitblock, \DateTime $dateTime)
     {
-        return $this->childInBlockService->getCurrentChildAndFuturerChildOfZeitblock($zeitblock,$dateTime);
+        return $this->childInBlockService->getCurrentChildAndFuturerChildOfZeitblock($zeitblock, $dateTime);
 
     }
 

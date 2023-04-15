@@ -32,7 +32,7 @@ security:
             switch_user: { role: ROLE_ALLOWED_TO_SWITCH }
             logout:
                 path:   app_logout
-                target: index
+                target: welcome_landing
 
             custom_authenticators:
                 - App\Security\KeycloakAuthenticator
