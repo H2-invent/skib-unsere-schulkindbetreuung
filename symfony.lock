@@ -199,9 +199,6 @@
     "markbaker/matrix": {
         "version": "1.2.0"
     },
-    "michaeldegroot/doctrine-encrypt-bundle": {
-        "version": "4.0.2"
-    },
     "monolog/monolog": {
         "version": "1.24.0"
     },
@@ -242,18 +239,6 @@
             "./config/routes/oneup_uploader.yaml"
         ]
     },
-    "paragonie/constant_time_encoding": {
-        "version": "v2.3.0"
-    },
-    "paragonie/halite": {
-        "version": "v4.6.0"
-    },
-    "paragonie/hidden-string": {
-        "version": "v1.0.0"
-    },
-    "paragonie/sodium_compat": {
-        "version": "v1.12.1"
-    },
     "phar-io/manifest": {
         "version": "2.0.3"
     },
@@ -277,6 +262,9 @@
     },
     "phpstan/phpdoc-parser": {
         "version": "1.4.3"
+    },
+    "phpstan/phpstan": {
+        "version": "1.10.13"
     },
     "phpunit/php-code-coverage": {
         "version": "9.2.15"
@@ -345,6 +333,9 @@
     },
     "ramsey/uuid": {
         "version": "4.2.3"
+    },
+    "rector/rector": {
+        "version": "0.15.24"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"

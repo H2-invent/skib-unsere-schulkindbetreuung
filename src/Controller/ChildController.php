@@ -15,6 +15,7 @@ use App\Service\ElternService;
 use App\Service\HistoryService;
 use App\Service\MailerService;
 use App\Service\PrintService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +28,7 @@ use function Doctrine\ORM\QueryBuilder;
 class ChildController extends AbstractController
 {
     private $wochentag;
+    private EntityManagerInterface $entityManager;
     private $translator;
     public static $WEEKDAY = [
         'Montag',
@@ -38,9 +40,10 @@ class ChildController extends AbstractController
         'Sonntag',
     ];
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager)
     {
         $this->translator = $translator;
+        $this->entityManager = $entityManager;
         $this->wochentag = [
             $this->translator->trans('Montag'),
             $this->translator->trans('Dienstag'),
@@ -72,7 +75,9 @@ class ChildController extends AbstractController
             $actualSchuljahr = $block->getActive();
         }
 
+        $schuljahreForNew = $this->entityManager->getRepository(Active::class)->findAllActualSchuljahrFromCity($organisation->getStadt(),new \DateTime());
         return $this->render('child/child.html.twig', [
+            'schuljahreForNew'=>$schuljahreForNew,
             'actualSchuljahr' => $actualSchuljahr,
             'organisation' => $organisation,
             'schuljahre' => $schuljahre,
@@ -278,6 +283,9 @@ class ChildController extends AbstractController
         $response->headers->clearCookie('KindID');
         $response->headers->clearCookie('SecID');
         $response->headers->clearCookie('UserID');
+        $active = $this->entityManager->getRepository(Active::class)->findOneBy(array('id'=>$request->get('schuljahr'),'stadt'=>$this->getUser()->getOrganisation()->getStadt()));
+        $session = $request->getSession();
+        $session->set('schuljahr_to_add', $active->getId());
         return $response;
     }
 }

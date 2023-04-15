@@ -225,6 +225,21 @@ class ActiveRepository extends ServiceEntityRepository
     /**
      * @return Active[] Returns an array of Active objects
      */
+    public function findAllActualSchuljahrFromCity(Stadt $stadt, \DateTime $today)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb->andWhere('a.stadt = :stadt')
+            ->andWhere('a.anmeldeStart <= :today')
+            ->andWhere('a.bis >= :today')
+            ->orderBy('a.bis', 'DESC')
+            ->setParameter('today', $today)
+            ->setParameter('stadt', $stadt);
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Active[] Returns an array of Active objects
+     */
 
     public function findFutureSchuljahreByCity(Stadt $stadt)
     {
