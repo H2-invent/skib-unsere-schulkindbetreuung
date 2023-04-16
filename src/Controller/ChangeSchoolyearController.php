@@ -6,6 +6,7 @@ use App\Entity\Kind;
 use App\Service\AnmeldeEmailService;
 use App\Service\ChildSchoolYearChangeService;
 use App\Service\ChildEmailChangeService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +16,7 @@ class ChangeSchoolyearController extends AbstractController
 {
     private $translator;
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, private ManagerRegistry $managerRegistry)
     {
         $this->translator = $translator;
     }
@@ -26,7 +27,7 @@ class ChangeSchoolyearController extends AbstractController
      */
     public function index(TranslatorInterface $translator, Request $request, AnmeldeEmailService $anmeldeEmailService, ChildSchoolYearChangeService $childChoolYearChangeService)
     {
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
 
         if ($kind->getSchule()->getOrganisation() !== $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Keine Berechtigung');

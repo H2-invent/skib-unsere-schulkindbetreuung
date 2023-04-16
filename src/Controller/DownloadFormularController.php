@@ -13,7 +13,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
 class DownloadFormularController extends AbstractController
 {
-
+    public function __construct(
+        private LoerrachWorkflowController $loerrachWorkflowController
+    )
+    {
+    }
 
     /**
      * @Route("/download/anmeldung/{schule}/{cat}/{schuljahr}", name="download_formular_schule")
@@ -23,7 +27,7 @@ class DownloadFormularController extends AbstractController
     public function index(Schule $schule, PrintService $printService, TCPDFController $TCPDFController, TranslatorInterface $translator, $cat, Active  $schuljahr)
     {
 
-        return $printService->printAnmeldeformular($schule,$TCPDFController,$translator->trans('Aenderungsformular_%n%',array('%n%'=>$schule->getName())),(new LoerrachWorkflowController($translator))->beruflicheSituation, $schule->getStadt()->getGehaltsklassen(),$cat,$schuljahr,'D');
+        return $printService->printAnmeldeformular($schule,$TCPDFController,$translator->trans('Aenderungsformular_%n%',array('%n%'=>$schule->getName())),$this->loerrachWorkflowController->beruflicheSituation, $schule->getStadt()->getGehaltsklassen(),$cat,$schuljahr,'D');
 
     }
 }

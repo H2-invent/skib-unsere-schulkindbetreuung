@@ -8,7 +8,7 @@
                 <div class=" col-12 card">
                     <ul class="list-group">
                         <li class="list-group-item"><h2>App Verbindung: </h2><img
-                                    src="{{ qr_code_path(absolute_url(path('connect_User',{'appToken':user.appToken}))|makeHttps,{ writer: 'svg', size: 100 }) }}"/>
+                                    src="{{ qr_code_path(absolute_url(path('connect_User',{'appToken':user.appToken}))|makeHttps,'default') }}"/>
                         </li>
                         {% if user.appSettingsSaved == true %}
                         <li class="list-group-item">

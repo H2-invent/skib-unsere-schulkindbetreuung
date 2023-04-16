@@ -15,6 +15,8 @@ use App\Service\ElternService;
 use App\Service\HistoryService;
 use App\Service\MailerService;
 use App\Service\PrintService;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +29,7 @@ use function Doctrine\ORM\QueryBuilder;
 class ChildController extends AbstractController
 {
     private $wochentag;
+    private EntityManagerInterface $entityManager;
     private $translator;
     public static $WEEKDAY = [
         'Montag',
@@ -38,9 +41,10 @@ class ChildController extends AbstractController
         'Sonntag',
     ];
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager, private ManagerRegistry $managerRegistry)
     {
         $this->translator = $translator;
+        $this->entityManager = $entityManager;
         $this->wochentag = [
             $this->translator->trans('Montag'),
             $this->translator->trans('Dienstag'),
@@ -58,21 +62,23 @@ class ChildController extends AbstractController
     public function showAction(Request $request, TranslatorInterface $translator)
     {
 
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
         $text = $translator->trans('Kinder betreut vom Träger');
         $schulen = sizeof($this->getUser()->getSchulen()) === 0 ? $organisation->getSchule()->toArray() : $this->getUser()->getSchulen();
         $schuljahre = $schulen[0]->getStadt()->getActives()->toArray();
-        $actualSchuljahr = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($organisation->getStadt());
+        $actualSchuljahr = $this->managerRegistry->getRepository(Active::class)->findActiveSchuljahrFromCity($organisation->getStadt());
 
         if ($request->get('block')) {
-            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block'));
+            $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block'));
             $actualSchuljahr = $block->getActive();
         }
 
+        $schuljahreForNew = $this->entityManager->getRepository(Active::class)->findAllActualSchuljahrFromCity($organisation->getStadt(),new \DateTime());
         return $this->render('child/child.html.twig', [
+            'schuljahreForNew'=>$schuljahreForNew,
             'actualSchuljahr' => $actualSchuljahr,
             'organisation' => $organisation,
             'schuljahre' => $schuljahre,
@@ -86,13 +92,13 @@ class ChildController extends AbstractController
      */
     public function childDetail(Request $request, TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController, ElternService $elternService, HistoryService $historyService)
     {
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
 
         $date = new \DateTime();
         if ($request->get('date')) {
             $date = new \DateTime($request->get('date'));
         }
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findLatestKindForDate($kind, $date);
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findLatestKindForDate($kind, $date);
         $eltern = $elternService->getElternForSpecificTimeAndKind($kind, $date);
         $historydate = $historyService->getAllHistoyPointsFromKind($kind);
 
@@ -109,7 +115,7 @@ class ChildController extends AbstractController
      */
     public function childSaveInternall(Request $request, TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController, $childId)
     {
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($childId);
+        $kind = $this->managerRegistry->getRepository(Kind::class)->find($childId);
         if (!$kind || $kind->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -118,7 +124,7 @@ class ChildController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $kind = $form->getData();
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
             $em->persist($kind);
             $em->flush();
             $notice = $kind->getInternalNotice();
@@ -140,12 +146,12 @@ class ChildController extends AbstractController
      */
     public function printChild(Request $request, TranslatorInterface $translator, PrintService $printService, TCPDFController $TCPDFController, ElternService $elternService)
     {
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
         $date = new \DateTime();
         if ($request->get('date')) {
             $date = new \DateTime($request->get('date'));
         }
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findLatestKindForDate($kind, $date);
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findLatestKindForDate($kind, $date);
         $eltern = $elternService->getElternForSpecificTimeAndKind($kind, $date);
 
         if ($kind->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
@@ -161,7 +167,7 @@ class ChildController extends AbstractController
     public function buildChildTable(ChildSearchService $childSearchService, Request $request, TranslatorInterface $translator, PrintService $printService, TCPDFController $TCPDFController, ChildExcelService $childExcelService)
     {
         set_time_limit(300);
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('organisation'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('organisation'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -178,11 +184,11 @@ class ChildController extends AbstractController
 
         $text = $translator->trans('Kinder betreut vom Träger %organisation%', array('%organisation%' => $organisation->getName()));
         if ($request->get('schule')) {
-            $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule'));
+            $schule = $this->managerRegistry->getRepository(Schule::class)->find($request->get('schule'));
             $text .= $translator->trans(' an der Schule %schule%', array('%schule%' => $schule->getName()));
         }
         if ($request->get('schuljahr')) {
-            $jahr = $this->getDoctrine()->getRepository(Active::class)->find($request->get('schuljahr'));
+            $jahr = $this->managerRegistry->getRepository(Active::class)->find($request->get('schuljahr'));
             $text .= $translator->trans(' im Schuljahr schuljahr', array('schuljahr' => $jahr->getVon()->format('d.m.Y') . '-' . $jahr->getBis()->format('d.m.Y')));
             if ($jahr && $jahr->getVon() > new \DateTime()){
                 $startDate= $jahr->getVon();
@@ -195,7 +201,7 @@ class ChildController extends AbstractController
             $text .= $translator->trans(' am Wochentag %wochentag%', array('%wochentag%' => $this->wochentag[$request->get('wochentag')]));
         }
         if ($request->get('block')) {
-            $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block'));
+            $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block'));
             $fileName = $block->getSchule()->getName() . '-' . $block->getWochentagString() . '-' . $block->getVon()->format('H:i') . '-' . $block->getBis()->format('H:i');
             $text .= $translator->trans(' am %d% von %s% bis %e% Uhr', array('%d%' => $block->getWochentagString(), '%s%' => $block->getVon()->format('H:i'), '%e%' => $block->getBis()->format('H:i')));
         }
@@ -234,7 +240,7 @@ class ChildController extends AbstractController
      */
     public function resendSecCodeChild(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
 
         if ($kind->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
@@ -243,9 +249,9 @@ class ChildController extends AbstractController
             $title = $translator->trans('Email mit Sicherheitscode');
             $eltern = $kind->getEltern();
             if (!$eltern->getSecCode()){
-                $elternAll = $this->getDoctrine()->getRepository(Stammdaten::class)->findBy(array('tracing'=>$eltern->getTracing()));
+                $elternAll = $this->managerRegistry->getRepository(Stammdaten::class)->findBy(array('tracing'=>$eltern->getTracing()));
                 $secCode = substr(str_shuffle(MD5(microtime())), 0, 6);
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 foreach ($elternAll as $data){
                     $data->setSecCode($secCode);
                     $em->persist($data);
@@ -273,11 +279,14 @@ class ChildController extends AbstractController
      */
     public function addNewChild(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
-
+        $request->getSession()->remove('schuljahr_to_add');
         $response = $this->redirectToRoute('workflow_start', array('slug' => $this->getUser()->getOrganisation()->getStadt()->getSlug()));
         $response->headers->clearCookie('KindID');
         $response->headers->clearCookie('SecID');
         $response->headers->clearCookie('UserID');
+        $active = $this->entityManager->getRepository(Active::class)->findOneBy(array('id'=>$request->get('schuljahr'),'stadt'=>$this->getUser()->getOrganisation()->getStadt()));
+        $session = $request->getSession();
+        $session->set('schuljahr_to_add', $active->getId());
         return $response;
     }
 }

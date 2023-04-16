@@ -7,6 +7,7 @@ use App\Entity\Organisation;
 use App\Entity\User;
 use App\Entity\Zeitblock;
 use App\Service\CheckinSchulkindservice;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,14 +17,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CheckinSchulkindbetreuungController extends AbstractController
 {
+    public function __construct(private ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/checkin/schulkindbetreuung/{kindID}", name="checkin_schulkindbetreuung", methods={"POST"})
      */
     public function index(Request $request, TranslatorInterface $translator, $kindID, CheckinSchulkindservice $checkinSchulkindservice)
     {
         $today = (new \DateTime());
-        $org = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($kindID);
+        $org = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->find($kindID);
         $result = $checkinSchulkindservice->checkin($kind, $today, $org);
 
 
@@ -35,7 +39,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
      */
     public function connectOrg(Request $request, TranslatorInterface $translator, $orgID, CheckinSchulkindservice $checkinSchulkindservice)
     {
-        $org = $this->getDoctrine()->getRepository(Organisation::class)->find($orgID);
+        $org = $this->managerRegistry->getRepository(Organisation::class)->find($orgID);
         return new JsonResponse(array(
                 'type'=>'ORGANISATION',
                 'id' => $org->getId(),
@@ -51,7 +55,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
      */
     public function getORg(Request $request, TranslatorInterface $translator, $orgID, CheckinSchulkindservice $checkinSchulkindservice)
     {
-        $org = $this->getDoctrine()->getRepository(Organisation::class)->find($orgID);
+        $org = $this->managerRegistry->getRepository(Organisation::class)->find($orgID);
         $today = new \DateTime();
         $kinder = $checkinSchulkindservice->getAllKidsToday($org, $today,null);
         return new JsonResponse(array(
@@ -69,7 +73,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
      */
     public function getallKids(Request $request, CheckinSchulkindservice $checkinSchulkindservice, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -85,11 +89,11 @@ class CheckinSchulkindbetreuungController extends AbstractController
      */
     public function getBlockKids(Request $request, CheckinSchulkindservice $checkinSchulkindservice, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $block = $this->getDoctrine()->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
         $today = new \DateTime();
         $kinder = $checkinSchulkindservice->getAllKidsTodayandBlock($organisation, $today, $block);
         $text = $translator->trans('Kinder Anwesend im Betreuungszeitfenster am %date% von %time% Uhr für die Schule %schule%',

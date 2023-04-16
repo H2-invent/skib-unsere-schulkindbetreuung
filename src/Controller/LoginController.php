@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Client\Provider\Auth0Client;
+use Stevenmaguire\OAuth2\Client\Provider\Keycloak;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,8 @@ use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class LoginController extends AbstractController
 {
+
+
     /**
      * @Route("/login/auth0_login", name="login_auth0")
      */
@@ -50,10 +53,28 @@ class LoginController extends AbstractController
      */
     public function logout(ClientRegistry $clientRegistry, Request $request)
     {
-        $url = $this->getParameter('KEYCLOAK_URL')
-            .'/realms/'.$this->getParameter('KEYCLOAK_REALM')
-            .'/protocol/openid-connect/logout?redirect_uri='.$this->generateUrl('welcome_landing',[],UrlGenerator::ABSOLUTE_URL);
+        $provider = new Keycloak([
+            'authServerUrl' => $this->getParameter('KEYCLOAK_URL'),
+            'realm' => $this->getParameter('KEYCLOAK_REALM'),
+            'clientId' => $this->getParameter('KEYCLOAK_ID'),
+            'clientSecret' => $this->getParameter('KEYCLOAK_SECRET'),
+        ]);
+
+
+        $redirectUri = $this->generateUrl('app_logout');
+        $options = array(
+            'id_token_hint' => $request->getSession()->get('id_token'),
+            'post_logout_redirect_uri' => $redirectUri,
+        );
+
+
+
+        $url = $provider->getLogoutUrl(
+            $options
+        );
         return $this->redirect($url);
+
+
 
     }
 }

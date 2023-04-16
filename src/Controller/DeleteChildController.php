@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Service\ChildDeleteService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ class DeleteChildController extends AbstractController
 {
     private $deleteChildService;
     private $translator;
-    public function __construct(ChildDeleteService $deleteChildService,TranslatorInterface $translator)
+    public function __construct(ChildDeleteService $deleteChildService,TranslatorInterface $translator, private ManagerRegistry $managerRegistry)
     {
         $this->deleteChildService = $deleteChildService;
         $this->translator = $translator;
@@ -26,7 +27,7 @@ class DeleteChildController extends AbstractController
      */
     public function index(Request $request)
     {
-        $child = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
+        $child = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
         if ($child->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }

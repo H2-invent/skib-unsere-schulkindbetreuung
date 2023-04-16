@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\Type\UserType;
 use App\Security\UserManagerInterface;
 use App\Service\InvitationService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,7 +22,7 @@ class EmployeeController extends AbstractController
     private $manager;
     private $availRole;
 
-    public function __construct(UserManagerInterface $manager)
+    public function __construct(UserManagerInterface $manager, private ManagerRegistry $managerRegistry)
     {
         $this->manager = $manager;
         $this->availRole = array(
@@ -37,11 +38,11 @@ class EmployeeController extends AbstractController
      */
     public function index(Request $request)
     {
-        $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
         if ($city != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
-        $user = $this->getDoctrine()->getRepository(User::class)->findBy(array('stadt' => $city, 'organisation' => null));
+        $user = $this->managerRegistry->getRepository(User::class)->findBy(array('stadt' => $city, 'organisation' => null));
         return $this->render(
             'employee/user.html.twig',
             [
@@ -56,7 +57,7 @@ class EmployeeController extends AbstractController
      */
     public function newUser(Request $request, TranslatorInterface $translator, ValidatorInterface $validator,InvitationService $invitationService)
     {
-        $city = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('id'));
+        $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
         if ($city != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
@@ -243,7 +244,7 @@ class EmployeeController extends AbstractController
         if ($user->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->remove($user);
         $em->flush();
         if ($user->getStadt() !== null) {

@@ -6,6 +6,7 @@ use App\Entity\Kind;
 use App\Entity\Stammdaten;
 use App\Service\ElternService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,6 +17,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChildChangeController extends AbstractController
 {
+    public function __construct(private ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/org_child/change/seccode", name="child_change_seccode")
      */
@@ -23,7 +27,7 @@ class ChildChangeController extends AbstractController
     {
 
 
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->find($request->get('kind_id'));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
         $adresse = new Stammdaten();
         $adresse = $kind->getEltern();
 
@@ -42,7 +46,7 @@ class ChildChangeController extends AbstractController
 
             if ($input['seccode'] == $adresse->getSecCode() || $kind->getSchule()->getStadt()->getNoSecCodeForChangeChilds()) {
 
-                $kind = $this->getDoctrine()->getRepository(Kind::class)->findActualWorkingCopybyKind($kind);
+                $kind = $this->managerRegistry->getRepository(Kind::class)->findActualWorkingCopybyKind($kind);
 
                 $adresse = $kind->getEltern();
                 $cookie = new Cookie ('KindID', $kind->getId() . "." . hash("sha256", $kind->getId() . $this->getParameter("secret")));

@@ -7,6 +7,7 @@ use App\Entity\Stadt;
 use App\Service\UploadService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Util\Json;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -28,6 +29,9 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class UploadController extends AbstractController
 {
+    public function __construct(private ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/login/upload/{id}/file", name="upload_stadt",methods={"POST"})
      * @ParamConverter ("stadt", options={"mapping": {"id": "id"}})
@@ -95,7 +99,7 @@ class UploadController extends AbstractController
     {
 
         $internFileSystem->delete($file->getFileName());
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->remove($file);
         $em->flush();
         return $this->redirect(

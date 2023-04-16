@@ -8,6 +8,7 @@ use App\Form\Type\UserType;
 
 use App\Security\UserManagerInterface;
 use App\Service\InvitationService;
+use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -23,7 +24,7 @@ class EmployeeOrganisationController extends AbstractController
     private $manager;
     private $availRole;
     private LoggerInterface $logger;
-    public function __construct(UserManagerInterface $manager, LoggerInterface $logger)
+    public function __construct(UserManagerInterface $manager, LoggerInterface $logger, private ManagerRegistry $managerRegistry)
     {
         $this->logger = $logger;
         $this->manager = $manager;
@@ -60,13 +61,13 @@ class EmployeeOrganisationController extends AbstractController
      */
     public function employeeOrg(Request $request)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
 
         if ($organisation->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
 
-        $user = $this->getDoctrine()->getRepository(User::class)->findBy(array('organisation' => $organisation));
+        $user = $this->managerRegistry->getRepository(User::class)->findBy(array('organisation' => $organisation));
 
         return $this->render(
             'employee_organisation/user.html.twig',
@@ -126,7 +127,7 @@ class EmployeeOrganisationController extends AbstractController
      */
     public function newUser(Request $request, TranslatorInterface $translator, ValidatorInterface $validator,InvitationService $invitationService)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }

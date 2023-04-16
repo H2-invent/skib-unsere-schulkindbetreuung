@@ -17,6 +17,7 @@ use App\Service\CheckoutPaymentService;
 use App\Service\FerienAbschluss;
 use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindFerienblock;
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -39,6 +40,9 @@ class FerienController extends AbstractController
 {
     const BEZEICHNERCOOKIE = 'FerienUserID';
     const BEZEICHNERCOOKIEKINDER = 'FerienKinderID';
+    public function __construct(private ManagerRegistry $managerRegistry)
+    {
+    }
 
     /**
      * @Route("/{slug}/ferien/adresse",name="ferien_adresse",methods={"GET","POST"})
@@ -46,7 +50,7 @@ class FerienController extends AbstractController
     public function adresseAction(TranslatorInterface $translator, Request $request, ValidatorInterface $validator, $slug, StamdatenFromCookie $stamdatenFromCookie)
     {
 
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
 
         if ($stadt === null) {
             return $this->redirectToRoute('workflow_city_not_found');
@@ -82,7 +86,7 @@ class FerienController extends AbstractController
             if (count($errors) == 0) {
                 $adresse->setFin(false);
                 $cookie = new Cookie (self::BEZEICHNERCOOKIE, $adresse->getUid() . "." . hash("sha256", $adresse->getUid() . $this->getParameter("secret")), time() + 60 * 60 * 24 * 365);
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($adresse);
                 $em->flush();
                 $response = $this->redirectToRoute('workflow_confirm_Email', array('redirect' => $this->generateUrl('ferien_auswahl', array('slug' => $stadt->getSlug()),UrlGeneratorInterface::ABSOLUTE_URL), 'uid' => $adresse->getUid(), 'stadt' => $stadt->getId()));
@@ -104,7 +108,7 @@ class FerienController extends AbstractController
     public function ferienAction(Request $request, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
         // Load all schools from the city into the controller as $schulen
-        $org = $this->getDoctrine()->getRepository(Organisation::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
+        $org = $this->managerRegistry->getRepository(Organisation::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
 
         //Include Parents in this route
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE)) {
@@ -119,7 +123,7 @@ class FerienController extends AbstractController
         $kinder = array();
         if ($request->cookies->get(self::BEZEICHNERCOOKIEKINDER)) {
             $cookie_kind = explode('.', $request->cookies->get(self::BEZEICHNERCOOKIEKINDER));
-            $kinder = $this->getDoctrine()->getRepository(Kind::class)->findBy(array('id' => $cookie_kind[0]));
+            $kinder = $this->managerRegistry->getRepository(Kind::class)->findBy(array('id' => $cookie_kind[0]));
 
         } else {
             $kinder = $adresse->getKinds()->toArray();
@@ -155,7 +159,7 @@ class FerienController extends AbstractController
 
             try {
                 if (count($errors) === 0) {
-                    $em = $this->getDoctrine()->getManager();
+                    $em = $this->managerRegistry->getManager();
                     $em->persist($kind);
                     $em->flush();
                     $text = $translator->trans('Erfolgreich gespeichert');
@@ -181,8 +185,8 @@ class FerienController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE);
         }
 
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
 
         $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('ferien_workflow_kind_edit', array('slug' => $slug, 'kind_id' => $kind->getId()))));
         $form->remove('klasse');
@@ -194,7 +198,7 @@ class FerienController extends AbstractController
 
             try {
                 if (count($errors) === 0) {
-                    $em = $this->getDoctrine()->getManager();
+                    $em = $this->managerRegistry->getManager();
                     $em->persist($kind);
                     $em->flush();
                     $text = $translator->trans('Erfolgreich gespeichert');
@@ -220,8 +224,8 @@ class FerienController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE);
         }
 
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-        $em = $this->getDoctrine()->getManager();
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $em = $this->managerRegistry->getManager();
         $em->remove($kind);
         $em->flush();
         return new JsonResponse(array('redirect' => $this->generateUrl('ferien_auswahl', array('slug' => $slug))));
@@ -250,14 +254,14 @@ class FerienController extends AbstractController
             $endDate = isset($param->end)?new \DateTime( $param->end):null;
             $onlyEmptyCourse = isset($param->freeSpace)?$param->freeSpace:null;
             foreach ($param->tag as $data){
-                $tag[] = $this->getDoctrine()->getRepository(Tags::class)->find($data);
+                $tag[] = $this->managerRegistry->getRepository(Tags::class)->find($data);
             }
 
         }
 
-        $tags = $this->getDoctrine()->getRepository(Tags::class)->findAll();
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-        $dates = $this->getDoctrine()->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt,$startDate,$endDate,$tag,$onlyEmptyCourse);
+        $tags = $this->managerRegistry->getRepository(Tags::class)->findAll();
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $dates = $this->managerRegistry->getRepository(Ferienblock::class)->findFerienblocksFromToday($stadt,$startDate,$endDate,$tag,$onlyEmptyCourse);
         $today = new \DateTime('today');
         return $this->render('ferien/blocks.html.twig', array('kind' => $kind, 'dates' => $dates, 'stadt' => $stadt, 'today' => $today,'tags'=>$tags));
     }
@@ -275,8 +279,8 @@ class FerienController extends AbstractController
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE);
         }
 
-        $kind = $this->getDoctrine()->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
-        $block = $this->getDoctrine()->getRepository(Ferienblock::class)->find($request->get('block_id'));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $block = $this->managerRegistry->getRepository(Ferienblock::class)->find($request->get('block_id'));
         $result = $toogleKindFerienblock->toggleKind($kind, $block, $request->get('preis_id'));
 
         return new JsonResponse($result);
@@ -318,7 +322,7 @@ class FerienController extends AbstractController
         } else {
             return $this->redirectToRoute('ferien_adresse', array('slug' => $slug));
         }
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
         // überprüfe ob alle Payment vorhanden sind
         $check = $ferienAbschluss->checkIfStillSpace($adresse);
         if ($check !== null) {

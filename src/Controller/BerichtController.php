@@ -8,6 +8,7 @@ use App\Entity\Zeitblock;
 use App\Service\ChildSearchService;
 use App\Service\ElternService;
 use App\Service\StadtBerichtService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -16,17 +17,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BerichtController extends AbstractController
 {
+    public function __construct(private ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/city_report/index", name="stadt_bericht_index")
      */
     public function index(Request $request)
     {
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt_id'));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('stadt_id'));
         if ($stadt != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
 
-        $qb = $this->getDoctrine()->getRepository(Zeitblock::class)->createQueryBuilder('b');
+        $qb = $this->managerRegistry->getRepository(Zeitblock::class)->createQueryBuilder('b');
 
 
         foreach ($stadt->getSchules() as $key => $data) {
@@ -38,10 +42,10 @@ class BerichtController extends AbstractController
             if ($request->get('schuljahr') === 'all') {
                 $jahr = null;
             } else {
-                $jahr = $this->getDoctrine()->getRepository(Active::class)->find($request->get('schuljahr'));
+                $jahr = $this->managerRegistry->getRepository(Active::class)->find($request->get('schuljahr'));
             }
         } else {
-            $jahr = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrFromCity($stadt, new \DateTime());
+            $jahr = $this->managerRegistry->getRepository(Active::class)->findSchuljahrFromCity($stadt, new \DateTime());
         }
 
 
@@ -53,7 +57,7 @@ class BerichtController extends AbstractController
 
         $query = $qb->getQuery();
         $blocks = $query->getResult();
-        $schuljahre = $this->getDoctrine()->getRepository(Active::class)->findBy(array('stadt' => $stadt));
+        $schuljahre = $this->managerRegistry->getRepository(Active::class)->findBy(array('stadt' => $stadt));
         return $this->render('bericht/index.html.twig', array('blocks' => $blocks, 'schuljahre' => $schuljahre, 'active' => $jahr, 'stadt' => $stadt));
     }
 
@@ -69,16 +73,16 @@ class BerichtController extends AbstractController
         $elternT = array();
         $kinderT = array();
 
-        $stadt = $this->getDoctrine()->getRepository(Stadt::class)->find($request->get('stadt_id'));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('stadt_id'));
         if ($stadt != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
 
         if ($request->get('schuljahr')) {
-            $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findBy(array('stadt' => $stadt, 'id' => $request->get('schuljahr')));
+            $schuljahr = $this->managerRegistry->getRepository(Active::class)->findBy(array('stadt' => $stadt, 'id' => $request->get('schuljahr')));
 
         } else {
-            $schuljahr = $this->getDoctrine()->getRepository(Active::class)->findBy(array('stadt' => $stadt));
+            $schuljahr = $this->managerRegistry->getRepository(Active::class)->findBy(array('stadt' => $stadt));
 
         }
 

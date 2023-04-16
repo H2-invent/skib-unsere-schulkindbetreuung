@@ -11,6 +11,7 @@ use App\Entity\Sepa;
 use App\Entity\Zeitblock;
 use App\Service\ChildSearchService;
 use App\Service\WidgetService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,12 +21,15 @@ use function Doctrine\ORM\QueryBuilder;
 
 class WidgetController extends AbstractController
 {
+    public function __construct(private ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/org_child/show/widget/kidsToday", name="widget_kids_today")
      */
     public function index(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
   
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
@@ -50,7 +54,7 @@ class WidgetController extends AbstractController
      */
     public function indexCheckin(Request $request, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -59,8 +63,8 @@ class WidgetController extends AbstractController
         $midnight->setTime(0, 0, 0);
 
         $stadt = $this->getUser()->getStadt();
-        $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
-        $qb = $this->getDoctrine()->getRepository(Anwesenheit::class)->createQueryBuilder('an');
+        $active = $this->managerRegistry->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        $qb = $this->managerRegistry->getRepository(Anwesenheit::class)->createQueryBuilder('an');
         $qb->andWhere('an.organisation = :org')
             ->andWhere(
                 $qb->expr()->between('an.arrivedAt', ':midnight', ':now')
@@ -80,7 +84,7 @@ class WidgetController extends AbstractController
      */
     public function schuljahr(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -99,8 +103,8 @@ class WidgetController extends AbstractController
      */
     public function childsInSchule(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
-        $schule = $this->getDoctrine()->getRepository(Schule::class)->findOneBy(array('organisation' => $organisation, 'id' => $request->get('schule_id')));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
+        $schule = $this->managerRegistry->getRepository(Schule::class)->findOneBy(array('organisation' => $organisation, 'id' => $request->get('schule_id')));
 
         if ($organisation != $this->getUser()->getOrganisation() || !in_array($schule,$this->getUser()->getSchulen()->toArray())){
             throw new \Exception('Wrong Organisation');
@@ -116,20 +120,20 @@ class WidgetController extends AbstractController
      */
     public function blockansicht(Request $request, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
         $stadt = $this->getUser()->getStadt();
-        $active = $this->getDoctrine()->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
-        $qb = $this->getDoctrine()->getRepository(Zeitblock::class)->createQueryBuilder('b')
+        $active = $this->managerRegistry->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        $qb = $this->managerRegistry->getRepository(Zeitblock::class)->createQueryBuilder('b')
             ->andWhere('b.active = :jahr')->setParameter('jahr', $active)
             ->andWhere('b.deleted = false')
             ->innerJoin('b.schule', 'schule')
             ->andWhere('schule.organisation =:org') ->setParameter('org', $organisation);
         if ($request->get('schule_id')) {
-            $schule = $this->getDoctrine()->getRepository(Schule::class)->find($request->get('schule_id'));
+            $schule = $this->managerRegistry->getRepository(Schule::class)->find($request->get('schule_id'));
             $qb->andWhere('b.schule =:schule')->setParameter('schule', $schule);
         }
         $blocks = $qb->getQuery()->getResult();
@@ -148,14 +152,14 @@ class WidgetController extends AbstractController
      */
     public function sepa(Request $request, TranslatorInterface $translator)
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($request->get('org_id'));
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
         $lastMonth = (new \DateTime())->modify('first day of last Month');
         $lastDay = (new \DateTime())->modify('last day of last Month');
-        $active = $this->getDoctrine()->getRepository(Active::class)->findSchuljahrBetweentwoDates($lastDay, $lastDay, $organisation->getStadt());
-        $qb = $this->getDoctrine()->getRepository(Sepa::class)->createQueryBuilder('s');
+        $active = $this->managerRegistry->getRepository(Active::class)->findSchuljahrBetweentwoDates($lastDay, $lastDay, $organisation->getStadt());
+        $qb = $this->managerRegistry->getRepository(Sepa::class)->createQueryBuilder('s');
         $qb->andWhere('s.von <= :today')
             ->andWhere('s.bis >= :today')
             ->andWhere('s.organisation = :org')

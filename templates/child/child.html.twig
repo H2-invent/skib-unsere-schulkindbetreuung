@@ -6,13 +6,30 @@
             <div class="row">
                 <!-- Count item widget-->
                 <div class=" col-12 card">
-                    <div class="card-header">
-                        <h1> {% if is_granted('ROLE_ORG_CHILD_CHANGE') %} Kind hinzufügen  <a target="_blank"
-                                                                                              href="{{ path('child_add_new') }}">
-                                    <button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
+                    <div class="card-header d-flex align-items-center">
+                        <h1 class="mr-2"> {% if is_granted('ROLE_ORG_CHILD_CHANGE') %} Kind hinzufügen</h1>
+                                <div class="dropdown">
+
+
+                                    <button href="#" type="button"
+                                            class="btn  bmd-btn-fab bmd-btn-fab-sm dropdown-toggle"
+                                            data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
                                         <i class="material-icons">add</i>
-                                    </button></a>{% endif %}
-                        </h1>
+                                    </button>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        {% for s in schuljahreForNew %}
+                                            <a class="dropdown-item" target="_blank"
+                                               href="{{ path('child_add_new',{'schuljahr':s.id}) }}">{{ s.von|date('d.m.Y') }}
+                                                - {{ s.bis|date('d.m.Y') }}</a>
+                                        {% endfor %}
+
+
+                                    </div>
+                                </div>
+                            {% endif %}
+
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -116,7 +133,8 @@
                                 <div class="wave"></div>
                                 <div class="wave"></div>
                                 <div class="wave"></div>
-                            </div>                        </div>
+                            </div>
+                        </div>
 
 
                     </div>
@@ -128,7 +146,11 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <a class="btn btn-outline-primary" id="daterangesim" data-startdate="{{ 'now'|date('m/d/Y') }}" data-enddate="{{ date('now')|date_modify("+1 month")|date('m/d/Y') }}"> <i class="fa fa-calendar"></i><span>{{ 'now'|date('d.m.Y') }} - {{ date('now')|date_modify("+1 month")|date('d.m.Y') }}</span> </a>
+                                <a class="btn btn-outline-primary" id="daterangesim"
+                                   data-startdate="{{ 'now'|date('m/d/Y') }}"
+                                   data-enddate="{{ date('now')|date_modify("+1 month")|date('m/d/Y') }}"> <i
+                                            class="fa fa-calendar"></i><span>{{ 'now'|date('d.m.Y') }} - {{ date('now')|date_modify("+1 month")|date('d.m.Y') }}</span>
+                                </a>
                             </div>
                         </div>
                         <div class="col-12">

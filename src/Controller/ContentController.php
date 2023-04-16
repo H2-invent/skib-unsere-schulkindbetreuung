@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Content;
 use App\Form\Type\ContentType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,12 +14,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ContentController extends AbstractController
 {
+    public function __construct(private ManagerRegistry $managerRegistry)
+    {
+    }
     /**
      * @Route("/admin/content/show", name="content_show")
      */
     public function index()
     {
-        $content = $this->getDoctrine()->getRepository(Content::class)->findAll();
+        $content = $this->managerRegistry->getRepository(Content::class)->findAll();
 
         return $this->render('content/index.html.twig', [
             'content' => $content,
@@ -41,7 +45,7 @@ class ContentController extends AbstractController
             $content = $form->getData();
             $errors = $validator->validate($content);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($content);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
@@ -57,7 +61,7 @@ class ContentController extends AbstractController
      */
     public function editcontent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $content =$this->getDoctrine()->getRepository(Content::class)->find($request->get('content_id'));
+        $content =$this->managerRegistry->getRepository(Content::class)->find($request->get('content_id'));
         $content->setDate(new \DateTime());
 
         $form = $this->createForm(ContentType::class, $content);
@@ -67,7 +71,7 @@ class ContentController extends AbstractController
             $content = $form->getData();
             $errors = $validator->validate($content);
             if (count($errors) == 0) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->managerRegistry->getManager();
                 $em->persist($content);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
@@ -82,14 +86,14 @@ class ContentController extends AbstractController
      */
     public function activatecontent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $content =$this->getDoctrine()->getRepository(Content::class)->find($request->get('content_id'));
+        $content =$this->managerRegistry->getRepository(Content::class)->find($request->get('content_id'));
         $content->setDate(new \DateTime());
         if($content->getActiv()){
             $content->setActiv(false);
         }else{
             $content->setActiv(true);
         }
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($content);
         $em->flush();
         $text = $translator->trans('Erfolgreich geändert');
@@ -100,9 +104,9 @@ class ContentController extends AbstractController
      */
     public function deletecontent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $content =$this->getDoctrine()->getRepository(Content::class)->find($request->get('content_id'));
+        $content =$this->managerRegistry->getRepository(Content::class)->find($request->get('content_id'));
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->remove($content);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');

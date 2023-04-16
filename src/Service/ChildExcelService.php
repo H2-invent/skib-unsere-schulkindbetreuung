@@ -33,7 +33,14 @@ class ChildExcelService
     private ElternService $elternService;
     private BerechnungsService $berechnungsService;
     private $stichtag = null;
-    public function __construct(TranslatorInterface $translator, TokenStorageInterface $tokenStorage, CreateExcelDayService $createExcelDayService, ElternService $elternService, BerechnungsService $berechnungsService)
+
+    public function __construct(
+        TranslatorInterface                $translator,
+        TokenStorageInterface              $tokenStorage,
+        CreateExcelDayService              $createExcelDayService,
+        ElternService                      $elternService,
+        BerechnungsService                 $berechnungsService,
+        private LoerrachWorkflowController $loerrachWorkflowController)
     {
         $this->spreadsheet = new Spreadsheet();
         $this->writer = new Xlsx($this->spreadsheet);
@@ -44,16 +51,16 @@ class ChildExcelService
         $this->berechnungsService = $berechnungsService;
     }
 
-    public function generateExcel($kinder, Stadt $stadt, $wochentag,$stichtag = null)
+    public function generateExcel($kinder, Stadt $stadt, $wochentag, $stichtag = null)
     {
-        $beruflicheSituation = new LoerrachWorkflowController($this->translator);
+
         $this->stichtag = $stichtag;
         $this->stadt = $stadt;
         $this->alphas = $this->createColumnsArray('ZZ');
         $count = 0;
-        if ($wochentag=== null){
+        if ($wochentag === null) {
             $this->writeSpreadsheet($kinder);
-        }else{
+        } else {
             $this->writeSpreadsheet($kinder, $this->translator->trans(ChildController::$WEEKDAY[$wochentag]), [$wochentag]);
         }
 
@@ -118,7 +125,7 @@ class ChildExcelService
     public function writeSpreadsheet($kinder, $title = 'Kinder', $weekdays = [0, 1, 2, 3, 4])
     {
 
-        $beruflicheSituation = new LoerrachWorkflowController($this->translator);
+        $beruflicheSituation = $this->loerrachWorkflowController;
         $alphas = $this->createColumnsArray('ZZ');
         $count = 0;
         $kindSheet = $this->spreadsheet->createSheet();
@@ -129,7 +136,7 @@ class ChildExcelService
         $counter = 2;
         foreach ($kinder as $data) {
             if ($this->checkIfChildhasBlockOnDayOfArray($data, $weekdays)) {
-                $eltern = $this->elternService->getElternForSpecificTimeAndKind($data,$this->stichtag?:new \DateTime());
+                $eltern = $this->elternService->getElternForSpecificTimeAndKind($data, $this->stichtag ?: new \DateTime());
                 $count = 0;
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getVorname());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getNachname());
@@ -224,7 +231,7 @@ class ChildExcelService
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getIban());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getBic());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getKontoinhaber());
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->berechnungsService->getPreisforBetreuung($data,false,$this->stichtag?:null));
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->berechnungsService->getPreisforBetreuung($data, false, $this->stichtag ?: null));
                     if ($this->stadt->getSettingsEingabeDerGeschwister()) {
                         $geschwister = '';
                         foreach ($eltern->getGeschwisters() as $gesch) {
