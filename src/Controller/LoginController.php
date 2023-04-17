@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class LoginController extends AbstractController
 {
@@ -61,7 +62,7 @@ class LoginController extends AbstractController
         ]);
 
 
-        $redirectUri = $this->generateUrl('app_logout');
+        $redirectUri = $this->generateUrl('app_logout',array(),UrlGeneratorInterface::ABSOLUTE_URL);
         $options = array(
             'id_token_hint' => $request->getSession()->get('id_token'),
             'post_logout_redirect_uri' => $redirectUri,
