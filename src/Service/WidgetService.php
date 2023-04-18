@@ -15,7 +15,7 @@ class WidgetService
     private EntityManagerInterface $em;
     private ChildSearchService $childSearchService;
     private ChildInBlockService $childInBlockService;
-    private $time = 600;
+    public static int $CACHE_TIME = 120;
 
     public function __construct(EntityManagerInterface $entityManager, ChildSearchService $childSearchService, ChildInBlockService $childInBlockService)
     {
@@ -28,7 +28,8 @@ class WidgetService
     {
         $cache = new FilesystemAdapter();
         $value = $cache->get('schule_' . $schule->getId(), function (ItemInterface $item) use ($schule, $now) {
-            $item->expiresAfter($this->time);
+
+            $item->expiresAfter(self::$CACHE_TIME);
 
             // ... do some HTTP request or heavy computations
             $active = $this->em->getRepository(Active::class)->findActiveSchuljahrFromCity($schule->getOrganisation()->getStadt());
@@ -42,7 +43,7 @@ class WidgetService
     {
         $cache = new FilesystemAdapter();
         $value = $cache->get('schule_today_' . $schule->getId(), function (ItemInterface $item) use ($schule, $now) {
-            $item->expiresAfter($this->time);
+            $item->expiresAfter(self::$CACHE_TIME);
             $today = $now->format('w');
             if ($today == 0) {
                 $today = 6;
@@ -69,6 +70,7 @@ class WidgetService
 
         $cache = new FilesystemAdapter();
         $value = $cache->get('zeitblock_' . $zeitblock->getId(), function (ItemInterface $item) use ($zeitblock, $now) {
+            $item->expiresAfter(self::$CACHE_TIME);
             $kinder = $this->childInBlockService->getCurrentChildOfZeitblock($zeitblock, $now);
 
             return sizeof($kinder);
@@ -80,15 +82,13 @@ class WidgetService
     {
         $cache = new FilesystemAdapter();
         $value = $cache->get('schuljahr_' . $active->getId(), function (ItemInterface $item) use ($active, $dateTime) {
+            $item->expiresAfter(self::$CACHE_TIME);
             $total = 0;
-            foreach ($active->getStadt()->getSchules() as $data){
-                $total +=  sizeof($this->childSearchService->searchChild(array( 'schuljahr' => $active->getId(), 'schule' =>$data->getId()), null, false, null, $dateTime));
+            foreach ($active->getStadt()->getSchules() as $data) {
+                $total += sizeof($this->childSearchService->searchChild(array('schuljahr' => $active->getId(), 'schule' => $data->getId()), null, false, null, $dateTime));
             }
-
-
             return $total;
         });
         return $value;
     }
-
 }

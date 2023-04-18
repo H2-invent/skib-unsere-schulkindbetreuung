@@ -63,10 +63,11 @@ class StatistikGenerateCommand extends Command
         $io->info('generate Zeitblocks');
         $progressBar = new ProgressBar($output, sizeof($zeitblocks));
         $progressBar->start();
-        foreach ($zeitblocks as $data2) {
+        foreach ($zeitblocks as $blocks) {
 
-            $cache->delete('zeitblock_' . $data2->getId());
-            $this->widgetService->calcBlocksNumberNow($data);
+            $cache->delete('zeitblock_' . $blocks->getId());
+            $this->widgetService->calcBlocksNumberNow($blocks);
+
             $progressBar->advance();
         }
         $progressBar->finish();
