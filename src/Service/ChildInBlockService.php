@@ -38,6 +38,8 @@ class ChildInBlockService
                 $checkTracing[] = $tracing;
             }
         }
+
+
         return $res;
     }
 
@@ -67,11 +69,11 @@ class ChildInBlockService
     /**
      * @param Kind[] $kinds
      */
-    private function sortChilds(array $kinds)
+    public function sortChilds(array $kinds)
     {
         usort($kinds, function (Kind $a, Kind $b): int {
             if ($a->getStartDate() == $b->getStartDate()) {
-                return $a->getEltern()->getCreatedAt() <=> $a->getEltern()->getCreatedAt();
+                return $a->getEltern()->getCreatedAt() <=> $b->getEltern()->getCreatedAt();
             }
             return $a->getStartDate() <=> $b->getStartDate();
         });
@@ -116,6 +118,7 @@ class ChildInBlockService
     public function checkIfChildIsNow($kinds, Zeitblock $zeitblock, \DateTime $date): ?Kind
     {
         $lastChecked = null;
+
         foreach (array_reverse($kinds) as $data) {
 
             if ($data->getStartDate() <= $date) { // ich befinde mich vor dem start-datum
