@@ -387,28 +387,31 @@ class NewsController extends AbstractController
         $mailContent = $this->renderView('email/news.html.twig', array('sender' => $news->getOrganisation(), 'news' => $news, 'stammdaten' => $stammdaten));
         foreach ($stammdaten as $data) {
             $data = $elternService->getLatestElternFromCEltern($data);
-            if (!in_array($data->getEmail(), $sendReport)) {
-                $mailerService->sendEmail(
-                    'Ranzenpost',
-                    $news->getOrganisation()->getEmail(),
-                    $data->getEmail(),
-                    $news->getTitle(),
-                    $mailContent,
-                    $news->getOrganisation()->getEmail());
-                $sendReport[] = $data->getEmail();
-            }
-            foreach ($data->getPersonenberechtigters() as $data2) {
-                if (!in_array($data2->getEmail(), $sendReport)) {
+            if ($data){
+                if (!in_array($data->getEmail(), $sendReport)) {
                     $mailerService->sendEmail(
                         'Ranzenpost',
                         $news->getOrganisation()->getEmail(),
-                        $data2->getEmail(),
+                        $data->getEmail(),
                         $news->getTitle(),
                         $mailContent,
                         $news->getOrganisation()->getEmail());
-                    $sendReport[] = $data2->getEmail();
+                    $sendReport[] = $data->getEmail();
+                }
+                foreach ($data->getPersonenberechtigters() as $data2) {
+                    if (!in_array($data2->getEmail(), $sendReport)) {
+                        $mailerService->sendEmail(
+                            'Ranzenpost',
+                            $news->getOrganisation()->getEmail(),
+                            $data2->getEmail(),
+                            $news->getTitle(),
+                            $mailContent,
+                            $news->getOrganisation()->getEmail());
+                        $sendReport[] = $data2->getEmail();
+                    }
                 }
             }
+
 
         }
 
@@ -445,28 +448,31 @@ class NewsController extends AbstractController
         $sendReport = $news->getSendHistory() ? $news->getSendHistory() : array();
         foreach ($stammdaten as $data) {
             $data = $elternService->getLatestElternFromCEltern($data);
-            if (!in_array($data->getEmail(), $sendReport)) {
-                $mailerService->sendEmail(
-                    'Ranzenpost',
-                    $news->getStadt()->getEmail(),
-                    $data->getEmail(),
-                    $news->getTitle(),
-                    $mailContent,
-                    $news->getStadt()->getEmail());
-                $sendReport[] = $data->getEmail();
-            }
-            foreach ($data->getPersonenberechtigters() as $data2) {
-                if (!in_array($data2->getEmail(), $sendReport)) {
+            if ($data){
+                if (!in_array($data->getEmail(), $sendReport)) {
                     $mailerService->sendEmail(
                         'Ranzenpost',
                         $news->getStadt()->getEmail(),
-                        $data2->getEmail(),
+                        $data->getEmail(),
                         $news->getTitle(),
                         $mailContent,
                         $news->getStadt()->getEmail());
-                    $sendReport[] = $data2->getEmail();
+                    $sendReport[] = $data->getEmail();
+                }
+                foreach ($data->getPersonenberechtigters() as $data2) {
+                    if (!in_array($data2->getEmail(), $sendReport)) {
+                        $mailerService->sendEmail(
+                            'Ranzenpost',
+                            $news->getStadt()->getEmail(),
+                            $data2->getEmail(),
+                            $news->getTitle(),
+                            $mailContent,
+                            $news->getStadt()->getEmail());
+                        $sendReport[] = $data2->getEmail();
+                    }
                 }
             }
+
         }
 
         $text = $translator->trans('Nachricht versendet');

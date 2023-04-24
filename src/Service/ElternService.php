@@ -40,7 +40,7 @@ class ElternService
     }
 
 
-    public function getLatestElternFromCEltern(Stammdaten $stammdaten): Stammdaten
+    public function getLatestElternFromCEltern(Stammdaten $stammdaten): ?Stammdaten
     {
         if ($stammdaten->getCreatedAt()) {
             return $this->em->getRepository(Stammdaten::class)->findlatestStammdatenfromStammdaten($stammdaten);
