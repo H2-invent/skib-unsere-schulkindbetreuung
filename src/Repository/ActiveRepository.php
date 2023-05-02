@@ -101,7 +101,7 @@ class ActiveRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('a')
             ->andWhere('a.stadt = :stadt')
             ->andWhere('a.anmeldeStart <= :today')
-            ->andWhere('a.anmeldeEnde >= :today')
+            ->andWhere('a.bis >= :today')
             ->setParameter('today', $today)
             ->setParameter('stadt', $stadt)
             ->orderBy('a.von', 'ASC')
