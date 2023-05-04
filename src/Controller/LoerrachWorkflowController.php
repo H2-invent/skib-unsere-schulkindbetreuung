@@ -214,10 +214,10 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = new Kind();
 
-        $kind = $schulkindBetreuungKindNeuService->prepareKind($kind, $schule, $adresse);
+
         // Load the data from the city into the controller as $stadt
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
-
+        $kind = $schulkindBetreuungKindNeuService->prepareKind($kind, $schule, $adresse, $schuljahr);
         $form = $this->createForm(LoerrachKind::class, $kind, array('schuljahr' => $schuljahr, 'validation_groups' => ['Eltern'], 'action' => $this->generateUrl('loerrach_workflow_schulen_kind_neu', array('slug' => $stadt->getSlug(), 'schule_id' => $schule->getId()))));
         if ($this->getUser() && $this->getUser()->getOrganisation()->getStadt() === $stadt && in_array('ROLE_ORG_CHILD_CHANGE', $this->getUser()->getRoles(), true) && $stadt->getSettingsSkibShowSetStartDateOnChange()) {
 
@@ -359,7 +359,7 @@ class LoerrachWorkflowController extends AbstractController
         if (count($kind->getRealZeitblocks()) > 0) {
             $schuljahr = $this->managerRegistry->getRepository(Active::class)->findSchuljahrFromKind($kind);
         } else {
-            $schuljahr = $this->managerRegistry->getRepository(Active::class)->findSchuljahrfromStadtAndStichtag($stadt,$kind->getStartDate());
+            $schuljahr = $schuljahrService->getSchuljahr(stadt: $stadt);// $this->managerRegistry->getRepository(Active::class)->findSchuljahrfromStadtAndStichtag($stadt,$kind->getStartDate());
         }
 
         $req = array(

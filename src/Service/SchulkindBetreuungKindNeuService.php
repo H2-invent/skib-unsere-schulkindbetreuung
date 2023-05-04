@@ -40,12 +40,11 @@ class SchulkindBetreuungKindNeuService
         $this->error = $errorService;
         $this->schuljahrService  = $schuljahrService;
     }
-    public function prepareKind(Kind $kind, Schule $schule, Stammdaten $eltern){
+    public function prepareKind(Kind $kind, Schule $schule, Stammdaten $eltern, Active $schuljahr){
         $kind->setEltern($eltern);
         $kind->setSchule($schule);
-        $schuljahr = $this->schuljahrService->getSchuljahr($schule->getStadt());
 
-        if (new \DateTime() < $schuljahr->getAnmeldeEnde() && new \DateTime()>$schuljahr->getAnmeldeStart()){//ist im ANmeldezeitraum, alos wahrscheinlich ein Elternteil oder ein Mitarbeiter, der ein Kind so anmelden möchte
+        if (new \DateTime() < $schuljahr->getVon()){//ist im ANmeldezeitraum, also wahrscheinlich ein Elternteil oder ein Mitarbeiter, der ein Kind so anmelden möchte
             $kind->setStartDate($schuljahr->getVon());
         }else{
             $kind->setStartDate((new \DateTime())->modify($schule->getStadt()->getSettingSkibDefaultNextChange()));

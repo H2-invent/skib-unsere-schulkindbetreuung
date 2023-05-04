@@ -30,6 +30,9 @@ class ElternService
             $dateTime = new \DateTime();
         }
        $parent = $this->em->getRepository(Stammdaten::class)->findStammdatenfromKindforSpecificDate($kind,$dateTime,$demo);
+        if (!$parent){
+            $parent = $kind->getEltern();
+        }
         return $parent;
     }
 
