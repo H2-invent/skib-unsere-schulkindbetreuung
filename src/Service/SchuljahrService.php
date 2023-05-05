@@ -31,9 +31,12 @@ class SchuljahrService
 
     public function getSchuljahr(Stadt $stadt): ?Active
     {
-        if ($this->requestStack->getSession()->get('schuljahr_to_add')){
-          return  $this->em->getRepository(Active::class)->find($this->requestStack->getSession()->get('schuljahr_to_add'));
+
+        if ($this->requestStack->getSession()->get('schuljahr_to_add')) {
+            $schuljahr = $this->em->getRepository(Active::class)->find($this->requestStack->getSession()->get('schuljahr_to_add'));
+            return $schuljahr;
         }
+
         if ($this->user->getUser() && $this->user->getUser()->hasRole('ROLE_ORG_CHILD_CHANGE')) {
             return $this->em->getRepository(Active::class)->findSchuljahrFromCity($stadt, new \DateTime());
         } else {
