@@ -158,6 +158,7 @@ class ChildExcelService
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getAbholberechtigter());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getMedikamente());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAllergie());
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getZeckenEntfernen());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getMasernImpfung());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getBemerkung());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getGluten());
@@ -274,6 +275,7 @@ class ChildExcelService
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Abholung durch'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Medikamente'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Allergien'));
+        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Zecken dürfen entfernt werden'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Masernimpfung'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Bemerkung'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Gluten intolerant'));
