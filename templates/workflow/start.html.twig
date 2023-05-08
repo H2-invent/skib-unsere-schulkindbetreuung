@@ -253,43 +253,23 @@
                                                            class="btn-rounded btn-outline-primary btn  btn-sm">{{ 'Kind anmelden'|trans }}</a>
                                                         {% if actualSchuljahr|length > 0 or (anmeldeSchuljahr|length > 0 and is_granted('IS_AUTHENTICATED_FULLY')) %}
 
-                                                                <!--Trigger-->
-                                                                <a class="btn-rounded btn-outline-primary btn-sm btn dropdown multi-level-dropdown"
-                                                                   type="button" id="dropdownMenu1"
-                                                                   data-toggle="dropdown"
-                                                                   aria-haspopup="true"
-                                                                   aria-expanded="false">{{ 'Anmeldungs-/Änderungsformular'|trans }}</a>
-                                                                <!--Menu-->
-                                                                <ul style="list-style-type:none" class="dropdown-menu mt-2 rounded-0 white border-0 z-depth-1">
-                                                                {% for  a in  actualSchuljahr %}
-                                                                    <li class="dropdown-item dropdown-submenu p-0">
-                                                                        <a href="#" data-toggle="dropdown"
-                                                                           class="dropdown-toggle dropdown-item w-100">{{ a.von|date('d.m.Y')}} - {{ a.bis|date('d.m.Y')}} </a>
-                                                                        <ul class="dropdown-menu  rounded-0 white border-0 z-depth-1">
+                                                            <!--Trigger-->
+                                                            <a class="btn-rounded btn-outline-primary btn-sm btn dropdown multi-level-dropdown"
+                                                               type="button" id="dropdownMenu1"
+                                                               data-toggle="dropdown"
+                                                               aria-haspopup="true"
+                                                               aria-expanded="false">{{ 'Anmeldungs-/Änderungsformular'|trans }}</a>
+                                                            <!--Menu-->
+                                                            <ul style="list-style-type:none"
+                                                                class="dropdown-menu mt-2 rounded-0 white border-0 z-depth-1">
 
-                                                                            {% if s.blocksforThisYearAndType(1,a)|length > 0 %}
-
-                                                                                <li class="dropdown-item p-0">
-                                                                                    <a href="{{ path('download_formular_schule',{'cat':1,'schule':s.id,'schuljahr': a.id}) }}"
-                                                                                       class="dropdown-item w-100">{{ 'Ganztag'|trans }}</a>
-                                                                                </li>
-                                                                            {% endif %}
-                                                                            {% if s.blocksforThisYearAndType(2,a)|length > 0 %}
-                                                                                <li class="dropdown-item p-0">
-                                                                                    <a href="{{ path('download_formular_schule',{'cat':2,'schule':s.id,'schuljahr': a.id}) }}"
-                                                                                       class="dropdown-item w-100">{{ 'Halbtag'|trans }}</a>
-                                                                                </li>
-                                                                            {% endif %}
-
-                                                                        </ul>
-                                                                    </li>
-                                                                {% endfor %}
                                                                 {% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.stadt == stadt %}
                                                                     {% for  a in anmeldeSchuljahr %}
 
                                                                         <li class="dropdown-item dropdown-submenu p-0">
                                                                             <a href="#" data-toggle="dropdown"
-                                                                               class="dropdown-toggle dropdown-item w-100">{{ a.von|date('d.m.Y')}} - {{ a.bis|date('d.m.Y')}}</a>
+                                                                               class="dropdown-toggle dropdown-item w-100">{{ a.von|date('d.m.Y') }}
+                                                                                - {{ a.bis|date('d.m.Y') }}</a>
                                                                             <ul class="dropdown-menu  rounded-0 white border-0 z-depth-1">
 
                                                                                 {% if s.blocksforThisYearAndType(1,a)|length > 0 %}
@@ -309,6 +289,34 @@
                                                                             </ul>
                                                                         </li>
                                                                     {% endfor %}
+
+                                                                {% else %}
+
+                                                                    {% for  a in  actualSchuljahr %}
+                                                                        <li class="dropdown-item dropdown-submenu p-0">
+                                                                            <a href="#" data-toggle="dropdown"
+                                                                               class="dropdown-toggle dropdown-item w-100">{{ a.von|date('d.m.Y') }}
+                                                                                - {{ a.bis|date('d.m.Y') }} </a>
+                                                                            <ul class="dropdown-menu  rounded-0 white border-0 z-depth-1">
+
+                                                                                {% if s.blocksforThisYearAndType(1,a)|length > 0 %}
+
+                                                                                    <li class="dropdown-item p-0">
+                                                                                        <a href="{{ path('download_formular_schule',{'cat':1,'schule':s.id,'schuljahr': a.id}) }}"
+                                                                                           class="dropdown-item w-100">{{ 'Ganztag'|trans }}</a>
+                                                                                    </li>
+                                                                                {% endif %}
+                                                                                {% if s.blocksforThisYearAndType(2,a)|length > 0 %}
+                                                                                    <li class="dropdown-item p-0">
+                                                                                        <a href="{{ path('download_formular_schule',{'cat':2,'schule':s.id,'schuljahr': a.id}) }}"
+                                                                                           class="dropdown-item w-100">{{ 'Halbtag'|trans }}</a>
+                                                                                    </li>
+                                                                                {% endif %}
+
+                                                                            </ul>
+                                                                        </li>
+                                                                    {% endfor %}
+
                                                                 {% endif %}
 
                                                             </ul>
