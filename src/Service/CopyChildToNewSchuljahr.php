@@ -211,4 +211,7 @@ class CopyChildToNewSchuljahr
         }
        $this->entityManager->flush();
     }
+    public function checkStatusOfChildInTargetYear(Kind $kind, Active $target){
+
+    }
 }
