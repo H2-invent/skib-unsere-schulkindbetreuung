@@ -1,3 +1,8 @@
+{%if stadt.settingEncryptEmailAttachment%}
+    <p class="text-center">
+        <b>{{'Das Passswort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (z.B. 01.01.2010)'|trans}}</b>
+    </p>
+{%endif%}
 {% if stadt is not defined or not stadt.NoSecCodeForChangeChilds %}
     <p class="text-center">{% trans %}Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.
             Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.{% endtrans %}</p>
