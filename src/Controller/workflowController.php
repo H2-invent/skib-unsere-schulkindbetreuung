@@ -33,6 +33,7 @@ class workflowController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
+
     /**
      * @Route("/{slug}/home",name="workflow_start",methods={"GET"})
      */
@@ -45,7 +46,16 @@ class workflowController extends AbstractController
         }
 
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
-        $activeSchuljahr = $this->managerRegistry->getRepository(Active::class)->findActiveSchuljahrFromCity($stadt);
+        $anmeldeSchuljahr = $this->managerRegistry->getRepository(Active::class)->findAnmeldeSchuljahrFromCity($stadt);
+        $aktiveSchuljahre = $this->managerRegistry->getRepository(Active::class)->findAllActualSchuljahrFromCity(stadt: $stadt, today: new \DateTime());
+        $schuljahre = [];
+        foreach ($aktiveSchuljahre as $data){
+            if ($data !== $anmeldeSchuljahr){
+                $schuljahre[] = $data;
+            }
+        }
+        dump($aktiveSchuljahre);
+        dump($anmeldeSchuljahr);
         $cityInfoText = $stadt->translate()->getInfoText();
         // Load all schools from the city into the controller as $schulen
         $schule = $this->managerRegistry->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
@@ -61,7 +71,7 @@ class workflowController extends AbstractController
         $text = $stadt->translate()->getInfoText();
         $array = explode('. ', $text);
         $metaDescription = $this->buildMeta($array);
-        return $this->render('workflow/start.html.twig', array('metaDescription' => $metaDescription, 'title' => $title, 'schule' => $schule, 'news' => $news, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'schuljahr' => $schuljahr, 'activeSchuljahr' => $activeSchuljahr));
+        return $this->render('workflow/start.html.twig', array('metaDescription' => $metaDescription, 'title' => $title, 'schule' => $schule, 'news' => $news, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'schuljahr' => $schuljahr, 'activeSchuljahr' => $schuljahre));
     }
 
 
@@ -174,7 +184,6 @@ class workflowController extends AbstractController
             $stadt = $organisation->getStadt();
             return $printDatenschutzService->printDatenschutz($organisation->translate()->getDatenschutz(), 'D', null, $organisation);
         }
-
 
 
     }

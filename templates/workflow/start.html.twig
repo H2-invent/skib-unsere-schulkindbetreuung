@@ -251,7 +251,7 @@
                                                            class="loadContent btn-rounded btn-outline-primary btn btn-sm">{{ 'Zeitblöcke und Preise'|trans }}</a>
                                                         <a href="{{ path('loerrach_workflow_adresse',{'slug':stadt.slug}) }}"
                                                            class="btn-rounded btn-outline-primary btn  btn-sm">{{ 'Kind anmelden'|trans }}</a>
-                                                        {% if actualSchuljahr|length > 0 or (anmeldeSchuljahr|length > 0 and is_granted('IS_AUTHENTICATED_FULLY')) %}
+                                                        {% if activeSchuljahr|length > 0 or (anmeldeSchuljahr|length > 0 and is_granted('IS_AUTHENTICATED_FULLY')) %}
 
                                                             <!--Trigger-->
                                                             <a class="btn-rounded btn-outline-primary btn-sm btn dropdown multi-level-dropdown"
@@ -292,7 +292,7 @@
 
                                                                 {% else %}
 
-                                                                    {% for  a in  actualSchuljahr %}
+                                                                    {% for  a in  activeSchuljahr %}
                                                                         <li class="dropdown-item dropdown-submenu p-0">
                                                                             <a href="#" data-toggle="dropdown"
                                                                                class="dropdown-toggle dropdown-item w-100">{{ a.von|date('d.m.Y') }}
