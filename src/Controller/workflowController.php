@@ -54,8 +54,6 @@ class workflowController extends AbstractController
                 $schuljahre[] = $data;
             }
         }
-        dump($aktiveSchuljahre);
-        dump($anmeldeSchuljahr);
         $cityInfoText = $stadt->translate()->getInfoText();
         // Load all schools from the city into the controller as $schulen
         $schule = $this->managerRegistry->getRepository(Schule::class)->findBy(array('stadt' => $stadt, 'deleted' => false));
