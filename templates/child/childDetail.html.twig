@@ -63,7 +63,10 @@
                                     <td>{{ eltern.abholberechtigter }}</td>
                                 </tr>
 
-
+                                <tr>
+                                    <td>{% trans %} Erstellt am: {% endtrans %}</td>
+                                    <td>{{ eltern.createdAt|date('d.m.Y H:i') }}</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -191,6 +194,15 @@
                                                         {{ k.startDate|date('d.m.Y') }}
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td>
+                                                        {% trans %} Erstellt am{% endtrans %}
+                                                    </td>
+
+                                                    <td>
+                                                        {{ k.eltern.createdAt|date('d.m.Y H:i') }}
+                                                    </td>
+                                                </tr>
                                                 {% if app.user and is_granted('ROLE_ORG_SEE_PRICE') %}
                                                     <tr>
                                                         <td>
@@ -258,19 +270,14 @@
                                                     <ul class="list-group">
                                                         {% for h in his %}
 
-                                                            <li class="list-group-item">
-                                                                <a href="{{ path('child_detail',{'kind_id':k.id,'date':h|date('d.m.Y')}) }}">
-                                                                    {% if date >= his[loop.index-1] %}
-                                                                        {% if his[loop.index] is defined %}
-                                                                            {% if  date < his[loop.index] %}
-                                                                                <i class="fa fa-arrow-right mr-2"></i>
-                                                                            {% endif %}
-                                                                        {% else %}
+                                                            <li class="list-group-item {% if his[loop.index-2] is defined and his[loop.index-2].startDate == his[loop.index-1].eltern.startDate %}strikethrough{% endif %}">
+                                                                <a href="{{ path('child_detail',{'kind_id':h.id,'date':h.eltern.startDate|date('d.m.Y')}) }}">
+                                                                    {% if k == h %}
+
                                                                             <i class="fa fa-arrow-right mr-2"></i>
-                                                                        {% endif %}
-                                                                    {% endif %}
+                                                                       {% endif %}
                                                                     Änderung tritt in
-                                                                    Kraft: {{ h|date('d.m.Y') }}
+                                                                    Kraft: {{ h.eltern.startDate|date('d.m.Y') }} ({{ h.eltern.createdAt|date('d.m.Y H:i') }})
                                                                 </a>
                                                             </li>
 

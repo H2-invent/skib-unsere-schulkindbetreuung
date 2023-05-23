@@ -99,6 +99,9 @@ class ChildController extends AbstractController
             $date = new \DateTime($request->get('date'));
         }
         $kind = $this->managerRegistry->getRepository(Kind::class)->findLatestKindForDate($kind, $date);
+        if ($request->get('kind_id')){
+            $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
+        }
         $eltern = $elternService->getElternForSpecificTimeAndKind($kind, $date);
         $historydate = $historyService->getAllHistoyPointsFromKind($kind);
 

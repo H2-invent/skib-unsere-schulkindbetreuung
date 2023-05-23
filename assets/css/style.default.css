@@ -3144,7 +3144,9 @@ a > code {
     transform: scale(0);
   }
 }
-
+.strikethrough{
+  text-decoration: line-through;
+}
 
 
 

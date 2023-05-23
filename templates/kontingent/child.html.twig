@@ -30,7 +30,7 @@
 
 
                                                 <p> {{ 'Startdatum:'|trans }} <b>{{ k.startDate|date('d.m.Y') }}</b>
-
+                                                <p> {{ 'Erstellt am:'|trans }} <b>{{ eltern.createdAt|date('d.m.Y H:i') }}</b>
                                                 <p>Anzahl Kinder zu diesem Zeitpunkt: <b>{{ getChildsOnSpecificTime(block,k.startDate)|length }}</b></p>
                                                 {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
                                                     <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}"
@@ -49,6 +49,7 @@
                                                     <a href="{{ path('child_change_seccode',{'kind_id':k.id}) }}"><i
                                                                 class="material-icons">edit</i></a>
                                                 {% endif %}
+
                                                 <!-- Button trigger modal -->
 
                                                 <a type="button" class="btn btn-primary" data-toggle="modal"
@@ -58,7 +59,13 @@
                                                     , {{ eltern.alleinerziehend?"Alleinerziehend":'Nicht alleinerziehend'|trans }}
                                                     )
                                                 </a>
+                                                {% if is_granted('ROLE_ORG_CHILD_DELETE') %}
 
+                                                    <a class="btn btn-danger btn-raised btn-sm deleteBtn" type="DELETE"
+                                                       href="{{ path('delete_child_delete',{'kind_id':k.id}) }}">{% trans %}Kind entgültig löschen{% endtrans %}</a>
+                                                    <p><small>Hinweis: Dies löscht das gesamte Kind auch aus anderen Betreuungszeitblöcken. Das Kind wird danach nicht mehr im System sein.</small></p>
+
+                                                {% endif %}
                                             </div>
 
 
