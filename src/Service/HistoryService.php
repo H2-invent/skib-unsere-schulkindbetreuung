@@ -16,8 +16,8 @@ class HistoryService
 
     public function getAllHistoyPointsFromKind(Kind $kind)
     {
-
-        $history = $this->em->getRepository(Kind::class)->findHistoryOfThisChild($kind);
+        $history = $this->em->getRepository(Stammdaten::class)->findHistoryStammdaten($kind->getEltern());
+//        $history = $this->em->getRepository(Kind::class)->findHistoryOfThisChild($kind);
         $historydate = array();
 //        foreach ($history as $data) {
 //            if ($data->getStartDate()) {
@@ -32,11 +32,14 @@ class HistoryService
 
 //        $historydate = array_unique($historydate, SORT_REGULAR);
 
-        usort($history, function (Kind $a, Kind $b) {
-            if ($a->getEltern()->getStartDate()->format('U') < $b->getEltern()->getStartDate()->format('U')){
-                return $a->getEltern()->getCreatedAt()->format('U') < $b->getEltern()->getCreatedAt()->format('U') ? -1 : 1;
+        usort($history, function (Stammdaten $a, Stammdaten $b) {
+            $aDate = $a->getStartDate()?:$a->getKinds()[0]->getStartDate();
+            $bDate = $b->getStartDate()?:$b->getKinds()[0]->getStartDate();
+
+            if ($aDate === $bDate){
+                return $a->getCreatedAt()->format('U') < $b->getCreatedAt()->format('U') ? -1 : 1;
             }
-            return $a->getEltern()->getStartDate()->format('U') < $b->getEltern()->getStartDate()->format('U') ? -1 : 1;
+            return $aDate < $bDate ? -1 : 1;
         });
         return $history;
     }

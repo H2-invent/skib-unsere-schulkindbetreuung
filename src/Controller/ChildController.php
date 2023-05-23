@@ -99,12 +99,11 @@ class ChildController extends AbstractController
             $date = new \DateTime($request->get('date'));
         }
         $kind = $this->managerRegistry->getRepository(Kind::class)->findLatestKindForDate($kind, $date);
-        if ($request->get('kind_id')){
-            $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
+        if ($request->get('spezial_kind_id')){
+            $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('spezial_kind_id'));
         }
         $eltern = $elternService->getElternForSpecificTimeAndKind($kind, $date);
         $historydate = $historyService->getAllHistoyPointsFromKind($kind);
-
         $form = $this->createForm(InternNoticeType::class, $kind, array('action' => $this->generateUrl('child_detail_save_internal', array('childId' => $kind->getId()))));
         if ($kind->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');

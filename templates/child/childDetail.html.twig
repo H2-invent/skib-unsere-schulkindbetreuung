@@ -7,7 +7,8 @@
                 <div class=" col-12 card">
                     <div class="card-header">
                         <h1>{{ k.vorname }} {{ k.nachname }}<a
-                                    href="{{ path('child_detail_print',{'kind_id':k.id,'date':date|date('d.m.Y')}) }}" class="ml-2"><i
+                                    href="{{ path('child_detail_print',{'kind_id':k.id,'date':date|date('d.m.Y')}) }}"
+                                    class="ml-2"><i
                                         class="material-icons">print</i></a>
                             {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
                                 <a
@@ -18,7 +19,8 @@
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="cover-heading">{{ 'Daten des Erziehungsberechtigten'|trans }} <small>(Gültig ab: {{ eltern.startDate|date('d.m.Y') }})</small></h2>
+                            <h2 class="cover-heading">{{ 'Daten des Erziehungsberechtigten'|trans }} <small>(Gültig
+                                    ab: {{ eltern.startDate|date('d.m.Y') }})</small></h2>
                         </div>
                         <div class="card-body">
                             <table class="table">
@@ -268,16 +270,33 @@
 
 
                                                     <ul class="list-group">
+                                                        {% set oldDate = null %}
                                                         {% for h in his %}
+                                                            {% set tmpKind = null %}
+                                                            {% for kin in h.kinds %}
+                                                                {% if kin.tracing == k.tracing %}
+                                                                    {% set tmpKind = kin %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                            {% set startDate = h.startDate?:h.kinds[0].startDate %}
+                                                            <li class="list-group-item {% if startDate == oldDate %}strikethrough{% endif %}{% set oldDate = startDate %}">
 
-                                                            <li class="list-group-item {% if his[loop.index-2] is defined and his[loop.index-2].startDate == his[loop.index-1].eltern.startDate %}strikethrough{% endif %}">
-                                                                <a href="{{ path('child_detail',{'kind_id':h.id,'date':h.eltern.startDate|date('d.m.Y')}) }}">
-                                                                    {% if k == h %}
+                                                                <a href="
+                                                                {% if tmpKind is defined and tmpKind is not null %}
 
-                                                                            <i class="fa fa-arrow-right mr-2"></i>
-                                                                       {% endif %}
+                                                                {{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':tmpKind.id,'date':startDate|date('Y-m-d')}) }}
+                                                                {% else %}
+                                                                  {{ path('child_detail',{'kind_id':k.id,'date':startDate|date('Y-m-d')}) }}
+                                                                {% endif %}
+
+">
+{#                                                                    {% if k == h %}#}
+
+{#                                                                        <i class="fa fa-arrow-right mr-2"></i>#}
+{#                                                                    {% endif %}#}
                                                                     Änderung tritt in
-                                                                    Kraft: {{ h.eltern.startDate|date('d.m.Y') }} ({{ h.eltern.createdAt|date('d.m.Y H:i') }})
+                                                                    Kraft: {{ startDate|date('d.m.Y') }}
+                                                                    ({{ h.createdAt|date('d.m.Y H:i') }})
                                                                 </a>
                                                             </li>
 
