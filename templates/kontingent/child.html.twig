@@ -30,7 +30,7 @@
 
 
                                                 <p> {{ 'Startdatum:'|trans }} <b>{{ k.startDate|date('d.m.Y') }}</b>
-                                                <p> {{ 'Erstellt am:'|trans }} <b>{{ eltern.createdAt|date('d.m.Y H:i') }}</b>
+                                                <p> {{ 'Erstellt am:'|trans }} <b>{{ k.eltern.createdAt|date('d.m.Y H:i') }}</b>
                                                 <p>Anzahl Kinder zu diesem Zeitpunkt: <b>{{ getChildsOnSpecificTime(block,k.startDate)|length }}</b></p>
                                                 {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
                                                     <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}"
@@ -42,7 +42,7 @@
                                                     </a>
 
                                                 {% endif %}
-                                                <a href="{{ path('child_detail',{'kind_id':k.id,'date':k.startDate|date('d.m.Y')}) }}"><i
+                                                <a href="{{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':k.id,'date':k.startDate|date('d.m.Y')}) }}"><i
                                                             class="material-icons">info</i>
                                                 </a>
                                                 {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
