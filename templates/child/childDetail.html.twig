@@ -187,24 +187,7 @@
                                                         </ul>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        {% trans %} Startet ab{% endtrans %}
-                                                    </td>
 
-                                                    <td>
-                                                        {{ k.startDate|date('d.m.Y') }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        {% trans %} Erstellt am{% endtrans %}
-                                                    </td>
-
-                                                    <td>
-                                                        {{ k.eltern.createdAt|date('d.m.Y H:i') }}
-                                                    </td>
-                                                </tr>
                                                 {% if app.user and is_granted('ROLE_ORG_SEE_PRICE') %}
                                                     <tr>
                                                         <td>
@@ -218,6 +201,24 @@
                                                     </tr>
                                                 {% endif %}
                                             {% endif %}
+                                            <tr>
+                                                <td>
+                                                    {% trans %} Startet ab{% endtrans %}
+                                                </td>
+
+                                                <td>
+                                                    {{ k.startDate|date('d.m.Y') }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    {% trans %} Erstellt am{% endtrans %}
+                                                </td>
+
+                                                <td>
+                                                    {{ k.eltern.createdAt|date('d.m.Y H:i') }}
+                                                </td>
+                                            </tr>
                                             {% if k.betreungsblocksRealKontingent|length > 0 %}
                                                 <tr>
                                                     <td>
@@ -272,6 +273,7 @@
                                                     <ul class="list-group">
                                                         {% set oldDate = null %}
                                                         {% for h in his %}
+
                                                             {% set tmpKind = null %}
                                                             {% for kin in h.kinds %}
                                                                 {% if kin.tracing == k.tracing %}

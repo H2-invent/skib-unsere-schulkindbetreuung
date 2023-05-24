@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class HistoryService
 {
     private $em;
+
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
@@ -31,18 +32,17 @@ class HistoryService
 //        }
 
 //        $historydate = array_unique($historydate, SORT_REGULAR);
-
         usort($history, function (Stammdaten $a, Stammdaten $b) {
-            $aDate = $a->getStartDate()?:$a->getKinds()[0]->getStartDate();
-            $bDate = $b->getStartDate()?:$b->getKinds()[0]->getStartDate();
-
-            if ($aDate === $bDate){
-                return $a->getCreatedAt()->format('U') < $b->getCreatedAt()->format('U') ? -1 : 1;
+            $aDate = $a->getStartDate() ?: $a->getKinds()[0]->getStartDate();
+            $bDate = $b->getStartDate() ?: $b->getKinds()[0]->getStartDate();
+            if ($aDate == $bDate) {
+                return $a->getCreatedAt() > $b->getCreatedAt() ? -1 : 1;
             }
-            return $aDate < $bDate ? -1 : 1;
+            return $aDate > $bDate ? -1 : 1;
         });
         return $history;
     }
+
     public function getAllHistoyPointsFromStammdaten(Stammdaten $stammdaten)
     {
 
