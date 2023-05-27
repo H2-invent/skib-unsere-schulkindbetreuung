@@ -138,8 +138,9 @@ class ChildController extends AbstractController
             }
             $em->flush();
         }
+        $route = $request->headers->get('referer');
 
-        return $this->redirectToRoute('child_detail', array('kind_id' => $kind->getId()));
+        return $this->redirect($route);
     }
 
 
