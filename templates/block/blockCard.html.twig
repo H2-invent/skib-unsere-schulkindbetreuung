@@ -42,8 +42,10 @@
                         {% if b.min is not null and b.max is not null %}
                             <p>{% trans %}Min{% endtrans %}: {{ b.min }}</p>
                             <p>{% trans %}Max{% endtrans %}: {{ b.max }}</p>
-                            <b>{% trans %}Angemeldete Kinder{% endtrans %}:</b>
-                            {{ b.BeworbenwithFin|length }}
+                            {% if getAnzahlBeworbenKids(b)|length >0 %}
+                                <b>{% trans %}Noch nicht zugelassene Kinder{% endtrans %}:</b>
+                                {{ getAnzahlBeworbenKids(b)|length }}
+                            {% endif %}
                         {% endif %}
                         <p>{% trans %}Preise{% endtrans %}:</p>
                         <ul class="list-group">
@@ -94,7 +96,8 @@
                             <a href="{{ path('app_deactivate_zeitblock_index',{'id':b.id}) }}"
                                class="deleteBtn dropdown-item" type="PUT"
                                successFKT="reloadBlocks"><i
-                                        class="material-icons">disabled_by_default</i>{%if b.deaktiviert%}Buchbarkeit aktivieren{%else%}Buchbarkeit deaktivieren{%endif%}</a>
+                                        class="material-icons">disabled_by_default</i>{% if b.deaktiviert %}Buchbarkeit aktivieren{% else %}Buchbarkeit deaktivieren{% endif %}
+                            </a>
                         {% endif %}
                         {% if is_granted('ROLE_ORG_ACCEPT_CHILD') and (b.min is not null or b.max is not null) and getAnzahlBeworbenKids(b)|length>0 %}
 
