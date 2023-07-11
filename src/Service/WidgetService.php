@@ -8,6 +8,7 @@ use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
 class WidgetService
@@ -15,9 +16,12 @@ class WidgetService
     private EntityManagerInterface $em;
     private ChildSearchService $childSearchService;
     private ChildInBlockService $childInBlockService;
-    public static int $CACHE_TIME = 120;
+    public static int $CACHE_TIME = 1200;
 
-    public function __construct(EntityManagerInterface $entityManager, ChildSearchService $childSearchService, ChildInBlockService $childInBlockService)
+    public function __construct(
+        EntityManagerInterface        $entityManager,
+        ChildSearchService            $childSearchService,
+        ChildInBlockService           $childInBlockService)
     {
         $this->em = $entityManager;
         $this->childSearchService = $childSearchService;
