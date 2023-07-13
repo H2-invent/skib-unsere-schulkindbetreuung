@@ -435,7 +435,7 @@ class PrintService
         }
 
 
-        $blockTmp = $this->em->getRepository(Zeitblock::class)->findBy(array('active'=>$schulJahr,'schule'=>$schule));
+        $blockTmp = $this->em->getRepository(Zeitblock::class)->findBy(array('active'=>$schulJahr,'schule'=>$schule),['von'=>'ASC']);
         foreach ($blockTmp as $data) {
             if ($data->getGanztag() == $cat && !$data->getDeleted() && !$data->getDeaktiviert()) {
                 $block['data'][] = $data;
