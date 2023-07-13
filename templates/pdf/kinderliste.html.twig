@@ -19,7 +19,9 @@
         <th>{% trans %}Vorname{% endtrans %}</th>
         <th>{% trans %}Nachname{% endtrans %}</th>
         <th>{% trans %}Notfallkontakt{% endtrans %}</th>
-        <th>{% trans %}Schule{% endtrans %}</th>
+        {% if schulen|length > 1 %}
+            <th>{% trans %}Schule{% endtrans %}</th>
+        {% endif %}
         <th>{% trans %}Klasse{% endtrans %}</th>
         <th>{% trans %}Alleine nach Hause{% endtrans %}</th>
         {% if 0 in wochentag %}
@@ -51,7 +53,9 @@
             <td>{{ k.vorname }}</td>
             <td>{{ k.nachname }}</td>
             <td>{{ eltern.notfallkontakt }}</td>
-            <td>{{ k.schule.name }}</td>
+            {% if schulen|length > 1 %}
+                <td>{{ k.schule.name }}</td>
+            {% endif %}
             <td>{{ k.klasseString }}</td>
             <td>{{ k.alleineHause?'Ja'|trans:'Nein'|trans }}</td>
 

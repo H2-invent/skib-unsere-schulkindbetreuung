@@ -34,6 +34,7 @@ class PrintService
     private $generator;
     private $em;
     private TCPDFController $TCPDFController;
+
     public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, FilesystemOperator $publicUploadsFilesystem, Environment $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag, TCPDFController $TCPDFController)
     {
 
@@ -46,7 +47,7 @@ class PrintService
         $this->TCPDFController = $TCPDFController;
     }
 
-    public function printAnmeldebestaetigung(Kind $kind, Stammdaten $eltern, Stadt $stadt,$fileName, $beruflicheSituation, Organisation $organisation, $type = 'D', $encyption = false)
+    public function printAnmeldebestaetigung(Kind $kind, Stammdaten $eltern, Stadt $stadt, $fileName, $beruflicheSituation, Organisation $organisation, $type = 'D', $encyption = false)
     {
         $pdf = $this->TCPDFController->create();
 
@@ -146,14 +147,16 @@ class PrintService
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }
 
-    public function printElternDetail(Stammdaten $stammdaten,Organisation $organisation){
+    public function printElternDetail(Stammdaten $stammdaten, Organisation $organisation)
+    {
         $pdf = $this->TCPDFController->create();
 
         $pdf = $this->preparePDF($pdf, $this->translator->trans('Änderung der Stammdaten'), $organisation->getName(), $this->translator->trans('Änderung der Stammdaten'), null, $organisation);
-        $pdf->AddPage('H','A4');
-        $pdf = $this->addEltern($stammdaten,$pdf);
-        return $pdf->Output($stammdaten->getVorname().' '.$stammdaten->getName().'.pdf','S');
+        $pdf->AddPage('H', 'A4');
+        $pdf = $this->addEltern($stammdaten, $pdf);
+        return $pdf->Output($stammdaten->getVorname() . ' ' . $stammdaten->getName() . '.pdf', 'S');
     }
+
     public function printChildDetail(Kind $kind, Stammdaten $elter, TCPDFController $tcpdf, $fileName, Organisation $organisation, $type = 'D')
     {
         $pdf = $tcpdf->create();
@@ -186,18 +189,18 @@ class PrintService
     }
 
 
-    public function printChildList($kinder, Organisation $organisation, $text, $fileName, TCPDFController $tcpdf, $wochentag = [0,1,2,3,4], $type = 'I', $stichtag = null)
+    public function printChildList($kinder, Organisation $organisation, $text, $fileName, TCPDFController $tcpdf, $wochentag = [0, 1, 2, 3, 4], $type = 'I', $stichtag = null)
     {
 
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
-        $subject = 'Kinder in Organistaion ' . $organisation->getName();
+        $subject = 'Kinder in der Organisation ' . $organisation->getName();
         $pdf = $this->preparePDF($pdf, $subject, 'test', 'test', null, $organisation);
         $pdf->writeHTMLCell(0,
             0,
             20,
             100,
-        '<h1>'.$subject.'</h1>',
+            '<h1>' . $subject . '</h1>',
             0,
             1,
             0,
@@ -206,7 +209,17 @@ class PrintService
             true
         );
         $pdf->AddPage('L');
-        $kindData = $this->templating->render('pdf/kinderliste.html.twig', array('text' => $text, 'kinder' => $kinder, 'wochentag'=>$wochentag,'stichtag'=>$stichtag));
+        $schulen = [];
+
+        foreach ($kinder as $data) {
+            /**
+             * @Kind $data
+             */
+            if (!in_array($data->getSchule(),$schulen)){
+                $schulen[] = $data->getSchule();
+            }
+        }
+        $kindData = $this->templating->render('pdf/kinderliste.html.twig', array('text' => $text, 'kinder' => $kinder,'schulen'=>$schulen, 'wochentag' => $wochentag, 'stichtag' => $stichtag));
         $pdf->writeHTMLCell(
             0,
             0,
@@ -350,7 +363,7 @@ class PrintService
         return $pdf;
     }
 
-    function printAnmeldeformular(Schule $schule, TCPDFController $tcpdf, $fileName, $beruflicheSituation, $gehaltsklassen, $cat,$schuljahr = null, $type = 'D')
+    function printAnmeldeformular(Schule $schule, TCPDFController $tcpdf, $fileName, $beruflicheSituation, $gehaltsklassen, $cat, $schuljahr = null, $type = 'D')
     {
         $catArr = array(1 => $this->translator->trans('Ganztag'), 2 => $this->translator->trans('Halbtag'));
         $pdf = $tcpdf->create();
@@ -428,11 +441,12 @@ class PrintService
         // hier die Kinderdaten
         $blocks = array();
         $block['type'] = $catArr[$cat];
-        if ($schuljahr){
+        if ($schuljahr) {
             $schulJahr = $schuljahr;
-        }else{
+        } else {
             $schulJahr = $this->em->getRepository(Active::class)->findActiveSchuljahrFromCity($schule->getOrganisation()->getStadt());
         }
+
 
 
         $blockTmp = $this->em->getRepository(Zeitblock::class)->findBy(array('active'=>$schulJahr,'schule'=>$schule),['von'=>'ASC']);
@@ -487,8 +501,8 @@ class PrintService
 
     function generateTimeTable($blocks, $cross = false)
     {
-        if (sizeof($blocks) === 0){
-            return '<tr><td colspan="7"><h3>'.$this->translator->trans('Keine Betreuungszeitblöcke gebucht') .'</h3></td></tr>';
+        if (sizeof($blocks) === 0) {
+            return '<tr><td colspan="7"><h3>' . $this->translator->trans('Keine Betreuungszeitblöcke gebucht') . '</h3></td></tr>';
         }
 
         foreach ($blocks as $data) {
