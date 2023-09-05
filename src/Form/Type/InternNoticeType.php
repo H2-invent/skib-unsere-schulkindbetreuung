@@ -19,7 +19,7 @@ class InternNoticeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('internalNotice', TextareaType::class,['label'=>'Interne Notiz. (Diese Notiz ist auch auf dem PDF zu sehen)','translation_domain' => 'form','attr'=> array('rows' => 6, 'class' => 'onlineEditor'),])
+            ->add('internalNotice', TextareaType::class,['required'=>false, 'label'=>'Interne Notiz. (Diese Notiz ist auch auf dem PDF zu sehen)','translation_domain' => 'form','attr'=> array('rows' => 6, 'class' => 'onlineEditor'),])
             ->add('submit', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
     }

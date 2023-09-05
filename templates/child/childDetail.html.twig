@@ -181,7 +181,7 @@
                                                             {% for z in k.BetreungsblocksReal %}
                                                                 {% if z.deleted == false %}
                                                                     <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }}
-                                                                        - {{ z.bis|date('H:i') }}</li>
+                                                                        - {{ z.bis|date('H:i') }} {% if is_granted('ROLE_PREVIOUS_ADMIN') %}<a href="{{ path('child_admin_remove_block',{'childId':k.id,'blockId':z.id}) }}"><i class="fa fa-trash"></i> </a> {% endif %}</li>
                                                                 {% endif %}
                                                             {% endfor %}
                                                         </ul>

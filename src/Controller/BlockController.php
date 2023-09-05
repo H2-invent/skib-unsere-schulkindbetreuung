@@ -171,7 +171,7 @@ class BlockController extends AbstractController
             $text = $translator->trans('Fehler: Falsche Organisation');
             return new JsonResponse(array('error'=>1,'snack'=>$text));
         }
-        $blocks1 = $this->managerRegistry->getRepository('App:Zeitblock')->findBy(
+        $blocks1 = $this->managerRegistry->getRepository(Zeitblock::class)->findBy(
             array('schule'=>$block->getSchule(),
                 'ganztag'=>$block->getGanztag(),
                 'active'=>$block->getActive(),'deleted'=>false),array('von'=>'ASC'),);

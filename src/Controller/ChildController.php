@@ -292,4 +292,28 @@ class ChildController extends AbstractController
         $session->set('schuljahr_to_add', $active->getId());
         return $response;
     }
+    /**
+     * @Route("/admin/org_child/removeBlock/{childId}/{blockId}", name="child_admin_remove_block")
+     */
+    public function removeBlockByAdmin(Request $request,$childId,$blockId)
+    {
+        $child = $this->entityManager->getRepository(Kind::class)->find($childId);
+        $zeitblock = $this->entityManager->getRepository(Zeitblock::class)->find($blockId);
+        if ($child && $zeitblock){
+            if (in_array($zeitblock,$child->getZeitblocks()->toArray())){
+                $child->removeZeitblock($zeitblock);
+            }
+            if (in_array($zeitblock,$child->getBeworben()->toArray())){
+                $child->removeBeworben($zeitblock);
+            }
+            $this->entityManager->persist($child);
+            $this->entityManager->flush();
+
+            $route = $request->headers->get('referer');
+
+            return $this->redirect($route);
+
+        }
+    }
+
 }
