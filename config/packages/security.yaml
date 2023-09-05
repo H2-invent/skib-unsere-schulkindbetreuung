@@ -45,7 +45,7 @@ security:
         - { path: /register, role: PUBLIC_ACCESS }
         - { path: /resetting, role: PUBLIC_ACCESS }
         - { path: /login/, role: ROLE_USER }
-        - { path: /admin/, role: ROLE_ADMIN }
+        - { path: /admin/, role: [ROLE_ADMIN,ROLE_PREVIOUS_ADMIN] }
         - { path: /city_admin/, role: ROLE_CITY_ADMIN }
         - { path: /city_edit/, role: ROLE_CITY_EDITOR }
         - { path: /city_dashboard/, role: ROLE_CITY_DASHBOARD }
