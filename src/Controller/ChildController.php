@@ -171,6 +171,11 @@ class ChildController extends AbstractController
     {
         set_time_limit(300);
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('organisation'));
+        if (!$this->getUser()){
+            $route = $request->headers->get('referer');
+
+            return $this->redirect($route);
+        }
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
@@ -283,6 +288,11 @@ class ChildController extends AbstractController
     public function addNewChild(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
         $request->getSession()->remove('schuljahr_to_add');
+        if (!$this->getUser()){
+            $route = $request->headers->get('referer');
+
+            return $this->redirect($route);
+        }
         $response = $this->redirectToRoute('workflow_start', array('slug' => $this->getUser()->getOrganisation()->getStadt()->getSlug()));
         $response->headers->clearCookie('KindID');
         $response->headers->clearCookie('SecID');

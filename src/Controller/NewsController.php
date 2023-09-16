@@ -13,6 +13,7 @@ use App\Service\ElternService;
 use App\Service\MailerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -350,7 +351,9 @@ class NewsController extends AbstractController
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $request->get('slug')));
         $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
-
+        if (!$news){
+            throw new NotFoundHttpException('News not found');
+        }
         $title = $news->getTitle() . ' | ' . $news->getStadt()->getName();
         $metaDescription = $news->getMessage();
 

@@ -12,7 +12,9 @@
             <a class="btn btn-primary" href="{{ path('workflow_agb_pdf',{'slug':stadt.slug}) }}"><i class="fa fa-download"></i> {% trans %}Vertragsbedingungen als PDF herunterladen{% endtrans %}</a>
 
         <p>
-            {{ stadtAGB|markdown_to_html }}
+            {% if stadtAGB is not null %}
+             {{ stadtAGB|markdown_to_html }}
+            {% endif %}
         </p>
     </div>
 {% endblock %}
