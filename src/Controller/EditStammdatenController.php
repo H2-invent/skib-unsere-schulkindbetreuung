@@ -95,6 +95,7 @@ class EditStammdatenController extends AbstractController
         }
 
         $stammdaten->setStartDate($nextDate);
+        $stammdaten->setEmailDoubleInput($stammdaten->getEmail());
         $formArr = array('einkommen' => array_flip($stadt->getGehaltsklassen()), 'beruflicheSituation' => $loerrachWorkflowController->beruflicheSituation, 'stadt' => $stadt);
 
         $form = $this->createForm(LoerrachEltern::class, $stammdaten, $formArr);
@@ -125,7 +126,6 @@ class EditStammdatenController extends AbstractController
         if ($form->isSubmitted()) {
             set_time_limit(6000);
             $adresse = $form->getData();
-
             $errors = $validator->validate($adresse, null, ['Default', 'internal']);
 
 
