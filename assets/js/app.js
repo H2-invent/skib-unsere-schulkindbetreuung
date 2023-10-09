@@ -11,6 +11,7 @@ import '../css/app.css';
 import $ from 'jquery';
 
 global.$ = global.jQuery = $;
+
 import Popper from 'popper.js';
 import 'datatables.net-dt';
 
@@ -21,7 +22,6 @@ import niceScroll from 'jquery.nicescroll';
 import trumbowgy from './trumbowyg';
 import icon from 'trumbowyg/dist/ui/icons.svg'
 
-global.$ = global.jQuery = $;
 
 import('jquery-ui/ui/widgets/sortable');
 global.Popper = Popper;
@@ -91,6 +91,20 @@ $(document).ready(function () {
     if ($('.dropzone').length) {
         let myDropzone = new Dropzone(".dropzone");
     }
+
+    if ($('#loerrach_eltern_kinderImKiga').prop('checked')) {
+        $('#kigaOfKids').addClass('show')
+    } else {
+        $('#kigaOfKids').removeClass('show')
+    }
+    $('#loerrach_eltern_kinderImKiga').change(function () {
+        if ($('#loerrach_eltern_kinderImKiga').prop('checked')) {
+            $('#kigaOfKids').addClass('show')
+        } else {
+            $('#kigaOfKids').removeClass('show')
+        }
+    });
+
 
 })
 

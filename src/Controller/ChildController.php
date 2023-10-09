@@ -63,7 +63,7 @@ class ChildController extends AbstractController
     {
 
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
-        if ($organisation != $this->getUser()->getOrganisation()) {
+        if (!$this->getUser() || $organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
         $text = $translator->trans('Kinder betreut vom Träger');
