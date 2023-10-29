@@ -32,12 +32,16 @@ class MailerService
     public function sendEmail($sender, $from, $to, $betreff, $content, $replyTo, $attachment = array())
     {
         $from = $this->parameter->get('confirmEmailSender');
+        if (!$to){
+            return false;
+        }
         $this->sendViaMailer($sender, $to, $betreff, $content, $replyTo, $attachment);
     }
 
     private function sendViaMailer($sender, $to, $betreff, $content, $replyTo, $attachment = array())
     {
         try {
+
             $message = (new Email())
                 ->subject($betreff)
                 ->from(new Address('noreply@unsere-schulkindbetreuung.de', $sender))
