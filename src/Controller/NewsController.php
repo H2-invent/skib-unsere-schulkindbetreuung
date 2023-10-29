@@ -373,6 +373,7 @@ class NewsController extends AbstractController
      */
     public function orgNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
+        set_time_limit(600);
         $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getOrganisation() != $this->getUser()->getOrganisation()) {
@@ -402,7 +403,8 @@ class NewsController extends AbstractController
                     $sendReport[] = $data->getEmail();
                 }
                 foreach ($data->getPersonenberechtigters() as $data2) {
-                    if (!in_array($data2->getEmail(), $sendReport)) {
+                    if ($data2->getEmail() && !in_array($data2->getEmail(), $sendReport)) {
+
                         $mailerService->sendEmail(
                             'Ranzenpost',
                             $news->getOrganisation()->getEmail(),
@@ -411,11 +413,10 @@ class NewsController extends AbstractController
                             $mailContent,
                             $news->getOrganisation()->getEmail());
                         $sendReport[] = $data2->getEmail();
+
                     }
                 }
             }
-
-
         }
 
         $text = $translator->trans('Nachricht versendet');
@@ -432,6 +433,7 @@ class NewsController extends AbstractController
      */
     public function cityNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
+        set_time_limit(600);
         $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
 
         if ($news->getStadt() != $this->getUser()->getStadt()) {
@@ -463,7 +465,7 @@ class NewsController extends AbstractController
                     $sendReport[] = $data->getEmail();
                 }
                 foreach ($data->getPersonenberechtigters() as $data2) {
-                    if (!in_array($data2->getEmail(), $sendReport)) {
+                    if ($data2->getEmail() && !in_array($data2->getEmail(), $sendReport)) {
                         $mailerService->sendEmail(
                             'Ranzenpost',
                             $news->getStadt()->getEmail(),
