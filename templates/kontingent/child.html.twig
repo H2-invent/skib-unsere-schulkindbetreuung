@@ -17,7 +17,16 @@
                         <div class="col-lg-12" id="blockContentContent">
                             <h3>{{ 'Mindest Anzahl'|trans }}: {{ block.min }}</h3>
                             <h3>{{ 'Maximal Anzahl'|trans }}: {{ block.max }}</h3>
-
+                            <label for="fictiveDate">Datum eingeben, für welches die Anzahl der Kinder angezeigt werden
+                                soll:</label>
+                            <input
+                                    id="fictiveDate"
+                                    type="date"
+                                    name="fictiveDate"
+                                    value="{{ fictiveDate|date('Y-m-d') }}"
+                            />
+                            <a href="{{ path('kontingent_show_kids',{'block_id':block.id}) }}" class="btn btn-primary"
+                               id="sendFictiveDate">Auswählen</a>
                             <div class="row">
                                 {% for k in kinder %}
                                     {% set eltern = getEltern(k,k.startDate) %}
@@ -30,13 +39,20 @@
 
 
                                                 <p> {{ 'Startdatum:'|trans }} <b>{{ k.startDate|date('d.m.Y') }}</b>
-                                                <p> {{ 'Erstellt am:'|trans }} <b>{{ k.eltern.createdAt|date('d.m.Y H:i') }}</b>
-                                                <p>Anzahl Kinder zu diesem Zeitpunkt: <b>{{ getChildsOnSpecificTime(block,k.startDate)|length }}</b></p>
+                                                <p> {{ 'Erstellt am:'|trans }}
+                                                    <b>{{ k.eltern.createdAt|date('d.m.Y H:i') }}</b>
+                                                <p>Anzahl Kinder zum Startdatum:
+                                                    <b>{{ getChildsOnSpecificTime(block,k.startDate)|length }}</b></p>
+                                                <p>Anzahl Kinder am {{ fictiveDate|date('d.m.Y') }}:
+                                                    <b>{{ getChildsOnSpecificTime(block,fictiveDate)|length }}</b></p>
                                                 {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
                                                     <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}"
                                                        class="deleteAjaxConfirm"><i class="material-icons">check</i></a>
                                                     <a href="{{ path('kontingent_accept_kid_silent',{'block_id':block.id,'kind_id':k.id}) }}"
-                                                       class="deleteAjaxConfirm" data-title="{{ 'Achtung!!! Keine Bestätigungs E-mail'|trans }}" data-text="{{ 'Dieses Kind zulassen aber KEINE E-Mail versenden.'|trans }}"><i class="material-icons">voice_over_off</i></a>
+                                                       class="deleteAjaxConfirm"
+                                                       data-title="{{ 'Achtung!!! Keine Bestätigungs E-mail'|trans }}"
+                                                       data-text="{{ 'Dieses Kind zulassen aber KEINE E-Mail versenden.'|trans }}"><i
+                                                                class="material-icons">voice_over_off</i></a>
                                                     <a href="{{ path('kontingent_remove_kid',{'block_id':block.id,'kind_id':k.id}) }}"
                                                        class="deleteAjaxConfirm"><i class="material-icons">delete</i>
                                                     </a>
@@ -63,7 +79,9 @@
 
                                                     <a class="btn btn-danger btn-raised btn-sm deleteBtn" type="DELETE"
                                                        href="{{ path('delete_child_delete',{'kind_id':k.id}) }}">{% trans %}Kind entgültig löschen{% endtrans %}</a>
-                                                    <p><small>Hinweis: Dies löscht das gesamte Kind auch aus anderen Betreuungszeitblöcken. Das Kind wird danach nicht mehr im System sein.</small></p>
+                                                    <p><small>Hinweis: Dies löscht das gesamte Kind auch aus anderen
+                                                            Betreuungszeitblöcken. Das Kind wird danach nicht mehr im
+                                                            System sein.</small></p>
 
                                                 {% endif %}
                                             </div>
@@ -157,10 +175,10 @@
             var url = $(this).attr('href');
             var $text = $(this).data('text');
             var $title = $(this).data('title');
-            if ($text){
+            if ($text) {
                 var confirmText = $text
             }
-            if ($title){
+            if ($title) {
                 confirmTitle = $title;
             }
             $.confirm({
@@ -183,6 +201,13 @@
                 }
             });
         });
+        $('#sendFictiveDate').click(function (e) {
+                e.preventDefault();
+                var target = $(this).attr('href') + '&fictiveDate=' + $('#fictiveDate').val();
+                console.log(target);
+                location.href = target;
+            }
+        )
 
     </script>
 {% endblock %}
