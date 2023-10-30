@@ -51,6 +51,7 @@ class KontingentController extends AbstractController
      */
     public function schowAllKids(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
+        $fictiveDate = $request->get('fictiveDate')?new \DateTime($request->get('fictiveDate')):(new \DateTime())->modify('first day of next month');
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
         if ($this->getUser()->getOrganisation() != $block->getSchule()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
@@ -58,7 +59,7 @@ class KontingentController extends AbstractController
 
         $kind = $this->managerRegistry->getRepository(Kind::class)->findBeworbenByZeitblock($block);
 
-        return $this->render('kontingent/child.html.twig', array('text' => $translator->trans('Akzeptieren oder lehnen Sie ein Kind für diesen Block ab'), 'block' => $block, 'kinder' => $kind));
+        return $this->render('kontingent/child.html.twig', array('fictiveDate'=>$fictiveDate,'text' => $translator->trans('Akzeptieren oder lehnen Sie ein Kind für diesen Block ab'), 'block' => $block, 'kinder' => $kind));
 
     }
 
