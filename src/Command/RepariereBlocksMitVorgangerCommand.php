@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'app:RepariereBlocksMitVorganger',
+    name: 'app:repair:vorgangerBlocks',
     description: 'Add a short description for your command',
 )]
 class RepariereBlocksMitVorgangerCommand extends Command
