@@ -33,18 +33,17 @@ class RepariereBlocksMitVorgangerCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('schuljahr', InputArgument::REQUIRED, 'Schuljahr to secure this command')
-            ->addArgument('blocks', InputArgument::REQUIRED, 'Add Blocks in array notation [id1,id2,....]');
+            ->addArgument('schuljahr', InputArgument::REQUIRED, 'Schuljahr to secure this command');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $counter = 0;
         $io = new SymfonyStyle($input, $output);
-        $blocks = json_decode($input->getArgument('blocks'));
         $schuljahr = $this->activeRepository->find($input->getArgument('schuljahr'));
-        foreach ($blocks as $data) {
-            $block = $this->zeitblockRepository->findOneBy(['id' => $data, 'active' => $schuljahr]);
+
+        foreach ($schuljahr->getBlocks() as $data) {
+            $block = $data;
             if ($block) {
                 $io->info(sprintf('We work with block Nr.: %s', $block->getId()));
                 foreach ($block->getVorganger() as $cBlock){
@@ -70,7 +69,6 @@ class RepariereBlocksMitVorgangerCommand extends Command
             }
         }
         $this->entityManager->flush();
-
         $io->success(sprintf('We added %s Child to Blocks', $counter));
 
         return Command::SUCCESS;
