@@ -63,7 +63,9 @@ $('#toggle-btn').on('click', function (e) {
     }
 });
 try {
-    $('table').DataTable({
+    const table = $('table');
+    if (table.find('thead').length > 0) {
+        table.DataTable({
             buttons: [
                 {
                     extend: 'excelHtml5',
@@ -75,11 +77,12 @@ try {
                     }
                 }
             ]
-        }
-    );
+        });
+    }
+
 } catch
     (e) {
-    console.log(e)
+
 }
 
 
