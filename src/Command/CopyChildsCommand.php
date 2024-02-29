@@ -39,7 +39,9 @@ class CopyChildsCommand extends Command
             ->addArgument('target', null, InputOption::VALUE_NONE, 'Schuljahr in welches die Kinder kopiert werden')
             ->addArgument('date', null, InputOption::VALUE_NONE, 'Stichtag, zu welchem die Kinder kopiert werden sollen')
             ->addArgument('schuljahrsMatrix', null, InputOption::VALUE_NONE, 'Wie sollen sich die Schuljahre ändern, wie sollen diese hochgezählt werden')
-            ->addArgument('blockmatrix', null, InputOption::VALUE_NONE, 'Soll die MIedglidschaft in einem BLock zu einem Block im nächsten Shculjahr gemappt werden, kann diese matrix hier angegeben werden {"start_id":["end_id1","end_id2"....]}');
+            ->addArgument('sendEmail', null, InputOption::VALUE_NONE, 'sollen emails an die Eltnern der Kinder gesendet werden? [FALSE/true]')
+            ->addArgument('blockmatrix', null, InputOption::VALUE_OPTIONAL, 'Soll die Mitgliedschaft in einem BLock zu einem Block im nächsten Shculjahr gemappt werden, kann diese matrix hier angegeben werden {"start_id":["end_id1","end_id2"....]}');
+
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -53,9 +55,11 @@ class CopyChildsCommand extends Command
 
         if ($input->getArgument('source')) {
             $sourceActive = $this->em->getRepository(Active::class)->find($input->getArgument('source'));
+            dump($sourceActive->getId());
         }
         if ($input->getArgument('target')) {
             $targetActive = $this->em->getRepository(Active::class)->find($input->getArgument('target'));
+            dump($targetActive->getId());
         }
         if ($sourceActive->getStadt() !== $targetActive->getStadt()) {
             $io->error('Schuljahre passen nicht zur selben Stadt');
@@ -64,6 +68,11 @@ class CopyChildsCommand extends Command
 
         if ($input->getArgument('date')) {
             $stichtag = new \DateTime($input->getArgument('date'));
+            dump($stichtag);
+        }
+        if ($input->getArgument('sendEmail')) {
+            $sendEmail = $input->getArgument('sendEmail')==='true'?true:false;
+            dump($sendEmail);
         }
         if ($stichtag < $sourceActive->getVon() || $stichtag > $sourceActive->getBis()) {
             $io->error('Stichtag liegt außerhalb des Schuljahrs');
@@ -91,7 +100,7 @@ class CopyChildsCommand extends Command
 
         }
 
-        $res = $this->copyChildToNewSchuljahr->copyKinderToSchuljahr($sourceActive, $targetActive, $stichtag, $matrix, $blockMatrix, $output);
+        $res = $this->copyChildToNewSchuljahr->copyKinderToSchuljahr($sourceActive, $targetActive, $stichtag, $matrix, $blockMatrix, $output,$sendEmail);
         if (!$res) {
             $io->error('Target ist nicht mehr leer. Es wurden keine Kinder kopiert');
             return Command::FAILURE;

@@ -6,15 +6,19 @@ namespace App\Service;
 
 use App\Entity\Active;
 use App\Entity\Zeitblock;
+use App\Repository\ZeitblockRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CopySchuljahr
 {
-    private $em;
 
-    public function __construct(EntityManagerInterface $em)
+
+    public function __construct(
+        private ZeitblockRepository $zeitblockRepository,
+        private EntityManagerInterface $em
+    )
     {
-        $this->em = $em;
+
     }
 
     function copyYear(Active $active)
@@ -44,7 +48,20 @@ class CopySchuljahr
 
         }
         $this->em->persist($newYear);
-        $this->em->flush();
 
+        $this->em->flush();
+        $this->addVorganger($newYear);
+
+    }
+    function addVorganger(Active $active){
+        foreach ($active->getBlocks() as $data){
+            foreach ($data->getCloneOf()->getVorganger() as $vorganger){
+                $newVorganger = $this->zeitblockRepository->findOneBy(array('cloneOf'=>$vorganger,'active'=>$active));
+                dump($newVorganger->getId());
+                $data->addVorganger($newVorganger);
+            }
+            $this->em->persist($data);
+        }
+        $this->em->flush();
     }
 }

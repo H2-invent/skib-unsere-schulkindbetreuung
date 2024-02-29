@@ -37,7 +37,7 @@ class CopyChildToNewSchuljahr
         $this->translator = $translator;
     }
 
-    public function copyKinderToSchuljahr(Active $source, Active $target, \DateTime $stichtag, $matrix, $blockmatrix, Output $output): ?Active
+    public function copyKinderToSchuljahr(Active $source, Active $target, \DateTime $stichtag, $matrix, $blockmatrix, Output $output,$sendEmails=false): ?Active
     {
 
 
@@ -65,17 +65,16 @@ class CopyChildToNewSchuljahr
             foreach ($kinder as $kind) {
                 if (isset($matrix[$kind->getKlasse()])) {
                     $neuesSchuljahr = $matrix[$kind->getKlasse()];
+                    $blocks = $kind->getZeitblocks()->toArray();
                     $kindTmp = clone $kind;
                     $kindTmp->setKlasse($neuesSchuljahr);
                     $kindTmp->setStartDate($target->getVon());
                     $kindTmp->setTracing(md5(uniqid()));
-
                     $this->entityManager->persist($kindTmp);
                     foreach ($kindTmp->getZeitblocks() as $oldBlocks) {
-                        $kindTmp->removeZeitblocks($oldBlocks);
+                        $kindTmp->removeZeitblock($oldBlocks);
                     }
-                    foreach ($kind->getZeitblocks() as $block) {
-
+                    foreach ($blocks as $block) {
                         if (isset($blockmatrix[$block->getId()])) {
                             foreach ($blockmatrix[$block->getId()] as $bMat) {
                                 $tmpBlock = $this->entityManager->getRepository(Zeitblock::class)->find($bMat);
@@ -98,7 +97,10 @@ class CopyChildToNewSchuljahr
                     $this->entityManager->persist($kindTmp);
 
                 } else {
-                    $this->sendABmeldeEmail($elternAlt, $kind, $source);
+                    if ($sendEmails){
+                        $this->sendABmeldeEmail($elternAlt, $kind, $source);
+                    }
+
                 }
             }
             if (sizeof($elternNeu->getKinds()) > 0) {
@@ -109,7 +111,10 @@ class CopyChildToNewSchuljahr
                 foreach ($elternNeu->getKinds() as $data2) {
                     $this->entityManager->refresh($elternNeu);
                     $this->entityManager->refresh($data2);
-                    $this->sendAnmedebestaetigung($data2, $elternNeu, $source->getStadt(), $this->translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:'));
+                    if ($sendEmails){
+                        $this->sendAnmedebestaetigung($data2, $elternNeu, $source->getStadt(), $this->translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:'));
+                    }
+
                 }
             }
         }
