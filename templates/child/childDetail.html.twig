@@ -280,7 +280,8 @@
                                                                     {% set tmpKind = kin %}
                                                                 {% endif %}
                                                             {% endfor %}
-                                                            {% set startDate = h.startDate?:h.kinds[0].startDate %}
+
+                                                            {% set startDate = (tmpKind and tmpKind.startDate)?tmpKind.startDate:h.startDate %}
                                                             <li class="list-group-item {% if startDate == oldDate %}strikethrough{% endif %}{% set oldDate = startDate %}">
 
                                                                 <a href="
