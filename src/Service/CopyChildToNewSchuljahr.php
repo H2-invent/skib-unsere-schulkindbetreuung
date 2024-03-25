@@ -89,7 +89,7 @@ class CopyChildToNewSchuljahr
                             }
                         }
                     }
-                    foreach ($kind->getBeworben() as $beworben) {
+                    foreach ($kinderTmp->getBeworben() as $beworben) {
                         $kindTmp->removeBeworben($beworben);
                     }
                     $kindTmp->setEltern($elternNeu);
