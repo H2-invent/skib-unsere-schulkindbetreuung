@@ -2773,9 +2773,9 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <source>Super Admin ernennen</source>
         <target>Super Admin ernennen</target>
       </trans-unit>
-      <trans-unit id="SzFeSH9" resname="Das Passswort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (01.01.2010)">
-        <source>Das Passswort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (01.01.2010)</source>
-        <target>Das Passswort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (01.01.2010)</target>
+      <trans-unit id="SzFeSH9" resname="Das Passwort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (01.01.2010)">
+        <source>Das Passwort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (01.01.2010)</source>
+        <target>Das Passwort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (01.01.2010)</target>
       </trans-unit>
       <trans-unit id="fnI_ZTF" resname="Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.">
         <source>Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.

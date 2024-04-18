@@ -32,9 +32,33 @@ class HistoryService
 //        }
 
 //        $historydate = array_unique($historydate, SORT_REGULAR);
+        foreach ($history as $key => $data) {
+
+            // Überprüfen, ob getCreatedAt() ein leeres Array zurückgibt
+            if (!$history[$key]->getCreatedAt() && sizeof($history[$key]->getKinds()->toArray()) === 0) {
+
+                unset($history[$key]);
+                continue;
+            }
+        }
+
+// Optional: Zurücksetzen der Schlüsselindizes
+        $history = array_values($history);
+
+//        foreach ($history as $data){
+//            dump($data);
+//            dump($data->getKinds()->toArray());
+//        }
+
         usort($history, function (Stammdaten $a, Stammdaten $b) {
-            $aDate = $a->getStartDate() ?: $a->getKinds()[0]->getStartDate();
-            $bDate = $b->getStartDate() ?: $b->getKinds()[0]->getStartDate();
+
+            try {
+                $aDate = $a->getStartDate() ?: $a->getKinds()[0]->getStartDate();
+                $bDate = $b->getStartDate() ?: $b->getKinds()[0]->getStartDate();
+            }catch (\Exception $exception){
+//                dump($a->getKinds()->toArray());
+            }
+
             if ($aDate == $bDate) {
                 return $a->getCreatedAt() > $b->getCreatedAt() ? -1 : 1;
             }
