@@ -45,10 +45,7 @@ class HistoryService
 // Optional: Zurücksetzen der Schlüsselindizes
         $history = array_values($history);
 
-//        foreach ($history as $data){
-//            dump($data);
-//            dump($data->getKinds()->toArray());
-//        }
+
 
         usort($history, function (Stammdaten $a, Stammdaten $b) {
 
@@ -56,7 +53,7 @@ class HistoryService
                 $aDate = $a->getStartDate() ?: $a->getKinds()[0]->getStartDate();
                 $bDate = $b->getStartDate() ?: $b->getKinds()[0]->getStartDate();
             }catch (\Exception $exception){
-//                dump($a->getKinds()->toArray());
+
             }
 
             if ($aDate == $bDate) {
