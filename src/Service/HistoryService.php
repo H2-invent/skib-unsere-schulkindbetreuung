@@ -45,7 +45,6 @@ class HistoryService
 // Optional: Zurücksetzen der Schlüsselindizes
         $history = array_values($history);
 
-dump($history);
 
         usort($history, function (Stammdaten $a, Stammdaten $b) {
 
