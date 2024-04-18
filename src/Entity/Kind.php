@@ -13,6 +13,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\KindRepository")
+ * @ORM\Table(
+ *       indexes={
+ *           @ORM\Index(name="idx_tracing", columns={"tracing"}),
+ *       }
+ *   )
  */
 class Kind
 {
@@ -151,7 +156,7 @@ class Kind
     private $history = 0;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $tracing;
 
