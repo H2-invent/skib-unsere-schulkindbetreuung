@@ -35,7 +35,7 @@ class HistoryService
         foreach ($history as $key => $data) {
 
             // Überprüfen, ob getCreatedAt() ein leeres Array zurückgibt
-            if (!$history[$key]->getCreatedAt() && sizeof($history[$key]->getKinds()->toArray()) === 0) {
+            if (!$history[$key]->getCreatedAt() || (!$history[$key]->getStartDate() && sizeof($history[$key]->getKinds()->toArray()) === 0)) {
 
                 unset($history[$key]);
                 continue;
@@ -45,7 +45,7 @@ class HistoryService
 // Optional: Zurücksetzen der Schlüsselindizes
         $history = array_values($history);
 
-
+dump($history);
 
         usort($history, function (Stammdaten $a, Stammdaten $b) {
 
