@@ -1,0 +1,35 @@
+<div class="card">
+    <div class="card-header">
+        <h2>{% trans %}Geschwister{% endtrans %}</h2>
+    </div>
+    <div class="card-body">
+        {% if form.geschwisters is defined %}
+            {% for gesch in form.geschwisters %}
+                <div class="mb-5">
+                    <h3 class="mb-2">Geschwisterkind {{ loop.index }}</h3>
+                    {{ form_row(gesch.vorname) }}
+                    {{ form_row(gesch.nachname) }}
+                    {{ form_row(gesch.geburtsdatum) }}
+                </div>
+            {% endfor %}
+        {% else %}
+        -
+        {% endif %}
+    </div>
+</div>
+{% if form.geschwisters is defined %}
+    <div class="geschwisterHolder"
+         data-index="{{ form.geschwisters|length }}"
+         data-prototype='
+            <div class="mb-5 mt-2">
+                <h3 class="mb-2">Geschwisterkind hinzufügen</h3>
+                {{ form_row(form.geschwisters.vars.prototype.vorname)|e('html_attr') }}
+                {{ form_row(form.geschwisters.vars.prototype.nachname)|e('html_attr') }}
+                {{ form_row(form.geschwisters.vars.prototype.geburtsdatum)|e('html_attr') }}
+            </div>'>
+    </div>
+{% endif %}
+<button type="button"
+        class="add_item_link btn btn-light btn-sm add_item_link mt-3"
+        data-collection-holder-class="geschwisterHolder">+ {{ 'Geschwisterkind hinzufügen'|trans }}
+</button>

@@ -2,42 +2,34 @@
 
 {% block content %}
     <section class="dashboard-counts section-padding">
-        <div class="container-fluid ">
+        <div class="container-fluid">
             <div class="row">
-                <!-- Count item widget-->
-                <div class=" col-12 card">
-                    <ul class="list-group">
-                        <li class="list-group-item"><h2>App Verbindung: </h2><img
-                                    src="{{ qr_code_path(absolute_url(path('connect_User',{'appToken':user.appToken}))|makeHttps,'default') }}"/>
-                        </li>
+                <div class="col-12 card">
+                    <div class="card-header">
+                        <h1>App Verbindung</h1>
+                    </div>
+                    <div class="card-body">
+                        <img src="{{ qr_code_path(absolute_url(path('connect_User',{'appToken':user.appToken}))|makeHttps,'default') }}"/>
                         {% if user.appSettingsSaved == true %}
-                        <li class="list-group-item">
-                                <h3>Gerät verbunden:</h3>
-                        </li>
-                            <li class="list-group-item">
-                                Gerät:&nbsp;<b>{{ user.appDevice }}</b>
-                            </li>
-                        <li class="list-group-item">
-                            OS:&nbsp;<b>{{ user.appOS }}</b>
-                        </li>
-                        <li class="list-group-item">
-                            IMEI:&nbsp;<b>{{ user.AppImei }}</b>
-                        </li>
+                            <h3>Gerät verbunden</h3>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    Gerät:&nbsp;<b>{{ user.appDevice }}</b>
+                                </li>
+                                <li class="list-group-item">
+                                    OS:&nbsp;<b>{{ user.appOS }}</b>
+                                </li>
+                                <li class="list-group-item">
+                                    IMEI:&nbsp;<b>{{ user.AppImei }}</b>
+                                </li>
+                            </ul>
                         {% endif %}
-                        <li class="list-group-item">
-                            <a href="{{ path('connection_app_disconnect') }}"
-                               class="btn btn-primary">{{ 'Verbindung zu der App trennen'|trans }}</a>
-                        </li>
-                    </ul>
+                        <div class="mt-4">
+                            <a href="{{ path('connection_app_disconnect') }}" class="btn btn-primary">{{ 'Verbindung zu der App trennen'|trans }}</a>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-
-        </div>
-
-        </div>
-        </div>
         </div>
     </section>
-
 {% endblock %}

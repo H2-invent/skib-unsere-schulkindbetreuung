@@ -6,47 +6,41 @@
     </button>
 </div>
 <div class="modal-body">
-
     {{ form_start(form, {
         'attr': {
             'class':'ajaxForm'
         }
     }) }}
     {{ form_errors(form) }}
-<div class="row">
-    <div class="col-md-6">
-        {{ form_row(form.von) }}
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form.von) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.bis) }}
+        </div>
     </div>
-    <div class="col-md-6">
-        {{ form_row(form.bis) }}
-    </div>
-</div>
-
-
-
     {% if form.ganztag is defined %}
-  {{ form_row(form.ganztag) }}
+        {{ form_row(form.ganztag) }}
     {% endif %}
     {% if form.min is defined %}
-    {{ form_row(form.min) }}
+        {{ form_row(form.min) }}
     {% endif %}
     {% if form.max is defined %}
-    {{ form_row(form.max) }}
+        {{ form_row(form.max) }}
     {% endif %}
-{% if form.preise is defined %}
-       {{ form_row(form.preise) }}
-{% endif %}
-
+    {% if form.preise is defined %}
+        {{ form_row(form.preise) }}
+    {% endif %}
     {% if form.hidePrice is defined %}
         {{ form_row(form.hidePrice) }}
     {% endif %}
-
     {{ a2lixTranslations.partialTranslations(form.translations, ['extraText']) }}
     <button type="submit" class="btn btn-primary">{% trans %}Speichern{% endtrans %}</button>
     {{ form_end(form) }}
 </div>
 <script>
-  $('.ajaxForm').submit(function(e) {
+    $('.ajaxForm').submit(function(e) {
       e.preventDefault();
       var $form = $(e.currentTarget);
       $.ajax({
@@ -59,11 +53,5 @@
               $('#blockContent').load(LoadContentUrl)
           }
       });
-  })
-
-
+    })
 </script>
-<div class="modal-footer">
-
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %}Schließen{% endtrans %}</button>
-</div>

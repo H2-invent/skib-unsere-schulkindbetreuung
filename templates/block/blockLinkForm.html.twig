@@ -11,13 +11,10 @@
         }
     }) }}
     {{ form_errors(form) }}
-
     {{ form_row(form.vorganger) }}
-
-
     <button type="submit" class="btn btn-primary">{% trans %}Speichern{% endtrans %}</button>
+    <a class="btn btn-danger" type="DELETE"  href="{{ path('block_schule_linkBlock_remove',{'block_id':block.id}) }}">{{ 'Löschen'|trans }}</a>
     {{ form_end(form) }}
-    <a class="btn btn-primary deleteBtn" type="DELETE"  href="{{ path('block_schule_linkBlock_remove',{'block_id':block.id}) }}">{{ 'Löschen'|trans }}</a>
 </div>
 <script>
     $('.ajaxForm').submit(function (e) {
@@ -34,13 +31,7 @@
             }
         });
     });
-
     $(function () {
         $("select").attr("size", $("select option").length + 5);
     });
-
 </script>
-<div class="modal-footer">
-
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %}Schließen{% endtrans %}</button>
-</div>

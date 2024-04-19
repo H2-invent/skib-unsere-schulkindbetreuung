@@ -1,31 +1,31 @@
 {% extends 'adminBase.html.twig' %}
 {% block content %}
     <section class="dashboard-counts section-padding">
-        <div class="container-fluid ">
+        <div class="container-fluid">
             <div class="row">
-                <!-- Count item widget-->
-                <div class=" col-12 card">
+                <div class="col-12 card">
                     <div class="card-header">
-                        <h1>{{ k.vorname }} {{ k.nachname }}<a
-                                    href="{{ path('child_detail_print',{'kind_id':k.id,'date':date|date('d.m.Y')}) }}"
-                                    class="ml-2"><i
-                                        class="material-icons">print</i></a>
-                            {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
-                                <a
-                                        href="{{ path('child_change_seccode',{'kind_id':k.id}) }}"><i
-                                            class="material-icons">edit</i></a>
-                            {% endif %}
-                        </h1>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="cover-heading">{{ 'Daten des Erziehungsberechtigten'|trans }} <small>(Gültig
-                                    ab: {{ eltern.startDate|date('d.m.Y') }})</small></h2>
+                        <div class="row">
+                            <div class="col">
+                                <h1>{{ k.vorname }} {{ k.nachname }}</h1>
+                            </div>
+                            <div class="col text-right">
+                                <a href="{{ path('child_detail_print',{'kind_id':k.id,'date':date|date('d.m.Y')}) }}"
+                                   class="btn btn-primary">Drucken</a>
+                                {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                                    <a href="{{ path('child_change_seccode',{'kind_id':k.id}) }}"
+                                       class="btn btn-primary">Bearbeiten</a>
+                                {% endif %}
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <tbody>
-
+                    </div>
+                    <div class="card-body">
+                        <h2>
+                            {{ 'Daten des Erziehungsberechtigten'|trans }}
+                            <small>(Gültig ab: {{ eltern.startDate|date('d.m.Y') }})</small>
+                        </h2>
+                        <table class="table table-data">
+                            <tbody>
                                 <tr>
                                     <td>{% trans %} Name des Erziehungsberechtigten {% endtrans %} </td>
                                     <td>{{ eltern.vorname }} {{ eltern.name }}</td>
@@ -42,16 +42,11 @@
                                     <td>{% trans %} Adresse des Erziehungsberechtigten {% endtrans %}</td>
                                     <td>{{ eltern.strasse }}<br>{{ eltern.plz }} {{ eltern.stadt }}</td>
                                 </tr>
-
                                 <tr>
-
                                     <td>{% trans %} Berufliche Situation des Erziehungsberechtigten {% endtrans %}</td>
                                     <td>{{ beruflicheSituation[eltern.beruflicheSituation] }}</td>
                                 </tr>
-
                                 {% include 'widget/__elternTabelle_reduced.html.twig' with {'stadt':k.schule.stadt,'eltern':eltern} %}
-
-
                                 <tr>
                                     <td>{% trans %} Name und Beziehung des Notfallkontakt {% endtrans %}</td>
                                     <td>{{ eltern.notfallName }}</td>
@@ -64,263 +59,202 @@
                                     <td>{% trans %} Weitere abholberechtigte Personen {% endtrans %}</td>
                                     <td>{{ eltern.abholberechtigter }}</td>
                                 </tr>
-
                                 <tr>
                                     <td>{% trans %} Erstellt am: {% endtrans %}</td>
                                     <td>{{ eltern.createdAt|date('d.m.Y H:i') }}</td>
                                 </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Daten der Kinder in einer for Schleife -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="cover-heading">{{ 'Daten des Kindes'|trans }} <small>(beginnt
-                                    ab: {{ k.startDate|date('d.m.Y') }})</small></h2>
-                        </div>
-                        <div class="text-left" id="accordion">
-
-                            <div class="card">
-                                <div class="card-header" id="heading0">
-                                    <h5 class="mb-0">
-
-                                        {{ k.vorname }} {{ k.nachname }}
-
-
-                                    </h5>
-                                </div>
-
-                                <div id="collapse0" aria-labelledby="heading0" data-parent="#accordion">
-                                    <div class="card-body">
-                                        <table class="table">
-                                            <tbody>
-                                            <tr>
-                                                <td>{% trans %} Vorname {% endtrans %}</td>
-                                                <td>{{ k.vorname }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %} Nachname {% endtrans %}</td>
-                                                <td>{{ k.nachname }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %} Geburtstag {% endtrans %}</td>
-                                                <td>{{ k.geburtstag|date('d.m.Y') }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %} Schule {% endtrans %}</td>
-                                                <td>{{ k.schule.name }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %} Klasse {% endtrans %}</td>
-                                                <td>{{ k.klasseString }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %} Allergien {% endtrans %}</td>
-                                                <td>{{ k.allergie }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %} Medikamente {% endtrans %}</td>
-                                                <td>{{ k.medikamente }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %}Mein Kind ist gegen Masern geimpft / bereits immun{% endtrans %}</td>
-                                                <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %} Mein Kind ist glutenintolerant {% endtrans %}</td>
-                                                <td>{{ k.gluten?"Ja"|trans:'Nein'|trans }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %} Mein Kind ist laktoseintolerant {% endtrans %}</td>
-                                                <td>{{ k.laktose?"Ja"|trans:'Nein'|trans }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %} Mein Kind isst kein Schweinefleisch {% endtrans %}</td>
-                                                <td>{{ k.schweinefleisch?"Ja"|trans:'Nein'|trans }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %}Mein Kind ernährt sich vegetarisch{% endtrans %}</td>
-                                                <td>{{ k.vegetarisch?"Ja"|trans:'Nein'|trans }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %} Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause {% endtrans %}</td>
-                                                <td>{{ k.alleineHause?"Ja"|trans:'Nein'|trans }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %} Mein Kind darf an Ausflügen teilnehmen {% endtrans %}</td>
-                                                <td>{{ k.ausfluege?"Ja"|trans:'Nein'|trans }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %} Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden {% endtrans %}</td>
-                                                <td>{{ k.sonnencreme?"Ja"|trans:'Nein'|trans }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %}Betreuer dürfen bei meinem Kind Zecken entfernen{% endtrans %}</td>
-                                                <td>{{ k.zeckenEntfernen?"Ja"|trans:'Nein'|trans }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{% trans %}Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.{% endtrans %}</td>
-                                                <td>{{ k.fotos?"Ja"|trans:'Nein'|trans }}</td>
-                                            </tr>
-
-                                            {% if k.betreungsblocksReal|length > 0 %}
-                                                <tr>
-                                                    <td>{% trans %} Bemerkung {% endtrans %}</td>
-                                                    <td>{{ k.bemerkung }}</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>
-                                                        {% trans %} Gebuchte Betreuungszeitfenster {% endtrans %}
-                                                    </td>
-
-                                                    <td>
-                                                        <ul class="list-group">
-                                                            {% for z in k.BetreungsblocksReal %}
-                                                                {% if z.deleted == false %}
-                                                                    <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }}
-                                                                        - {{ z.bis|date('H:i') }} {% if is_granted('ROLE_PREVIOUS_ADMIN') %}<a href="{{ path('child_admin_remove_block',{'childId':k.id,'blockId':z.id}) }}"><i class="fa fa-trash"></i> </a> {% endif %}</li>
-                                                                {% endif %}
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-
-                                                {% if app.user and is_granted('ROLE_ORG_SEE_PRICE') %}
-                                                    <tr>
-                                                        <td>
-                                                            {% trans %} Preis pro Monat {% endtrans %}
-                                                        </td>
-
-                                                        <td>
-                                                            {{ getPreisforBetreuungWithoutBeworben(k,date)|number_format(2,',','.') }}
-                                                            €
-                                                        </td>
-                                                    </tr>
-                                                {% endif %}
+                            </tbody>
+                        </table>
+                        <h2>
+                            {{ 'Daten des Kindes'|trans }}
+                            <small>(beginnt ab: {{ k.startDate|date('d.m.Y') }})</small>
+                        </h2>
+                        <h3>{{ k.vorname }} {{ k.nachname }}</h3>
+                        <table class="table table-data">
+                            <tbody>
+                                <tr>
+                                    <td>{% trans %} Vorname {% endtrans %}</td>
+                                    <td>{{ k.vorname }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Nachname {% endtrans %}</td>
+                                    <td>{{ k.nachname }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Geburtstag {% endtrans %}</td>
+                                    <td>{{ k.geburtstag|date('d.m.Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Schule {% endtrans %}</td>
+                                    <td>{{ k.schule.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Klasse {% endtrans %}</td>
+                                    <td>{{ k.klasseString }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Allergien {% endtrans %}</td>
+                                    <td>{{ k.allergie }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Medikamente {% endtrans %}</td>
+                                    <td>{{ k.medikamente }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Mein Kind ist gegen Masern geimpft / bereits immun{% endtrans %}</td>
+                                    <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Mein Kind ist glutenintolerant {% endtrans %}</td>
+                                    <td>{{ k.gluten?"Ja"|trans:'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Mein Kind ist laktoseintolerant {% endtrans %}</td>
+                                    <td>{{ k.laktose?"Ja"|trans:'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Mein Kind isst kein Schweinefleisch {% endtrans %}</td>
+                                    <td>{{ k.schweinefleisch?"Ja"|trans:'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Mein Kind ernährt sich vegetarisch{% endtrans %}</td>
+                                    <td>{{ k.vegetarisch?"Ja"|trans:'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause {% endtrans %}</td>
+                                    <td>{{ k.alleineHause?"Ja"|trans:'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Mein Kind darf an Ausflügen teilnehmen {% endtrans %}</td>
+                                    <td>{{ k.ausfluege?"Ja"|trans:'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden {% endtrans %}</td>
+                                    <td>{{ k.sonnencreme?"Ja"|trans:'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Betreuer dürfen bei meinem Kind Zecken entfernen{% endtrans %}</td>
+                                    <td>{{ k.zeckenEntfernen?"Ja"|trans:'Nein'|trans }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.{% endtrans %}</td>
+                                    <td>{{ k.fotos?"Ja"|trans:'Nein'|trans }}</td>
+                                </tr>
+                                {% if k.betreungsblocksReal|length > 0 %}
+                                    <tr>
+                                        <td>{% trans %} Bemerkung {% endtrans %}</td>
+                                        <td>{{ k.bemerkung }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{% trans %} Gebuchte Betreuungszeitfenster {% endtrans %}</td>
+                                        <td>
+                                            <ul class="list-group">
+                                                {% for z in k.BetreungsblocksReal %}
+                                                    {% if z.deleted == false %}
+                                                        <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }}
+                                                            - {{ z.bis|date('H:i') }} {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                                                                <a
+                                                                        href="{{ path('child_admin_remove_block',{'childId':k.id,'blockId':z.id}) }}">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </a> {% endif %}</li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    {% if app.user and is_granted('ROLE_ORG_SEE_PRICE') %}
+                                        <tr>
+                                            <td>{% trans %} Preis pro Monat {% endtrans %}</td>
+                                            <td>{{ getPreisforBetreuungWithoutBeworben(k,date)|number_format(2,',','.') }} €</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endif %}
+                                <tr>
+                                    <td>{% trans %} Startet ab{% endtrans %}</td>
+                                    <td>{{ k.startDate|date('d.m.Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %} Erstellt am{% endtrans %}</td>
+                                    <td>{{ k.eltern.createdAt|date('d.m.Y H:i') }}</td>
+                                </tr>
+                                {% if k.betreungsblocksRealKontingent|length > 0 %}
+                                    <tr>
+                                        <td>{% trans %} Angemeldete Betreuungsblöcke {% endtrans %}</td>
+                                        <td>
+                                            <ul class="list-group">
+                                                {% for z in k.betreungsblocksRealKontingent %}
+                                                    <li class="list-group-item">
+                                                        {{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                <tr>
+                                    <td>{% trans %} Gebuchte Mittagessen {% endtrans %}</td>
+                                    <td>
+                                        <ul class="list-group">
+                                            {% for z in k.MittagessenblocksReal %}
+                                                <li class="list-group-item">{{ z.WochentagString }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                </tr>
+                                {% if app.user is not null %}
+                                    <tr>
+                                        <td colspan="2">
+                                            {% if app.user is not null and  is_granted('ROLE_ORG_EDIT_NOTICE') %}
+                                                {{ form_start(formInternalNotice) }}
+                                                {{ form_rest(formInternalNotice) }}
+                                                {{ form_end(formInternalNotice) }}
+                                            {% elseif app.user is not null and is_granted('ROLE_ORG_VIEW_NOTICE') %}
+                                                <h3>{{ 'Notizen'|trans }}</h3>
+                                                {{ k.internalNotice|raw }}
                                             {% endif %}
-                                            <tr>
-                                                <td>
-                                                    {% trans %} Startet ab{% endtrans %}
-                                                </td>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                            <h2>{% trans %} Historie{% endtrans %}</h2>
+                            <ul class="list-group">
+                                {% set oldDate = null %}
+                                {% for h in his %}
 
-                                                <td>
-                                                    {{ k.startDate|date('d.m.Y') }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    {% trans %} Erstellt am{% endtrans %}
-                                                </td>
+                                    {% set tmpKind = null %}
+                                    {% for kin in h.kinds %}
+                                        {% if kin.tracing == k.tracing %}
+                                            {% set tmpKind = kin %}
+                                        {% endif %}
+                                    {% endfor %}
 
-                                                <td>
-                                                    {{ k.eltern.createdAt|date('d.m.Y H:i') }}
-                                                </td>
-                                            </tr>
-                                            {% if k.betreungsblocksRealKontingent|length > 0 %}
-                                                <tr>
-                                                    <td>
-                                                        {% trans %} Angemeldete Betreuungsblöcke {% endtrans %}
-                                                    </td>
+                                    {% set startDate = (tmpKind and tmpKind.startDate)?tmpKind.startDate:h.startDate %}
+                                    <li class="list-group-item {% if startDate == oldDate %}strikethrough{% endif %}{% set oldDate = startDate %}">
 
-                                                    <td>
-                                                        <ul class="list-group">
-                                                            {% for z in k.betreungsblocksRealKontingent %}
-                                                                <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }}
-                                                                    - {{ z.bis|date('H:i') }}</li>
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                            {% endif %}
-                                            <tr>
-                                                <td>
-                                                    {% trans %} Gebuchte Mittagessen {% endtrans %}
-                                                </td>
+                                        <a href="
+                                                        {% if tmpKind is defined and tmpKind is not null %}
 
-                                                <td>
-                                                    <ul class="list-group">
-                                                        {% for z in k.MittagessenblocksReal %}
-                                                            <li class="list-group-item">{{ z.WochentagString }}</li>
-                                                        {% endfor %}
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            {% if app.user is not null %}
-                                                <tr>
-                                                    <td>
-                                                        {% if app.user is not null and  is_granted('ROLE_ORG_EDIT_NOTICE') %}
-                                                            {{ form_start(formInternalNotice) }}
-
-                                                            {{ form_rest(formInternalNotice) }}
-                                                            {{ form_end(formInternalNotice) }}
-                                                        {% elseif app.user is not null and is_granted('ROLE_ORG_VIEW_NOTICE') %}
-                                                            <h3>{{ 'Notizen'|trans }}</h3>
-                                                            {{ k.internalNotice|raw }}
+                                                        {{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':tmpKind.id,'date':startDate|date('Y-m-d')}) }}
+                                                        {% else %}
+                                                          {{ path('child_detail',{'kind_id':k.id,'date':startDate|date('Y-m-d')}) }}
                                                         {% endif %}
-                                                    </td>
-                                                </tr>
-                                            {% endif %}
-                                            <tr>
-                                                <td colspan="2"><h3>{% trans %} Historie{% endtrans %}</h3></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-
-
-                                                    <ul class="list-group">
-                                                        {% set oldDate = null %}
-                                                        {% for h in his %}
-
-                                                            {% set tmpKind = null %}
-                                                            {% for kin in h.kinds %}
-                                                                {% if kin.tracing == k.tracing %}
-                                                                    {% set tmpKind = kin %}
-                                                                {% endif %}
-                                                            {% endfor %}
-
-                                                            {% set startDate = (tmpKind and tmpKind.startDate)?tmpKind.startDate:h.startDate %}
-                                                            <li class="list-group-item {% if startDate == oldDate %}strikethrough{% endif %}{% set oldDate = startDate %}">
-
-                                                                <a href="
-                                                                {% if tmpKind is defined and tmpKind is not null %}
-
-                                                                {{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':tmpKind.id,'date':startDate|date('Y-m-d')}) }}
-                                                                {% else %}
-                                                                  {{ path('child_detail',{'kind_id':k.id,'date':startDate|date('Y-m-d')}) }}
-                                                                {% endif %}
 
 ">
-{#                                                                    {% if k == h %}#}
+                                            {#                                                                    {% if k == h %} #}
 
-{#                                                                        <i class="fa fa-arrow-right mr-2"></i>#}
-{#                                                                    {% endif %}#}
-                                                                    Änderung tritt in
-                                                                    Kraft: {{ startDate|date('d.m.Y') }}
-                                                                    ({{ h.createdAt|date('d.m.Y H:i') }})
-                                                                </a>
-                                                            </li>
-
-                                                        {% endfor %}
-
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                            {#                                                                        <i class="fa fa-arrow-right mr-2"></i> #}
+                                            {#                                                                    {% endif %} #}
+                                            Änderung tritt in
+                                            Kraft: {{ startDate|date('d.m.Y') }}
+                                            ({{ h.createdAt|date('d.m.Y H:i') }})
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
                     </div>
-                </div>
-                <div class="col-12 card">
                 </div>
             </div>
         </div>
     </section>
-
-
 {% endblock %}

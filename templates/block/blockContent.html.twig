@@ -1,83 +1,28 @@
-<div class="row">
-    <div class="col-md-2 text-center">
-        <h5 class="card-title text-center">{% trans %}Montag{% endtrans %}</h5>
-        {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
-        <a  href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':0}) }}" class="loadContent"><button type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
-                <i class="material-icons">add</i>
-            </button></a>
-        {% endif %}
-
-        {% if blocks[0] is defined %}
-            {% include 'block/blockCard.html.twig' with {'blocks': blocks[0]} %}
-        {% endif %}
-    </div>
-    <div class="col-md-2 text-center">
-        <h5 class="card-title">{% trans %}Dienstag{% endtrans %}</h5>
-        {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
-        <a  href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':1}) }}" class="loadContent"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
-                <i class="material-icons">add</i>
-            </button></a>
-        {% endif %}
-        {% if blocks[1] is defined %}
-            {% include 'block/blockCard.html.twig' with {'blocks': blocks[1]} %}
-        {% endif %}
-    </div>
-    <div class="col-md-2 text-center">
-        <h5 class="card-title">{% trans %}Mittwoch{% endtrans %}</h5>
-        {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
-        <a  href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':2}) }}" class="loadContent"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
-                <i class="material-icons">add</i>
-            </button></a>
-        {% endif %}
-        {% if blocks[2] is defined %}
-            {% include 'block/blockCard.html.twig' with {'blocks': blocks[2]} %}
-        {% endif %}
-    </div>
-    <div class="col-md-2 text-center">
-        <h5 class="card-title">{% trans %}Donnerstag{% endtrans %}</h5>
-        {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
-        <a  href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':3}) }}" class="loadContent"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
-                <i class="material-icons">add</i>
-            </button></a>
-        {% endif %}
-        {% if blocks[3] is defined %}
-            {% include 'block/blockCard.html.twig' with {'blocks': blocks[3]} %}
-        {% endif %}
-    </div>
-    <div class="col-md-2 text-center">
-        <h5 class="card-title">{% trans %}Freitag{% endtrans %}</h5>
-        {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
-        <a href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':4}) }}" class="loadContent"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
-                <i class="material-icons">add</i>
-            </button></a>
-        {% endif %}
-        {% if blocks[4] is defined %}
-            {% include 'block/blockCard.html.twig' with {'blocks': blocks[4]} %}
-        {% endif %}
-    </div>
-
-    <div class="col-md-1 text-center">
-        <h5 class="card-title">{% trans %}Samstag{% endtrans %}</h5>
-        {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
-        <a href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':5}) }}" class="loadContent"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
-                <i class="material-icons">add</i>
-            </button></a>
-        {% endif %}
-        {% if blocks[5] is defined %}
-            {% include 'block/blockCard.html.twig' with {'blocks': blocks[5]} %}
-        {% endif %}
-    </div>
-    <div class="col-md-1 text-center">
-        <h5 class="card-title">{% trans %}Sonntag{% endtrans %}</h5>
-        {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
-        <a href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':6}) }}" class="loadContent"><button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
-                <i class="material-icons">add</i>
-            </button></a>
-        {% endif %}
-        {% if blocks[6] is defined %}
-            {% include 'block/blockCard.html.twig' with {'blocks': blocks[6]} %}
-        {% endif %}
-    </div>
-</div>
-
-
+<table class="table table-stundenplan">
+    <thead>
+        <tr>
+            <th>{% trans %}Montag{% endtrans %}</th>
+            <th>{% trans %}Dienstag{% endtrans %}</th>
+            <th>{% trans %}Mittwoch{% endtrans %}</th>
+            <th>{% trans %}Donnerstag{% endtrans %}</th>
+            <th>{% trans %}Freitag{% endtrans %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {% for i in 0..4 %}
+                <td class="text-center">
+                    {% if blocks[i] is defined %}
+                        {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
+                            <div class="mb-3">
+                                <a href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':i}) }}"
+                                   class="loadContent btn btn-sm btn-success" style="line-height: 1;"><i class="material-icons" style="font-size: 16px;">add</i></a>
+                            </div>
+                        {% endif %}
+                        {% include 'block/blockCard.html.twig' with {'blocks': blocks[i]} %}
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+    </tbody>
+</table>

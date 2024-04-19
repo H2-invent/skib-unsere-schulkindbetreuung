@@ -1,70 +1,56 @@
 {% if blocks is defined %}
     {% for b in blocks %}
         <div class="card">
-            <div class="card-body text-center {% if b.deleted == true %}bg-danger collapse{% endif %}"
-                 id="deletedCollape-{{ b.id }}">
+            <div class="card-body text-center {% if b.deleted == true %}bg-danger collapse{% endif %}" id="deletedCollape-{{ b.id }}">
+                <div class="data">
+                    <h5 class="mb-3">
+                        {{ b.ganztagString }}{% if b.ganztag == 0 %}<i class="material-icons">restaurant</i>{% endif %}
+                    </h5>
+                    {% if b.deaktiviert %}
+                        <div class="disabled">{{ 'Dieser Block ist nicht mehr buchbar'|trans }}</div>
+                        <hr>
+                    {% endif %}
+                    <p class="mb-2 date">{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</p>
+                    <p class="mb-2 kids">{{ getChildsOnSpecificTimeCached(b) }}</p>
+                    {% if b.vorganger|length %}
+                        <p>Vorgänger:
+                            {% for l in b.vorganger %}
+                                <br>{{ l.wochentagString }} {{ l.von|date('H:i') }} - {{ l.bis|date('H:i') }}
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                </div>
+
                 {% if getAnzahlBeworbenKids(b)|length > 0 %}
+                    <hr>
+                    <b>{% trans %}Noch nicht zugelassene Kinder{% endtrans %}:</b>
                     <span class="badge badge-danger">{{ getAnzahlBeworbenKids(b)|length }}</span>
                 {% endif %}
-                {% if b.deaktiviert %}
-                    <div class="disabled">{{ 'Dieser Block ist nicht mehr buchbar'|trans }}</div>
+
+                <div class="data">
+                    {% if b.min is not null and b.max is not null %}
+                        <hr>
+                        <p>
+                            {% trans %}Min{% endtrans %}: {{ b.min }}<br>
+                            {% trans %}Max{% endtrans %}: {{ b.max }}
+                        </p>
+                    {% endif %}
                     <hr>
-                {% endif %}
-                <p>
-                    {{ b.ganztagString }}{% if b.ganztag == 0 %}<i class="material-icons">restaurant</i> {% endif %}
-
-                </p>
-                {% if b.min is not null or b.max is not null %}
-                    <small>
-                        {{ 'Kontingent'|trans }}
-                    </small>
-                {% endif %}
-                <p>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</p>
-                {% if b.vorganger is not empty %}
-                    <ul class="list-group">
-                        <li class="list-group-item">Vorgänger:</li>
-                        {% for l in b.vorganger %}
-                            <li class="list-group-item">{{ l.wochentagString }} {{ l.von|date('H:i') }}
-                                -{{ l.bis|date('H:i') }}</li>
+                    <p>
+                        {% trans %}Preise{% endtrans %}:
+                        {% for p in b.preise %}
+                            <br>{{ p|number_format(2,',') }}€
                         {% endfor %}
-                    </ul>
-                {% endif %}
-                <p>
-                    <a class="btn btn-primary" data-toggle="collapse" href="#collapse{{ b.id }}" role="button"
-                       aria-expanded="false" aria-controls="collapseExample">
-                        {% trans %}Detail{% endtrans %}
-                    </a>
-
-                </p>
-                <div class="collapse" id="collapse{{ b.id }}">
-                    <div class="card card-body">
-                        <p>{% trans %}Kinder{% endtrans %}: {{ getChildsOnSpecificTimeCached(b) }}</p>
-                        {% if b.min is not null and b.max is not null %}
-                            <p>{% trans %}Min{% endtrans %}: {{ b.min }}</p>
-                            <p>{% trans %}Max{% endtrans %}: {{ b.max }}</p>
-                            {% if getAnzahlBeworbenKids(b)|length >0 %}
-                                <b>{% trans %}Noch nicht zugelassene Kinder{% endtrans %}:</b>
-                                {{ getAnzahlBeworbenKids(b)|length }}
-                            {% endif %}
-                        {% endif %}
-                        <p>{% trans %}Preise{% endtrans %}:</p>
-                        <ul class="list-group">
-                            {% for p in b.preise %}
-                                <li class="list-group-item">{{ p|number_format(2,',') }}€</li>{% endfor %}
-                        </ul>
-
-                    </div>
+                    </p>
                 </div>
+
                 {% if b.deleted == true and  is_granted('ROLE_ORG_BLOCK_DELETE') %}
-
                     <a href="{{ path('block_schule_restoreBlocks',{'id':b.id}) }}" class="deleteBtn" type="GET"
-                       successFKT="reloadBlocks"><i
-                                class="material-icons">restore_from_trash</i></a>
-
+                       successFKT="reloadBlocks"><i class="material-icons">restore_from_trash</i></a>
                 {% endif %}
             </div>
-            <div class="bmd-card-actions text-center">
 
+            <div class="bmd-card-actions text-center">
                 {% if b.deleted == false %}
                     <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
@@ -112,11 +98,6 @@
                             </a>
                         {% endif %}
                     </div>
-
-
-
-
-
                 {% else %}
                     <a data-toggle="collapse" href="#deletedCollape-{{ b.id }}" role="button" aria-expanded="false"
                        aria-controls="collapseExample"> {% trans %}gelöscht{% endtrans %}

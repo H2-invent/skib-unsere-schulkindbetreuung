@@ -20,18 +20,6 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 
-
-    <style>
-        .background {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background-image: url({% if app.user.stadt is defined and app.user.stadt is not null %}{{ vich_uploader_asset(app.user.stadt,'imageFile') }}{% else %}{{ asset('images/background.jpg') }}{% endif %});
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center top;
-        }
-    </style>
     {% block style %}
     {% endblock %}
 
@@ -52,24 +40,25 @@
         </div>
         <!-- Sidebar Navigation Menus-->
         <div class="main-menu">
-
             <ul id="side-main-menu" class="side-menu list-unstyled">
-                <li><a href="{{ path('dashboard') }}"><i
-                                class="material-icons">dashboard</i>{% trans %}Dashboard{% endtrans %}</a></li>
                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                    <li>
-                        <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">{% trans %}Original Account{% endtrans %}</a>
+                    <li class="mb-3">
+                        <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}" style="font-size: 12px;">
+                            <i class="material-icons">keyboard_return</i>
+                            {% trans %}Original Account{% endtrans %}</a>
                     </li>
                 {% endif %}
+                <li><a href="{{ path('dashboard') }}"{{ isActiveNav('dashboard') ? ' class="active"' }}><i
+                                class="material-icons">dashboard</i>{% trans %}Dashboard{% endtrans %}</a></li>
                 {% if is_granted('ROLE_ADMIN') %}
                     <h5 class="sidenav-heading">{% trans %}Admin{% endtrans %}</h5>
-                    <li><a href="{{ path('admin_stadt') }}"> <i
+                    <li><a href="{{ path('admin_stadt') }}"{{ isActiveNav('admin_stadt') ? ' class="active"' }}> <i
                                     class="material-icons">home</i>{% trans %}Städte{% endtrans %}</a></li>
-                    <li><a href="{{ path('admin_showAllUser') }}"><i
+                    <li><a href="{{ path('admin_showAllUser') }}"{{ isActiveNav('admin_showAllUser') ? ' class="active"' }}><i
                                     class="material-icons">people</i>{% trans %}Alle User{% endtrans %}</a></li>
-                    <li><a href="{{ path('content_show') }}"><i
+                    <li><a href="{{ path('content_show') }}"{{ isActiveNav('content_show') ? ' class="active"' }}><i
                                     class="material-icons">inbox</i>{% trans %}Frontpage Content{% endtrans %}</a></li>
-                    <li><a href="{{ path('admin_mailgun_index') }}"><i
+                    <li><a href="{{ path('admin_mailgun_index') }}"{{ isActiveNav('admin_mailgun_index') ? ' class="active"' }}><i
                                     class="material-icons">inbox</i>{% trans %}Mailgun{% endtrans %}</a></li>
 
                 {% endif %}
@@ -98,18 +87,22 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_CITY_NEWS') %}
-                    <li><a href="{{ path('city_admin_news_anzeige',{'id':app.user.stadt.id}) }}"> <i
+                    <li><a href="{{ path('city_admin_news_anzeige',{'id':app.user.stadt.id}) }}"
+                                {{ isActiveNav('city_admin_news_anzeige') ? ' class="active"' }}> <i
                                     class="material-icons">chat</i>{% trans %}Neuigkeiten{% endtrans %}</a></li>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_ADMIN') %}
-                    <li><a href="{{ path('city_admin_organisation_detail',{'id':app.user.organisation.id}) }}"> <i
+                    <li><a href="{{ path('city_admin_organisation_detail',{'id':app.user.organisation.id}) }}"
+                                {{ isActiveNav('city_admin_organisation_detail') ? ' class="active"' }}> <i
                                     class="material-icons">home</i> {% trans %}Organisation{% endtrans %}</a></li>
-                    <li><a href="{{ path('city_employee_org_show',{'id':app.user.organisation.id}) }}"> <i
+                    <li><a href="{{ path('city_employee_org_show',{'id':app.user.organisation.id}) }}"
+                                {{ isActiveNav('city_employee_org_show') ? ' class="active"' }}> <i
                                     class="material-icons">people</i> {% trans %}Mitarbeiter{% endtrans %}</a>
                     </li>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_NEWS') %}
-                    <li><a href="{{ path('org_news_anzeige',{'id':app.user.organisation.id}) }}"> <i
+                    <li><a href="{{ path('org_news_anzeige',{'id':app.user.organisation.id}) }}"
+                                {{ isActiveNav('org_news_anzeige') ? ' class="active"' }}> <i
                                     class="material-icons">chat</i>{% trans %}Neuigkeiten{% endtrans %}</a></li>
                 {% endif %}
 
@@ -132,15 +125,18 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
-                    <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"> <i
+                    <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"
+                                {{ isActiveNav('block_schulen_schow') ? ' class="active"' }}> <i
                                     class="material-icons">school</i> {% trans %}Meine Schulen{% endtrans %}
                         </a></li>
-                    <li><a href="{{ path('child_show',{'id':app.user.organisation.id}) }}"> <i
+                    <li><a href="{{ path('child_show',{'id':app.user.organisation.id}) }}"
+                                {{ isActiveNav('child_show') ? ' class="active"' }}> <i
                                     class="material-icons">people</i> {% trans %}Angemeldete Kinder{% endtrans %}
                         </a></li>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_CHECKIN_SHOW') %}
-                    <li><a href="{{ path('orgCheckin_how_all_kids',{'id':app.user.organisation.id}) }}"> <i
+                    <li><a href="{{ path('orgCheckin_how_all_kids',{'id':app.user.organisation.id}) }}"
+                                {{ isActiveNav('orgCheckin_how_all_kids') ? ' class="active"' }}> <i
                                     class="material-icons">people</i> {% trans %}Anwesende Kinder{% endtrans %}
                         </a></li>
 
@@ -192,57 +188,31 @@
 
                 {% if is_granted('ROLE_ORG_ACCOUNTING') %}
                     <h5 class="sidenav-heading">Buchhaltung</h5>
-                    <li><a href="{{ path('accounting_overview',{'id':app.user.organisation.id}) }}"> <i
+                    <li><a href="{{ path('accounting_overview',{'id':app.user.organisation.id}) }}"
+                                {{ isActiveNav('accounting_overview') ? ' class="active"' }}> <i
                                     class="material-icons">attach_money</i> {% trans %}SEPA Übersicht{% endtrans %}</a>
                     </li>
-                    <li><a href="{{ path('accounting_showdata',{'id':app.user.organisation.id}) }}"> <i
+                    <li><a href="{{ path('accounting_showdata',{'id':app.user.organisation.id}) }}"
+                                {{ isActiveNav('accounting_showdata') ? ' class="active"' }}> <i
                                     class="material-icons">assignment</i> {% trans %}Stammdaten{% endtrans %}</a></li>
                 {% endif %}
 
 
                 <h5 class="sidenav-heading">{% trans %}Einstellungen{% endtrans %}</h5>
                 <li><a href="{{ path('connect_keycloak_password') }}"> <i
-                                class="icon-home"></i>{% trans %}Passwort ändern{% endtrans %}</a>
+                                class="material-icons" style="width: 14px;">lock_reset</i>{% trans %}Passwort ändern{% endtrans %}</a>
                 </li>
                 {% if is_granted('ROLE_ORG_CHECKIN_SHOW') %}
-                    <li><a href="{{ path('connection_app_start') }}"> <i
+                    <li><a href="{{ path('connection_app_start') }}"
+                                {{ isActiveNav('connection_app_start') ? ' class="active"' }}> <i
                                     class="material-icons">link</i> {% trans %}App Verbindung{% endtrans %}
                         </a></li>
 
                 {% endif %}
 
-                {% if is_granted('ROLE_ADMIN') %}
-                <h5 class="sidenav-heading">Main</h5>
-                <li><a href="index.html"> <i class="icon-home"></i>Home </a></li>
-                <li><a href="forms.html"> <i class="icon-form"></i>Forms </a></li>
-                <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
-                <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
-                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
-                                class="icon-interface-windows"></i>Example dropdown </a>
-                    <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                        <li><a href="#">Page</a></li>
-                        <li><a href="#">Page</a></li>
-                        <li><a href="#">Page</a></li>
-                    </ul>
-                </li>
-                <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>
-                <li><a href="#"> <i class="icon-mail"></i>Demo
-                        <div class="badge badge-warning">6 New</div>
-                    </a></li>
+
             </ul>
         </div>
-        <div class="admin-menu">
-            <h5 class="sidenav-heading">Second menu</h5>
-            <ul id="side-admin-menu" class="side-menu list-unstyled">
-                <li><a href="#"> <i class="icon-screen"> </i>Demo</a></li>
-                <li><a href="#"> <i class="icon-flask"> </i>Demo
-                        <div class="badge badge-info">Special</div>
-                    </a></li>
-                <li><a href=""> <i class="icon-flask"> </i>Demo</a></li>
-                <li><a href=""> <i class="icon-picture"> </i>Demo</a></li>
-            </ul>
-        </div>
-        {% endif %}
     </div>
 </nav>
 <div class="page">
@@ -254,15 +224,14 @@
         <nav class="navbar">
             <div class="container-fluid">
                 <div class="navbar-holder d-flex align-items-center justify-content-between">
-                    <div class="navbar-header"><a id="toggle-btn" href="#" class="btn menu-btn"><i
-                                    class="material-icons">menu</i></a><a href="{{ path('dashboard') }}"
-                                                                          class="navbar-brand">
+                    <div class="navbar-header">
+{#                        <a id="toggle-btn" href="#" class="btn menu-btn"><i class="material-icons">menu</i></a>#}
+                        <a href="{{ path('dashboard') }}" class="navbar-brand">
                             <div class="brand-text d-none d-md-inline-block">
-                                <strong class="text-primary">
-                                    unsere-schulkindbetreuung
-                                </strong>
+                                Unsere Schulkindbetreuung
                             </div>
-                        </a></div>
+                        </a>
+                    </div>
                     <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
 
                         <!-- Languages dropdown    -->
@@ -774,9 +743,9 @@
     {% endblock %}
     <div class="modal fade" id="loadContentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
          aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-
+                Loading ...
             </div>
         </div>
     </div>
@@ -805,22 +774,21 @@
     </div>
     <!-- Modal -->
 
-    <footer class="main-footer">
+    {# <footer class="main-footer">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-
                     <p>SKB &copy; {{ 'now'|date('Y') }}</p>
                 </div>
                 <div class="col-sm-6 text-right">
-
-                    <p><a href="https://book.h2-invent.com/books/skib/page/versionen-und-changelog">
-                            v{{ laf_version }}</a></p>
+                    <p>
+                        <a href="https://book.h2-invent.com/books/skib/page/versionen-und-changelog">v{{ laf_version }}</a>
+                    </p>
                     <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions and it helps me to run Bootstrapious. Thank you for understanding :)-->
                 </div>
             </div>
         </div>
-    </footer>
+    </footer> #}
 </div>
 
 

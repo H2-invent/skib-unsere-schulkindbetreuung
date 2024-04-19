@@ -33,19 +33,7 @@ $('.dropdown-item').click(function () {
             break;
 
     }
-    $('#childTable').html('<div id="childTableSimulation">\n' +
-        '                                <div class="center">\n' +
-        '                                    <div class="wave"></div>\n' +
-        '                                    <div class="wave"></div>\n' +
-        '                                    <div class="wave"></div>\n' +
-        '                                    <div class="wave"></div>\n' +
-        '                                    <div class="wave"></div>\n' +
-        '                                    <div class="wave"></div>\n' +
-        '                                    <div class="wave"></div>\n' +
-        '                                    <div class="wave"></div>\n' +
-        '                                    <div class="wave"></div>\n' +
-        '                                    <div class="wave"></div>\n' +
-        '                                </div>    ')
+    $('#childTable').html('<div id="childTableSimulation"><div class="center">Loading ...</div></div>')
     $('#childTable').load(searchUrl, search);
 });
 

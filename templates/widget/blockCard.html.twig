@@ -1,26 +1,26 @@
 {% if blocks is defined %}
     {% for b in blocks %}
         <div class="card">
-            <div class="card-body text-center {% if b.deleted == true %}bg-danger{% endif %}">
-                <p>
+            <div class="card-body data text-center {% if b.deleted == true %}bg-danger{% endif %}">
+                <h5 class="mb-3">
                     {{ b.schule.name }}
                     <br>
                     {{ b.ganztagString }}
-                </p>
-
-                <p>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</p>
-
-                    <p>{% trans %}Kinder{% endtrans %}: {{ getChildsOnSpecificTimeCached(b) }}</p>
+                </h5>
+                <p class="mb-2 date">{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</p>
+                <p class="mb-2 kids">{{ getChildsOnSpecificTimeCached(b) }}</p>
             </div>
-
             <div class="bmd-card-actions text-center">
                 {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
-                    <a href="{{ path('child_show',{'id':b.schule.organisation.id,'block':b.id}) }}"><i class="material-icons">info</i></a>
+                    <a href="{{ path('child_show',{'id':b.schule.organisation.id,'block':b.id}) }}">
+                        <i class="material-icons">info</i>
+                    </a>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_CHECKIN_SHOW') %}
-                    <a href="{{ path('orgCheckin_how_block_kids',{'id':b.schule.organisation.id,'block_id':b.id}) }}"><i class="material-icons">how_to_reg</i></a>
+                    <a href="{{ path('orgCheckin_how_block_kids',{'id':b.schule.organisation.id,'block_id':b.id}) }}">
+                        <i class="material-icons">how_to_reg</i>
+                    </a>
                 {% endif %}
-
             </div>
         </div>
     {% endfor %}
