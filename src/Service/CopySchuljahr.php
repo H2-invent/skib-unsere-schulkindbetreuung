@@ -57,7 +57,7 @@ class CopySchuljahr
         foreach ($active->getBlocks() as $data){
             foreach ($data->getCloneOf()->getVorganger() as $vorganger){
                 $newVorganger = $this->zeitblockRepository->findOneBy(array('cloneOf'=>$vorganger,'active'=>$active));
-                dump($newVorganger->getId());
+
                 $data->addVorganger($newVorganger);
             }
             $this->em->persist($data);

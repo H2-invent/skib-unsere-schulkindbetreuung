@@ -14,6 +14,12 @@ use Symfony\Component\Validator\GroupSequenceProviderInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StammdatenRepository")
+ * @ORM\Table(
+ *      indexes={
+ *          @ORM\Index(name="idx_tracing", columns={"tracing"}),
+ *          @ORM\Index(name="idx_tracing_of_last_year", columns={"tracing_of_last_year"})
+ *      }
+ *  )
  * @Assert\GroupSequenceProvider()
  */
 class Stammdaten implements GroupSequenceProviderInterface
@@ -209,7 +215,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     private $history = 0;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $tracing;
 
@@ -290,7 +296,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     private $startDate;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $tracingOfLastYear;
 

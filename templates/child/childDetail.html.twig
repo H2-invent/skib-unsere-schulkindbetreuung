@@ -228,33 +228,41 @@
                                             {% set tmpKind = kin %}
                                         {% endif %}
                                     {% endfor %}
-
-                                    {% set startDate = (tmpKind and tmpKind.startDate)?tmpKind.startDate:h.startDate %}
+                                    {% set startDate = h.startDate?h.startDate:h.kinds[0].startDate %}
                                     <li class="list-group-item {% if startDate == oldDate %}strikethrough{% endif %}{% set oldDate = startDate %}">
-
                                         <a href="
-                                                        {% if tmpKind is defined and tmpKind is not null %}
-
-                                                        {{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':tmpKind.id,'date':startDate|date('Y-m-d')}) }}
-                                                        {% else %}
-                                                          {{ path('child_detail',{'kind_id':k.id,'date':startDate|date('Y-m-d')}) }}
-                                                        {% endif %}
+                                                                {% if tmpKind is defined and tmpKind is not null %}
+                                                                {{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':tmpKind.id,'date':startDate|date('Y-m-d')}) }}
+                                                                {% else %}
+                                                                  {{ path('child_detail',{'kind_id':k.id,'date':startDate|date('Y-m-d')}) }}
+                                                                {% endif %}
 
 ">
-                                            {#                                                                    {% if k == h %} #}
-
-                                            {#                                                                        <i class="fa fa-arrow-right mr-2"></i> #}
-                                            {#                                                                    {% endif %} #}
+                                                                                                        {% endif %}#}
                                             Änderung tritt in
                                             Kraft: {{ startDate|date('d.m.Y') }}
                                             ({{ h.createdAt|date('d.m.Y H:i') }})
                                         </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
+                                                            </li>
+
+                                                        {% endfor %}
+
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="col-12 card">
                 </div>
             </div>
         </div>
     </section>
+
+
 {% endblock %}

@@ -55,11 +55,11 @@ class CopyChildsCommand extends Command
 
         if ($input->getArgument('source')) {
             $sourceActive = $this->em->getRepository(Active::class)->find($input->getArgument('source'));
-            dump($sourceActive->getId());
+
         }
         if ($input->getArgument('target')) {
             $targetActive = $this->em->getRepository(Active::class)->find($input->getArgument('target'));
-            dump($targetActive->getId());
+
         }
         if ($sourceActive->getStadt() !== $targetActive->getStadt()) {
             $io->error('Schuljahre passen nicht zur selben Stadt');
@@ -68,11 +68,11 @@ class CopyChildsCommand extends Command
 
         if ($input->getArgument('date')) {
             $stichtag = new \DateTime($input->getArgument('date'));
-            dump($stichtag);
+
         }
         if ($input->getArgument('sendEmail')) {
             $sendEmail = $input->getArgument('sendEmail')==='true'?true:false;
-            dump($sendEmail);
+
         }
         if ($stichtag < $sourceActive->getVon() || $stichtag > $sourceActive->getBis()) {
             $io->error('Stichtag liegt außerhalb des Schuljahrs');
