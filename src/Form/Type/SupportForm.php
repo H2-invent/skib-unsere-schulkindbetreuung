@@ -35,7 +35,7 @@ class SupportForm extends AbstractType
             ->add('phone', TextType::class, ['required' => true, 'label' => 'Telefonnummer', 'translation_domain' => 'form'])
             ->add('subject', TextType::class, ['required' => true, 'label' => 'Betreff', 'translation_domain' => 'form'])
             ->add('message', TextareaType::class, ['attr'=>array('class'=>'onlineEditor','rows'=>10),'required' => true, 'label' => 'Nachricht', 'translation_domain' => 'form'])
-            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'Speichern', 'translation_domain' => 'form']);
+            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-primary'), 'label' => 'Speichern', 'translation_domain' => 'form']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

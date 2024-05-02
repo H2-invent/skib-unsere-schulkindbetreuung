@@ -32,7 +32,7 @@ class customerIDStammdatenType extends AbstractType
 
         $builder
             ->add('kundennummer', TextType::class, ['required' => true, 'label' => 'Kundennummer', 'translation_domain' => 'form'])
-            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form']);
+            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-primary'), 'label' => 'weiter', 'translation_domain' => 'form']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

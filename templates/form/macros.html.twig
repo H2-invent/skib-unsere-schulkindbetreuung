@@ -5,7 +5,6 @@
         <ul class="a2lix_translationsLocales nav nav-tabs" role="tablist">
             {% for translationsFields in form %}
                 {% set locale = translationsFields.vars.name %}
-
                 <li class="nav-item">
                     <a href="#{{ translationsFields.vars.id }}{{ rand }}_a2lix_translations-fields" class="nav-link {% if app.request.locale == locale %}active{% endif %}" data-toggle="tab" role="tab">
                         {{ translationsFields.vars.label|default(locale|humanize)|trans }}
@@ -15,12 +14,9 @@
                 </li>
             {% endfor %}
         </ul>
-<div class="card z-depth-1">
-    <div class="card-body">
-        <div class="a2lix_translationsFields tab-content ">
+        <div class="a2lix_translationsFields tab-content">
             {% for translationsFields in form %}
                 {% set locale = translationsFields.vars.name %}
-
                 <div id="{{ translationsFields.vars.id }}{{ rand }}_a2lix_translations-fields" class="tab-pane {% if app.request.locale == locale %}show active{% endif %} {% if not form.vars.valid %}sonata-ba-field-error{% endif %}" role="tabpanel">
                     {% for translationsField in translationsFields|filter(translationsField => translationsField.vars.name in fieldsNames) %}
                         {{ form_row(translationsField) }}
@@ -28,8 +24,5 @@
                 </div>
             {% endfor %}
         </div>
-    </div>
-</div>
-
     </div>
 {% endmacro %}

@@ -4,19 +4,22 @@
     <section class="dashboard-counts section-padding">
         <div class="container-fluid ">
             <div class="row">
-                <!-- Count item widget-->
                 <div class=" col-12 card">
                     <div class="card-header">
-                        <h1> {{ 'Buchhaltung'|trans }}
-                        </h1>
+                        <div class="row">
+                            <div class="col">
+                                <h1>{{ 'Buchhaltung'|trans }}</h1>
+                            </div>
+                            <div class="col text-right">
+                                <button type="button" data-toggle="modal" data-target="#newSepa" class="btn btn-success">
+                                    {{ 'SEPA Lastschrift erstellen'|trans }}
+                                </button>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
                     <div class="card-body">
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <button type="button" data-toggle="modal" data-target="#newSepa"
-                                        class="btn btn-raised btn-primary">{{ 'SEPA Lastschrift erstellen'|trans }}</button>
-                            </div>
+                        <div>
                             <div class="modal fade" id="newSepa" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -29,13 +32,13 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-
                                             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     {{ form_label(form.von) }}
                                                     {{ form_widget(form.von.day,{'attr':{'class':'d-none ' }}) }}
-                                                    <div class="d-flex">Monat: {{ form_widget(form.von.month) }} Jahr: {{ form_widget(form.von.year) }}</div>
+                                                    {{ form_row(form.von.month) }}
+                                                    {{ form_row(form.von.year) }}
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -48,15 +51,11 @@
                                                     {{ form_row(form.save) }}
                                                 </div>
                                             </div>
-
                                             {{ form_end(form) }}
-
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">{{ 'Schließen'|trans }}</button>
-
-                                        </div>
+                                        {#<div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-dismiss="modal">{{ 'Schließen'|trans }}</button>
+                                        </div>#}
                                     </div>
                                 </div>
                             </div>
@@ -64,8 +63,6 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="table-responsive">
-
-
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>

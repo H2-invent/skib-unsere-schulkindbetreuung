@@ -4,22 +4,27 @@
 <section class="dashboard-counts section-padding">
     <div class="container-fluid ">
         <div class="row">
-            <!-- Count item widget-->
-            <div class=" col-12 card">
+            <div class="col-12 card">
                 <div class="card-header">
-                  <h1> {{ organisation.name }}<a href="{{ path('city_admin_organisation_edit',{'id':organisation.id}) }}"> <button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
-                              <i class="material-icons">edit</i>
-                          </button></a></h1>
+                    <div class="row">
+                        <div class="col">
+                            <h1>{{ organisation.name }}</h1>
+                        </div>
+                        <div class="col text-right">
+                            <a href="{{ path('city_admin_organisation_edit',{'id':organisation.id}) }}" class="btn btn-light">
+                                {% trans %}Bearbeiten{% endtrans %}
+                            </a>
+                        </div>
+                    </div>
                 </div>
-               <div class="card-header">
+               <div class="card-body">
                    <div class="row">
                        <div class="col-md-6">
-
                            {% if organisation.image is not null %}
-                           <img src="{{ vich_uploader_asset(organisation,'imageFile')|imagine_filter('my_cards')|makeHttps}}" class="img-thumbnail">
+                                <img src="{{ vich_uploader_asset(organisation,'imageFile')|imagine_filter('my_cards')|makeHttps}}" class="img-thumbnail">
                            {% endif %}
                        </div>
-                       <div class=" col-md-6">
+                       <div class="col-md-6">
                            <ul class="list-group">
                                <li class="list-group-item">
                                    <h2>{% trans %}Adresse{% endtrans %}:</h2>
@@ -27,7 +32,6 @@
                                    {{ organisation.adresszusatz }},
                                    {{ organisation.plz }} {{ organisation.ort }}
                                </li>
-
                                <li class="list-group-item"><h2>{% trans %} Schulen{% endtrans %}: </h2> {% for s in organisation.schule %} {% if is_granted('ROLE_ORG_SHOOL') %}<a href="{{ path('city_admin_schule_detail',{'id':s.id}) }}"> {{ s.name }}, </a>{% else %}{{ s.name }}{% endif %}{% endfor %}</li>
                                <li class="list-group-item"><h2>{% trans %}Telefon{% endtrans %}: </h2>{{ organisation.telefon }}</li>
                                <li class="list-group-item"><h2>{% trans %}Email{% endtrans %}: </h2>{{ organisation.email }}</li>
@@ -36,14 +40,10 @@
                                <li class="list-group-item"><h2>App Verbindung: </h2><img src="{{ qr_code_path(absolute_url(path('connect_Org',{'orgID':organisation.id}))|makeHttps,'default') }}" /></li>
                             </ul>
                        </div>
-
                    </div>
-
                </div>
-
             </div>
         </div>
     </div>
 </section>
-
 {% endblock %}

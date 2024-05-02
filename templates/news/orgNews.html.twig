@@ -4,91 +4,96 @@
     <section class="dashboard-counts section-padding">
         <div class="container-fluid ">
             <div class="row">
-                <!-- Count item widget-->
-                <div class=" col-12 card">
+                <div class="col-12 card">
                     <div class="card-header">
-                        <h1> {% trans %}Neuigkeiten{% endtrans %} <a
-                                    href="{{ path('org_news_neu',{'id':org.id}) }}">
-                                <button href="#" type="button" class="btn  bmd-btn-fab bmd-btn-fab-sm">
-                                    <i class="material-icons">add</i>
-                                </button>
-                            </a></h1>
+                        <div class="row">
+                            <div class="col">
+                                <h1>{% trans %}Neuigkeiten{% endtrans %}</h1>
+                            </div>
+                            <div class="col text-right">
+                                <a href="{{ path('org_news_neu',{'id':org.id}) }}" class="btn btn-success">
+                                    {% trans %}Ranzenpost erstellen{% endtrans %}
+                                </a>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>{% trans %}Titel{% endtrans %}</th>
-
-                                <th>{% trans %}Schule{% endtrans %}</th>
-                                <th>{% trans %}Datum{% endtrans %}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for n in news %}
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
                                 <tr>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="material-icons">more_vert</i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-                                                <a class="dropdown-item"
-                                                   href="{{ path('org_news_edit',{'id':n.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
-                                                <a class="dropdown-item"
-                                                   href="{{ path('org_news_delete',{'id':n.id}) }}">{% trans %}Löschen{% endtrans %}</a>
-                                                {% if n.schule is not empty %}
-                                                <a class="dropdown-item"
-                                                   href="{{ path('org_news_send',{'id':n.id}) }}">{% trans %}Per Email versenden{% endtrans %}</a>
-                                                    <a class="dropdown-item" data-toggle="modal"
-                                                       data-target="#sendReport{{ n.id }}"
-                                                       href="{{ path('city_news_send',{'id':n.id}) }}">{% trans %}E-Mail Report{% endtrans %}</a>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>{{ n.title }}</td>
+                                    <th></th>
+                                    <th>{% trans %}Titel{% endtrans %}</th>
 
-                                    <td>{% for s in n.schule %}{{ s.name }}<br>{% endfor %}</td>
-                                    <td>{{ n.createdDate|date("d.m.Y G:i") }}</td>
+                                    <th>{% trans %}Schule{% endtrans %}</th>
+                                    <th>{% trans %}Datum{% endtrans %}</th>
                                 </tr>
-                                <div class="modal fade" id="sendReport{{ n.id }}" tabindex="-1" role="dialog"
-                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title"
-                                                    id="exampleModalLabel">{{ 'Diese Ranzenpost wurde an nachfolge E-Mailadressen versendet'|trans }}</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
+                                </thead>
+                                <tbody>
+                                {% for n in news %}
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                    <i class="material-icons">more_vert</i>
                                                 </button>
+                                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('org_news_edit',{'id':n.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('org_news_delete',{'id':n.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                                    {% if n.schule is not empty %}
+                                                        <a class="dropdown-item"
+                                                           href="{{ path('org_news_send',{'id':n.id}) }}">{% trans %}Per Email versenden{% endtrans %}</a>
+                                                        <a class="dropdown-item" data-toggle="modal"
+                                                           data-target="#sendReport{{ n.id }}"
+                                                           href="{{ path('city_news_send',{'id':n.id}) }}">{% trans %}E-Mail Report{% endtrans %}</a>
+                                                    {% endif %}
+                                                </div>
                                             </div>
-                                            <div class="modal-body">
-                                                <ul class="list-group">
-                                                    {% for r in n.sendHistory %}
-                                                        <li class="list-group-item">{{r}}</li>
-                                                    {% endfor %}
-                                                </ul>
+                                        </td>
+                                        <td>{{ n.title }}</td>
 
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">{{ 'Schließen'|trans }}</button>
+                                        <td>{% for s in n.schule %}{{ s.name }}<br>{% endfor %}</td>
+                                        <td>{{ n.createdDate|date("d.m.Y G:i") }}</td>
+                                    </tr>
+                                    <div class="modal fade" id="sendReport{{ n.id }}" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        id="exampleModalLabel">{{ 'Diese Ranzenpost wurde an nachfolge E-Mailadressen versendet'|trans }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="list-group">
+                                                        {% for r in n.sendHistory %}
+                                                            <li class="list-group-item">{{ r }}</li>
+                                                        {% endfor %}
+                                                    </ul>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">{{ 'Schließen'|trans }}</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </section>
-
 {% endblock %}

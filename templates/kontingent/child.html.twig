@@ -1,159 +1,166 @@
 {% extends 'adminBase.html.twig' %}
 
 {% block content %}
-
     <section class="dashboard-counts section-padding">
         <div class="container-fluid ">
             <div class="row">
-                <!-- Count item widget-->
-                <div class=" col-12 card">
+                <div class="col-12 card">
                     <div class="card-header">
-                        <h1> {{ text }}
-                        </h1>
-                        <h3>{{ block.schule.name }}: {{ block.wochentagString }} {{ block.von|date('H:i') }}
-                            - {{ block.bis|date('H:i') }}</h3>
+                        <h1>{{ text }}</h1>
                     </div>
-                    <div class="row" id="blockContent">
-                        <div class="col-lg-12" id="blockContentContent">
-                            <h3>{{ 'Mindest Anzahl'|trans }}: {{ block.min }}</h3>
-                            <h3>{{ 'Maximal Anzahl'|trans }}: {{ block.max }}</h3>
-                            <label for="fictiveDate">Datum eingeben, für welches die Anzahl der Kinder angezeigt werden
-                                soll:</label>
-                            <input
-                                    id="fictiveDate"
-                                    type="date"
-                                    name="fictiveDate"
-                                    value="{{ fictiveDate|date('Y-m-d') }}"
-                            />
-                            <a href="{{ path('kontingent_show_kids',{'block_id':block.id}) }}" class="btn btn-primary"
-                               id="sendFictiveDate">Auswählen</a>
-                            <div class="row">
-                                {% for k in kinder %}
-                                    {% set eltern = getEltern(k,k.startDate) %}
-                                    <div class="col-lg-3">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h4 class="text-capitalize text-center">{{ k.vorname }} {{ k.nachname }}</h4>
-                                            </div>
-                                            <div class=" card-body text-center ">
-
-
-                                                <p> {{ 'Startdatum:'|trans }} <b>{{ k.startDate|date('d.m.Y') }}</b>
-                                                <p> {{ 'Erstellt am:'|trans }}
-                                                    <b>{{ k.eltern.createdAt|date('d.m.Y H:i') }}</b>
-                                                <p>Anzahl Kinder zum Startdatum:
-                                                    <b>{{ getChildsOnSpecificTime(block,k.startDate)|length }}</b></p>
-                                                <p>Anzahl Kinder am {{ fictiveDate|date('d.m.Y') }}:
-                                                    <b>{{ getChildsOnSpecificTime(block,fictiveDate)|length }}</b></p>
-                                                {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
-                                                    <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}"
-                                                       class="deleteAjaxConfirm"><i class="material-icons">check</i></a>
-                                                    <a href="{{ path('kontingent_accept_kid_silent',{'block_id':block.id,'kind_id':k.id}) }}"
-                                                       class="deleteAjaxConfirm"
-                                                       data-title="{{ 'Achtung!!! Keine Bestätigungs E-mail'|trans }}"
-                                                       data-text="{{ 'Dieses Kind zulassen aber KEINE E-Mail versenden.'|trans }}"><i
-                                                                class="material-icons">voice_over_off</i></a>
-                                                    <a href="{{ path('kontingent_remove_kid',{'block_id':block.id,'kind_id':k.id}) }}"
-                                                       class="deleteAjaxConfirm"><i class="material-icons">delete</i>
-                                                    </a>
-
-                                                {% endif %}
-                                                <a href="{{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':k.id,'date':k.startDate|date('d.m.Y')}) }}"><i
-                                                            class="material-icons">info</i>
-                                                </a>
-                                                {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
-                                                    <a href="{{ path('child_change_seccode',{'kind_id':k.id}) }}"><i
-                                                                class="material-icons">edit</i></a>
-                                                {% endif %}
-
-                                                <!-- Button trigger modal -->
-
-                                                <a type="button" class="btn btn-primary" data-toggle="modal"
-                                                   data-target="#kind{{ k.id }}">
-
-                                                    ( {{ getBerufstatig(k) }}
-                                                    , {{ eltern.alleinerziehend?"Alleinerziehend":'Nicht alleinerziehend'|trans }}
-                                                    )
-                                                </a>
-                                                {% if is_granted('ROLE_ORG_CHILD_DELETE') %}
-
-                                                    <a class="btn btn-danger btn-raised btn-sm deleteBtn" type="DELETE"
-                                                       href="{{ path('delete_child_delete',{'kind_id':k.id}) }}">{% trans %}Kind entgültig löschen{% endtrans %}</a>
-                                                    <p><small>Hinweis: Dies löscht das gesamte Kind auch aus anderen
-                                                            Betreuungszeitblöcken. Das Kind wird danach nicht mehr im
-                                                            System sein.</small></p>
-
-                                                {% endif %}
-                                            </div>
-
-
-                                            <!-- Modal -->
-
-                                        </div>
-                                        <div class="modal fade" id="kind{{ k.id }}" tabindex="-1" role="dialog"
-                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title"
-                                                            id="exampleModalLabel">{{ 'Infos zu dem Kind'|trans }}</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-
-                                                        <p><b>{{ 'Name'|trans }}:</b>
-                                                            {{ k.vorname }} {{ k.nachname }}</p>
-                                                        <p><b>{{ 'Geburtstag'|trans }}
-                                                                :</b> {{ k.geburtstag|date('d.m.Y') }}
-                                                        </p>
-                                                        <p><b>{{ 'Jahrgangsstufe'|trans }}:</b> {{ k.klasseString }}</p>
-                                                        <p><b>{{ 'Info'|trans }}:</b> {{ k.bemerkung }}</p>
-                                                    </div>
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title"
-                                                            id="exampleModalLabel">{{ 'Infos des Erziehungsberechtigten'|trans }}</h5>
-
-                                                    </div>
-                                                    <div class="modal-body">
-
-                                                        <p><b>{{ 'Name'|trans }}:</b>
-                                                            {{ eltern.vorname }} {{ eltern.name }}</p>
-                                                        <p><b>{{ 'Berufliche Situation'|trans }}
-                                                                :</b> {{ getBerufstatig(k) }}
-                                                        </p>
-                                                        <p><b>{{ 'Alleinerziehend'|trans }}
-                                                                :</b> {{ eltern.alleinerziehend?"Ja":'Nein'|trans }}</p>
-                                                        <table class="table table-responsive">
-                                                            <tbody>
-                                                            {% include 'widget/__elternTabelle_reduced.html.twig' with {'stadt':k.schule.stadt, 'eltern':eltern} %}
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">{{ 'Schließen'|trans }}</button>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-
+                    <div class="card-body">
+                        <h3>
+                            {{ block.schule.name }}: {{ block.wochentagString }} {{ block.von|date('H:i') }}
+                            - {{ block.bis|date('H:i') }}
+                        </h3>
+                        <div class="row" id="blockContent">
+                            <div class="col-lg-12" id="blockContentContent">
+                                <h5 class="mb-2">{{ 'Mindest Anzahl'|trans }}: {{ block.min }}</h5>
+                                <h5>{{ 'Maximal Anzahl'|trans }}: {{ block.max }}</h5>
+                                <hr>
+                                <label for="fictiveDate">Datum eingeben, für welches die Anzahl der Kinder angezeigt werden
+                                    soll:</label>
+                                <input
+                                        id="fictiveDate"
+                                        type="date"
+                                        name="fictiveDate"
+                                        value="{{ fictiveDate|date('Y-m-d') }}"
+                                />
+                                <a href="{{ path('kontingent_show_kids',{'block_id':block.id}) }}"
+                                   class="btn btn-sm btn-primary"
+                                   id="sendFictiveDate">Auswählen</a>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
+            </div>
+            <div class="row">
+                {% for k in kinder %}
+                    {% set eltern = getEltern(k,k.startDate) %}
+                    <div class="col-3 pb-4">
+                        <div class="card h-100 text-center">
+                            <div class="card-body">
+                                <h2>{{ k.vorname }} {{ k.nachname }}</h2>
+                                <p>
+                                    {{ 'Startdatum:'|trans }} <b>{{ k.startDate|date('d.m.Y') }}</b><br>
+                                    Anzahl Kinder zum Startdatum: <b>{{ getChildsOnSpecificTime(block,k.startDate)|length }}</b><br>
+                                    Anzahl Kinder am {{ fictiveDate|date('d.m.Y') }}: <b>{{ getChildsOnSpecificTime(block,fictiveDate)|length }}</b><br>
+                                </p>
+                                <p>
+                                    <small>{{ 'Erstellt am:'|trans }} <b>{{ k.eltern.createdAt|date('d.m.Y H:i') }}</b></small>
+                                </p>
+                                <div class="btn-group btn-group-sm" role="group">
+                                {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
+                                    <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}"
+                                       class="btn btn-success deleteAjaxConfirm no-shadow"><i class="material-icons">check</i></a>
+                                    <a href="{{ path('kontingent_accept_kid_silent',{'block_id':block.id,'kind_id':k.id}) }}"
+                                       class="btn btn-light deleteAjaxConfirm"
+                                       data-title="{{ 'Achtung!!! Keine Bestätigungs E-mail'|trans }}"
+                                       data-text="{{ 'Dieses Kind zulassen aber KEINE E-Mail versenden.'|trans }}"><i
+                                                class="material-icons">voice_over_off</i></a>
+                                    <a href="{{ path('kontingent_remove_kid',{'block_id':block.id,'kind_id':k.id}) }}"
+                                       class="btn btn-light deleteAjaxConfirm"><i class="material-icons">delete</i>
+                                    </a>
+                                    <a href="{{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':k.id,'date':k.startDate|date('d.m.Y')}) }}"
+                                       class="btn btn-light">
+                                        <i class="material-icons">info</i>
+                                    </a>
+                                    {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                                        <a href="{{ path('child_change_seccode',{'kind_id':k.id}) }}" class="btn btn-light">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                                </div>
+                                <hr>
+                                <p class="mt-3">
+                                    <a type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#kind{{ k.id }}">Infos zum Kind</a>
+                                </p>
+                                <ul class="mt-2 text-left small" style="padding-left: 15px;">
+                                    <li>{{ getBerufstatig(k) }}</li>
+                                    <li>{{ eltern.alleinerziehend?"Alleinerziehend":'Nicht alleinerziehend'|trans }}</li>
+                                </ul>
+                                {% if is_granted('ROLE_ORG_CHILD_DELETE') %}
+                                    <hr>
+                                    <a class="text-danger small" type="DELETE"
+                                       href="{{ path('delete_child_delete',{'kind_id':k.id}) }}">{% trans %}Kind entfernen{% endtrans %}</a>
+                                    <p class="mt-2 mb-0" style="line-height: 1.2;">
+                                        <small>
+                                            Hinweis: Dies löscht das Kind auch aus anderen
+                                            Betreuungszeitblöcken. Das Kind wird danach nicht mehr im
+                                            System sein.
+                                        </small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="modal fade" id="kind{{ k.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title" id="exampleModalLabel">{{ 'Infos zu dem Kind'|trans }}</h3>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-data">
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{ 'Name'|trans }}</td>
+                                                    <td>{{ k.vorname }} {{ k.nachname }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{ 'Geburtstag'|trans }}</td>
+                                                    <td>{{ k.geburtstag|date('d.m.Y') }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{ 'Jahrgangsstufe'|trans }}</td>
+                                                    <td>{{ k.klasseString }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{ 'Info'|trans }}</td>
+                                                    <td>{{ k.bemerkung }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <h4>{{ 'Infos des Erziehungsberechtigten'|trans }}</h4>
+                                        <table class="table table-data">
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{ 'Name'|trans }}</td>
+                                                    <td>{{ eltern.vorname }} {{ eltern.name }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{ 'Berufliche Situation'|trans }}</td>
+                                                    <td>{{ getBerufstatig(k) }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{ 'Alleinerziehend'|trans }}</td>
+                                                    <td>{{ eltern.alleinerziehend?"Ja":'Nein'|trans }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="table table-data">
+                                            <tbody>
+                                                {% include 'widget/__elternTabelle_reduced.html.twig' with {'stadt':k.schule.stadt, 'eltern':eltern} %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-dismiss="modal">{{ 'Schließen'|trans }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </section>
-
 {% endblock %}
+
 {% block jquery %}
     <script>
 

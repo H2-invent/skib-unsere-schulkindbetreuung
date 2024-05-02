@@ -1,0 +1,48 @@
+{% if form.personenberechtigters is defined %}
+    <div class="card">
+        <div class="card-header">
+            <h2>{{ 'Berechtigte Personen'|trans }}</h2>
+        </div>
+        <div class="card-body">
+            {% if form.personenberechtigters|length %}
+                {% for pers in form.personenberechtigters %}
+                    <div class="mb-5">
+                        <h3 class="mb-2">Berechtigte Person {{ loop.index }}</h3>
+                        {{ form_row(pers.email) }}
+                        {{ form_row(pers.phone) }}
+                        {{ form_row(pers.vorname) }}
+                        {{ form_row(pers.nachname) }}
+                        {{ form_row(pers.strasse) }}
+                        {{ form_row(pers.adresszusatz) }}
+                        {{ form_row(pers.plz) }}
+                        {{ form_row(pers.stadt) }}
+                        {{ form_row(pers.notfallkontakt) }}
+                    </div>
+                {% endfor %}
+            {% else %}
+            -
+            {% endif %}
+        </div>
+    </div>
+    <div class="persHolder"
+         data-index="{{ form.personenberechtigters|length }}"
+         data-prototype='
+                <div class="mb-5 mt-2">
+                    <h3 class="mb-2">Person hinzufügen</h3>
+                    {{ form_row(form.personenberechtigters.vars.prototype.email)|e('html_attr') }}
+                    {{ form_row(form.personenberechtigters.vars.prototype.vorname)|e('html_attr') }}
+                    {{ form_row(form.personenberechtigters.vars.prototype.nachname)|e('html_attr') }}
+                    {{ form_row(form.personenberechtigters.vars.prototype.phone)|e('html_attr') }}
+                    {{ form_row(form.personenberechtigters.vars.prototype.strasse)|e('html_attr') }}
+                    {{ form_row(form.personenberechtigters.vars.prototype.adresszusatz)|e('html_attr') }}
+                    {{ form_row(form.personenberechtigters.vars.prototype.plz)|e('html_attr') }}
+                    {{ form_row(form.personenberechtigters.vars.prototype.stadt)|e('html_attr') }}
+                    {{ form_row(form.personenberechtigters.vars.prototype.notfallkontakt)|e('html_attr') }}
+                </div>
+                '>
+    </div>
+    <button type="button"
+            class="add_item_link btn btn-light btn-sm add_item_link"
+            data-collection-holder-class="persHolder">+ {{ 'Person hinzufügen'|trans }}
+    </button>
+{% endif %}

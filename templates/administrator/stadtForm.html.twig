@@ -294,6 +294,7 @@
                         {{ form_widget(form) }}
                         {{ form_end(form) }}
                         <hr>
+                        {% if stadt is defined and stadt.id is not null %}
                         <h3 class="h3-responsive">{{ 'Dateien hochladen'|trans }}</h3>
                         <form action="{{ path('upload_stadt',{'id':stadt.id}) }}"
                               class="dropzone"
@@ -310,6 +311,7 @@
 
                             {% endfor %}
                         </ul>
+                        {% endif %}
                     </div>
 
 

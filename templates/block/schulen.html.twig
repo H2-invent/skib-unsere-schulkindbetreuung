@@ -3,11 +3,11 @@
 {% block content %}
     <section class="dashboard-counts section-padding">
         <div class="container-fluid ">
-            <div class="row">
+            <div class="row gutters-10px">
                 <!-- Count item widget-->
                 {% for s in schule %}
                     <div class="col-lg-3 col-sm-6 ">
-                        <div class="card">
+                        <div class="card mb-4">
                             {% if not s.image is empty %}
                                 <img class="card-img-top"
                                      src="{{ vich_uploader_asset(s,'imageFile')|imagine_filter('my_cards')|makeHttps }}"
@@ -27,11 +27,11 @@
                                 </h5>
 
                                 <a href="{{ path('block_schule_schow',{'id':s.id}) }}"
-                                   class="btn btn-primary">{% trans %}Betreuungsblöcke{% endtrans %}</a>
+                                   class="btn btn-light btn-sm">{% trans %}Blöcke{% endtrans %}</a>
                                 {% if is_granted('ROLE_ORG_SHOOL') %}
                                     <a
                                             href="{{ path('city_admin_schule_edit',{'id':s.id}) }}"
-                                            class="btn btn-primary">{% trans %}Schule bearbeiten{% endtrans %}
+                                            class="btn btn-light btn-sm">{% trans %}Bearbeiten{% endtrans %}
                                     </a>
                                 {% endif %}
                             </div>

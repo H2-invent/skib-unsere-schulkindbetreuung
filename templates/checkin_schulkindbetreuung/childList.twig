@@ -5,8 +5,12 @@
             <div class="row">
                 <!-- Count item widget-->
                 <div class=" col-12 card">
-                    {% include 'child/childTable.html.twig' %}
-
+                    <div class="card-header">
+                        <h1>{% trans %}Anwesende Kinder{% endtrans %}</h1>
+                    </div>
+                    <div class="card-body">
+                        {% include 'child/childTable.html.twig' %}
+                    </div>
                 </div>
             </div>
         </div>

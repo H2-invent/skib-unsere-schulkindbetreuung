@@ -10,12 +10,11 @@
             {% if form.delete is defined %}
                 {{ form_row(form.delete) }}
             {% endif %}
-
             {% if download_uri %}
                 <a href="{{ download_uri }}">{{ translation_domain is same as(false) ? download_label : download_label|trans({}, translation_domain) }}</a>
             {% endif %}
         </div>
-{% endapply %}
+    {% endapply %}
 {% endblock %}
 
 {% block vich_image_row -%}
@@ -26,12 +25,10 @@
 {% block vich_image_widget %}
     {% apply spaceless %}
         <div class="vich-image">
-            <input type="text" readonly="" class="form-control" placeholder="Computer durchsuchen...">
             {{ form_widget(form.file) }}
             {% if form.delete is defined %}
                 {{ form_row(form.delete) }}
             {% endif %}
-
             {% if image_uri %}
                 <div style="width: 30%">
                     <a href="{{ image_uri }}"><img class="img-thumbnail" src="{{ image_uri }}" alt=""/></a>
@@ -43,7 +40,7 @@
                 </div>
             {% endif %}
         </div>
-{% endapply %}
+    {% endapply %}
 {% endblock %}
 
 {% block vich_file_label %}

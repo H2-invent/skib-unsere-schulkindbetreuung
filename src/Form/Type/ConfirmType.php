@@ -28,7 +28,7 @@ class ConfirmType extends AbstractType
         $builder
             ->add('confirmationCode', TextType::class, ['label' => 'Bestätigungscode', 'translation_domain' => 'form'])
             ->add('redirectUrl', HiddenType::class)
-            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form']);
+            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-primary'), 'label' => 'weiter', 'translation_domain' => 'form']);
 
     }
     public function configureOptions(OptionsResolver $resolver)

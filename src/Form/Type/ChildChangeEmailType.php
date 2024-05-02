@@ -23,7 +23,7 @@ class ChildChangeEmailType extends AbstractType
         $builder
             ->add('email', TextType::class, ['label' => 'Neue Email Adresse eingeben', 'translation_domain' => 'form'])
             ->add('emailDoubleInput', TextType::class, ['label' => 'Neue Email Adresse erneut eingeben', 'translation_domain' => 'form'])
-            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'Speichern', 'translation_domain' => 'form'])
+            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-primary'), 'label' => 'Speichern', 'translation_domain' => 'form'])
         ;
     }
     public function configureOptions(OptionsResolver $resolver)

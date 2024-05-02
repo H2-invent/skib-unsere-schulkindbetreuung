@@ -1,32 +1,31 @@
 {% extends 'adminBase.html.twig' %}
 
 {% block content %}
-<section class="dashboard-counts section-padding">
-    <div class="container-fluid ">
-        <div class="row">
-            <!-- Count item widget-->
-            <div class=" col-12 card">
-                <div class="card-header">
-                  <h1>{{ title }}</h1>
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <div class=" col-12 card">
+                    <div class="card-header">
+                        <h1>{{ title }}</h1>
+                    </div>
+                    <div class="card-body">
+                        {% if errors|length %}
+                            <ul>
+                                {% for error in errors %}
+                                    <li>{{ error.message }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                        {{ form_widget(form) }}
+                        {{ form_end(form) }}
+                    </div>
                 </div>
-                <div class="card-body">
-                    <ul>
-                        {% for error in errors %}
-                            <li>{{ error.message }}</li>
-                        {% endfor %}
-                    </ul>
-                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-                    {{ form_widget(form) }}
-                    {{ form_end(form) }}
-                </div>
-
-
             </div>
         </div>
-    </div>
-</section>
-
+    </section>
 {% endblock %}
+
 {% block jquery %}
     <script>
         $(document).ready(function(){
@@ -43,6 +42,4 @@
             }
         })
     </script>
-
-
 {% endblock %}

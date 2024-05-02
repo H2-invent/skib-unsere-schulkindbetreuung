@@ -44,7 +44,7 @@ class LoerrachEltern extends AbstractType
             ->add('notfallkontakt', TextType::class, ['required' => true, 'label' => 'Telefonnummer des Notfallkontakts', 'translation_domain' => 'form'])
             ->add('abholberechtigter', TextareaType::class, ['required' => false, 'label' => 'Weitere abholberechtigte Personen', 'translation_domain' => 'form', 'attr' => ['rows' => 6]])
             ->add('gdpr', CheckboxType::class, ['required' => true, 'label' => 'Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet werden und an die betreuende Organisation weitergegeben werden.', 'translation_domain' => 'form'])
-            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-outline-primary'), 'label' => 'weiter', 'translation_domain' => 'form']);
+            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-primary'), 'label' => 'weiter', 'translation_domain' => 'form']);
         if ($options['stadt']->getSettingsweiterePersonenberechtigte()) {
             $builder->add('personenberechtigters', CollectionType::class,
                 ['entry_type' => PersonenberechtigterType::class,
