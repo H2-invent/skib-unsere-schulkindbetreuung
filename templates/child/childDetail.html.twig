@@ -228,7 +228,8 @@
                                             {% set tmpKind = kin %}
                                         {% endif %}
                                     {% endfor %}
-                                    {% set startDate = h.startDate?h.startDate:h.kinds[0].startDate %}
+                                    {% set startDate = (h.kinds[0] and h.kinds[0].startDate)?h.kinds[0].startDate:h.startDate %}
+{#                                    {% set startDate = h.startDate?h.startDate:h.kinds[0].startDate %}#}
                                     <li class="list-group-item {% if startDate == oldDate %}strikethrough{% endif %}{% set oldDate = startDate %}">
                                         <a href="
                                                                 {% if tmpKind is defined and tmpKind is not null %}
@@ -238,7 +239,7 @@
                                                                 {% endif %}
 
 ">
-                                                                                                        {% endif %}#}
+
                                             Änderung tritt in
                                             Kraft: {{ startDate|date('d.m.Y') }}
                                             ({{ h.createdAt|date('d.m.Y H:i') }})
