@@ -12,13 +12,14 @@
         <tr>
             {% for i in 0..4 %}
                 <td class="text-center">
+                    {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
+                        <div class="mb-3">
+                            <a href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':i}) }}"
+                               class="loadContent btn btn-sm btn-success" style="line-height: 1;"><i class="material-icons" style="font-size: 16px;">add</i></a>
+                        </div>
+                    {% endif %}
                     {% if blocks[i] is defined %}
-                        {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
-                            <div class="mb-3">
-                                <a href="{{ path('block_schule_newBlocks',{'year':year.id,'shool':shool.id,'weekday':i}) }}"
-                                   class="loadContent btn btn-sm btn-success" style="line-height: 1;"><i class="material-icons" style="font-size: 16px;">add</i></a>
-                            </div>
-                        {% endif %}
+
                         {% include 'block/blockCard.html.twig' with {'blocks': blocks[i]} %}
                     {% endif %}
                 </td>
