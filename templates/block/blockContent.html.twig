@@ -1,3 +1,6 @@
+{%  if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
+<a href="{{ path('download_angemeldete_kinder',{'schule_id':shool.id,'active_id': year.id}) }}" class="btn btn-green">Download Excel <i class="fa fa-download"></i> </a>
+   {% endif %}
 <table class="table table-stundenplan">
     <thead>
         <tr>
