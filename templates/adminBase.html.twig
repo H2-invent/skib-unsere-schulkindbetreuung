@@ -200,7 +200,7 @@
 
                 <h5 class="sidenav-heading">{% trans %}Einstellungen{% endtrans %}</h5>
                 <li><a href="{{ path('connect_keycloak_password') }}"> <i
-                                class="material-icons" style="width: 14px;">lock_reset</i>{% trans %}Passwort ändern{% endtrans %}</a>
+                                class="material-icons">lock</i>{% trans %}Passwort ändern{% endtrans %}</a>
                 </li>
                 {% if is_granted('ROLE_ORG_CHECKIN_SHOW') %}
                     <li><a href="{{ path('connection_app_start') }}"
@@ -225,7 +225,7 @@
             <div class="container-fluid">
                 <div class="navbar-holder d-flex align-items-center justify-content-between">
                     <div class="navbar-header">
-{#                        <a id="toggle-btn" href="#" class="btn menu-btn"><i class="material-icons">menu</i></a>#}
+                        <a id="toggle-btn" href="#" class="btn menu-btn"><i class="material-icons">menu</i></a>
                         <a href="{{ path('dashboard') }}" class="navbar-brand">
                             <div class="brand-text d-none d-md-inline-block">
                                 Unsere Schulkindbetreuung

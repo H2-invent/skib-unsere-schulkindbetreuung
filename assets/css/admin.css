@@ -367,3 +367,20 @@ legend.col-form-label {
 .trumbowyg-button-pane {
     border-radius: 0px;
 }
+
+nav.navbar a.menu-btn {
+    color: #292929;
+    background: white;
+    width: 30px;
+    height: 25px;
+}
+
+nav.navbar a.menu-btn:hover {
+    background: white !important;
+}
+
+@media (min-width: 1200px) {
+    nav.navbar a.menu-btn {
+        display: none !important;
+    }
+}
