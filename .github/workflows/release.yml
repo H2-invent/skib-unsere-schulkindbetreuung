@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: [self-hosted, linux]
     container:
-      image: ubuntu-20.04-lts:latest
+      image: ubuntu-24.04-lts:latest
     steps:
       - uses: actions/checkout@v3
 
@@ -48,14 +48,6 @@ jobs:
           minor_pattern: "(MINOR)"
           change_path: .
           version_format: "${major}.${minor}.${patch}"
-
-      - name: Write semantic Version in .env.local
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          find: "laF_version=2.0.0-dev"
-          replace: "laF_version=${{ steps.version.outputs.version }}"
-          regex: false
-          include: "artifact/.env"
 
       - name: Archive Release for application
         uses: thedoctor0/zip-release@0.7.1
