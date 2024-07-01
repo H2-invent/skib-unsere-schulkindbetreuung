@@ -12,6 +12,8 @@ on:
 jobs:
   build:
     runs-on: [self-hosted, linux]
+    container:
+      image: ubuntu-20.04-lts:latest
     steps:
       - uses: actions/checkout@v3
 
