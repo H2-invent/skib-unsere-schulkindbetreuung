@@ -21,7 +21,7 @@ jobs:
         with:
           php-version: ${{ vars.PHP_VERSION }}
           ini-values: date.timezone ="Europe/Berlin"
-          extensions: gb,intl,mbstring
+          extensions: gd,intl,mbstring
 
       - name: Install NPM Packages
         uses: actions/setup-node@v3
