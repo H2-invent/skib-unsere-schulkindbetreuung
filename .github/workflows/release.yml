@@ -53,7 +53,7 @@ jobs:
         uses: thedoctor0/zip-release@0.7.1
         with:
           type: 'zip'
-          filename: 'skib-${{ github.run_number }}.zip'
+          filename: 'artifact.zip'
           exclusions: '*.git* *.github* /*node_modules/* /*nodejs/* /*var/* .editorconfig'
           directory: .
 
@@ -63,8 +63,8 @@ jobs:
           user: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           host: ${{ secrets.FTP_HOST }}
-          src: skib-${{ github.run_number }}.zip
-          dest: skib-${{ github.run_number }}.zip
+          src: artifact.zip
+          dest: skib-${{ steps.version.outputs.version }}.zip
     
       - name: Create new Release with semantic-version tag
         uses: ncipollo/release-action@v1
@@ -72,6 +72,6 @@ jobs:
         with:
           draft: true
           prerelease: false
-          name: Release ${{ github.run_number }}
-          tag: ${{ github.run_number }}
+          name: Release ${{ steps.version.outputs.version }}
+          tag: ${{ steps.version.outputs.version }}
           body: Test
