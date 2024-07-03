@@ -7,14 +7,14 @@ on:
   push:
     branches:
       - master
-      - main
-      - devops
 
 jobs:
   build:
     runs-on: [self-hosted, linux]
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Update PHP Version and tools
         uses: shivammathur/setup-php@v2
@@ -53,16 +53,25 @@ jobs:
         uses: thedoctor0/zip-release@0.7.1
         with:
           type: 'zip'
-          filename: 'skib-${{ steps.version.outputs.version }}.zip'
+          filename: 'skib-${{ github.run_number }}.zip'
           exclusions: '*.git* *.github* /*node_modules/* /*nodejs/* /*var/* .editorconfig'
           directory: .
 
+      - name: Upload file
+        uses: tomasbkk/action-ftp-upload@v1.0
+        with:
+          user: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          host: ${{ secrets.FTP_HOST }}
+          src: skib-${{ github.run_number }}.zip
+          dest: skib-${{ github.run_number }}.zip
+    
       - name: Create new Release with semantic-version tag
         uses: ncipollo/release-action@v1
         id: create_release
         with:
           draft: true
           prerelease: false
-          name: Release ${{ steps.version.outputs.version }}
-          tag: ${{ steps.version.outputs.version }}
+          name: Release ${{ github.run_number }}
+          tag: ${{ github.run_number }}
           body: Test
