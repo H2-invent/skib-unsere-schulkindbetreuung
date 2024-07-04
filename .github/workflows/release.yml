@@ -70,8 +70,8 @@ jobs:
         uses: ncipollo/release-action@v1
         id: create_release
         with:
-          draft: true
+          draft: false
           prerelease: false
           name: Release ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
-          body: Test
+          body: Neuer Release erstellt und auf FTp Server hochgeladen.\nhttps://www3.h2-invent.com/h2-invent/artifacts/skib-${{ steps.version.outputs.version }}.zip
