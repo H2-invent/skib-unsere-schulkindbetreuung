@@ -6,21 +6,26 @@
         <div class="card-body">
             {% if form.personenberechtigters|length %}
                 {% for pers in form.personenberechtigters %}
-                    <div class="mb-5">
-                        <h3 class="mb-2">Berechtigte Person {{ loop.index }}</h3>
-                        {{ form_row(pers.email) }}
-                        {{ form_row(pers.phone) }}
-                        {{ form_row(pers.vorname) }}
-                        {{ form_row(pers.nachname) }}
-                        {{ form_row(pers.strasse) }}
-                        {{ form_row(pers.adresszusatz) }}
-                        {{ form_row(pers.plz) }}
-                        {{ form_row(pers.stadt) }}
-                        {{ form_row(pers.notfallkontakt) }}
+                    <div class="card card-body">
+                           <a href="#" class="removeFromForm" type="remove-group"><i
+                                        class="text-danger px-1 fa fa-trash" data-toggle="tooltip" title="Löschen"
+                                        data-original-title="Löschen"></i></a>
+
+                            <h3 class="mb-2">Berechtigte Person {{ loop.index }}</h3>
+                            {{ form_row(pers.email) }}
+                            {{ form_row(pers.phone) }}
+                            {{ form_row(pers.vorname) }}
+                            {{ form_row(pers.nachname) }}
+                            {{ form_row(pers.strasse) }}
+                            {{ form_row(pers.adresszusatz) }}
+                            {{ form_row(pers.plz) }}
+                            {{ form_row(pers.stadt) }}
+                            {{ form_row(pers.notfallkontakt) }}
+
                     </div>
                 {% endfor %}
             {% else %}
-            -
+                -
             {% endif %}
         </div>
     </div>

@@ -5,15 +5,21 @@
     <div class="card-body">
         {% if form.geschwisters is defined %}
             {% for gesch in form.geschwisters %}
-                <div class="mb-5">
+                <div class="card card-body">
+                    <a href="#" class="removeFromForm" type="remove-group"><i
+                                class="text-danger px-1 fa fa-trash" data-toggle="tooltip" title="Löschen"
+                                data-original-title="Löschen"></i></a>
+
                     <h3 class="mb-2">Geschwisterkind {{ loop.index }}</h3>
                     {{ form_row(gesch.vorname) }}
                     {{ form_row(gesch.nachname) }}
                     {{ form_row(gesch.geburtsdatum) }}
+
                 </div>
+
             {% endfor %}
         {% else %}
-        -
+            -
         {% endif %}
     </div>
 </div>

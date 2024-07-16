@@ -21,7 +21,7 @@ import $ from "jquery";
 }
 
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormButton = $('<a href="#" class="deleteKeyCloakGroup" type="remove-group"><i class="text-danger px-1 fa fa-trash" data-toggle="tooltip" title="Löschen" data-original-title="Löschen"></i></a>');
+    var $removeFormButton = $('<a href="#" class="removeFromForm" type="remove-group"><i class="text-danger px-1 fa fa-trash" data-toggle="tooltip" title="Löschen" data-original-title="Löschen"></i></a>');
     $tagFormLi.prepend($removeFormButton);
     $removeFormButton.on('click', function(e) {
         e.preventDefault();
@@ -30,8 +30,6 @@ function addTagFormDeleteLink($tagFormLi) {
 }
 function initKeycloakGroups(){
       $('.add_item_link').off('click');
-
-
 
     $('.add_item_link').each(function() {
         var perber = $('.'+$(this).data('collectionHolderClass')).find('div').length+2;
@@ -48,5 +46,17 @@ function initKeycloakGroups(){
             $(this).text($(this).text().replace(/[0-9]/gm,perber))
         })
     })
+    const deleteBtn = document.querySelectorAll('.removeFromForm');
+    deleteBtn.forEach(ele => {
+        // Elternknoten des Elements abrufen (dies ist das div mit der Klasse 'card')
+        const cardDiv = ele.closest('.card');
+
+        // Hinzufügen des Klickereignisses zum Löschen des Elternelements
+        ele.addEventListener('click', () => {
+            if (cardDiv) {
+                cardDiv.remove();
+            }
+        });
+    });
 }
 export {initKeycloakGroups};
