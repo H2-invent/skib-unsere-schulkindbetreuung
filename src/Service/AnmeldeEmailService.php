@@ -61,6 +61,15 @@ class AnmeldeEmailService
         $this->internFileSystem = $internFileSystem;
     }
 
+    /**
+     * @return null
+     */
+    public function getBetreff()
+    {
+        return $this->betreff;
+    }
+
+
     public function sendEmail(Kind $kind, Stammdaten $adresse, Stadt $stadt, $text, $dontSendBeworben = false)
     {
         $this->attachment = array();
@@ -126,7 +135,7 @@ class AnmeldeEmailService
             $this->betreff = $this->translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $kind->getVorname() . ' ' . $kind->getNachname();
             $this->content = $this->templating->render('email/anmeldebestatigung.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt, 'text' => $text));
             $this->translator->setLocale($sessionLocale);
-
+            return true;
         } else {// es gibt noch beworbene Zeitblöcke
             if (!$dontSendBeworben) {
                 foreach ($stadt->getEmailDokumenteSchulkindbetreuungAnmeldung() as $att) {
@@ -142,8 +151,10 @@ class AnmeldeEmailService
                 $this->betreff = $this->translator->trans('Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname% %nachname%', array('%vorname%' => $kind->getVorname(), '%nachname%' => $kind->getNachname()));
                 $this->content = $this->templating->render('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt));
                 $this->translator->setLocale($sessionLocale);
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -164,6 +175,14 @@ class AnmeldeEmailService
 
     public function send(Kind $kind, Stammdaten $adresse)
     {
+//        dump('kind: ' . $kind->getVorname() . ' ' . $kind->getNachname());
+//        dump($adresse->getEmail());
+//        dump($kind->getZeitblocks()->count());
+//        dump($kind->getBeworben()->count());
+//        foreach ($adresse->getPersonenberechtigters() as $data) {
+//            dump($data->getNachname() . '/' . $data->getVorname() . ': ' . $data->getEmail());
+//        }
+//        dump($this->betreff);
 
         $this->mailer->sendEmail(
             $kind->getSchule()->getOrganisation()->getName(),
@@ -184,5 +203,6 @@ class AnmeldeEmailService
                 $kind->getSchule()->getOrganisation()->getEmail(),
                 $this->attachment);
         }
+        return $this->betreff;
     }
 }

@@ -180,9 +180,15 @@ class CopyChildToNewSchuljahr
 
     public function sendAnmedebestaetigung(Kind $kind, Stammdaten $stammdaten, Stadt $stadt, $text, $dontSendBeworben = false)
     {
-        $this->anmeldeEmailService->sendEmail($kind, $stammdaten, $stadt, $text, $dontSendBeworben);
-        $this->anmeldeEmailService->send($kind, $stammdaten);
+       $emailMustSended =  $this->anmeldeEmailService->sendEmail($kind, $stammdaten, $stadt, $text, $dontSendBeworben);
+       if ($emailMustSended === true){
+           $this->anmeldeEmailService->send($kind, $stammdaten);
+           return true;
+       }
+       return false;
     }
+
+
     public function fixChildInTwoYears(Kind $kind){
         $allChilds = $this->entityManager->getRepository(Kind::class)->findBy(array('tracing'=>$kind->getTracing()));
         $correctChild = null;
