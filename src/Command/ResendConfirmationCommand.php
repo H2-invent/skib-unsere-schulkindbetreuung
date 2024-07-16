@@ -66,9 +66,12 @@ class ResendConfirmationCommand extends Command
         $progressBar = new ProgressBar($output, sizeof($kinder));
         foreach ($kinder as $data) {
             $progressBar->advance();
+
             $eltern = $this->elternService->getElternForSpecificTimeAndKind($data, $schuljahr->getVon());
             $this->copyChildService->sendAnmedebestaetigung($data, $eltern, $schuljahr->getStadt(), $text,true);
+
         }
+
         $progressBar->finish();
 
 
