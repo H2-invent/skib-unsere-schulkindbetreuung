@@ -146,6 +146,7 @@ class StammdatenRepository extends ServiceEntityRepository
             ->andWhere('s.startDate IS NOT NULL')
             ->andWhere('s.startDate <= :datetime')->setParameter('datetime', $dateTime)
             ->orderBy('s.startDate', 'DESC')
+            ->orderBy('s.created_at', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
