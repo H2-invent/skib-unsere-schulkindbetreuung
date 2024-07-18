@@ -67,6 +67,7 @@ class HistoryService
     {
 
         $history = $this->em->getRepository(Stammdaten::class)->findHistoryStammdaten($stammdaten);
+
         $historydate = array();
         foreach ($history as $data) {
             if ($data->getStartDate()) {

@@ -175,14 +175,7 @@ class AnmeldeEmailService
 
     public function send(Kind $kind, Stammdaten $adresse)
     {
-//        dump('kind: ' . $kind->getVorname() . ' ' . $kind->getNachname());
-//        dump($adresse->getEmail());
-//        dump($kind->getZeitblocks()->count());
-//        dump($kind->getBeworben()->count());
-//        foreach ($adresse->getPersonenberechtigters() as $data) {
-//            dump($data->getNachname() . '/' . $data->getVorname() . ': ' . $data->getEmail());
-//        }
-//        dump($this->betreff);
+
 
         $this->mailer->sendEmail(
             $kind->getSchule()->getOrganisation()->getName(),
