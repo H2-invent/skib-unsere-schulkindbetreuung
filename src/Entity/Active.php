@@ -7,52 +7,34 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ActiveRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\ActiveRepository::class)]
 class Active
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $von;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $bis;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="actives")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'actives')]
     private $stadt;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $anmeldeStart;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $anmeldeEnde;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Zeitblock", mappedBy="active")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Zeitblock::class, mappedBy: 'active')]
     private $blocks;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=News::class, mappedBy="schuljahre")
-     */
+    #[ORM\ManyToMany(targetEntity: News::class, mappedBy: 'schuljahre')]
     private $news;
 
 

@@ -4,38 +4,26 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AnwesenheitRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\AnwesenheitRepository::class)]
 class Anwesenheit
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Kind", inversedBy="anwesenheitenSchulkindbetreuung")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Kind::class, inversedBy: 'anwesenheitenSchulkindbetreuung')]
     private $kind;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $arrivedAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="anwesenheitSchulkindbetreuung")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'anwesenheitSchulkindbetreuung')]
     private $organisation;
 
     public function getId(): ?int

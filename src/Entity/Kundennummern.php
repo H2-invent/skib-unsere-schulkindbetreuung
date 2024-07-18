@@ -4,33 +4,23 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\KundennummernRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\KundennummernRepository::class)]
 class Kundennummern
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\organisation", inversedBy="kundennummerns")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\organisation::class, inversedBy: 'kundennummerns')]
     private $organisation;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\stammdaten", inversedBy="kundennummerns")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\stammdaten::class, inversedBy: 'kundennummerns')]
     private $stammdaten;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $kundennummer;
 
     public function getId(): ?int

@@ -156,18 +156,20 @@ class ChildExcelService
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getNotfallName());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getNotfallkontakt());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getAbholberechtigter());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getMedikamente());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAllergie());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getZeckenEntfernen());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getMasernImpfung());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getBemerkung());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getGluten());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSchweinefleisch());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getLaktose());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSonnencreme());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAusfluege());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAlleineHause());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getFotos());
+                if (!$data->getSchule()->getStadt()->isHideChildQuestions()) {
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getMedikamente());
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAllergie());
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getZeckenEntfernen());
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getGluten());
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSchweinefleisch());
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getLaktose());
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSonnencreme());
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAusfluege());
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAlleineHause());
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getFotos());
+                }
 
                 if (in_array(0, $weekdays)) {
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->createExcelDayService->getMergedTime($data, 0));
@@ -273,18 +275,21 @@ class ChildExcelService
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Notfallkontakt'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Notfallnummer'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Abholung durch'));
-        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Medikamente'));
-        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Allergien'));
-        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Zecken dürfen entfernt werden'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Masernimpfung'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Bemerkung'));
-        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Gluten intolerant'));
-        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Kein Schweinefleisch'));
-        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Laktose intolerant'));
-        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Darf mit Sonnencreme eingecremt werden'));
-        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Darf an Ausflügen teilnehmen'));
-        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Darf alleine nach Hause'));
-        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Fotos dürfen veröffentlicht werden'));
+        if (!$this->stadt->isHideChildQuestions()){
+            $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Medikamente'));
+            $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Allergien'));
+            $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Zecken dürfen entfernt werden'));
+            $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Gluten intolerant'));
+            $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Kein Schweinefleisch'));
+            $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Laktose intolerant'));
+            $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Darf mit Sonnencreme eingecremt werden'));
+            $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Darf an Ausflügen teilnehmen'));
+            $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Darf alleine nach Hause'));
+            $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Fotos dürfen veröffentlicht werden'));
+        }
+
 
         if (in_array(0, $weekdays)) {
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Montag'));

@@ -8,50 +8,34 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=GeschwisterRepository::class)
- */
+#[ORM\Entity(repositoryClass: GeschwisterRepository::class)]
 class Geschwister
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\NotBlank]
     private $vorname;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\NotBlank]
     private $nachname;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Assert\NotBlank]
     private $geburtsdatum;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Stammdaten::class, inversedBy="geschwisters")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Stammdaten::class, inversedBy: 'geschwisters')]
     private $stammdaten;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=File::class)
-     */
+    #[ORM\ManyToMany(targetEntity: File::class)]
     private $file;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $uid;
 
     public function __construct()

@@ -6,73 +6,47 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\RechnungRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\RechnungRepository::class)]
 class Rechnung
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $pdf;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: 'float')]
     private $summe;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Zeitblock", inversedBy="rechnungen")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, inversedBy: 'rechnungen')]
     private $zeitblocks;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stammdaten", inversedBy="rechnungs")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Stammdaten::class, inversedBy: 'rechnungs')]
     private $stammdaten;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Sepa", inversedBy="rechnungen",cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
+    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Sepa::class, inversedBy: 'rechnungen', cascade: ['persist'])]
     private $sepa;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $rechnungsnummer;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Kind", inversedBy="rechnungen")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Kind::class, inversedBy: 'rechnungen')]
     private $kinder;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $von;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $bis;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $sepaType;
 
     public function __construct()

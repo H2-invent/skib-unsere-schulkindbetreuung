@@ -6,75 +6,51 @@ use App\Repository\PersonenberechtigterRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=PersonenberechtigterRepository::class)
- */
+#[ORM\Entity(repositoryClass: PersonenberechtigterRepository::class)]
 class Personenberechtigter
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private $vorname;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private $nachname;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private $strasse;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $adresszusatz;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     * @Assert\Regex(pattern="/\b(?!01000|99999)(0[1-9]\d{3}|[1-9]\d{4})\b/i")
-     */
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern: '/\b(?!01000|99999)(0[1-9]\d{3}|[1-9]\d{4})\b/i')]
     private $plz;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private $stadt;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $phone;
 
-    /**
-     * @Assert\Email()
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[Assert\Email]
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $email;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $notfallkontakt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Stammdaten::class, inversedBy="personenberechtigters")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Stammdaten::class, inversedBy: 'personenberechtigters')]
     private $stammdaten;
 
     public function getId(): ?int

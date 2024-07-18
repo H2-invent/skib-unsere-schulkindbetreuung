@@ -10,71 +10,53 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\SchuleRepository")
  * @Vich\Uploadable
  */
+#[ORM\Entity(repositoryClass: \App\Repository\SchuleRepository::class)]
 class Schule
 {
     public function __serialize(): array
     {
         return array('id'=>$this->id);
     }
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $name;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="schule")
-     * @ORM\JoinColumn(nullable=true)
-     */
+    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'schule')]
     private $organisation;
 
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="schules")
-     */
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'schules')]
     private $stadt;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $adresse;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $adresszusatz;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $plz;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $ort;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $deleted = false;
     /**
-     * @ORM\Column(type="string", length=255,nullable=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $image;
 
     /**
@@ -84,52 +66,36 @@ class Schule
     private $imageFile;
 
     /**
-     * @ORM\Column(type="datetime",nullable=true)
      * @var \DateTime
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $infoText;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Zeitblock", mappedBy="schule", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Zeitblock::class, mappedBy: 'schule', orphanRemoval: true)]
     private $zeitblocks;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Kind", mappedBy="schule")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Kind::class, mappedBy: 'schule')]
     private $kinder;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Assert\Url()
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\Url]
     private $catererUrl;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $catererName;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Assert\Email()
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\Email]
     private $catererEmail;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\News", mappedBy="schule")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\News::class, mappedBy: 'schule')]
     private $news;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="schulen")
-     */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'schulen')]
     private $users;
 
 

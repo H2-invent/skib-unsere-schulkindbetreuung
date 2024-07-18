@@ -6,83 +6,53 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PaymentRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\PaymentRepository::class)]
 class Payment
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: 'float')]
     private $summe;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="paymentsFerien")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'paymentsFerien')]
     private $organisation;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stammdaten", inversedBy="paymentFerien")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Stammdaten::class, inversedBy: 'paymentFerien')]
     private $stammdaten;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $ipAdresse;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PaymentSepa", inversedBy="payments",cascade={"persist", "remove"})
-     */
+    #[ORM\ManyToOne(targetEntity: \App\Entity\PaymentSepa::class, inversedBy: 'payments', cascade: ['persist', 'remove'])]
     private $sepa;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\PaymentBraintree", inversedBy="payment", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: \App\Entity\PaymentBraintree::class, inversedBy: 'payment', cascade: ['persist', 'remove'])]
     private $braintree;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: 'float')]
     private $bezahlt;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PaymentRefund", mappedBy="payment")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\PaymentRefund::class, mappedBy: 'payment')]
     private $refunds;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $uid;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $finished;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\PaymentStripe", inversedBy="payment",cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: \App\Entity\PaymentStripe::class, inversedBy: 'payment', cascade: ['persist', 'remove'])]
     private $paymentStripes;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $artString;
 
     public function __construct()

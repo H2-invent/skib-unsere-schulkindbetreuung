@@ -6,40 +6,28 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AbwesendRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\AbwesendRepository::class)]
 class Abwesend
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
 
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\kind", inversedBy="abwesends")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\kind::class, inversedBy: 'abwesends')]
     private $kind;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $von;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $bis;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Zeitblock", inversedBy="abwesenheit")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Zeitblock::class, inversedBy: 'abwesenheit')]
     private $zeitblock;
 
 
