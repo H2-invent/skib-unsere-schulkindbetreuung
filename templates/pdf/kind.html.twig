@@ -16,7 +16,9 @@
 <h3>{{ kind.vorname }} {{ kind.nachname }} | {% trans %}Geburtstag{% endtrans %}: {{ kind.geburtstag|date('d.m.Y') }}
     | {% trans %}Klasse{% endtrans %}: {{ kind.klasseString }}</h3>
     <h3>{{ 'Betreuungsbeginn mit diesem Stundenplan'|trans }}: {{ kind.startDate|date('d.m.Y') }}</h3>
+{% if not kind.schule.stadt.hideChildQuestions %}
     <p>{{ 'Allergie'|trans }}: {{ kind.allergie }} | {{ 'Medikamente'|trans }}: {{ kind.medikamente }}
+        {% endif %}
         | {{ 'Sicherheitscode'|trans }}: {{ eltern.secCode }} | {{ 'Monatliche Gebühren'|trans }}
         : {{ getPreisforBetreuungWithoutBeworben(kind,kind.startDate)|number_format(2,',','.') }}€</p>
 

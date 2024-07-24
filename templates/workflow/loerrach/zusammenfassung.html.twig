@@ -147,6 +147,7 @@
                                         <td>{% trans %}Masernimpfung{% endtrans %}</td>
                                         <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
                                     </tr>
+                                    {% if not stadt.hideChildQuestions %}
                                     <tr>
                                         <td>{% trans %}Allergien{% endtrans %}</td>
                                         <td> {% if k.allergie|length== 0 %}{{ 'Keine Angabe'|trans }}{% else %}{{ k.allergie }}{% endif %}</td>
@@ -193,7 +194,7 @@
                                         <td>{% trans %}Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.{% endtrans %}</td>
                                         <td>{{ k.fotos?"Ja"|trans:'Nein'|trans }}</td>
                                     </tr>
-
+        {% endif %}
                                     <tr>
                                         <td>{% trans %}Betreuende Organisation{% endtrans %}</td>
                                         <td>{{ k.schule.organisation.name }}</td>

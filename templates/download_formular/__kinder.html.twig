@@ -82,6 +82,7 @@
             </table>
         </td>
     </tr>
+    {% if not schule.stadt.hideChildQuestions %}
     <tr>
         <td style=" border-bottom: 1px black solid" colspan="2">{{ 'Allergien'|trans }}:</td>
     </tr>
@@ -234,6 +235,7 @@
 
         </td>
     </tr>
+    {% endif %}
     </tbody>
 </table>
 

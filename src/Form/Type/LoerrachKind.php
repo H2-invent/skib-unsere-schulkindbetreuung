@@ -50,19 +50,22 @@ class LoerrachKind extends AbstractType
                     'Halbtag' => 2,
                 ], 'label' => 'Schulform', 'translation_domain' => 'form'])
             ->add('geburtstag', BirthdayType::class, ['attr' => array('class' => 'pickadate'), 'widget' => 'single_text', 'years' => range($today - 20, $today, 1), 'label' => 'Geburtstag', 'translation_domain' => 'form'])
-            ->add('masernImpfung', CheckboxType::class, array('label' => 'Mein Kind ist gegen Masern geimpft / bereits immun'))
-            ->add('allergie', TextType::class, ['required' => false, 'label' => 'Mein Kind hat folgende Allergien', 'translation_domain' => 'form'])
-            ->add('medikamente', TextType::class, ['required' => false, 'label' => 'Mein Kind benötigt folgende Medikamente', 'translation_domain' => 'form'])
-            ->add('gluten', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind ist glutenintolerant', 'translation_domain' => 'form'])
-            ->add('laktose', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind ist laktoseintolerant', 'translation_domain' => 'form'])
-            ->add('schweinefleisch', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind isst kein Schweinefleich', 'translation_domain' => 'form'])
-            ->add('vegetarisch', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind ernährt sich vegetarisch', 'translation_domain' => 'form'])
-            ->add('alleineHause', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause', 'translation_domain' => 'form'])
-            ->add('ausfluege', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind darf an Ausflügen teilnehmen', 'translation_domain' => 'form'])
-            ->add('sonnencreme', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden', 'translation_domain' => 'form'])
-            ->add('zeckenEntfernen', CheckboxType::class, ['required' => false, 'label' => 'Die Betreuer dürfen bei meinem Kinder Zecken entfernen', 'translation_domain' => 'form'])
-            ->add('fotos', CheckboxType::class, ['required' => false, 'label' => 'Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.', 'translation_domain' => 'form'])
-            ->add('bemerkung', TextareaType::class, ['required' => false, 'label' => 'Bemerkung', 'translation_domain' => 'form', 'attr' => ['rows' => 6]]);
+            ->add('masernImpfung', CheckboxType::class, array('label' => 'Mein Kind ist gegen Masern geimpft / bereits immun'));
+       if (!$stadt->isHideChildQuestions()){
+          $builder ->add('allergie', TextType::class, ['required' => false, 'label' => 'Mein Kind hat folgende Allergien', 'translation_domain' => 'form'])
+               ->add('medikamente', TextType::class, ['required' => false, 'label' => 'Mein Kind benötigt folgende Medikamente', 'translation_domain' => 'form'])
+               ->add('gluten', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind ist glutenintolerant', 'translation_domain' => 'form'])
+               ->add('laktose', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind ist laktoseintolerant', 'translation_domain' => 'form'])
+               ->add('schweinefleisch', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind isst kein Schweinefleich', 'translation_domain' => 'form'])
+               ->add('vegetarisch', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind ernährt sich vegetarisch', 'translation_domain' => 'form'])
+               ->add('alleineHause', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause', 'translation_domain' => 'form'])
+               ->add('ausfluege', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind darf an Ausflügen teilnehmen', 'translation_domain' => 'form'])
+               ->add('sonnencreme', CheckboxType::class, ['required' => false, 'label' => 'Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden', 'translation_domain' => 'form'])
+               ->add('zeckenEntfernen', CheckboxType::class, ['required' => false, 'label' => 'Die Betreuer dürfen bei meinem Kinder Zecken entfernen', 'translation_domain' => 'form'])
+               ->add('fotos', CheckboxType::class, ['required' => false, 'label' => 'Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.', 'translation_domain' => 'form']);
+
+       }
+                    $builder   ->add('bemerkung', TextareaType::class, ['required' => false, 'label' => 'Bemerkung', 'translation_domain' => 'form', 'attr' => ['rows' => 6]]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

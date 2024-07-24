@@ -9,71 +9,49 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\NewsRepository")
  * @Vich\Uploadable
  */
+#[ORM\Entity(repositoryClass: \App\Repository\NewsRepository::class)]
 class News
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $title;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $message;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="news")
-     */
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'news')]
     private $stadt;
 
-    /**
-     * @ORM\Column(type="datetime",  nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $date;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $activ;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="orgNews")
-     */
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'orgNews')]
     private $organisation;
     
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $createdDate;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Schule", inversedBy="news")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Schule::class, inversedBy: 'news')]
     private $schule;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Active::class, inversedBy="news")
-     */
+    #[ORM\ManyToMany(targetEntity: Active::class, inversedBy: 'news')]
     private $schuljahre;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
+    #[ORM\Column(type: 'array', nullable: true)]
     private $sendHistory = [];
     /**
-     * @ORM\Column(type="string", length=255,nullable=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $attachment;
 
     /**
@@ -82,14 +60,10 @@ class News
      */
     private $attachmentFile;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $sendToAngemeldet;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $sendToGebucht;
 
     public function __construct()

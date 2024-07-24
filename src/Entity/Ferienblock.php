@@ -10,153 +10,99 @@ use Knp\DoctrineBehaviors\Model\Translatable\Translatable as Translatable;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\FerienblockRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\FerienblockRepository::class)]
 class Ferienblock  implements TranslatableInterface
 {
     use TranslatableTrait;
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-      * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank]
     private $minAlter;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $maxAlter;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank]
     private $startDate;
 
-    /**
-     * @ORM\Column(type="time")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'time')]
+    #[Assert\NotBlank]
     private $StartTime;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank]
     private $endDate;
 
-    /**
-     * @ORM\Column(type="time")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'time')]
+    #[Assert\NotBlank]
     private $endTime;
 
-    /**
-     * @ORM\Column(type="date")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'date')]
+    #[Assert\NotBlank]
     private $endVerkauf;
 
-    /**
-     * @ORM\Column(type="date")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'date')]
+    #[Assert\NotBlank]
     private $startVerkauf;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $minAnzahl;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $maxAnzahl;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private $Ort;
 
-    /**
-     * @ORM\Column(type="json")
-     */
+    #[ORM\Column(type: 'json')]
     private $preis = [];
 
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="ferienblocks")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'ferienblocks')]
     private $stadt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="ferienblocks")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'ferienblocks')]
     private $organisation;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $anzahlPreise;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
     private $namePreise = [];
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\KindFerienblock", mappedBy="ferienblock")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\KindFerienblock::class, mappedBy: 'ferienblock')]
     private $kindFerienblocks;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $warteliste;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $modeMaximal=false;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
     private $customQuestion = [];
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
     private $voucher = [];
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
     private $voucherPrice = [];
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $amountVoucher;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tags", inversedBy="feriens")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Tags::class, inversedBy: 'feriens')]
     private $kategorie;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $individualQuestions;
 
 

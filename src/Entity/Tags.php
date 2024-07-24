@@ -6,26 +6,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TagsRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\TagsRepository::class)]
 class Tags
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $name;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Ferienblock", mappedBy="kategorie")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Ferienblock::class, mappedBy: 'kategorie')]
     private $feriens;
 
 

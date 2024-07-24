@@ -11,189 +11,118 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\KindRepository")
- * @ORM\Table(
- *       indexes={
- *           @ORM\Index(name="idx_tracing", columns={"tracing"}),
- *       }
- *   )
- */
+#[ORM\Table]
+#[ORM\Index(name: 'idx_tracing', columns: ['tracing'])]
+#[ORM\Entity(repositoryClass: \App\Repository\KindRepository::class)]
 class Kind
 {
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stammdaten", inversedBy="kinds")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Stammdaten::class, inversedBy: 'kinds')]
     private $eltern;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $allergie;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $medikamente;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $vorname;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $nachname;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $klasse;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $art;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="datetime")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'datetime')]
     private $geburtstag;
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Abwesend", mappedBy="kind")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Abwesend::class, mappedBy: 'kind')]
     private $abwesends;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Zeitblock", mappedBy="kind")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, mappedBy: 'kind')]
     private $zeitblocks;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $bemerkung;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Schule", inversedBy="kinder")
-     * @ORM\JoinColumn(nullable=true)
-     */
+    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Schule::class, inversedBy: 'kinder')]
     private $schule;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $fin = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $gluten = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $laktose = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $schweinefleisch = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $vegetarisch = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $ausfluege = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $alleineHause = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $sonnencreme = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $fotos = false;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Zeitblock", inversedBy="kinderBeworben")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, inversedBy: 'kinderBeworben')]
     private $beworben;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $saved = false;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $history = 0;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     private $tracing;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Rechnung", mappedBy="kinder")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Rechnung::class, mappedBy: 'kinder')]
     private $rechnungen;
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\KindFerienblock", mappedBy="kind", cascade={"remove"})
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\KindFerienblock::class, mappedBy: 'kind', cascade: ['remove'])]
     private $kindFerienblocks;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $masernImpfung;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Anwesenheit", mappedBy="kind")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Anwesenheit::class, mappedBy: 'kind')]
     private $anwesenheitenSchulkindbetreuung;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $internalNotice;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: 'date', nullable: true)]
     private $startDate;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $zeckenEntfernen;
 
 

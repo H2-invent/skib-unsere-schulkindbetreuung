@@ -4,32 +4,22 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AnmeldefristenRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\AnmeldefristenRepository::class)]
 class Anmeldefristen
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $von;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $bis;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="anmeldefristens")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'anmeldefristens')]
     private $stadt;
 
     public function getId(): ?int

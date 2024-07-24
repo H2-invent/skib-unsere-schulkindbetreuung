@@ -124,6 +124,8 @@ class StadtType extends AbstractType
             ->add('settingsSkibChangeDocumentChangeDateShow', CheckboxType::class, ['required' => false, 'label' => 'In dem Änderungsformular soll ein Änderungsdatum angezeigt werden', 'translation_domain' => 'form'])
             ->add('settingsSkibShowSetStartDateOnChange', CheckboxType::class, ['required' => false, 'label' => 'Zeige das Startdatum für die Änderung beim bearbeiten eines Kindes an,', 'translation_domain' => 'form'])
             ->add('settingSkibDefaultNextChange', TextType::class, ['required' => false, 'label' => 'Startdatum einer Änderung vom aktuellen Zeitpunkt in php-Schreibweise (first day of next month)', 'translation_domain' => 'form'])
+            ->add('hideChildQuestions', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die detaillierten Fragen bei der Kinderanmeldung', 'translation_domain' => 'form'])
+
             ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])
             ->add('skibSettingsBypassBankdaten', CheckboxType::class, ['required' => false, 'label' => 'Es werden keine Bankdaten abgefragt', 'translation_domain' => 'form'])
             ->add('skibSettingsFinishButtonText', TextType::class, ['required' => false, 'label' => 'Text welcher auf dem Button zum abschließen der Anmeldung steht', 'translation_domain' => 'form'])

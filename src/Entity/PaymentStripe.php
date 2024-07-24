@@ -4,41 +4,27 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PaymentStripeRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\PaymentStripeRepository::class)]
 class PaymentStripe
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $chargeId;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $status;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Payment", mappedBy="paymentStripes", cascade={"persist"})
-     */
+    #[ORM\OneToOne(targetEntity: \App\Entity\Payment::class, mappedBy: 'paymentStripes', cascade: ['persist'])]
     private $payment;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
     private $result = [];
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $transactionId;
 
     public function getId(): ?int

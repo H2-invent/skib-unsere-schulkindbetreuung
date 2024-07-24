@@ -8,69 +8,45 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\SepaRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\SepaRepository::class)]
 class Sepa
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: 'float')]
     private $summe;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $anzahl;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $sepaXML;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="sepas")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'sepas')]
     private $organisation;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank]
     private $von;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $bis;
 
-    /**
-     * @ORM\Column(type="blob")
-     */
+    #[ORM\Column(type: 'blob')]
     private $pdf;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Rechnung", mappedBy="sepa",cascade={"persist"})
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Rechnung::class, mappedBy: 'sepa', cascade: ['persist'])]
     private $rechnungen;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank]
     private $einzugsDatum;
 
     public function __construct()

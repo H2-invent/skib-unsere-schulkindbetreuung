@@ -93,6 +93,11 @@
                                     <td>{{ k.klasseString }}</td>
                                 </tr>
                                 <tr>
+                                    <td>{% trans %}Mein Kind ist gegen Masern geimpft / bereits immun{% endtrans %}</td>
+                                    <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
+                                </tr>
+                                {% if not k.schule.stadt.hideChildQuestions %}
+                                <tr>
                                     <td>{% trans %} Allergien {% endtrans %}</td>
                                     <td>{{ k.allergie }}</td>
                                 </tr>
@@ -100,10 +105,7 @@
                                     <td>{% trans %} Medikamente {% endtrans %}</td>
                                     <td>{{ k.medikamente }}</td>
                                 </tr>
-                                <tr>
-                                    <td>{% trans %}Mein Kind ist gegen Masern geimpft / bereits immun{% endtrans %}</td>
-                                    <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
-                                </tr>
+
                                 <tr>
                                     <td>{% trans %} Mein Kind ist glutenintolerant {% endtrans %}</td>
                                     <td>{{ k.gluten?"Ja"|trans:'Nein'|trans }}</td>
@@ -140,6 +142,7 @@
                                     <td>{% trans %}Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.{% endtrans %}</td>
                                     <td>{{ k.fotos?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
+                                {% endif %}
                                 {% if k.betreungsblocksReal|length > 0 %}
                                     <tr>
                                         <td>{% trans %} Bemerkung {% endtrans %}</td>

@@ -10,294 +10,189 @@ use Symfony\Component\Validator\Constraints\GroupSequence;
 use Symfony\Component\Validator\GroupSequenceProviderInterface;
 
 // importing @Encrypted annotation
-
-
-/**
- * @ORM\Entity(repositoryClass="App\Repository\StammdatenRepository")
- * @ORM\Table(
- *      indexes={
- *          @ORM\Index(name="idx_tracing", columns={"tracing"}),
- *          @ORM\Index(name="idx_tracing_of_last_year", columns={"tracing_of_last_year"})
- *      }
- *  )
- * @Assert\GroupSequenceProvider()
- */
+#[ORM\Table]
+#[ORM\Index(name: 'idx_tracing', columns: ['tracing'])]
+#[ORM\Index(name: 'idx_tracing_of_last_year', columns: ['tracing_of_last_year'])]
+#[ORM\Entity(repositoryClass: \App\Repository\StammdatenRepository::class)]
+#[Assert\GroupSequenceProvider]
 class Stammdaten implements GroupSequenceProviderInterface
 {
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
     /**
-     * @Assert\NotBlank(groups = {"all"})
-     * @ORM\Column(type="text", nullable=true)
      * @var int
      */
+    #[Assert\NotBlank(groups: ['all'])]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $name;
 
-    /**
-     * @Assert\NotBlank(groups = {"all"})
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[Assert\NotBlank(groups: ['all'])]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $vorname;
 
-    /**
-     * @Assert\NotBlank(groups = {"all"})
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[Assert\NotBlank(groups: ['all'])]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $strasse;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $adresszusatz;
 
-    /**
-     * @ORM\Column(type="integer",nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $einkommen = 0;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $created_at;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $kinderImKiga = false;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $uid;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $angemeldet = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $buk = false;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $beruflicheSituation;
 
-    /**
-     * @Assert\NotBlank(groups = {"all"})
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[Assert\NotBlank(groups: ['all'])]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $notfallkontakt;
 
-    /**
-     * @ORM\Column(type="boolean",nullable=true)
-     * @Assert\NotBlank(groups={"SchulkindSepa"})
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    #[Assert\NotBlank(groups: ['SchulkindSepa'])]
     private $sepaInfo;
 
-    /**
-     * @Assert\Iban(groups={"Schulkind"})
-     * @Assert\NotBlank(groups={"Schulkind","SchulkindSepa"})
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[Assert\Iban(groups: ['Schulkind'])]
+    #[Assert\NotBlank(groups: ['Schulkind', 'SchulkindSepa'])]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $iban;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Kind", mappedBy="eltern")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Kind::class, mappedBy: 'eltern')]
     private $kinds;
 
-    /**
-     * @Assert\Bic(groups={"Schulkind"})
-     * @ORM\Column(type="text",nullable=true)
-     * @Assert\NotBlank(groups={"Schulkind","SchulkindSepa"})
-     */
+    #[Assert\Bic(groups: ['Schulkind'])]
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\NotBlank(groups: ['Schulkind', 'SchulkindSepa'])]
     private $bic;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     * @Assert\NotBlank(groups={"Schulkind","SchulkindSepa"})
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\NotBlank(groups: ['Schulkind', 'SchulkindSepa'])]
     private $kontoinhaber;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $fin = false;
 
-    /**
-     * @Assert\NotBlank(groups = {"all"})
-     * @ORM\Column(type="boolean",nullable=true)
-     */
+    #[Assert\NotBlank(groups: ['all'])]
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $gdpr;
 
-    /**
-     * @Assert\NotBlank(groups = {"all"})
-     * @Assert\Regex(pattern="/\b(?!01000|99999)(0[1-9]\d{3}|[1-9]\d{4})\b/i",groups = {"all"})
-     * @ORM\Column(type="integer",nullable=true)
-     */
+    #[Assert\NotBlank(groups: ['all'])]
+    #[Assert\Regex(pattern: '/\b(?!01000|99999)(0[1-9]\d{3}|[1-9]\d{4})\b/i', groups: ['all'])]
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $plz;
 
-    /**
-     * @Assert\NotBlank(groups = {"all"})
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[Assert\NotBlank(groups: ['all'])]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $stadt;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $secCode;
 
-    /**
-     * @Assert\Email(groups = {"all"})
-     * @Assert\NotBlank(groups = {"all"})
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[Assert\Email(groups: ['all'])]
+    #[Assert\NotBlank(groups: ['all'])]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $email;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $alleinerziehend;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $abholberechtigter;
 
-    /**
-     * @Assert\NotBlank(groups = {"all"})
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[Assert\NotBlank(groups: ['all'])]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $notfallName;
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $emailConfirmed = false;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $confirmationCode;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $confirmEmailSend = false;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $resendEmail;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Rechnung", mappedBy="stammdaten")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Rechnung::class, mappedBy: 'stammdaten')]
     private $rechnungs;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $saved = false;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $history = 0;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     private $tracing;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $endedAt;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $ipAdresse;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $confirmDate;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Payment", mappedBy="stammdaten")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Payment::class, mappedBy: 'stammdaten')]
     private $paymentFerien;
 
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $language;
 
-    /**
-     * @Assert\NotBlank(groups = {"all"})
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[Assert\NotBlank(groups: ['all'])]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $phoneNumber;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Kundennummern", mappedBy="stammdaten")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Kundennummern::class, mappedBy: 'stammdaten')]
     private $kundennummerns;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank(groups = {"kindInKiga"})
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\NotBlank(groups: ['kindInKiga'])]
     private $kigaOfKids;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank(groups={"internal"})
-     * @Assert\IdenticalTo(groups={"internal"},propertyPath="email")
-     * @Assert\Email()
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\NotBlank(groups: ['internal'])]
+    #[Assert\IdenticalTo(groups: ['internal'], propertyPath: 'email')]
+    #[Assert\Email]
     private $emailDoubleInput;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $anzahlKindergeldempfanger = 0;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $sozialhilfeEmpanger = false;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Personenberechtigter::class, mappedBy="stammdaten", orphanRemoval=true,cascade={"persist"})
-     */
+    #[ORM\OneToMany(targetEntity: Personenberechtigter::class, mappedBy: 'stammdaten', orphanRemoval: true, cascade: ['persist'])]
     private $personenberechtigters;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Geschwister::class, mappedBy="stammdaten", orphanRemoval=true,cascade={"persist"})
-     */
+    #[ORM\OneToMany(targetEntity: Geschwister::class, mappedBy: 'stammdaten', orphanRemoval: true, cascade: ['persist'])]
     private $geschwisters;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: 'date', nullable: true)]
     private $startDate;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     private $tracingOfLastYear;
 
     public function __construct()

@@ -12,9 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OrganisationRepository")
  * @Vich\Uploadable
  */
+#[ORM\Entity(repositoryClass: \App\Repository\OrganisationRepository::class)]
 class Organisation implements TranslatableInterface
 {
     use TranslatableTrait;
@@ -24,131 +24,89 @@ class Organisation implements TranslatableInterface
         return array('id'=>$this->id);
     }
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Schule", mappedBy="organisation")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Schule::class, mappedBy: 'organisation')]
     private $schule;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stadt", inversedBy="organisations")
-     */
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'organisations')]
     private $stadt;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $deleted = false;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $adresse;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $adresszusatz;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $plz;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $ort;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $ansprechpartner;
 
-    /**
-     * @Assert\Iban()
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\Iban]
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $iban;
 
-    /**
-     * @Assert\Bic()
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\Bic]
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $bic;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $bankName;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $glauaubigerId;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $infoText;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $telefon;
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[Assert\Email]
+    #[ORM\Column(type: 'text')]
     private $email;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $smptServer;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $smtpPort;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $smtpUser;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $smtpPassword;
     /**
-     * @ORM\Column(type="string", length=255,nullable=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $image;
 
     /**
@@ -158,152 +116,96 @@ class Organisation implements TranslatableInterface
     private $imageFile;
 
     /**
-     * @ORM\Column(type="datetime",nullable=true)
      * @var \DateTime
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Sepa", mappedBy="organisation")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Sepa::class, mappedBy: 'organisation')]
     private $sepas;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $steuernummer;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private $umstid;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $orgHomepage;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $ferienprogramm;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $paypalId;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $paypalSecret;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $paypalSignature;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $stripeID;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $stripeSecret;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
     private $stornoGebuehr;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $ansprechpartnerFerien;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $ansprechpartnerFerienPhone;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $ansprechpartnerFerienEmail;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Ferienblock", mappedBy="organisation")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Ferienblock::class, mappedBy: 'organisation')]
     private $ferienblocks;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Payment", mappedBy="organisation")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Payment::class, mappedBy: 'organisation')]
     private $paymentsFerien;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $ferienRegulation;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\News", mappedBy="organisation")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\News::class, mappedBy: 'organisation')]
     private $orgNews;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $braintreeOK;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $braintreeMerchantId;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $BraintreePublicKey;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $braintreePrivateKey;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $braintreeSandbox;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $stripeOK = false;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $slug;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Kundennummern", mappedBy="organisation")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Kundennummern::class, mappedBy: 'organisation')]
     private $kundennummerns;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Anwesenheit", mappedBy="organisation")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Anwesenheit::class, mappedBy: 'organisation')]
     private $anwesenheitSchulkindbetreuung;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $sepaOrganisation;
 
 

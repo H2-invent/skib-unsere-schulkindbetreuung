@@ -13,9 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\StadtRepository")
  * @Vich\Uploadable
  */
+#[ORM\Entity(repositoryClass: \App\Repository\StadtRepository::class)]
 class Stadt implements TranslatableInterface
 {
     use TranslatableTrait;
@@ -25,49 +25,35 @@ class Stadt implements TranslatableInterface
         return array('id' => $this->id);
     }
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="string", length=32, unique=true,)
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 32, unique: true)]
     private $slug;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $Name;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Anmeldefristen", mappedBy="stadt")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Anmeldefristen::class, mappedBy: 'stadt')]
     private $anmeldefristens;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Organisation", mappedBy="stadt")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Organisation::class, mappedBy: 'stadt')]
     private $organisations;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Schule", mappedBy="stadt")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Schule::class, mappedBy: 'stadt')]
     private $schules;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $created_at;
 
     /**
-     * @ORM\Column(type="string", length=255,nullable=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $image;
 
     /**
@@ -76,9 +62,9 @@ class Stadt implements TranslatableInterface
      */
     private $imageFile;
     /**
-     * @ORM\Column(type="string", length=255,nullable=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $logoStadt;
 
     /**
@@ -87,122 +73,80 @@ class Stadt implements TranslatableInterface
      */
     private $logoStadtFile;
     /**
-     * @ORM\Column(type="datetime",nullable=true)
      * @var \DateTime
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $deleted = false;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $email;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $smtpServer;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $smtpPort;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $smtpUsername;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $smtpPassword;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $telefon;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $adresse;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $adresszusatz;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $plz;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $ort;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="text")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text')]
     private $ansprechpartner;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $hauptfarbe;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $akzentfarbe;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $akzentfarbeFehler;
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Active", mappedBy="stadt")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Active::class, mappedBy: 'stadt')]
     private $actives;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="integer")
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'integer')]
     private $preiskategorien;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $logoUrl;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $stadtHomepage;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\News", mappedBy="stadt")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\News::class, mappedBy: 'stadt')]
     private $news;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $berechnungsFormel = '
       
         $kinder = $adresse->getKinds()->toArray();
@@ -220,198 +164,127 @@ class Stadt implements TranslatableInterface
         $summe += $this->getBetragforKindBetreuung($kind, $adresse);
        ';
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $ferienprogramm;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $schulkindBetreung;
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Ferienblock", mappedBy="stadt")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Ferienblock::class, mappedBy: 'stadt')]
     private $ferienblocks;
 
-    /**
-     * @ORM\Column(type="json")
-     */
+    #[ORM\Column(type: 'json')]
     private $gehaltsklassen = [];
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $imprint;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $active;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $minDaysperWeek = 1;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $minBlocksPerDay = 0;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $onlineCheckinEnable;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $secCodeAlwaysNew;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $showShowMoreToggleOnHomescreen;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $settingsAnzahlKindergeldempfanger = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $settingsSozielHilfeEmpfanger = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $settingsAnzahlKindergeldempfangerRequired = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $settingsSozielHilfeEmpfangerRequired = false;
 
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $settingKinderimKiga = false;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $settingGehaltsklassen = false;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $settingGehaltsklassenRequired = false;
 
-    /**
-     * @ORM\OneToMany(targetEntity=\App\Entity\File::class, mappedBy="stadt")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\File::class, mappedBy: 'stadt')]
     private $uploads;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=\App\Entity\File::class )
-     * @ORM\JoinTable(name="dokumente_confirm")
-     */
+    #[ORM\JoinTable(name: 'dokumente_confirm')]
+    #[ORM\ManyToMany(targetEntity: \App\Entity\File::class)]
     private $emailDokumente_confirm;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=\App\Entity\File::class)
-     * @ORM\JoinTable(name="dokumete_skib_anmeldung")
-     */
+    #[ORM\JoinTable(name: 'dokumete_skib_anmeldung')]
+    #[ORM\ManyToMany(targetEntity: \App\Entity\File::class)]
     private $emailDokumente_schulkindbetreuung_anmeldung;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=\App\Entity\File::class)
-     * @ORM\JoinTable(name="dokumete_skib_buchung")
-     */
+    #[ORM\JoinTable(name: 'dokumete_skib_buchung')]
+    #[ORM\ManyToMany(targetEntity: \App\Entity\File::class)]
     private $emailDokumente_schulkindbetreuung_buchung;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=\App\Entity\File::class)
-     * @ORM\JoinTable(name="dokumete_skib_anderung")
-     */
+    #[ORM\JoinTable(name: 'dokumete_skib_anderung')]
+    #[ORM\ManyToMany(targetEntity: \App\Entity\File::class)]
     private $emailDokumente_schulkindbetreuung_anderung;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=\App\Entity\File::class)
-     * @ORM\JoinTable(name="dokumete_rechnung")
-     */
+    #[ORM\JoinTable(name: 'dokumete_rechnung')]
+    #[ORM\ManyToMany(targetEntity: \App\Entity\File::class)]
     private $emailDokumente_rechnung;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=\App\Entity\File::class)
-     * @ORM\JoinTable(name="dokumete_skib_abmeldung")
-     */
+    #[ORM\JoinTable(name: 'dokumete_skib_abmeldung')]
+    #[ORM\ManyToMany(targetEntity: \App\Entity\File::class)]
     private $emailDokumente_schulkindbetreuung_abmeldung;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $settingsEingabeDerGeschwister = false;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $settingsweiterePersonenberechtigte = false;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $settings_skib_sepaElektronisch;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $settingEncryptEmailAttachment;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $settings_skib_disableIcs;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $settings_skib_change_document_change_date_show;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $NoSecCodeForChangeChilds;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $settingSkibDefaultNextChange;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $settingsSkibShowSetStartDateOnChange;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $skibSettingsAbmeldungEmailText;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $skibSettingsBypassBankdaten;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $skibSettingsFinishButtonText;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $hideChildQuestions = null;
 
 
 
@@ -1513,6 +1386,18 @@ class Stadt implements TranslatableInterface
     public function setSkibSettingsFinishButtonText(?string $skibSettingsFinishButtonText): self
     {
         $this->skibSettingsFinishButtonText = $skibSettingsFinishButtonText;
+
+        return $this;
+    }
+
+    public function isHideChildQuestions(): ?bool
+    {
+        return $this->hideChildQuestions;
+    }
+
+    public function setHideChildQuestions(?bool $hideChildQuestions): self
+    {
+        $this->hideChildQuestions = $hideChildQuestions;
 
         return $this;
     }

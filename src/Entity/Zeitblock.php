@@ -10,119 +10,75 @@ use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ZeitblockRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\ZeitblockRepository::class)]
 class Zeitblock implements TranslatableInterface
 {
     use TranslatableTrait;
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="time")
-     */
+    #[ORM\Column(type: 'time')]
     private $von;
 
-    /**
-     * @ORM\Column(type="time")
-     */
+    #[ORM\Column(type: 'time')]
     private $bis;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Schule", inversedBy="zeitblocks")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Schule::class, inversedBy: 'zeitblocks')]
     private $schule;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Kind", inversedBy="zeitblocks")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Kind::class, inversedBy: 'zeitblocks')]
     private $kind;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Active", inversedBy="blocks")
-     */
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Active::class, inversedBy: 'blocks')]
     private $active;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Abwesend", mappedBy="zeitblock")
-     */
+    #[ORM\OneToMany(targetEntity: \App\Entity\Abwesend::class, mappedBy: 'zeitblock')]
     private $abwesenheit;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $wochentag;
 
 
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $ganztag;
 
-    /**
-     * @ORM\Column(type="json")
-     */
+    #[ORM\Column(type: 'json')]
     private $preise = [];
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $deleted = false;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $min;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $max;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Kind", mappedBy="beworben")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Kind::class, mappedBy: 'beworben')]
     private $kinderBeworben;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Rechnung", mappedBy="zeitblocks")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Rechnung::class, mappedBy: 'zeitblocks')]
     private $rechnungen;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Zeitblock", mappedBy="vorganger")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, mappedBy: 'vorganger')]
     private $nachfolger;
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Zeitblock", inversedBy="nachfolger")
-     */
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, inversedBy: 'nachfolger')]
     private $vorganger;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $deaktiviert;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $hidePrice;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Zeitblock::class, inversedBy="parentOf")
-     */
+    #[ORM\ManyToOne(targetEntity: Zeitblock::class, inversedBy: 'parentOf')]
     private $cloneOf;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Zeitblock::class, mappedBy="cloneOf")
-     */
+    #[ORM\OneToMany(targetEntity: Zeitblock::class, mappedBy: 'cloneOf')]
     private $parentOf;
 
     public function __construct()
