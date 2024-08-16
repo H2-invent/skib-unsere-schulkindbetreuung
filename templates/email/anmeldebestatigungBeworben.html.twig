@@ -7,7 +7,7 @@
 {% block content %}
     <p class="text-center">{% trans %}Sie haben Ihr Kind für die Schulkindbetreuung angemeldet:{% endtrans %}<br>
 
-        <b>{{ kind.vorname }} {{ kind.nachname }}</b> </p>
+        <b>{{ kind.vorname }} </b> </p>
     {{ include('email/__securityCode.twig') }}
     <p class="text-center">{% trans %}Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.
             Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.{% endtrans %}

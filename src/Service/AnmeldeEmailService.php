@@ -76,7 +76,7 @@ class AnmeldeEmailService
         $sessionLocale = $this->translator->getLocale();
 
         if (count($kind->getBeworben()->toArray()) == 0) {//Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
-            $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $kind->getSchule()->getName();
+            $fileName = $kind->getVorname() . '_' .  $kind->getSchule()->getName();
             $beruflicheSituation = $this->loerrachWorkflowController->beruflicheSituation;
             $pdf = $this->print->printAnmeldebestaetigung(
                 $kind,
@@ -118,7 +118,7 @@ class AnmeldeEmailService
                 );
             }
             if ($stadt->getSettingsSkibDisableIcs() !== true) {
-                $this->attachment[] = array('type' => 'text/calendar', 'filename' => $kind->getVorname() . ' ' . $kind->getNachname() . '.ics', 'body' => $this->ics->toString());
+                $this->attachment[] = array('type' => 'text/calendar', 'filename' => $kind->getVorname() . '.ics', 'body' => $this->ics->toString());
             }
 
             foreach ($stadt->getEmailDokumenteSchulkindbetreuungBuchung() as $att) {
@@ -132,7 +132,7 @@ class AnmeldeEmailService
             if ($adresse->getLanguage()) {
                 $this->translator->setLocale($adresse->getLanguage());
             }
-            $this->betreff = $this->translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $kind->getVorname() . ' ' . $kind->getNachname();
+            $this->betreff = $this->translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $kind->getVorname() ;
             $this->content = $this->templating->render('email/anmeldebestatigung.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt, 'text' => $text));
             $this->translator->setLocale($sessionLocale);
             return true;
