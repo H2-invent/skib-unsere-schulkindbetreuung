@@ -416,6 +416,7 @@
                                         {{ 'Betreuende Organisationen'|trans }}
                                     </h4>
                                     {% for o in stadt.organisations %}
+                                        {% if not o.deleted %}
                                         <div class="row mb-1">
                                             <div class="col-md-8">
                                                 <b>{{ o.name }}</b><br>
@@ -444,6 +445,7 @@
                                         </div>
                                         {% if not loop.last %}
                                             <hr class="hr-bold">
+                                        {% endif %}
                                         {% endif %}
                                     {% endfor %}
                                 </div>
