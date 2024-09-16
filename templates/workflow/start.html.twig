@@ -417,39 +417,50 @@
                                     </h4>
                                     {% for o in stadt.organisations %}
                                         {% if not o.deleted %}
-                                        <div class="row mb-1">
-                                            <div class="col-md-8">
-                                                <b>{{ o.name }}</b><br>
-                                                {% trans %}Ansprechpartner{% endtrans %}: {{ o.ansprechpartner }}<br/>
-                                                {% trans %}Telefon{% endtrans %}: <a
-                                                        href="tel:{{ o.telefon }}">{{ o.telefon }}</a><br/>
-                                                {% trans %}E-Mail{% endtrans %}: <a
-                                                        href="mailto:{{ o.email }}">{{ o.email }}</a><br/>
-                                                {% if o.orgHomepage is not null %}
-                                                    <a href="{{ o.orgHomepage }}"
-                                                       target="_blank" rel="noopener noreferrer"><i
-                                                                class="fas fa-external-link-alt"></i> {% trans %}Webseite{% endtrans %}
-                                                    </a><br/>
-                                                {% endif %}
-                                                {% if o.slug %}
-                                                    <a href="{{ path('organisation_profil', {'slug':o.slug}) }}">{{ 'Weitere Informationen'|trans }}</a>
-                                                {% endif %}
+                                            <div class="row mb-1">
+                                                <div class="col-md-8">
+                                                    <b>{{ o.name }}</b><br>
+                                                    {% trans %}Ansprechpartner{% endtrans %}: {{ o.ansprechpartner }}
+                                                    <br/>
+                                                    {% trans %}Telefon{% endtrans %}: <a
+                                                            href="tel:{{ o.telefon }}">{{ o.telefon }}</a><br/>
+                                                    {% trans %}E-Mail{% endtrans %}: <a
+                                                            href="mailto:{{ o.email }}">{{ o.email }}</a><br/>
+                                                    {% if o.orgHomepage is not null %}
+                                                        <a href="{{ o.orgHomepage }}"
+                                                           target="_blank" rel="noopener noreferrer"><i
+                                                                    class="fas fa-external-link-alt"></i> {% trans %}Webseite{% endtrans %}
+                                                        </a><br/>
+                                                    {% endif %}
+                                                    {% if o.slug %}
+                                                        <a href="{{ path('organisation_profil', {'slug':o.slug}) }}">{{ 'Weitere Informationen'|trans }}</a>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col-md-4 text-center">
+                                                    {% if o.image is not empty %}
+                                                        <img src="{{ vich_uploader_asset(o,'imageFile')|imagine_filter('my_logos')|makeHttps }}"
+                                                             style="max-height: 110px; max-width: 100%"
+                                                             alt="{{ o.name }} Logo">
+                                                    {% endif %}
+                                                </div>
                                             </div>
-                                            <div class="col-md-4 text-center">
-                                                {% if o.image is not empty %}
-                                                    <img src="{{ vich_uploader_asset(o,'imageFile')|imagine_filter('my_logos')|makeHttps }}"
-                                                         style="max-height: 110px; max-width: 100%"
-                                                         alt="{{ o.name }} Logo">
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        {% if not loop.last %}
-                                            <hr class="hr-bold">
-                                        {% endif %}
+                                            {% if not loop.last %}
+                                                <hr class="hr-bold">
+                                            {% endif %}
                                         {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>
+                            <div class="card mt-2">
+                                <div class="card-body">
+                                    <h4>
+                                        {{ 'Technische Umsetzung'|trans }}
+                                    </h4>
+                                  <p>  {% trans %} Kommunale Software für Ganztagesbetreuung{% endtrans %}: <a
+                                            href="https://unsere-schulkindbetreuung.de">https://unsere-schulkindbetreuung.de</a></p>
+                                </div>
+                            </div>
+
 
                         </div>
 
