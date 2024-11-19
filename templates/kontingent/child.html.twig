@@ -18,7 +18,8 @@
                                 <h5 class="mb-2">{{ 'Mindest Anzahl'|trans }}: {{ block.min }}</h5>
                                 <h5>{{ 'Maximal Anzahl'|trans }}: {{ block.max }}</h5>
                                 <hr>
-                                <label for="fictiveDate">Datum eingeben, für welches die Anzahl der Kinder angezeigt werden
+                                <label for="fictiveDate">Datum eingeben, für welches die Anzahl der Kinder angezeigt
+                                    werden
                                     soll:</label>
                                 <input
                                         id="fictiveDate"
@@ -43,38 +44,48 @@
                                 <h2>{{ k.vorname }} {{ k.nachname }}</h2>
                                 <p>
                                     {{ 'Startdatum:'|trans }} <b>{{ k.startDate|date('d.m.Y') }}</b><br>
-                                    Anzahl Kinder zum Startdatum: <b>{{ getChildsOnSpecificTime(block,k.startDate)|length }}</b><br>
-                                    Anzahl Kinder am {{ fictiveDate|date('d.m.Y') }}: <b>{{ getChildsOnSpecificTime(block,fictiveDate)|length }}</b><br>
+                                    Anzahl Kinder zum Startdatum:
+                                    <b>{{ getChildsOnSpecificTime(block,k.startDate)|length }}</b><br>
+                                    Anzahl Kinder am {{ fictiveDate|date('d.m.Y') }}:
+                                    <b>{{ getChildsOnSpecificTime(block,fictiveDate)|length }}</b><br>
                                 </p>
                                 <p>
                                     <small>{{ 'Erstellt am:'|trans }} <b>{{ k.eltern.createdAt|date('d.m.Y H:i') }}</b></small>
                                 </p>
                                 <div class="btn-group btn-group-sm" role="group">
-                                {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
-                                    <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}"
-                                       class="btn btn-success deleteAjaxConfirm no-shadow"><i class="material-icons">check</i></a>
-                                    <a href="{{ path('kontingent_accept_kid_silent',{'block_id':block.id,'kind_id':k.id}) }}"
-                                       class="btn btn-light deleteAjaxConfirm"
-                                       data-title="{{ 'Achtung!!! Keine Bestätigungs E-mail'|trans }}"
-                                       data-text="{{ 'Dieses Kind zulassen aber KEINE E-Mail versenden.'|trans }}"><i
-                                                class="material-icons">voice_over_off</i></a>
-                                    <a href="{{ path('kontingent_remove_kid',{'block_id':block.id,'kind_id':k.id}) }}"
-                                       class="btn btn-light deleteAjaxConfirm"><i class="material-icons">delete</i>
-                                    </a>
-                                    <a href="{{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':k.id,'date':k.startDate|date('d.m.Y')}) }}"
-                                       class="btn btn-light">
-                                        <i class="material-icons">info</i>
-                                    </a>
-                                    {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
-                                        <a href="{{ path('child_change_seccode',{'kind_id':k.id}) }}" class="btn btn-light">
-                                            <i class="material-icons">edit</i>
+                                    {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
+                                        <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}"
+                                           class="btn btn-success deleteAjaxConfirm no-shadow"><i
+                                                    class="material-icons">check</i></a>
+                                        <a href="{{ path('kontingent_accept_kid_silent',{'block_id':block.id,'kind_id':k.id}) }}"
+                                           class="btn btn-light deleteAjaxConfirm"
+                                           data-title="{{ 'Achtung!!! Keine Bestätigungs E-mail'|trans }}"
+                                           data-text="{{ 'Dieses Kind zulassen aber KEINE E-Mail versenden.'|trans }}"><i
+                                                    class="material-icons">voice_over_off</i></a>
+                                        <a href="{{ path('kontingent_accept_kid_AllBlocks',{'block_id':block.id,'kind_id':k.id}) }}"
+                                           class="btn btn-light deleteAjaxConfirm"
+                                           data-title="{{ 'Diese Kind für alle angemeldeten Blöcke zulassen'|trans }}"
+                                           data-text="{{ 'Sie lassen dieses Kind für alle Blöcke zu, zu dem dieses angemeldet ist. Wichtig es handelt sich nur um die Blöcke die zu diesem Kind zum diesem Zeitpunkt gehören.'|trans }}"><i
+                                                    class="material-icons"><span class="material-symbols-outlined">group_add</span></i></a>
+                                        <a href="{{ path('kontingent_remove_kid',{'block_id':block.id,'kind_id':k.id}) }}"
+                                           class="btn btn-light deleteAjaxConfirm"><i class="material-icons">delete</i>
                                         </a>
+                                        <a href="{{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':k.id,'date':k.startDate|date('d.m.Y')}) }}"
+                                           class="btn btn-light">
+                                            <i class="material-icons">info</i>
+                                        </a>
+                                        {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                                            <a href="{{ path('child_change_seccode',{'kind_id':k.id}) }}"
+                                               class="btn btn-light">
+                                                <i class="material-icons">edit</i>
+                                            </a>
+                                        {% endif %}
                                     {% endif %}
-                                {% endif %}
                                 </div>
                                 <hr>
                                 <p class="mt-3">
-                                    <a type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#kind{{ k.id }}">Infos zum Kind</a>
+                                    <a type="button" class="btn btn-sm btn-light" data-toggle="modal"
+                                       data-target="#kind{{ k.id }}">Infos zum Kind</a>
                                 </p>
                                 <ul class="mt-2 text-left small" style="padding-left: 15px;">
                                     <li>{{ getBerufstatig(k) }}</li>
@@ -94,11 +105,13 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="modal fade" id="kind{{ k.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="kind{{ k.id }}" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h3 class="modal-title" id="exampleModalLabel">{{ 'Infos zu dem Kind'|trans }}</h3>
+                                        <h3 class="modal-title"
+                                            id="exampleModalLabel">{{ 'Infos zu dem Kind'|trans }}</h3>
                                         <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -107,49 +120,50 @@
                                     <div class="modal-body">
                                         <table class="table table-data">
                                             <tbody>
-                                                <tr>
-                                                    <td>{{ 'Name'|trans }}</td>
-                                                    <td>{{ k.vorname }} {{ k.nachname }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{ 'Geburtstag'|trans }}</td>
-                                                    <td>{{ k.geburtstag|date('d.m.Y') }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{ 'Jahrgangsstufe'|trans }}</td>
-                                                    <td>{{ k.klasseString }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{ 'Info'|trans }}</td>
-                                                    <td>{{ k.bemerkung }}</td>
-                                                </tr>
+                                            <tr>
+                                                <td>{{ 'Name'|trans }}</td>
+                                                <td>{{ k.vorname }} {{ k.nachname }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ 'Geburtstag'|trans }}</td>
+                                                <td>{{ k.geburtstag|date('d.m.Y') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ 'Jahrgangsstufe'|trans }}</td>
+                                                <td>{{ k.klasseString }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ 'Info'|trans }}</td>
+                                                <td>{{ k.bemerkung }}</td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                         <h4>{{ 'Infos des Erziehungsberechtigten'|trans }}</h4>
                                         <table class="table table-data">
                                             <tbody>
-                                                <tr>
-                                                    <td>{{ 'Name'|trans }}</td>
-                                                    <td>{{ eltern.vorname }} {{ eltern.name }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{ 'Berufliche Situation'|trans }}</td>
-                                                    <td>{{ getBerufstatig(k) }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{ 'Alleinerziehend'|trans }}</td>
-                                                    <td>{{ eltern.alleinerziehend?"Ja":'Nein'|trans }}</td>
-                                                </tr>
+                                            <tr>
+                                                <td>{{ 'Name'|trans }}</td>
+                                                <td>{{ eltern.vorname }} {{ eltern.name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ 'Berufliche Situation'|trans }}</td>
+                                                <td>{{ getBerufstatig(k) }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ 'Alleinerziehend'|trans }}</td>
+                                                <td>{{ eltern.alleinerziehend?"Ja":'Nein'|trans }}</td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                         <table class="table table-data">
                                             <tbody>
-                                                {% include 'widget/__elternTabelle_reduced.html.twig' with {'stadt':k.schule.stadt, 'eltern':eltern} %}
+                                            {% include 'widget/__elternTabelle_reduced.html.twig' with {'stadt':k.schule.stadt, 'eltern':eltern} %}
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-dismiss="modal">{{ 'Schließen'|trans }}</button>
+                                        <button type="button" class="btn btn-light"
+                                                data-dismiss="modal">{{ 'Schließen'|trans }}</button>
                                     </div>
                                 </div>
                             </div>

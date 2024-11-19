@@ -13,6 +13,7 @@ use App\Controller\LoerrachWorkflowController;
 use App\Entity\Kind;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use App\Entity\Zeitblock;
 use League\Flysystem\FilesystemOperator;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -148,8 +149,13 @@ class AnmeldeEmailService
                 if ($adresse->getLanguage()) {
                     $this->translator->setLocale($adresse->getLanguage());
                 }
-                $this->betreff = $this->translator->trans('Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname% %nachname%', array('%vorname%' => $kind->getVorname(), '%nachname%' => $kind->getNachname()));
-                $this->content = $this->templating->render('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt));
+                $this->betreff = $this->translator->trans('Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname%', array( '%nachname%' => $kind->getNachname()));
+                $blocks = $kind->getBeworben()->toArray();
+                usort($blocks, function (Zeitblock $a, Zeitblock $b) {
+                    return $a->getVon() <=> $b->getVon();
+                });
+
+                $this->content = $this->templating->render('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt,'blocks' => $blocks));
                 $this->translator->setLocale($sessionLocale);
                 return true;
             }

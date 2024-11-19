@@ -1,17 +1,46 @@
-
 {% extends 'email/base.html.twig' %}
 {% block header %}
-    {% trans %}Anmeldebestätigung für die Schulkindbetreuung{% endtrans %}
+    {% trans with {'%vorname%':kind.vorname} %} Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname%{% endtrans %}
 {% endblock %}
 
 {% block content %}
     <p class="text-center">{% trans %}Sie haben Ihr Kind für die Schulkindbetreuung angemeldet:{% endtrans %}<br>
 
-        <b>{{ kind.vorname }} </b> </p>
+        <b>{{ kind.vorname }} </b></p>
     {{ include('email/__securityCode.twig') }}
     <p class="text-center">{% trans %}Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.
             Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.{% endtrans %}
     </p>
+    <p><b>{{ 'Ihr Wunschbetreuungsplan'|trans }}:</b></p>
+    <table>
+        <thead>
+        <tr>
+            <th>{{ 'Montag'|trans }}</th>
+            <th>{{ 'Dienstag'|trans }}</th>
+            <th>{{ 'Mittwoch'|trans }}</th>
+            <th>{{ 'Donnerstag'|trans }}</th>
+            <th>{{ 'Freitag'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% set weekdays = [0,1, 2, 3, 4] %}
+            {% for day in weekdays %}
+                <td>
+                    {% for block in blocks %}
+                        {% if block.wochentag == day %}
+                            <div>
+                                {{ block.von|date('H:i') }} - {{ block.bis|date('H:i') }}<br>
+
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            {% endfor %}
+        </tr>
+
+        </tbody>
+    </table>
     <br>
     <br>
     <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}<br>

@@ -2717,7 +2717,7 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Zutreffendes bitte ankreuzen</source>
         <target>Please mark with a cross where applicable</target>
       </trans-unit>
-      <trans-unit id="lUGZl8W" resname="Anmeldungs-/Änderungsformular">
+      <trans-unit id=".HD24KK" resname="Anmeldungs-/Änderungsformular">
         <source>Anmeldungs-/Änderungsformular</source>
         <target>Change form</target>
       </trans-unit>
@@ -2765,8 +2765,8 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Super Admin ernennen</source>
         <target>Promote Super Admin</target>
       </trans-unit>
-      <trans-unit id="SzFeSH9" resname="Das Passwort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (01.01.2010)">
-        <source>Das Passwort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (z.B. 01.01.2010)</source>
+      <trans-unit id="llsDrne" resname="Das Passwort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (01.01.2010)">
+        <source>Das Passwort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (01.01.2010)</source>
         <target>The password for the PDF is the child's date of birth in the format: dd.mm.yyyy (e.g. 01.01.2010)</target>
       </trans-unit>
       <trans-unit id="fnI_ZTF" resname="Für die Kommunikation mit dem Träger müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrere Kinder durch Dritte.">
@@ -2807,7 +2807,7 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?</source>
         <target>Do you receive benefits according to SGB II, SGB XII, AsylbLG, housing benefit or youth welfare?</target>
       </trans-unit>
-      <trans-unit id="um3vjJq" resname="Anzahl der Kinder, die kindergeldberechtigt sind und im selben Haushalt leben?">
+      <trans-unit id="7VgI3dM" resname="Anzahl der Kinder, die kindergeldberechtigt sind und im selben Haushalt leben?">
         <source>Anzahl der Kinder, die kindergeldberechtigt sind und im selben Haushalt leben?</source>
         <target>Number of children who are entitled to child benefit and live in the same household?</target>
       </trans-unit>
@@ -2819,7 +2819,7 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Für diesen Block gibt es eine manuelle Zuweisung der Betreuungsplätze. Dies geschieht durch die Organisationen.</source>
         <target>There is a manual allocation of childcare places for this block. This is done by the organizations.</target>
       </trans-unit>
-      <trans-unit id="UNc7hOn" resname="Geschwisterkind hinzufügen">
+      <trans-unit id="Gw.SIkv" resname="Geschwisterkind hinzufügen">
         <source>Geschwisterkind hinzufügen</source>
         <target>Add a sibling</target>
       </trans-unit>
@@ -2830,6 +2830,332 @@ The web application enables direct networking between parent or legal guardian, 
       <trans-unit id="2z.pcSK" resname="Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von">
         <source>Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von</source>
         <target>to collect payments from my account by direct debit. At the same time, I instruct my bank to</target>
+      </trans-unit>
+      <trans-unit id="gwVxViX" resname="Schuljahr geändert">
+        <source>Schuljahr geändert</source>
+        <target>__Schuljahr geändert</target>
+      </trans-unit>
+      <trans-unit id="BygxRwL" resname="Stammdaten gespeichert">
+        <source>Stammdaten gespeichert</source>
+        <target>__Stammdaten gespeichert</target>
+      </trans-unit>
+      <trans-unit id="F_1r.pz" resname="Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:">
+        <source>Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:</source>
+        <target>__Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:</target>
+      </trans-unit>
+      <trans-unit id="9AomjJd" resname="Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestend eine Schule aus">
+        <source>Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestend eine Schule aus</source>
+        <target>__Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestend eine Schule aus</target>
+      </trans-unit>
+      <trans-unit id="KMeWLMp" resname="Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestens ein Schuljahr aus">
+        <source>Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestens ein Schuljahr aus</source>
+        <target>__Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestens ein Schuljahr aus</target>
+      </trans-unit>
+      <trans-unit id="ep1anHh" resname="Zecken dürfen entfernt werden">
+        <source>Zecken dürfen entfernt werden</source>
+        <target>__Zecken dürfen entfernt werden</target>
+      </trans-unit>
+      <trans-unit id="mvnu8x5" resname="AG">
+        <source>AG</source>
+        <target>__AG</target>
+      </trans-unit>
+      <trans-unit id="eAC9U4w" resname="Notizen">
+        <source>Notizen</source>
+        <target>__Notizen</target>
+      </trans-unit>
+      <trans-unit id="ZZohsay" resname="Angemeldet am:">
+        <source>Angemeldet am:</source>
+        <target>__Angemeldet am:</target>
+      </trans-unit>
+      <trans-unit id="8vO5a9_" resname="Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:">
+        <source>Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:</source>
+        <target>__Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:</target>
+      </trans-unit>
+      <trans-unit id="rmnpZcO" resname="Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert.">
+        <source>Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert.</source>
+        <target>__Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert.</target>
+      </trans-unit>
+      <trans-unit id="QiG5uAg" resname="Uhr">
+        <source>Uhr</source>
+        <target>__Uhr</target>
+      </trans-unit>
+      <trans-unit id="we6IiXZ" resname="Änderung der Stammdaten">
+        <source>Änderung der Stammdaten</source>
+        <target>__Änderung der Stammdaten</target>
+      </trans-unit>
+      <trans-unit id="7toT5Xo" resname="Keine Betreuungszeitblöcke gebucht">
+        <source>Keine Betreuungszeitblöcke gebucht</source>
+        <target>__Keine Betreuungszeitblöcke gebucht</target>
+      </trans-unit>
+      <trans-unit id="uBHOg4A" resname="Bezeichnung der Schuljahre (JSON-Objekt)">
+        <source>Bezeichnung der Schuljahre (JSON-Objekt)</source>
+        <target>__Bezeichnung der Schuljahre (JSON-Objekt)</target>
+      </trans-unit>
+      <trans-unit id="NFOLrto" resname="Änderungen">
+        <source>Änderungen</source>
+        <target>__Änderungen</target>
+      </trans-unit>
+      <trans-unit id="Lp4FSpG" resname="Abmeldung der Kinder wenn diese nicht kopiert werden">
+        <source>Abmeldung der Kinder wenn diese nicht kopiert werden</source>
+        <target>__Abmeldung der Kinder wenn diese nicht kopiert werden</target>
+      </trans-unit>
+      <trans-unit id="Qu8dlGM" resname="Dieser Block ist nicht mehr buchbar">
+        <source>Dieser Block ist nicht mehr buchbar</source>
+        <target>__Dieser Block ist nicht mehr buchbar</target>
+      </trans-unit>
+      <trans-unit id="ChLZlxa" resname="Noch nicht zugelassene Kinder">
+        <source>Noch nicht zugelassene Kinder</source>
+        <target>__Noch nicht zugelassene Kinder</target>
+      </trans-unit>
+      <trans-unit id="xJUiwt6" resname="Blöcke">
+        <source>Blöcke</source>
+        <target>__Blöcke</target>
+      </trans-unit>
+      <trans-unit id="P2akYaZ" resname="Hmmmm. Hier lief ziemlich was schief.">
+        <source>Hmmmm. Hier lief ziemlich was schief.</source>
+        <target>__Hmmmm. Hier lief ziemlich was schief.</target>
+      </trans-unit>
+      <trans-unit id="oBFR00l" resname="Sie haben ein Verhalten gefunden, das uns unbekannt ist.">
+        <source>Sie haben ein Verhalten gefunden, das uns unbekannt ist.</source>
+        <target>__Sie haben ein Verhalten gefunden, das uns unbekannt ist.</target>
+      </trans-unit>
+      <trans-unit id="c9AP0oj" resname="Hier gehts zurück">
+        <source>Hier gehts zurück</source>
+        <target>__Hier gehts zurück</target>
+      </trans-unit>
+      <trans-unit id="KBKt3up" resname="Hier sollten Sie nicht sein.">
+        <source>Hier sollten Sie nicht sein.</source>
+        <target>__Hier sollten Sie nicht sein.</target>
+      </trans-unit>
+      <trans-unit id="0bZlmjh" resname="Beinahe hätten Sie hinter die Kullissen schauen können.">
+        <source>Beinahe hätten Sie hinter die Kullissen schauen können.</source>
+        <target>__Beinahe hätten Sie hinter die Kullissen schauen können.</target>
+      </trans-unit>
+      <trans-unit id="JQjD_Ln" resname="Wie hätte nicht gedacht, das jemand so tief gräbt.">
+        <source>Wie hätte nicht gedacht, das jemand so tief gräbt.</source>
+        <target>__Wie hätte nicht gedacht, das jemand so tief gräbt.</target>
+      </trans-unit>
+      <trans-unit id="ImCGLX0" resname="Hier geht es wieder zurück an die Oberfläche">
+        <source>Hier geht es wieder zurück an die Oberfläche</source>
+        <target>__Hier geht es wieder zurück an die Oberfläche</target>
+      </trans-unit>
+      <trans-unit id="xVUYEnR" resname="Sie haben eine Entdeckung gemacht">
+        <source>Sie haben eine Entdeckung gemacht</source>
+        <target>__Sie haben eine Entdeckung gemacht</target>
+      </trans-unit>
+      <trans-unit id="ue1gwrd" resname="Sie haben etwas gefunden, das selbst wir noch nicht kannten...">
+        <source>Sie haben etwas gefunden, das selbst wir noch nicht kannten...</source>
+        <target>__Sie haben etwas gefunden, das selbst wir noch nicht kannten...</target>
+      </trans-unit>
+      <trans-unit id="3rElC1z" resname="Wie Sie auf diese Seite gekommen sind, werden wir nachverfolgen, damit wir dieses Neuland ebenfalls erforschen können.">
+        <source>Wie Sie auf diese Seite gekommen sind, werden wir nachverfolgen, damit wir dieses Neuland ebenfalls erforschen können.</source>
+        <target>__Wie Sie auf diese Seite gekommen sind, werden wir nachverfolgen, damit wir dieses Neuland ebenfalls erforschen können.</target>
+      </trans-unit>
+      <trans-unit id="kmDMEGr" resname="Änderungen zwischen zwei Daten sehen">
+        <source>Änderungen zwischen zwei Daten sehen</source>
+        <target>__Änderungen zwischen zwei Daten sehen</target>
+      </trans-unit>
+      <trans-unit id="SPTFbW_" resname="Erstellt am:">
+        <source>Erstellt am:</source>
+        <target>__Erstellt am:</target>
+      </trans-unit>
+      <trans-unit id="6RS3FHE" resname="Betreuer dürfen bei meinem Kind Zecken entfernen">
+        <source>Betreuer dürfen bei meinem Kind Zecken entfernen</source>
+        <target>__Betreuer dürfen bei meinem Kind Zecken entfernen</target>
+      </trans-unit>
+      <trans-unit id="QAYDSux" resname="Preis pro Monat">
+        <source>Preis pro Monat</source>
+        <target>__Preis pro Monat</target>
+      </trans-unit>
+      <trans-unit id="0LdXxWg" resname="Startet ab">
+        <source>Startet ab</source>
+        <target>__Startet ab</target>
+      </trans-unit>
+      <trans-unit id="M8FLPC0" resname="Beginnt ab dem">
+        <source>Beginnt ab dem</source>
+        <target>__Beginnt ab dem</target>
+      </trans-unit>
+      <trans-unit id="JhU4T2U" resname="Stammdaten bearbeiten">
+        <source>Stammdaten bearbeiten</source>
+        <target>__Stammdaten bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="fSXK3.F" resname="Schuljahr ändern">
+        <source>Schuljahr ändern</source>
+        <target>__Schuljahr ändern</target>
+      </trans-unit>
+      <trans-unit id="_7Vp6rM" resname="Anzahl der kindergeldberechtigten Kinder im selben Haushalt">
+        <source>Anzahl der kindergeldberechtigten Kinder im selben Haushalt</source>
+        <target>__Anzahl der kindergeldberechtigten Kinder im selben Haushalt</target>
+      </trans-unit>
+      <trans-unit id="vuzlfGy" resname="Geschwisterkind">
+        <source>Geschwisterkind</source>
+        <target>__Geschwisterkind</target>
+      </trans-unit>
+      <trans-unit id="aIKQTac" resname="Geburtsdatum">
+        <source>Geburtsdatum</source>
+        <target>__Geburtsdatum</target>
+      </trans-unit>
+      <trans-unit id="dTCQ9ab" resname="Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe">
+        <source>Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe</source>
+        <target>__Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe</target>
+      </trans-unit>
+      <trans-unit id="pz6dUO." resname="Diese Änderung/Neuanmeldung soll am dd.mm.yyyy in Kraft treten">
+        <source>Diese Änderung/Neuanmeldung soll am dd.mm.yyyy in Kraft treten</source>
+        <target>__Diese Änderung/Neuanmeldung soll am dd.mm.yyyy in Kraft treten</target>
+      </trans-unit>
+      <trans-unit id="14GvYDM" resname="Berechtigte Personen">
+        <source>Berechtigte Personen</source>
+        <target>__Berechtigte Personen</target>
+      </trans-unit>
+      <trans-unit id="GBbkcq8" resname="Person hinzufügen">
+        <source>Person hinzufügen</source>
+        <target>__Person hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="9RKgXyO" resname="Ende der Schulkindbetreuung">
+        <source>Ende der Schulkindbetreuung</source>
+        <target>__Ende der Schulkindbetreuung</target>
+      </trans-unit>
+      <trans-unit id="brlB.6o" resname="Änderung der Stammdaten für die Schulkindbetreuung">
+        <source>Änderung der Stammdaten für die Schulkindbetreuung</source>
+        <target>__Änderung der Stammdaten für die Schulkindbetreuung</target>
+      </trans-unit>
+      <trans-unit id="a5c9Jm3" resname="Guten Tag">
+        <source>Guten Tag</source>
+        <target>__Guten Tag</target>
+      </trans-unit>
+      <trans-unit id="HWdiE9s" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten als PDF.&#10;            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.&#10;            Die Kontaktdaten sind in dem angehängten PDF angegeben.">
+        <source>Im Anhang finden Sie zur Kontrolle Ihre Daten als PDF.
+            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
+            Die Kontaktdaten sind in dem angehängten PDF angegeben.</source>
+        <target>__Im Anhang finden Sie zur Kontrolle Ihre Daten als PDF.
+            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
+            Die Kontaktdaten sind in dem angehängten PDF angegeben.</target>
+      </trans-unit>
+      <trans-unit id="LPHMtvP" resname="Das Passwort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (z.B. 01.01.2010)">
+        <source>Das Passwort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (z.B. 01.01.2010)</source>
+        <target>__Das Passwort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (z.B. 01.01.2010)</target>
+      </trans-unit>
+      <trans-unit id="nL_.c2k" resname="Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.">
+        <source>Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.
+            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.</source>
+        <target>__Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.
+            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.</target>
+      </trans-unit>
+      <trans-unit id=".LkIgTx" resname="Mitarbeiter anlegen">
+        <source>Mitarbeiter anlegen</source>
+        <target>__Mitarbeiter anlegen</target>
+      </trans-unit>
+      <trans-unit id="pjU6UGb" resname="Startdatum:">
+        <source>Startdatum:</source>
+        <target>__Startdatum:</target>
+      </trans-unit>
+      <trans-unit id="YTDxGpG" resname="Achtung!!! Keine Bestätigungs E-mail">
+        <source>Achtung!!! Keine Bestätigungs E-mail</source>
+        <target>__Achtung!!! Keine Bestätigungs E-mail</target>
+      </trans-unit>
+      <trans-unit id="RlxzsAX" resname="Dieses Kind zulassen aber KEINE E-Mail versenden.">
+        <source>Dieses Kind zulassen aber KEINE E-Mail versenden.</source>
+        <target>__Dieses Kind zulassen aber KEINE E-Mail versenden.</target>
+      </trans-unit>
+      <trans-unit id="SAAtFG2" resname="E-Mail Report">
+        <source>E-Mail Report</source>
+        <target>__E-Mail Report</target>
+      </trans-unit>
+      <trans-unit id="QLLLgo4" resname="Diese Ranzenpost wurde an nachfolge E-Mailadressen versendet">
+        <source>Diese Ranzenpost wurde an nachfolge E-Mailadressen versendet</source>
+        <target>__Diese Ranzenpost wurde an nachfolge E-Mailadressen versendet</target>
+      </trans-unit>
+      <trans-unit id="HAbPJxS" resname="Diese Daten gelten ab dem">
+        <source>Diese Daten gelten ab dem</source>
+        <target>__Diese Daten gelten ab dem</target>
+      </trans-unit>
+      <trans-unit id="s5sxxAc" resname="Betreuungsbeginn mit diesem Stundenplan">
+        <source>Betreuungsbeginn mit diesem Stundenplan</source>
+        <target>__Betreuungsbeginn mit diesem Stundenplan</target>
+      </trans-unit>
+      <trans-unit id="0j6Gfjj" resname="Mo">
+        <source>Mo</source>
+        <target>__Mo</target>
+      </trans-unit>
+      <trans-unit id="Fqtyh0g" resname="Di">
+        <source>Di</source>
+        <target>__Di</target>
+      </trans-unit>
+      <trans-unit id="2PM6E65" resname="Mi">
+        <source>Mi</source>
+        <target>__Mi</target>
+      </trans-unit>
+      <trans-unit id="MAlOC_w" resname="Do">
+        <source>Do</source>
+        <target>__Do</target>
+      </trans-unit>
+      <trans-unit id="7tj5AWk" resname="Fr">
+        <source>Fr</source>
+        <target>__Fr</target>
+      </trans-unit>
+      <trans-unit id=".hPN2pl" resname="Beginn der Betreuung:">
+        <source>Beginn der Betreuung:</source>
+        <target>__Beginn der Betreuung:</target>
+      </trans-unit>
+      <trans-unit id="wwvEkEm" resname="Gültig ab">
+        <source>Gültig ab</source>
+        <target>__Gültig ab</target>
+      </trans-unit>
+      <trans-unit id="goAF9xV" resname="Monatliche Zahlungen">
+        <source>Monatliche Zahlungen</source>
+        <target>__Monatliche Zahlungen</target>
+      </trans-unit>
+      <trans-unit id="DlNwFrD" resname="Infos zu den Stammdaten">
+        <source>Infos zu den Stammdaten</source>
+        <target>__Infos zu den Stammdaten</target>
+      </trans-unit>
+      <trans-unit id="YshOVgt" resname="SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe">
+        <source>SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe</source>
+        <target>__SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe</target>
+      </trans-unit>
+      <trans-unit id="zjAiIRk" resname="Anzahl an Kindergelberechtigten Kinder im Haushalt">
+        <source>Anzahl an Kindergelberechtigten Kinder im Haushalt</source>
+        <target>__Anzahl an Kindergelberechtigten Kinder im Haushalt</target>
+      </trans-unit>
+      <trans-unit id="HhsnQiS" resname="Gesamtbetrag ab {date}">
+        <source>Gesamtbetrag ab {date}</source>
+        <target>__Gesamtbetrag ab {date}</target>
+      </trans-unit>
+      <trans-unit id="8.9oFD." resname="Änderungen zum Monat {month}">
+        <source>Änderungen zum Monat {month}</source>
+        <target>__Änderungen zum Monat {month}</target>
+      </trans-unit>
+      <trans-unit id="2TZjY5c" resname="Es gibt einen 2. Peronenberechtigten">
+        <source>Es gibt einen 2. Peronenberechtigten</source>
+        <target>__Es gibt einen 2. Peronenberechtigten</target>
+      </trans-unit>
+      <trans-unit id="DvvATRn" resname="Ab wann soll diese Buchung gelten">
+        <source>Ab wann soll diese Buchung gelten</source>
+        <target>__Ab wann soll diese Buchung gelten</target>
+      </trans-unit>
+      <trans-unit id="NhUsOK7" resname="Bearbeiten abschließen">
+        <source>Bearbeiten abschließen</source>
+        <target>__Bearbeiten abschließen</target>
+      </trans-unit>
+      <trans-unit id="2.s0g9s" resname="Wichtig">
+        <source>Wichtig</source>
+        <target>__Wichtig</target>
+      </trans-unit>
+      <trans-unit id="xMUL8mn" resname="ACHTUNG! NUR {selected} Betreuungszeitfenster ausgewählt">
+        <source>ACHTUNG! NUR {selected} Betreuungszeitfenster ausgewählt</source>
+        <target>__ACHTUNG! NUR {selected} Betreuungszeitfenster ausgewählt</target>
+      </trans-unit>
+      <trans-unit id="rf2s.iT" resname="Die Einzugsermächtigung wurde nicht erteilt. Diese muss postalisch erteilt werden. Ein Formular für die Einzugsermächtigung ist der Buchungsbestätigungs-E-Mail angehängt.">
+        <source>Die Einzugsermächtigung wurde nicht erteilt. Diese muss postalisch erteilt werden. Ein Formular für die Einzugsermächtigung ist der Buchungsbestätigungs-E-Mail angehängt.</source>
+        <target>__Die Einzugsermächtigung wurde nicht erteilt. Diese muss postalisch erteilt werden. Ein Formular für die Einzugsermächtigung ist der Buchungsbestätigungs-E-Mail angehängt.</target>
+      </trans-unit>
+      <trans-unit id="Riz2v4m" resname="Technische Umsetzung">
+        <source>Technische Umsetzung</source>
+        <target>__Technische Umsetzung</target>
+      </trans-unit>
+      <trans-unit id="DSQrjZn" resname="Kommunale Software für Ganztagesbetreuung">
+        <source>Kommunale Software für Ganztagesbetreuung</source>
+        <target>__Kommunale Software für Ganztagesbetreuung</target>
       </trans-unit>
     </body>
   </file>
