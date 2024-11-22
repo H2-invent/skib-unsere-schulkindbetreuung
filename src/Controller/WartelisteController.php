@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Kind;
 use App\Entity\Zeitblock;
 use App\Service\WartelisteService;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,6 +20,7 @@ class WartelisteController extends AbstractController
     public function __construct(
         private WartelisteService   $wartelisteService,
         private TranslatorInterface $translator,
+        private LoggerInterface $logger,
     )
     {
     }
@@ -122,12 +124,14 @@ class WartelisteController extends AbstractController
             try {
              $date = new \DateTime($date);
             }catch (\Exception $e){
+                $this->logger->error($e->getMessage());
                 throw new NotFoundHttpException('Datum nicht gefunden');
             }
         }
         try {
             $this->wartelisteService->acceptChildFromWaitingListForSpecificTime($kind, $zeitblock,$date);
-        } catch (\Exception) {
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
             return new JsonResponse(['snack' => $this->translator->trans('Fehler, bitte laden Sie die Seite neu')]);
 
         }
