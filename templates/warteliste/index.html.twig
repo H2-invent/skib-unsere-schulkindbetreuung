@@ -71,7 +71,7 @@
 
 
                                             <a
-                                                    href="{{ path('warteliste_accept_kid',{'block_id':block.id,'kind_id':k.id,'date': fictiveDate|date('Y-m-d')}) }}"
+                                                    href="{{ path('warteliste_accept_kid',{'block_id':block.id,'kind_id':k.id,'date':  findLatestChildForChild(k).startDate|date('Y-m-d')  }) }}"
                                                     class="btn btn-light deleteAjaxConfirm"
                                                     id="sendWarteliste_accept_kind{{ k.id }}"
                                                     data-title="{{ 'Kind in Betreuung übernehmen'|trans }}"
