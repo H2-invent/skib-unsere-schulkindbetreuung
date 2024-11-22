@@ -148,6 +148,7 @@
                                         <td>{% trans %} Bemerkung {% endtrans %}</td>
                                         <td>{{ k.bemerkung }}</td>
                                     </tr>
+                                    <hr>
                                     <tr>
                                         <td>{% trans %} Gebuchte Betreuungszeitfenster {% endtrans %}</td>
                                         <td>
@@ -181,6 +182,7 @@
                                     <td>{{ k.eltern.createdAt|date('d.m.Y H:i') }}</td>
                                 </tr>
                                 {% if k.betreungsblocksRealKontingent|length > 0 %}
+                                    <hr>
                                     <tr>
                                         <td>{% trans %} Angemeldete Betreuungsblöcke {% endtrans %}</td>
                                         <td>
@@ -194,6 +196,37 @@
                                         </td>
                                     </tr>
                                 {% endif %}
+                                {% if  showWarteListForChild(k)|length > 0 %}
+                                    <hr>
+                                    <tr>
+                                        <td>{% trans %} Warteliste  {% endtrans %}</td>
+                                        <td>
+                                            <ul class="list-group">
+                                                {% for z in showWarteListForChild(k) %}
+                                                    <li class="list-group-item">
+                                                        {{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if  k.movedToWaiting|length > 0 %}
+                                    <hr>
+                                    <tr>
+                                        <td>{% trans %} Auf Warteliste verschoben{% endtrans %}</td>
+                                        <td>
+                                            <ul class="list-group">
+                                                {% for z in k.movedToWaiting %}
+                                                    <li class="list-group-item">
+                                                        {{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+
                                 <tr>
                                     <td>{% trans %} Gebuchte Mittagessen {% endtrans %}</td>
                                     <td>

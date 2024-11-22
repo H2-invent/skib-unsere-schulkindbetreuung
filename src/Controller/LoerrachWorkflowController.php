@@ -259,7 +259,7 @@ class LoerrachWorkflowController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
-        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(['eltern' => $adresse, 'id' => $request->get('kind_id')]);
         $isEdit = false;
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
         if ($request->cookies->get('KindID')) {

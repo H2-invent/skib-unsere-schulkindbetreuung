@@ -26,7 +26,11 @@
                     <b>{% trans %}Noch nicht zugelassene Kinder{% endtrans %}:</b>
                     <span class="badge badge-danger">{{ getAnzahlBeworbenKids(b)|length }}</span>
                 {% endif %}
-
+                {% if b.wartelisteKinder|length > 0 %}
+                    <hr>
+                    <b>{% trans %}Kinder auf der Warteliste{% endtrans %}:</b>
+                    <span class="badge badge-info">{{ b.wartelisteKinder|length }}</span>
+                {% endif %}
                 <div class="data">
                     {% if b.min is not null and b.max is not null %}
                         <hr>
@@ -85,7 +89,7 @@
                                         class="material-icons">disabled_by_default</i>{% if b.deaktiviert %}Buchbarkeit aktivieren{% else %}Buchbarkeit deaktivieren{% endif %}
                             </a>
                         {% endif %}
-                        {% if is_granted('ROLE_ORG_ACCEPT_CHILD') and (b.min is not null or b.max is not null) and getAnzahlBeworbenKids(b)|length>0 %}
+                        {% if is_granted('ROLE_ORG_ACCEPT_CHILD') and (b.min is not null or b.max is not null)  %}
 
                             {% if (b.max is not null and (b.beworbenwithFin|length + b.kindwithFin|length) <= b.max) or b.min is not null %}
                                 <a href="{{ path('kontingent_accept_all_kids',{'block_id':b.id}) }}"
@@ -96,6 +100,15 @@
                             <a class="dropdown-item" href="{{ path('kontingent_show_kids',{'block_id':b.id}) }}"><i
                                         class="material-icons">person_add</i>&nbsp;Kinder einzeln zulassen
                             </a>
+                        {% endif %}
+                        {% if is_granted('ROLE_ORG_ACCEPT_CHILD') and (b.min is not null or b.max is not null) and b.wartelisteKinder|length>0 %}
+
+                            {% if (b.max is not null and (b.beworbenwithFin|length + b.kindwithFin|length) <= b.max) or b.min is not null %}
+                                <a href="{{ path('warteliste_show',{'block_id':b.id}) }}"
+                                   class=" dropdown-item"><i
+                                            class="material-icons">playlist_add_check</i>&nbsp;Warteliste ansehen</a>
+                            {% endif %}
+
                         {% endif %}
                     </div>
                 {% else %}

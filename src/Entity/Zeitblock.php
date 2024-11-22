@@ -81,6 +81,12 @@ class Zeitblock implements TranslatableInterface
     #[ORM\OneToMany(targetEntity: Zeitblock::class, mappedBy: 'cloneOf')]
     private $parentOf;
 
+    #[ORM\ManyToMany(targetEntity: Kind::class, mappedBy: 'warteliste')]
+    private Collection $wartelisteKinder;
+
+    #[ORM\ManyToMany(targetEntity: Kind::class, mappedBy: 'movedToWaiting')]
+    private Collection $movedToWaitingKid;
+
     public function __construct()
     {
         $this->kind = new ArrayCollection();
@@ -90,6 +96,8 @@ class Zeitblock implements TranslatableInterface
         $this->nachfolger = new ArrayCollection();
         $this->vorganger = new ArrayCollection();
         $this->parentOf = new ArrayCollection();
+        $this->wartelisteKinder = new ArrayCollection();
+        $this->movedToWaitingKid = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -575,6 +583,60 @@ class Zeitblock implements TranslatableInterface
             if ($parentOf->getCloneOf() === $this) {
                 $parentOf->setCloneOf(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Kind>
+     */
+    public function getWartelisteKinder(): Collection
+    {
+        return $this->wartelisteKinder;
+    }
+
+    public function addWartelisteKinder(Kind $wartelisteKinder): self
+    {
+        if (!$this->wartelisteKinder->contains($wartelisteKinder)) {
+            $this->wartelisteKinder->add($wartelisteKinder);
+            $wartelisteKinder->addWarteliste($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWartelisteKinder(Kind $wartelisteKinder): self
+    {
+        if ($this->wartelisteKinder->removeElement($wartelisteKinder)) {
+            $wartelisteKinder->removeWarteliste($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Kind>
+     */
+    public function getMovedToWaitingKid(): Collection
+    {
+        return $this->movedToWaitingKid;
+    }
+
+    public function addMovedToWaitingKid(Kind $movedToWaitingKid): self
+    {
+        if (!$this->movedToWaitingKid->contains($movedToWaitingKid)) {
+            $this->movedToWaitingKid->add($movedToWaitingKid);
+            $movedToWaitingKid->addMovedToWaiting($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMovedToWaitingKid(Kind $movedToWaitingKid): self
+    {
+        if ($this->movedToWaitingKid->removeElement($movedToWaitingKid)) {
+            $movedToWaitingKid->removeMovedToWaiting($this);
         }
 
         return $this;

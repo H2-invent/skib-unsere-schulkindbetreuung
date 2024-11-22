@@ -27,6 +27,7 @@ class WorkflowAbschluss
     function abschluss(Stammdaten $adresseAktuell, Stadt $stadt, ?Kind $kindToEdit = null, $stammdatenOnly = false): Stammdaten
     {
 
+
         if (!$adresseAktuell->getTracing()) {//Die Stammdaten sind neu und es gibt noch keine Tracing ID
             $adresseAktuell->setTracing(md5(uniqid('stammdaten', true)));
         }
@@ -53,12 +54,36 @@ class WorkflowAbschluss
             $this->em->persist($kn);
         }
 
+        $adressNew =  $this->cloneStammdaten($adresseAktuell);
+
+        if (!$stammdatenOnly) {//Die kinder ohne ein Startdatem werden von den Eltern entfernt. somi können wir weniger sinnlose Kinder in die DB schrieben
+            if ($kindToEdit) {
+                $adresseAktuell->setStartDate(null);
+                foreach ($adresseAktuell->getKinds()  as $data) {
+                    if ($data !== $kindToEdit) {
+                        $this->em->remove($data);
+                    }
+                }
+            }
+
+        } else {
+            foreach ($adresseAktuell->getKinds()  as $data) {
+                $this->em->remove($data);
+            }
+        }
+
+        $this->em->persist($adresseAktuell);
+        $this->em->persist($adressNew);
+        $this->em->flush();
+        return $adresseAktuell;
+    }
+    public function cloneStammdaten(Stammdaten $adresseAktuell):Stammdaten
+    {
         $adressNew = clone $adresseAktuell;//hier erstellen wir nun unsere neue Arbeitsvorlage. Alle späteren änderungen geschen auf dieser vorlage.
         $adressNew->setSecCode(null);//die neue Adresse hat noch keinen neuen SecCode
         $adressNew->setCreatedAt(null);//we set the createdAt to null so we know that whit is the working copy
         $this->em->persist($adressNew);
-        $kinderAktuell = $adresseAktuell->getKinds();//alle Kinder werden von der aktuellen Arbeitskopie ausgelesen
-        foreach ($kinderAktuell as $data) {
+        foreach ($adresseAktuell->getKinds() as $data) { //alle Kinder werden von der aktuellen Arbeitskopie ausgelesen
             if (!$data->getTracing()) {
                 $data->setTracing(md5(uniqid('kind', true)));//wir setzten eine tracing ID, falls diese noch nciht vorhanfden ist.
             }
@@ -78,23 +103,6 @@ class WorkflowAbschluss
 
         }
 
-        if (!$stammdatenOnly) {//Die kinder ohne ein Startdatem werden von den Eltern entfernt. somi können wir weniger sinnlose Kinder in die DB schrieben
-            if ($kindToEdit) {
-                $adresseAktuell->setStartDate(null);
-                foreach ($kinderAktuell as $data) {
-                    if ($data !== $kindToEdit) {
-                        $this->em->remove($data);
-                    }
-                }
-            }
-
-        } else {
-            foreach ($kinderAktuell as $data) {
-                $this->em->remove($data);
-            }
-        }
-
-
         foreach ($adresseAktuell->getPersonenberechtigters() as $dataP) { // alle personen berechtigten werden kopiert und an die Arbeitskopie der Stammdaten angehängt
             $persNeu = clone $dataP;
             $persNeu->setStammdaten($adressNew);
@@ -105,10 +113,7 @@ class WorkflowAbschluss
             $geschNeu->setStammdaten($adressNew);
             $this->em->persist($geschNeu);
         }
-
-        $this->em->persist($adresseAktuell);
-        $this->em->persist($adressNew);
-        $this->em->flush();
-        return $adresseAktuell;
+        return $adressNew;
     }
+
 }

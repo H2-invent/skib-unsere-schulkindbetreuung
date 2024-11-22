@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Active;
+use App\Entity\Kind;
 use App\Entity\Schule;
 use App\Entity\Zeitblock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -70,6 +71,19 @@ class ZeitblockRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    */
+
+     /**
+      * @return Zeitblock[] Returns an array of Zeitblock objects
+      */
+    public function findWartelisteForChild(Kind $kind)
+    {
+        return $this->createQueryBuilder('z')
+            ->innerJoin('z.wartelisteKinder','warteliste_kinder')
+            ->andWhere('warteliste_kinder.tracing =:tracing')
+            ->setParameter('tracing',$kind->getTracing())
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 }
