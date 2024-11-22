@@ -1,7 +1,8 @@
 {% set eltern = getEltern(kind) %}
 {% if blocks is defined %}
     {% for b in blocks %}
-        <div class=" card " >
+
+        <div class=" card    {% if b.wartelisteKinder|filter(k => k.tracing == kind.tracing)|length > 0 %}bg-info{% endif %}" >
             {%if b.deaktiviert%}
             <div class="blockdeactiviert">
                 {{ b.schule.organisation.stadt.translate.schulkindbetreuungBlockDeaktiviertText|raw }}
@@ -10,7 +11,9 @@
             <div class="loader d-none mask flex-center rgba-black-strong"><span class="spinner-border mr-2" role="status" aria-hidden="true"></span></div>
 
 
-                {% if b.min is not null or b.max is not null %} <div class="card-header">{% trans %}Anmeldung{% endtrans %}
+                {% if b.min is not null or b.max is not null %} <div class="card-header">
+                    {% trans %}Anmeldung{% endtrans %}
+                    {% if b.wartelisteKinder|filter(k => k.tracing == kind.tracing)|length > 0 %}<br>Bereits auf der Warteliste{% endif %}
                     <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Für diesen Block gibt es eine manuelle Zuweisung der Betreuungsplätze. Dies geschieht durch die Organisationen.{% endtrans %}"></i>
                     </div>{% endif %}
 

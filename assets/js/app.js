@@ -189,28 +189,14 @@ $(window).on('load', function () {
         }
     });
 
-initKeycloakGroups();
-    $('input[type="date"]').daterangepicker({
-        "singleDatePicker": true,
-        autoUpdateInput: false,
-        locale: {
-            "format": "YYYY-MM-DD",
-            "separator": " - ",
-        }
-    }, function (chosen_date) {
-        $(this).val(chosen_date.format('YYYY-MM-DD'));
-    })
-        .on('apply.daterangepicker', function (ev, picker) {
-            //do something, like clearing an input
-            var ele = $(this);
-            ele.val(picker.startDate.format('YYYY-MM-DD'))
-        });
+    initKeycloakGroups();
 
-    $('input[type="time"]').jqclockpicker({
-        autoclose: true,
-        donetext: "OK"
-    });
 
+    initdateRangepicker();
+    initDeleteBtn();
+    initSelectDate();
+    inintDeleteAjax();
+    initSendFictiveDate();
     $(document).on('click', '.loadInTarget', function (e) {
         e.preventDefault();
         var ele = $(this);
@@ -238,6 +224,33 @@ initKeycloakGroups();
 
 });
 
+function initdateRangepicker() {
+    $('input[type="date"]').each(function () {
+        const ele = $(this); // Speichert das aktuelle Element
+        console.log("minDate:", ele.data('mindate')); // Debugging
+        ele.daterangepicker({
+            "singleDatePicker": true,
+            autoUpdateInput: false,
+            minDate: ele.data('mindate'), // Zugriff auf data-mindate
+            locale: {
+                "format": "YYYY-MM-DD",
+                "separator": " - ",
+            }
+        }, function (chosen_date) {
+            ele.val(chosen_date.format('YYYY-MM-DD'));
+        }).on('apply.daterangepicker', function (ev, picker) {
+            const nativeInput = ele[0]; // Hole das native DOM-Element aus dem jQuery-Objekt
+            const event = new Event('change', {bubbles: true}); // Erstelle ein 'change'-Event mit bubbling
+            nativeInput.dispatchEvent(event); // Löst das Event aus
+        });
+    });
+
+    $('input[type="time"]').jqclockpicker({
+        autoclose: true,
+        donetext: "OK"
+    });
+}
+
 function sendSurveyToServer($orgId, $id, $question) {
     $.ajax({
         url: surveUrl,
@@ -254,44 +267,124 @@ function sendSurveyToServer($orgId, $id, $question) {
     });
 }
 
-$(document).on('click', '.deleteBtn', function (e) {
-    e.preventDefault();
-    var url = $(this).attr('href');
-    var type = $(this).attr('type');
-    sucessFkt = undefined;
-    sucessFkt = $(this).attr('successFKT');
-    var $text = $(this).attr('text');
-    if ($text){
-        var confirmText = $text
-    }
-    $.confirm({
-        title: confirmTitle,
-        content: confirmText,
-        theme: 'material',
-        buttons: {
-            confirm: function () {
-                $.ajax({
-                    url: url,
-                    type: type,
-                    success: success,
-                });
-            },
-            cancel: function () {
-            },
-
+function initDeleteBtn() {
+    $(document).on('click', '.deleteBtn', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        var type = $(this).attr('type');
+        sucessFkt = undefined;
+        sucessFkt = $(this).attr('successFKT');
+        var $text = $(this).attr('text');
+        if ($text) {
+            var confirmText = $text
         }
+        $.confirm({
+            title: confirmTitle,
+            content: confirmText,
+            theme: 'material',
+            buttons: {
+                confirm: function () {
+                    $.ajax({
+                        url: url,
+                        type: type,
+                        success: success,
+                    });
+                },
+                cancel: function () {
+                },
+
+            }
+        });
     });
-});
 
-function success(data) {
-    if (typeof data.redirect !== 'undefined') {
-        window.location.href = data.redirect;
-    } else {
-        $.snackbar({content: data.snack});
-        console.log('test');
-        if (typeof sucessFkt !== 'undefined') {
-            var fn = window[sucessFkt];
-            if (typeof fn === "function") fn();
+    function success(data) {
+        if (typeof data.redirect !== 'undefined') {
+            window.location.href = data.redirect;
+        } else {
+            $.snackbar({content: data.snack});
+            console.log('test');
+            if (typeof sucessFkt !== 'undefined') {
+                var fn = window[sucessFkt];
+                if (typeof fn === "function") fn();
+            }
         }
     }
+
+}
+
+
+function inintDeleteAjax() {
+    $(document).on('click', '.deleteAjax', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $.ajax({
+            url: url,
+            success: function (data) {
+                $.snackbar({content: data.snack});
+                $('#blockContent').load(loadUrl)
+            }
+        });
+    });
+
+
+    $(document).on('click', '.deleteAjaxConfirm', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        var $text = $(this).data('text');
+        var $title = $(this).data('title');
+        if ($text) {
+            var confirmText = $text
+        }
+        if ($title) {
+            confirmTitle = $title;
+        }
+        $.confirm({
+            title: confirmTitle,
+            content: confirmText,
+            theme: 'material',
+            buttons: {
+                confirm: function () {
+                    $.ajax({
+                        url: url,
+                        success: function (data) {
+                            $.snackbar({content: data.snack});
+                            $('#blockContent').load(loadUrl,()=>{
+                                initdateRangepicker();
+                                initSelectDate();
+
+                            })
+                        }
+                    });
+                },
+                cancel: function () {
+                },
+
+            }
+        });
+    });
+}
+function initSendFictiveDate() {
+    $('#sendFictiveDate').click(function (e) {
+            e.preventDefault();
+            var target = $(this).attr('href') + '&fictiveDate=' + $('#fictiveDate').val();
+            console.log(target);
+            location.href = target;
+        }
+    )
+}
+
+
+
+function initSelectDate() {
+    document.querySelectorAll('.startDateSelector').forEach(input => {
+        input.addEventListener('change', event => {
+            const newDate = event.target.value; // Das neue Datum
+            const target = document.querySelector(event.target.dataset.target);
+            if (target) {
+                const url = new URL(target.href);
+                url.searchParams.set('date', newDate); // Aktualisiere den "date"-Parameter in der URL
+                target.href = url.toString(); // Setze die aktualisierte URL zurück
+            }
+        });
+    });
 }

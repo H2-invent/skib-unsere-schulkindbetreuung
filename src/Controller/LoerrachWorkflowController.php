@@ -32,7 +32,6 @@ use App\Service\SchulkindBetreuungKindSEPAService;
 use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindBlockSchulkind;
 use App\Service\WorkflowAbschluss;
-use App\Service\WorkflowStart;
 use Doctrine\Persistence\ManagerRegistry;
 use phpDocumentor\Reflection\DocBlock;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -260,7 +259,7 @@ class LoerrachWorkflowController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request);
         }
-        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(['eltern' => $adresse, 'id' => $request->get('kind_id')]);
         $isEdit = false;
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
         if ($request->cookies->get('KindID')) {
@@ -595,6 +594,7 @@ class LoerrachWorkflowController extends AbstractController
             $anmeldeEmailService->sendEmail($data, $adresse, $stadt, $translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:'));
             $anmeldeEmailService->send($data, $adresse);
         }
+
         $response = $this->render('workflow/abschluss.html.twig', array('kind' => $kinder, 'eltern' => $adresse, 'stadt' => $stadt));
         $response->headers->clearCookie('UserID');
         $response->headers->clearCookie('SecID');

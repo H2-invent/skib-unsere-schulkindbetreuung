@@ -125,6 +125,19 @@ class Kind
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $zeckenEntfernen;
 
+    #[ORM\ManyToMany(targetEntity: Zeitblock::class, inversedBy: 'wartelisteKinder')]
+    #[ORM\JoinTable(name: 'kinder__warteliste')]
+    #[ORM\JoinColumn(name: 'kind_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'zeitblock_id', referencedColumnName: 'id')]
+    private Collection $warteliste;
+
+    #[ORM\ManyToMany(targetEntity: Zeitblock::class, inversedBy: 'movedToWaitingKid')]
+    #[ORM\JoinTable(name: 'kinder___moved_to_warteliste')]
+    #[ORM\JoinColumn(name: 'kind_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'zeitblock_id', referencedColumnName: 'id')]
+
+    private Collection $movedToWaiting;
+
 
     public function __serialize(): array
     {
@@ -133,6 +146,13 @@ class Kind
     public function __toString()
     {
        return $this->tracing;
+    }
+
+    public function __clone() {
+        $this->zeitblocks= new ArrayCollection();
+        $this->beworben= new ArrayCollection();
+        $this->warteliste= new ArrayCollection();
+        $this->id = null;
     }
 
     public function __construct()
@@ -147,6 +167,8 @@ class Kind
         $this->ferienProgrammStorniert = new ArrayCollection();
         $this->kindFerienblocks = new ArrayCollection();
         $this->anwesenheitenSchulkindbetreuung = new ArrayCollection();
+        $this->warteliste = new ArrayCollection();
+        $this->movedToWaiting = new ArrayCollection();
 
     }
 
@@ -897,6 +919,54 @@ class Kind
     public function setZeckenEntfernen(?bool $zeckenEntfernen): self
     {
         $this->zeckenEntfernen = $zeckenEntfernen;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Zeitblock>
+     */
+    public function getWarteliste(): Collection
+    {
+        return $this->warteliste;
+    }
+
+    public function addWarteliste(Zeitblock $warteliste): self
+    {
+        if (!$this->warteliste->contains($warteliste)) {
+            $this->warteliste->add($warteliste);
+        }
+
+        return $this;
+    }
+
+    public function removeWarteliste(Zeitblock $warteliste): self
+    {
+        $this->warteliste->removeElement($warteliste);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Zeitblock>
+     */
+    public function getMovedToWaiting(): Collection
+    {
+        return $this->movedToWaiting;
+    }
+
+    public function addMovedToWaiting(Zeitblock $movedToWaiting): self
+    {
+        if (!$this->movedToWaiting->contains($movedToWaiting)) {
+            $this->movedToWaiting->add($movedToWaiting);
+        }
+
+        return $this;
+    }
+
+    public function removeMovedToWaiting(Zeitblock $movedToWaiting): self
+    {
+        $this->movedToWaiting->removeElement($movedToWaiting);
 
         return $this;
     }

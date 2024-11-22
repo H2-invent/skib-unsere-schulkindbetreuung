@@ -101,6 +101,24 @@ class KontingentController extends AbstractController
         }
     }
     /**
+     * @Route("/org_accept/accept/kid/AllBlocks", name="kontingent_accept_kid_AllBlocks",methods={"GET"})
+     */
+    public function acceptKidAllBlocks(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        if ($this->getUser()->getOrganisation() != $block->getSchule()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
+        try {
+            $this->acceptService->acceptAllZeitblockOfSpecificKind($kind);
+            return new JsonResponse(array('snack' => $translator->trans('Erfolgreich gespeichert')));
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+            return new JsonResponse(array('snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
+        }
+    }
+    /**
      * @Route("/org_accept/remove/kid", name="kontingent_remove_kid",methods={"GET"})
      */
     public function removeKid(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, LoggerInterface $logger)

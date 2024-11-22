@@ -22,7 +22,7 @@ class KontingentAcceptService
         $this->elternService = $elternService;
     }
 
-    public function acceptKind(Zeitblock $zeitblock, Kind $kind,$silent=false)
+    public function acceptKind(Zeitblock $zeitblock, Kind $kind, $silent = false)
     {
 
         if (!in_array($kind, $zeitblock->getKinderBeworben()->toArray())) {
@@ -36,10 +36,21 @@ class KontingentAcceptService
         $this->em->persist($kind);
         $this->em->persist($kindWorkingcopy);
         $this->em->flush();
-        if (!$silent){
+        if (!$silent) {
             $this->beworbenCheck($kind);
         }
 
+        return true;
+    }
+
+    public function acceptAllZeitblockOfSpecificKind(Kind $kind, $silent = false):bool
+    {
+
+
+        $beworbenBlocks = $kind->getBeworben();
+        foreach ($beworbenBlocks as $beworbenBlock) {
+            $this->acceptKind($beworbenBlock, $kind, $silent);
+        }
         return true;
     }
 
@@ -50,7 +61,7 @@ class KontingentAcceptService
 
             try {
                 $this->acceptKind($zeitblock, $data);
-            }catch (\Exception $exception){
+            } catch (\Exception $exception) {
 
             }
 
