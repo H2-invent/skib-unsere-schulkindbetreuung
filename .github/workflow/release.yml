@@ -49,13 +49,9 @@ jobs:
           change_path: .
           version_format: "${major}.${minor}.${patch}"
 
-      - name: Write semantic Version in .env.local
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          find: "laF_version=2.0.0-dev"
-          replace: "laF_version=${{ steps.version.outputs.version }}"
-          regex: false
-          include: "artifact/.env"
+      - name: Set laF_version in .env
+        run: |
+          sed -i 's/^laF_version=.*/laF_version=${{ steps.version.outputs.version }}/' .env
 
       - name: Archive Release for application
         uses: thedoctor0/zip-release@0.7.1
