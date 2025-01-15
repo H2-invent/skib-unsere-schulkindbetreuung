@@ -157,7 +157,7 @@ class LoerrachWorkflowController extends AbstractController
     {
 
         // Load all schools from the city into the controller as $schulen
-        $schule = $this->managerRegistry->getRepository(Schule::class)->findBy(['stadt' => $stadt, 'deleted' => false],['name'=>'DESC']);
+        $schule = $this->managerRegistry->getRepository(Schule::class)->findBy(['stadt' => $stadt, 'deleted' => false],['name'=>'ASC']);
         $schuljahr = $schuljahrService->getSchuljahr($stadt);
         $isEdit = false;
         if ($schuljahr === null) {

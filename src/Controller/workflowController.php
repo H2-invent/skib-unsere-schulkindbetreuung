@@ -56,7 +56,7 @@ class workflowController extends AbstractController
         }
         $cityInfoText = $stadt->translate()->getInfoText();
         // Load all schools from the city into the controller as $schulen
-        $schule = $this->managerRegistry->getRepository(Schule::class)->findBy(['stadt' => $stadt, 'deleted' => false],['name'=>'DESC']);
+        $schule = $this->managerRegistry->getRepository(Schule::class)->findBy(['stadt' => $stadt, 'deleted' => false],['name'=>'ASC']);
         $title = $translator->trans('Anmeldeportal') . ' ' . $stadt->getName();
         if ($stadt->getSchulkindBetreung() && $stadt->getFerienprogramm()) {
             $title = $translator->trans('Schulkindbetreuung und Ferienbetreuung der ') . ' ' . $stadt->getName() . ' | ' . $translator->trans(' Hier anmelden');
