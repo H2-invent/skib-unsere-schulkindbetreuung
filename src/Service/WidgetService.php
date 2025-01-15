@@ -65,21 +65,26 @@ class WidgetService
     public function calcBlocksNumberNow(Zeitblock $zeitblock)
     {
         $now = new \DateTime();
-        if ($zeitblock->getActive()->getBis() < $now) {
-            $now = $zeitblock->getActive()->getBis();
-        }
-        if ($zeitblock->getActive()->getVon() > $now) {
-            $now = $zeitblock->getActive()->getVon();
-        }
+        try {
+            if ($zeitblock->getActive()->getBis() < $now) {
+                $now = $zeitblock->getActive()->getBis();
+            }
+            if ($zeitblock->getActive()->getVon() > $now) {
+                $now = $zeitblock->getActive()->getVon();
+            }
 
-        $cache = new FilesystemAdapter();
-        $value = $cache->get('zeitblock_' . $zeitblock->getId(), function (ItemInterface $item) use ($zeitblock, $now) {
-            $item->expiresAfter(self::$CACHE_TIME);
-            $kinder = $this->childInBlockService->getCurrentChildOfZeitblock($zeitblock, $now);
+            $cache = new FilesystemAdapter();
+            $value = $cache->get('zeitblock_' . $zeitblock->getId(), function (ItemInterface $item) use ($zeitblock, $now) {
+                $item->expiresAfter(self::$CACHE_TIME);
+                $kinder = $this->childInBlockService->getCurrentChildOfZeitblock($zeitblock, $now);
 
-            return sizeof($kinder);
-        });
-        return $value;
+                return sizeof($kinder);
+            });
+            return $value;
+        }catch (\Exception $exception){
+
+        }
+    return null;
     }
 
     public function calcChildsFromSchuljahrAndCity(Active $active, \DateTime $dateTime)

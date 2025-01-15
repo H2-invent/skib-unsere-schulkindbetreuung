@@ -306,7 +306,15 @@ class Kind
         }
 
         usort($block, function (Zeitblock $a, Zeitblock $b) {
-            return ($a->getVon() > $b->getVon() ? true : false);
+            $vonA = $a->getVon();
+            $vonB = $b->getVon();
+
+            if ($vonA instanceof \DateTime && $vonB instanceof \DateTime) {
+                return $vonA <=> $vonB;
+            }
+
+            // Fallback, falls die Werte nicht vergleichbar sind
+            return 0;
         });
 
         return new ArrayCollection($block);
