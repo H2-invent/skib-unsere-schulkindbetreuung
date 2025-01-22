@@ -16,11 +16,10 @@ Um diese Herausforderungen zu meistern, bietet SKIB unserer-schulkindbetreuung.d
 
 Das eingesparte Personal kann sich dann auf die wesentlichen Aufgaben konzentrieren: die direkte Arbeit mit den Kindern. Durch diese Entlastung wird nicht nur die Effizienz erhöht, sondern auch die Qualität der Betreuung verbessert. So können die Träger sicherstellen, dass die gesetzlichen Vorgaben zur Ganztagsbetreuung ab 2025 und 2026 erfüllt werden, während gleichzeitig die Bedürfnisse der Kinder in den Mittelpunkt rücken.
 
-__Wir beraten Schulträger bei der Digitalisierung Ihrer Schulkindbetreuung gerne individuell:__
+# Wir beraten Schulträger bei der Digitalisierung Ihrer Schulkindbetreuung gerne individuell:
 
-__info@unsere-schulkindbetreuung.de__
-
-__+49 07621-9515700__
+* info@unsere-schulkindbetreuung.de
+* +49 07621-9515700
 
 # License
 Weitere Informationen zur Lizenz finden Sie im License Dokument in diesem Repository.
