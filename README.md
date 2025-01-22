@@ -1,12 +1,27 @@
-# SKiB Schulkinbetreung, ein E-Service von Komunen
+# SKiB - Digitale Verwaltung der Schulkindbetreuung
 
-## Basis ist Symfony 4.4
+## Online Anmeldung und Verwaltung für die Schulkindbetreuung
 
-### Module:
-* FOSUser
-* noch auszufüllen
+Die Schulkindbetreuung bzw. Ganztagsbetreuung von Grundschulkindern ist eine komplexe Dienstleistung. Viele Menschen und Institutionen sind bei der Finanzierung, Planung, Verwaltung und Umsetzung beteiligt. 
 
+Der Schulträger von Morgen stellt eine innovative, moderne und transparente Informationsplattform, Anmeldung und Verwaltung allen Beteiligten zur Verfügung. Digitalisierung und umweltbewusstes Handeln sind zentrale Themen unserer Zeit.
 
-Aktuelle Medaille:
+## Jedes Kind hat einen gesetzlichen Anspruch auf eine Ganztagsbetreuung
 
-[![SymfonyInsight](https://insight.symfony.com/projects/ddf9a874-92d3-4a6d-9465-4e1c2ec5c554/big.svg)](https://insight.symfony.com/projects/ddf9a874-92d3-4a6d-9465-4e1c2ec5c554)
+Ab dem Jahr 2025 haben Eltern einen gesetzlichen Anspruch auf Ganztagsbetreuung für ihre Grundschulkinder. Dieser Rechtsanspruch wird ab 2026 in vollem Umfang umgesetzt.
+
+Allerdings ist die Situation bereits jetzt angespannt, da es an Betreuungspersonal bei den Schulträgern mangelt.
+
+Um diese Herausforderungen zu meistern, bietet SKIB unserer-schulkindbetreuung.de eine innovative Lösung an. Die Plattform ermöglicht es den Trägern, die Organisation und Verwaltung der Ganztagsbetreuung einfach und effizient zu digitalisieren. Dies führt dazu, dass bis zu 80% des Verwaltungsaufwands eingespart werden können.
+
+Das eingesparte Personal kann sich dann auf die wesentlichen Aufgaben konzentrieren: die direkte Arbeit mit den Kindern. Durch diese Entlastung wird nicht nur die Effizienz erhöht, sondern auch die Qualität der Betreuung verbessert. So können die Träger sicherstellen, dass die gesetzlichen Vorgaben zur Ganztagsbetreuung ab 2025 und 2026 erfüllt werden, während gleichzeitig die Bedürfnisse der Kinder in den Mittelpunkt rücken.
+
+__Wir beraten Schulträger bei der Digitalisierung Ihrer Schulkindbetreuung gerne individuell:__
+
+__info@unsere-schulkindbetreuung.de__
+
+__+49 07621-9515700__
+
+# License
+Weitere Informationen zur Lizenz finden Sie im License Dokument in diesem Repository.
+
