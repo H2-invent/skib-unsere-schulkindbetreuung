@@ -49,6 +49,10 @@ jobs:
           change_path: .
           version_format: "${major}.${minor}.${patch}"
 
+      - name: Set laF_version in .env
+        run: |
+          sed -i 's/^laF_version=.*/laF_version=${{ steps.version.outputs.version }}/' .env
+
       - name: Archive Release for application
         uses: thedoctor0/zip-release@0.7.1
         with:
@@ -57,15 +61,6 @@ jobs:
           exclusions: '*.git* *.github* /*node_modules/* /*nodejs/* /*var/* .editorconfig'
           directory: .
 
-      - name: Upload file
-        uses: tomasbkk/action-ftp-upload@v1.0
-        with:
-          user: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          host: ${{ secrets.FTP_HOST }}
-          src: artifact.zip
-          dest: skib-${{ steps.version.outputs.version }}.zip
-    
       - name: Create new Release with semantic-version tag
         uses: ncipollo/release-action@v1
         id: create_release
@@ -74,4 +69,7 @@ jobs:
           prerelease: false
           name: Release ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
-          body: Neuer Release erstellt und auf FTp Server hochgeladen.\nhttps://www3.h2-invent.com/h2-invent/artifacts/skib-${{ steps.version.outputs.version }}.zip
+          artifacts: artifact.zip
+          artifactContentType: application/zip
+          bodyFile: RELEASE_NOTE.md
+    
