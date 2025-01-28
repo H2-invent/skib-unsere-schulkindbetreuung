@@ -205,7 +205,12 @@
                                     </div>
                                 </div>
 
-
+                                <div class="row mb-3">
+                                    <div class="col-lg-4">
+                                        {{ form_row(form.settingsSkibShowPopupOnRegistration) }}
+                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settingsSkibPopupRegistrationText']) }}
+                                    </div>
+                                </div>
                                 <div class="row mb-3">
                                     <div class="col-lg-8">
                                         {{ 'Bezeichnung der Schuljahre (JSON-Objekt)'|trans }}

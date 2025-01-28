@@ -80,6 +80,10 @@ class StadtType extends AbstractType
             $stadt->translate('en')->setSchulindbetreuungPreiseFreitext('');
             $stadt->translate('fr')->setSchulindbetreuungPreiseFreitext('');
 
+            $stadt->translate('de')->setSettingsSkibPopupRegistrationText('');
+            $stadt->translate('en')->setSettingsSkibPopupRegistrationText('');
+            $stadt->translate('fr')->setSettingsSkibPopupRegistrationText('');
+
             foreach ($stadt->getNewTranslations() as $newTranslation) {
                 if (!$stadt->getTranslations()->contains($newTranslation) && !$stadt->getNewTranslations()->isEmpty()) {
                     $stadt->addTranslation($newTranslation);
@@ -125,6 +129,8 @@ class StadtType extends AbstractType
             ->add('settingsSkibShowSetStartDateOnChange', CheckboxType::class, ['required' => false, 'label' => 'Zeige das Startdatum für die Änderung beim bearbeiten eines Kindes an,', 'translation_domain' => 'form'])
             ->add('settingSkibDefaultNextChange', TextType::class, ['required' => false, 'label' => 'Startdatum einer Änderung vom aktuellen Zeitpunkt in php-Schreibweise (first day of next month)', 'translation_domain' => 'form'])
             ->add('hideChildQuestions', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die detaillierten Fragen bei der Kinderanmeldung', 'translation_domain' => 'form'])
+            ->add('settingsSkibShowPopupOnRegistration', CheckboxType::class, ['required' => false, 'label' => 'Zeige ein Popupfenster beim Abschluss der RRegistrierung durch die Eltern', 'translation_domain' => 'form'])
+
 
             ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])
             ->add('skibSettingsBypassBankdaten', CheckboxType::class, ['required' => false, 'label' => 'Es werden keine Bankdaten abgefragt', 'translation_domain' => 'form'])
@@ -332,7 +338,12 @@ class StadtType extends AbstractType
                             'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
                             'label' => 'Text, welcher den Eltern angezeigt wird, bevor diese Ihre Bankdaten eingeben können. Diese Meldung muss quitiert werden bevor sie weitergeleitet werden',
                             'translation_domain' => 'form'
-                        ]
+                        ],
+                         'settingsSkibPopupRegistrationText' => [
+        'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
+        'label' => 'Text des Popups, welches den Eltern vor Abschluss der Registrierung angezeigt wird.',
+        'translation_domain' => 'form'
+    ]
                     ]
                 ]
             )

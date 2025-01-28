@@ -41,8 +41,6 @@ class Zeitblock implements TranslatableInterface
     #[ORM\Column(type: 'integer')]
     private $wochentag;
 
-
-
     #[ORM\Column(type: 'integer')]
     private $ganztag;
 
@@ -385,6 +383,7 @@ class Zeitblock implements TranslatableInterface
                 return $date->modify('next sun');
                 break;
         }
+        return $date;
     }
 
     public function getMin(): ?int
