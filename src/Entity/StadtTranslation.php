@@ -67,6 +67,10 @@ class StadtTranslation implements TranslationInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $popUpTextVorBezahlung;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $settingsSkibPopupRegistrationText;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -347,6 +351,18 @@ class StadtTranslation implements TranslationInterface
     public function setPopUpTextVorBezahlung($popUpTextVorBezahlung): void
     {
         $this->popUpTextVorBezahlung = $popUpTextVorBezahlung;
+    }
+
+    public function getSettingsSkibPopupRegistrationText(): ?string
+    {
+        return $this->settingsSkibPopupRegistrationText;
+    }
+
+    public function setSettingsSkibPopupRegistrationText(?string $settingsSkibPopupRegistrationText): self
+    {
+        $this->settingsSkibPopupRegistrationText = $settingsSkibPopupRegistrationText;
+
+        return $this;
     }
 
 

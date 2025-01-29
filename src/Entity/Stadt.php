@@ -286,6 +286,11 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(nullable: true)]
     private ?bool $hideChildQuestions = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $settingsSkibShowPopupOnRegistration = null;
+
+
+
 
 
 
@@ -1398,6 +1403,18 @@ class Stadt implements TranslatableInterface
     public function setHideChildQuestions(?bool $hideChildQuestions): self
     {
         $this->hideChildQuestions = $hideChildQuestions;
+
+        return $this;
+    }
+
+    public function isSettingsSkibShowPopupOnRegistration(): ?bool
+    {
+        return $this->settingsSkibShowPopupOnRegistration;
+    }
+
+    public function setSettingsSkibShowPopupOnRegistration(?bool $settingsSkibShowPopupOnRegistration): self
+    {
+        $this->settingsSkibShowPopupOnRegistration = $settingsSkibShowPopupOnRegistration;
 
         return $this;
     }
