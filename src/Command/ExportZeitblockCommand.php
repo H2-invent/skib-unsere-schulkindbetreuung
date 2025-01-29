@@ -36,7 +36,7 @@ class ExportZeitblockCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $schuljahr = $this->entityManager->getRepository(Active::class)->find($input->getArgument('schuljahr'));
         $csvFile = $input->getArgument('csvFile');
-        dump($schuljahr);
+
         $zeitbloecke = $this->entityManager->getRepository(Zeitblock::class)->findBy(['active' => $schuljahr]);
 
         if (empty($zeitbloecke)) {
@@ -78,6 +78,7 @@ $csv->setDelimiter(';');
         }
 
         $io->success('Export erfolgreich!');
+        $io->success(sprintf('We print %s rows to the file "%s"', count($zeitbloecke), $csvFile));
         return Command::SUCCESS;
     }
 }

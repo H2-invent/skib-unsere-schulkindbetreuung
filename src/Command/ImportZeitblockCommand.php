@@ -36,14 +36,15 @@ class ImportZeitblockCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-
+        $io = new SymfonyStyle($input, $output);
         $csvFile = $input->getArgument('csvFile');
         $csv = Reader::createFromPath($csvFile, 'r');
         $csv->setDelimiter(';');
         $csv->setHeaderOffset(0);
 
         $notFoundIds = [];
-
+        $foundIds= [];
+        $newIds=[];
         foreach ($csv as $record) {
 
             $id = $record['id'] ?? null;
@@ -75,6 +76,7 @@ class ImportZeitblockCommand extends Command
                     $notFoundIds[] = $id;
                     continue;
                 }
+                $foundIds[]=$id;
             } else {
                 $zeitblock = new Zeitblock();
                 $zeitblock->setDeleted(false)
@@ -82,6 +84,7 @@ class ImportZeitblockCommand extends Command
                     ->setMax(0)
                     ->setDeaktiviert(false)
                     ->setHidePrice(false);
+                $newIds[] = $zeitblock;
             }
 
             $zeitblock->setPreise($preise);
@@ -102,7 +105,8 @@ class ImportZeitblockCommand extends Command
         }
 
         $output->writeln('<info>Import abgeschlossen!</info>');
-
+        $io->success(sprintf('We found %s id in the database',sizeof($foundIds)));
+        $io->success(sprintf('We created %s new timeslots in the database',sizeof($newIds)));
         return Command::SUCCESS;
     }
 }
