@@ -54,18 +54,18 @@ jobs:
         with:
           type: 'zip'
           filename: 'artifact.zip'
-          exclusions: '*.git* *.github* /*node_modules/* /*nodejs/* /*var/* .editorconfig'
+          exclusions: '*.git* *.github* /*node_modules/* /*var/* .editorconfig'
           directory: .
 
-      - name: Upload file
-        uses: tomasbkk/action-ftp-upload@v1.0
-        with:
-          user: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          host: ${{ secrets.FTP_HOST }}
-          src: artifact.zip
-          dest: skib-${{ steps.version.outputs.version }}.zip
-    
+#      - name: Upload file
+#        uses: tomasbkk/action-ftp-upload@v1.0
+#        with:
+#          user: ${{ secrets.FTP_USERNAME }}
+#          password: ${{ secrets.FTP_PASSWORD }}
+#          host: ${{ secrets.FTP_HOST }}
+#          src: artifact.zip
+#          dest: skib-${{ steps.version.outputs.version }}.zip
+
       - name: Create new Release with semantic-version tag
         uses: ncipollo/release-action@v1
         id: create_release
@@ -74,4 +74,5 @@ jobs:
           prerelease: false
           name: Release ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
-          body: Neuer Release erstellt und auf FTp Server hochgeladen.\nhttps://www3.h2-invent.com/h2-invent/artifacts/skib-${{ steps.version.outputs.version }}.zip
+          artifacts: artifact.zip
+          body: Neuer Release erstellt und als Artifact hochgeladen
