@@ -19,6 +19,7 @@
         "knplabs/doctrine-behaviors": "^2.6",
         "knpuniversity/oauth2-client-bundle": "^2.10",
         "league/commonmark": "^1.0",
+        "league/csv": "^9.21",
         "liip/imagine-bundle": "^2.3",
         "oneup/flysystem-bundle": "^4.1",
         "oneup/uploader-bundle": "^3.2",
