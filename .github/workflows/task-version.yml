@@ -3,7 +3,9 @@ name: Publish Docker image
 on:
   workflow_call:
     outputs:
-      version_output: ${{ jobs.detect_version.outputs.version }}
+      version_output:
+        description: Output next build version
+        value: ${{ jobs.detect_version.outputs.version }}
 jobs:
   detect_version:
     name: Build and Push Docker image
