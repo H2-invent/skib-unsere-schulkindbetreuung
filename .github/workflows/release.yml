@@ -9,17 +9,6 @@ on:
       - master
 
 jobs:
-  docker_image:
-    uses: ./.github/workflows/task-docker.yml
-    with:
-      reponame: 'h2invent/jitsi-admin-main'
-      dockerfile_path: './Dockerfile'
-      directory: '.'
-      version: h2invent/jitsi-admin-main:latest,h2invent/jitsi-admin-main:${{ needs.create_release.outputs.create_release_output }}
-    secrets:
-      dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
-      dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-
   build:
     runs-on: ubuntu-latest
     steps:
@@ -83,3 +72,16 @@ jobs:
           artifacts: artifact.zip
           artifactContentType: application/zip
           bodyFile: RELEASE_NOTE.md
+
+  docker_image:
+    needs:
+      - build
+    uses: ./.github/workflows/task-docker.yml
+    with:
+      reponame: 'git.h2-invent.com/unsere-schulkindbetreuung/application'
+      dockerfile_path: './Dockerfile'
+      directory: '.'
+      version: git.h2-invent.com/unsere-schulkindbetreuung/application:latest,git.h2-invent.com/unsere-schulkindbetreuung/application:${{ needs.create_release.outputs.create_release_output }}
+    secrets:
+      dockerhub_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+      dockerhub_username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
