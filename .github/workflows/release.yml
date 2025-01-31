@@ -84,6 +84,3 @@ jobs:
       dockerfile_path: './Dockerfile'
       directory: '.'
       version: git.h2-invent.com/unsere-schulkindbetreuung/application:latest,git.h2-invent.com/unsere-schulkindbetreuung/application:${{ needs.build.outputs.build_version_output }}
-    secrets:
-      dockerhub_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
-      dockerhub_username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
