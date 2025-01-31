@@ -20,7 +20,7 @@
 
 
     <tbody>
-    {% if schule.stadt.noSecCodeForChangeChilds %}
+    {% if not schule.stadt.noSecCodeForChangeChilds %}
         <tr>
             <td><h3 style="color: red">{{ 'Sicherheitscode bei Änderung'|trans }}:</h3></td>
             <td>____ ____ ____ ____ ____
