@@ -10,9 +10,9 @@ on:
 
 jobs:
   build:
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -24,7 +24,7 @@ jobs:
           extensions: gd,intl,mbstring
 
       - name: Install NPM Packages
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
@@ -58,7 +58,7 @@ jobs:
         with:
           type: 'zip'
           filename: 'artifact.zip'
-          exclusions: '*.git* *.github* /*node_modules/* /*nodejs/* /*var/* .editorconfig'
+          exclusions: '*.git* *.github* /*node_modules/* /*var/* .editorconfig'
           directory: .
 
       - name: Create new Release with semantic-version tag
@@ -72,4 +72,3 @@ jobs:
           artifacts: artifact.zip
           artifactContentType: application/zip
           bodyFile: RELEASE_NOTE.md
-    
