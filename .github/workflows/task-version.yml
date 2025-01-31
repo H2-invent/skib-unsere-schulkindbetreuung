@@ -3,11 +3,13 @@ name: Publish Docker image
 on:
   workflow_call:
     outputs:
-      version_output: ${{ steps.version.outputs.version }}
+      version_output: ${{ jobs.detect_version.outputs.version }}
 jobs:
-  push_to_registry:
+  detect_version:
     name: Build and Push Docker image
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
