@@ -44,15 +44,6 @@ jobs:
       - name: Remove node_modules
         run: rm -r node_modules
 
-      - uses: paulhatch/semantic-version@v5.0.2
-        id: version
-        with:
-          tag_prefix: ""
-          major_pattern: "(MAJOR)"
-          minor_pattern: "(MINOR)"
-          change_path: .
-          version_format: "${major}.${minor}.${patch}"
-
       - name: Set laF_version in .env
         run: |
           sed -i 's/^laF_version=.*/laF_version=${{ needs.version.outputs.version_output }}/' .env
