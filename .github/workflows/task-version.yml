@@ -2,7 +2,8 @@ name: Publish Docker image
 
 on:
   workflow_call:
-
+    outputs:
+      version_output: ${{ steps.version.outputs.version }}
 jobs:
   push_to_registry:
     name: Build and Push Docker image
