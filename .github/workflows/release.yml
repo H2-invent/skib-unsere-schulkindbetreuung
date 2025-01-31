@@ -70,7 +70,7 @@ jobs:
 
   docker_image:
     needs:
-      - build
+      - version
     uses: ./.github/workflows/task-docker.yml
     with:
       reponame: 'git.h2-invent.com/unsere-schulkindbetreuung/application'
