@@ -1,5 +1,11 @@
-FROM thecodingmachine/php:8.3-v4-fpm-node22 AS builder
+FROM thecodingmachine/php:8.2-v4-fpm-node22 AS builder
 ARG VERSION=development
+
+ENV PHP_EXTENSION_LDAP=1
+ENV PHP_EXTENSION_INTL=1
+ENV PHP_EXTENSION_BCMATH=1
+ENV COMPOSER_MEMORY_LIMIT=-1
+ENV PHP_EXTENSION_GD=1
 
 COPY . /var/www/html
 
