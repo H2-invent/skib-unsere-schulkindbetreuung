@@ -8,13 +8,15 @@ on:
         value: ${{ jobs.detect_version.outputs.version }}
 jobs:
   detect_version:
-    name: Build and Push Docker image
+    name: Get new version in Repo
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: paulhatch/semantic-version@v5.0.2
         id: version
