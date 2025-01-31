@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -24,7 +24,7 @@ jobs:
           extensions: gd,intl,mbstring
 
       - name: Install NPM Packages
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
@@ -49,6 +49,10 @@ jobs:
           change_path: .
           version_format: "${major}.${minor}.${patch}"
 
+      - name: Set laF_version in .env
+        run: |
+          sed -i 's/^laF_version=.*/laF_version=${{ steps.version.outputs.version }}/' .env
+
       - name: Archive Release for application
         uses: thedoctor0/zip-release@0.7.1
         with:
@@ -56,15 +60,6 @@ jobs:
           filename: 'artifact.zip'
           exclusions: '*.git* *.github* /*node_modules/* /*var/* .editorconfig'
           directory: .
-
-#      - name: Upload file
-#        uses: tomasbkk/action-ftp-upload@v1.0
-#        with:
-#          user: ${{ secrets.FTP_USERNAME }}
-#          password: ${{ secrets.FTP_PASSWORD }}
-#          host: ${{ secrets.FTP_HOST }}
-#          src: artifact.zip
-#          dest: skib-${{ steps.version.outputs.version }}.zip
 
       - name: Create new Release with semantic-version tag
         uses: ncipollo/release-action@v1
