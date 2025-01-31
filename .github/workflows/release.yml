@@ -76,7 +76,7 @@ jobs:
       reponame: 'git.h2-invent.com/unsere-schulkindbetreuung/application'
       dockerfile_path: './Dockerfile'
       directory: '.'
-      version: git.h2-invent.com/unsere-schulkindbetreuung/application:latest,git.h2-invent.com/unsere-schulkindbetreuung/application:${{ needs.version.outputs.version_output }}
+      version: ${{ needs.version.outputs.version_output }}
     secrets:
       docker_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
       docker_username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
