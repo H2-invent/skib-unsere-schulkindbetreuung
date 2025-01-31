@@ -1,0 +1,22 @@
+name: Publish Docker image
+
+on:
+  workflow_call:
+    outputs:
+      version_output: ${{ steps.version.outputs.version }}
+jobs:
+  push_to_registry:
+    name: Build and Push Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - uses: paulhatch/semantic-version@v5.0.2
+        id: version
+        with:
+          tag_prefix: ""
+          major_pattern: "(MAJOR)"
+          minor_pattern: "(MINOR)"
+          change_path: .
+          version_format: "${major}.${minor}.${patch}"

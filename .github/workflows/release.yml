@@ -9,10 +9,12 @@ on:
       - master
 
 jobs:
+  version:
+    uses: ./.github/workflows/task-version.yml
   build:
+    needs:
+      - version
     runs-on: ubuntu-latest
-    outputs:
-      build_version_output: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -42,18 +44,9 @@ jobs:
       - name: Remove node_modules
         run: rm -r node_modules
 
-      - uses: paulhatch/semantic-version@v5.0.2
-        id: version
-        with:
-          tag_prefix: ""
-          major_pattern: "(MAJOR)"
-          minor_pattern: "(MINOR)"
-          change_path: .
-          version_format: "${major}.${minor}.${patch}"
-
       - name: Set laF_version in .env
         run: |
-          sed -i 's/^laF_version=.*/laF_version=${{ steps.version.outputs.version }}/' .env
+          sed -i 's/^laF_version=.*/laF_version=${{ needs.version.outputs.version_output }}/' .env
 
       - name: Archive Release for application
         uses: thedoctor0/zip-release@0.7.1
@@ -69,18 +62,18 @@ jobs:
         with:
           draft: false
           prerelease: false
-          name: Release ${{ steps.version.outputs.version }}
-          tag: ${{ steps.version.outputs.version }}
+          name: Release ${{ needs.version.outputs.version_output }}
+          tag: ${{ needs.version.outputs.version_output }}
           artifacts: artifact.zip
           artifactContentType: application/zip
           bodyFile: RELEASE_NOTE.md
 
   docker_image:
     needs:
-      - build
+      - version
     uses: ./.github/workflows/task-docker.yml
     with:
       reponame: 'git.h2-invent.com/unsere-schulkindbetreuung/application'
       dockerfile_path: './Dockerfile'
       directory: '.'
-      version: git.h2-invent.com/unsere-schulkindbetreuung/application:latest,git.h2-invent.com/unsere-schulkindbetreuung/application:${{ needs.build.outputs.build_version_output }}
+      version: git.h2-invent.com/unsere-schulkindbetreuung/application:latest,git.h2-invent.com/unsere-schulkindbetreuung/application:${{ needs.version.outputs.version_output }}
