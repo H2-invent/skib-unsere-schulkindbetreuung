@@ -68,7 +68,6 @@ $csv->setDelimiter(';');
                     $zeitblock->getBis()->diff($zeitblock->getVon())->format('%H:%i:%s'),
                     '',
                     $zeitblock->getWochentag(),
-                    $zeitblock->getGanztag(),
                     $zeitblock->getGanztag()
             ];
             foreach ($zeitblock->getPreise() as $preis) {
