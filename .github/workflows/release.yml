@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      build_version_output: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -70,4 +72,15 @@ jobs:
           name: Release ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
           artifacts: artifact.zip
-          body: Neuer Release erstellt und als Artifact hochgeladen
+          artifactContentType: application/zip
+          bodyFile: RELEASE_NOTE.md
+
+  docker_image:
+    needs:
+      - build
+    uses: ./.github/workflows/task-docker.yml
+    with:
+      reponame: 'git.h2-invent.com/unsere-schulkindbetreuung/application'
+      dockerfile_path: './Dockerfile'
+      directory: '.'
+      version: git.h2-invent.com/unsere-schulkindbetreuung/application:latest,git.h2-invent.com/unsere-schulkindbetreuung/application:${{ needs.build.outputs.build_version_output }}
