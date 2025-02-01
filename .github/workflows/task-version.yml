@@ -26,3 +26,14 @@ jobs:
           minor_pattern: "(MINOR)"
           change_path: .
           version_format: "${major}.${minor}.${patch}"
+
+      - name: Create new Release with semantic-version tag
+        uses: ncipollo/release-action@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          allowUpdates: true
+          name: Release ${{ steps.version.outputs.version }}
+          tag: ${{ steps.version.outputs.version }}
+          bodyFile: RELEASE_NOTE.md
