@@ -33,6 +33,7 @@ jobs:
       dockerfile_path: './Dockerfile'
       directory: '.'
       version: ${{ needs.version.outputs.version_output }}
+      tags: git.h2-invent.com/unsere-schulkindbetreuung/application:${{ needs.version.outputs.version_output }},git.h2-invent.com/unsere-schulkindbetreuung/application:latest
     secrets:
       docker_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
       docker_username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
