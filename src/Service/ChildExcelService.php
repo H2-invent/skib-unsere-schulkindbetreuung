@@ -145,7 +145,8 @@ class ChildExcelService
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getArt());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getArtString());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSchule()->getName());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getVorname() . ' ' . $eltern->getName());
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getVorname());
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getName());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getStrasse());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getAdresszusatz());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getPlz());
@@ -264,7 +265,8 @@ class ChildExcelService
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Typ Numerisch'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Typ'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Schule'));
-        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Erziehungsberechtigter'));
+        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Erziehungsberechtigter Vorname'));
+        $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Erziehungsberechtigter Nachname'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Straße'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Adresse'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('PLZ'));
