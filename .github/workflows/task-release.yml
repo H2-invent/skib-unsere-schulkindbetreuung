@@ -43,4 +43,3 @@ jobs:
           tag: ${{ inputs.version }}
           artifacts: artifact/application.zip
           artifactContentType: application/zip
-          bodyFile: RELEASE_NOTE.md
