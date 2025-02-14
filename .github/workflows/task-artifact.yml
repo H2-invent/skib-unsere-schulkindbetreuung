@@ -7,17 +7,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install PHP Dependencies
-        uses: php-actions/composer@v6
         with:
-          php_version: ${{ vars.PHP_VERSION }}
-          php_extensions: ldap xsl zip
+          fetch-depth: 0
+
+      - name: Update PHP Version and tools
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ vars.PHP_VERSION }}
+          ini-values: date.timezone ="Europe/Berlin"
+          extensions: gd,intl,mbstring
 
       - name: Install NPM Packages
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Run composer Install
+        run: php composer.phar install
 
       - name: Install Node modules
         run: npm install
