@@ -11,6 +11,19 @@ on:
 jobs:
   version:
     uses: ./.github/workflows/task-version.yml
+
+  artifact:
+    uses: ./.github/workflows/task-artifact.yml
+
+  release:
+    needs:
+      - artifact
+      - version
+    uses: ./.github/workflows/task-release.yml
+    with:
+      version: ${{ needs.version.outputs.version }}
+      prerelease: false
+
   build:
     needs:
       - version
