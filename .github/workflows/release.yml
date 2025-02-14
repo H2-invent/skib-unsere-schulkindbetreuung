@@ -11,63 +11,18 @@ on:
 jobs:
   version:
     uses: ./.github/workflows/task-version.yml
-  build:
+
+  artifact:
+    uses: ./.github/workflows/task-artifact.yml
+
+  release:
     needs:
+      - artifact
       - version
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Update PHP Version and tools
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ vars.PHP_VERSION }}
-          ini-values: date.timezone ="Europe/Berlin"
-          extensions: gd,intl,mbstring
-
-      - name: Install NPM Packages
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
-
-      - name: Run composer Install
-        run: php composer.phar install
-        
-      - name: Install Node modules
-        run: npm install
-
-      - name: Build NPM Files
-        run: npm run build
-
-      - name: Remove node_modules
-        run: rm -r node_modules
-
-      - name: Set laF_version in .env
-        run: |
-          sed -i 's/^laF_version=.*/laF_version=${{ needs.version.outputs.version_output }}/' .env
-
-      - name: Archive Release for application
-        uses: thedoctor0/zip-release@0.7.1
-        with:
-          type: 'zip'
-          filename: 'artifact.zip'
-          exclusions: '*.git* *.github* /*node_modules/* /*var/* .editorconfig'
-          directory: .
-
-      - name: Create new Release with semantic-version tag
-        uses: ncipollo/release-action@v1
-        id: create_release
-        with:
-          draft: false
-          prerelease: false
-          allowUpdates: true
-          name: Release ${{ needs.version.outputs.version_output }}
-          tag: ${{ needs.version.outputs.version_output }}
-          artifacts: artifact.zip
-          artifactContentType: application/zip
-          bodyFile: RELEASE_NOTE.md
+    uses: ./.github/workflows/task-release.yml
+    with:
+      version: ${{ needs.version.outputs.version }}
+      prerelease: false
 
   docker_image:
     needs:
@@ -78,6 +33,7 @@ jobs:
       dockerfile_path: './Dockerfile'
       directory: '.'
       version: ${{ needs.version.outputs.version_output }}
+      tags: git.h2-invent.com/unsere-schulkindbetreuung/application:${{ needs.version.outputs.version_output }},git.h2-invent.com/unsere-schulkindbetreuung/application:latest
     secrets:
       docker_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
       docker_username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
