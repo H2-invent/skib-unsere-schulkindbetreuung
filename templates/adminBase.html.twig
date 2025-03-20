@@ -123,7 +123,10 @@
                 {% if is_granted('ROLE_ORG_BLOCK_MANAGEMENT') %}
 
                 {% endif %}
-
+                {% if is_granted('ROLE_ORG_KVJS') %}
+                    <li><a href="{{ path('app_kvjs_index')}}"> <i
+                                    class="material-icons">school</i>{% trans %}KVJS/Anfrage Gafög{% endtrans %}</a></li>
+                {% endif %}
                 {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
                     <li><a href="{{ path('block_schulen_schow',{'id':app.user.organisation.id}) }}"
                                 {{ isActiveNav('block_schulen_schow') ? ' class="active"' }}> <i
