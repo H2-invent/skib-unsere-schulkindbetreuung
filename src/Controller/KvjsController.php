@@ -52,9 +52,9 @@ class KvjsController extends AbstractController
                 ->setCellValue('B1', 'Nachname')
                 ->setCellValue('C1', 'Geburtsdatum (TT.MM.JJJJ)')
                 ->setCellValue('D1', 'Geschlecht (m/w/d)')
-                ->setCellValue('E1','Nimmt nimmt B3 in Anspruch (ja/nein)')
+                ->setCellValue('E1','Nimmt B3 in Anspruch (ja/nein)')
                 ->setCellValue('F1','Anzahl Stunden B3 (darf dann nicht leer oder 0 sein, wenn ja in Spalte davor bei Plausibilisierung')
-                ->setCellValue('G1','Nimmt nimmt B4 in Anspruch (ja/nein)')
+                ->setCellValue('G1','Nimmt B4 in Anspruch (ja/nein)')
                 ->setCellValue('H1','Anzahl Stunden B4');
             $count = 2;
             foreach ($childs as $child) {
