@@ -79,8 +79,7 @@ class WartelisteService
             $stammdatenNew->removeKind($data);
         }
         $stammdatenNew->addKind($kindNew);
-        dump($kindNew);
-        dump($stammdatenNew);
+
 
         $this->entityManager->persist($kindNew);
         $this->entityManager->persist($stammdatenNew);

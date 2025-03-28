@@ -22,7 +22,6 @@ class KvjsType extends AbstractType
                 'class' => Active::class,
                 'choices'=>$schuljahre,
                 'choice_label' => function (Active $schuljahr) {
-                dump($schuljahr);
                     return sprintf('%s/%s', $schuljahr->getVon()->format('Y'), $schuljahr->getBis()->format('Y'));
                 },
                 'label' => 'Schuljahr',
