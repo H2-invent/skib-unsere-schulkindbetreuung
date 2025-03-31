@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\Active;
 use App\Entity\Schule;
 use App\Entity\Zeitblock;
+use App\Entity\ZeitblockTranslation;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -86,7 +87,7 @@ class ImportZeitblockCommand extends Command
                     ->setHidePrice(false);
                 $newIds[] = $zeitblock;
             }
-
+            $anmerkung = $record['anmerkung']??null;
             $zeitblock->setPreise($preise);
             $zeitblock->setGanztag($ganztag);
             $zeitblock->setVon(new \DateTime($von));
@@ -94,6 +95,14 @@ class ImportZeitblockCommand extends Command
             $zeitblock->setWochentag($wochentag);
             $zeitblock->setSchule($schule);
             $zeitblock->setActive($schuljahr);
+            if ($anmerkung){
+//                dump($anmerkung);
+                $translation = new ZeitblockTranslation();
+                $translation->setExtraText(mb_convert_encoding($anmerkung, 'UTF-8', 'ISO-8859-1'));
+                $translation->setLocale('de');
+                $zeitblock->addTranslation($translation);
+                $this->entityManager->persist($translation);
+            }
 
             $this->entityManager->persist($zeitblock);
         }

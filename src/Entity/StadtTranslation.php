@@ -70,6 +70,12 @@ class StadtTranslation implements TranslationInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $settingsSkibPopupRegistrationText;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $settingsExtraTextEmailAnmeldungMitBeworben;
+
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $settingsExtraTextEmailAnmeldung;
 
     public function getId(): ?int
     {
@@ -363,6 +369,38 @@ class StadtTranslation implements TranslationInterface
         $this->settingsSkibPopupRegistrationText = $settingsSkibPopupRegistrationText;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsExtraTextEmailAnmeldungMitBeworben()
+    {
+        return $this->settingsExtraTextEmailAnmeldungMitBeworben;
+    }
+
+    /**
+     * @param mixed $settingsExtraTextEmailAnmeldungMitBeworben
+     */
+    public function setSettingsExtraTextEmailAnmeldungMitBeworben($settingsExtraTextEmailAnmeldungMitBeworben): void
+    {
+        $this->settingsExtraTextEmailAnmeldungMitBeworben = $settingsExtraTextEmailAnmeldungMitBeworben;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsExtraTextEmailAnmeldung()
+    {
+        return $this->settingsExtraTextEmailAnmeldung;
+    }
+
+    /**
+     * @param mixed $settingsExtraTextEmailAnmeldung
+     */
+    public function setSettingsExtraTextEmailAnmeldung($settingsExtraTextEmailAnmeldung): void
+    {
+        $this->settingsExtraTextEmailAnmeldung = $settingsExtraTextEmailAnmeldung;
     }
 
 

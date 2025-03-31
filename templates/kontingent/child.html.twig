@@ -61,50 +61,53 @@
                                 {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
 
                             <hr>
-                                <div class="btn-group btn-group-sm" role="group">
+                                <p>Zulassen</p>
+                                <div class="btn-group btn-group-sm d-flex flex-column" role="group">
                                     <a href="{{ path('kontingent_accept_kid',{'block_id':block.id,'kind_id':k.id}) }}"
                                        class="btn btn-success deleteAjaxConfirm no-shadow"><i
-                                                class="material-icons">check</i></a>
+                                                class="material-icons">check</i> Zulassen</a>
                                     <a href="{{ path('kontingent_accept_kid_silent',{'block_id':block.id,'kind_id':k.id}) }}"
                                        class="btn btn-light deleteAjaxConfirm"
                                        data-title="{{ 'Achtung!!! Keine Bestätigungs E-mail'|trans }}"
                                        data-text="{{ 'Dieses Kind zulassen aber KEINE E-Mail versenden.'|trans }}"><i
-                                                class="material-icons">voice_over_off</i></a>
+                                                class="material-icons">voice_over_off</i> Zulasse ohne Benachrichtigung</a>
                                     <a href="{{ path('kontingent_accept_kid_AllBlocks',{'block_id':block.id,'kind_id':k.id}) }}"
                                        class="btn btn-light deleteAjaxConfirm"
                                        data-title="{{ 'Diese Kind für alle angemeldeten Blöcke zulassen'|trans }}"
                                        data-text="{{ 'Sie lassen dieses Kind für alle Blöcke zu, zu dem dieses angemeldet ist. Wichtig es handelt sich nur um die Blöcke die zu diesem Kind zum diesem Zeitpunkt gehören.'|trans }}"><i
-                                                class="material-icons">group_add</i></a>
+                                                class="material-icons">group_add</i> Alle Blöcke dieses Kindes zulassen </a>
                                 </div>
 
                             <hr>
-                                <div class="btn-group btn-group-sm" role="group">
+                                <p>Warteliste</p>
+                                <div class="btn-group btn-group-sm d-flex flex-column" role="group">
                                     <a href="{{ path('warteliste_add_kid',{'block_id':block.id,'kind_id':k.id}) }}"
                                        class="btn btn-light deleteAjaxConfirm"
                                        data-title="{{ 'Kind zu Warteliste hinzufügen'|trans }}"
                                        data-text="{{ 'Wollen Sie dieses Kind auf die Warteliste für diesen Zeitblock setzen?'|trans }}"><i
-                                                class="material-icons"><span class="material-symbols-outlined">playlist_add</span></i></a>
+                                                class="material-icons"><span class="material-symbols-outlined">playlist_add</span></i> Diesen Block auf die Warteliste</a>
                                     <a href="{{ path('warteliste_add_completekid',{'kind_id':k.id}) }}"
                                        class="btn btn-light deleteAjaxConfirm"
                                        data-title="{{ 'Gesamtes Kind zu Warteliste hinzufügen'|trans }}"
                                        data-text="{{ 'Wollen Sie dieses Kind komplett auf die Warteliste setzen? Es werden alle angemeldeten und noch nicht gebuchten Zeitblöcke auf die Warteliste gesetzte.'|trans }}"><i
-                                                class="material-icons"><span class="material-symbols-outlined">recent_actors</span></i></a>
+                                                class="material-icons"><span class="material-symbols-outlined">recent_actors</span></i> GEsamtes Kind auf die Warteliste</a>
                                 </div>
                           <hr>
-                                <div class="btn-group btn-group-sm" role="group">
+                                <p>Bearbeiten</p>
+                                <div class="btn-group btn-group-sm d-flex flex-column" role="group">
                                     <a href="{{ path('kontingent_remove_kid',{'block_id':block.id,'kind_id':k.id}) }}"
-                                       class="btn btn-light deleteAjaxConfirm"><i class="material-icons">delete</i>
+                                       class="btn btn-light deleteAjaxConfirm"><i class="material-icons">delete</i> Löschen
                                     </a>
                                     <a href="{{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':k.id,'date':k.startDate|date('d.m.Y')}) }}"
                                        target="_blank"
                                        class="btn btn-light">
-                                        <i class="material-icons">info</i>
+                                        <i class="material-icons">info</i> Info
                                     </a>
 
                                     {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
                                         <a href="{{ path('child_change_seccode',{'kind_id':k.id}) }}"
                                            class="btn btn-light">
-                                            <i class="material-icons">edit</i>
+                                            <i class="material-icons">edit</i> Bearbeiten
                                         </a>
                                     {% endif %}
                                     {% endif %}

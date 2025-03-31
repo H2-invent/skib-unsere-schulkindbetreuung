@@ -33,76 +33,68 @@ class KvjsController extends AbstractController
         $user = $this->getUser();
         /**
          * @var Stadt
-         * */
+         */
         $stadt = $user->getStadt();
         $schuljahre = $stadt->getActives()->toArray();
         $form = $this->createForm(KvjsType::class, null, ['schuljahre' => $schuljahre]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Hier kannst du die verarbeiteten Daten nutzen
             $data = $form->getData();
-
             $type = $data['type'];
-            $childs = $this->childSearchService->searchChild(['schuljahr'=>$data['schuljahr']],$user->getOrganisation(),false,$user,new $data['datum']);
+            $childs = $this->childSearchService->searchChild(['schuljahr' => $data['schuljahr']], $user->getOrganisation(), false, $user, new $data['datum']);
 
-            $kvysSheet = $this->spreadSheet->createSheet();
-            $kvysSheet->setTitle('KVJS Datei Gafög')
-                ->setCellValue('A1', 'Vorname')
-                ->setCellValue('B1', 'Nachname')
-                ->setCellValue('C1', 'Geburtsdatum (TT.MM.JJJJ)')
-                ->setCellValue('D1', 'Geschlecht (m/w/d)')
-                ->setCellValue('E1','Nimmt B3 in Anspruch (ja/nein)')
-                ->setCellValue('F1','Anzahl Stunden B3 (darf dann nicht leer oder 0 sein, wenn ja in Spalte davor bei Plausibilisierung')
-                ->setCellValue('G1','Nimmt B4 in Anspruch (ja/nein)')
-                ->setCellValue('H1','Anzahl Stunden B4');
-            $count = 2;
+            $csvData = [];
+            $csvData[] = [
+                'Vorname', 'Nachname', 'Geburtsdatum (TT.MM.JJJJ)', 'Geschlecht (m/w/d)',
+                'Nimmt nimmt B3 in Anspruch (ja/nein)', 'Anzahl Stunden B3 (darf dann nicht leer oder 0 sein, wenn ja in Spalte davor bei Plausibilisierung',
+                'Nimmt nimmt B4 in Anspruch (ja/nein)', 'Anzahl Stunden B4'
+            ];
+
             foreach ($childs as $child) {
-                $kvysSheet->setCellValue('A'.$count, $child->getVorname())
-                    ->setCellValue('B'.$count, $child->getNachname())
-                    ->setCellValue('C'.$count,$child->getGeburtstag()->format('d.m.Y'))
-                    ->setCellValue('D'.$count,'n/a');
                 $time = 0;
                 foreach ($child->getZeitblocks() as $zeitblock) {
                     $diff = $zeitblock->getBis()->diff($zeitblock->getVon());
-                    $time +=($diff->h*60)+$diff->i;
+                    $time += ($diff->h * 60) + $diff->i;
                 }
-                if ($type === 'b3'){
-                    $kvysSheet->setCellValue('E'.$count,'ja')
-                    ->setCellValue('F'.$count,$time/60)
-                        ->setCellValue('G'.$count,'Nein')
-                        ->setCellValue('H'.$count,0);
-                }else if ($type === 'b4'){
-                    $kvysSheet->setCellValue('E'.$count,'Nein')
-                        ->setCellValue('F'.$count,'0')
-                        ->setCellValue('G'.$count,'ja')
-                        ->setCellValue('H'.$count,$time/60);
-                }
-                $count++;
+
+                $row = [
+                    $child->getVorname(),
+                    $child->getNachname(),
+                    $child->getGeburtstag()->format('d.m.Y'),
+                    'n/a',
+                    $type === 'b3' ? 'ja' : 'nein',
+                    $type === 'b3' ? $time / 60 : '',
+                    $type === 'b4' ? 'ja' : 'nein',
+                    $type === 'b4' ? $time / 60 : ''
+                ];
+
+                $csvData[] = $row;
             }
-            $sheetIndex = $this->spreadSheet->getIndex(
-                $this->spreadSheet->getSheetByName('Worksheet')
-            );
-            $this->spreadSheet->removeSheetByIndex($sheetIndex);
-            $this->spreadSheet->setActiveSheetIndex(0);
-            $writer = new Xlsx($this->spreadSheet);
 
+            $fileName = 'KVJS_Datei_Gafög_' . $data['datum']->format('Ymd') . '.csv';
 
-            // Create a Temporary file in the system
-            $fileName = 'KVJS Datei Gafög'.$data['datum']->format('Ymd').'.xlsx';
-            $temp_file = tempnam(sys_get_temp_dir(), $fileName);
+            $response = new Response();
+            $response->setContent($this->arrayToCsv($csvData));
+            $response->headers->set('Content-Type', 'text/csv');
+            $response->headers->set('Content-Disposition', ResponseHeaderBag::DISPOSITION_ATTACHMENT . '; filename="' . $fileName . '"');
 
-            // Create the excel file in the tmp directory of the system
-            $writer->save($temp_file);
-
-            // Return the excel file as an attachment
-            return $this->file($temp_file,  $fileName , ResponseHeaderBag::DISPOSITION_ATTACHMENT);
-
+            return $response;
         }
 
         return $this->render('kvjs/index.html.twig', [
             'controller_name' => 'KvjsController',
             'form' => $form->createView(),
         ]);
+    }
+
+    private function arrayToCsv(array $data): string
+    {
+        $output = fopen('php://temp', 'r+');
+        foreach ($data as $row) {
+            fputcsv($output, $row, ';');
+        }
+        rewind($output);
+        return stream_get_contents($output);
     }
 }
