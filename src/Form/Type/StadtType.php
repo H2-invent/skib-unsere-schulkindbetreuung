@@ -343,7 +343,17 @@ class StadtType extends AbstractType
         'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
         'label' => 'Text des Popups, welches den Eltern vor Abschluss der Registrierung angezeigt wird.',
         'translation_domain' => 'form'
-    ]
+    ],
+                        'settingsExtraTextEmailAnmeldungMitBeworben' => [
+                            'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
+                            'label' => 'Text welcher in der E-Mail für eine Anmeldung mit beworbenen Zeitblöcken zusätzlich angezeigt wird. (Markdown)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingsExtraTextEmailAnmeldung' => [
+                            'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
+                            'label' => 'Text welcher in der E-Mail für eine Anmeldung ohne beworbenen Zeitblöcken zusätzlich angezeigt wird. (Markdown)',
+                            'translation_domain' => 'form'
+                        ]
                     ]
                 ]
             )

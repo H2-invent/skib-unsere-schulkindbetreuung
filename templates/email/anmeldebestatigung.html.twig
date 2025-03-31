@@ -14,6 +14,11 @@
             Die Kontaktdaten sind in dem angehängten PDF angegeben.{% endtrans %}
     </p>
     <br>
+    {% if stadt.translate.settingsExtraTextEmailAnmeldung %}
+    <p>
+        {{ stadt.translate.settingsExtraTextEmailAnmeldung|markdown_to_html }}
+    </p>
+    {% endif %}
     <br>
     <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}<br>
     <b>{{ kind.schule.organisation.name }}</b></p>

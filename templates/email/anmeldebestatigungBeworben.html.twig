@@ -42,8 +42,13 @@
         </tbody>
     </table>
     <br>
+    {% if stadt.translate.settingsExtraTextEmailAnmeldungMitBeworben %}
+    <p>
+        {{ stadt.translate.settingsExtraTextEmailAnmeldungMitBeworben|markdown_to_html }}
+    </p>
+{% endif %}
     <br>
-    <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}<br>
+    <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre Organisation{% endtrans %}<br>
         <b>{{ kind.schule.organisation.name }}</b></p>
 
 
