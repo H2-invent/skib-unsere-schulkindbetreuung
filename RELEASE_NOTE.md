@@ -7,6 +7,7 @@ __🚀 Features:__
 __🐛 Bugfixes:__
 
 * Update Pipeline with new actions
+* Dezimaltrennzeichen , anstatt einem . in den KVYJ exports
 
 ## Files
 

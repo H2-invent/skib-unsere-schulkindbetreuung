@@ -64,9 +64,9 @@ class KvjsController extends AbstractController
                     $child->getGeburtstag()->format('d.m.Y'),
                     'n/a',
                     $type === 'b3' ? 'ja' : 'nein',
-                    $type === 'b3' ? $time / 60 : '',
+                    $type === 'b3' ? number_format($time / 60, 2, ',', '') : '',
                     $type === 'b4' ? 'ja' : 'nein',
-                    $type === 'b4' ? $time / 60 : ''
+                    $type === 'b4' ? number_format($time / 60, 2, ',', '') : ''
                 ];
 
                 $csvData[] = $row;
