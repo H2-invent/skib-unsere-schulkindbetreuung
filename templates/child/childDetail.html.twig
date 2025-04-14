@@ -130,14 +130,18 @@
                                     <td>{% trans %} Mein Kind darf an Ausflügen teilnehmen {% endtrans %}</td>
                                     <td>{{ k.ausfluege?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
+                                {% if k.schule.stadt.settingsSkibShowSonnencremeKinder != true %}
                                 <tr>
                                     <td>{% trans %} Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden {% endtrans %}</td>
                                     <td>{{ k.sonnencreme?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
+                                    {% endif %}
+                                {% if k.schule.stadt.settingsSkibShowZeckenKinder != true %}
                                 <tr>
                                     <td>{% trans %}Betreuer dürfen bei meinem Kind Zecken entfernen{% endtrans %}</td>
                                     <td>{{ k.zeckenEntfernen?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
+                                    {% endif %}
                                 <tr>
                                     <td>{% trans %}Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.{% endtrans %}</td>
                                     <td>{{ k.fotos?"Ja"|trans:'Nein'|trans }}</td>

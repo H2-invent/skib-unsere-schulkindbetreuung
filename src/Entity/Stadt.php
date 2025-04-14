@@ -289,6 +289,12 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(nullable: true)]
     private ?bool $settingsSkibShowPopupOnRegistration = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $settingsSkibShowSonnencremeKinder = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $settingsSkibShowZeckenKinder = null;
+
 
 
 
@@ -1415,6 +1421,30 @@ class Stadt implements TranslatableInterface
     public function setSettingsSkibShowPopupOnRegistration(?bool $settingsSkibShowPopupOnRegistration): self
     {
         $this->settingsSkibShowPopupOnRegistration = $settingsSkibShowPopupOnRegistration;
+
+        return $this;
+    }
+
+    public function isSettingsSkibShowSonnencremeKinder(): ?bool
+    {
+        return $this->settingsSkibShowSonnencremeKinder;
+    }
+
+    public function setSettingsSkibShowSonnencremeKinder(?bool $settingsSkibShowSonnencremeKinder): self
+    {
+        $this->settingsSkibShowSonnencremeKinder = $settingsSkibShowSonnencremeKinder;
+
+        return $this;
+    }
+
+    public function isSettingsSkibShowZeckenKinder(): ?bool
+    {
+        return $this->settingsSkibShowZeckenKinder;
+    }
+
+    public function setSettingsSkibShowZeckenKinder(?bool $settingsSkibShowZeckenKinder): self
+    {
+        $this->settingsSkibShowZeckenKinder = $settingsSkibShowZeckenKinder;
 
         return $this;
     }
