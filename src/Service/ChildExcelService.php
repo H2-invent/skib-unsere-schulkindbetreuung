@@ -162,11 +162,16 @@ class ChildExcelService
                 if (!$data->getSchule()->getStadt()->isHideChildQuestions()) {
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getMedikamente());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAllergie());
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getZeckenEntfernen());
+                    if ($data->getSchule()->getStadt()->isSettingsSkibShowZeckenKinder()) {
+                        $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getZeckenEntfernen());
+                    }
+
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getGluten());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSchweinefleisch());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getLaktose());
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSonnencreme());
+                    if ($data->getSchule()->getStadt()->isSettingsSkibShowSonnencremeKinder()) {
+                        $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSonnencreme());
+                    }
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAusfluege());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAlleineHause());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getFotos());
@@ -279,14 +284,19 @@ class ChildExcelService
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Abholung durch'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Masernimpfung'));
         $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Bemerkung'));
-        if (!$this->stadt->isHideChildQuestions()){
+        if (!$this->stadt->isHideChildQuestions()) {
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Medikamente'));
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Allergien'));
-            $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Zecken dürfen entfernt werden'));
+            if ($this->stadt->isSettingsSkibShowZeckenKinder()) {
+                $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Zecken dürfen entfernt werden'));
+
+            }
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Gluten intolerant'));
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Kein Schweinefleisch'));
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Laktose intolerant'));
-            $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Darf mit Sonnencreme eingecremt werden'));
+            if ($this->stadt->isSettingsSkibShowSonnencremeKinder()) {
+                $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Darf mit Sonnencreme eingecremt werden'));
+            }
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Darf an Ausflügen teilnehmen'));
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Darf alleine nach Hause'));
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Fotos dürfen veröffentlicht werden'));
