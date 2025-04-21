@@ -27,7 +27,7 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class StadtType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 
         $stadt = $options['data'];
@@ -130,6 +130,8 @@ class StadtType extends AbstractType
             ->add('settingSkibDefaultNextChange', TextType::class, ['required' => false, 'label' => 'Startdatum einer Änderung vom aktuellen Zeitpunkt in php-Schreibweise (first day of next month)', 'translation_domain' => 'form'])
             ->add('hideChildQuestions', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die detaillierten Fragen bei der Kinderanmeldung', 'translation_domain' => 'form'])
             ->add('settingsSkibShowPopupOnRegistration', CheckboxType::class, ['required' => false, 'label' => 'Zeige ein Popupfenster beim Abschluss der RRegistrierung durch die Eltern', 'translation_domain' => 'form'])
+            ->add('settingsSkibShowSonnencremeKinder', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer bei den Kindern Zecken entfernen dürfen', 'translation_domain' => 'form'])
+            ->add('settingsSkibShowZeckenKinder', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer die Kinder mit Sonnencreme eincremen dürfen', 'translation_domain' => 'form'])
 
 
             ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])
