@@ -978,6 +978,13 @@ class Kind
 
         return $this;
     }
-
-
+    public function getSchuljahr():?Active{
+     if ($this->zeitblocks){
+         return $this->zeitblocks[0]->getActive();
+     }
+     if ($this->beworben){
+         return $this->beworben[0]->getActive();
+     }
+     return  null;
+    }
 }

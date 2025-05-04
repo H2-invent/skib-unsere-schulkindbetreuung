@@ -80,7 +80,9 @@ class CopyChildsCommand extends Command
         }
 
         if ($input->getArgument('schuljahrsMatrix')) {
+            dump($input->getArgument('schuljahrsMatrix'));
             $matrix = json_decode($input->getArgument('schuljahrsMatrix'), true);
+            dump($matrix);
         }
         if ($input->getArgument('schuljahrsMatrix')) {
             $blockMatrix = json_decode($input->getArgument('blockmatrix'), true);
@@ -90,7 +92,7 @@ class CopyChildsCommand extends Command
         $kinderTarget = $this->childSearchService->searchChild(array('schuljahr' => $targetActive), null, false, null, $targetActive->getVon(), null, $sourceActive->getStadt());
         if (sizeof($kinderTarget) > 0) {
             $helper = $this->getHelper('question');
-            $question = new ConfirmationQuestion(sprintf('Es existieren bereits %s Kinder in dem ZielSchuljahr. Wollen Sie fortfahren?',sizeof($kinderTarget)), false,
+            $question = new ConfirmationQuestion(sprintf('Es existieren bereits %s Kinder in dem ZielSchuljahr. Wollen Sie fortfahren?(y|N)',sizeof($kinderTarget)), false,
                 '/^(y|j)/i');
 
             if (!$helper->ask($input, $output, $question)) {

@@ -63,6 +63,7 @@ class CopyChildToNewSchuljahr
 
 
             foreach ($kinder as $kind) {
+
                 if (isset($matrix[$kind->getKlasse()])) {
                     $neuesSchuljahr = $matrix[$kind->getKlasse()];
                     $blocks = $kind->getZeitblocks()->toArray();
@@ -83,13 +84,16 @@ class CopyChildToNewSchuljahr
                                 }
                             }
                         } else {
+
                             $tmpBlock = $this->entityManager->getRepository(Zeitblock::class)->findOneBy(array('active' => $target, 'cloneOf' => $block));
+
                             if ($tmpBlock) {
                                 $kindTmp->addZeitblock($tmpBlock);
+
                             }
                         }
                     }
-                    foreach ($kinderTmp->getBeworben() as $beworben) {
+                    foreach ($kindTmp->getBeworben() as $beworben) {
                         $kindTmp->removeBeworben($beworben);
                     }
                     $kindTmp->setEltern($elternNeu);

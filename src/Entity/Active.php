@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
@@ -36,6 +37,9 @@ class Active
 
     #[ORM\ManyToMany(targetEntity: News::class, mappedBy: 'schuljahre')]
     private $news;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $specialCalculationFormular = null;
 
 
 
@@ -163,6 +167,18 @@ class Active
         if ($this->news->removeElement($news)) {
             $news->removeSchuljahre($this);
         }
+
+        return $this;
+    }
+
+    public function getSpecialCalculationFormular(): ?string
+    {
+        return $this->specialCalculationFormular;
+    }
+
+    public function setSpecialCalculationFormular(?string $specialCalculationFormular): self
+    {
+        $this->specialCalculationFormular = $specialCalculationFormular;
 
         return $this;
     }
