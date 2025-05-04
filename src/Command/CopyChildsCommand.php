@@ -80,9 +80,11 @@ class CopyChildsCommand extends Command
         }
 
         if ($input->getArgument('schuljahrsMatrix')) {
-            dump($input->getArgument('schuljahrsMatrix'));
+            $io->info($input->getArgument('schuljahrsMatrix'));
+
             $matrix = json_decode($input->getArgument('schuljahrsMatrix'), true);
-            dump($matrix);
+            $io->info($matrix);
+
         }
         if ($input->getArgument('schuljahrsMatrix')) {
             $blockMatrix = json_decode($input->getArgument('blockmatrix'), true);
