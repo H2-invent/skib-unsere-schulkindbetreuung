@@ -53,7 +53,9 @@ class ImportZeitblockCommand extends Command
 
             // Preise extrahieren (Annahme: Spalten "Preis 1", "Preis 2", ... existieren)
             foreach ($record as $key => $value) {
-                if (str_starts_with($key, 'preis') && !empty($value)) {
+
+                if (str_starts_with($key, 'preis') ) {
+                
                     $preise[] = (float) str_replace(',', '.', $value);
                 }
             }

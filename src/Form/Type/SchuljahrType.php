@@ -30,6 +30,7 @@ class SchuljahrType extends AbstractType
             ->add('bis', DateType::class,array('widget'=>'single_text','label'=>'Schuljahresende','required'=>true,'translation_domain' => 'form'))
             ->add('anmeldeStart', DateType::class,array('widget'=>'single_text','label'=>'Beginn der Anmeldung','required'=>true,'translation_domain' => 'form'))
             ->add('anmeldeEnde', DateType::class,array('widget'=>'single_text','label'=>'Ende der Anmeldung','required'=>true,'translation_domain' => 'form'))
+            ->add('specialCalculationFormular', TextareaType::class,array('label'=>'Berechnungsformel nur für dieses Schuljahr gültig (optional)','required'=>false,'translation_domain' => 'form'))
             ->add('save', SubmitType::class, ['label' => 'Speichern','translation_domain' => 'form'])
         ;
     }

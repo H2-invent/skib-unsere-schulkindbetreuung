@@ -32,7 +32,11 @@ class BerechnungsService
         unset($geschwister[$kind->getTracing()]);
         $kinder = $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($adresse, $stichtag, $demo);
         $summe = 0;
-        eval($stadt->getBerechnungsFormel());
+        $formel = $stadt->getBerechnungsFormel();
+        if ($kind->getSchuljahr() and $kind->getSchuljahr()->getSpecialCalculationFormular()){
+            $formel = $kind->getRealZeitblocks()[0]->getActive()->getSpecialCalculationFormular();
+        }
+        eval($formel);
         return $summe;
     }
 
