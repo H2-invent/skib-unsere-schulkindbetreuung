@@ -135,7 +135,6 @@ class Kind
     #[ORM\JoinTable(name: 'kinder___moved_to_warteliste')]
     #[ORM\JoinColumn(name: 'kind_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'zeitblock_id', referencedColumnName: 'id')]
-
     private Collection $movedToWaiting;
 
 
@@ -143,15 +142,17 @@ class Kind
     {
         return $this->tracing;
     }
+
     public function __toString()
     {
-       return $this->tracing;
+        return $this->tracing;
     }
 
-    public function __clone() {
-        $this->zeitblocks= new ArrayCollection();
-        $this->beworben= new ArrayCollection();
-        $this->warteliste= new ArrayCollection();
+    public function __clone()
+    {
+        $this->zeitblocks = new ArrayCollection();
+        $this->beworben = new ArrayCollection();
+        $this->warteliste = new ArrayCollection();
         $this->id = null;
     }
 
@@ -179,7 +180,7 @@ class Kind
 
     public function getEltern(): ?Stammdaten
     {
-            return $this->eltern;
+        return $this->eltern;
     }
 
     public function setEltern(?Stammdaten $eltern): self
@@ -978,13 +979,18 @@ class Kind
 
         return $this;
     }
-    public function getSchuljahr():?Active{
-     if ($this->zeitblocks){
-         return $this->zeitblocks[0]->getActive();
-     }
-     if ($this->beworben){
-         return $this->beworben[0]->getActive();
-     }
-     return  null;
+
+    public function getSchuljahr(): ?Active
+    {
+        if ($this->zeitblocks->count() > 0) {
+            return $this->zeitblocks[0]->getActive();
+        }
+        if ($this->beworben->count() > 0) {
+            return $this->beworben[0]->getActive();
+        }
+        if ($this->warteliste->count() > 0) {
+            return $this->warteliste[0]->getActive();
+        }
+        return null;
     }
 }
