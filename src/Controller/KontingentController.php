@@ -16,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -24,7 +26,11 @@ class KontingentController extends AbstractController
 {
     private KontingentAcceptService $acceptService;
     private LoggerInterface $logger;
-    public function __construct(KontingentAcceptService $kontingentAcceptService, LoggerInterface $logger, private ManagerRegistry $managerRegistry)
+    public function __construct(
+        KontingentAcceptService $kontingentAcceptService,
+        LoggerInterface $logger,
+        private ManagerRegistry $managerRegistry,
+    private LoerrachWorkflowController $loerrachWorkflowController)
     {
         $this->acceptService = $kontingentAcceptService;
         $this->logger = $logger;
@@ -63,6 +69,71 @@ class KontingentController extends AbstractController
 
     }
 
+    /**
+     * @Route("/org_accept/download_kids", name="kontingent_download_kids",methods={"GET"})
+     */
+    public function downloadAllKids(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        if ($this->getUser()->getOrganisation() != $block->getSchule()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+
+        $kind = $this->managerRegistry->getRepository(Kind::class)->findBeworbenByZeitblock($block);
+
+        $csvData = [];
+        $csvData[] = [
+            'Vorname',
+            'Nachname',
+            'Geburtsdatum (TT.MM.JJJJ)',
+            'Jahrgang',
+            'Bemerkung',
+            'Eltern',
+            'Berufliche Situation',
+            'Alleinerziehend'
+        ];
+
+        foreach ($kind as $child) {
+            /**
+             * @var Kind $child
+             */
+            $workflow = $this->loerrachWorkflowController;
+            $beruflicheSituation = array_flip($workflow->beruflicheSituation)[$child->getEltern()->getBeruflicheSituation()] ?? 'Keine Angabe';
+
+            $row = [
+                $child->getVorname(),
+                $child->getNachname(),
+                $child->getGeburtstag()->format('d.m.Y'),
+                $child->getKlasseString(),
+                $child->getBemerkung(),
+                $child->getEltern()->getVorname().' '.$child->getEltern()->getName(),
+                $beruflicheSituation,
+                $child->getEltern()->getAlleinerziehend()?'Ja':'Nein'
+            ];
+
+            $csvData[] = $row;
+        }
+
+        $fileName = 'Angemeldete Kinder im Block: '.$block->getId().'.csv';
+
+        $response = new Response();
+        $response->setContent($this->arrayToCsv($csvData));
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', ResponseHeaderBag::DISPOSITION_ATTACHMENT . '; filename="' . $fileName . '"');
+
+        return $response;
+    }
+
+    private function arrayToCsv(array $data): string
+    {
+        $output = fopen('php://temp', 'r+');
+        foreach ($data as $row) {
+            fputcsv($output, $row, ';');
+        }
+        rewind($output);
+        return stream_get_contents($output);
+    }
     /**
      * @Route("/org_accept/accept/kid", name="kontingent_accept_kid",methods={"GET"})
      */
