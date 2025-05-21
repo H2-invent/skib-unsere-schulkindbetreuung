@@ -62,28 +62,33 @@ $('#toggle-btn').on('click', function (e) {
         $('.page').toggleClass('active-sm');
     }
 });
-try {
-    const table = $('table');
-    if (table.find('thead').length > 0) {
-        table.DataTable({
-            buttons: [
-                {
-                    extend: 'excelHtml5',
-                    text: 'Save current page',
-                    exportOptions: {
-                        modifier: {
-                            page: 'current'
+initTable();
+function initTable() {
+    try {
+        const tables = document.querySelectorAll('table');
+        tables.forEach((element) => {
+            if (element.querySelector('thead')) {
+                $(element).DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'excelHtml5',
+                            text: 'Save current page',
+                            exportOptions: {
+                                modifier: {
+                                    page: 'current'
+                                }
+                            }
                         }
-                    }
-                }
-            ]
+                    ]
+                });
+            }
         });
+    } catch (e) {
+        console.error(e);
     }
-
-} catch
-    (e) {
-
 }
+
 
 
 $(document).ready(function () {
@@ -351,7 +356,7 @@ function inintDeleteAjax() {
                             $('#blockContent').load(loadUrl,()=>{
                                 initdateRangepicker();
                                 initSelectDate();
-
+                                updateViewFromCookie();
                             })
                         }
                     });
@@ -387,4 +392,57 @@ function initSelectDate() {
             }
         });
     });
+}
+
+function setCookie(name, value, days = 30) {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+}
+
+// Hilfsfunktion: Cookie lesen
+function getCookie(name) {
+    return document.cookie.split('; ').reduce((r, v) => {
+        const parts = v.split('=');
+        return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+    }, null);
+}
+
+// Ansicht aktualisieren (Tabelle oder Kachel)
+function updateView(view) {
+    const tableView = document.getElementById('tableView');
+    const gridView = document.getElementById('tileView');
+
+    if (view === 'tableView') {
+        tableView.style.display = 'block';
+        gridView.style.display = 'none';
+
+
+    } else if (view === 'tileView') {
+        tableView.style.display = 'none';
+        gridView.style.display = 'block';
+    }
+
+    // Auswahl im Dropdown synchronisieren
+    const selector = document.getElementById('tableSelector');
+    if (selector) selector.value = view;
+}
+
+// Event-Listener für Dropdown-Auswahl
+document.addEventListener('change', (e) => {
+    const selector = e.target.closest('#tableSelector');
+    if (selector) {
+        const selectedView = selector.value;
+        setCookie('preferredView', selectedView);
+        updateView(selectedView);
+    }
+});
+
+// Beim Laden: Cookie prüfen & Ansicht initial setzen
+document.addEventListener('DOMContentLoaded', () => {
+ updateViewFromCookie();
+});
+
+function updateViewFromCookie() {
+    const savedView = getCookie('preferredView') || 'table'; // Standard: Tabelle
+    updateView(savedView);
 }
