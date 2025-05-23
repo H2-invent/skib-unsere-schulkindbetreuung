@@ -7,6 +7,7 @@ use App\Entity\Kind;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Form\Type\LoerrachEltern;
+use App\Repository\StammdatenRepository;
 use App\Service\ErrorService;
 use App\Service\SchulkindBetreuungAdresseService;
 use App\Service\StammdatenEditEmailService;
@@ -26,9 +27,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EditStammdatenController extends AbstractController
 {
-    public function __construct(private ManagerRegistry $managerRegistry)
+    public function __construct(
+        private ManagerRegistry      $managerRegistry,
+        private StammdatenRepository $stammdatenRepository)
     {
     }
+
     /**
      * @Route("/org_child/stammdaten/edit/seccode", name="edit_stammdaten_seccode")
      */
@@ -85,12 +89,12 @@ class EditStammdatenController extends AbstractController
 
 
         $stadt = $this->getUser()->getOrganisation()->getStadt();
-        $schuljahr = $this->managerRegistry->getRepository(Active::class)->findSchuljahrFromStamdaten($workingCopyStammdaten);
+        $schuljahr = $this->getSchuljahrForStammdaten($workingCopyStammdaten);
 
         $nextDateTmp = new \DateTime();
-        if ($nextDateTmp < $schuljahr->getVon()){
-           $nextDate = clone $schuljahr->getVon();
-        }else{
+        if ($nextDateTmp < $schuljahr->getVon()) {
+            $nextDate = clone $schuljahr->getVon();
+        } else {
             $nextDate = (clone $nextDateTmp)->modify($stadt->getSettingSkibDefaultNextChange());
         }
 
@@ -136,8 +140,8 @@ class EditStammdatenController extends AbstractController
                 $adresse->setCreatedAt(new \DateTime());
                 $schulkindBetreuungAdresseService->setAdress($adresse, true, $request->getClientIp());
                 $abschluss->abschluss($adresse, $this->getUser()->getOrganisation()->getStadt(), null, true);
-                $stammdatenEditEmailService->sendEmail($adresse,$this->getUser()->getOrganisation(),'');
-                $stammdatenEditEmailService->send($stammdaten,$this->getUser()->getOrganisation());
+                $stammdatenEditEmailService->sendEmail($adresse, $this->getUser()->getOrganisation(), '');
+                $stammdatenEditEmailService->send($stammdaten, $this->getUser()->getOrganisation());
                 return $this->redirectToRoute('child_show', array('id' => $this->getUser()->getOrganisation()->getId(), 'snack' => $translator->trans('Stammdaten gespeichert')));
 
             }
@@ -145,5 +149,24 @@ class EditStammdatenController extends AbstractController
         }
 
         return $this->render('edit_stammdaten/index.html.twig', array('title' => ' Stammdaten bearbeiten', 'stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errorsString));
+    }
+
+    private function getSchuljahrForStammdaten(Stammdaten $stammdaten):?Active
+    {
+        $allStammdaten = $this->stammdatenRepository->findBy(['tracing' => $stammdaten->getTracing()]);
+        foreach ($allStammdaten as $item) {
+            foreach ($item->getKinds() as $kind){
+                foreach ($kind->getZeitblocks() as $block){
+                    return $block->getActive();
+                }
+                foreach ($kind->getBeworben() as $beworben){
+                    return  $beworben->getActive();
+                }
+                foreach ($kind->getWarteliste() as $warteliste){
+                    return  $warteliste->getActive();
+                }
+            }
+        }
+
     }
 }

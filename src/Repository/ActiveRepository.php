@@ -113,21 +113,23 @@ class ActiveRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Active
+     * @return Active|null
      */
     public function findSchuljahrFromStamdaten(Stammdaten $stammdaten): ?Active
     {
         $qb = $this->createQueryBuilder('a');
-        $qb->innerJoin('a.blocks', 'blocks')
-            ->innerJoin('blocks.kind', 'kind')
-            ->innerJoin('kind.eltern', 'eltern')
-            ->leftJoin('blocks.kinderBeworben', 'kinderBeworben')
-            ->leftJoin('kinderBeworben.eltern', 'elternBeworben')
-            ->orWhere(
-                $qb->expr()->orX(
-                    'eltern.tracing = :eltern', 'elternBeworben.tracing =:eltern'
-                )
+
+        $qb->innerJoin('a.blocks', 'blocks') // Zeitblöcke mit "Active"-Element
+        ->innerJoin('blocks.kind', 'kind') // Kind, das mit einem Zeitblock verknüpft ist
+        ->innerJoin('kind.eltern', 'eltern') // Eltern des Kinds
+        ->innerJoin('blocks.kinderBeworben', 'kinderBeworben') // Bewerbungen auf diesen Block
+        ->innerJoin('kinderBeworben.eltern', 'elternBeworben') // Eltern der Kinder aus Bewerbungen
+        ->where( // Filtern nach Eltern oder beworbenen Eltern, die zum übergebenen tracing passen
+            $qb->expr()->orX(
+                $qb->expr()->eq('eltern.tracing', ':eltern'),
+                $qb->expr()->eq('elternBeworben.tracing', ':eltern')
             )
+        )
             ->setParameter('eltern', $stammdaten->getTracing())
             ->setMaxResults(1);
 

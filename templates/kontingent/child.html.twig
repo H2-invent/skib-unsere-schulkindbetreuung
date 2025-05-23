@@ -50,11 +50,11 @@
                 </div>
 
                     <div class="col-12">
-
-
                         <div id="blockContent">
                             <div  id="blockContentContent">
                                 <div id="tileView">
+                                    <div class="row">
+
                                     {% for k in kinder %}
                                         {% set eltern = getEltern(k,k.startDate) %}
                                         <div class="col-3 pb-4">
@@ -237,6 +237,7 @@
                                             </div>
                                         </div>
                                     {% endfor %}
+                                    </div>
                                 </div>
                                 <div id="tableView">
                                     <table id="kidsTable" class="table table-striped table-bordered">
@@ -250,6 +251,7 @@
                                             <th>Eltern</th>
                                             <th>Berufliche Situation</th>
                                             <th>Alleinerziehend</th>
+                                            <th>Angelegt am</th>
                                             <th>Aktionen</th>
                                         </tr>
                                         </thead>
@@ -265,7 +267,7 @@
                                                 <td>{{ eltern.vorname }} {{ eltern.name }}</td>
                                                 <td>{{ getBerufstatig(k) }}</td>
                                                 <td>{{ eltern.alleinerziehend ? 'Ja' : 'Nein'|trans }}</td>
-
+                                                <td>{{ k.eltern.createdAt|date('d.m.Y H:i') }}</td>
                                                 <td>
                                                     <div class="dropdown">
                                                         <button class="btn btn-sm btn-light dropdown-toggle"
