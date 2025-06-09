@@ -48,6 +48,10 @@
                                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#ferienbetreeuung"
                                    role="tab" aria-controls="contact" aria-selected="false">Ferienbetreuung</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="email-tab" data-toggle="tab" href="#emails"
+                                   role="tab" aria-controls="contact" aria-selected="false">Emails</a>
+                            </li>
                         </ul>
 
                         <div class="tab-content" id="myTabContent">
@@ -178,8 +182,8 @@
                                     <div class="col-12">
                                         <h3>Kinderfragen</h3>
 
-                                            {{ form_widget(form.settingsSkibShowZeckenKinder) }}
-                                            {{ form_widget(form.settingsSkibShowSonnencremeKinder) }}
+                                        {{ form_widget(form.settingsSkibShowZeckenKinder) }}
+                                        {{ form_widget(form.settingsSkibShowSonnencremeKinder) }}
 
 
                                     </div>
@@ -319,28 +323,94 @@
                             <div class="tab-pane fade" id="ferienbetreeuung" role="tabpanel"
                                  aria-labelledby="profile-tab"><h2>Ferienbetreuung</h2></div>
 
+                            <div class="tab-pane fade" id="emails" role="tabpanel"
+                                 aria-labelledby="profile-tab"><h2>E-Mails</h2>
+                                <hr>
+                                <div class="card card-body">
+                                    {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateAnmeldung']) }}
+                                    <a href="{{ path('app_send_test_email_for_template',{'template':'anmeldebestatigungBeworben','stadt':stadt.id}) }}" target="_blank">Testmail senden, nach dem speichern des Templates</a>
+
+                                </div>
+                                <div class="card card-body">
+                                  {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateBuchung']) }}
+                                <a  href="{{ path('app_send_test_email_for_template',{'template':'anmeldebestatigung','stadt':stadt.id}) }}" target="_blank">Testmail senden, nach dem speichern des Templates</a>
+                                </div>
+                                <div class="card card-body">
+                                {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateAbmeldung']) }}
+                                <a  href="{{ path('app_send_test_email_for_template',{'template':'abmeldebestatigung','stadt':stadt.id}) }}" target="_blank">Testmail senden, nach dem speichern des Templates</a>
+                                </div>
+                                <div class="card card-body">
+                                {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateStammdatenEdit']) }}
+                                <a  href="{{ path('app_send_test_email_for_template',{'template':'stammdatenEdit','stadt':stadt.id}) }}" target="_blank">Testmail senden, nach dem speichern des Templates</a>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        {{ 'Variablen'|trans }}
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                eltern: Eltern-Daten
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">.vorname: Vorname</li>
+                                                    <li class="list-group-item">.name: Nachname</li>
+                                                    <li class="list-group-item">.strasse: Straße</li>
+                                                    <li class="list-group-item">.adresszusatz: Adresszusatz</li>
+                                                    <li class="list-group-item">.plz: Postleitzahl</li>
+                                                    <li class="list-group-item">.stadt: Stadt</li>
+                                                    <li class="list-group-item">.email: E-Mail-Adresse</li>
+                                                    <li class="list-group-item">.phoneNumber: Telefonnummer</li>
+                                                    <li class="list-group-item">.secCode: Security Code</li>
+
+                                                </ul>
+                                            </div>
+                                            <div class="col-6">
+                                                kind: Kinder-Daten
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">.vorname: Vorname</li>
+                                                    <li class="list-group-item">.nachname: Nachname</li>
+                                                    <li class="list-group-item">.geburtstag: Geburtsdatum (datetime)
+                                                    </li>
+
+                                                    <li class="list-group-item">.eltern: Verknüpfte Eltern-Entität</li>
+                                                    <li class="list-group-item">.zeitblocks: Zugewiesene Zeitblöcke
+                                                        (Collection)
+                                                    </li>
+                                                    <li class="list-group-item">.beworben: Beworbene Zeitblöcke
+                                                        (Collection)
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
 
                         </div>
                         {{ form_widget(form) }}
                         {{ form_end(form) }}
                         <hr>
                         {% if stadt is defined and stadt.id is not null %}
-                        <h3 class="h3-responsive">{{ 'Dateien hochladen'|trans }}</h3>
-                        <form action="{{ path('upload_stadt',{'id':stadt.id}) }}"
-                              class="dropzone"
-                              id="my-awesome-dropzone"></form>
+                            <h3 class="h3-responsive">{{ 'Dateien hochladen'|trans }}</h3>
+                            <form action="{{ path('upload_stadt',{'id':stadt.id}) }}"
+                                  class="dropzone"
+                                  id="my-awesome-dropzone"></form>
 
-                        <ul class="list-group">
-                            {% for f in stadt.uploads %}
-                                <li class="list-group-item">
-                                    <a href="{{ path('login_download_file',{'fileName':f.fileName}) }}"> <i
-                                                class="fa fa-download"></i></a><span>{{ f.originalName }}</span>
-                                    <a href="{{ path('login_remove_file',{'fileName':f.fileName}) }}"><i
-                                                class="fa fa-trash"></i> </a>
-                                </li>
+                            <ul class="list-group">
+                                {% for f in stadt.uploads %}
+                                    <li class="list-group-item">
+                                        <a href="{{ path('login_download_file',{'fileName':f.fileName}) }}"> <i
+                                                    class="fa fa-download"></i></a><span>{{ f.originalName }}</span>
+                                        <a href="{{ path('login_remove_file',{'fileName':f.fileName}) }}"><i
+                                                    class="fa fa-trash"></i> </a>
+                                    </li>
 
-                            {% endfor %}
-                        </ul>
+                                {% endfor %}
+                            </ul>
                         {% endif %}
                     </div>
 

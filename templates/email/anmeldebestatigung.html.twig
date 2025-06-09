@@ -4,26 +4,31 @@
 {% endblock %}
 
 {% block content %}
-    <p class="text-center">{{text}}<br>
 
-    <b>{{ kind.vorname }} </b> </p>
-   {{ include('email/__securityCode.twig') }}
-   
-    <p class="text-center">{% trans %}Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
-            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
-            Die Kontaktdaten sind in dem angehängten PDF angegeben.{% endtrans %}
-    </p>
-    <br>
-    {% if stadt.translate.settingsExtraTextEmailAnmeldung %}
-    <p>
-        {{ stadt.translate.settingsExtraTextEmailAnmeldung|markdown_to_html }}
-    </p>
+    {% if stadt.translate.emailtemplateBuchung %}
+        {{ include(template_from_string(stadt.translate.emailtemplateBuchung)) }}
+    {% else %}
+
+        <p class="text-center">{{ text }}<br>
+
+            <b>{{ kind.vorname }} </b></p>
+        {{ include('email/__securityCode.twig') }}
+
+        <p class="text-center">{% trans %}Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
+                Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
+                Die Kontaktdaten sind in dem angehängten PDF angegeben.{% endtrans %}
+        </p>
+        <br>
+        {% if stadt.translate.settingsExtraTextEmailAnmeldung %}
+            <p>
+                {{ stadt.translate.settingsExtraTextEmailAnmeldung|markdown_to_html }}
+            </p>
+        {% endif %}
+        <br>
+        <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}<br>
+            <b>{{ kind.schule.organisation.name }}</b></p>
+
     {% endif %}
-    <br>
-    <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}<br>
-    <b>{{ kind.schule.organisation.name }}</b></p>
-
-
 {% endblock %}
 
 
