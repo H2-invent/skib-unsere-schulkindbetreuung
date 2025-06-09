@@ -4,54 +4,57 @@
 {% endblock %}
 
 {% block content %}
-    <p class="text-center">{% trans %}Sie haben Ihr Kind für die Schulkindbetreuung angemeldet:{% endtrans %}<br>
+    {% if stadt.translate.emailtemplateAnmeldung %}
+        {{ include(template_from_string(stadt.translate.emailtemplateAnmeldung)) }}
+    {% else %}
+        <p class="text-center">{% trans %}Sie haben Ihr Kind für die Schulkindbetreuung angemeldet:{% endtrans %}<br>
 
-        <b>{{ kind.vorname }} </b></p>
-    {{ include('email/__securityCode.twig') }}
-    <p class="text-center">{% trans %}Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.
-            Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.{% endtrans %}
-    </p>
-    <p><b>{{ 'Ihr Wunschbetreuungsplan'|trans }}:</b></p>
-    <table>
-        <thead>
-        <tr>
-            <th>{{ 'Montag'|trans }}</th>
-            <th>{{ 'Dienstag'|trans }}</th>
-            <th>{{ 'Mittwoch'|trans }}</th>
-            <th>{{ 'Donnerstag'|trans }}</th>
-            <th>{{ 'Freitag'|trans }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            {% set weekdays = [0,1, 2, 3, 4] %}
-            {% for day in weekdays %}
-                <td>
-                    {% for block in blocks %}
-                        {% if block.wochentag == day %}
-                            <div>
-                                {{ block.von|date('H:i') }} - {{ block.bis|date('H:i') }}<br>
+            <b>{{ kind.vorname }} </b></p>
+        {{ include('email/__securityCode.twig') }}
+        <p class="text-center">{% trans %}Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.
+                Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.{% endtrans %}
+        </p>
+        <p><b>{{ 'Ihr Wunschbetreuungsplan'|trans }}:</b></p>
+        <table>
+            <thead>
+            <tr>
+                <th>{{ 'Montag'|trans }}</th>
+                <th>{{ 'Dienstag'|trans }}</th>
+                <th>{{ 'Mittwoch'|trans }}</th>
+                <th>{{ 'Donnerstag'|trans }}</th>
+                <th>{{ 'Freitag'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {% set weekdays = [0,1, 2, 3, 4] %}
+                {% for day in weekdays %}
+                    <td>
+                        {% for block in blocks %}
+                            {% if block.wochentag == day %}
+                                <div>
+                                    {{ block.von|date('H:i') }} - {{ block.bis|date('H:i') }}<br>
 
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </td>
-            {% endfor %}
-        </tr>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                {% endfor %}
+            </tr>
 
-        </tbody>
-    </table>
-    <br>
-    {% if stadt.translate.settingsExtraTextEmailAnmeldungMitBeworben %}
-    <p>
-        {{ stadt.translate.settingsExtraTextEmailAnmeldungMitBeworben|markdown_to_html }}
-    </p>
-{% endif %}
-    <br>
-    <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre Organisation{% endtrans %}<br>
-        <b>{{ kind.schule.organisation.name }}</b></p>
+            </tbody>
+        </table>
+        <br>
+        {% if stadt.translate.settingsExtraTextEmailAnmeldungMitBeworben %}
+            <p>
+                {{ stadt.translate.settingsExtraTextEmailAnmeldungMitBeworben|markdown_to_html }}
+            </p>
+        {% endif %}
+        <br>
+        <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre Organisation{% endtrans %}<br>
+            <b>{{ kind.schule.organisation.name }}</b></p>
 
-
+    {% endif %}
 {% endblock %}
 
 

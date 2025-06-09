@@ -355,7 +355,28 @@ class StadtType extends AbstractType
                             'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
                             'label' => 'Text welcher in der E-Mail für eine Anmeldung ohne beworbenen Zeitblöcken zusätzlich angezeigt wird. (Markdown)',
                             'translation_domain' => 'form'
+                        ],
+                        'emailtemplateAnmeldung' => [
+                            'attr' => array('rows' => 5, 'class' => 'onlineEditor'),
+                            'label' => 'TWIG Template für Anmelde-Email',
+                            'translation_domain' => 'form'
+                        ],
+                        'emailtemplateBuchung' => [
+                            'attr' => array('rows' => 5, 'class' => 'onlineEditor'),
+                            'label' => 'TWIG Template für Anmeldebestätigung-Email',
+                            'translation_domain' => 'form'
+                        ],
+                        'emailtemplateAbmeldung' => [
+                            'attr' => array('rows' => 5, 'class' => 'onlineEditor'),
+                            'label' => 'TWIG Template für E-Mail bei Abmeldung',
+                            'translation_domain' => 'form'
+                        ],
+                        'emailtemplateStammdatenEdit' => [
+                            'attr' => array('rows' => 5, 'class' => 'onlineEditor'),
+                            'label' => 'TWIG Template für Email nach Bearbeiten der Stammdaten',
+                            'translation_domain' => 'form'
                         ]
+
                     ]
                 ]
             )

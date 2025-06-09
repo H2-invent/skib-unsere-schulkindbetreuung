@@ -4,22 +4,27 @@
 {% endblock %}
 
 {% block content %}
-    {% if text is defined %}
-    <p class="text-center">{{text}}<br>
-{% endif %}
-    <b> {{ 'Guten Tag'|trans }} {{ stammdaten.vorname }} {{ stammdaten.name }}</b> </p>
-    {{ include('email/__securityCode.twig') }}
-   
-    <p class="text-center">{% trans %}Im Anhang finden Sie zur Kontrolle Ihre Daten als PDF.
-            Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
-            Die Kontaktdaten sind in dem angehängten PDF angegeben.{% endtrans %}
-    </p>
-    <br>
-    <br>
-    <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}<br>
-    <b>{{ organisation.name }}</b></p>
+    {% if stadt.translate.emailtemplateStammdatenEdit %}
+        {% set eltern = stammdaten %}
+        {{ include(template_from_string(stadt.translate.emailtemplateStammdatenEdit)) }}
+    {% else %}
 
+        {% if text is defined %}
+            <p class="text-center">{{ text }}<br>
+        {% endif %}
+        <b> {{ 'Guten Tag'|trans }} {{ stammdaten.vorname }} {{ stammdaten.name }}</b> </p>
+        {{ include('email/__securityCode.twig') }}
 
+        <p class="text-center">{% trans %}Im Anhang finden Sie zur Kontrolle Ihre Daten als PDF.
+                Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
+                Die Kontaktdaten sind in dem angehängten PDF angegeben.{% endtrans %}
+        </p>
+        <br>
+        <br>
+        <p class="text-center">{% trans %}Mit freundlichen Grüßen Ihre betreuende Organisation{% endtrans %}<br>
+            <b>{{ organisation.name }}</b></p>
+
+    {% endif %}
 {% endblock %}
 
 

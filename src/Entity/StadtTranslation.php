@@ -77,6 +77,16 @@ class StadtTranslation implements TranslationInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $settingsExtraTextEmailAnmeldung;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $emailtemplateAnmeldung;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $emailtemplateBuchung;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $emailtemplateAbmeldung;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $emailtemplateStammdatenEdit;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -401,6 +411,70 @@ class StadtTranslation implements TranslationInterface
     public function setSettingsExtraTextEmailAnmeldung($settingsExtraTextEmailAnmeldung): void
     {
         $this->settingsExtraTextEmailAnmeldung = $settingsExtraTextEmailAnmeldung;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmailtemplateAnmeldung()
+    {
+        return $this->emailtemplateAnmeldung;
+    }
+
+    /**
+     * @param mixed $emailtemplateAnmeldung
+     */
+    public function setEmailtemplateAnmeldung($emailtemplateAnmeldung): void
+    {
+        $this->emailtemplateAnmeldung = $emailtemplateAnmeldung;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmailtemplateBuchung()
+    {
+        return $this->emailtemplateBuchung;
+    }
+
+    /**
+     * @param mixed $emailtemplateBuchung
+     */
+    public function setEmailtemplateBuchung($emailtemplateBuchung): void
+    {
+        $this->emailtemplateBuchung = $emailtemplateBuchung;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmailtemplateAbmeldung()
+    {
+        return $this->emailtemplateAbmeldung;
+    }
+
+    /**
+     * @param mixed $emailtemplateAbmeldung
+     */
+    public function setEmailtemplateAbmeldung($emailtemplateAbmeldung): void
+    {
+        $this->emailtemplateAbmeldung = $emailtemplateAbmeldung;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmailtemplateStammdatenEdit()
+    {
+        return $this->emailtemplateStammdatenEdit;
+    }
+
+    /**
+     * @param mixed $emailtemplateStammdatenEdit
+     */
+    public function setEmailtemplateStammdatenEdit($emailtemplateStammdatenEdit): void
+    {
+        $this->emailtemplateStammdatenEdit = $emailtemplateStammdatenEdit;
     }
 
 
