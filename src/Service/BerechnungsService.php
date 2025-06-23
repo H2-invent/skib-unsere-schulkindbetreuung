@@ -34,7 +34,7 @@ class BerechnungsService
         $summe = 0;
         $formel = $stadt->getBerechnungsFormel();
         if ($kind->getSchuljahr() and $kind->getSchuljahr()->getSpecialCalculationFormular()){
-            $formel = $kind->getRealZeitblocks()[0]->getActive()->getSpecialCalculationFormular();
+            $formel = $kind->getSchuljahr()->getSpecialCalculationFormular();
         }
         eval($formel);
         return $summe;

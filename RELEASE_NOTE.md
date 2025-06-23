@@ -7,7 +7,7 @@ __🚀 Features:__
 * Customize emails 
 
 __🐛 Bugfixes:__
-
+* Fix error in berechnung when child has an appllied block
 
 ## Files
 
