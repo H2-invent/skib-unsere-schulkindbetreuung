@@ -385,15 +385,15 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="qVIPq3c" resname="Kind erfolgreich auf Warteliste verschoben.">
         <source>Kind erfolgreich auf Warteliste verschoben.</source>
-        <target state="needs-translation">Kind erfolgreich auf Warteliste verschoben.</target>
+        <target state="translated">Child successfully moved to queue.</target>
       </trans-unit>
       <trans-unit id="VtzD2VE" resname="Kind erfolgreich aus die Warteliste entfernt">
         <source>Kind erfolgreich aus die Warteliste entfernt</source>
-        <target state="needs-translation">Kind erfolgreich aus die Warteliste entfernt</target>
+        <target state="translated">Child successfully removed from queue</target>
       </trans-unit>
       <trans-unit id="wOjlxm2" resname="Kind erfolgreich in Betreuung verschoben">
         <source>Kind erfolgreich in Betreuung verschoben</source>
-        <target state="needs-translation">Kind erfolgreich in Betreuung verschoben</target>
+        <target state="translated">Child successfully transferred to care</target>
       </trans-unit>
       <trans-unit id="ULJt1hZ" resname="Anwesende Kinder">
         <source>Anwesende Kinder</source>
@@ -473,7 +473,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="7imYU.d" resname="Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname%">
         <source>Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname%</source>
-        <target state="needs-translation">Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname%</target>
+        <target state="translated">Preliminary information about registration for school child care for %name%</target>
       </trans-unit>
       <trans-unit id="O50zxfL" resname="Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:">
         <source>Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:</source>
@@ -493,7 +493,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="ewdRqId" resname="Erfolgreich wiederhergestellt">
         <source>Erfolgreich wiederhergestellt</source>
-        <target state="needs-translation">Erfolgreich wiederhergestellt</target>
+        <target state="translated">Successfully restored</target>
       </trans-unit>
       <trans-unit id="SX9ku_n" resname="Kind erfolgreich eingecheckt">
         <source>Kind erfolgreich eingecheckt</source>
@@ -573,11 +573,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="5sqs7xE" resname="Erziehungsberechtigter Vorname">
         <source>Erziehungsberechtigter Vorname</source>
-        <target state="needs-translation">Erziehungsberechtigter Vorname</target>
+        <target state="translated">Parent/Guardian First Name</target>
       </trans-unit>
       <trans-unit id="5AAZuPH" resname="Erziehungsberechtigter Nachname">
         <source>Erziehungsberechtigter Nachname</source>
-        <target state="needs-translation">Erziehungsberechtigter Nachname</target>
+        <target state="translated">Parent/Guardian Last Name</target>
       </trans-unit>
       <trans-unit id="WKN3jBj" resname="Straße">
         <source>Straße</source>
@@ -633,11 +633,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="ep1anHh" resname="Zecken dürfen entfernt werden">
         <source>Zecken dürfen entfernt werden</source>
-        <target state="needs-translation">Zecken dürfen entfernt werden</target>
+        <target state="translated">Ticks must be removed</target>
       </trans-unit>
       <trans-unit id="KnjEKsZ" resname="Gluten intolerant">
         <source>Gluten intolerant</source>
-        <target state="needs-translation">Gluten intolerant</target>
+        <target state="translated">Gluten intolerant</target>
       </trans-unit>
       <trans-unit id="y.AkFG7" resname="Kein Schweinefleisch">
         <source>Kein Schweinefleisch</source>
@@ -669,7 +669,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="eAC9U4w" resname="Notizen">
         <source>Notizen</source>
-        <target state="needs-translation">Notizen</target>
+        <target state="translated">Notes</target>
       </trans-unit>
       <trans-unit id="Up_TjZv" resname="E-Mail Adresse">
         <source>E-Mail Adresse</source>
@@ -697,7 +697,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="ZZohsay" resname="Angemeldet am:">
         <source>Angemeldet am:</source>
-        <target state="needs-translation">Angemeldet am:</target>
+        <target state="translated">Registered on:</target>
       </trans-unit>
       <trans-unit id="uEwfnJM" resname="Kundennummer">
         <source>Kundennummer</source>
@@ -765,11 +765,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="RHI5AOs" resname="Ganztag">
         <source>Ganztag</source>
-        <target state="needs-translation">Ganztag</target>
+        <target state="translated">Full-day</target>
       </trans-unit>
       <trans-unit id="HoWFEFd" resname="Halbtag">
         <source>Halbtag</source>
-        <target state="needs-translation">Halbtag</target>
+        <target state="translated">Half-day</target>
       </trans-unit>
       <trans-unit id="JeKC2oz" resname="Rechnungsdatum">
         <source>Rechnungsdatum</source>
@@ -789,7 +789,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="L65vsws" resname="E-Mail">
         <source>E-Mail</source>
-        <target state="needs-translation">E-Mail</target>
+        <target state="translated">Email</target>
       </trans-unit>
       <trans-unit id="DPWfUcS" resname="Anmeldebestätigung für die Schulkindbetreuung">
         <source>Anmeldebestätigung für die Schulkindbetreuung</source>
@@ -805,7 +805,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="we6IiXZ" resname="Änderung der Stammdaten">
         <source>Änderung der Stammdaten</source>
-        <target state="needs-translation">Änderung der Stammdaten</target>
+        <target state="translated">Change of master data</target>
       </trans-unit>
       <trans-unit id="x9cMUQ_" resname="Änderungsformular für die Schulkindbetreuung">
         <source>Änderungsformular für die Schulkindbetreuung</source>
