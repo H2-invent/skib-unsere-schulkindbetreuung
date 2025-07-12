@@ -896,7 +896,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="7.WUGsM" resname="Schuljahr Ende">
         <source>Schuljahr Ende</source>
-        <target state="translated">School year end</target>
+        <target state="translated">School year-end</target>
       </trans-unit>
       <trans-unit id="0Z73o2J" resname="Anzahl Kinder">
         <source>Anzahl Kinder</source>
@@ -976,15 +976,15 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="iaxN3xl" resname="Original Account">
         <source>Original Account</source>
-        <target state="needs-translation">Original Account</target>
+        <target state="translated">Original account</target>
       </trans-unit>
       <trans-unit id="Z7aWRoY" resname="Dashboard">
         <source>Dashboard</source>
-        <target state="needs-translation">Dashboard</target>
+        <target state="translated">Dashboard</target>
       </trans-unit>
       <trans-unit id="wcIksDz" resname="Admin">
         <source>Admin</source>
-        <target state="needs-translation">Admin</target>
+        <target state="translated">Admin</target>
       </trans-unit>
       <trans-unit id="h7YL9VW" resname="Städte">
         <source>Städte</source>
@@ -996,11 +996,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="FhZB0Ue" resname="Frontpage Content">
         <source>Frontpage Content</source>
-        <target state="needs-translation">Frontpage Content</target>
+        <target state="translated">Front page content</target>
       </trans-unit>
       <trans-unit id="UhAi66F" resname="Mailgun">
         <source>Mailgun</source>
-        <target state="needs-translation">Mailgun</target>
+        <target state="translated">Mailgun</target>
       </trans-unit>
       <trans-unit id="0rh74eB" resname="Organisationen">
         <source>Organisationen</source>
@@ -1024,7 +1024,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="_PBS_ja" resname="KVJS/Anfrage Gafög">
         <source>KVJS/Anfrage Gafög</source>
-        <target state="needs-translation">KVJS/Anfrage Gafög</target>
+        <target state="translated">KVJS/Inquiry GaFöG</target>
       </trans-unit>
       <trans-unit id="eDJe41j" resname="Meine Schulen">
         <source>Meine Schulen</source>
@@ -1584,7 +1584,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="a90sKGv" resname="Ich habe die Datenschutzerklärung der %s%  gelesen und bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet und an die betreuende Organisation weitergegeben werden.">
         <source>Ich habe die Datenschutzerklärung der %s%  gelesen und bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet und an die betreuende Organisation weitergegeben werden.</source>
-        <target state="translated">I have read the privacy policy of %s% and agree that my data and the data of my children are electronically processed and passed on to the supervising organisation.</target>
+        <target state="translated">I have read the privacy policy of %s% and agree that my data and the data of my children are electronically processed and passed on to the supervising organization.</target>
       </trans-unit>
       <trans-unit id="9Th.m7b" resname="Kind">
         <source>Kind</source>
@@ -1720,11 +1720,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="V8wnGsJ" resname="Diese Email wurde im Auftrag der %s% versandt">
         <source>Diese Email wurde im Auftrag der %s% versandt</source>
-        <target state="translated">This email was sent on behalf of  %s%</target>
+        <target state="translated">This email was sent on behalf of  %s% </target>
       </trans-unit>
       <trans-unit id="UQJHoxY" resname="Bestätigungscode für die Anmeldung zur Schulkindbetreuung">
         <source>Bestätigungscode für die Anmeldung zur Schulkindbetreuung</source>
-        <target state="translated">Confirmation code for enrolment for school childcare</target>
+        <target state="translated">Confirmation code for enrollment for school childcare</target>
       </trans-unit>
       <trans-unit id="dhhPs7h" resname="Bestätigungscode zur Überprüfung der E-Mail Adresse">
         <source>Bestätigungscode zur Überprüfung der E-Mail Adresse</source>
@@ -1800,7 +1800,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="VYDPU5D" resname="Der berechnet Betrag in Höhe von&lt;br&gt;&lt;b&gt;%betrag%€&lt;/b&gt; &lt;br&gt; wird am &lt;br&gt;&lt;b&gt;%einzugsdatum%&lt;/b&gt;&lt;br&gt; eingezogen.">
         <source>Der berechnet Betrag in Höhe von&lt;br&gt;&lt;b&gt;%betrag%€&lt;/b&gt; &lt;br&gt; wird am &lt;br&gt;&lt;b&gt;%einzugsdatum%&lt;/b&gt;&lt;br&gt; eingezogen.</source>
-        <target state="translated"><![CDATA[The calculated fees in the amount of<br><b>%amount%€</b><br>will be<br><b>%collection date%</b><br>Fed.]]></target>
+        <target state="translated"><![CDATA[The calculated fees in the amount of<br><b>%betrag%€</b><br>will be<br><b>%einzugsdatum%</b><br>Fed.]]></target>
       </trans-unit>
       <trans-unit id="eAXuGwF" resname="Der berechnet Betrag in Höhe von %betrag%€ dient zu Ihrer Information.">
         <source>Der berechnet Betrag in Höhe von %betrag%€ dient zu Ihrer Information.</source>
@@ -1882,7 +1882,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="g7KT4KD" resname="Vielen Dank für Ihre Anmeldung ...">
         <source>Vielen Dank für Ihre Anmeldung ...</source>
-        <target state="translated">Many thanks for your registration ...</target>
+        <target state="translated">Many thanks for your registration...</target>
       </trans-unit>
       <trans-unit id="HLC6El_" resname="Information">
         <source>Information</source>
@@ -2026,7 +2026,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="XxzYUSG" resname="Der Anmeldezeitraum für dieses Programm ist vorüber">
         <source>Der Anmeldezeitraum für dieses Programm ist vorüber</source>
-        <target state="translated">The registration period for this programme is over</target>
+        <target state="translated">The registration period for this program is over</target>
       </trans-unit>
       <trans-unit id="XaAKW1h" resname="Anmeldezeitraum">
         <source>Anmeldezeitraum</source>
@@ -2118,7 +2118,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="JDD3en2" resname="Kreditkarte oder Paypal">
         <source>Kreditkarte oder Paypal</source>
-        <target state="translated">Credit card or Paypal</target>
+        <target state="translated">Credit card or PayPal</target>
       </trans-unit>
       <trans-unit id="Vc_Z2WP" resname="Diese Zahlungsart verwenden">
         <source>Diese Zahlungsart verwenden</source>
@@ -2130,7 +2130,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="2f45s_g" resname="Email an Erziehungsberechtigten senden">
         <source>Email an Erziehungsberechtigten senden</source>
-        <target state="translated">Send an email to parent or legal guardian</target>
+        <target state="translated">Email parent or legal guardian</target>
       </trans-unit>
       <trans-unit id="ewI9bbC" resname="Details des Erziehungsberechtigten">
         <source>Details des Erziehungsberechtigten</source>
@@ -2370,7 +2370,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="YU8Nm1l" resname="Erziehungsberechtigten und Eltern stehen die betreuenden Organisationen in den Städten gerne zur Verfügung.">
         <source>Erziehungsberechtigten und Eltern stehen die betreuenden Organisationen in den Städten gerne zur Verfügung.</source>
-        <target state="translated">Parents and guardians are welcome to contact the organisations providing care.</target>
+        <target state="translated">Parents and guardians are welcome to contact the organizations providing care.</target>
       </trans-unit>
       <trans-unit id="aq9j.Xq" resname="Zusammenfassung der Datenschutzhinweise">
         <source>Zusammenfassung der Datenschutzhinweise</source>
@@ -2386,7 +2386,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="0qFVV1v" resname="Beim Anmelden setzen wir Cookies ein, um die Funktionalität bequem zu gewährleisten und um sicherzustellen, welcher Daten Ihnen gehört. Wir speichern keine IP-Adressen, Browserdaten, Referer oder andere unnötige Metadaten.">
         <source>Beim Anmelden setzen wir Cookies ein, um die Funktionalität bequem zu gewährleisten und um sicherzustellen, welcher Daten Ihnen gehört. Wir speichern keine IP-Adressen, Browserdaten, Referer oder andere unnötige Metadaten.</source>
-        <target state="translated">When logging in, we use cookies to ensure functionality conveniently and to ensure what data belongs to you. We do not store IP addresses, browser data, referers or other unnecessary metadata.</target>
+        <target state="translated">When logging in, we use cookies to ensure functionality conveniently and to ensure what data belongs to you. We do not store IP addresses, browser data, referrer or other unnecessary metadata.</target>
       </trans-unit>
       <trans-unit id="MK3zW3." resname="Alle Server von H2 invent befinden sich in deutschen Rechenzentren und deutsches Datenschutzrecht ist anwendbar. Das Team von SKB hat technisch Zugriff auf Ihre Daten, benutzt diesen aber ausschliesslich im Falle einer Supportanfrage zur Fehleranalyse.">
         <source>Alle Server von H2 invent befinden sich in deutschen Rechenzentren und deutsches Datenschutzrecht ist anwendbar. Das Team von SKB hat technisch Zugriff auf Ihre Daten, benutzt diesen aber ausschliesslich im Falle einer Supportanfrage zur Fehleranalyse.</source>
@@ -2402,7 +2402,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="IH6kyJe" resname="Wenn Sie per SEPA-Bankeinzug zahlen, werden zahlungsrelevante Metadaten bei Ihrer und der Bank des Trägers anfallen.">
         <source>Wenn Sie per SEPA-Bankeinzug zahlen, werden zahlungsrelevante Metadaten bei Ihrer und der Bank des Trägers anfallen.</source>
-        <target state="translated">If you pay by SEPA bank note, payment-related metadata will be generated by your and the bank of the institution.</target>
+        <target state="translated">If you pay by SEPA direct debit, payment-related metadata will be generated by your and the bank of the institution.</target>
       </trans-unit>
       <trans-unit id="2RQ.lyp" resname="Datenschutzhinweise der Stadt und betreuenden Organisationen">
         <source>Datenschutzhinweise der Stadt und betreuenden Organisationen</source>
@@ -2435,13 +2435,25 @@ The web application enables direct networking between parent or legal guardian, 
                         #### Haftung für Links
                         Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</source>
         <target state="translated"><![CDATA[Address
-                        H2 invent GmbH<br>Gewerbestraße 9 (HALLE9)<br>D-79539 Lörrach<br>Managing Director: Andreas Holzmann<br>Phone: 07621-7925862<br>Email: info@h2-invent.com<br>Register court: District Court of Freiburg im Breisgau<br>Register number: HRB 720434<br>Value Added Tax Identification Number pursuant to Section 27a UStG: DE326041099<br>Responsible for content in accordance with Section 55 II RStV: H2 invent GmbH<br>Copyright / Terms of Use
+                        H2 invent GmbH<br>
+                        Gewerbestraße 9 (HALLE9)<br>
+                        D-79539 Lörrach<br>
+
+                        Managing Director: Andreas Holzmann<br>
+                        Phone: 07621-7925862<br>
+                        Email: info@h2-invent.com<br>
+                        Register court: District Court of Freiburg im Breisgau<br>
+                        Register number: HRB 720434<br>
+                        Value Added Tax Identification Number pursuant to Section 27a UStG: DE326041099<br>
+                        Responsible for content in accordance with Section 55 II RStV: H2 invent GmbH<br>
+
+                        Copyright / Terms of Use
                         The content published on our pages is protected by copyright. All rights of the images and documents published here, in particular project photographs and descriptions, are the property of H2 Invent GmbH or the respective rights providers.
 
-• Liability for content
+                        • Liability for content
                         The contents of our pages are created with the utmost care. However, we cannot assume any liability for the correctness, completeness and topicality of the contents. As a service provider, we are responsible for our own content on these pages in accordance with the general laws in accordance with Section 7 (1) TMG. Pursuant to Sections 8 to 10 of the TMG, however, we as a service provider are not obliged to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information in accordance with the general laws remain unaffected. However, liability in this respect is only possible from the moment of knowledge of a specific infringement. We will immediately block or remove this content if we become aware of such infringements.
 
-• Liability for links
+                        • Liability for links
                         Our offer contains links to external websites of third parties, on whose contents we have no influence. Therefore, we cannot assume any liability for these third-party contents. The respective provider or operator of the pages is always responsible for the contents of the linked pages. The linked pages were checked for possible legal violations at the time of linking. Illegal contents were not recognizable at the time of linking. However, a permanent control of the content of the linked pages is not reasonable without concrete indications of a violation of the law. We will remove such links immediately upon becoming aware of any infringements of the law.]]></target>
       </trans-unit>
       <trans-unit id="32cAxL4" resname="Nutzungsbedingungen">
