@@ -23,7 +23,7 @@
       </trans-unit>
       <trans-unit id="2M_gsdT" resname="Email Adressen stimmen nicht überein.">
         <source>Email Adressen stimmen nicht überein.</source>
-        <target state="translated">Emails don't match!</target>
+        <target state="translated">Emails don't match.</target>
       </trans-unit>
       <trans-unit id="ojEwBSz" resname="Email adresse geändert">
         <source>Email adresse geändert</source>
@@ -155,7 +155,7 @@
       </trans-unit>
       <trans-unit id="8azWWO_" resname="Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername">
         <source>Der Benutername existriert Bereits. Bitte verwenden Sie eine anderen Benutzername</source>
-        <target state="translated">The user name already exists. Please use a different username</target>
+        <target state="translated">The username already exists. Please use a different username</target>
       </trans-unit>
       <trans-unit id="QAUpUIQ" resname="Neuen Stadtmitarbeiter anlegen">
         <source>Neuen Stadtmitarbeiter anlegen</source>
@@ -248,16 +248,15 @@
       <trans-unit id="1Fj0jnL" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.">
         <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.</source>
         <target state="translated">SKiB is so far the only online solution for the registration and administration of school childcare and holiday care.
-The web application enables direct networking between parent or legal guardian, external organizations and the municipal administration or school authorities.
-</target>
+The web application enables direct networking between parent or legal guardian, external organizations and the municipal administration or school authorities.</target>
       </trans-unit>
       <trans-unit id="3r4L_M3" resname="Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig">
         <source>Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig</source>
-        <target state="translated">Singe parent / legal guardian is working</target>
+        <target state="translated">Single parent / legal guardian is working</target>
       </trans-unit>
       <trans-unit id="oM8HA8j" resname="Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend">
         <source>Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend</source>
-        <target state="translated">Singe parent / legal guardian is a job-seeker</target>
+        <target state="translated">Single parent / legal guardian is a job-seeker</target>
       </trans-unit>
       <trans-unit id="tnIiRYb" resname="Beide Elternteile / Erziehungsberechtigte sind berufstätig">
         <source>Beide Elternteile / Erziehungsberechtigte sind berufstätig</source>
@@ -309,15 +308,15 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="KxdUo83" resname="Ranzenpost erstellen">
         <source>Ranzenpost erstellen</source>
-        <target state="translated">Create Ranzenpost</target>
+        <target state="translated">Create Satchel mail</target>
       </trans-unit>
       <trans-unit id="7iz7Sih" resname="Ranzenpost bearbeiten">
         <source>Ranzenpost bearbeiten</source>
-        <target state="translated">Edit Ranzenpost</target>
+        <target state="translated">Edit Satchel mail</target>
       </trans-unit>
       <trans-unit id="fCQ84Uw" resname="Alle Neuigkeiten der Stadt">
         <source>Alle Neuigkeiten der Stadt</source>
-        <target state="translated">All News</target>
+        <target state="translated">All city News</target>
       </trans-unit>
       <trans-unit id="gq8j58x" resname="Nachricht konnte nicht versendet werden">
         <source>Nachricht konnte nicht versendet werden</source>
@@ -473,7 +472,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="7imYU.d" resname="Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname%">
         <source>Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname%</source>
-        <target state="translated">Preliminary information about registration for school child care for %name%</target>
+        <target state="translated">Preliminary information about registration for school child care for %vorname%</target>
       </trans-unit>
       <trans-unit id="O50zxfL" resname="Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:">
         <source>Leider wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind abgesagt:</source>
@@ -481,7 +480,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id=".iQZfNt" resname="Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
         <source>Absage des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
-        <target state="translated">Cancellation of care time slot: %day% from %from% to %to% the school %shool%.</target>
+        <target state="translated">Cancellation of care time slot: %day% from %from% to %to% the school %shool%</target>
       </trans-unit>
       <trans-unit id="pqaJS.R" resname="Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:">
         <source>Es wurde das Betreuungszeitfenster am %day% von %from% bis %to% in der %shool% für folgendes Kind wiederhergestellt:</source>
@@ -489,7 +488,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="ZXQY7Nz" resname="Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%">
         <source>Wiederherstellung des Betreuungszeitfensters: %day% von %from% bis %to% der Schule %shool%</source>
-        <target state="translated">Restoration of care time slot: %day% from %from% to %to% the school %shool%.</target>
+        <target state="translated">Restoration of care time slot: %day% from %from% to %to% the school %shool%</target>
       </trans-unit>
       <trans-unit id="ewdRqId" resname="Erfolgreich wiederhergestellt">
         <source>Erfolgreich wiederhergestellt</source>
@@ -529,7 +528,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="mAer7Ut" resname="Abmeldung der Schulkindbetreuung für ">
         <source>Abmeldung der Schulkindbetreuung für </source>
-        <target state="translated">Deregistration of school childcare for</target>
+        <target state="translated">Deregistration of school childcare for </target>
       </trans-unit>
       <trans-unit id="PZtkwfX" resname="Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:">
         <source>Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:</source>
@@ -537,7 +536,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="6qMlHHn" resname="Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Oranisation geändert.">
         <source>Ihre E-Mail Adresse wurde von einem Mitarbeiter der betreuenden Oranisation geändert.</source>
-        <target state="translated">Your e-mail address has been changed by an employee of the organization in charge.</target>
+        <target state="translated">Your E-mail address has been changed by an employee of the organization in charge.</target>
       </trans-unit>
       <trans-unit id="kOvBveb" resname="Nein">
         <source>Nein</source>
@@ -545,11 +544,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="0td7b.p" resname="Vorname">
         <source>Vorname</source>
-        <target state="translated">Firstname</target>
+        <target state="translated">First name</target>
       </trans-unit>
       <trans-unit id="slNY7dS" resname="Nachname">
         <source>Nachname</source>
-        <target state="translated">Lastname</target>
+        <target state="translated">Last name</target>
       </trans-unit>
       <trans-unit id="SCuY4WC" resname="Alter">
         <source>Alter</source>
@@ -665,7 +664,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="mvnu8x5" resname="AG">
         <source>AG</source>
-        <target state="needs-translation">AG</target>
+        <target state="translated">AG</target>
       </trans-unit>
       <trans-unit id="eAC9U4w" resname="Notizen">
         <source>Notizen</source>
@@ -705,11 +704,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="fjRcO6e" resname="IBAN">
         <source>IBAN</source>
-        <target state="needs-translation">IBAN</target>
+        <target state="translated">IBAN</target>
       </trans-unit>
       <trans-unit id="2Bz6Sw." resname="BIC">
         <source>BIC</source>
-        <target state="needs-translation">BIC</target>
+        <target state="translated">BIC </target>
       </trans-unit>
       <trans-unit id="4t3IU.b" resname="Kontoinhaber">
         <source>Kontoinhaber</source>
@@ -725,7 +724,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="8vO5a9_" resname="Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:">
         <source>Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:</source>
-        <target state="needs-translation">Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:</target>
+        <target state="translated">Your child's school year has been changed by an employee of the caring organization. For this reason we will send you the booking confirmation of this child again:</target>
       </trans-unit>
       <trans-unit id="rmnpZcO" resname="Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert.">
         <source>Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert.</source>
@@ -813,7 +812,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="7toT5Xo" resname="Keine Betreuungszeitblöcke gebucht">
         <source>Keine Betreuungszeitblöcke gebucht</source>
-        <target state="needs-translation">Keine Betreuungszeitblöcke gebucht</target>
+        <target state="translated">No childcare time blocks booked</target>
       </trans-unit>
       <trans-unit id="WpgnVX_" resname="Warten auf Bestätigung">
         <source>Warten auf Bestätigung</source>
@@ -837,7 +836,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="Y3Cn2Fa" resname="Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig">
         <source>Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig</source>
-        <target state="needs-translation">Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig</target>
+        <target state="translated">Error: Only settlements for the previous month and this month are permitted</target>
       </trans-unit>
       <trans-unit id="XHg7TJF" resname="Fehler: Kein Schuljahr in diesem Zeitraum gefunden">
         <source>Fehler: Kein Schuljahr in diesem Zeitraum gefunden</source>
@@ -973,7 +972,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="wDzoM92" resname="Warteliste für Ihr Kind %vorname%">
         <source>Warteliste für Ihr Kind %vorname%</source>
-        <target state="needs-translation">Warteliste für Ihr Kind %vorname%</target>
+        <target state="translated">Waitlist for your child %vorname%</target>
       </trans-unit>
       <trans-unit id="iaxN3xl" resname="Original Account">
         <source>Original Account</source>
