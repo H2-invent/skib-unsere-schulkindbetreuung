@@ -99,7 +99,7 @@
       </trans-unit>
       <trans-unit id="lBV5YKD" resname=" am %d% von %s% bis %e% Uhr">
         <source> am %d% von %s% bis %e% Uhr</source>
-        <target state="needs-translation"> am %d% von %s% bis %e% Uhr</target>
+        <target state="translated"> on %d% from %s to %e% o'clock</target>
       </trans-unit>
       <trans-unit id="wyfWzSw" resname=" in der Klasse: %klasse%">
         <source> in der Klasse: %klasse%</source>
@@ -107,15 +107,15 @@
       </trans-unit>
       <trans-unit id="_S8zNXy" resname="Email mit Sicherheitscode">
         <source>Email mit Sicherheitscode</source>
-        <target state="needs-translation">Email mit Sicherheitscode</target>
+        <target state="translated">Email with security code</target>
       </trans-unit>
       <trans-unit id="EnnkoaW" resname="Sicherheitscode erneut zugesendet">
         <source>Sicherheitscode erneut zugesendet</source>
-        <target state="needs-translation">Sicherheitscode erneut zugesendet</target>
+        <target state="translated">Security code resent</target>
       </trans-unit>
       <trans-unit id="OqifTIq" resname="Sicherheitscode konnte nicht erneut zugesendet">
         <source>Sicherheitscode konnte nicht erneut zugesendet</source>
-        <target state="needs-translation">Sicherheitscode konnte nicht erneut zugesendet</target>
+        <target state="translated">Security code can't be sent again</target>
       </trans-unit>
       <trans-unit id="2Hxrhyc" resname="Erfolgreich angelegt">
         <source>Erfolgreich angelegt</source>
@@ -139,11 +139,11 @@
       </trans-unit>
       <trans-unit id="QTjlAaM" resname="Aenderungsformular_%n%">
         <source>Aenderungsformular_%n%</source>
-        <target state="needs-translation">Aenderungsformular_%n%</target>
+        <target state="translated">Change form_%n%</target>
       </trans-unit>
       <trans-unit id="BygxRwL" resname="Stammdaten gespeichert">
         <source>Stammdaten gespeichert</source>
-        <target state="needs-translation">Stammdaten gespeichert</target>
+        <target state="translated">Master data saved</target>
       </trans-unit>
       <trans-unit id="YXWA8Pf" resname="Unbekannter Fehler">
         <source>Unbekannter Fehler</source>
@@ -329,11 +329,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="9AomjJd" resname="Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestend eine Schule aus">
         <source>Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestend eine Schule aus</source>
-        <target state="needs-translation">Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestend eine Schule aus</target>
+        <target state="translated">Massage can't be sent. Please, chose at least one school</target>
       </trans-unit>
       <trans-unit id="KMeWLMp" resname="Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestens ein Schuljahr aus">
         <source>Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestens ein Schuljahr aus</source>
-        <target state="needs-translation">Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestens ein Schuljahr aus</target>
+        <target state="translated">Massage can't be sent. Please, chose at least one school year</target>
       </trans-unit>
       <trans-unit id="bRCf2Pa" resname="Organisation anlegen">
         <source>Organisation anlegen</source>
