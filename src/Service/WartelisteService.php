@@ -8,6 +8,7 @@ use App\Repository\KindRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment;
 
 class WartelisteService
 {
@@ -18,6 +19,8 @@ class WartelisteService
         private AnmeldeEmailService    $anmeldeEmailService,
         private TranslatorInterface    $translator,
         private WorkflowAbschluss      $workflowAbschluss,
+        private MailerService          $mailerService,
+        private Environment            $environment
     )
     {
     }
@@ -32,9 +35,20 @@ class WartelisteService
         $kind->addMovedToWaiting($zeitblock);
         $this->entityManager->persist($kind);
         $this->entityManager->flush();
+       $this->sendEmailForWartelisteAdding($kind,$zeitblock);
         return true;
     }
-
+    public function sendEmailForWartelisteAdding(Kind $kind, Zeitblock $zeitblock): void
+    {
+        $content = $this->environment->render('email/childAddedToWarteliste.html.twig', array('kind' => $kind, 'block' => $zeitblock));
+        $this->mailerService->sendEmail(
+            $kind->getSchule()->getOrganisation()->getName(),
+            $kind->getSchule()->getOrganisation()->getEmail(),
+            $this->elternService->getLatestElternFromChild($kind)->getEmail(),
+            $this->translator->trans('Warteliste für Ihr Kind %vorname%', ['%vorname%' => $kind->getVorname()]),
+            $content,
+            $kind->getSchule()->getOrganisation()->getEmail());
+    }
     public function removeKindFromWarteliste(Kind $kind, Zeitblock $zeitblock): bool
     {
         if (!$kind->getWarteliste()->contains($zeitblock)) {

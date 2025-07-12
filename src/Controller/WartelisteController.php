@@ -52,12 +52,15 @@ class WartelisteController extends AbstractController
         #[MapEntity(id: 'block_id')]
         Zeitblock $zeitblock = null): Response
     {
-        if (!$kind || !$zeitblock) {
+        if (!$kind) {
             throw new NotFoundHttpException('Kind wurde nicht gefunden');
+        }
+        if (!$zeitblock) {
+            throw new NotFoundHttpException('Zeitblock wurde nicht gefunden');
         }
         try {
             $this->wartelisteService->addKindToWarteliste($kind, $zeitblock);
-        } catch (\Exception) {
+        } catch (\Exception $e) {
             return new JsonResponse(['snack' => $this->translator->trans('Fehler, bitte laden Sie die Seite neu')]);
 
         }

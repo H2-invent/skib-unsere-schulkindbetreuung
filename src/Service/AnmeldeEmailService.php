@@ -149,7 +149,7 @@ class AnmeldeEmailService
                 if ($adresse->getLanguage()) {
                     $this->translator->setLocale($adresse->getLanguage());
                 }
-                $this->betreff = $this->translator->trans('Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname%', array( '%nachname%' => $kind->getNachname()));
+                $this->betreff = $this->translator->trans('Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname%', array( '%vorname%'=>$kind->getVorname(), '%nachname%' => $kind->getNachname()));
                 $blocks = $kind->getBeworben()->toArray();
                 usort($blocks, function (Zeitblock $a, Zeitblock $b) {
                     return $a->getVon() <=> $b->getVon();
