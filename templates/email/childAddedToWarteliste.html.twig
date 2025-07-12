@@ -1,0 +1,41 @@
+{% extends 'email/base.html.twig' %}
+{% block header %}
+    {% trans with {'%vorname%': kind.vorname} %}Ihr Kind wurde auf die Warteliste verschoben{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <h4 class="text-center">
+        {% trans with {
+            '%vorname%': kind.vorname,
+            '%day%': block.wochentagString,
+            '%von%': block.von|date('H:i'),
+            '%bis%': block.bis|date('H:i')
+        } %}
+            Ihr Kind %vorname% wurde auf die Warteliste für den Betreuungsblock am %day% von %von% bis %bis% verschoben
+        {% endtrans %}
+    </h4>
+
+    <p>
+        {% trans %}Die Anmeldung für den oben genannten Betreuungsblock konnte derzeit nicht berücksichtigt werden, da alle verfügbaren Plätze bereits vergeben sind. Ihr Kind wurde daher auf die Warteliste gesetzt.{% endtrans %}
+    </p>
+
+    <p>
+        {% trans %}Aktuell befindet sich Ihr Kind für folgende Zeitblöcke auf der Warteliste:{% endtrans %}
+    </p>
+
+    <ul>
+        {% for b in kind.warteliste %}
+            <li>
+                <b>{{ b.wochentagString }}:</b> {{ b.von|date('H:i') }} - {{ b.bis|date('H:i') }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        {% trans %}Bitte beachten Sie, dass die Platzvergabe nach Verfügbarkeit und gegebenenfalls nach festgelegten Kriterien erfolgt. Es ist nicht erforderlich, weitere Schritte zu unternehmen – wir informieren Sie automatisch über Änderungen am Wartelistenstatus.{% endtrans %}
+    </p>
+
+    <p class="text-center">
+        {% trans %}Vielen Dank für Ihr Verständnis.{% endtrans %}
+    </p>
+{% endblock %}

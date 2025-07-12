@@ -13,7 +13,7 @@ Telefonnummer des Notfallkontakts: Telephone number of the emergency contact
 Name der Stadt: Name of the city
 Slug der Stadt: Slug of the city
 Username: Username
-E-Mail: E-Mail
+E-Mail: Email
 Passwort: Password
 Geburtstag: Date of Birth
 Name der Schule: Name of the School
@@ -21,7 +21,7 @@ Postleitzahl: Postcode
 Stadt: City
 Name der Organisation: Name of the organisation
 Name der Bank: Name of the Bank
-Gläubiger ID: Gläubiger ID
+Gläubiger ID: Creditor ID
 Info Text Deutsch: Info text German
 Info Text Englisch: Info text English
 Info Text Französisch: Info text French
@@ -29,8 +29,8 @@ Vertragsbedingungen Deutsch (Markdown): Terms German (Markdown)
 Vertragsbedingungen Englisch (Markdown): Terms English (Markdown)
 Vertragsbedingungen Französisch (Markdown): Terms French (Markdown)
 Telefonnummer: Phone
-SMTP Server: SMTP Server
-SMTP Port: SMTP Port
+SMTP Server: SMTP server
+SMTP Port: SMTP port
 SMTP Username: SMTP Username
 SMTP Passwort: SMTP Password
 Ansprechpartner: Contact person
