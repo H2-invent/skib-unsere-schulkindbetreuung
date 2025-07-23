@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -49,6 +50,27 @@ class KontingentController extends AbstractController
             $this->acceptService->acceptAllkindOfZeitblock($block);
 
             return new JsonResponse(array('error' => 0, 'snack' => $translator->trans('Erfolgreich gespeichert')));
+
+    }
+    /**
+     * @Route("/org_accept/resend_confirmation/{kindId}", name="kontingent_resend_confirmation",methods={"GET"})
+     */
+    public function resendCOnfirmation(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, $kindId)
+    {
+        $kind = $this->managerRegistry->getRepository(Kind::class)->find($kindId);
+        try {
+            if ($kind && $kind->getSchule()->getOrganisation() === $this->getUser()->getOrganisation()){
+                $this->acceptService->beworbenCheck($kind);
+            }else{
+                $this->addFlash('danger',$translator->trans('Kind nicht vorhanden.'));
+            }
+            $this->addFlash('success',$translator->trans('Erfolgreich gesendet.'));
+        }catch (\Exception $exception){
+            $this->addFlash('danger',$translator->trans('Bestätigung konnte nicht gesendet werden.'));
+        }
+
+        return  new RedirectResponse($request->headers->get('referer'));
+
 
     }
 
