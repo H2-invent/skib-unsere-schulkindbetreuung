@@ -58,16 +58,16 @@ class KontingentController extends AbstractController
     public function resendCOnfirmation(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, $kindId)
     {
         $kind = $this->managerRegistry->getRepository(Kind::class)->find($kindId);
-//        try {
+        try {
             if ($kind && $kind->getSchule()->getOrganisation() === $this->getUser()->getOrganisation()){
                 $this->acceptService->beworbenCheck($kind);
             }else{
                 $this->addFlash('danger',$translator->trans('Kind nicht vorhanden.'));
             }
             $this->addFlash('success',$translator->trans('Erfolgreich gesendet.'));
-//        }catch (\Exception $exception){
-//            $this->addFlash('danger',$translator->trans('Bestätigung konnte nicht gesendet werden.'));
-//        }
+        }catch (\Exception $exception){
+            $this->addFlash('danger',$translator->trans('Bestätigung konnte nicht gesendet werden.'));
+        }
 
         return  new RedirectResponse($request->headers->get('referer'));
 
