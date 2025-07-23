@@ -16,6 +16,10 @@
                                     <a href="{{ path('child_change_seccode',{'kind_id':k.id}) }}"
                                        class="btn btn-primary">Bearbeiten</a>
                                 {% endif %}
+                                {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
+                                    <a class="btn btn-primary"
+                                       href="{{ path('kontingent_resend_confirmation',{'kindId':k.id}) }}">{% trans %}Bestätigung erneut versenden{% endtrans %}</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

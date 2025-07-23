@@ -1,4 +1,142 @@
-ROLE_CITY_DASHBOARD: Darf das Dashboard sehen
-ROLE_CITY_SCHOOL: Darf Schulen sehen und bearbeiten
-ROLE_CITY_REPORT: Darf Report zu den Organisationen sehen
-ROLE_ORG_CHILD_DELETE: ROLE_ORG_CHILD_DELETE
+Name: Name
+Nachname: Nachname
+Vorname: Vorname
+Straße: Straße
+Adresszusatz: Adresszusatz
+Brutto Haushaltseinkommen pro Monat: Brutto Haushaltseinkommen pro Monat
+Speichern: Speichern
+Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung: Ich habe mindestens ein weiteres Kind in einer kostenpflichtigen öffentlichen Kindergarteneinrichtung
+Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger: Ich bin Bildungs- und Teilhabepaket (BUT) Empfänger
+Berufliche Situation: Berufliche Situation
+Name des Notfallkontakts: Name des Notfallkontakts
+Telefonnummer des Notfallkontakts: Telefonnummer des Notfallkontakts
+Name der Stadt: Name der Stadt
+Slug der Stadt: Slug der Stadt
+Username: Username
+E-Mail: E-Mail
+Passwort: Passwort
+Geburtstag: Geburtstag
+Name der Schule: Name der Schule
+Postleitzahl: Postleitzahl
+Stadt: Stadt
+Name der Organisation: Name der Organisation
+Name der Bank: Name der Bank
+Gläubiger ID: Gläubiger ID
+Info Text Deutsch: Info Text Deutsch
+Info Text Englisch: Info Text Englisch
+Info Text Französisch: Info Text Französisch
+Vertragsbedingungen Deutsch (Markdown): Vertragsbedingungen Deutsch (Markdown)
+Vertragsbedingungen Englisch (Markdown): Vertragsbedingungen Englisch (Markdown)
+Vertragsbedingungen Französisch (Markdown): Vertragsbedingungen Französisch (Markdown)
+Telefonnummer: Telefonnummer
+SMTP Server: SMTP Server
+SMTP Port: SMTP Port
+SMTP Username: SMTP Username
+SMTP Passwort: SMTP Passwort
+Ansprechpartner: Ansprechpartner
+Hauptfarbe(HTML Code): Hauptfarbe(HTML Code)
+Akzentfarbe (HTML Code): Akzentfarbe (HTML Code)
+Akzentfarbe Fehler (HTML Code): Akzentfarbe Fehler (HTML Code)
+Logo hochladen: Logo hochladen
+ROLE_CITY_DASHBOARD: ROLE_CITY_DASHBOARD
+ROLE_CITY_SCHOOL: ROLE_CITY_SCHOOL
+ROLE_CITY_REPORT: ROLE_CITY_REPORT
+Schuljahresbegin: Schuljahresbegin
+Schuljahresende: Schuljahresende
+Beginn der Anmeldung: Beginn der Anmeldung
+Ende der Anmeldung: Ende der Anmeldung
+Betreuungsbeginn: Betreuungsbeginn
+Betreuungsende: Betreuungsende
+Preis: Preis
+Name der Organisation für den SEPA Lastschrifteinzug: Name der Organisation für den SEPA Lastschrifteinzug
+IBAN für das Lastschriftmandat: IBAN für das Lastschriftmandat
+SEPA-LAstschrift Mandat wird elektromisch erteilt: SEPA-LAstschrift Mandat wird elektromisch erteilt
+BIC für das Lastschriftmandat: BIC für das Lastschriftmandat
+BIC: BIC
+Kontoinhaber für das Lastschriftmandat: Kontoinhaber für das Lastschriftmandat
+SEPA-Lastschrift Mandat wird elektronisch erteilt: SEPA-Lastschrift Mandat wird elektronisch erteilt
+Schulform: Schulform
+Jahrgangsstufe zu Betreuungsbeginn: Jahrgangsstufe zu Betreuungsbeginn
+Ganztag: Ganztag
+Halbtag: Halbtag
+Mein Kind benötigt folgende Medikamente: Mein Kind benötigt folgende Medikamente
+Mein Kind hat folgende Allergien: Mein Kind hat folgende Allergien
+Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden.: Ich nehme zur Kenntnis, dass meine Daten elektronisch verarbeitet werden.
+Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet werden und an die betreuende Organisation weitergegeben werden.: Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet werden und an die betreuende Organisation weitergegeben werden.
+Zum Newsletter anmelden: Zum Newsletter anmelden
+Klasse 1: Klasse 1
+Klasse 2: Klasse 2
+Klasse 3: Klasse 3
+Klasse 4: Klasse 4
+Klasse 5: Klasse 5
+Klasse 6: Klasse 6
+Bemerkung: Bemerkung
+weiter: weiter
+Anzahl der Preiskategorien: Anzahl der Preiskategorien
+Sicherheitscode des Erziehungsberechtigten: Sicherheitscode des Erziehungsberechtigten
+Name und Beziehung des Notfallkontakts: Name und Beziehung des Notfallkontakts
+Ich bin alleinerziehend: Ich bin alleinerziehend
+Weitere abholberechtigte Personen: Weitere abholberechtigte Personen
+Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause: Mein Kind darf nach Ende der gebuchten Betreuung alleine nach Hause
+Mein Kind darf an Ausflügen teilnehmen: Mein Kind darf an Ausflügen teilnehmen
+Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden: Mein Kind darf im Sommer mit handelsüblicher Sonnencreme eingecremt werden
+Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.: Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.
+Mein Kind ernährt sich vegetarisch: Mein Kind ernährt sich vegetarisch
+Mein Kind isst kein Schweinefleich: Mein Kind isst kein Schweinefleich
+Mein Kind ist glutenintolerant: Mein Kind ist glutenintolerant
+Mein Kind ist laktoseintolerant: Mein Kind ist laktoseintolerant
+Mein Kind ist gegen Masern geimpft / bereits immun: Mein Kind ist gegen Masern geimpft / bereits immun
+Tag des Lastschrifteinzugs: Tag des Lastschrifteinzugs
+Beginn des Abrechnungszeitraums: Beginn des Abrechnungszeitraums
+Datenschutzhinweis Deutsch (Markdown): Datenschutzhinweis Deutsch (Markdown)
+Datenschutzhinweis Englisch (Markdown): Datenschutzhinweis Englisch (Markdown)
+Datenschutzhinweis Französisch (Markdown): Datenschutzhinweis Französisch (Markdown)
+URL für Logo: URL für Logo
+Steuernummer: Steuernummer
+UmSt. Identnummer: UmSt. Identnummer
+Homepage URL: Homepage URL
+Neuigkeit auf der Startseite sichtbar: Neuigkeit auf der Startseite sichtbar
+Nachricht: Nachricht
+Titel: Titel
+Wir bieten eine Ferienbetreuung über dieses Portal an: Wir bieten eine Ferienbetreuung über dieses Portal an
+Wir bieten eine Schulkindbetreuung über dieses Portal an: Wir bieten eine Schulkindbetreuung über dieses Portal an
+Anzahl Preise: Anzahl Preise
+Maximum Anzahl: Maximum Anzahl
+Minimum Anzahl: Minimum Anzahl
+End Vorverkauf: End Vorverkauf
+Start Vorverkauf: Start Vorverkauf
+Uhrzeit Ende: Uhrzeit Ende
+Uhrzeit Anfang: Uhrzeit Anfang
+Datum Ende: Datum Ende
+Datum Start: Datum Start
+Maximum Alter: Maximum Alter
+Mindest Alter: Mindest Alter
+Bezeichnung der Gehaltsklassen: Bezeichnung der Gehaltsklassen
+Ferienblock mit Warteliste: Ferienblock mit Warteliste
+Manuelle Bestätigung der Teilnehmer: Manuelle Bestätigung der Teilnehmer
+Stornogebühr für das Ferienprogramm: Stornogebühr für das Ferienprogramm
+Regelungen Ferienprogram (Markdown): Regelungen Ferienprogram (Markdown)
+Ansprechpartner Email: Ansprechpartner Email
+Ansprechpartner Telefon: Ansprechpartner Telefon
+Ansprechpartner Ferien: Ansprechpartner Ferien
+Name der Schule für den Versand der Nachricht: Name der Schule für den Versand der Nachricht
+Braintree akzeptieren: Braintree akzeptieren
+Braintree Merchant ID: Braintree Merchant ID
+Braintree Private Key: Braintree Private Key
+Braintree Public Key: Braintree Public Key
+Braintree in der Sandbox: Braintree in der Sandbox
+Impressum der Stadt (Markdown): Impressum der Stadt (Markdown)
+Straße Nr.: Straße Nr.
+Kategorie (strg halten für Mehrfachauswahl): Kategorie (strg halten für Mehrfachauswahl)
+Stadt aktiv: Stadt aktiv
+Stripe Public Key: Stripe Public Key
+Stripe Private Key: Stripe Private Key
+Stripe akzeptieren: Stripe akzeptieren
+Caterer Info Deutsch (Markdown): Caterer Info Deutsch (Markdown)
+Caterer Info Englisch (Markdown): Caterer Info Englisch (Markdown)
+Caterer Info Französisch (Markdown): Caterer Info Französisch (Markdown)
+Betreuungszeitfenster Info Deutsch (Markdown): Betreuungszeitfenster Info Deutsch (Markdown)
+Betreuungszeitfenster Info Englisch (Markdown): Betreuungszeitfenster Info Englisch (Markdown)
+Betreuungszeitfenster Info Französisch (Markdown): Betreuungszeitfenster Info Französisch (Markdown)
+Name des Kindergartens: Name des Kindergartens
+E-Mail wiederholt eingeben: E-Mail wiederholt eingeben
