@@ -18,6 +18,15 @@
                 Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
                 Die Kontaktdaten sind in dem angehängten PDF angegeben.{% endtrans %}
         </p>
+        <p>Ihr Kind ist zu den folgenden Betreuungszeitfenstern auf der Warteliste:</p>{% if kind.warteliste %}
+        <ul>{% for warteliste in kind.warteliste %}
+                <li>{{ warteliste.wochentagString }}: {{ warteliste.von|date('H:i') }}
+                    - {{ warteliste.bis|date('H:i') }} Uhr
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+        <p>
         <br>
         {% if stadt.translate.settingsExtraTextEmailAnmeldung %}
             <p>
