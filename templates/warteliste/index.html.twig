@@ -41,15 +41,24 @@
             <div id="blockContent">
                 <div class="row" id="blockContentContent">
                     {% for k in kinder %}
+                        {% if k.startDate is null %}
+                            {% set startDate = "now"|date_modify("first day of next month") %}
+                        {% else %}
+                            {% set startDate = k.startDate %}
+                        {% endif %}
+
                         {% set eltern = getEltern(k,k.startDate) %}
                         <div class="col-3 pb-4">
                             <div class="card h-100 text-center">
                                 <div class="card-body">
                                     <h2>{{ k.vorname }} {{ k.nachname }}</h2>
                                     <p>
-                                        {{ 'Wunsch Startdatum:'|trans }} <b>{{ k.startDate|date('d.m.Y') }}</b><br>
+                                        {% if k.startDate is null %}
+                                    <p class="badge badge-warning">Achtung kein Startdatum vorhanden</p>
+                                        {% endif %}
+                                        {{ 'Wunsch Startdatum:'|trans }} <b>{{ startDate|date('d.m.Y') }}</b><br>
                                         Anzahl Kinder zum Startdatum:
-                                        <b>{{ getChildsOnSpecificTime(block,k.startDate)|length }}</b><br>
+                                        <b>{{ getChildsOnSpecificTime(block,startDate)|length }}</b><br>
 
                                     </p>
                                     <p>
@@ -84,7 +93,7 @@
                                                data-text="{{ 'Wollen Sie dieses Kind aus der Warteliste löschen?'|trans }}"><i
                                                         class="material-icons"><span class="material-symbols-outlined">delete</span></i></a>
 
-                                            <a href="{{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':k.id,'date':k.startDate|date('d.m.Y')}) }}"
+                                            <a href="{{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':k.id,'date':startDate|date('d.m.Y')}) }}"
                                                target="_blank"
                                                class="btn btn-light">
                                                 <i class="material-icons">info</i>
