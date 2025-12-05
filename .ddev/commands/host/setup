@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+## Description: Run first time setup for SKiB
+## Usage: setup
+## Example: "ddev setup"
+## ExecRaw: true
+## MutagenSync: true
+
+ddev console cache:clear
+ddev snapshot restore --latest
+ddev console doctrine:migrations:migrate --no-interaction
+ddev kcctl import

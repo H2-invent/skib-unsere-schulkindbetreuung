@@ -24,3 +24,51 @@ Das eingesparte Personal kann sich dann auf die wesentlichen Aufgaben konzentrie
 # License
 Weitere Informationen zur Lizenz finden Sie im License Dokument in diesem Repository.
 
+
+## Lokale Entwicklung
+
+Für die lokale Entwicklung nutzen wir [DDEV](https://ddev.readthedocs.io/).
+
+### Voraussetzungen
+
+- [Docker](https://www.docker.com/) muss installiert sein
+- [DDEV](https://ddev.readthedocs.io/en/stable/users/install/) muss installiert sein
+
+### Installation
+
+1. **Repository klonen:**
+   ```bash
+   git clone https://github.com/H2-invent/skib-unsere-schulkindbetreuung
+   cd skib-unsere-schulkindbetreuung
+   ```
+
+2. **DDEV starten:**
+   ```bash
+   ddev start
+   ```
+
+3. **Projekt initialisieren:**
+   Nach dem ersten Start muss das Setup ausgeführt werden, um Keycloak und die Datenbank aufzusetzen:
+   ```bash
+   ddev setup
+   ```
+
+### Nützliche DDEV-Befehle
+
+| Befehl          | Beschreibung                                                             |
+|-----------------|--------------------------------------------------------------------------|
+| `ddev start`    | Startet die DDEV-Umgebung                                                |
+| `ddev stop`     | Stoppt die DDEV-Umgebung                                                 |
+| `ddev restart`  | Startet die DDEV-Umgebung neu unter Berücksichtigung neuer Konfiguration |
+| `ddev ssh`      | Öffnet eine Shell im Web-Container                                       |
+| `ddev describe` | Zeigt Informationen zur Umgebung (URLs, Ports, etc.)                     |
+| `ddev logs`     | Zeigt die Container-Logs an                                              |
+
+### Zugriff auf die Anwendung
+
+Nach erfolgreichem Start ist die Anwendung unter der von DDEV bereitgestellten URL erreichbar: `https://skib-unsere-schulkindbetreuung.ddev.site`
+
+#### Accounts
+
+- Keycloak Admin: `admin:password`
+- Keycloak SKiB Admin: `test@test.com:test`
