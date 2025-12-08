@@ -3101,6 +3101,10 @@
         <source>Abbrechen</source>
         <target state="needs-translation">Abbrechen</target>
       </trans-unit>
+      <trans-unit id="l0T3KG." resname="Autom. Zuteilung">
+          <source>Autom. Zuteilung</source>
+          <target state="translated">Autom. Zuteilung</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
