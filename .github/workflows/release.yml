@@ -10,19 +10,35 @@ on:
 
 jobs:
   version:
-    uses: ./.github/workflows/task-version.yml
+    name: Generate new Release Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-  artifact:
-    uses: ./.github/workflows/task-artifact.yml
+      - uses: paulhatch/semantic-version@v5.0.2
+        id: version
+        with:
+          tag_prefix: ""
+          major_pattern: "(MAJOR)"
+          minor_pattern: "(MINOR)"
+          change_path: .
+          version_format: "${major}.${minor}.${patch}"
 
-  release:
-    needs:
-      - artifact
-      - version
-    uses: ./.github/workflows/task-release.yml
-    with:
-      version: ${{ needs.version.outputs.version_output }}
-      prerelease: false
+      - name: Create new Release with semantic-version tag
+        uses: ncipollo/release-action@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          allowUpdates: true
+          name: Release ${{ steps.version.outputs.version }}
+          tag: ${{ steps.version.outputs.version }}
+          bodyFile: RELEASE_NOTE.md
 
   docker_image:
     needs:
@@ -33,7 +49,7 @@ jobs:
       dockerfile_path: './Dockerfile'
       directory: '.'
       version: ${{ needs.version.outputs.version_output }}
-      tags: reg.h2-invent.com/unsere-schulkindbetreuung/application:${{ needs.version.outputs.version_output }},reg.h2-invent.com/unsere-schulkindbetreuung/application:latest
+      tags: reg.h2-invent.com/unsere-schulkindbetreuung/application:${{ needs.version.outputs.version }},reg.h2-invent.com/unsere-schulkindbetreuung/application:latest
     secrets:
       docker_password: ${{ secrets.HARBOR_PUSH_PASSWORD }}
       docker_username: ${{ secrets.HARBOR_PUSH_USERNAME }}
