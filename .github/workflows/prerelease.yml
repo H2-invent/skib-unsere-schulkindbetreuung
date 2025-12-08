@@ -41,18 +41,6 @@ jobs:
           tag: ${{ steps.version.outputs.version }}
           body: Prelease and Dev Build
 
-  artifact:
-    uses: ./.github/workflows/task-artifact.yml
-
-  release:
-    needs:
-      - artifact
-      - version
-    uses: ./.github/workflows/task-release.yml
-    with:
-      version: ${{ needs.version.outputs.version_output }}
-      prerelease: false
-
   docker_image:
     needs:
       - version
@@ -66,3 +54,12 @@ jobs:
     secrets:
       docker_password: ${{ secrets.HARBOR_PUSH_PASSWORD }}
       docker_username: ${{ secrets.HARBOR_PUSH_USERNAME }}
+
+  release:
+    needs:
+      - docker_image
+      - version
+    uses: ./.github/workflows/task-release.yml
+    with:
+      version: ${{ needs.version.outputs.version_output }}
+      prerelease: false
