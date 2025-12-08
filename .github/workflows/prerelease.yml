@@ -55,11 +55,3 @@ jobs:
       docker_password: ${{ secrets.HARBOR_PUSH_PASSWORD }}
       docker_username: ${{ secrets.HARBOR_PUSH_USERNAME }}
 
-  release:
-    needs:
-      - docker_image
-      - version
-    uses: ./.github/workflows/task-release.yml
-    with:
-      version: ${{ needs.version.outputs.version_output }}
-      prerelease: false
