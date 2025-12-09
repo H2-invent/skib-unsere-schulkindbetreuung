@@ -208,6 +208,9 @@ class Organisation implements TranslatableInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $sepaOrganisation;
 
+    #[ORM\OneToOne(mappedBy: 'organisation', cascade: ['persist', 'remove'])]
+    private ?AutoBlockAssignment $autoBlockAssignment = null;
+
 
     public function __construct()
     {
@@ -968,6 +971,23 @@ class Organisation implements TranslatableInterface
     public function setSepaOrganisation(?string $sepaOrganisation): self
     {
         $this->sepaOrganisation = $sepaOrganisation;
+
+        return $this;
+    }
+
+    public function getAutoBlockAssignment(): ?AutoBlockAssignment
+    {
+        return $this->autoBlockAssignment;
+    }
+
+    public function setAutoBlockAssignment(AutoBlockAssignment $autoBlockAssignment): self
+    {
+        // set the owning side of the relation if necessary
+        if ($autoBlockAssignment->getOrganisation() !== $this) {
+            $autoBlockAssignment->setOrganisation($this);
+        }
+
+        $this->autoBlockAssignment = $autoBlockAssignment;
 
         return $this;
     }

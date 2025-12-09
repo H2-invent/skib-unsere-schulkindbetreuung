@@ -136,6 +136,10 @@
                                 {{ isActiveNav('child_show') ? ' class="active"' }}> <i
                                     class="material-icons">people</i> {% trans %}Angemeldete Kinder{% endtrans %}
                         </a></li>
+                    <li><a href="{{ path('org_child_auto_assign',{'id':app.user.organisation.id}) }}"
+                                {{ isActiveNav('org_child_auto_assign') ? ' class="active"' }}> <i
+                                    class="material-icons">fact_check</i> {% trans %}Autom. Zuteilung{% endtrans %}
+                        </a></li>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_CHECKIN_SHOW') %}
                     <li><a href="{{ path('orgCheckin_how_all_kids',{'id':app.user.organisation.id}) }}"

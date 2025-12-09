@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
@@ -294,6 +295,9 @@ class Stadt implements TranslatableInterface
 
     #[ORM\Column(nullable: true)]
     private ?bool $settingsSkibShowZeckenKinder = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $autoAssign_formula = null;
 
 
 
@@ -1445,6 +1449,18 @@ class Stadt implements TranslatableInterface
     public function setSettingsSkibShowZeckenKinder(?bool $settingsSkibShowZeckenKinder): self
     {
         $this->settingsSkibShowZeckenKinder = $settingsSkibShowZeckenKinder;
+
+        return $this;
+    }
+
+    public function getAutoAssignFormula(): ?string
+    {
+        return $this->autoAssign_formula;
+    }
+
+    public function setAutoAssignFormula(?string $autoAssign_formula): self
+    {
+        $this->autoAssign_formula = $autoAssign_formula;
 
         return $this;
     }

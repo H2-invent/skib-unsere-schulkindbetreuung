@@ -1,0 +1,63 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h1>{% trans %}Ergebnisse der automatischen Blockzuteilung{% endtrans %}</h1>
+                            </div>
+                            <div class="col text-right">
+                                <a href="{{ path('org_child_auto_assign_reject', {'id': app.user.organisation.id}) }}">
+                                    <button type="button" class="btn btn-red">
+                                        {% trans %}Zuteilung verwerfen{% endtrans %}
+                                    </button>
+                                </a>
+                                <a href="{{ path('org_child_auto_assign_accept', {'id': app.user.organisation.id}) }}">
+                                    <button type="button" class="btn btn-success">
+                                        {% trans %}Zuteilung akzeptieren{% endtrans %}
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mb-1">
+                    <div class="card-body">
+                        <table id="assignment-table" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>{% trans %}Kind{% endtrans %}</th>
+                                <th>{% trans %}Anzahl akzeptierter Blöcke{% endtrans %}</th>
+                                <th>{% trans %}Anzahl Wartelisten{% endtrans %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for kind in kinder %}
+                                <tr>
+                                    <td>{{ kind.vorname ~ ' ' ~ kind.nachname }}</td>
+                                    <td>{{ random(30) }}</td>{#TODO#}
+                                    <td>{{ random(10) }}</td>{#TODO#}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $('#assignment-table').DataTable({
+                searching: false
+            });
+        });
+    </script>
+{% endblock %}
