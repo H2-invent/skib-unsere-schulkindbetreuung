@@ -8,6 +8,7 @@ use App\Repository\ZeitblockRepository;
 use App\Service\AutoBlockAssignmentService;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,12 +35,17 @@ class AutoBlockAssignmentController extends AbstractController
          * Reject löscht diese
          */
 
-        $organisation = $this->organisationRepository->find($request->get('id'));
+        $idOrganisation = $request->get('id');
+        $organisation = $this->organisationRepository->find($idOrganisation);
         $assignmentStarted = $request->get('assignment_started', false);
 
         if ($organisation === null || $organisation->getStadt() !== $this->getUser()->getStadt()) {
             throw new Exception('Wrong City');
         }
+        if ($organisation->getAutoBlockAssignment()) {
+            return $this->redirectToRoute('org_child_auto_assign_confirm', ['id' => $idOrganisation]);
+        }
+
         $schulen = $organisation->getSchule();
         $schulDaten = [];
         foreach ($schulen as $schule) {
@@ -61,12 +67,12 @@ class AutoBlockAssignmentController extends AbstractController
      */
     public function start(Request $request): Response
     {
-        $idOrganistion = $request->get('id');
-        $organisation = $this->organisationRepository->find($idOrganistion);
-        $this->autoBlockAssignmentService->startAsync($organisation);
+        $idOrganisation = $request->get('id');
+        $organisation = $this->organisationRepository->find($idOrganisation);
+        $this->autoBlockAssignmentService->createDraftAsync($organisation);
 
         return $this->redirectToRoute('org_child_auto_assign', [
-            'id' => $idOrganistion,
+            'id' => $idOrganisation,
             'assignment_started' => true,
         ]);
     }
@@ -77,6 +83,7 @@ class AutoBlockAssignmentController extends AbstractController
     public function confirm(): Response
     {
         $kinder = $this->kindRepository->findBy([], [], 50);
+
         return $this->render('auto_block_assignment/confirm.html.twig', [
             'kinder' => $kinder,
         ]);
@@ -87,8 +94,11 @@ class AutoBlockAssignmentController extends AbstractController
      */
     public function accept(Request $request): Response
     {
-        $organisationId = $request->get('id');
-        return $this->redirectToRoute('org_child_auto_assign', ['id' => $organisationId]);
+        $idOrganisation = $request->get('id');
+        $organisation = $this->organisationRepository->find($idOrganisation);
+        $this->autoBlockAssignmentService->acceptDraft($organisation);
+
+        return $this->redirectToRoute('org_child_auto_assign', ['id' => $idOrganisation]);
     }
 
     /**
@@ -96,8 +106,22 @@ class AutoBlockAssignmentController extends AbstractController
      */
     public function reject(Request $request): Response
     {
-        $organisationId = $request->get('id');
-        return $this->redirectToRoute('org_child_auto_assign', ['id' => $organisationId]);
+        $idOrganisation = $request->get('id');
+        $organisation = $this->organisationRepository->find($idOrganisation);
+        $this->autoBlockAssignmentService->rejectDraft($organisation);
+
+        return $this->redirectToRoute('org_child_auto_assign', ['id' => $idOrganisation]);
     }
 
+    /**
+     * @Route("/org_child/auto_assign/status", name="org_child_auto_assign_status")
+     */
+    public function status(Request $request): JsonResponse
+    {
+        $idOrganisation = $request->get('id');
+        $organisation = $this->organisationRepository->find($idOrganisation);
+        $isDone = $organisation?->getAutoBlockAssignment() !== null;
+
+        return $this->json(['done' => $isDone]);
+    }
 }

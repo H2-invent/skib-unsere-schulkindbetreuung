@@ -52,6 +52,10 @@
                                 <a class="nav-link" id="email-tab" data-toggle="tab" href="#emails"
                                    role="tab" aria-controls="contact" aria-selected="false">Emails</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="auto-assign-tab" data-toggle="tab" href="#auto-assign"
+                                   role="tab" aria-controls="contact" aria-selected="false">Automatische Blockzuweisung</a>
+                            </li>
                         </ul>
 
                         <div class="tab-content" id="myTabContent">
@@ -388,6 +392,11 @@
                                     </div>
                                 </div>
 
+                            </div>
+                            <div class="tab-pane fade show active" id="auto-assign" role="tabpanel"
+                                 aria-labelledby="home-tab"><h2>Automatische Blockzuteilung</h2>
+
+                                {{ form_row(form.autoAssign_formula) }}
                             </div>
 
                         </div>

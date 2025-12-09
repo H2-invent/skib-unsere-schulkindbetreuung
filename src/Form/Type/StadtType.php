@@ -95,48 +95,142 @@ class StadtType extends AbstractType
         $builder
             ->add('name', TextType::class, ['label' => 'Name der Stadt', 'translation_domain' => 'form'])
             ->add('slug', TextType::class, ['label' => 'Slug der Stadt', 'translation_domain' => 'form'])
-            ->add('active', CheckboxType::class, ['required' => false, 'label' => 'Stadt aktiv', 'translation_domain' => 'form'])
-            ->add('onlineCheckinEnable', CheckboxType::class, ['required' => false, 'label' => 'Online Checkin aktivieren', 'translation_domain' => 'form'])
-            ->add('settingEncryptEmailAttachment', CheckboxType::class, ['required' => false, 'label' => 'Alle E-Mail-Anhänge sollen verschlüsselt werden', 'translation_domain' => 'form'])
-            ->add('ferienprogramm', CheckboxType::class, ['required' => false, 'label' => 'Wir bieten eine Ferienbetreuung über dieses Portal an', 'translation_domain' => 'form'])
-            ->add('schulkindBetreung', CheckboxType::class, ['required' => false, 'label' => 'Wir bieten eine Schulkindbetreuung über dieses Portal an', 'translation_domain' => 'form'])
+            ->add('active',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Stadt aktiv', 'translation_domain' => 'form']
+            )
+            ->add('onlineCheckinEnable',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Online Checkin aktivieren', 'translation_domain' => 'form']
+            )
+            ->add('settingEncryptEmailAttachment',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Alle E-Mail-Anhänge sollen verschlüsselt werden', 'translation_domain' => 'form']
+            )
+            ->add('ferienprogramm',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Wir bieten eine Ferienbetreuung über dieses Portal an', 'translation_domain' => 'form']
+            )
+            ->add('schulkindBetreung',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Wir bieten eine Schulkindbetreuung über dieses Portal an', 'translation_domain' => 'form']
+            )
             ->add('email', TextType::class, ['label' => 'Email', 'translation_domain' => 'form'])
             ->add('adresse', TextType::class, ['label' => 'Straße', 'translation_domain' => 'form'])
-            ->add('adresszusatz', TextType::class, ['required' => false, 'label' => 'Adresszusatz', 'translation_domain' => 'form'])
+            ->add('adresszusatz',
+                TextType::class,
+                ['required' => false, 'label' => 'Adresszusatz', 'translation_domain' => 'form']
+            )
             ->add('plz', TextType::class, ['label' => 'PLZ', 'translation_domain' => 'form'])
             ->add('ort', TextType::class, ['label' => 'Stadt', 'translation_domain' => 'form'])
             ->add('telefon', TextType::class, ['label' => 'Telefonnummer', 'translation_domain' => 'form'])
             ->add('ansprechpartner', TextType::class, ['label' => 'Ansprechpartner', 'translation_domain' => 'form'])
-            ->add('stadtHomepage', TextType::class, ['required' => false, 'label' => 'Homepage URL', 'translation_domain' => 'form'])
-            ->add('minBlocksPerDay', NumberType::class, ['required' => true, 'label' => 'Mindestanzahl an Blöcken pro Tag', 'translation_domain' => 'form'])
-            ->add('minDaysperWeek', NumberType::class, ['required' => true, 'label' => 'Mindestanzahl an Blöcken pro Woche', 'translation_domain' => 'form'])
-            ->add('preiskategorien', NumberType::class, ['required' => true, 'label' => 'Anzahl der Preiskategorien', 'translation_domain' => 'form'])
-            ->add('secCodeAlwaysNew', CheckboxType::class, ['required' => false, 'label' => 'Der Security-Code soll bei jeder Änderung geändert werden', 'translation_domain' => 'form'])
+            ->add('stadtHomepage',
+                TextType::class,
+                ['required' => false, 'label' => 'Homepage URL', 'translation_domain' => 'form']
+            )
+            ->add('minBlocksPerDay',
+                NumberType::class,
+                ['required' => true, 'label' => 'Mindestanzahl an Blöcken pro Tag', 'translation_domain' => 'form']
+            )
+            ->add('minDaysperWeek',
+                NumberType::class,
+                ['required' => true, 'label' => 'Mindestanzahl an Blöcken pro Woche', 'translation_domain' => 'form']
+            )
+            ->add('preiskategorien',
+                NumberType::class,
+                ['required' => true, 'label' => 'Anzahl der Preiskategorien', 'translation_domain' => 'form']
+            )
+            ->add('secCodeAlwaysNew',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Der Security-Code soll bei jeder Änderung geändert werden', 'translation_domain' => 'form']
+            )
 
             //SKIB Stammdaten einstallungen
-            ->add('settingsAnzahlKindergeldempfanger', CheckboxType::class, ['required' => false, 'label' => 'Abfrage Anzahl Kindergeldberechtigter Kinder im Haushalt', 'translation_domain' => 'form'])
-            ->add('settingsAnzahlKindergeldempfangerRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
-            ->add('settingsSozielHilfeEmpfanger', CheckboxType::class, ['required' => false, 'label' => 'Abfrage Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?', 'translation_domain' => 'form'])
-            ->add('settingsSozielHilfeEmpfangerRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
-            ->add('settingGehaltsklassen', CheckboxType::class, ['required' => false, 'label' => 'Gehaltsklassen abfragen?', 'translation_domain' => 'form'])
-            ->add('settingGehaltsklassenRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
-            ->add('settingKinderimKiga', CheckboxType::class, ['required' => false, 'label' => 'Abfrage ob weiteres Kind im KiGa?', 'translation_domain' => 'form'])
-            ->add('settingsweiterePersonenberechtigte', CheckboxType::class, ['required' => false, 'label' => 'Weitere Personenberechtigte hinzufügen.', 'translation_domain' => 'form'])
-            ->add('settingsEingabeDerGeschwister', CheckboxType::class, ['required' => false, 'label' => 'Die Geschwisterkinder müssen aufgelistet werden.', 'translation_domain' => 'form'])
-            ->add('settings_skib_disableIcs', CheckboxType::class, ['required' => false, 'label' => 'Es sollen KEINE Kalenderdatei an die Eltern versandt werden', 'translation_domain' => 'form'])
-            ->add('noSecCodeForChangeChilds', CheckboxType::class, ['required' => false, 'label' => 'Die Mitarbeitenden benötigen keinen Security-Code für die Änderung', 'translation_domain' => 'form'])
-            ->add('settingsSkibChangeDocumentChangeDateShow', CheckboxType::class, ['required' => false, 'label' => 'In dem Änderungsformular soll ein Änderungsdatum angezeigt werden', 'translation_domain' => 'form'])
-            ->add('settingsSkibShowSetStartDateOnChange', CheckboxType::class, ['required' => false, 'label' => 'Zeige das Startdatum für die Änderung beim bearbeiten eines Kindes an,', 'translation_domain' => 'form'])
-            ->add('settingSkibDefaultNextChange', TextType::class, ['required' => false, 'label' => 'Startdatum einer Änderung vom aktuellen Zeitpunkt in php-Schreibweise (first day of next month)', 'translation_domain' => 'form'])
-            ->add('hideChildQuestions', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die detaillierten Fragen bei der Kinderanmeldung', 'translation_domain' => 'form'])
-            ->add('settingsSkibShowPopupOnRegistration', CheckboxType::class, ['required' => false, 'label' => 'Zeige ein Popupfenster beim Abschluss der RRegistrierung durch die Eltern', 'translation_domain' => 'form'])
-            ->add('settingsSkibShowSonnencremeKinder', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer bei den Kindern Zecken entfernen dürfen', 'translation_domain' => 'form'])
-            ->add('settingsSkibShowZeckenKinder', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer die Kinder mit Sonnencreme eincremen dürfen', 'translation_domain' => 'form'])
-
-
-            ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])
-            ->add('skibSettingsBypassBankdaten', CheckboxType::class, ['required' => false, 'label' => 'Es werden keine Bankdaten abgefragt', 'translation_domain' => 'form'])
-            ->add('skibSettingsFinishButtonText', TextType::class, ['required' => false, 'label' => 'Text welcher auf dem Button zum abschließen der Anmeldung steht', 'translation_domain' => 'form'])
+            ->add('settingsAnzahlKindergeldempfanger',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Abfrage Anzahl Kindergeldberechtigter Kinder im Haushalt', 'translation_domain' => 'form']
+            )
+            ->add('settingsAnzahlKindergeldempfangerRequired',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form']
+            )
+            ->add('settingsSozielHilfeEmpfanger',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Abfrage Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?', 'translation_domain' => 'form']
+            )
+            ->add('settingsSozielHilfeEmpfangerRequired',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form']
+            )
+            ->add('settingGehaltsklassen',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Gehaltsklassen abfragen?', 'translation_domain' => 'form']
+            )
+            ->add('settingGehaltsklassenRequired',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form']
+            )
+            ->add('settingKinderimKiga',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Abfrage ob weiteres Kind im KiGa?', 'translation_domain' => 'form']
+            )
+            ->add('settingsweiterePersonenberechtigte',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Weitere Personenberechtigte hinzufügen.', 'translation_domain' => 'form']
+            )
+            ->add('settingsEingabeDerGeschwister',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Die Geschwisterkinder müssen aufgelistet werden.', 'translation_domain' => 'form']
+            )
+            ->add('settings_skib_disableIcs',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Es sollen KEINE Kalenderdatei an die Eltern versandt werden', 'translation_domain' => 'form']
+            )
+            ->add('noSecCodeForChangeChilds',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Die Mitarbeitenden benötigen keinen Security-Code für die Änderung', 'translation_domain' => 'form']
+            )
+            ->add('settingsSkibChangeDocumentChangeDateShow',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'In dem Änderungsformular soll ein Änderungsdatum angezeigt werden', 'translation_domain' => 'form']
+            )
+            ->add('settingsSkibShowSetStartDateOnChange',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Zeige das Startdatum für die Änderung beim bearbeiten eines Kindes an,', 'translation_domain' => 'form']
+            )
+            ->add('settingSkibDefaultNextChange',
+                TextType::class,
+                ['required' => false, 'label' => 'Startdatum einer Änderung vom aktuellen Zeitpunkt in php-Schreibweise (first day of next month)', 'translation_domain' => 'form']
+            )
+            ->add('hideChildQuestions',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Verstecke die detaillierten Fragen bei der Kinderanmeldung', 'translation_domain' => 'form']
+            )
+            ->add('settingsSkibShowPopupOnRegistration',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Zeige ein Popupfenster beim Abschluss der RRegistrierung durch die Eltern', 'translation_domain' => 'form']
+            )
+            ->add('settingsSkibShowSonnencremeKinder',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer bei den Kindern Zecken entfernen dürfen', 'translation_domain' => 'form']
+            )
+            ->add('settingsSkibShowZeckenKinder',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer die Kinder mit Sonnencreme eincremen dürfen', 'translation_domain' => 'form']
+            )
+            ->add('settings_skib_sepaElektronisch',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form']
+            )
+            ->add('skibSettingsBypassBankdaten',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Es werden keine Bankdaten abgefragt', 'translation_domain' => 'form']
+            )
+            ->add('skibSettingsFinishButtonText',
+                TextType::class,
+                ['required' => false, 'label' => 'Text welcher auf dem Button zum abschließen der Anmeldung steht', 'translation_domain' => 'form']
+            )
             ->add('emailDokumente_confirm', EntityType::class, [
                 // looks for choices from this entity
                 'class' => File::class,
@@ -211,7 +305,10 @@ class StadtType extends AbstractType
                 'expanded' => true,
                 'required' => false
             ])
-            ->add('showShowMoreToggleOnHomescreen', CheckboxType::class, ['required' => false, 'label' => 'Zeige den "Mehr lesen" Button auf der Startseite an', 'translation_domain' => 'form'])
+            ->add('showShowMoreToggleOnHomescreen',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Zeige den "Mehr lesen" Button auf der Startseite an', 'translation_domain' => 'form']
+            )
             ->add('gehaltsklassen', CollectionType::class, [
                 'entry_type' => TextType::class,
                 'entry_options' => array('label' => 'Bezeichnung der Gehaltsklassen', 'translation_domain' => 'form')
@@ -230,10 +327,22 @@ class StadtType extends AbstractType
                 'label' => 'Logo hochladen',
                 'translation_domain' => 'form'
             ])
-            ->add('logoUrl', TextType::class, ['required' => false, 'label' => 'URL für Logo', 'translation_domain' => 'form'])
-            ->add('hauptfarbe', TextType::class, ['required' => false, 'label' => 'Hauptfarbe(HTML Code)', 'translation_domain' => 'form'])
-            ->add('akzentfarbe', TextType::class, ['required' => false, 'label' => 'Akzentfarbe (HTML Code)', 'translation_domain' => 'form'])
-            ->add('akzentfarbeFehler', TextType::class, ['required' => false, 'label' => 'Akzentfarbe Fehler (HTML Code)', 'translation_domain' => 'form'])
+            ->add('logoUrl',
+                TextType::class,
+                ['required' => false, 'label' => 'URL für Logo', 'translation_domain' => 'form']
+            )
+            ->add('hauptfarbe',
+                TextType::class,
+                ['required' => false, 'label' => 'Hauptfarbe(HTML Code)', 'translation_domain' => 'form']
+            )
+            ->add('akzentfarbe',
+                TextType::class,
+                ['required' => false, 'label' => 'Akzentfarbe (HTML Code)', 'translation_domain' => 'form']
+            )
+            ->add('akzentfarbeFehler',
+                TextType::class,
+                ['required' => false, 'label' => 'Akzentfarbe Fehler (HTML Code)', 'translation_domain' => 'form']
+            )
             ->add('translations', TranslationsType::class, [
 
                     'fields' => [
@@ -341,11 +450,11 @@ class StadtType extends AbstractType
                             'label' => 'Text, welcher den Eltern angezeigt wird, bevor diese Ihre Bankdaten eingeben können. Diese Meldung muss quitiert werden bevor sie weitergeleitet werden',
                             'translation_domain' => 'form'
                         ],
-                         'settingsSkibPopupRegistrationText' => [
-        'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
-        'label' => 'Text des Popups, welches den Eltern vor Abschluss der Registrierung angezeigt wird.',
-        'translation_domain' => 'form'
-    ],
+                        'settingsSkibPopupRegistrationText' => [
+                            'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
+                            'label' => 'Text des Popups, welches den Eltern vor Abschluss der Registrierung angezeigt wird.',
+                            'translation_domain' => 'form'
+                        ],
                         'settingsExtraTextEmailAnmeldungMitBeworben' => [
                             'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
                             'label' => 'Text welcher in der E-Mail für eine Anmeldung mit beworbenen Zeitblöcken zusätzlich angezeigt wird. (Markdown)',
@@ -380,8 +489,18 @@ class StadtType extends AbstractType
                     ]
                 ]
             )
-            ->add('imprint', TextareaType::class, ['attr' => ['rows' => 6, 'class' => 'onlineEditor'], 'required' => true, 'label' => 'Impressum der Stadt', 'translation_domain' => 'form'])
-            ->add('skibSettingsAbmeldungEmailText', TextareaType::class, ['attr' => ['rows' => 6, 'class' => 'onlineEditor'], 'required' => true, 'label' => 'E-Mail welche an die Eltern geschickt werden wenn die Kinder nicht kopiert werden, da sie einer Abschlussklasse sind', 'translation_domain' => 'form'])
+            ->add('imprint',
+                TextareaType::class,
+                ['attr' => ['rows' => 6, 'class' => 'onlineEditor'], 'required' => true, 'label' => 'Impressum der Stadt', 'translation_domain' => 'form']
+            )
+            ->add('skibSettingsAbmeldungEmailText',
+                TextareaType::class,
+                ['attr' => ['rows' => 6, 'class' => 'onlineEditor'], 'required' => true, 'label' => 'E-Mail welche an die Eltern geschickt werden wenn die Kinder nicht kopiert werden, da sie einer Abschlussklasse sind', 'translation_domain' => 'form']
+            )
+            ->add('autoAssign_formula',
+            TextareaType::class,
+                ['attr' => ['rows' => 6], 'required' => true, 'label' => 'Formel für die Gewichtsberechnung pro Kind']
+            )
             ->add('submit', SubmitType::class, ['label' => 'Speichern', 'translation_domain' => 'form']);
 
     }
