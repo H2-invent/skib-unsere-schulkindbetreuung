@@ -26,7 +26,7 @@ RUN tar \
     --exclude='./var/log' \
     -zcvf /artifact.tgz .
 
-FROM git.h2-invent.com/public-system-design/alpine-php8-cron-webserver:3.20.13
+FROM reg.h2-invent.com/public-system-design/alpine-php8-cron-webserver:3.20.16
 ARG VERSION=development
 
 LABEL version="${VERSION}" \
@@ -50,9 +50,7 @@ RUN apk --no-cache add \
 RUN echo "Europe/Berlin" > /etc/timezone
 
 RUN echo "#!/bin/sh" > /docker-entrypoint-init.d/02-symfony.sh \
-    && echo "php bin/console cache:clear" >> /docker-entrypoint-init.d/02-symfony.sh \
     && echo "php bin/console doc:mig:mig --no-interaction" >> /docker-entrypoint-init.d/02-symfony.sh \
-    && echo "php bin/console cache:clear" >> /docker-entrypoint-init.d/02-symfony.sh \
     && chmod +x /docker-entrypoint-init.d/02-symfony.sh
 
 USER nobody
