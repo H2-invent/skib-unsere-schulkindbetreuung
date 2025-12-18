@@ -2,7 +2,7 @@
 
 namespace App\Message;
 
-final class AutoBlockAssignmentMessage
+final class AutoBlockAssignmentApplyMessage
 {
     public function __construct(
         private int $idOrganisation

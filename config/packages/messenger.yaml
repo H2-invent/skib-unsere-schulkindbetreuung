@@ -11,7 +11,7 @@ framework:
 
         routing:
             # Route your messages to the transports
-             'App\Message\AutoBlockAssignmentMessage': async
+            '*': async
 
 # when@test:
 #    framework:

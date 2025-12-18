@@ -61,10 +61,10 @@
                     $.getJSON(
                         '{{ path('org_child_auto_assign_status', {'id': app.user.organisation.id}) }}',
                         function (data) {
-                           if (data.done) {
-                               clearInterval(polling);
-                               window.location.href = '{{ path('org_child_auto_assign_confirm') }}';
-                           }
+                            if (data.done) {
+                                clearInterval(polling);
+                                window.location.href = '{{ path('org_child_auto_assign_confirm', {'id': app.user.organisation.id}) }}';
+                            }
                         }
                     );
                 }, 3000); // every 3s

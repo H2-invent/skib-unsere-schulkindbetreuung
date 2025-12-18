@@ -21,24 +21,6 @@ class AutoBlockAssignmentRepository extends ServiceEntityRepository
         parent::__construct($registry, AutoBlockAssignment::class);
     }
 
-    public function save(AutoBlockAssignment $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(AutoBlockAssignment $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
 //    /**
 //     * @return AutoBlockAssignment[] Returns an array of AutoBlockAssignment objects
 //     */

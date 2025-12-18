@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Organisation;
+use App\Repository\AutoBlockAssignmentChildRepository;
+use App\Repository\AutoBlockAssignmentChildZeitblockRepository;
 use App\Repository\KindRepository;
 use App\Repository\OrganisationRepository;
 use App\Repository\ZeitblockRepository;
 use App\Service\AutoBlockAssignmentService;
 use Exception;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,11 +21,12 @@ class AutoBlockAssignmentController extends AbstractController
 {
     public function __construct(
         private OrganisationRepository $organisationRepository,
-        private KindRepository $kindRepository,
+        private AutoBlockAssignmentChildRepository $autoChildRepository,
         private ZeitblockRepository $zeitblockRepository,
         private AutoBlockAssignmentService $autoBlockAssignmentService,
     )
-    {}
+    {
+    }
 
     /**
      * @Route("/org_child/auto_assign", name="org_child_auto_assign")
@@ -29,19 +34,12 @@ class AutoBlockAssignmentController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        /**
-         * TODO
-         * Sucht nach AutoBlockAssignment für Organisation (1 to 1 Relation) und zeigt diese an (org_child_auto_assign_confirm)
-         * Reject löscht diese
-         */
-
         $idOrganisation = $request->get('id');
         $organisation = $this->organisationRepository->find($idOrganisation);
         $assignmentStarted = $request->get('assignment_started', false);
 
-        if ($organisation === null || $organisation->getStadt() !== $this->getUser()->getStadt()) {
-            throw new Exception('Wrong City');
-        }
+        $this->assertUserAndOrgaAllowed($organisation);
+
         if ($organisation->getAutoBlockAssignment()) {
             return $this->redirectToRoute('org_child_auto_assign_confirm', ['id' => $idOrganisation]);
         }
@@ -69,6 +67,8 @@ class AutoBlockAssignmentController extends AbstractController
     {
         $idOrganisation = $request->get('id');
         $organisation = $this->organisationRepository->find($idOrganisation);
+        $this->assertUserAndOrgaAllowed($organisation);
+
         $this->autoBlockAssignmentService->createDraftAsync($organisation);
 
         return $this->redirectToRoute('org_child_auto_assign', [
@@ -80,13 +80,38 @@ class AutoBlockAssignmentController extends AbstractController
     /**
      * @Route("/org_child/auto_assign/confirm", name="org_child_auto_assign_confirm")
      */
-    public function confirm(): Response
+    public function confirm(Request $request): Response
     {
-        $kinder = $this->kindRepository->findBy([], [], 50);
+        $idOrganisation = $request->get('id');
+        $assignmentStarted = $request->get('assignment_started', false);
+        $organisation = $this->organisationRepository->find($idOrganisation);
+        $this->assertUserAndOrgaAllowed($organisation);
+
+        if ($organisation->getAutoBlockAssignment() === null) {
+            return $this->redirectToRoute('org_child_auto_assign', ['id' => $idOrganisation]);
+        }
+
+        $autoBlockChildren = $this->autoChildRepository->findByOrganisationAddZeitblocksCounts($organisation);
 
         return $this->render('auto_block_assignment/confirm.html.twig', [
-            'kinder' => $kinder,
+            'autoBlockChildren' => $autoBlockChildren,
+            'assignment_started' => $assignmentStarted,
         ]);
+    }
+
+    /**
+     * @Route("/org_child/auto_assign/confirm/child/{id}", name="org_child_auto_assign_confirm_child")
+     */
+    public function confirmChildRow(Request $request): JsonResponse
+    {
+        $idChild = $request->get('id');
+        $child = $this->autoChildRepository->find($idChild);
+        if ($child === null) {
+            return $this->json([], Response::HTTP_NOT_FOUND);
+        }
+        $autoZeitblocks = $child?->getZeitblocks();
+
+        return $this->json($autoZeitblocks, context: ['groups' => 'confirm_child']);
     }
 
     /**
@@ -96,9 +121,14 @@ class AutoBlockAssignmentController extends AbstractController
     {
         $idOrganisation = $request->get('id');
         $organisation = $this->organisationRepository->find($idOrganisation);
-        $this->autoBlockAssignmentService->acceptDraft($organisation);
+        $this->assertUserAndOrgaAllowed($organisation);
 
-        return $this->redirectToRoute('org_child_auto_assign', ['id' => $idOrganisation]);
+        $this->autoBlockAssignmentService->acceptDraftAsync($organisation);
+
+        return $this->redirectToRoute('org_child_auto_assign_confirm', [
+            'id' => $idOrganisation,
+            'assignment_started' => true
+        ]);
     }
 
     /**
@@ -108,6 +138,8 @@ class AutoBlockAssignmentController extends AbstractController
     {
         $idOrganisation = $request->get('id');
         $organisation = $this->organisationRepository->find($idOrganisation);
+        $this->assertUserAndOrgaAllowed($organisation);
+
         $this->autoBlockAssignmentService->rejectDraft($organisation);
 
         return $this->redirectToRoute('org_child_auto_assign', ['id' => $idOrganisation]);
@@ -120,8 +152,35 @@ class AutoBlockAssignmentController extends AbstractController
     {
         $idOrganisation = $request->get('id');
         $organisation = $this->organisationRepository->find($idOrganisation);
+        $this->assertUserAndOrgaAllowed($organisation);
+
         $isDone = $organisation?->getAutoBlockAssignment() !== null;
 
         return $this->json(['done' => $isDone]);
+    }
+
+    /**
+     * @Route("/org_child/auto_assign/status-apply", name="org_child_auto_assign_status_apply")
+     */
+    public function statusApply(Request $request): JsonResponse
+    {
+        $idOrganisation = $request->get('id');
+        $organisation = $this->organisationRepository->find($idOrganisation);
+        $this->assertUserAndOrgaAllowed($organisation);
+
+        $isDone = $organisation?->getAutoBlockAssignment() === null;
+
+        return $this->json(['done' => $isDone]);
+    }
+
+    /**
+     * @param Organisation|null $organisation
+     * @throws Exception
+     */
+    private function assertUserAndOrgaAllowed(?Organisation $organisation): void
+    {
+        if ($organisation === null || $organisation->getStadt() !== $this->getUser()?->getStadt()) {
+            throw new RuntimeException('Wrong City');
+        }
     }
 }
