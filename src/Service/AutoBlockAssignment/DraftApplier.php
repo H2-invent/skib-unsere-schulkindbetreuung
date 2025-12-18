@@ -38,10 +38,8 @@ class DraftApplier
                 throw new RuntimeException('Could not find Zeitblock of AutoBlockAssignmentChildZeitblock: ' . $autoZeitblock->getId());
             }
 
-            // TODO silent? viele mails gehen raus möglicherweise
+            // TODO silent? lot of mails could be going out
             $this->kontingentAcceptService->acceptKind($zeitblock, $kind);
-
-            // TODO warteschlange auch in die DB oder brauch man die garnicht?
         }
 
         $this->entityManager->remove($autoBlockAssignment);

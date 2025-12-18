@@ -49,7 +49,6 @@ class ZeitblockRepository extends ServiceEntityRepository
      */
     public function findBeworbenBlocksByKind(Kind $kind): array
     {
-        // TODO gives more results than by schule
         return $this->createQueryBuilder('z')
             ->innerJoin('z.kind', 'z_k')
             ->innerJoin('z.kinderBeworben','kinder_beworben')

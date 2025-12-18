@@ -55,7 +55,6 @@ class DraftCreator
 
         foreach ($organisation->getSchule() as $schule) {
             foreach ($schule->getKinder() as $kind) {
-                // TODO error handling wenn expression failed
                 $weight = $this->expressionLanguage->evaluate($formulaParsed, [
                     'kind' => $kind,
                     'eltern' => $kind->getEltern(),
