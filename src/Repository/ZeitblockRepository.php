@@ -64,34 +64,6 @@ class ZeitblockRepository extends ServiceEntityRepository
         ;
     }
 
-    // /**
-    //  * @return Zeitblock[] Returns an array of Zeitblock objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('z')
-            ->andWhere('z.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('z.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Zeitblock
-    {
-        return $this->createQueryBuilder('z')
-            ->andWhere('z.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-
      /**
       * @return Zeitblock[] Returns an array of Zeitblock objects
       */

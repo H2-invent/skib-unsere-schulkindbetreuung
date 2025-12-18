@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Organisation;
 use App\Repository\AutoBlockAssignmentChildRepository;
-use App\Repository\AutoBlockAssignmentChildZeitblockRepository;
-use App\Repository\KindRepository;
 use App\Repository\OrganisationRepository;
 use App\Repository\ZeitblockRepository;
 use App\Service\AutoBlockAssignmentService;

@@ -7,16 +7,13 @@ use App\Entity\AutoBlockAssignment;
 use App\Entity\AutoBlockAssignmentChild;
 use App\Entity\AutoBlockAssignmentChildZeitblock;
 use App\Entity\Organisation;
-use App\Entity\Zeitblock;
 use App\Repository\AutoBlockAssignmentChildRepository;
 use App\Repository\AutoBlockAssignmentRepository;
 use App\Repository\ZeitblockRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerAwareTrait;
 use RuntimeException;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-use Symfony\Component\ExpressionLanguage\SyntaxError;
 
 class DraftCreator
 {
@@ -36,7 +33,8 @@ class DraftCreator
     public function create(Organisation $organisation): void
     {
         $autoBlockAssignment = (new AutoBlockAssignment())
-            ->setOrganisation($organisation);
+            ->setOrganisation($organisation)
+        ;
 
 
         $this->calculateWeights($organisation, $autoBlockAssignment);
@@ -65,7 +63,8 @@ class DraftCreator
                 $autoBlockAssignmentChild = (new AutoBlockAssignmentChild())
                     ->setAutoBlockAssignment($autoBlockAssignment)
                     ->setKind($kind)
-                    ->setWeight((float)$weight);
+                    ->setWeight((float)$weight)
+                ;
                 $autoBlockAssignment->addChild($autoBlockAssignmentChild);
                 $this->entityManager->persist($autoBlockAssignmentChild);
             }
@@ -93,7 +92,8 @@ class DraftCreator
                     ->setChild($child)
                     ->setZeitblock($acceptedZeitblock)
                     ->setAccepted(true)
-                    ->setWarteschlange(false);
+                    ->setWarteschlange(false)
+                ;
                 $this->entityManager->persist($autoBlockAssignmentZeitblock);
             }
 
@@ -102,7 +102,8 @@ class DraftCreator
                     ->setChild($child)
                     ->setZeitblock($warteschlangeZeitblock)
                     ->setAccepted(false)
-                    ->setWarteschlange(true);
+                    ->setWarteschlange(true)
+                ;
                 $this->entityManager->persist($autoBlockAssignmentZeitblock);
             }
         }

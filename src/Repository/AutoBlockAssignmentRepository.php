@@ -21,28 +21,4 @@ class AutoBlockAssignmentRepository extends ServiceEntityRepository
         parent::__construct($registry, AutoBlockAssignment::class);
     }
 
-//    /**
-//     * @return AutoBlockAssignment[] Returns an array of AutoBlockAssignment objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?AutoBlockAssignment
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

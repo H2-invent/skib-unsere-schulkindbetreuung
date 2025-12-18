@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\AutoBlockAssignment;
 use App\Entity\Organisation;
 use App\Message\AutoBlockAssignmentApplyMessage;
 use App\Message\AutoBlockAssignmentCreateMessage;
