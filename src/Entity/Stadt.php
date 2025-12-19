@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
@@ -297,6 +298,10 @@ class Stadt implements TranslatableInterface
 
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $settingsDokumentUploadText = null;
+  
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $autoAssign_formula = null;
+
 
 
 
@@ -1459,10 +1464,17 @@ class Stadt implements TranslatableInterface
     public function setSettingsDokumentUploadText(string $settingsDokumentUploadText): self
     {
         $this->settingsDokumentUploadText = $settingsDokumentUploadText;
+    }
+  
+    public function getAutoAssignFormula(): ?string
+    {
+        return $this->autoAssign_formula;
+    }
+
+    public function setAutoAssignFormula(?string $autoAssign_formula): self
+    {
+        $this->autoAssign_formula = $autoAssign_formula;
 
         return $this;
     }
-
-
-
 }

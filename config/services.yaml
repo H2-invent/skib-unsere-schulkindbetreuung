@@ -48,3 +48,6 @@ services:
         class: Twig\Extension\StringLoaderExtension
         tags:
             - { name: 'twig.extension' }
+
+    Symfony\Component\ExpressionLanguage\ExpressionLanguage:
+        autoconfigure: true

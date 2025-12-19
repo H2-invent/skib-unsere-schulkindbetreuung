@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: \App\Repository\ZeitblockRepository::class)]
@@ -17,28 +18,34 @@ class Zeitblock implements TranslatableInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['confirm_child'])]
     private $id;
 
     #[ORM\Column(type: 'time')]
+    #[Groups(['confirm_child'])]
     private $von;
 
     #[ORM\Column(type: 'time')]
+    #[Groups(['confirm_child'])]
     private $bis;
 
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: \App\Entity\Schule::class, inversedBy: 'zeitblocks')]
+    #[Groups(['confirm_child'])]
     private $schule;
 
     #[ORM\ManyToMany(targetEntity: \App\Entity\Kind::class, inversedBy: 'zeitblocks')]
     private $kind;
 
     #[ORM\ManyToOne(targetEntity: \App\Entity\Active::class, inversedBy: 'blocks')]
+    #[Groups(['confirm_child'])]
     private $active;
 
     #[ORM\OneToMany(targetEntity: \App\Entity\Abwesend::class, mappedBy: 'zeitblock')]
     private $abwesenheit;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(['confirm_child'])]
     private $wochentag;
 
     #[ORM\Column(type: 'integer')]

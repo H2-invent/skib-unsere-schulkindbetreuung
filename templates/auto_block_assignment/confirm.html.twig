@@ -1,0 +1,148 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h1>{% trans %}Ergebnisse der automatischen Blockzuteilung{% endtrans %}</h1>
+                            </div>
+                            <div class="col text-right">
+                                <a href="{{ path('org_child_auto_assign_reject', {'id': app.user.organisation.id}) }}">
+                                    <button type="button" class="btn btn-red">
+                                        {% trans %}Zuteilung verwerfen{% endtrans %}
+                                    </button>
+                                </a>
+                                {% if assignment_started %}
+                                    <button class="btn btn-success" type="button" disabled>
+                                        <span class="spinner-border spinner-border-sm" role="status"
+                                              aria-hidden="true"></span>
+                                        &nbsp; {% trans %}Lädt{% endtrans %} ...
+                                    </button>
+                                {% else %}
+                                    <a href="{{ path('org_child_auto_assign_accept', {'id': app.user.organisation.id}) }}">
+                                        <button type="button" class="btn btn-success">
+                                            {% trans %}Zuteilung akzeptieren{% endtrans %}
+                                        </button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mb-1">
+                    <div class="card-body">
+                        <table id="assignment-table" class="table table-striped no-data-table">
+                            <thead>
+                            <tr>
+                                <th>{% trans %}Kind{% endtrans %}</th>
+                                <th>{% trans %}Anzahl akzeptierter Blöcke{% endtrans %}</th>
+                                <th>{% trans %}Anzahl Wartelisten{% endtrans %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for blockChild in autoBlockChildren %}
+                                <tr id="{{ blockChild.0.id }}">
+                                    <td>{{ blockChild.0.kind.vorname ~ ' ' ~ blockChild.0.kind.nachname }}</td>
+                                    <td>{{ blockChild.countAccepted }}</td>
+                                    <td>{{ blockChild.countWarteschlange }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block jquery %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            async function getChildData(data) {
+                function getWeekdayName(dayIndex) {
+                    const date = new Date(1970, 0, 5 + dayIndex);
+                    return new Intl.DateTimeFormat('{{ app.request.locale }}', {weekday: 'long'}).format(date);
+                }
+
+                function getZeitblockTime(time) {
+                    const date = new Date(time);
+                    return new Intl.DateTimeFormat('de-DE', {hour: '2-digit', minute: '2-digit'}).format(date);
+                }
+
+                await $.ajax({
+                    // __ID__ as placeholder since id is only known at runtime
+                    url: '{{ path('org_child_auto_assign_confirm_child', {'id': '__ID__'}) }}'.replace('__ID__', data.DT_RowId),
+                    success: (responseData) => {
+                        data = responseData;
+                    },
+                });
+                let html =
+                    `<table style="width: 100%">
+                        <thead>
+                            <tr>
+                                <td>Tag</td>
+                                <td>Zeit</td>
+                                <td>Schule</td>
+                                <td>Akzeptiert</td>
+                                <td>Warteschlange</td>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+                data.forEach((data) => {
+                    html += `
+                            <tr style="background-color: ${data.accepted ? '#28a74557' : '#ffc10742'}">
+                                <td>${getWeekdayName(data.zeitblock.wochentag)}</td>
+                                <td>${getZeitblockTime(data.zeitblock.von)} - ${getZeitblockTime(data.zeitblock.bis)}</td>
+                                <td>${data.zeitblock.schule.name}</td>
+                                <td>${data.accepted ? '✔️' : '❌'}</td>
+                                <td>${data.warteschlange ? '✔️' : '❌'}</td>
+                            </tr> `;
+                });
+                html += '</tbody></table>';
+
+                return html;
+            }
+
+            let table = $('#assignment-table').DataTable({
+                searching: false,
+                order: [[1, 'desc']],
+            });
+            // table.on('click', 'tbody td.dt-control', function (e) {
+            table.on('click', 'tbody tr', async function (e) {
+                const row = table.row(this);
+
+                if (row.child.isShown()) {
+                    row.child.hide();
+                } else {
+                    // could implement caching here for performance gain on subsequent openings
+                    // but .hide() does delete the row from dom so it's not that easy
+                    const childToShow = await getChildData(row.data());
+                    row.child(childToShow).show();
+                }
+            });
+        });
+    </script>
+
+    {% if assignment_started %}
+        <script>
+            $(document).ready(function () {
+                const polling = setInterval(function () {
+                    $.getJSON(
+                        '{{ path('org_child_auto_assign_status_apply', {'id': app.user.organisation.id}) }}',
+                        function (data) {
+                            if (data.done) {
+                                clearInterval(polling);
+                                window.location.href = '{{ path('org_child_auto_assign', {'id': app.user.organisation.id}) }}';
+                            }
+                        }
+                    );
+                }, 3000); // every 3s
+            });
+        </script>
+    {% endif %}
+{% endblock %}

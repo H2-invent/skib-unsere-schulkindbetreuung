@@ -273,6 +273,10 @@ table.table-stundenplan td .card .kids {
     font-size: 16px;
 }
 
+#assignment-table td {
+    cursor: pointer;
+}
+
 .no-shadow {
     box-shadow: none !important;
 }
