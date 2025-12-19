@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Geschwister;
 use App\Entity\Stadt;
+use App\Entity\Stammdaten;
 use App\Service\UploadService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -107,5 +108,31 @@ class UploadController extends AbstractController
                 ->headers
                 ->get('referer')
         );
+    }
+
+    /**
+     * @Route("/upload/additional/{id}/file", name="upload_additional-documents",methods={"POST"})
+     * @ParamConverter ("Stammdaten", options={"mapping": {"id": "id"}})
+     */
+    public function additionalDocuments(
+        Request $request,
+        UploadService $uploadService,
+        Stammdaten $stammdaten,
+        EntityManagerInterface $entityManager
+    )
+    {
+        set_time_limit(300);
+
+        /** @var UploadedFile $uploadedFile */
+        $uploadedFile = $request->files->get('file');
+        $file = $uploadService->uploadFile($uploadedFile);
+        if (!$file) {
+            return new JsonResponse(['error' => 1]);
+        }
+        $stammdaten->addFile($file);
+        $entityManager->persist($stammdaten);
+        $entityManager->flush();
+
+        return new JsonResponse(['error' => 0]);
     }
 }

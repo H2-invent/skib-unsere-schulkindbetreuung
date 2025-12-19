@@ -295,6 +295,8 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(nullable: true)]
     private ?bool $settingsSkibShowZeckenKinder = null;
 
+    #[ORM\Column(length: 1024, nullable: true)]
+    private ?string $settingsDokumentUploadText = null;
 
 
 
@@ -1445,6 +1447,18 @@ class Stadt implements TranslatableInterface
     public function setSettingsSkibShowZeckenKinder(?bool $settingsSkibShowZeckenKinder): self
     {
         $this->settingsSkibShowZeckenKinder = $settingsSkibShowZeckenKinder;
+
+        return $this;
+    }
+
+    public function getSettingsDokumentUploadText(): ?string
+    {
+        return $this->settingsDokumentUploadText;
+    }
+
+    public function setSettingsDokumentUploadText(string $settingsDokumentUploadText): self
+    {
+        $this->settingsDokumentUploadText = $settingsDokumentUploadText;
 
         return $this;
     }
