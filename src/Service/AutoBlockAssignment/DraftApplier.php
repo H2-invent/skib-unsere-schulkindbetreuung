@@ -6,6 +6,7 @@ namespace App\Service\AutoBlockAssignment;
 use App\Entity\AutoBlockAssignment;
 use App\Repository\AutoBlockAssignmentChildZeitblockRepository;
 use App\Service\KontingentAcceptService;
+use App\Service\WartelisteService;
 use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
 
@@ -13,6 +14,7 @@ class DraftApplier
 {
     public function __construct(
         private KontingentAcceptService $kontingentAcceptService,
+        private WartelisteService $wartelisteService,
         private AutoBlockAssignmentChildZeitblockRepository $autoZeitblockRepository,
         private EntityManagerInterface $entityManager,
     )
@@ -26,7 +28,8 @@ class DraftApplier
             throw new RuntimeException('Could not find Organisation of AutoBlockAssignment: ' . $autoBlockAssignment->getId());
         }
 
-        $autoZeitblocks = $this->autoZeitblockRepository->findAcceptedJoinChildAndKindByOrganisation($organisation);
+        $autoZeitblocks = $this->autoZeitblockRepository->findByOrganisationJoinChildAndKind($organisation);
+
         foreach ($autoZeitblocks as $autoZeitblock) {
             $kind = $autoZeitblock->getChild()?->getKind();
             if ($kind === null) {
@@ -39,7 +42,11 @@ class DraftApplier
             }
 
             // TODO silent? lot of mails could be going out
-            $this->kontingentAcceptService->acceptKind($zeitblock, $kind);
+            if ($autoZeitblock->isAccepted()) {
+                $this->kontingentAcceptService->acceptKind($zeitblock, $kind);
+            } else if ($autoZeitblock->isWarteschlange()) {
+                $this->wartelisteService->addKindToWarteliste($kind, $zeitblock);
+            }
         }
 
         $this->entityManager->remove($autoBlockAssignment);

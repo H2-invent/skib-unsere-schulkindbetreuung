@@ -25,15 +25,14 @@ class AutoBlockAssignmentChildZeitblockRepository extends ServiceEntityRepositor
     /**
      * @return AutoBlockAssignmentChildZeitblock[]
      */
-    public function findAcceptedJoinChildAndKindByOrganisation(Organisation $organisation): array
+    public function findByOrganisationJoinChildAndKind(Organisation $organisation): array
     {
         return $this->createQueryBuilder('z')
             ->innerJoin('z.child', 'child')
             ->innerJoin('child.autoBlockAssignment', 'auto')
             ->innerJoin('z.zeitblock', 'block')
             ->innerJoin('child.kind', 'kind')
-            ->where('z.accepted = 1')
-            ->andWhere('auto.organisation = :organisation')
+            ->where('auto.organisation = :organisation')
             ->setParameter('organisation', $organisation)
             ->getQuery()
             ->getResult()
