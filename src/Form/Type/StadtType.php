@@ -147,90 +147,30 @@ class StadtType extends AbstractType
             )
 
             //SKIB Stammdaten einstallungen
-            ->add('settingsAnzahlKindergeldempfanger',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Abfrage Anzahl Kindergeldberechtigter Kinder im Haushalt', 'translation_domain' => 'form']
-            )
-            ->add('settingsAnzahlKindergeldempfangerRequired',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form']
-            )
-            ->add('settingsSozielHilfeEmpfanger',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Abfrage Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?', 'translation_domain' => 'form']
-            )
-            ->add('settingsSozielHilfeEmpfangerRequired',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form']
-            )
-            ->add('settingGehaltsklassen',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Gehaltsklassen abfragen?', 'translation_domain' => 'form']
-            )
-            ->add('settingGehaltsklassenRequired',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form']
-            )
-            ->add('settingKinderimKiga',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Abfrage ob weiteres Kind im KiGa?', 'translation_domain' => 'form']
-            )
-            ->add('settingsweiterePersonenberechtigte',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Weitere Personenberechtigte hinzufügen.', 'translation_domain' => 'form']
-            )
-            ->add('settingsEingabeDerGeschwister',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Die Geschwisterkinder müssen aufgelistet werden.', 'translation_domain' => 'form']
-            )
-            ->add('settings_skib_disableIcs',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Es sollen KEINE Kalenderdatei an die Eltern versandt werden', 'translation_domain' => 'form']
-            )
-            ->add('noSecCodeForChangeChilds',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Die Mitarbeitenden benötigen keinen Security-Code für die Änderung', 'translation_domain' => 'form']
-            )
-            ->add('settingsSkibChangeDocumentChangeDateShow',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'In dem Änderungsformular soll ein Änderungsdatum angezeigt werden', 'translation_domain' => 'form']
-            )
-            ->add('settingsSkibShowSetStartDateOnChange',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Zeige das Startdatum für die Änderung beim bearbeiten eines Kindes an,', 'translation_domain' => 'form']
-            )
-            ->add('settingSkibDefaultNextChange',
-                TextType::class,
-                ['required' => false, 'label' => 'Startdatum einer Änderung vom aktuellen Zeitpunkt in php-Schreibweise (first day of next month)', 'translation_domain' => 'form']
-            )
-            ->add('hideChildQuestions',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Verstecke die detaillierten Fragen bei der Kinderanmeldung', 'translation_domain' => 'form']
-            )
-            ->add('settingsSkibShowPopupOnRegistration',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Zeige ein Popupfenster beim Abschluss der RRegistrierung durch die Eltern', 'translation_domain' => 'form']
-            )
-            ->add('settingsSkibShowSonnencremeKinder',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer bei den Kindern Zecken entfernen dürfen', 'translation_domain' => 'form']
-            )
-            ->add('settingsSkibShowZeckenKinder',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer die Kinder mit Sonnencreme eincremen dürfen', 'translation_domain' => 'form']
-            )
-            ->add('settings_skib_sepaElektronisch',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form']
-            )
-            ->add('skibSettingsBypassBankdaten',
-                CheckboxType::class,
-                ['required' => false, 'label' => 'Es werden keine Bankdaten abgefragt', 'translation_domain' => 'form']
-            )
-            ->add('skibSettingsFinishButtonText',
-                TextType::class,
-                ['required' => false, 'label' => 'Text welcher auf dem Button zum abschließen der Anmeldung steht', 'translation_domain' => 'form']
-            )
+            ->add('settingsAnzahlKindergeldempfanger', CheckboxType::class, ['required' => false, 'label' => 'Abfrage Anzahl Kindergeldberechtigter Kinder im Haushalt', 'translation_domain' => 'form'])
+            ->add('settingsAnzahlKindergeldempfangerRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
+            ->add('settingsSozielHilfeEmpfanger', CheckboxType::class, ['required' => false, 'label' => 'Abfrage Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?', 'translation_domain' => 'form'])
+            ->add('settingsSozielHilfeEmpfangerRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
+            ->add('settingGehaltsklassen', CheckboxType::class, ['required' => false, 'label' => 'Gehaltsklassen abfragen?', 'translation_domain' => 'form'])
+            ->add('settingGehaltsklassenRequired', CheckboxType::class, ['required' => false, 'label' => 'Diese Angabe ist Mandatory?', 'translation_domain' => 'form'])
+            ->add('settingKinderimKiga', CheckboxType::class, ['required' => false, 'label' => 'Abfrage ob weiteres Kind im KiGa?', 'translation_domain' => 'form'])
+            ->add('settingsweiterePersonenberechtigte', CheckboxType::class, ['required' => false, 'label' => 'Weitere Personenberechtigte hinzufügen.', 'translation_domain' => 'form'])
+            ->add('settingsEingabeDerGeschwister', CheckboxType::class, ['required' => false, 'label' => 'Die Geschwisterkinder müssen aufgelistet werden.', 'translation_domain' => 'form'])
+            ->add('settings_skib_disableIcs', CheckboxType::class, ['required' => false, 'label' => 'Es sollen KEINE Kalenderdatei an die Eltern versandt werden', 'translation_domain' => 'form'])
+            ->add('noSecCodeForChangeChilds', CheckboxType::class, ['required' => false, 'label' => 'Die Mitarbeitenden benötigen keinen Security-Code für die Änderung', 'translation_domain' => 'form'])
+            ->add('settingsSkibChangeDocumentChangeDateShow', CheckboxType::class, ['required' => false, 'label' => 'In dem Änderungsformular soll ein Änderungsdatum angezeigt werden', 'translation_domain' => 'form'])
+            ->add('settingsSkibShowSetStartDateOnChange', CheckboxType::class, ['required' => false, 'label' => 'Zeige das Startdatum für die Änderung beim bearbeiten eines Kindes an,', 'translation_domain' => 'form'])
+            ->add('settingSkibDefaultNextChange', TextType::class, ['required' => false, 'label' => 'Startdatum einer Änderung vom aktuellen Zeitpunkt in php-Schreibweise (first day of next month)', 'translation_domain' => 'form'])
+            ->add('hideChildQuestions', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die detaillierten Fragen bei der Kinderanmeldung', 'translation_domain' => 'form'])
+            ->add('settingsSkibShowPopupOnRegistration', CheckboxType::class, ['required' => false, 'label' => 'Zeige ein Popupfenster beim Abschluss der RRegistrierung durch die Eltern', 'translation_domain' => 'form'])
+            ->add('settingsSkibShowSonnencremeKinder', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer bei den Kindern Zecken entfernen dürfen', 'translation_domain' => 'form'])
+            ->add('settingsSkibShowZeckenKinder', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer die Kinder mit Sonnencreme eincremen dürfen', 'translation_domain' => 'form'])
+
+
+            ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])
+            ->add('skibSettingsBypassBankdaten', CheckboxType::class, ['required' => false, 'label' => 'Es werden keine Bankdaten abgefragt', 'translation_domain' => 'form'])
+            ->add('skibSettingsFinishButtonText', TextType::class, ['required' => false, 'label' => 'Text welcher auf dem Button zum abschließen der Anmeldung steht', 'translation_domain' => 'form'])
+            ->add('settingsDokumentUploadText', TextType::class, ['required' => false, 'label' => 'Text welcher in dem Dokumenten-Upload Feld bei der Anmeldung steht', 'translation_domain' => 'form'])
             ->add('emailDokumente_confirm', EntityType::class, [
                 // looks for choices from this entity
                 'class' => File::class,

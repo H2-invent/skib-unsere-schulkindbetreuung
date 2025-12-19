@@ -3091,6 +3091,9 @@ Responsabilité pour les liens
         <source>Abbrechen</source>
         <target state="translated">Annuler</target>
       </trans-unit>
+      <trans-unit id="c9G0RhG" resname="Zusätzliche Dokumente">
+        <source>Zusätzliche Dokumente</source>
+        <target state="translated">Documents supplémentaires</target>
       <trans-unit id="l0T3KG." resname="Autom. Zuteilung">
           <source>Autom. Zuteilung</source>
           <target state="translated">Attribution autom.</target>

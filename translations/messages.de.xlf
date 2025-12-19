@@ -1190,8 +1190,8 @@
         <target state="needs-translation">Kein Admin</target>
       </trans-unit>
       <trans-unit id="47DEQpj" resname="">
-        <source/>
-        <target/>
+        <source></source>
+        <target></target>
       </trans-unit>
       <trans-unit id="1j_378O" resname="Berichte von %active%">
         <source>Berichte von %active%</source>
@@ -3101,6 +3101,9 @@
         <source>Abbrechen</source>
         <target state="needs-translation">Abbrechen</target>
       </trans-unit>
+      <trans-unit id="c9G0RhG" resname="Zusätzliche Dokumente">
+        <source>Zusätzliche Dokumente</source>
+        <target state="needs-translation">Zusätzliche Dokumente</target>
       <trans-unit id="l0T3KG." resname="Autom. Zuteilung">
           <source>Autom. Zuteilung</source>
           <target state="translated">Autom. Zuteilung</target>

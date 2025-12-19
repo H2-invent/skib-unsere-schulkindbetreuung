@@ -195,6 +195,9 @@ class Stammdaten implements GroupSequenceProviderInterface
     #[ORM\Column(type: 'string', nullable: true)]
     private $tracingOfLastYear;
 
+    #[ORM\ManyToMany(targetEntity: File::class)]
+    private Collection $file;
+
     public function __construct()
     {
 
@@ -206,6 +209,7 @@ class Stammdaten implements GroupSequenceProviderInterface
         $this->kundennummerns = new ArrayCollection();
         $this->personenberechtigters = new ArrayCollection();
         $this->geschwisters = new ArrayCollection();
+        $this->file = new ArrayCollection();
 
     }
 
@@ -949,6 +953,30 @@ class Stammdaten implements GroupSequenceProviderInterface
     public function setTracingOfLastYear(?string $tracingOfLastYear): self
     {
         $this->tracingOfLastYear = $tracingOfLastYear;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, File>
+     */
+    public function getFile(): Collection
+    {
+        return $this->file;
+    }
+
+    public function addFile(File $file): self
+    {
+        if (!$this->file->contains($file)) {
+            $this->file->add($file);
+        }
+
+        return $this;
+    }
+
+    public function removeFile(File $file): self
+    {
+        $this->file->removeElement($file);
 
         return $this;
     }

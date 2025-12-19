@@ -296,6 +296,9 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(nullable: true)]
     private ?bool $settingsSkibShowZeckenKinder = null;
 
+    #[ORM\Column(length: 1024, nullable: true)]
+    private ?string $settingsDokumentUploadText = null;
+  
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $autoAssign_formula = null;
 
@@ -1453,6 +1456,16 @@ class Stadt implements TranslatableInterface
         return $this;
     }
 
+    public function getSettingsDokumentUploadText(): ?string
+    {
+        return $this->settingsDokumentUploadText;
+    }
+
+    public function setSettingsDokumentUploadText(string $settingsDokumentUploadText): self
+    {
+        $this->settingsDokumentUploadText = $settingsDokumentUploadText;
+    }
+  
     public function getAutoAssignFormula(): ?string
     {
         return $this->autoAssign_formula;
@@ -1464,7 +1477,4 @@ class Stadt implements TranslatableInterface
 
         return $this;
     }
-
-
-
 }
