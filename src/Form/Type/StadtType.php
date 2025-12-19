@@ -137,6 +137,7 @@ class StadtType extends AbstractType
             ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])
             ->add('skibSettingsBypassBankdaten', CheckboxType::class, ['required' => false, 'label' => 'Es werden keine Bankdaten abgefragt', 'translation_domain' => 'form'])
             ->add('skibSettingsFinishButtonText', TextType::class, ['required' => false, 'label' => 'Text welcher auf dem Button zum abschließen der Anmeldung steht', 'translation_domain' => 'form'])
+            ->add('settingsDokumentUploadText', TextType::class, ['required' => false, 'label' => 'Text welcher in dem Dokumenten-Upload Feld bei der Anmeldung steht', 'translation_domain' => 'form'])
             ->add('emailDokumente_confirm', EntityType::class, [
                 // looks for choices from this entity
                 'class' => File::class,

@@ -290,6 +290,21 @@
             {% endfor %}
         </div>
     </div>
+    <div class="card mb-2">
+        <div class="card-header ">
+            <h3 class="cover-heading">{% trans %}Zusätzliche Dokumente{% endtrans %}</h3>
+        </div>
+        <div class="card-body">
+            <form action="{{ path('upload_additional-documents',{'id':eltern.id}) }}"
+                  id="dropzone_additional-documents"
+                  class="dropzone"
+            >
+                <div style="display: none" class="dz-message" data-dz-message>
+                    <span>{{ stadt.settingsDokumentUploadText | default('Hier zusätzliche Dokumente hochladen') | trans }}</span>
+                </div>
+            </form>
+        </div>
+    </div>
     {% if not stadt.skibSettingsBypassBankdaten %}
         <div class="card mb-2">
             <div class="card-header ">
