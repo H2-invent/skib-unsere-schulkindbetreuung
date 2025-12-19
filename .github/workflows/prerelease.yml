@@ -1,4 +1,4 @@
-name: Create Release
+name: Create Pre-Release
 
 env:
   GITHUB_TOKEN: ${{ secrets.token }}
@@ -6,7 +6,8 @@ env:
 on:
   push:
     branches:
-      - master
+      - staging
+      - bugfix/**
 
 jobs:
   version:
@@ -27,18 +28,18 @@ jobs:
           major_pattern: "(MAJOR)"
           minor_pattern: "(MINOR)"
           change_path: .
-          version_format: "${major}.${minor}.${patch}"
+          version_format: "${major}.${minor}.${patch}-${increment}"
 
       - name: Create new Release with semantic-version tag
         uses: ncipollo/release-action@v1
         id: create_release
         with:
-          draft: false
-          prerelease: false
+          draft: true
+          prerelease: true
           allowUpdates: true
           name: Release ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
-          bodyFile: RELEASE_NOTE.md
+          body: Prelease and Dev Build
 
   docker_image:
     needs:
@@ -49,7 +50,8 @@ jobs:
       dockerfile_path: './Dockerfile'
       directory: '.'
       version: ${{ needs.version.outputs.version_output }}
-      tags: reg.h2-invent.com/unsere-schulkindbetreuung/application:${{ needs.version.outputs.version }},reg.h2-invent.com/unsere-schulkindbetreuung/application:latest
+      tags: reg.h2-invent.com/unsere-schulkindbetreuung/application:${{ needs.version.outputs.version }}
     secrets:
       docker_password: ${{ secrets.HARBOR_PUSH_PASSWORD }}
       docker_username: ${{ secrets.HARBOR_PUSH_USERNAME }}
+
