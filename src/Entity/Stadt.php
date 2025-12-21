@@ -1504,7 +1504,4 @@ class Stadt implements TranslatableInterface
 
         return $this;
     }
-
-
-
 }
