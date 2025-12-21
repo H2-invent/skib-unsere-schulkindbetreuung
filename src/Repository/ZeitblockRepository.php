@@ -50,15 +50,14 @@ class ZeitblockRepository extends ServiceEntityRepository
     public function findBeworbenBlocksByKind(Kind $kind): array
     {
         return $this->createQueryBuilder('z')
-            ->innerJoin('z.kind', 'z_k')
-            ->innerJoin('z.kinderBeworben','kinder_beworben')
-            ->innerJoin('kinder_beworben.eltern','eltern')
-            ->where(':kind MEMBER OF z.kinderBeworben')
+            ->innerJoin('z.schule', 'schule')
+            ->innerJoin('z.kinderBeworben', 'kinder_beworben')
+            ->innerJoin('kinder_beworben.eltern', 'eltern')
+            ->andWhere('kinder_beworben = :kind')
             ->setParameter('kind', $kind)
             ->andWhere('kinder_beworben.startDate is not NULL')
             ->andWhere('eltern.created_at is not NULL')
             ->andWhere('z.deleted = 0')
-            ->andWhere('SIZE(z.kinderBeworben) > 0')
             ->getQuery()
             ->getResult()
         ;
