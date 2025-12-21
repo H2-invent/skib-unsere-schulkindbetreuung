@@ -1464,6 +1464,7 @@ class Stadt implements TranslatableInterface
     public function setSettingsDokumentUploadText(string $settingsDokumentUploadText): self
     {
         $this->settingsDokumentUploadText = $settingsDokumentUploadText;
+        return $this;
     }
   
     public function getAutoAssignFormula(): ?string
