@@ -305,6 +305,9 @@ class Stadt implements TranslatableInterface
     #[ORM\ManyToMany(targetEntity: \App\Entity\File::class)]
     private $settingsDokumentTemplates;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $settingsSkibShowPflasterKinder = null;
+
 
 
 
@@ -1501,6 +1504,18 @@ class Stadt implements TranslatableInterface
     public function removeSettingsDokumentTemplate(File $settingsDokumentTemplate): self
     {
         $this->settingsDokumentTemplates->removeElement($settingsDokumentTemplate);
+
+        return $this;
+    }
+
+    public function isSettingsSkibShowPflasterKinder(): ?bool
+    {
+        return $this->settingsSkibShowPflasterKinder;
+    }
+
+    public function setSettingsSkibShowPflasterKinder(?bool $settingsSkibShowPflasterKinder): self
+    {
+        $this->settingsSkibShowPflasterKinder = $settingsSkibShowPflasterKinder;
 
         return $this;
     }

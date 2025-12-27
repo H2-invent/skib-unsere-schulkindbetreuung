@@ -162,10 +162,13 @@ class ChildExcelService
                 if (!$data->getSchule()->getStadt()->isHideChildQuestions()) {
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getMedikamente());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAllergie());
+
                     if ($data->getSchule()->getStadt()->isSettingsSkibShowZeckenKinder()) {
                         $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getZeckenEntfernen());
                     }
-
+                    if ($data->getSchule()->getStadt()->isSettingsSkibShowPflasterKinder()) {
+                        $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->isPflaster());
+                    }
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getGluten());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSchweinefleisch());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getLaktose());
@@ -289,6 +292,10 @@ class ChildExcelService
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Allergien'));
             if ($this->stadt->isSettingsSkibShowZeckenKinder()) {
                 $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Zecken dürfen entfernt werden'));
+
+            }
+            if ($this->stadt->isSettingsSkibShowPflasterKinder()) {
+                $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Pflaster dürfen angebracht werden'));
 
             }
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Gluten intolerant'));
