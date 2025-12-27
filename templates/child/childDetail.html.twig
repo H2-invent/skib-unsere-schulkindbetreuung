@@ -146,6 +146,12 @@
                                     <td>{{ k.zeckenEntfernen?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
                                     {% endif %}
+                                    {% if k.schule.stadt.settingsSkibShowPflasterKinder != true %}
+                                        <tr>
+                                            <td>{% trans %}Dürfen Betreuer Ihrem Kind bei einer Verletzung ein Pflaster aufkleben{% endtrans %}</td>
+                                            <td>{{ k.pflaster?"Ja"|trans:'Nein'|trans }}</td>
+                                        </tr>
+                                    {% endif %}
                                 <tr>
                                     <td>{% trans %}Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.{% endtrans %}</td>
                                     <td>{{ k.fotos?"Ja"|trans:'Nein'|trans }}</td>

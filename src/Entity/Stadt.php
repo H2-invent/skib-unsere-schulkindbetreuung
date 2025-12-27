@@ -302,6 +302,9 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $autoAssign_formula = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $settingsSkibShowPflasterKinder = null;
+
 
 
 
@@ -1475,6 +1478,18 @@ class Stadt implements TranslatableInterface
     public function setAutoAssignFormula(?string $autoAssign_formula): self
     {
         $this->autoAssign_formula = $autoAssign_formula;
+
+        return $this;
+    }
+
+    public function isSettingsSkibShowPflasterKinder(): ?bool
+    {
+        return $this->settingsSkibShowPflasterKinder;
+    }
+
+    public function setSettingsSkibShowPflasterKinder(?bool $settingsSkibShowPflasterKinder): self
+    {
+        $this->settingsSkibShowPflasterKinder = $settingsSkibShowPflasterKinder;
 
         return $this;
     }
