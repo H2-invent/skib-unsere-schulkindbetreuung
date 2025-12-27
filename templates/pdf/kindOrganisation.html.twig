@@ -85,7 +85,7 @@
                 <td>{{ k.zeckenEntfernen?"Ja"|trans:'Nein'|trans }}</td>
             </tr>
         {% endif %}
-        {% if k.schule.stadt.settingsSkibShowPflasterKinder != true %}
+        {% if k.schule.stadt.settingsSkibShowPflasterKinder == true %}
             <tr>
                 <td>{% trans %}Dürfen Betreuer Ihrem Kind bei einer Verletzung ein Pflaster aufkleben{% endtrans %}</td>
                 <td>{{ k.pflaster?"Ja"|trans:'Nein'|trans }}</td>

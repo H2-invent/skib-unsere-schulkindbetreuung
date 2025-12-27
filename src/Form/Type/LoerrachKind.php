@@ -72,7 +72,7 @@ class LoerrachKind extends AbstractType
                 $builder->add('zeckenEntfernen', CheckboxType::class, ['required' => false, 'label' => 'Die Betreuer dürfen bei meinem Kinder Zecken entfernen', 'translation_domain' => 'form']);
 
             }
-            if ($stadt->isSettingsSkibShowPflasterKinder() !== true) {
+            if ($stadt->isSettingsSkibShowPflasterKinder() === true) {
                 $builder->add('pflaster', CheckboxType::class, ['required' => false, 'label' => 'Dürfen Betreuer Ihrem Kind bei einer Verletzung ein Pflaster aufkleben', 'translation_domain' => 'form']);
             }
 
