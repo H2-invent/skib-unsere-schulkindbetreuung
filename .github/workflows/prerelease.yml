@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - staging
-      - bugfix/**
+      - hotfix/**
 
 jobs:
   version:
