@@ -1,0 +1,53 @@
+{% set stammdaten = form.vars.value %}
+<div class="card">
+    <div class="card-header">
+        <h2>{% trans %}Dokumente{% endtrans %}</h2>
+    </div>
+    <div class="card-body">
+            {% for file in stammdaten.file %}
+                <li class="list-group-item">
+                    <a href="{{ path('login_download_file',{'fileName':file.fileName}) }}">
+                        <i class="fa fa-download"></i>
+                    </a>
+                    {{ file.originalName }}
+                    {% if is_granted('ROLE_ORG_CHILD_DOCUMENT_DELETE') %}
+                        <a href="{{ path('login_remove_file', {'fileName':file.fileName}) }}" class="file-delete-button">
+                            <i class="fa fa-trash text-danger"></i>
+                        </a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+
+        {# I really don't know why but we need 2 of those here to show a singular dropzone #}
+        <form action="{{ path('upload_additional-documents', {'id': stammdaten.id}) }}" class="dropzone"></form>
+        <form action="{{ path('upload_additional-documents', {'id': stammdaten.id}) }}" class="dropzone"></form>
+    </div>
+
+</div>
+
+{% block jquery %}
+    {% if is_granted('ROLE_ORG_CHILD_DOCUMENT_DELETE') %}
+        <script>
+            window.onload = function () {
+                $('a.file-delete-button').confirm({
+                    title: 'Dokument löschen',
+                    content: 'Sind Sie sich sicher?',
+                    buttons: {
+                        confirm: {
+                            text: 'Löschen',
+                            btnClass: 'btn-danger',
+                            action: function() {
+                                location.href = this.$target.attr('href');
+                            }
+                        },
+                        cancel: {
+                            text: 'Abbrechen',
+                            btnClass: 'btn-default',
+                            keys: ['enter'],
+                        },
+                    }
+                });
+            };
+        </script>
+    {% endif %}
+{% endblock %}
