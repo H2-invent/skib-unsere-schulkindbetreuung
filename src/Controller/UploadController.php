@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Geschwister;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use App\Repository\StammdatenRepository;
 use App\Service\UploadService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -118,8 +119,9 @@ class UploadController extends AbstractController
         Request $request,
         UploadService $uploadService,
         Stammdaten $stammdaten,
-        EntityManagerInterface $entityManager
-    )
+        EntityManagerInterface $entityManager,
+        StammdatenRepository $stammdatenRepository,
+    ): JsonResponse
     {
         set_time_limit(300);
 
@@ -128,6 +130,14 @@ class UploadController extends AbstractController
         $file = $uploadService->uploadFile($uploadedFile);
         if (!$file) {
             return new JsonResponse(['error' => 1]);
+        }
+        // if we have a working copy, also write the file to the latest proper stammdaten since they are not subject to confirmation or abschluss workflow
+        if ($stammdaten->getCreatedAt() === null) {
+            $actualStammdaten = $stammdatenRepository->findlatestStammdatenfromStammdaten($stammdaten);
+            if ($actualStammdaten) {
+                $actualStammdaten->addFile($file);
+                $entityManager->persist($actualStammdaten);
+            }
         }
         $stammdaten->addFile($file);
         $entityManager->persist($stammdaten);
