@@ -165,6 +165,7 @@ class StadtType extends AbstractType
             ->add('settingsSkibShowPopupOnRegistration', CheckboxType::class, ['required' => false, 'label' => 'Zeige ein Popupfenster beim Abschluss der RRegistrierung durch die Eltern', 'translation_domain' => 'form'])
             ->add('settingsSkibShowSonnencremeKinder', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer bei den Kindern Zecken entfernen dürfen', 'translation_domain' => 'form'])
             ->add('settingsSkibShowZeckenKinder', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer die Kinder mit Sonnencreme eincremen dürfen', 'translation_domain' => 'form'])
+            ->add('settingsSkibShowPflasterKinder', CheckboxType::class, ['required' => false, 'label' => 'Zeige die Frage bei den Kindern, ob Erzieher bei den Kindern Pflaster anbringen dürfen', 'translation_domain' => 'form'])
 
 
             ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])
