@@ -306,7 +306,12 @@ class Stadt implements TranslatableInterface
     private ?bool $settingsSkibShowPflasterKinder = null;
 
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $settingsDokumentUploadTitle = null;
 
+    #[ORM\JoinTable(name: 'dokumente_upload_templates')]
+    #[ORM\ManyToMany(targetEntity: \App\Entity\File::class)]
+    private $settingsDokumentTemplates;
 
 
 
@@ -326,6 +331,7 @@ class Stadt implements TranslatableInterface
         $this->emailDokumente_schulkindbetreuung_anderung = new ArrayCollection();
         $this->emailDokumente_rechnung = new ArrayCollection();
         $this->emailDokumente_schulkindbetreuung_abmeldung = new ArrayCollection();
+        $this->settingsDokumentTemplates = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1474,7 +1480,7 @@ class Stadt implements TranslatableInterface
     {
         return $this->autoAssign_formula;
     }
-
+  
     public function setAutoAssignFormula(?string $autoAssign_formula): self
     {
         $this->autoAssign_formula = $autoAssign_formula;
@@ -1482,6 +1488,40 @@ class Stadt implements TranslatableInterface
         return $this;
     }
 
+    public function getSettingsDokumentUploadTitle(): ?string
+    {
+        return $this->settingsDokumentUploadTitle;
+    }
+
+    public function setSettingsDokumentUploadTitle(?string $settingsDokumentUploadTitle): self
+    {
+        $this->settingsDokumentUploadTitle = $settingsDokumentUploadTitle;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, File>
+     */
+    public function getSettingsDokumentTemplates(): Collection
+    {
+        return $this->settingsDokumentTemplates;
+    }
+
+    public function addSettingsDokumentTemplate(File $settingsDokumentTemplate): self
+    {
+        if (!$this->settingsDokumentTemplates->contains($settingsDokumentTemplate)) {
+            $this->settingsDokumentTemplates->add($settingsDokumentTemplate);
+        }
+
+        return $this;
+    }
+
+    public function removeSettingsDokumentTemplate(File $settingsDokumentTemplate): self
+    {
+        $this->settingsDokumentTemplates->removeElement($settingsDokumentTemplate);
+    }
+  
     public function isSettingsSkibShowPflasterKinder(): ?bool
     {
         return $this->settingsSkibShowPflasterKinder;

@@ -3109,6 +3109,14 @@
           <source>Autom. Zuteilung</source>
           <target state="translated">Autom. Zuteilung</target>
       </trans-unit>
+      <trans-unit id="NvJQq9J" resname="Dokumente">
+        <source>Dokumente</source>
+        <target state="needs-translation">Dokumente</target>
+      </trans-unit>
+      <trans-unit id="lSO_Agf" resname="Auszufüllende Dokumente">
+        <source>Auszufüllende Dokumente</source>
+        <target state="needs-translation">Auszufüllende Dokumente</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

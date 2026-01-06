@@ -297,15 +297,28 @@
     </div>
     <div class="card mb-2">
         <div class="card-header ">
-            <h3 class="cover-heading">{% trans %}Zusätzliche Dokumente{% endtrans %}</h3>
+            <h3 class="cover-heading">{{ stadt.settingsDokumentUploadTitle | default('Zusätzliche Dokumente') | trans }}</h3>
         </div>
         <div class="card-body">
+            {% if stadt.settingsDokumentTemplates | length > 0 %}
+                <h5>{% trans %}Auszufüllende Dokumente{% endtrans %}</h5>
+                <ul>
+                {% for template in stadt.settingsDokumentTemplates %}
+                    <li>
+                        <a href="{{ path('login_download_file',{'fileName':template.fileName}) }}">
+                            {{ template.originalName }}
+                            <i class="fa fa-download"></i>
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
             <form action="{{ path('upload_additional-documents',{'id':eltern.id}) }}"
                   id="dropzone_additional-documents"
                   class="dropzone"
             >
                 <div style="display: none" class="dz-message" data-dz-message>
-                    <span>{{ stadt.settingsDokumentUploadText | default('Hier zusätzliche Dokumente hochladen') | trans }}</span>
+                    <span>{{ stadt.settingsDokumentUploadText | default('Pflichtangabe für Klasse 2-4: Arbeitgeberbescheinigung') | trans }}</span>
                 </div>
             </form>
         </div>
