@@ -3095,6 +3095,14 @@ Responsabilité pour les liens
         <source>Zusätzliche Dokumente</source>
         <target state="translated">Documents supplémentaires</target>
       </trans-unit>
+      <trans-unit id="NvJQq9J" resname="Dokumente">
+        <source>Dokumente</source>
+        <target state="translated">Documents</target>
+      </trans-unit>
+      <trans-unit id="lSO_Agf" resname="Auszufüllende Dokumente">
+        <source>Auszufüllende Dokumente</source>
+        <target state="translated">Documents à remplir</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
