@@ -3104,6 +3104,9 @@
       <trans-unit id="c9G0RhG" resname="Zusätzliche Dokumente">
         <source>Zusätzliche Dokumente</source>
         <target state="needs-translation">Zusätzliche Dokumente</target>
+      <trans-unit id="l0T3KG." resname="Autom. Zuteilung">
+          <source>Autom. Zuteilung</source>
+          <target state="translated">Autom. Zuteilung</target>
       </trans-unit>
       <trans-unit id="NvJQq9J" resname="Dokumente">
         <source>Dokumente</source>

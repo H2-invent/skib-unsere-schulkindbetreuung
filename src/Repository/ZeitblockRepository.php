@@ -44,31 +44,23 @@ class ZeitblockRepository extends ServiceEntityRepository
         ;
     }
 
-    // /**
-    //  * @return Zeitblock[] Returns an array of Zeitblock objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Zeitblock[]
+     */
+    public function findBeworbenBlocksByKind(Kind $kind): array
     {
         return $this->createQueryBuilder('z')
-            ->andWhere('z.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('z.id', 'ASC')
-            ->setMaxResults(10)
+            ->innerJoin('z.kind', 'z_k')
+            ->innerJoin('z.kinderBeworben','kinder_beworben')
+            ->innerJoin('kinder_beworben.eltern','eltern')
+            ->where(':kind MEMBER OF z.kinderBeworben')
+            ->setParameter('kind', $kind)
+            ->andWhere('kinder_beworben.startDate is not NULL')
+            ->andWhere('eltern.created_at is not NULL')
+            ->andWhere('z.deleted = 0')
+            ->andWhere('SIZE(z.kinderBeworben) > 0')
             ->getQuery()
             ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Zeitblock
-    {
-        return $this->createQueryBuilder('z')
-            ->andWhere('z.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
         ;
     }
 
