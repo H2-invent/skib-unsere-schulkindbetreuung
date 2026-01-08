@@ -195,7 +195,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     #[ORM\Column(type: 'string', nullable: true)]
     private $tracingOfLastYear;
 
-    #[ORM\ManyToMany(targetEntity: File::class)]
+    #[ORM\ManyToMany(targetEntity: File::class, fetch: 'EAGER')]
     private Collection $file;
 
     public function __construct()
