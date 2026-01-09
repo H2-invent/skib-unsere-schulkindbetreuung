@@ -6,16 +6,10 @@
                 <div class="col-12 card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col">
-                                <h1>{{ k.vorname }} {{ k.nachname }}</h1>
-                            </div>
+                            <h1 class="col">{{ k.vorname }} {{ k.nachname }}</h1>
                             <div class="col text-right">
                                 <a href="{{ path('child_detail_print',{'kind_id':k.id,'date':date|date('d.m.Y')}) }}"
                                    class="btn btn-primary">Drucken</a>
-                                {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
-                                    <a href="{{ path('child_change_seccode',{'kind_id':k.id}) }}"
-                                       class="btn btn-primary">Bearbeiten</a>
-                                {% endif %}
                                 {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
                                     <a class="btn btn-primary"
                                        href="{{ path('kontingent_resend_confirmation',{'kindId':k.id}) }}">{% trans %}Bestätigung erneut versenden{% endtrans %}</a>
@@ -24,10 +18,19 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <h2>
-                            {{ 'Daten des Erziehungsberechtigten'|trans }}
-                            <small>(Gültig ab: {{ eltern.startDate|date('d.m.Y') }})</small>
-                        </h2>
+                        <div class="row">
+                            <h2 class="col">
+                                {{ 'Daten des Erziehungsberechtigten'|trans }}
+                                <small>(Gültig ab: {{ eltern.startDate|date('d.m.Y') }})</small>
+                            </h2>
+                            <div class="col text-right">
+                                {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                                    <a href="{{ path('edit_stammdaten_seccode',{'eltern_id':eltern.id}) }}"
+                                       class="btn btn-primary">Bearbeiten</a>
+                                {% endif %}
+                            </div>
+
+                        </div>
                         <table class="table table-data">
                             <tbody>
                                 <tr>
@@ -67,12 +70,42 @@
                                     <td>{% trans %} Erstellt am: {% endtrans %}</td>
                                     <td>{{ eltern.createdAt|date('d.m.Y H:i') }}</td>
                                 </tr>
+                                <tr>
+                                    <td>{% trans %}Dokumente{% endtrans %}</td>
+                                    <td>
+                                        <ul class="list-group">
+                                            {% for file in eltern.file %}
+                                                <li class="list-group-item">
+                                                    <a href="{{ path('login_download_file',{'fileName':file.fileName}) }}">
+                                                        <i class="fa fa-download"></i>
+                                                    </a>
+                                                    {{ file.originalName }}
+                                                    {% if is_granted('ROLE_ORG_CHILD_DOCUMENT_DELETE') %}
+                                                        <a href="{{ path('login_remove_file', {'fileName':file.fileName}) }}" class="file-delete-button">
+                                                            <i class="fa fa-trash text-danger"></i>
+                                                        </a>
+                                                    {% endif %}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
-                        <h2>
-                            {{ 'Daten des Kindes'|trans }}
-                            <small>(beginnt ab: {{ k.startDate|date('d.m.Y') }})</small>
-                        </h2>
+                        <div class="row">
+                            <div class="col">
+                                <h2>
+                                    {{ 'Daten des Kindes'|trans }}
+                                    <small>(beginnt ab: {{ k.startDate|date('d.m.Y') }})</small>
+                                </h2>
+                            </div>
+                            <div class="col text-right">
+                                {% if is_granted('ROLE_ORG_CHILD_CHANGE') %}
+                                    <a href="{{ path('child_change_seccode',{'kind_id':k.id}) }}"
+                                       class="btn btn-primary">Bearbeiten</a>
+                                {% endif %}
+                            </div>
+                        </div>
                         <h3>{{ k.vorname }} {{ k.nachname }}</h3>
                         <table class="table table-data">
                             <tbody>
@@ -145,6 +178,12 @@
                                     <td>{% trans %}Betreuer dürfen bei meinem Kind Zecken entfernen{% endtrans %}</td>
                                     <td>{{ k.zeckenEntfernen?"Ja"|trans:'Nein'|trans }}</td>
                                 </tr>
+                                    {% endif %}
+                                    {% if k.schule.stadt.settingsSkibShowPflasterKinder == true %}
+                                        <tr>
+                                            <td>{% trans %}Betreuer dürfen meinem Kind bei einer Verletzung ein Pflaster aufkleben{% endtrans %}</td>
+                                            <td>{{ k.pflaster?"Ja"|trans:'Nein'|trans }}</td>
+                                        </tr>
                                     {% endif %}
                                 <tr>
                                     <td>{% trans %}Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.{% endtrans %}</td>
@@ -310,4 +349,31 @@
     </section>
 
 
+{% endblock %}
+
+{% block jquery %}
+    {% if is_granted('ROLE_ORG_CHILD_DOCUMENT_DELETE') %}
+        <script>
+            window.onload = function () {
+                $('a.file-delete-button').confirm({
+                    title: 'Dokument löschen',
+                    content: 'Sind Sie sich sicher?',
+                    buttons: {
+                        confirm: {
+                            text: 'Löschen',
+                            btnClass: 'btn-danger',
+                            action: function() {
+                                location.href = this.$target.attr('href');
+                            }
+                        },
+                        cancel: {
+                            text: 'Abbrechen',
+                            btnClass: 'btn-default',
+                            keys: ['enter'],
+                        },
+                    }
+                });
+            };
+        </script>
+    {% endif %}
 {% endblock %}

@@ -1192,8 +1192,8 @@ The web application enables direct networking between parent or legal guardian, 
         <target state="translated">No admin</target>
       </trans-unit>
       <trans-unit id="47DEQpj" resname="">
-        <source/>
-        <target/>
+        <source></source>
+        <target></target>
       </trans-unit>
       <trans-unit id="1j_378O" resname="Berichte von %active%">
         <source>Berichte von %active%</source>
@@ -3090,6 +3090,18 @@ The web application enables direct networking between parent or legal guardian, 
       <trans-unit id="9.8ReK8" resname="Abbrechen">
         <source>Abbrechen</source>
         <target state="translated">Cancel</target>
+      </trans-unit>
+      <trans-unit id="c9G0RhG" resname="Zusätzliche Dokumente">
+        <source>Zusätzliche Dokumente</source>
+        <target state="translated">Additional Documents</target>
+      </trans-unit>
+      <trans-unit id="NvJQq9J" resname="Dokumente">
+        <source>Dokumente</source>
+        <target state="translated">Documents</target>
+      </trans-unit>
+      <trans-unit id="lSO_Agf" resname="Auszufüllende Dokumente">
+        <source>Auszufüllende Dokumente</source>
+        <target state="translated">Documents to be filled out</target>
       </trans-unit>
     </body>
   </file>

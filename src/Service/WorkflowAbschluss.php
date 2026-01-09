@@ -38,6 +38,11 @@ class WorkflowAbschluss
         $adresseOld = $this->em->getRepository(Stammdaten::class)->findLatestStammdatenByStartDate( $adresseAktuell);
         if ($adresseOld) {
             $kundennummern = $adresseOld->getKundennummerns();
+
+            // when we get the new Stammdaten from a Form the files will be empty so fill them from old Stammdaten data
+            foreach ($adresseOld->getFile() as $file) {
+                $adresseAktuell->addFile($file);
+            }
         }
 
 

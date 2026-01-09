@@ -137,6 +137,9 @@ class Kind
     #[ORM\InverseJoinColumn(name: 'zeitblock_id', referencedColumnName: 'id')]
     private Collection $movedToWaiting;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $pflaster = null;
+
 
     public function __serialize(): array
     {
@@ -992,5 +995,17 @@ class Kind
             return $this->warteliste[0]->getActive();
         }
         return null;
+    }
+
+    public function isPflaster(): ?bool
+    {
+        return $this->pflaster;
+    }
+
+    public function setPflaster(?bool $pflaster): self
+    {
+        $this->pflaster = $pflaster;
+
+        return $this;
     }
 }
