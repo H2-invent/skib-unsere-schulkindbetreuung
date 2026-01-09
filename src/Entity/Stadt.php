@@ -298,7 +298,7 @@ class Stadt implements TranslatableInterface
 
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $settingsDokumentUploadText = null;
-  
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $autoAssign_formula = null;
 
@@ -1473,14 +1473,15 @@ class Stadt implements TranslatableInterface
     public function setSettingsDokumentUploadText(string $settingsDokumentUploadText): self
     {
         $this->settingsDokumentUploadText = $settingsDokumentUploadText;
+
         return $this;
     }
-  
+
     public function getAutoAssignFormula(): ?string
     {
         return $this->autoAssign_formula;
     }
-  
+
     public function setAutoAssignFormula(?string $autoAssign_formula): self
     {
         $this->autoAssign_formula = $autoAssign_formula;
@@ -1520,8 +1521,10 @@ class Stadt implements TranslatableInterface
     public function removeSettingsDokumentTemplate(File $settingsDokumentTemplate): self
     {
         $this->settingsDokumentTemplates->removeElement($settingsDokumentTemplate);
+
+        return $this;
     }
-  
+
     public function isSettingsSkibShowPflasterKinder(): ?bool
     {
         return $this->settingsSkibShowPflasterKinder;
