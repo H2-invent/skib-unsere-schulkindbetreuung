@@ -1,0 +1,13 @@
+{% if eltern.file | length > 0 %}
+    <h5>{% trans %}Hochgeladene Dokumente{% endtrans %}</h5>
+    <ul>
+        {% for file in eltern.file %}
+            <li>
+                {{ file.originalName }}
+                <a href="{{ path('login_remove_file', {'fileName': file.fileName}) }}" class="file-delete-button">
+                    <i class="fa fa-trash text-danger"></i>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
