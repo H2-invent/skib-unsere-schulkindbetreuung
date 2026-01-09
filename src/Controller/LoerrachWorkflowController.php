@@ -40,6 +40,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -532,6 +533,22 @@ class LoerrachWorkflowController extends AbstractController
             'error' => $error,
             'noPrintout' => true,
             'organisation' => $renderOrganisation));
+    }
+
+    /**
+     * @Route("/{slug}/zusammenfassung/uploaded-documents",name="loerrach_workflow_zusammenfassung_uploaded-documents",methods={"GET"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
+     */
+    public function zusammenfassungUploadedDocumentsAction(
+        Request $request,
+        StamdatenFromCookie $stammdatenFromCookie,
+    ): Response
+    {
+        $adresse = $stammdatenFromCookie->getStammdatenFromCookie($request) ?? new Stammdaten();
+
+        return $this->render('workflow/loerrach/zusammenfassung/uploaded_documents.html.twig', [
+            'eltern' => $adresse,
+        ]);
     }
 
     /**
