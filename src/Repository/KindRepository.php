@@ -143,4 +143,18 @@ class KindRepository extends ServiceEntityRepository
         }
         return $kinder;
     }
+
+    public function findSampleKind(): ?Kind
+    {
+        return $this->createQueryBuilder('k')
+            ->innerJoin('k.eltern', 'eltern')
+            ->innerJoin('k.schule', 'schule')
+            ->innerJoin('schule.organisation', 'orga')
+            ->innerJoin('schule.stadt', 'stadt')
+            ->orderBy('k.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

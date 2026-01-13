@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\GroupSequence;
 use Symfony\Component\Validator\GroupSequenceProviderInterface;
@@ -26,10 +27,12 @@ class Stammdaten implements GroupSequenceProviderInterface
     /**
      * @var int
      */
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank(groups: ['all'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $name;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank(groups: ['all'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $vorname;
@@ -41,31 +44,39 @@ class Stammdaten implements GroupSequenceProviderInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $adresszusatz;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'integer', nullable: true)]
     private $einkommen = 0;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $created_at;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $kinderImKiga = false;
 
     #[ORM\Column(type: 'text')]
     private $uid;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $angemeldet = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $buk = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $beruflicheSituation;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank(groups: ['all'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $notfallkontakt;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Assert\NotBlank(groups: ['SchulkindSepa'])]
     private $sepaInfo;
@@ -87,18 +98,22 @@ class Stammdaten implements GroupSequenceProviderInterface
     #[Assert\NotBlank(groups: ['Schulkind', 'SchulkindSepa'])]
     private $kontoinhaber;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $fin = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank(groups: ['all'])]
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $gdpr;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank(groups: ['all'])]
     #[Assert\Regex(pattern: '/\b(?!01000|99999)(0[1-9]\d{3}|[1-9]\d{4})\b/i', groups: ['all'])]
     #[ORM\Column(type: 'integer', nullable: true)]
     private $plz;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank(groups: ['all'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $stadt;
@@ -106,20 +121,25 @@ class Stammdaten implements GroupSequenceProviderInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $secCode;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\Email(groups: ['all'])]
     #[Assert\NotBlank(groups: ['all'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $email;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $alleinerziehend;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $abholberechtigter;
 
     #[Assert\NotBlank(groups: ['all'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $notfallName;
+
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $emailConfirmed = false;
 
@@ -135,21 +155,25 @@ class Stammdaten implements GroupSequenceProviderInterface
     #[ORM\OneToMany(targetEntity: \App\Entity\Rechnung::class, mappedBy: 'stammdaten')]
     private $rechnungs;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $saved = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'integer')]
     private $history = 0;
 
     #[ORM\Column(type: 'string', nullable: true)]
     private $tracing;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $endedAt;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $ipAdresse;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $confirmDate;
 
@@ -157,6 +181,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     private $paymentFerien;
 
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $language;
 
@@ -167,6 +192,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     #[ORM\OneToMany(targetEntity: \App\Entity\Kundennummern::class, mappedBy: 'stammdaten')]
     private $kundennummerns;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text', nullable: true)]
     #[Assert\NotBlank(groups: ['kindInKiga'])]
     private $kigaOfKids;
@@ -177,9 +203,11 @@ class Stammdaten implements GroupSequenceProviderInterface
     #[Assert\Email]
     private $emailDoubleInput;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'integer', nullable: true)]
     private $anzahlKindergeldempfanger = 0;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $sozialhilfeEmpanger = false;
 
@@ -189,6 +217,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     #[ORM\OneToMany(targetEntity: Geschwister::class, mappedBy: 'stammdaten', orphanRemoval: true, cascade: ['persist'])]
     private $geschwisters;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'date', nullable: true)]
     private $startDate;
 
