@@ -65,7 +65,7 @@ $('#toggle-btn').on('click', function (e) {
 initTable();
 function initTable() {
     try {
-        const tables = document.querySelectorAll('table');
+        const tables = document.querySelectorAll('table:not(.no-data-table)');
         tables.forEach((element) => {
             if (element.querySelector('thead')) {
                 $(element).DataTable({

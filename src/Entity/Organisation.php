@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -29,6 +30,7 @@ class Organisation implements TranslatableInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $name;
@@ -39,9 +41,11 @@ class Organisation implements TranslatableInterface
     #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'organisations')]
     private $stadt;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $deleted = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $adresse;
@@ -49,14 +53,17 @@ class Organisation implements TranslatableInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $adresszusatz;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $plz;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $ort;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $ansprechpartner;
@@ -79,6 +86,7 @@ class Organisation implements TranslatableInterface
     #[ORM\Column(type: 'text')]
     private $glauaubigerId;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $infoText;
@@ -118,6 +126,7 @@ class Organisation implements TranslatableInterface
     /**
      * @var \DateTime
      */
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
@@ -129,6 +138,7 @@ class Organisation implements TranslatableInterface
     #[ORM\Column(type: 'text')]
     private $steuernummer;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text')]
     #[Assert\NotBlank]
     private $umstid;
@@ -193,9 +203,11 @@ class Organisation implements TranslatableInterface
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $braintreeSandbox;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $stripeOK = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $slug;
 
@@ -207,6 +219,9 @@ class Organisation implements TranslatableInterface
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $sepaOrganisation;
+
+    #[ORM\OneToOne(mappedBy: 'organisation', cascade: ['persist', 'remove'])]
+    private ?AutoBlockAssignment $autoBlockAssignment = null;
 
 
     public function __construct()
@@ -972,5 +987,32 @@ class Organisation implements TranslatableInterface
         return $this;
     }
 
+    public function getAutoBlockAssignment(): ?AutoBlockAssignment
+    {
+        return $this->autoBlockAssignment;
+    }
 
+    public function setAutoBlockAssignment(AutoBlockAssignment $autoBlockAssignment): self
+    {
+        // set the owning side of the relation if necessary
+        if ($autoBlockAssignment->getOrganisation() !== $this) {
+            $autoBlockAssignment->setOrganisation($this);
+        }
+
+        $this->autoBlockAssignment = $autoBlockAssignment;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTime $updatedAt): Organisation
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
 }

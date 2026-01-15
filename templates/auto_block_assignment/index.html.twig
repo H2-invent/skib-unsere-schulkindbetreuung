@@ -1,0 +1,104 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h1>{% trans %}Automatische Blockzuteilung{% endtrans %}</h1>
+                            </div>
+                            <div class="col text-right">
+                                <span class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{ schuljahre[0].von|date('d.m.Y') }} - {{ schuljahre[0].bis|date('d.m.Y') }}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        {% for s in schuljahre %}
+                                            <a class="schuljahrSelector dropdown-item" data-id="{{ s.id }}"
+                                               href="#">{{ s.von|date('d.m.Y') }} - {{ s.bis|date('d.m.Y') }}</a>
+                                        {% endfor %}
+                                    </div>
+                                </span>
+
+                                {% if assignment_started %}
+                                    <button class="btn btn-success" type="button" disabled>
+                                        <span class="spinner-border spinner-border-sm" role="status"
+                                              aria-hidden="true"></span>
+                                        &nbsp; {% trans %}Lädt{% endtrans %} ...
+                                    </button>
+                                {% else %}
+                                    <a id="start-assignment-link"
+                                       href="{{ path('org_child_auto_assign_start', {'id': app.user.organisation.id, 'schuljahr': schuljahre[0].id}) }}">
+                                        <button type="button" class="btn btn-success">
+                                            {% trans %}Blockzuteilung starten{% endtrans %}
+                                        </button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mb-1">
+                    <div class="card-body">
+                        <table id="school-table" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>{% trans %}Schule{% endtrans %}</th>
+                                <th>{% trans %}Anzahl Unzugeteilter Blöcke{% endtrans %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for data in schulData %}
+                                <tr>
+                                    <td>{{ data.schule.name }}</td>
+                                    <td>{{ data.count }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block jquery %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $('.schuljahrSelector').click(function () {
+                var ele = $(this);
+                var text = ele.text();
+                var schuljahrId = ele.data('id');
+                var dropdown = ele.closest('.dropdown').find('button');
+                dropdown.text(text);
+
+                // Update the start assignment link with the selected schuljahr
+                var baseUrl = '{{ path('org_child_auto_assign_start', {'id': app.user.organisation.id}) }}';
+                $('#start-assignment-link').attr('href', baseUrl + '&schuljahr=' + schuljahrId);
+            });
+        });
+    </script>
+    {% if assignment_started %}
+        <script>
+            $(document).ready(function () {
+                const polling = setInterval(function () {
+                    $.getJSON(
+                        '{{ path('org_child_auto_assign_status', {'id': app.user.organisation.id}) }}',
+                        function (data) {
+                            if (data.done) {
+                                clearInterval(polling);
+                                window.location.href = '{{ path('org_child_auto_assign_confirm', {'id': app.user.organisation.id}) }}';
+                            }
+                        }
+                    );
+                }, 3000); // every 3s
+            });
+        </script>
+    {% endif %}
+{% endblock %}

@@ -3095,6 +3095,10 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Zusätzliche Dokumente</source>
         <target state="translated">Additional Documents</target>
       </trans-unit>
+      <trans-unit id="l0T3KG." resname="Autom. Zuteilung">
+        <source>Autom. Zuteilung</source>
+        <target state="translated">Autom. Allocation</target>
+      </trans-unit>
       <trans-unit id="NvJQq9J" resname="Dokumente">
         <source>Dokumente</source>
         <target state="translated">Documents</target>
