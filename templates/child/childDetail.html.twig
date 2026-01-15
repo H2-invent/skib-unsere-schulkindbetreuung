@@ -87,6 +87,7 @@
                                                     {% endif %}
                                                 </li>
                                             {% endfor %}
+                                            <form action="{{ path('upload_additional-documents', {'id': eltern.id}) }}" class="dropzone" id="child-detail-dropzone"></form>
                                         </ul>
                                     </td>
                                 </tr>
