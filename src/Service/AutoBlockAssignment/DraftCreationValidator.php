@@ -4,83 +4,32 @@ declare(strict_types=1);
 namespace App\Service\AutoBlockAssignment;
 
 use App\Entity\Zeitblock;
-use App\Service\AutoBlockAssignment\DraftCreationValidator\CapacityTracker;
-use App\Service\AutoBlockAssignment\DraftCreationValidator\Result;
+use App\Service\WidgetService;
 use function usort;
 
 class DraftCreationValidator
 {
     private array $addedCountByZeitblock;
 
+    public function __construct(private WidgetService $widgetService)
+    {
+    }
+
     /**
      * @param Zeitblock[] $zeitblocks
      * @return array<Zeitblock[], Zeitblock[]>
      */
-    public function validateZeitblocks(array $zeitblocks): array
+    public function validateZeitblocks(array $zeitblocks, ?int $minBlocksPerDay): array
     {
         $sortedZeitblocksByDay = $this->sortZeitblocksByDayAndTime($zeitblocks);
 
         $accepted = [];
         $warteschlange = [];
         foreach ($sortedZeitblocksByDay as $dayZeitblocks) {
-            $this->validateDayZeitblocks($dayZeitblocks, $accepted, $warteschlange);
+            $this->validateDayZeitblocks($dayZeitblocks, $accepted, $warteschlange, $minBlocksPerDay);
         }
 
         return [$accepted, $warteschlange];
-    }
-
-    /**
-     * @param Zeitblock[] $dayZeitblocks
-     * @param Zeitblock[] $accepted
-     * @param Zeitblock[] $warteschlange
-     */
-    private function validateDayZeitblocks(array $dayZeitblocks, array &$accepted, array &$warteschlange): void
-    {
-        $lastAcceptedBis = null;
-
-        foreach ($dayZeitblocks as $zeitblock) {
-            // capacity check
-            if (!$this->hasCapacity($zeitblock)) {
-                $warteschlange[] = $zeitblock;
-                continue;
-            }
-
-            // continuity check
-            if ($lastAcceptedBis !== null && !$this->isContinuous($lastAcceptedBis, $zeitblock->getVon())) {
-                $warteschlange[] = $zeitblock;
-                continue;
-            }
-
-            $accepted[] = $zeitblock;
-            $lastAcceptedBis = $zeitblock->getBis();
-
-            if (isset($this->addedCountByZeitblock[$zeitblock->getId()])) {
-                $this->addedCountByZeitblock[$zeitblock->getId()]++;
-            } else {
-                $this->addedCountByZeitblock[$zeitblock->getId()] = count($zeitblock->getKind()) + 1;
-            }
-        }
-    }
-
-    private function hasCapacity(Zeitblock $zeitblock): bool
-    {
-        $max = $zeitblock->getMax();
-        if ($max === null) {
-            return true;
-        }
-
-        $currentCount = $this->addedCountByZeitblock[$zeitblock->getId()] ?? count($zeitblock->getKind());
-
-        return $currentCount < $max;
-    }
-
-    private function isContinuous(?\DateTimeInterface $lastBis, ?\DateTimeInterface $currentVon): bool
-    {
-        if ($lastBis === null || $currentVon === null) {
-            return false;
-        }
-
-        return $lastBis->format('H:i:s') === $currentVon->format('H:i:s');
     }
 
     /**
@@ -103,6 +52,25 @@ class DraftCreationValidator
     }
 
     /**
+     * @param Zeitblock[] $dayZeitblocks
+     * @param Zeitblock[] $accepted
+     * @param Zeitblock[] $warteschlange
+     */
+    private function validateDayZeitblocks(array $dayZeitblocks, array &$accepted, array &$warteschlange, ?int $minBlocksPerDay): void
+    {
+        $tempAccepted = [];
+        $tempWarteschlange = [];
+
+        $this->checkCapacity($dayZeitblocks, $tempAccepted, $tempWarteschlange);
+        $this->checkVorgaenger($tempAccepted, $tempWarteschlange);
+        $this->checkMinBlocksPerDay($minBlocksPerDay, $tempAccepted, $tempWarteschlange);
+        $this->incrementAddedCount($tempAccepted);
+
+        array_push($accepted, ...$tempAccepted);
+        array_push($warteschlange, ...$tempWarteschlange);
+    }
+
+    /**
      * @param Zeitblock[] $zeitblocks
      * @return Zeitblock[]
      */
@@ -120,5 +88,94 @@ class DraftCreationValidator
         });
 
         return $zeitblocks;
+    }
+
+    /**
+     * @param Zeitblock[] $dayZeitblocks
+     * @param Zeitblock[] $tempWarteschlange
+     * @param Zeitblock[] $tempAccepted
+     */
+    private function checkCapacity(array $dayZeitblocks, array &$tempAccepted, array &$tempWarteschlange): void
+    {
+        foreach ($dayZeitblocks as $zeitblock) {
+            if (!$this->hasCapacity($zeitblock)) {
+                $tempWarteschlange[] = $zeitblock;
+                continue;
+            }
+
+            $tempAccepted[] = $zeitblock;
+        }
+    }
+
+    /**
+     * @param Zeitblock[] $tempAccepted
+     * @param Zeitblock[] $tempWarteschlange
+     */
+    private function checkVorgaenger(array &$tempAccepted, array &$tempWarteschlange): void
+    {
+        foreach ($tempAccepted as $key => $block) {
+            $vorgaenger = $this->getAllVorgaengerBlocks($block);
+
+            $vorgaengerIds = array_map(static fn($v) => $v->getId(), $vorgaenger);
+            $acceptedIds = array_map(static fn($a) => $a->getId(), $tempAccepted);
+            $allInAccepted = empty(array_diff($vorgaengerIds, $acceptedIds));
+
+            if (!$allInAccepted) {
+                unset($tempAccepted[$key]);
+                $tempWarteschlange[] = $block;
+            }
+        }
+    }
+
+    /**
+     * @param int|null $minBlocksPerDay
+     * @param Zeitblock[] $tempAccepted
+     * @param Zeitblock[] $tempWarteschlange
+     */
+    private function checkMinBlocksPerDay(?int $minBlocksPerDay, array &$tempAccepted, array &$tempWarteschlange): void
+    {
+        if (count($tempAccepted) < $minBlocksPerDay) {
+            $tempWarteschlange = array_merge($tempAccepted, $tempWarteschlange);
+            $tempAccepted = [];
+        }
+    }
+
+    /**
+     * @param Zeitblock[] $tempAccepted
+     */
+    private function incrementAddedCount(array $tempAccepted): void
+    {
+        foreach ($tempAccepted as $block) {
+            if (isset($this->addedCountByZeitblock[$block->getId()])) {
+                $this->addedCountByZeitblock[$block->getId()]++;
+            } else {
+                $this->addedCountByZeitblock[$block->getId()] = $this->widgetService->calcBlocksNumberNow($block) + 1;
+            }
+        }
+    }
+
+    private function hasCapacity(Zeitblock $zeitblock): bool
+    {
+        $max = $zeitblock->getMax();
+        if ($max === null) {
+            return true;
+        }
+
+        $currentCount = $this->addedCountByZeitblock[$zeitblock->getId()] ?? $this->widgetService->calcBlocksNumberNow($zeitblock);
+
+        return $currentCount < $max;
+    }
+
+    /**
+     * @return Zeitblock[]
+     */
+    private function getAllVorgaengerBlocks(Zeitblock $zeitblock): array
+    {
+        $allVorgaenger = [];
+        foreach ($zeitblock->getVorganger() as $vorgaenger) {
+            $allVorgaenger[] = $vorgaenger;
+            array_push($allVorgaenger, ...$this->getAllVorgaengerBlocks($vorgaenger));
+        }
+        return $allVorgaenger;
     }
 }

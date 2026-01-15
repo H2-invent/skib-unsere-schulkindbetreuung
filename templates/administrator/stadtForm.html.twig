@@ -396,10 +396,80 @@
                                 </div>
 
                             </div>
-                            <div class="tab-pane fade show active" id="auto-assign" role="tabpanel"
+                            <div class="tab-pane fade show active container-fluid" id="auto-assign" role="tabpanel"
                                  aria-labelledby="home-tab"><h2>Automatische Blockzuteilung</h2>
 
                                 {{ form_row(form.autoAssign_formula) }}
+
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label for="auto_assign_formula-result">Formel Ergebnis für Beispiel:</label>
+                                        <input type="text" id="auto_assign_formula-result" disabled>
+                                        <br>Alle Eigenschaften müssen per getter geholt werden!<br>
+                                        <del>kind.allergie</del> &rarr; kind.getAllergie()
+                                    </div>
+                                    <div class="col-9">
+                                        <div id="accordion">
+                                            <div class="card">
+                                                <div class="card-header" id="card-head-kind">
+                                                    <h5 class="mb-0">
+                                                        <a class="btn btn-link" data-toggle="collapse" href="#collapse-kind" aria-expanded="true" aria-controls="collapse-kind">
+                                                            kind
+                                                        </a>
+                                                    </h5>
+                                                </div>
+
+                                                <div id="collapse-kind" class="collapse show" aria-labelledby="card-head-kind" data-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <pre>{{ kind | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" id="card-head-eltern">
+                                                    <h5 class="mb-0">
+                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-eltern" aria-expanded="false" aria-controls="collapse-eltern">
+                                                            eltern
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-eltern" class="collapse" aria-labelledby="card-head-eltern" data-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <pre>{{ eltern | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" id="card-head-schule">
+                                                    <h5 class="mb-0">
+                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-schule" aria-expanded="false" aria-controls="collapse-schule">
+                                                            schule
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-schule" class="collapse" aria-labelledby="card-head-schule" data-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <pre>{{ schule | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" id="card-head-orga">
+                                                    <h5 class="mb-0">
+                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-orga" aria-expanded="false" aria-controls="collapse-orga">
+                                                            organisation
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-orga" class="collapse" aria-labelledby="card-head-orga" data-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <pre>{{ organisation | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -447,6 +517,30 @@
                 if (form.serialize() != original)
                     return 'Are you sure you want to leave?'
             }
+
+            // auto assign formula test
+            const calculateTestValue = async function () {
+                const formula = $('#stadt_autoAssign_formula').val();
+                const response = await fetch('{{ path('admin_formula_test') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({formula: formula})
+                    }
+                );
+
+                const resultInput = $('#auto_assign_formula-result');
+                if (!response.ok) {
+                    resultInput.val('Fehler')
+                    return;
+                }
+                const data = await response.json();
+                resultInput.val(data.weight)
+            };
+            $('#stadt_autoAssign_formula').on('change', calculateTestValue);
+            calculateTestValue();
         })
     </script>
 

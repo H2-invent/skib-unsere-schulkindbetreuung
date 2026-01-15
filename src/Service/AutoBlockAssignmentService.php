@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\Active;
 use App\Entity\Organisation;
 use App\Message\AutoBlockAssignmentApplyMessage;
 use App\Message\AutoBlockAssignmentCreateMessage;
@@ -24,14 +25,14 @@ class AutoBlockAssignmentService
     {
     }
 
-    public function createDraftAsync(Organisation $organisation): void
+    public function createDraftAsync(Organisation $organisation, Active $schuljahr): void
     {
         $this->messageBus->dispatch(
-            new AutoBlockAssignmentCreateMessage($organisation->getId())
+            new AutoBlockAssignmentCreateMessage($organisation->getId(), $schuljahr->getId())
         );
     }
 
-    public function createDraft(Organisation $organisation): void
+    public function createDraft(Organisation $organisation, Active $schuljahr): void
     {
         $autoBlockAssignment = $this->autoBlockAssignmentRepository->findOneBy(['organisation' => $organisation]);
         if ($autoBlockAssignment !== null) {
@@ -40,7 +41,7 @@ class AutoBlockAssignmentService
         }
 
         $this->entityManager->wrapInTransaction(
-            fn() => $this->draftCreator->create($organisation)
+            fn() => $this->draftCreator->create($organisation, $schuljahr)
         );
     }
 

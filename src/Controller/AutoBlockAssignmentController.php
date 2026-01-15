@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Active;
 use App\Entity\Organisation;
+use App\Repository\ActiveRepository;
 use App\Repository\AutoBlockAssignmentChildRepository;
 use App\Repository\OrganisationRepository;
 use App\Repository\ZeitblockRepository;
@@ -22,6 +24,7 @@ class AutoBlockAssignmentController extends AbstractController
         private AutoBlockAssignmentChildRepository $autoChildRepository,
         private ZeitblockRepository $zeitblockRepository,
         private AutoBlockAssignmentService $autoBlockAssignmentService,
+        private ActiveRepository $activeRepository,
     )
     {
     }
@@ -35,6 +38,8 @@ class AutoBlockAssignmentController extends AbstractController
         $idOrganisation = $request->get('id');
         $organisation = $this->organisationRepository->find($idOrganisation);
         $assignmentStarted = $request->get('assignment_started', false);
+
+        $schuljahre = $this->activeRepository->findBy(['stadt' => $organisation->getStadt()], ['bis' => 'desc']);
 
         $this->assertUserAndOrgaAllowed($organisation);
 
@@ -52,8 +57,10 @@ class AutoBlockAssignmentController extends AbstractController
             ];
         }
 
+
         return $this->render('auto_block_assignment/index.html.twig', [
             'schulData' => $schulDaten,
+            'schuljahre' => $schuljahre,
             'assignment_started' => $assignmentStarted,
         ]);
     }
@@ -65,9 +72,13 @@ class AutoBlockAssignmentController extends AbstractController
     {
         $idOrganisation = $request->get('id');
         $organisation = $this->organisationRepository->find($idOrganisation);
+
+        $idSchuljahr = $request->get('schuljahr');
+        $schuljahr = $this->activeRepository->find($idSchuljahr);
+
         $this->assertUserAndOrgaAllowed($organisation);
 
-        $this->autoBlockAssignmentService->createDraftAsync($organisation);
+        $this->autoBlockAssignmentService->createDraftAsync($organisation, $schuljahr);
 
         return $this->redirectToRoute('org_child_auto_assign', [
             'id' => $idOrganisation,
