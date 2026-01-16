@@ -5,14 +5,20 @@ namespace App\Service\AutoBlockAssignment;
 
 use App\Entity\Zeitblock;
 use App\Service\WidgetService;
+use Symfony\Contracts\Service\ResetInterface;
 use function usort;
 
-class DraftCreationValidator
+class DraftCreationValidator implements ResetInterface
 {
     private array $addedCountByZeitblock;
 
     public function __construct(private WidgetService $widgetService)
     {
+    }
+
+    public function reset(): void
+    {
+        $this->addedCountByZeitblock = [];
     }
 
     /**
