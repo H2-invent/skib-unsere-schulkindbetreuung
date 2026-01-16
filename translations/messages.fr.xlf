@@ -3096,8 +3096,8 @@ Responsabilité pour les liens
         <target state="translated">Documents supplémentaires</target>
       </trans-unit>
       <trans-unit id="l0T3KG." resname="Autom. Zuteilung">
-          <source>Autom. Zuteilung</source>
-          <target state="translated">Attribution autom.</target>
+        <source>Autom. Zuteilung</source>
+        <target state="translated">Attribution autom.</target>
       </trans-unit>
       <trans-unit id="NvJQq9J" resname="Dokumente">
         <source>Dokumente</source>
