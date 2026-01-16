@@ -1192,8 +1192,8 @@ The web application enables direct networking between parent or legal guardian, 
         <target state="translated">No admin</target>
       </trans-unit>
       <trans-unit id="47DEQpj" resname="">
-        <source></source>
-        <target></target>
+        <source/>
+        <target/>
       </trans-unit>
       <trans-unit id="1j_378O" resname="Berichte von %active%">
         <source>Berichte von %active%</source>
