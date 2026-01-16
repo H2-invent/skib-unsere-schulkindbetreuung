@@ -32,6 +32,25 @@ jarallax(document.querySelectorAll('.jarallax'), {
     speed: 0.2
 });
 
+Dropzone.options.dropzoneAdditionalDocuments = {
+    init: function () {
+        this.on("success", (file, response) => {
+            const dropzoneElement = document.getElementById('dropzone-additional-documents');
+            const successUrl = dropzoneElement?.dataset.successUrl;
+            if (successUrl) {
+                fetch(successUrl)
+                    .then(response => response.text())
+                    .then(html => {
+                        const wrapper = document.getElementById('wrapper-uploaded-documents');
+                        if (wrapper) {
+                            wrapper.innerHTML = html;
+                        }
+                    });
+            }
+        });
+    }
+};
+
 $(document).ready(function () {
     let drop= [];
     if($('.dropzone').length){

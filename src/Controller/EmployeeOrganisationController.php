@@ -28,12 +28,13 @@ class EmployeeOrganisationController extends AbstractController
     {
         $this->logger = $logger;
         $this->manager = $manager;
-        $this->availRole = array(
+        $this->availRole = [
             'ROLE_ORG_REPORT' => 'ROLE_ORG_REPORT',
             'ROLE_ORG_CHILD_CHANGE' => 'ROLE_ORG_CHILD_CHANGE',
             'ROLE_ORG_CHILD_EMAIL_CHANGE' => 'ROLE_ORG_CHILD_EMAIL_CHANGE',
             'ROLE_ORG_CHILD_SCHOOLYEAR_CHANGE' => 'ROLE_ORG_CHILD_SCHOOLYEAR_CHANGE',
             'ROLE_ORG_CHILD_SHOW' => 'ROLE_ORG_CHILD_SHOW',
+            'ROLE_ORG_CHILD_DOCUMENT_DELETE' => 'ROLE_ORG_CHILD_DOCUMENT_DELETE',
             'ROLE_ORG_ACCOUNTING'=>'ROLE_ORG_ACCOUNTING',
             'ROLE_ORG_BLOCK_MANAGEMENT'=>'ROLE_ORG_BLOCK_MANAGEMENT',
             'ROLE_ORG_BLOCK_DELETE'=>'ROLE_ORG_BLOCK_DELETE',
@@ -45,8 +46,6 @@ class EmployeeOrganisationController extends AbstractController
             'ROLE_ORG_SEE_PRICE'=>'ROLE_ORG_SEE_PRICE',
             'ROLE_ORG_VIEW_NOTICE'=>'ROLE_ORG_VIEW_NOTICE',
             'ROLE_ORG_EDIT_NOTICE'=>'ROLE_ORG_EDIT_NOTICE',
-
-
             'ROLE_ORG_FERIEN_EDITOR'=>'ROLE_ORG_FERIEN_EDITOR',
             'ROLE_ORG_FERIEN_REPORT'=>'ROLE_ORG_FERIEN_REPORT',
             'ROLE_ORG_FERIEN_ORDERS'=>'ROLE_ORG_FERIEN_ORDERS',
@@ -55,7 +54,7 @@ class EmployeeOrganisationController extends AbstractController
             'ROLE_ORG_FERIEN_STORNO'=>'ROLE_ORG_FERIEN_STORNO',
             'ROLE_ORG_CHECKIN_SHOW'=>'ROLE_ORG_CHECKIN_SHOW',
             'ROLE_ORG_KVJS'=>'ROLE_ORG_KVJS'
-        );
+        ];
     }
     /**
      * @Route("/org_edit/mitarbeiter/organisation", name="city_employee_org_show")

@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Geschwister;
 use App\Entity\Stadt;
+use App\Entity\Stammdaten;
+use App\Repository\StammdatenRepository;
 use App\Service\UploadService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -107,5 +109,40 @@ class UploadController extends AbstractController
                 ->headers
                 ->get('referer')
         );
+    }
+
+    /**
+     * @Route("/upload/additional/{id}/file", name="upload_additional-documents",methods={"POST"})
+     * @ParamConverter ("Stammdaten", options={"mapping": {"id": "id"}})
+     */
+    public function additionalDocuments(
+        Request $request,
+        UploadService $uploadService,
+        Stammdaten $stammdaten,
+        EntityManagerInterface $entityManager,
+        StammdatenRepository $stammdatenRepository,
+    ): JsonResponse
+    {
+        set_time_limit(300);
+
+        /** @var UploadedFile $uploadedFile */
+        $uploadedFile = $request->files->get('file');
+        $file = $uploadService->uploadFile($uploadedFile, '10M');
+        if (!$file) {
+            return new JsonResponse(['error' => "Maximal 10 MB und übliche Dateiformate erlaubt."], Response::HTTP_BAD_REQUEST);
+        }
+        // if we have a working copy, also write the file to the latest proper stammdaten since they are not subject to confirmation or abschluss workflow
+        if ($stammdaten->getCreatedAt() === null) {
+            $actualStammdaten = $stammdatenRepository->findlatestStammdatenfromStammdaten($stammdaten);
+            if ($actualStammdaten) {
+                $actualStammdaten->addFile($file);
+                $entityManager->persist($actualStammdaten);
+            }
+        }
+        $stammdaten->addFile($file);
+        $entityManager->persist($stammdaten);
+        $entityManager->flush();
+
+        return new JsonResponse([], Response::HTTP_OK);
     }
 }

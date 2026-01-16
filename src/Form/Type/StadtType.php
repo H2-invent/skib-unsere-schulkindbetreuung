@@ -132,11 +132,26 @@ class StadtType extends AbstractType
             ->add('settingsSkibShowPopupOnRegistration', CheckboxType::class, ['required' => false, 'label' => 'Zeige ein Popupfenster beim Abschluss der RRegistrierung durch die Eltern', 'translation_domain' => 'form'])
             ->add('settingsSkibShowSonnencremeKinder', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer bei den Kindern Zecken entfernen dürfen', 'translation_domain' => 'form'])
             ->add('settingsSkibShowZeckenKinder', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer die Kinder mit Sonnencreme eincremen dürfen', 'translation_domain' => 'form'])
+            ->add('settingsSkibShowPflasterKinder', CheckboxType::class, ['required' => false, 'label' => 'Zeige die Frage bei den Kindern, ob Erzieher bei den Kindern Pflaster anbringen dürfen', 'translation_domain' => 'form'])
 
 
             ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])
             ->add('skibSettingsBypassBankdaten', CheckboxType::class, ['required' => false, 'label' => 'Es werden keine Bankdaten abgefragt', 'translation_domain' => 'form'])
             ->add('skibSettingsFinishButtonText', TextType::class, ['required' => false, 'label' => 'Text welcher auf dem Button zum abschließen der Anmeldung steht', 'translation_domain' => 'form'])
+            ->add('settingsDokumentUploadTitle', TextType::class, ['required' => false, 'label' => 'Text welcher als Überschrift über dem Dokumenten-Upload Feld bei der Anmeldung steht', 'translation_domain' => 'form'])
+            ->add('settingsDokumentUploadText', TextType::class, ['required' => false, 'label' => 'Text welcher in dem Dokumenten-Upload Feld bei der Anmeldung steht', 'translation_domain' => 'form'])
+            ->add('settingsDokumentTemplates', EntityType::class, [
+                // looks for choices from this entity
+                'class' => File::class,
+                'label' => 'Unausgefüllte Formulare, zum Download und ausgefüllten Upload für den Nutzer',
+                // uses the User.username property as the visible option string
+                'choice_label' => 'originalName',
+                'choices' => $stadt->getUploads(),
+                // used to render a select box, check boxes or radios
+                'multiple' => true,
+                'expanded' => true,
+                'required' => false
+            ])
             ->add('emailDokumente_confirm', EntityType::class, [
                 // looks for choices from this entity
                 'class' => File::class,
