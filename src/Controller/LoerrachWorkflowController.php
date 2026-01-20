@@ -616,7 +616,7 @@ class LoerrachWorkflowController extends AbstractController
         $response->headers->clearCookie('UserID');
         $response->headers->clearCookie('SecID');
         $response->headers->clearCookie('KindID');
-        $request->getSession()->remove('schuljahr_to_add');
+        $request->getSession()->remove(SchuljahrService::SESSION_KEY_SCHULJAHR);
         return $response;
 
     }
