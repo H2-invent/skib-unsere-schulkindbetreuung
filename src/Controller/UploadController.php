@@ -127,9 +127,9 @@ class UploadController extends AbstractController
 
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get('file');
-        $file = $uploadService->uploadFile($uploadedFile);
+        $file = $uploadService->uploadFile($uploadedFile, '10M');
         if (!$file) {
-            return new JsonResponse(['error' => 1]);
+            return new JsonResponse(['error' => "Maximal 10 MB und übliche Dateiformate erlaubt."], Response::HTTP_BAD_REQUEST);
         }
         // if we have a working copy, also write the file to the latest proper stammdaten since they are not subject to confirmation or abschluss workflow
         if ($stammdaten->getCreatedAt() === null) {
@@ -143,6 +143,6 @@ class UploadController extends AbstractController
         $entityManager->persist($stammdaten);
         $entityManager->flush();
 
-        return new JsonResponse(['error' => 0]);
+        return new JsonResponse([], Response::HTTP_OK);
     }
 }

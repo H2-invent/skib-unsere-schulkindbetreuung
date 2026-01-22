@@ -5,12 +5,10 @@ namespace App\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class UploadService
 {
@@ -24,7 +22,7 @@ class UploadService
         $this->em = $entityManager;
     }
 
-    public function uploadFile(UploadedFile $uploadedFile)
+    public function uploadFile(UploadedFile $uploadedFile, string $maxSize = '50M')
     {
         $violations = $this->validator->validate(
             $uploadedFile,
@@ -33,7 +31,7 @@ class UploadService
                     'message' => 'Please select a file to upload'
                 ]),
                 new File([
-                    'maxSize' => '50M',
+                    'maxSize' => $maxSize,
                     'mimeTypes' => [
                         'image/*',
                         'application/pdf',
