@@ -3107,7 +3107,7 @@
       </trans-unit>
       <trans-unit id="l0T3KG." resname="Autom. Zuteilung">
           <source>Autom. Zuteilung</source>
-          <target state="translated">Autom. Zuteilung</target>
+          <target state="needs-translation">Autom. Zuteilung</target>
       </trans-unit>
       <trans-unit id="NvJQq9J" resname="Dokumente">
         <source>Dokumente</source>
