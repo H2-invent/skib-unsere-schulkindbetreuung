@@ -5,7 +5,12 @@ namespace App\Controller;
 use App\Entity\Stadt;
 use App\Form\Type\FormelType;
 use App\Form\Type\StadtType;
+use App\Repository\KindRepository;
+use JsonException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\ExpressionLanguage\SyntaxError;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -41,7 +46,7 @@ class StadtverwaltungController extends AbstractController
     /**
      * @Route("/admin/stadtverwaltung/neu", name="admin_stadt_neu",methods={"GET","POST"} )
      */
-    public function newStadt(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
+    public function newStadt(Request $request, TranslatorInterface $translator, ValidatorInterface $validator, KindRepository $kindRepository)
     {
         $city = new Stadt();
 
@@ -52,12 +57,12 @@ class StadtverwaltungController extends AbstractController
 
         $form->handleRequest($request);
         $errors = array();
+        $em = $this->managerRegistry->getManager();
         if ($form->isSubmitted() && $form->isValid()) {
             $city = $form->getData();
             $city->setCreatedAt(new \DateTime());
             $errors = $validator->validate($city);
             if (count($errors) == 0) {
-                $em = $this->managerRegistry->getManager();
                 $em->persist($city);
                 $em->flush();
                 return $this->redirectToRoute('admin_stadt');
@@ -65,13 +70,23 @@ class StadtverwaltungController extends AbstractController
 
         }
         $title = $translator->trans('Stadt anlegen');
-        return $this->render('administrator/stadtForm.html.twig', array('title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors));
+
+        $kind = $kindRepository->findSampleKind();
+        $em->initializeObject($kind);
+
+        return $this->render('administrator/stadtForm.html.twig',
+            [
+                'title' => $title, 'stadt' => $city, 'form' => $form->createView(),
+                'errors' => $errors, 'kind' => $kind, 'eltern' => $kind?->getEltern(),
+                'schule' => $kind?->getSchule(), 'organisation' => $kind?->getSchule()?->getOrganisation(),
+            ]
+        );
     }
 
     /**
      * @Route("/city_edit/stadtverwaltung/edit", name="admin_stadt_edit",methods={"GET","POST"} )
      */
-    public function editStadt(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
+    public function editStadt(Request $request, TranslatorInterface $translator, ValidatorInterface $validator, KindRepository $kindRepository)
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
 
@@ -90,11 +105,11 @@ class StadtverwaltungController extends AbstractController
 
         $form->handleRequest($request);
         $errors = array();
+        $em = $this->managerRegistry->getManager();
         if ($form->isSubmitted() && $form->isValid()) {
             $city = $form->getData();
             $errors = $validator->validate($city);
             if (count($errors) == 0) {
-                $em = $this->managerRegistry->getManager();
                 $em->persist($city);
 
                 //wichtig vor dem Flush
@@ -104,8 +119,18 @@ class StadtverwaltungController extends AbstractController
             }
 
         }
+
         $title = $translator->trans('Stadt bearbeiten');
-        return $this->render('administrator/stadtForm.html.twig', array('title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors));
+        $kind = $kindRepository->findSampleKind();
+        $em->initializeObject($kind);
+
+        return $this->render('administrator/stadtForm.html.twig',
+            [
+                'title' => $title, 'stadt' => $city, 'form' => $form->createView(),
+                'errors' => $errors, 'kind' => $kind, 'eltern' => $kind?->getEltern(),
+                'schule' => $kind?->getSchule(), 'organisation' => $kind?->getSchule()?->getOrganisation(),
+            ]
+        );
     }
 
     /**
@@ -145,5 +170,40 @@ class StadtverwaltungController extends AbstractController
             'title'=>'Berechnungsformel',
             'errors'=>$error
         ]);
+    }
+
+    /**
+     * @Route("/admin/formula-test", name="admin_formula_test", methods={"POST"})
+     */
+    public function formulaTest(
+        Request $request,
+        ExpressionLanguage $expressionLanguage,
+        KindRepository $kindRepository
+    ): JsonResponse
+    {
+        try {
+            $json = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+            $formula = $json['formula'] ?? throw new JsonException();
+        } catch (JsonException $e) {
+            return new JsonResponse([], 400);
+        }
+
+        $kind = $kindRepository->findSampleKind();
+        if ($kind === null) {
+            return new JsonResponse([], 500);
+        }
+
+        try {
+            $weight = $expressionLanguage->evaluate($formula, [
+                'kind' => $kind,
+                'eltern' => $kind->getEltern(),
+                'schule' => $kind->getSchule(),
+                'organisation' => $kind->getSchule()?->getOrganisation(),
+            ]);
+        } catch (SyntaxError $e) {
+            return new JsonResponse([], 400);
+        }
+
+        return new JsonResponse(['weight' => $weight]);
     }
 }

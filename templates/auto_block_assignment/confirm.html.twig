@@ -11,8 +11,11 @@
                                 <h1>{% trans %}Ergebnisse der automatischen Blockzuteilung{% endtrans %}</h1>
                             </div>
                             <div class="col text-right">
-                                <a href="{{ path('org_child_auto_assign_reject', {'id': app.user.organisation.id}) }}">
-                                    <button type="button" class="btn btn-red">
+                                <a class="{% if assignment_started %}disabled{% endif %}"
+                                   href="{{ path('org_child_auto_assign_reject', {'id': app.user.organisation.id}) }}"
+                                   id="button-auto-assign-reject">
+                                    <button type="button" class="btn btn-red"
+                                            {% if assignment_started %}disabled{% endif %}>
                                         {% trans %}Zuteilung verwerfen{% endtrans %}
                                     </button>
                                 </a>
@@ -23,7 +26,8 @@
                                         &nbsp; {% trans %}Lädt{% endtrans %} ...
                                     </button>
                                 {% else %}
-                                    <a href="{{ path('org_child_auto_assign_accept', {'id': app.user.organisation.id}) }}">
+                                    <a href="{{ path('org_child_auto_assign_accept', {'id': app.user.organisation.id}) }}"
+                                       id="button-auto-assign-accept">
                                         <button type="button" class="btn btn-success">
                                             {% trans %}Zuteilung akzeptieren{% endtrans %}
                                         </button>
@@ -37,6 +41,7 @@
                         <table id="assignment-table" class="table table-striped no-data-table">
                             <thead>
                             <tr>
+                                <th></th>
                                 <th>{% trans %}Kind{% endtrans %}</th>
                                 <th>{% trans %}Anzahl akzeptierter Blöcke{% endtrans %}</th>
                                 <th>{% trans %}Anzahl Wartelisten{% endtrans %}</th>
@@ -45,6 +50,7 @@
                             <tbody>
                             {% for blockChild in autoBlockChildren %}
                                 <tr id="{{ blockChild.0.id }}">
+                                    <td class="dt-control"></td>
                                     <td>{{ blockChild.0.kind.vorname ~ ' ' ~ blockChild.0.kind.nachname }}</td>
                                     <td>{{ blockChild.countAccepted }}</td>
                                     <td>{{ blockChild.countWarteschlange }}</td>
@@ -63,6 +69,11 @@
     {{ parent() }}
     <script>
         $(document).ready(function () {
+            document.getElementById('button-auto-assign-reject').addEventListener('click', (event) => {
+                document.getElementById('button-auto-assign-accept').classList.add('disabled');
+                document.getElementById('button-auto-assign-accept').querySelector('button').setAttribute('disabled', 'disabled');
+            });
+
             async function getChildData(data) {
                 function getWeekdayName(dayIndex) {
                     const date = new Date(1970, 0, 5 + dayIndex);

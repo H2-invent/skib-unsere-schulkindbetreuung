@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,7 +28,7 @@ class Schule
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
-    #[Groups(['confirm_child'])]
+    #[Groups(['confirm_child', 'assign_formula_sample'])]
     private $name;
 
     #[ORM\JoinColumn(nullable: true)]
@@ -38,21 +39,26 @@ class Schule
     #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'schules')]
     private $stadt;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $adresse;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $adresszusatz;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $plz;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $ort;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $deleted = false;
     /**
@@ -70,9 +76,11 @@ class Schule
     /**
      * @var \DateTime
      */
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $infoText;
@@ -87,6 +95,7 @@ class Schule
     #[Assert\Url]
     private $catererUrl;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $catererName;
 
@@ -414,5 +423,17 @@ class Schule
             }
         }
         return $res;
+    }
+
+    public function getUpdatedAt(): ?DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 }

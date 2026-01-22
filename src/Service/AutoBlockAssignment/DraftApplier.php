@@ -30,6 +30,7 @@ class DraftApplier
 
         $autoZeitblocks = $this->autoZeitblockRepository->findByOrganisationJoinChildAndKind($organisation);
 
+        $lastWarteSchlangePerKind = [];
         foreach ($autoZeitblocks as $autoZeitblock) {
             $kind = $autoZeitblock->getChild()?->getKind();
             if ($kind === null) {
@@ -41,13 +42,20 @@ class DraftApplier
                 throw new RuntimeException('Could not find Zeitblock of AutoBlockAssignmentChildZeitblock: ' . $autoZeitblock->getId());
             }
 
-            // TODO silent? lot of mails could be going out
             if ($autoZeitblock->isAccepted()) {
                 $this->kontingentAcceptService->acceptKind($zeitblock, $kind);
             } else if ($autoZeitblock->isWarteschlange()) {
-                $this->wartelisteService->addKindToWarteliste($kind, $zeitblock);
+                $this->wartelisteService->addKindToWarteliste($kind, $zeitblock, true);
+                $lastWarteSchlangePerKind[$kind->getId()] = [$kind, $zeitblock];
             }
         }
+
+        // this is to only send mail for the last warteschlange zeitblock per kind, else there are mass mails going out
+        foreach ($lastWarteSchlangePerKind as $i => $lastWarteschlange) {
+            [$kind, $zeitblock] = $lastWarteschlange;
+            $this->wartelisteService->sendEmailForWartelisteAdding($kind, $zeitblock);
+        }
+
 
         $this->entityManager->remove($autoBlockAssignment);
     }
