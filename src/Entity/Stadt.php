@@ -324,9 +324,6 @@ class Stadt implements TranslatableInterface
     #[ORM\ManyToMany(targetEntity: \App\Entity\File::class)]
     private $settingsDokumentTemplates;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $settingsSkibShowPflasterKinder = null;
-
     #[ORM\Column(options: ['default' => false])]
     private ?bool $settingsDokumentUploadEnable = null;
 
