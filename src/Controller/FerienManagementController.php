@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ferienblock;
+use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
 use App\Entity\Stammdaten;
@@ -10,11 +11,15 @@ use App\Form\Type\FerienBlockPreisType;
 use App\Form\Type\FerienBlockType;
 use App\Form\Type\FerienBlockVoucherType;
 use App\Form\Type\OrganisationFerienType;
+use App\Repository\FerienblockRepository;
+use App\Repository\KindFerienblockRepository;
+use App\Repository\KindRepository;
 use App\Service\AnwesenheitslisteService;
 use App\Service\CheckinFerienService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -25,6 +30,7 @@ class FerienManagementController extends AbstractController
     public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
     {
     }
+
     /**
      * @Route("/org_ferien/edit/show", name="ferien_management_show",methods={"GET"})
      */
@@ -111,8 +117,6 @@ class FerienManagementController extends AbstractController
     }
 
 
-
-
     /**
      * @Route("/org_ferien/edit/voucher", name="ferien_management_voucher", methods={"GET","POST"})
      */
@@ -131,7 +135,7 @@ class FerienManagementController extends AbstractController
         $size = sizeof($ferienblock->getVoucher());
         if ($size != $ferienblock->getAmountVoucher()) {
             array_push($ferienblock->getVoucher(), '');
-            $ferienblock->setVoucherPrice(array_fill($size + 1, $ferienblock->getAmountVoucher()-$size, '99'));
+            $ferienblock->setVoucherPrice(array_fill($size + 1, $ferienblock->getAmountVoucher() - $size, '99'));
         }
 
         $form = $this->createForm(FerienBlockVoucherType::class, $ferienblock);
@@ -180,7 +184,7 @@ class FerienManagementController extends AbstractController
                 $em->persist($block);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-               return $this->redirectToRoute('ferien_management_show', array('org_id' => $organisation->getId(), 'snack' => $text));
+                return $this->redirectToRoute('ferien_management_show', array('org_id' => $organisation->getId(), 'snack' => $text));
             }
 
         }
@@ -228,7 +232,7 @@ class FerienManagementController extends AbstractController
             $ferienblockNew->addTranslation($clone);
 
         }
-        foreach ($ferienblock->getKategorie() as $data){
+        foreach ($ferienblock->getKategorie() as $data) {
             $ferienblockNew->addKategorie($data);
         }
         $em = $this->managerRegistry->getManager();
@@ -258,9 +262,9 @@ class FerienManagementController extends AbstractController
 
         $today = new \DateTime('today');
         $checkinDate = $today->format('Y-m-d');
-        $kinder = $this->managerRegistry->getRepository(KindFerienblock::class)->findBy(array('ferienblock' => $block));
+        $kinder = $this->managerRegistry->getRepository(KindFerienblock::class)->findOrdersByBlock($block);
         $titel = $translator->trans('Anwesenheitsliste für Ferienblock');
-        $mode = 'block';
+        $mode = 'order';
 
         return $this->render('ferien_management/checkinList.html.twig', [
             'org' => $organisation,
@@ -370,7 +374,7 @@ class FerienManagementController extends AbstractController
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $qb = $this->managerRegistry->getRepository('App:Kind')->createQueryBuilder('kind')
+        $qb = $this->managerRegistry->getRepository(Kind::class)->createQueryBuilder('kind')
             ->innerJoin('kind.kindFerienblocks', 'kind_ferienblocks')
             ->innerJoin('kind_ferienblocks.ferienblock', 'ferienblock')
             ->andWhere('ferienblock.organisation = :org')
@@ -386,6 +390,192 @@ class FerienManagementController extends AbstractController
             'stammdaten' => $stammdaten,
             'titel' => $titel,
             'kinds' => $kinds,
+        ]);
+    }
+
+    /**
+     * @Route("/org_ferien/orders/{kurs_id}/sepa-export.csv", name="admin_sepa_export_kurs_csv", methods={"GET"})
+     */
+    public function exportKursSepaCsv(
+        int                       $kurs_id,
+        FerienblockRepository     $kursRepo,
+        KindFerienblockRepository $bookingRepo
+    )
+    {
+        // optional: Rechteprüfung
+        // $this->denyAccessUnlessGranted('ROLE_ORG_FERIEN_SEPA_EXPORT');
+
+        $org = $this->getUser()->getOrganisation();
+
+
+        $kurs = $kursRepo->find($kurs_id);
+        if (!$kurs) {
+            throw $this->createNotFoundException('Kurs nicht gefunden');
+        }
+        $buchungen = $kurs->getKindFerienblocksGebucht();
+        $buchungen_real = [];
+        $eltern = [];
+        foreach ($buchungen as $b) {
+            $parent = $b->getKind()?->getEltern();
+            if (!$parent) {
+                continue;
+            }
+
+            $pid = $parent->getId();
+
+            if (!isset($eltern[$pid])) {
+                $eltern[$pid] = [
+                    'eltern' => $parent,
+                    'buchungen' => [],
+                ];
+            }
+            if (isset( $parent->getPaymentFerien()[0]) && $parent->getPaymentFerien()[0]->getArtString() === 'SEPA'){
+                $eltern[$pid]['payment'] = $parent->getPaymentFerien()[0]->getSepa();
+            }
+
+            if ($b->getState() === 10 &&isset( $parent->getPaymentFerien()[0]) && $parent->getPaymentFerien()[0]->getArtString() === 'SEPA'){
+                $eltern[$pid]['buchungen'][] = $b;
+            }
+        }
+
+        // Dateiname: ohne Sonderzeichen
+        $kursName = $kurs->getTranslations()->get('de')->getTitel();
+        $kursName = preg_replace('/[^A-Za-z0-9_-]/', '_', $kursName);
+
+        $filename = sprintf('SEPA_%s_%s.csv', $kursName, date('Y-m-d'));
+
+        $response = new StreamedResponse(function () use ($eltern, $kurs) {
+            $out = fopen('php://output', 'w');
+
+            // UTF-8 BOM für Excel (optional aber hilfreich)
+            fwrite($out, "\xEF\xBB\xBF");
+
+            $delimiter = ';';
+
+            // Header
+            fputcsv($out, [
+                'ElternID',
+                'Kontoinhaber',
+                'IBAN',
+                'BIC',
+                'Betrag',
+                'Waehrung',
+                'Name',
+                'Vorname',
+                'Strasse',
+                'Adresszusatz',
+                'PLZ',
+                'Stadt',
+                'Email',
+                'Telefon',
+                'Verwendungszweck',
+                'Kinder',
+                'BuchungsIDs'
+            ], $delimiter);
+
+            // Optional: Kurs-Titel für Verwendungszweck
+            $kursTitel = $kurs->getTranslations()->get('de')->getTitel();
+
+
+            foreach ($eltern as $pid => $data) {
+                /** @var \App\Entity\Stammdaten $p */
+                $p = $data['eltern'];
+                $buchungen = $data['buchungen'];
+                /** @var \App\Entity\PaymentSepa $payment */
+                $payment = $data['payment']??null;
+                // Summe bilden
+                $sum = 0.0;
+                $kids = [];
+                $bookingIds = [];
+
+                foreach ($buchungen as $b) {
+                    $sum += (float)$b->getPreis();
+                    $bookingIds[] = (string)$b->getId();
+
+                    $k = $b->getKind();
+                    if ($k) {
+                        $kids[] = trim(($k->getVorname() ?? '') . ' ' . ($k->getNachname() ?? ''));
+                    }
+                }
+
+                $kids = array_values(array_unique(array_filter($kids)));
+                $kidsStr = implode(', ', $kids);
+
+                $verwendungszweck = 'Betreuung ' . $kursTitel;
+
+                // Optional: Eltern ohne SEPA-Daten trotzdem exportieren oder überspringen?
+                // Hier: wir exportieren trotzdem (damit du sie siehst), aber IBAN/BIC leer.
+                $iban = $payment->getIban()?? '';
+                $bic  = $payment->getBic()?? '';
+                $holder = $payment->getKontoinhaber()?? '';
+
+                fputcsv($out, [
+                    $p->getId(),
+                    $holder,
+                    $iban,
+                    $bic,
+                    number_format(round($sum, 2), 2, ',', ''), // deutsches Format
+                    'EUR',
+                    (string)($p->getName() ?? ''),
+                    (string)($p->getVorname() ?? ''),
+                    (string)($p->getStrasse() ?? ''),
+                    (string)($p->getAdresszusatz() ?? ''),
+                    (string)($p->getPlz() ?? ''),
+                    (string)($p->getStadt() ?? ''),
+                    (string)($p->getEmail() ?? ''),
+                    (string)($p->getPhoneNumber() ?? ''),
+                    $verwendungszweck,
+                    $kidsStr,
+                    implode(',', $bookingIds),
+                ], $delimiter);
+            }
+
+            fclose($out);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv; charset=UTF-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');
+
+        return $response;
+    }
+
+    /**
+     * @Route("/org_ferien/orders/kinder/{kind_id}", name="ferien_management_kind_details",methods={"GET","POST"})
+     */
+    public function kindDetails(
+
+        int            $kind_id,
+
+        KindRepository $kindRepo
+    )
+    {
+
+
+        $kind = $kindRepo->find($kind_id);
+        if (!$kind) {
+            throw $this->createNotFoundException('Kind nicht gefunden');
+        }
+
+        // Je nach deinem Model: $kind->getParent() / $kind->getErziehungsberechtigter() / etc.
+        $parent = $kind->getEltern();
+        if (!$parent) {
+            throw $this->createNotFoundException('Kein Erziehungsberechtigter zum Kind gefunden');
+        }
+
+        // Programme fürs Kind in dieser Org (wie in deinem Code)
+        $programme_all = $kind->getKindFerienblocksGebucht();
+        $programme = [];
+        foreach ($programme_all as $data) {
+            if ($data->getFerienblock()->getOrganisation() === $this->getUser()->getOrganisation()) {
+                $programme[] = $data;
+            }
+        }
+        dump($programme);
+        return $this->render('ferien_management/childDetails.html.twig', [
+            'org' => $this->getUser()->getOrganisation(),
+            'kind' => $kind,
+            'parent' => $parent,
+            'programme' => $programme,
         ]);
     }
 

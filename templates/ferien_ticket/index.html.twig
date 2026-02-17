@@ -97,7 +97,10 @@
 <h1>{{ 'Regelungen für die Teilnahme am Ferienprogram'|trans }}
 </h1>
 
-<b>{{ organisation.ferienRegulation|markdown_to_html }}
-</b>
+
+    {% if organisation.ferienRegulation is not empty %}
+        <b>{{ organisation.ferienRegulation|markdown_to_html }}</b>
+    {% endif %}
+
 
 
