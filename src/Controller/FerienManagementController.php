@@ -570,7 +570,7 @@ class FerienManagementController extends AbstractController
                 $programme[] = $data;
             }
         }
-        dump($programme);
+
         return $this->render('ferien_management/childDetails.html.twig', [
             'org' => $this->getUser()->getOrganisation(),
             'kind' => $kind,
