@@ -1,0 +1,173 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block style %}
+    <style>
+        .dataTables_wrapper { min-height: 150px !important; }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 card" style="border-radius: 10px;">
+                    <div class="card-header">
+                        <h1>Details Kind: {{ kind.vorname }} {{ kind.nachname }}</h1>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="mb-3">
+
+                            <a class="btn btn-secondary"
+                               href="{{ path('ferien_management_order_detail', {'id': parent.id,'org_id': org.id}) }}">
+                                Zum Erziehungsberechtigten: {{ parent.vorname }} {{ parent.name }}
+                            </a>
+
+                            {# Optional: Mail an Eltern #}
+                            <a class="btn btn-primary" href="mailto:{{ parent.email }}" target="_blank">
+                                Email an Erziehungsberechtigten senden
+                            </a>
+
+                            {# Optional: Ticket-Export global (wenn du so etwas brauchst) #}
+                            {# <a class="btn btn-primary" href="{{ path('ferien_ticket_all', {'org_id': org.id, 'kind_id': kind.id}) }}">Alle Tickets</a> #}
+                        </div>
+
+                        <h3 class="card-title">Kind-Details</h3>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <dl class="dl-horizontal">
+                                    <dt>Name</dt>
+                                    <dd>{{ kind.vorname }} {{ kind.nachname }}</dd>
+
+                                    <dt>Geburtstag</dt>
+                                    <dd>{{ kind.geburtstag ? kind.geburtstag|date('d.m.Y') : '-' }}</dd>
+
+                                    <dt>Allergien</dt>
+                                    <dd>{{ kind.allergie ?: '-' }}</dd>
+
+                                    <dt>Medikamente</dt>
+                                    <dd>{{ kind.medikamente ?: '-' }}</dd>
+
+                                    <dt>Glutenintolerant</dt>
+                                    <dd>{{ kind.gluten ? 'Ja'|trans : 'Nein'|trans }}</dd>
+
+                                    <dt>Laktoseintolerant</dt>
+                                    <dd>{{ kind.laktose ? 'Ja'|trans : 'Nein'|trans }}</dd>
+                                </dl>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <dl>
+                                    <dt>Isst kein Schweinefleisch</dt>
+                                    <dd>{{ kind.schweinefleisch ? 'Ja'|trans : 'Nein'|trans }}</dd>
+
+                                    <dt>Vegetarisch</dt>
+                                    <dd>{{ kind.vegetarisch ? 'Ja'|trans : 'Nein'|trans }}</dd>
+
+                                    <dt>Darf alleine nach Hause</dt>
+                                    <dd>{{ kind.alleineHause ? 'Ja'|trans : 'Nein'|trans }}</dd>
+
+                                    <dt>Darf an Ausflügen teilnehmen</dt>
+                                    <dd>{{ kind.ausfluege ? 'Ja'|trans : 'Nein'|trans }}</dd>
+
+                                    <dt>Sonnencreme erlaubt</dt>
+                                    <dd>{{ kind.sonnencreme ? 'Ja'|trans : 'Nein'|trans }}</dd>
+
+                                    <dt>Zecken entfernen erlaubt</dt>
+                                    <dd>{{ kind.zeckenEntfernen ? 'Ja'|trans : 'Nein'|trans }}</dd>
+
+                                    <dt>Fotos erlaubt</dt>
+                                    <dd>{{ kind.fotos ? 'Ja'|trans : 'Nein'|trans }}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <hr/>
+
+                        <h3 class="card-title">Gebuchte Programme</h3>
+
+                        {% if programme is empty %}
+                            <p class="alert alert-info">Keine Buchungen für diese Organisation.</p>
+                        {% else %}
+                            {% for f in programme %}
+                                <div class="row mt-3">
+                                    <div class="col-md-8">
+                                        <b>
+                                            {% if f.state == 20 %}<del>{% endif %}
+                                                #{{ loop.index }} {{ f.ferienblock.translate.titel }}
+                                                {% if f.state == 20 %}</del>{% endif %}
+                                        </b>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        {% if f.state != 20 %}
+                                            <a href="{{ path('ferien_ticket', {'org_id': org.id, 'kind_id': kind.id, 'ferien_id': f.id}) }}">
+                                                Ticket exportieren
+                                            </a>
+                                        {% else %}
+                                            &nbsp;
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <b>
+                                            {% if f.state == 20 %}<del>{% endif %}
+                                                {{ f.preis|number_format('2', ',', '.') }} €
+                                                {% if f.state == 20 %}</del>{% endif %}
+                                        </b>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        {% if f.state == 20 %}<del>{% endif %}
+                                            Checkin ID
+                                            {% if f.state == 20 %}</del>{% endif %}
+                                    </div>
+                                    <div class="col-md-9">
+                                        {% if f.state == 20 %}<del>{% endif %}
+                                            {{ f.checkinID ?: '-' }}
+                                            {% if f.state == 20 %}</del>{% endif %}
+                                    </div>
+
+                                    <div class="col-md-3">Checkins</div>
+                                    <div class="col-md-9">
+                                        {% if f.checkinStatus is empty %}
+                                            -
+                                        {% else %}
+                                            {% for c in f.checkinStatus %}
+                                                {{ c }}<br/>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <hr/>
+
+                        <h3 class="card-title">Eltern-Details (Kurz)</h3>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <dl class="dl-horizontal">
+                                    <dt>Name</dt>
+                                    <dd>{{ parent.vorname }} {{ parent.name }}</dd>
+                                    <dt>Adresse</dt>
+                                    <dd>{{ parent.strasse }}<br/>{{ parent.plz }} {{ parent.stadt }}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-lg-6">
+                                <dl>
+                                    <dt>Email</dt>
+                                    <dd>{{ parent.email }}</dd>
+                                    <dt>Notfallkontakt</dt>
+                                    <dd>{{ parent.notfallName }} ({{ parent.notfallkontakt }})</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

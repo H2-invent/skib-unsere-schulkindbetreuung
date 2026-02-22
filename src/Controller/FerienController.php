@@ -10,9 +10,12 @@ use App\Entity\Payment;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Entity\Tags;
+use App\Form\Type\ElternFerien;
+use App\Form\Type\FerienKind;
 use App\Form\Type\LoerrachEltern;
 use App\Form\Type\LoerrachKind;
 use App\Form\Type\PaymentType;
+use App\Repository\StadtRepository;
 use App\Service\CheckoutPaymentService;
 use App\Service\FerienAbschluss;
 use App\Service\StamdatenFromCookie;
@@ -67,7 +70,7 @@ class FerienController extends AbstractController
         if ($adresse->getUid() === null) {
             $adresse->setUid(md5(uniqid()))
                 ->setAngemeldet(false);
-            $adresse->setCreatedAt(new \DateTime());
+
         }
 
         //Check if admin has enabled ferienprogramm for the city
@@ -75,8 +78,8 @@ class FerienController extends AbstractController
             return $this->redirect($this->generateUrl('workflow_start', array('slug' => $stadt->getSlug())));
         }
 
-        $form = $this->createForm(LoerrachEltern::class, $adresse,array('stadt'=>$stadt));
-        $form->remove('alleinerziehend', 'kinderImKiga', 'beruflicheSituation', 'einkommen');
+        $form = $this->createForm(ElternFerien::class, $adresse,array('stadt'=>$stadt));
+
         $form->handleRequest($request);
 
         $errors = array();
@@ -139,7 +142,7 @@ class FerienController extends AbstractController
      * @Route("/{slug}/ferien/kind/neu",name="ferien_kind_neu",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function ferienNeukindAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
+    public function ferienNeukindAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, StadtRepository $stadtRepository)
     {
         //Include Parents in this route
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE)) {
@@ -149,7 +152,7 @@ class FerienController extends AbstractController
         $kind = new Kind();
         $kind->setEltern($adresse);
         $kind->setSchule(null);
-        $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('ferien_kind_neu', array('slug' => $stadt->getSlug()))));
+        $form = $this->createForm(FerienKind::class, $kind, array('stadt'=>$stadt,'action' => $this->generateUrl('ferien_kind_neu', array('slug' => $stadt->getSlug()))));
         $form->remove('klasse');
         $form->remove('art');
         $form->handleRequest($request);
@@ -188,9 +191,8 @@ class FerienController extends AbstractController
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
         $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kind_id')));
 
-        $form = $this->createForm(LoerrachKind::class, $kind, array('action' => $this->generateUrl('ferien_workflow_kind_edit', array('slug' => $slug, 'kind_id' => $kind->getId()))));
-        $form->remove('klasse');
-        $form->remove('art');
+        $form = $this->createForm(FerienKind::class, $kind, array('stadt'=>$stadt,'action' => $this->generateUrl('ferien_workflow_kind_edit', array('slug' => $slug, 'kind_id' => $kind->getId()))));
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $kind = $form->getData();
