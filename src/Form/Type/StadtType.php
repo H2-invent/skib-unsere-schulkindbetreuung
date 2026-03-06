@@ -227,6 +227,7 @@ class StadtType extends AbstractType
                 'expanded' => true,
                 'required' => false
             ])
+            ->add('allowCreateInvoiceInFuture', CheckboxType::class, ['required' => false, 'label' => 'Erlaube das erstellen Rechnungen in der Zukunft (Zum Debugging)', 'translation_domain' => 'form'])
             ->add('showShowMoreToggleOnHomescreen', CheckboxType::class, ['required' => false, 'label' => 'Zeige den "Mehr lesen" Button auf der Startseite an', 'translation_domain' => 'form'])
             ->add('gehaltsklassen', CollectionType::class, [
                 'entry_type' => TextType::class,
