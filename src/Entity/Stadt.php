@@ -311,6 +311,9 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(options: ['default' => false])]
     private ?bool $settingsDokumentUploadEnable = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $allowCreateInvoiceInFuture = null;
+
 
 
 
@@ -1519,6 +1522,18 @@ class Stadt implements TranslatableInterface
     public function setSettingsSkibShowPflasterKinder(?bool $settingsSkibShowPflasterKinder): self
     {
         $this->settingsSkibShowPflasterKinder = $settingsSkibShowPflasterKinder;
+
+        return $this;
+    }
+
+    public function isAllowCreateInvoiceInFuture(): ?bool
+    {
+        return $this->allowCreateInvoiceInFuture;
+    }
+
+    public function setAllowCreateInvoiceInFuture(?bool $allowCreateInvoiceInFuture): self
+    {
+        $this->allowCreateInvoiceInFuture = $allowCreateInvoiceInFuture;
 
         return $this;
     }

@@ -85,7 +85,7 @@ class SepaCreateService
         $controleDate = clone $today;
         $controleDate->modify('+1 month');
         $controleDate->modify('first day of this month');
-        if ($sepa->getBis() > $controleDate && $demoMode === false) {
+        if ($sepa->getBis() > $controleDate && $demoMode === false && $sepa->getOrganisation()->getStadt()->isAllowCreateInvoiceInFuture() !== true) {
             return $this->translator->trans('Fehler: Es sind nur Abrechnungen für vergangene und diesen  Monat zulässig');
         }
 
