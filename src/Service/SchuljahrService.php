@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class SchuljahrService
 {
 
+    public const SESSION_KEY_SCHULJAHR = 'schuljahr_to_add';
 
     private $em;
     private $user;
@@ -31,9 +32,8 @@ class SchuljahrService
 
     public function getSchuljahr(Stadt $stadt): ?Active
     {
-
-        if ($this->requestStack->getSession()->get('schuljahr_to_add')) {
-            $schuljahr = $this->em->getRepository(Active::class)->find($this->requestStack->getSession()->get('schuljahr_to_add'));
+        if ($this->requestStack->getSession()->get(self::SESSION_KEY_SCHULJAHR)) {
+            $schuljahr = $this->em->getRepository(Active::class)->find($this->requestStack->getSession()->get(self::SESSION_KEY_SCHULJAHR));
             return $schuljahr;
         }
 
