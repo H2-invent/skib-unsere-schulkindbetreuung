@@ -126,131 +126,188 @@
                             </div>
                             <div class="tab-pane fade" id="schulkindbetreuung" role="tabpanel"
                                  aria-labelledby="profile-tab"><h2>Schulkindbetreuung</h2>
-                                {{ form_row(form.secCodeAlwaysNew) }}
-                                {{ form_row(form.noSecCodeForChangeChilds) }}
-                                {{ form_row(form.minBlocksPerDay) }}
-                                {{ form_row(form.minDaysperWeek) }}
-                                {{ form_row(form.preiskategorien) }}
-                                {{ form_row(form.gehaltsklassen) }}
-                                {{ form_row(form.skibSettingsFinishButtonText) }}
-                                {{ form_row(form.settingsDokumentUploadTitle) }}
-                                {{ form_row(form.settingsDokumentUploadText) }}
-                                {{ form_row(form.settingsDokumentTemplates) }}
-                                {{ form_row(form.hideChildQuestions) }}
-                                <h3 class="mt-3">{{ 'Abfrage Stammdaten'|trans }}</h3>
-                                <div class="row mb-3">
-                                    <div class="col-lg-4">
-                                        {{ form_row(form.settingsAnzahlKindergeldempfanger) }}
-                                    </div>
-                                    <div class="col-lg-4">
-                                        {{ form_row(form.settingsAnzahlKindergeldempfangerRequired) }}
-                                    </div>
-                                    <div class="col-lg-4">
-                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settingsAnzahlKindergeldempfangerHelp']) }}
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h2>Sec-Code-Options</h2>
+                                        {{ form_row(form.secCodeAlwaysNew) }}
+                                        {{ form_row(form.noSecCodeForChangeChilds) }}
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-4">
-                                        {{ form_row(form.settingsSozielHilfeEmpfanger) }}
-                                    </div>
-                                    <div class="col-lg-4">
-                                        {{ form_row(form.settingsSozielHilfeEmpfangerRequired) }}
-                                    </div>
-                                    <div class="col-lg-4">
-                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settingsSozielHilfeEmpfangerHelp']) }}
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h2>Allgemein</h2>
+                                        {{ form_row(form.minBlocksPerDay) }}
+                                        {{ form_row(form.minDaysperWeek) }}
+                                        {{ form_row(form.preiskategorien) }}
+                                        {{ form_row(form.gehaltsklassen) }}
+                                        {{ form_row(form.skibSettingsFinishButtonText) }}
                                     </div>
                                 </div>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h2>Upload-Options</h2>
+                                        {{ form_row(form.settingsDokumentUploadEnable) }}
+                                        {{ form_row(form.settingsDokumentUploadTitle) }}
+                                        {{ form_row(form.settingsDokumentUploadText) }}
+                                        {{ form_row(form.settingsDokumentTemplates) }}
+                                    </div>
+                                </div>
+
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="mt-3">{{ 'Stammdaten-Options'|trans }}</h3>
+                                        {{ form_row(form.hideChildQuestions) }}
+                                        <div class="row mb-3">
+                                            <div class="col-lg-4">
+                                                {{ form_row(form.settingsAnzahlKindergeldempfanger) }}
+                                            </div>
+                                            <div class="col-lg-4">
+                                                {{ form_row(form.settingsAnzahlKindergeldempfangerRequired) }}
+                                            </div>
+                                            <div class="col-lg-4">
+                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingsAnzahlKindergeldempfangerHelp']) }}
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-lg-4">
+                                                {{ form_row(form.settingsSozielHilfeEmpfanger) }}
+                                            </div>
+                                            <div class="col-lg-4">
+                                                {{ form_row(form.settingsSozielHilfeEmpfangerRequired) }}
+                                            </div>
+                                            <div class="col-lg-4">
+                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingsSozielHilfeEmpfangerHelp']) }}
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-lg-4">
+                                                {{ form_row(form.settingKinderimKiga) }}
+                                            </div>
+                                            <div class="col-lg-8">
+                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingKinderimKigaHelp']) }}
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-lg-4">
+                                                {{ form_row(form.settingGehaltsklassen) }}
+                                            </div>
+                                            <div class="col-lg-4">
+                                                {{ form_row(form.settingGehaltsklassenRequired) }}
+                                            </div>
+                                            <div class="col-lg-4">
+                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingGehaltsklassenHelp']) }}
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-lg-10">
+                                                {{ form_row(form.settingsweiterePersonenberechtigte) }}
+                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingsweiterePersonenberechtigteHelp']) }}
+                                            </div>
+
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h3>Kinderfragen</h3>
+
+                                                        {{ form_widget(form.settingsSkibShowZeckenKinder) }}
+                                                        {{ form_widget(form.settingsSkibShowSonnencremeKinder) }}
+                                                        {{ form_widget(form.settingsSkibShowPflasterKinder) }}
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row mb-3 mt-3">
+                                            <div class="col-12">
+                                                <h3>Geschwisterfragen</h3>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                {{ form_row(form.settingsEingabeDerGeschwister) }}
+                                            </div>
+
+                                            <div class="col-lg-4">
+                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingsEingabeDerGeschwisterHelp']) }}
+                                            </div>
+                                            <div class="col-lg-4">
+                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingsEingabeDerGeschwisterHelpUpload']) }}
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-lg-12">
+                                                {{ a2lixTranslations.partialTranslations(form.translations, ['schulkindbetreuungBlockDeaktiviertText']) }}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 <div class="row mb-3">
                                     <div class="col-lg-4">
-                                        {{ form_row(form.settingKinderimKiga) }}
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h3>SEPA-Options</h3>
+                                                {{ form_row(form.settings_skib_sepaElektronisch) }}
+                                                {{ form_row(form.skibSettingsBypassBankdaten) }}
+                                            </div>
+                                        </div>
+
                                     </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-lg-4">
+                                        <div class="card-body card">
+                                            <h3>Abschluss-Optionen</h3>
+                                            {{ form_row(form.settingsSkibShowPopupOnRegistration) }}
+                                            {{ a2lixTranslations.partialTranslations(form.translations, ['settingsSkibPopupRegistrationText']) }}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
                                     <div class="col-lg-8">
-                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settingKinderimKigaHelp']) }}
+                                        <div class="card-body">
+                                            <h3>{{ 'Bezeichnung der Schuljahre (JSON-Objekt)'|trans }}</h3>
+                                            {{ a2lixTranslations.partialTranslations(form.translations, ['settings_skib_shoolyear_naming']) }}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-4">
-                                        {{ form_row(form.settingGehaltsklassen) }}
-                                    </div>
-                                    <div class="col-lg-4">
-                                        {{ form_row(form.settingGehaltsklassenRequired) }}
-                                    </div>
-                                    <div class="col-lg-4">
-                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settingGehaltsklassenHelp']) }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-4">
-                                        {{ form_row(form.settingsweiterePersonenberechtigte) }}
                                     </div>
 
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-12">
-                                        <h3>Kinderfragen</h3>
-
-                                        {{ form_widget(form.settingsSkibShowZeckenKinder) }}
-                                        {{ form_widget(form.settingsSkibShowSonnencremeKinder) }}
-                                        {{ form_widget(form.settingsSkibShowPflasterKinder) }}
-
-                                    </div>
-                                </div>
-                                <div class="row mb-3 mt-3">
-                                    <div class="col-12">
-                                        <h3>Geschwisterfragen</h3>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        {{ form_row(form.settingsEingabeDerGeschwister) }}
-                                    </div>
-
-                                    <div class="col-lg-4">
-                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settingsEingabeDerGeschwisterHelp']) }}
-                                    </div>
-                                    <div class="col-lg-4">
-                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settingsEingabeDerGeschwisterHelpUpload']) }}
-                                    </div>
-
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-lg-12">
-                                        {{ a2lixTranslations.partialTranslations(form.translations, ['schulkindbetreuungBlockDeaktiviertText']) }}
-                                    </div>
-
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-lg-4">
-                                        {{ form_row(form.settings_skib_sepaElektronisch) }}
-                                        {{ form_row(form.skibSettingsBypassBankdaten) }}
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-lg-4">
-                                        {{ form_row(form.settingsSkibShowPopupOnRegistration) }}
-                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settingsSkibPopupRegistrationText']) }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-8">
-                                        {{ 'Bezeichnung der Schuljahre (JSON-Objekt)'|trans }}
-                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settings_skib_shoolyear_naming']) }}
-                                    </div>
-                                </div>
                                 <div class="row mb-3">
                                     <div class="col-12">
-                                        {{ 'Extra-Texte in Emails'|trans }}
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h3>{{ 'Extra-Texte in Emails'|trans }}</h3>
+                                                <div class="col-lg-6">
+
+                                                    {{ a2lixTranslations.partialTranslations(form.translations, ['settingsExtraTextEmailAnmeldungMitBeworben']) }}
+                                                </div>
+                                                <div class="col-lg-6">
+
+                                                    {{ a2lixTranslations.partialTranslations(form.translations, ['settingsExtraTextEmailAnmeldung']) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
 
-                                    <div class="col-lg-6">
 
-                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settingsExtraTextEmailAnmeldungMitBeworben']) }}
-                                    </div>
-                                    <div class="col-lg-6">
-
-                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settingsExtraTextEmailAnmeldung']) }}
-                                    </div>
                                 </div>
                                 <div class="card">
                                     <h4 class="card-header">{{ 'Änderungen'|trans }}</h4>
@@ -295,6 +352,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="card">
                                     <h3 class="card-header">Dokumente welche an die E-Mails angehängt werden
                                         können</h3>
@@ -335,20 +393,24 @@
                                 <hr>
                                 <div class="card card-body">
                                     {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateAnmeldung']) }}
-                                    <a href="{{ path('app_send_test_email_for_template',{'template':'anmeldebestatigungBeworben','stadt':stadt.id}) }}" target="_blank">Testmail senden, nach dem speichern des Templates</a>
+                                    <a href="{{ path('app_send_test_email_for_template',{'template':'anmeldebestatigungBeworben','stadt':stadt.id}) }}"
+                                       target="_blank">Testmail senden, nach dem speichern des Templates</a>
 
                                 </div>
                                 <div class="card card-body">
-                                  {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateBuchung']) }}
-                                <a  href="{{ path('app_send_test_email_for_template',{'template':'anmeldebestatigung','stadt':stadt.id}) }}" target="_blank">Testmail senden, nach dem speichern des Templates</a>
+                                    {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateBuchung']) }}
+                                    <a href="{{ path('app_send_test_email_for_template',{'template':'anmeldebestatigung','stadt':stadt.id}) }}"
+                                       target="_blank">Testmail senden, nach dem speichern des Templates</a>
                                 </div>
                                 <div class="card card-body">
-                                {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateAbmeldung']) }}
-                                <a  href="{{ path('app_send_test_email_for_template',{'template':'abmeldebestatigung','stadt':stadt.id}) }}" target="_blank">Testmail senden, nach dem speichern des Templates</a>
+                                    {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateAbmeldung']) }}
+                                    <a href="{{ path('app_send_test_email_for_template',{'template':'abmeldebestatigung','stadt':stadt.id}) }}"
+                                       target="_blank">Testmail senden, nach dem speichern des Templates</a>
                                 </div>
                                 <div class="card card-body">
-                                {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateStammdatenEdit']) }}
-                                <a  href="{{ path('app_send_test_email_for_template',{'template':'stammdatenEdit','stadt':stadt.id}) }}" target="_blank">Testmail senden, nach dem speichern des Templates</a>
+                                    {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateStammdatenEdit']) }}
+                                    <a href="{{ path('app_send_test_email_for_template',{'template':'stammdatenEdit','stadt':stadt.id}) }}"
+                                       target="_blank">Testmail senden, nach dem speichern des Templates</a>
                                 </div>
                                 <div class="card">
                                     <div class="card-header">
@@ -396,10 +458,80 @@
                                 </div>
 
                             </div>
-                            <div class="tab-pane fade show active" id="auto-assign" role="tabpanel"
+                            <div class="tab-pane fade show active container-fluid" id="auto-assign" role="tabpanel"
                                  aria-labelledby="home-tab"><h2>Automatische Blockzuteilung</h2>
 
                                 {{ form_row(form.autoAssign_formula) }}
+
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label for="auto_assign_formula-result">Formel Ergebnis für Beispiel:</label>
+                                        <input type="text" id="auto_assign_formula-result" disabled>
+                                        <br>Alle Eigenschaften müssen per getter geholt werden!<br>
+                                        <del>kind.allergie</del> &rarr; kind.getAllergie()
+                                    </div>
+                                    <div class="col-9">
+                                        <div id="accordion">
+                                            <div class="card">
+                                                <div class="card-header" id="card-head-kind">
+                                                    <h5 class="mb-0">
+                                                        <a class="btn btn-link" data-toggle="collapse" href="#collapse-kind" aria-expanded="true" aria-controls="collapse-kind">
+                                                            kind
+                                                        </a>
+                                                    </h5>
+                                                </div>
+
+                                                <div id="collapse-kind" class="collapse show" aria-labelledby="card-head-kind" data-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <pre>{{ kind | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" id="card-head-eltern">
+                                                    <h5 class="mb-0">
+                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-eltern" aria-expanded="false" aria-controls="collapse-eltern">
+                                                            eltern
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-eltern" class="collapse" aria-labelledby="card-head-eltern" data-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <pre>{{ eltern | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" id="card-head-schule">
+                                                    <h5 class="mb-0">
+                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-schule" aria-expanded="false" aria-controls="collapse-schule">
+                                                            schule
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-schule" class="collapse" aria-labelledby="card-head-schule" data-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <pre>{{ schule | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" id="card-head-orga">
+                                                    <h5 class="mb-0">
+                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-orga" aria-expanded="false" aria-controls="collapse-orga">
+                                                            organisation
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-orga" class="collapse" aria-labelledby="card-head-orga" data-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <pre>{{ organisation | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -447,6 +579,30 @@
                 if (form.serialize() != original)
                     return 'Are you sure you want to leave?'
             }
+
+            // auto assign formula test
+            const calculateTestValue = async function () {
+                const formula = $('#stadt_autoAssign_formula').val();
+                const response = await fetch('{{ path('admin_formula_test') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({formula: formula})
+                    }
+                );
+
+                const resultInput = $('#auto_assign_formula-result');
+                if (!response.ok) {
+                    resultInput.val('Fehler')
+                    return;
+                }
+                const data = await response.json();
+                resultInput.val(data.weight)
+            };
+            $('#stadt_autoAssign_formula').on('change', calculateTestValue);
+            calculateTestValue();
         })
     </script>
 

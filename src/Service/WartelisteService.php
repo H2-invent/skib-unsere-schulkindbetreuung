@@ -25,7 +25,7 @@ class WartelisteService
     {
     }
 
-    public function addKindToWarteliste(Kind $kind, Zeitblock $zeitblock): bool
+    public function addKindToWarteliste(Kind $kind, Zeitblock $zeitblock, bool $silent = false): bool
     {
         if (!$kind->getBeworben()->contains($zeitblock)) {
             throw new \Exception('Block does not match Child Slots');
@@ -35,7 +35,9 @@ class WartelisteService
         $kind->addMovedToWaiting($zeitblock);
         $this->entityManager->persist($kind);
         $this->entityManager->flush();
-       $this->sendEmailForWartelisteAdding($kind,$zeitblock);
+        if (!$silent) {
+            $this->sendEmailForWartelisteAdding($kind, $zeitblock);
+        }
         return true;
     }
     public function sendEmailForWartelisteAdding(Kind $kind, Zeitblock $zeitblock): void

@@ -388,3 +388,12 @@ nav.navbar a.menu-btn:hover {
         display: none !important;
     }
 }
+
+#child-detail-dropzone {
+    min-height: 70px;
+    height: 70px;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

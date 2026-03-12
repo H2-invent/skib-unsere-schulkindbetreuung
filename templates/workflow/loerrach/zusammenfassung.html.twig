@@ -295,6 +295,7 @@
             {% endfor %}
         </div>
     </div>
+    {% if stadt.settingsDokumentUploadEnable %}
     <div class="card mb-2">
         <div class="card-header ">
             <h3 class="cover-heading">{{ stadt.settingsDokumentUploadTitle | default('Zusätzliche Dokumente') | trans }}</h3>
@@ -313,16 +314,20 @@
                 {% endfor %}
                 </ul>
             {% endif %}
+            <div id="wrapper-uploaded-documents">
+                {% include 'workflow/loerrach/zusammenfassung/uploaded_documents.html.twig' %}
+            </div>
             <form action="{{ path('upload_additional-documents',{'id':eltern.id}) }}"
-                  id="dropzone_additional-documents"
+                  id="dropzone-additional-documents"
                   class="dropzone"
-            >
+                  data-success-url="{{ path('loerrach_workflow_zusammenfassung_uploaded-documents', {'slug': stadt.slug}) }}">
                 <div style="display: none" class="dz-message" data-dz-message>
                     <span>{{ stadt.settingsDokumentUploadText | default('Pflichtangabe für Klasse 2-4: Arbeitgeberbescheinigung') | trans }}</span>
                 </div>
             </form>
         </div>
     </div>
+    {% endif %}
     {% if not stadt.skibSettingsBypassBankdaten %}
         <div class="card mb-2">
             <div class="card-header ">
