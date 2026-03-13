@@ -39,7 +39,12 @@ class AutoBlockAssignmentChildRepository extends ServiceEntityRepository
     public function findByOrganisationAddZeitblocksCounts(Organisation $organisation): array
     {
         return $this->createQueryBuilder('child')
-            ->select('child', 'SUM(zeitblock.accepted) as countAccepted', 'SUM(zeitblock.warteschlange) as countWarteschlange')
+            ->select(
+                'child',
+                'SUM(zeitblock.accepted) as countAccepted',
+                'SUM(zeitblock.warteschlange) as countWarteschlange',
+                '(SELECT COUNT(file2.id) FROM App\Entity\Stammdaten eltern2 JOIN eltern2.file file2 WHERE kind MEMBER OF eltern2.kinds) as countFile'
+            )
             ->innerJoin('child.autoBlockAssignment', 'autoblock')
             ->innerJoin('child.kind', 'kind')
             ->innerJoin('child.zeitblocks', 'zeitblock')
@@ -48,6 +53,7 @@ class AutoBlockAssignmentChildRepository extends ServiceEntityRepository
             ->groupBy('child.id')
             ->orderBy('countAccepted', 'DESC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 }
