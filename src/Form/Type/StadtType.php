@@ -133,7 +133,7 @@ class StadtType extends AbstractType
             ->add('settingsSkibShowSonnencremeKinder', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer bei den Kindern Zecken entfernen dürfen', 'translation_domain' => 'form'])
             ->add('settingsSkibShowZeckenKinder', CheckboxType::class, ['required' => false, 'label' => 'Verstecke die Frage bei den Kindern an, ob Betreuer die Kinder mit Sonnencreme eincremen dürfen', 'translation_domain' => 'form'])
             ->add('settingsSkibShowPflasterKinder', CheckboxType::class, ['required' => false, 'label' => 'Zeige die Frage bei den Kindern, ob Erzieher bei den Kindern Pflaster anbringen dürfen', 'translation_domain' => 'form'])
-
+            ->add('skipSettingShowChronicalDeseas', CheckboxType::class, ['required' => false, 'label' => 'Frage bei Kindern Chronische-Erkrankungen ab', 'translation_domain' => 'form'])
 
             ->add('settings_skib_sepaElektronisch', CheckboxType::class, ['required' => false, 'label' => 'Das SEPA Lastschriftmandat kann elektronisch erteilt werden', 'translation_domain' => 'form'])
             ->add('skibSettingsBypassBankdaten', CheckboxType::class, ['required' => false, 'label' => 'Es werden keine Bankdaten abgefragt', 'translation_domain' => 'form'])
@@ -328,6 +328,12 @@ class StadtType extends AbstractType
                             'translation_domain' => 'form'
                         ],
                         'settingsweiterePersonenberechtigteHelp' => [
+
+                            'attr' => array('rows' => 3,),
+                            'label' => 'Hilfetext (Text in den Fragezeigen)',
+                            'translation_domain' => 'form'
+                        ],
+                        'settingsChronicalDesesHelp' => [
 
                             'attr' => array('rows' => 3,),
                             'label' => 'Hilfetext (Text in den Fragezeigen)',

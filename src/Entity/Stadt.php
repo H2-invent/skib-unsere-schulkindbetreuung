@@ -314,6 +314,11 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(nullable: true)]
     private ?bool $allowCreateInvoiceInFuture = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $skip_setting_show_chronicalDeseas = null;
+
+
+
 
 
 
@@ -1549,4 +1554,17 @@ class Stadt implements TranslatableInterface
 
         return $this;
     }
+
+    public function isSkipSettingShowChronicalDeseas(): ?bool
+    {
+        return $this->skip_setting_show_chronicalDeseas;
+    }
+
+    public function setSkipSettingShowChronicalDeseas(?bool $skip_setting_show_chronicalDeseas): self
+    {
+        $this->skip_setting_show_chronicalDeseas = $skip_setting_show_chronicalDeseas;
+
+        return $this;
+    }
+
 }
