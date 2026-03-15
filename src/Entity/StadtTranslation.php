@@ -44,6 +44,8 @@ class StadtTranslation implements TranslationInterface
     private $settingsAnzahlKindergeldempfangerHelp;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    private $settingsChronicalDesesHelp;
+    #[ORM\Column(type: 'text', nullable: true)]
     private $settingsSozielHilfeEmpfangerHelp;
     #[ORM\Column(type: 'text', nullable: true)]
     private $settingsEingabeDerGeschwisterHelp;
@@ -475,6 +477,22 @@ class StadtTranslation implements TranslationInterface
     public function setEmailtemplateStammdatenEdit($emailtemplateStammdatenEdit): void
     {
         $this->emailtemplateStammdatenEdit = $emailtemplateStammdatenEdit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsChronicalDesesHelp()
+    {
+        return $this->settingsChronicalDesesHelp;
+    }
+
+    /**
+     * @param mixed $settingsChronicalDesesHelp
+     */
+    public function setSettingsChronicalDesesHelp($settingsChronicalDesesHelp): void
+    {
+        $this->settingsChronicalDesesHelp = $settingsChronicalDesesHelp;
     }
 
 
