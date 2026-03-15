@@ -42,7 +42,7 @@ class LoerrachEltern extends AbstractType
             ->add('alleinerziehend', CheckboxType::class, ['required' => false, 'label' => 'Ich bin alleinerziehend', 'translation_domain' => 'form'])
             ->add('notfallName', TextType::class, ['required' => true, 'label' => 'Name des Notfallkontakts', 'translation_domain' => 'form'])
             ->add('notfallkontakt', TextType::class, ['required' => true, 'label' => 'Telefonnummer des Notfallkontakts', 'translation_domain' => 'form'])
-            ->add('abholberechtigter', TextareaType::class, ['required' => false, 'placeholder'=> 'Bitte nur ausfüllen, wenn es neben den Eltern weitere Abholberechtigte Personen gibt.','label' => 'Weitere abholberechtigte Personen', 'translation_domain' => 'form', 'attr' => ['rows' => 6]])
+            ->add('abholberechtigter', TextareaType::class, ['required' => false, 'label' => 'Weitere abholberechtigte Personen', 'translation_domain' => 'form', 'attr' => ['rows' => 6,'placeholder'=>'Bitte nur ausfüllen, wenn es neben den Eltern weitere Abholberechtigte Personen gibt.']])
             ->add('gdpr', CheckboxType::class, ['required' => true, 'label' => 'Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet werden und an die betreuende Organisation weitergegeben werden.', 'translation_domain' => 'form'])
             ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-primary'), 'label' => 'weiter', 'translation_domain' => 'form']);
         if ($options['stadt']->getSettingsweiterePersonenberechtigte()) {
