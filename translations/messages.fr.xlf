@@ -182,8 +182,8 @@
         <target state="translated">Créer un nouvel employé organisationnel</target>
       </trans-unit>
       <trans-unit id="qZFHrCt" resname="Online Anmeldung für Ferienbetreuung">
-        <source>Online Anmeldung für Ferienbetreuung</source>
-        <target state="translated">Inscription en ligne pour les soins de vacances</target>
+        <source>Online Antrag für Ferienbetreuung</source>
+        <target state="needs-translation">Online Antrag für Ferienbetreuung</target>
       </trans-unit>
       <trans-unit id="eeXPIN4" resname="Adresse">
         <source>Adresse</source>
@@ -242,8 +242,8 @@
         <target state="translated">Garde d'enfants à l'école  SKiB</target>
       </trans-unit>
       <trans-unit id="bedt2uH" resname="Online Anmeldung und Verwaltung">
-        <source>Online Anmeldung und Verwaltung</source>
-        <target state="translated">Enregistrement et administration</target>
+        <source>Online Antrag und Verwaltung</source>
+        <target state="needs-translation">Online Antrag und Verwaltung</target>
       </trans-unit>
       <trans-unit id="1Fj0jnL" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.">
         <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.</source>
@@ -676,8 +676,8 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <target state="translated">Adresse e-mail</target>
       </trans-unit>
       <trans-unit id="lRPQnJ2" resname="Weitere personenberechtigte Personen">
-        <source>Weitere personenberechtigte Personen</source>
-        <target state="needs-translation">Weitere personenberechtigte Personen</target>
+        <source>Weitere sorgeberechtigte Personen</source>
+        <target state="needs-translation">Weitere sorgeberechtigte Personen</target>
       </trans-unit>
       <trans-unit id="ZEGhE2w" resname="Kinder im KiGa">
         <source>Kinder im KiGa</source>
@@ -932,8 +932,8 @@ L'application web permet une mise en réseau directe entre les parents, les orga
         <target state="translated">Groupe de revenus</target>
       </trans-unit>
       <trans-unit id=".1m.g7w" resname="Anzahl weitere personenberechtigte Personen">
-        <source>Anzahl weitere personenberechtigte Personen</source>
-        <target state="needs-translation">Anzahl weitere personenberechtigte Personen</target>
+        <source>Anzahl weitere sorgeberechtigte Personen</source>
+        <target state="needs-translation">Anzahl weitere sorgeberechtigte Personen</target>
       </trans-unit>
       <trans-unit id="HiujKG." resname="Anzahl an Kindern in der Schulkindbetreuung">
         <source>Anzahl an Kindern in der Schulkindbetreuung</source>
@@ -1874,8 +1874,8 @@ Veuillez confirmer votre e-mail en entrant le code de vérification dans votre n
         <target state="needs-translation">Mitarbeiter anlegen</target>
       </trans-unit>
       <trans-unit id="EfmaxLu" resname="Online Anmeldung">
-        <source>Online Anmeldung</source>
-        <target state="translated">Inscription en ligne</target>
+        <source>Online Antrag</source>
+        <target state="needs-translation">Online Antrag</target>
       </trans-unit>
       <trans-unit id="JdUtfoZ" resname="Fertig">
         <source>Fertig</source>
@@ -2358,8 +2358,8 @@ Veuillez confirmer votre e-mail en entrant le code de vérification dans votre n
         <target state="translated">Lire la suite</target>
       </trans-unit>
       <trans-unit id="n.c95W2" resname="Online Anmeldung und Verwaltung für die Schulkindbetreuung">
-        <source>Online Anmeldung und Verwaltung für die Schulkindbetreuung</source>
-        <target state="translated">Inscription et administration en ligne pour la garde d'enfants à l'école</target>
+        <source>Online Antrag und Verwaltung für die Schulkindbetreuung</source>
+        <target state="needs-translation">Online Antrag und Verwaltung für die Schulkindbetreuung</target>
       </trans-unit>
       <trans-unit id="Dt7wRjx" resname="Die Schulkindbetreuung steht ihnen in folgenden Städten zur Verfügung">
         <source>Die Schulkindbetreuung steht ihnen in folgenden Städten zur Verfügung</source>
@@ -3000,12 +3000,12 @@ Responsabilité pour les liens
         <target state="translated">Merci notre unsere-Schulkindbetreuung Team</target>
       </trans-unit>
       <trans-unit id="U9e4VJt" resname="Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung">
-        <source>Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung</source>
-        <target state="translated">Inscription en ligne pour la garde d'enfants à l'école et la garde de vacances</target>
+        <source>Online Antrag zur Schulkindbetreuung und Ferienbetreuung</source>
+        <target state="needs-translation">Online Antrag zur Schulkindbetreuung und Ferienbetreuung</target>
       </trans-unit>
       <trans-unit id="lpqZrbk" resname="Online Anmeldung zur Schulkindbetreuung">
-        <source>Online Anmeldung zur Schulkindbetreuung</source>
-        <target state="translated">Inscription en ligne pour la garde d'enfants à l'école</target>
+        <source>Online Antrag zur Schulkindbetreuung</source>
+        <target state="needs-translation">Online Antrag zur Schulkindbetreuung</target>
       </trans-unit>
       <trans-unit id="AogfjhA" resname="Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an">
         <source>Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an</source>
@@ -3093,15 +3093,15 @@ Responsabilité pour les liens
       </trans-unit>
       <trans-unit id="c9G0RhG" resname="Zusätzliche Dokumente">
         <source>Zusätzliche Dokumente</source>
-        <target state="translated">Documents supplémentaires</target>
+        <target state="needs-translation">Zusätzliche Dokumente</target>
       </trans-unit>
       <trans-unit id="NvJQq9J" resname="Dokumente">
         <source>Dokumente</source>
-        <target state="translated">Documents</target>
+        <target state="needs-translation">Dokumente</target>
       </trans-unit>
       <trans-unit id="lSO_Agf" resname="Auszufüllende Dokumente">
         <source>Auszufüllende Dokumente</source>
-        <target state="translated">Documents à remplir</target>
+        <target state="needs-translation">Auszufüllende Dokumente</target>
       </trans-unit>
     </body>
   </file>
