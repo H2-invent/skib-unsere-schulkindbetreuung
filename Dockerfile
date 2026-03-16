@@ -66,6 +66,7 @@ RUN tar -zxvf artifact.tgz \
 ENV CRON_COMMAND_0="*/10 * * * * php /var/www/html/bin/console app:statistik:generate" \
     nginx_root_directory=/var/www/html/public \
     memory_limit=1024M \
+    client_max_body_size=20M \
     post_max_size=20M \
-    upload_max_filesize=10M \
+    upload_max_filesize=20M \
     date_timezone=Europe/Berlin

@@ -45,6 +45,8 @@
                                 <th>{% trans %}Kind{% endtrans %}</th>
                                 <th>{% trans %}Anzahl akzeptierter Blöcke{% endtrans %}</th>
                                 <th>{% trans %}Anzahl Wartelisten{% endtrans %}</th>
+                                <th>{% trans %}Anzahl hochgeladener Dokumente{% endtrans %}</th>
+                                <th>{% trans %}Kind Details{% endtrans %}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -54,6 +56,15 @@
                                     <td>{{ blockChild.0.kind.vorname ~ ' ' ~ blockChild.0.kind.nachname }}</td>
                                     <td>{{ blockChild.countAccepted }}</td>
                                     <td>{{ blockChild.countWarteschlange }}</td>
+                                    <td>{{ blockChild.countFile }}</td>
+                                    <td>
+                                        <a href="{{ path('child_detail',{'kind_id':blockChild.0.kind.id,'spezial_kind_id':blockChild.0.kind.id,'date':blockChild.0.kind.startDate|date('d.m.Y')}) }}"
+                                           target="_blank"
+                                           onclick="event.stopImmediatePropagation()"
+                                        >
+                                            {% trans %}Details ansehen{% endtrans %}
+                                        </a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
