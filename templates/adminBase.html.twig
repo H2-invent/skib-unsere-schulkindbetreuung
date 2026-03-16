@@ -69,18 +69,18 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_CITY_EDITOR') and app.user.stadt is not null %}
-                    <li><a href="{{ path('admin_stadt_edit',{'id':app.user.stadt.id}) }}"> <i class="material-icons">home</i>{% trans %}Stadt bearbeiten{% endtrans %}
+                    <li><a href="{{ path('admin_stadt_edit',{'id':app.user.stadt.id}) }}"{{ isActiveNav('admin_stadt_edit') ? ' class="active"' }}> <i class="material-icons">home</i>{% trans %}Stadt bearbeiten{% endtrans %}
                         </a></li>
                 {% endif %}
                 {% if is_granted('ROLE_CITY_ADMIN') %}
-                    <li><a href="{{ path('city_admin_organisation_show',{'id':app.user.stadt.id}) }}"> <i
+                    <li><a href="{{ path('org_admin_mitarbeiter_roles',{'id':app.user.stadt.id}) }}"{{ isActiveNav('city_admin_organisation_show') ? ' class="active"' }}> <i
                                     class="material-icons">home</i>{% trans %}Organisationen{% endtrans %}</a></li>
 
-                    <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
+                    <li><a href="#exampledropdownDropdown" aria-expanded="{{ isActiveNav('city_employee_show') ? 'true' : 'false' }}" data-toggle="collapse"> <i
                                     class="material-icons">people</i>{% trans %}Mitarbeiter{% endtrans %} </a>
-                        <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                        <ul id="exampledropdownDropdown" class="collapse list-unstyled {{ isActiveNav('city_employee_show') ? 'show'}}">
                             <li>
-                                <a href="{{ path('city_employee_show',{'id':app.user.stadt.id}) }}">{% trans %}Stadt{% endtrans %}</a>
+                                <a href="{{ path('city_employee_show',{'id':app.user.stadt.id}) }}"{{ isActiveNav('city_employee_show') ? ' class="active"' }}>{% trans %}Stadt{% endtrans %}</a>
                             </li>
                         </ul>
                     </li>
@@ -111,12 +111,12 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_CITY_ADMIN') %}
-                    <li><a href="{{ path('city_admin_schuljahr_anzeige',{'id':app.user.stadt.id}) }}"> <i
+                    <li><a href="{{ path('city_admin_schuljahr_anzeige',{'id':app.user.stadt.id}) }}"{{ isActiveNav('city_admin_schuljahr_anzeige') ? ' class="active"' }}> <i
                                     class="material-icons">today</i>{% trans %}Schuljahre{% endtrans %}</a></li>
                 {% endif %}
 
                 {% if is_granted('ROLE_CITY_SCHOOL') %}
-                    <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"> <i
+                    <li><a href="{{ path('city_admin_schule_show',{'id':app.user.stadt.id}) }}"{{ isActiveNav('city_admin_schule_show') ? ' class="active"' }}> <i
                                     class="material-icons">school</i>{% trans %}Schulen{% endtrans %}</a></li>
                 {% endif %}
 
@@ -124,7 +124,7 @@
 
                 {% endif %}
                 {% if is_granted('ROLE_ORG_KVJS') %}
-                    <li><a href="{{ path('app_kvjs_index')}}"> <i
+                    <li><a href="{{ path('app_kvjs_index')}}"{{ isActiveNav('app_kvjs_index') ? ' class="active"' }}> <i
                                     class="material-icons">school</i>{% trans %}KVJS/Anfrage Gafög{% endtrans %}</a></li>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_CHILD_SHOW') %}
@@ -155,7 +155,7 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_CITY_REPORT') %}
-                    <li><a href="{{ path('stadt_bericht_index',{'stadt_id':app.user.stadt.id}) }}"> <i
+                    <li><a href="{{ path('stadt_bericht_index',{'stadt_id':app.user.stadt.id}) }}"{{ isActiveNav('stadt_bericht_index') ? ' class="active"' }}> <i
                                     class="material-icons">note</i> {% trans %}Berichte{% endtrans %}</a></li>
                 {% endif %}
 
@@ -166,30 +166,30 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_ORG_FERIEN_EDITOR') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
-                    <li><a href="{{ path('ferien_management_show',{'org_id':app.user.organisation.id}) }}"> <i
+                    <li><a href="{{ path('ferien_management_show',{'org_id':app.user.organisation.id}) }}"{{ isActiveNav('ferien_management_show') ? ' class="active"' }}> <i
                                     class="material-icons">home</i> {% trans %}Programm{% endtrans %}</a>
                     </li>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_FERIEN_ORDERS') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
-                    <li><a href="{{ path('ferien_management_orders',{'org_id':app.user.organisation.id}) }}"> <i
+                    <li><a href="{{ path('ferien_management_orders',{'org_id':app.user.organisation.id}) }}"{{ isActiveNav('ferien_management_orders') ? ' class="active"' }}> <i
                                     class="material-icons">home</i> {% trans %}Anmeldungen{% endtrans %}</a>
                     </li>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_FERIEN_CHECKIN') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
                     <li>
-                        <a href="{{ path('ferien_management_report_checkinlist_tag',{'org_id':app.user.organisation.id}) }}">
+                        <a href="{{ path('ferien_management_report_checkinlist_tag',{'org_id':app.user.organisation.id}) }}"{{ isActiveNav('ferien_management_report_checkinlist_tag') ? ' class="active"' }}>
                             <i
                                     class="material-icons">home</i> {% trans %}Checkin{% endtrans %}</a>
                     </li>
                 {% endif %}
                 {% if is_granted('ROLE_ORG_FERIEN_ADMIN') and app.user.organisation.ferienprogramm and app.user.organisation.stadt.ferienprogramm %}
                     <li>
-                        <a href="{{ path('ferien_admin_edit',{'org_id':app.user.organisation.id}) }}">
+                        <a href="{{ path('ferien_admin_edit',{'org_id':app.user.organisation.id}) }}"{{ isActiveNav('ferien_admin_edit') ? ' class="active"' }}>
                             <i
                                     class="material-icons">build</i> {% trans %}Ferien Einstellungen{% endtrans %}</a>
                     </li>
                     <li>
-                        <a href="{{ path('org_ferien_admin_payment_art',{'org_id':app.user.organisation.id}) }}">
+                        <a href="{{ path('org_ferien_admin_payment_art',{'org_id':app.user.organisation.id}) }}"{{ isActiveNav('org_ferien_admin_payment_art') ? ' class="active"' }}>
                             <i
                                     class="material-icons">payment</i> {% trans %}Zahlungsarten{% endtrans %}</a>
                     </li>
@@ -211,7 +211,7 @@
 
 
                 <h5 class="sidenav-heading">{% trans %}Einstellungen{% endtrans %}</h5>
-                <li><a href="{{ path('connect_keycloak_password') }}"> <i
+                <li><a href="{{ path('connect_keycloak_password') }}"{{ isActiveNav('connect_keycloak_password') ? ' class="active"' }}> <i
                                 class="material-icons">lock</i>{% trans %}Passwort ändern{% endtrans %}</a>
                 </li>
                 {% if is_granted('ROLE_ORG_CHECKIN_SHOW') %}
