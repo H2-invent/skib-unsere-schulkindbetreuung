@@ -15,10 +15,10 @@ class AppExtension extends AbstractExtension
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('dateChecker', array($this, 'getClassName')),
-            new TwigFunction('isActiveNav', array($this, 'isActiveNav')),
-        );
+        return [
+            new TwigFunction('dateChecker', [$this, 'getClassName']),
+            new TwigFunction('isActiveNav', [$this, 'isActiveNav']),
+        ];
     }
 
     public function getClassName($object)
@@ -27,63 +27,49 @@ class AppExtension extends AbstractExtension
             return false;
         }
         try {
-            $date= new \DateTime($object);
-            return $date;
+            return new \DateTime($object);
         }catch (\Exception $e){
             return false;
         }
-
     }
 
     public function isActiveNav(string $route): bool
     {
         $current = $this->requestStack->getCurrentRequest()->get('_route');
 
-        if ($this->isSpecialRoute($route, $current)) {
+        // Exact match
+        if ($route === $current) {
             return true;
         }
 
-        $partsRoute = explode('_', $route);
-        $partsCurrent = explode('_', $current);
-
-        if (isset($partsRoute[1]) && isset($partsCurrent[1])) {
-            $prefixRoute = $partsRoute[0] . '_' . $partsRoute[1];
-            $prefixCurrent = $this->fixCurrentRoutePart($partsCurrent[0]) . '_' . $this->fixCurrentRoutePart($partsCurrent[1]);
-        } else {
-            $prefixRoute = $partsRoute[0];
-            $prefixCurrent = $partsCurrent[0];
-        }
-
-        return $prefixRoute == $prefixCurrent;
+        return $this->isRelatedRoute($route, $current);
     }
 
-    private function isSpecialRoute(string $routeNav, string $routeCurrent): bool
+    private function isRelatedRoute(string $navRoute, string $currentRoute): bool
     {
-        if ($routeCurrent === 'kontingent_show_kids' && $routeNav === 'block_schulen_schow') {
-            return true;
-        }
+        // Define route groups: nav route => array of related routes that should highlight it
+        $routeGroups = [
+            'accounting_overview' => ['accounting_sepa_detail'],
+            'accounting_showdata' => ['edit_stammdaten_edit'],
+            'admin_stadt' => ['admin_stadt_detail', 'admin_stadt_edit_admin'],
+            'block_schulen_schow' => ['kontingent_show_kids'],
+            'child_show' => ['child_detail', 'child_edit', 'child_show_child'],
+            'city_admin_news_anzeige' => ['city_admin_news_neu', 'city_admin_news_edit'],
+            'city_admin_organisation_detail' => ['city_admin_organisation_edit'],
+            'city_admin_schule_show' => ['city_admin_schule_new', 'city_admin_schule_edit', 'city_admin_schule_detail'],
+            'city_admin_schuljahr_anzeige' => ['city_admin_schuljahr_neu', 'city_admin_schuljahr_edit'],
+            'city_employee_org_show' => ['city_employee_org_new', 'city_employee_org_edit', 'org_admin_mitarbeiter_roles'],
+            'city_employee_show' => ['city_employee_new', 'city_employee_edit', 'city_admin_mitarbeiter_roles'],
+            'ferien_management_orders' => ['ferien_management_order_detail'],
+            'ferien_management_show' => ['ferien_management_new', 'ferien_management_edit', 'ferien_management_detail'],
+            'org_child_auto_assign' => ['org_child_auto_assign_edit'],
+            'org_news_anzeige' => ['org_news_neu', 'org_news_edit'],
+        ];
 
-        if ($routeCurrent === 'edit_stammdaten_edit' && $routeNav === 'accounting_showdata') {
-            return true;
-        }
-
-        if ($routeCurrent === 'accounting_sepa_detail' && $routeNav === 'accounting_overview') {
-            return true;
+        if (isset($routeGroups[$navRoute])) {
+            return in_array($currentRoute, $routeGroups[$navRoute], true);
         }
 
         return false;
-    }
-
-    private function fixCurrentRoutePart(string $part): string
-    {
-        if ('organisation' === $part) {
-            return 'city';
-        }
-
-        if ('schule' === $part) {
-            return 'schulen';
-        }
-
-        return $part;
     }
 }
