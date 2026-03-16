@@ -3229,6 +3229,26 @@
         <source>Anzahl Unzugeteilter Blöcke</source>
         <target state="needs-translation">Anzahl Unzugeteilter Blöcke</target>
       </trans-unit>
+      <trans-unit id="l37ksI1" resname="Stadt Admin ernennen">
+        <source>Stadt Admin ernennen</source>
+        <target state="needs-translation">Stadt Admin ernennen</target>
+      </trans-unit>
+      <trans-unit id="sIsNyD0" resname="Organisations Admin ernennen">
+        <source>Organisations Admin ernennen</source>
+        <target state="needs-translation">Organisations Admin ernennen</target>
+      </trans-unit>
+      <trans-unit id="THpCAmG" resname="Stadt Admin">
+        <source>Stadt Admin</source>
+        <target state="needs-translation">Stadt Admin</target>
+      </trans-unit>
+      <trans-unit id="_UhQbPG" resname="Organisation Admin">
+        <source>Organisation Admin</source>
+        <target state="needs-translation">Organisation Admin</target>
+      </trans-unit>
+      <trans-unit id="zVX3M_I" resname="Super Admin">
+        <source>Super Admin</source>
+        <target state="needs-translation">Super Admin</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
