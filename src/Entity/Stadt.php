@@ -327,6 +327,14 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(options: ['default' => false])]
     private ?bool $settingsDokumentUploadEnable = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $allowCreateInvoiceInFuture = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $skip_setting_show_chronicalDeseas = null;
+
+
+
 
 
 
@@ -1551,6 +1559,18 @@ class Stadt implements TranslatableInterface
         return $this;
     }
 
+    public function isAllowCreateInvoiceInFuture(): ?bool
+    {
+        return $this->allowCreateInvoiceInFuture;
+    }
+
+    public function setAllowCreateInvoiceInFuture(?bool $allowCreateInvoiceInFuture): self
+    {
+        $this->allowCreateInvoiceInFuture = $allowCreateInvoiceInFuture;
+
+        return $this;
+    }
+
     public function isSettingsDokumentUploadEnable(): ?bool
     {
         return $this->settingsDokumentUploadEnable;
@@ -1562,4 +1582,17 @@ class Stadt implements TranslatableInterface
 
         return $this;
     }
+
+    public function isSkipSettingShowChronicalDeseas(): ?bool
+    {
+        return $this->skip_setting_show_chronicalDeseas;
+    }
+
+    public function setSkipSettingShowChronicalDeseas(?bool $skip_setting_show_chronicalDeseas): self
+    {
+        $this->skip_setting_show_chronicalDeseas = $skip_setting_show_chronicalDeseas;
+
+        return $this;
+    }
+
 }

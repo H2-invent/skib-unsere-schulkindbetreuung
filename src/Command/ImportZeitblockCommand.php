@@ -98,7 +98,7 @@ class ImportZeitblockCommand extends Command
             $zeitblock->setSchule($schule);
             $zeitblock->setActive($schuljahr);
             if ($anmerkung){
-//                dump($anmerkung);
+
                 $translation = new ZeitblockTranslation();
                 $translation->setExtraText(mb_convert_encoding($anmerkung, 'UTF-8', 'ISO-8859-1'));
                 $translation->setLocale('de');

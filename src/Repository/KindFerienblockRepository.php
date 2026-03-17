@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Ferienblock;
 use App\Entity\KindFerienblock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -34,7 +35,23 @@ class KindFerienblockRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    /**
+    * @return KindFerienblock[] Returns an array of KindFerienblock objects
     */
+    public function findOrdersByBlock(Ferienblock $ferienblock)
+    {
+        return $this->createQueryBuilder('k')
+            ->andWhere('k.ferienblock = :ferienblock')
+            ->setParameter('ferienblock', $ferienblock)
+            ->join('k.kind','kind')
+            ->andWhere('kind.fin = true')
+            ->orderBy('k.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
     /*
     public function findOneBySomeField($value): ?KindFerienblock

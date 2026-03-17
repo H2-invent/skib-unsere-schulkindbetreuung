@@ -38,6 +38,7 @@
             <h3 class="cover-heading">{% trans %}Daten der Kinder{% endtrans %}</h3>
         </div>
         <div class="text-left card-body" id="accordion">
+            {% set kosten_gesamt_alleKinder = 0 %}
             {% for k in kind %}
                 <div class="card mb-2">
                     <div class="card-header" id="heading{{ loop.index }}">
@@ -79,6 +80,7 @@
 
                                 <table class="table">
                                     <tbody>
+                                    {% set kosten_gesamt = 0 %}
                                     {% for f in k.kindFerienblocks %}
                                 <tr>
                                     <td>
@@ -86,6 +88,7 @@
                                         {{ f.ferienblock.startDate|date('d.M.Y') }}
                                         - {{ f.ferienblock.endDate|date('d.M.Y') }}<br/>
                                         {% trans %}Preis{% endtrans %}: {{ f.preis|number_format(2,',','.') }} €
+
                                         <br/>
                                         {% trans %}Betreuende Organisation{% endtrans %}: {{ f.ferienblock.organisation.name }}
                                         <br/>
@@ -99,6 +102,8 @@
                                                 {% trans %} Als Storniert vorgemerkt{% endtrans %}
                                             {% else %}
                                                 {% if f.state == 10 %}
+                                                    {% set kosten_gesamt = kosten_gesamt+f.preis %}
+                                                    {% set kosten_gesamt_alleKinder = kosten_gesamt_alleKinder+f.preis %}
                                                     {% trans %} Stornieren{% endtrans %}
                                                 {% elseif f.state == 20 %}
                                                     {% trans %}Bereits Storniert{% endtrans %}
@@ -114,7 +119,7 @@
                                 <tr>
                                     <td>
                                         <h5>
-                                            {% trans %} Summe {% endtrans %}
+                                            {% trans %} Summe: {% endtrans %} {{ kosten_gesamt|number_format(2,',','.') }} €
                                         </h5>
                                     </td>
                                     <td>
@@ -134,12 +139,14 @@
     <table class="table">
         <tr>
             <td>
-                <h5>{% trans %} Summe für alle Kinder {% endtrans %}</h5>
+                <h5>{% trans %} Summe für alle Kinder {% endtrans %}: {{ kosten_gesamt_alleKinder|number_format(2,',','.') }} €</h5>
             </td>
         </tr>
     </table>
-    <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect" name="Datenschutz"
-           value="Datenschutzhinweis"> {% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}
+    <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect form-check-input" name="Datenschutz" value="Datenschutzhinweis">
+
+
+    <label class="form-check-label" for="checkboxDatenschutz">{% trans %}Ich habe alle Datenschutzhinweise der Organisationen gelesen und akzeptiere die Verarbeitung{% endtrans %}</label>
     <br>
     <button class="btn btn-outline-primary sendButton" disabled>{% trans %}Änderung absenden{% endtrans %}</button>
 
