@@ -47,28 +47,30 @@ class ExportZeitblockCommand extends Command
 
         $preise_length = sizeof($zeitbloecke[0]->getPreise());
 
-        $header = ['id', 'schule', 'schul_id', 'schuljahr', 'von', 'bis', 'zeit', 'faktor', 'wochentag', 'ganztag'];
+        $header = ['id', 'schule', 'schul_id', 'schuljahr', 'min', 'max', 'von', 'bis', 'zeit', 'faktor', 'wochentag', 'ganztag'];
         for ($i = 1; $i <= $preise_length; $i++) {
             $header[] = "preis $i";
         }
 
         $csv = Writer::createFromPath($csvFile, 'w+');
-$csv->setDelimiter(';');
+        $csv->setDelimiter(';');
         $csv->insertOne($header);
 
         foreach ($zeitbloecke as $zeitblock) {
             $preise = implode(';', $zeitblock->getPreise());
             $data = [
-                    $zeitblock->getId(),
-                    $zeitblock->getSchule()->getName(),
-                    $zeitblock->getSchule()->getId(),
-                    $zeitblock->getActive()->getId(),
-                    $zeitblock->getVon()->format('H:i:s'),
-                    $zeitblock->getBis()->format('H:i:s'),
-                    $zeitblock->getBis()->diff($zeitblock->getVon())->format('%H:%i:%s'),
-                    '',
-                    $zeitblock->getWochentag(),
-                    $zeitblock->getGanztag()
+                $zeitblock->getId(),
+                $zeitblock->getSchule()->getName(),
+                $zeitblock->getSchule()->getId(),
+                $zeitblock->getActive()->getId(),
+                $zeitblock->getMin(),
+                $zeitblock->getMax(),
+                $zeitblock->getVon()->format('H:i:s'),
+                $zeitblock->getBis()->format('H:i:s'),
+                $zeitblock->getBis()->diff($zeitblock->getVon())->format('%H:%i:%s'),
+                '',
+                $zeitblock->getWochentag(),
+                $zeitblock->getGanztag()
             ];
             foreach ($zeitblock->getPreise() as $preis) {
                 $data[] = $preis;

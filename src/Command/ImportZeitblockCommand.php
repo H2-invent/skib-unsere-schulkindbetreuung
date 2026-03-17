@@ -63,6 +63,8 @@ class ImportZeitblockCommand extends Command
             $ganztag = $record['ganztag'] ?? null;
             $von = $record['von'] ?? null;
             $bis = $record['bis'] ?? null;
+            $max=$record['max']??null;
+            $min=$record['min']??$max!==null?0:null;
             $schulId = $record['schul_id'] ?? null;
             $schule = $this->entityManager->getRepository(Schule::class)->find($schulId);
             if (!$schule){
@@ -83,8 +85,8 @@ class ImportZeitblockCommand extends Command
             } else {
                 $zeitblock = new Zeitblock();
                 $zeitblock->setDeleted(false)
-                    ->setMin(0)
-                    ->setMax(0)
+                    ->setMin($min)
+                    ->setMax($max)
                     ->setDeaktiviert(false)
                     ->setHidePrice(false);
                 $newIds[] = $zeitblock;
