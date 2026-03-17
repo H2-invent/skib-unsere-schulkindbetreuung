@@ -417,103 +417,88 @@
                                                 </div>
                                             </div>
 
-                                                <div class="tab-pane fade" id="auto-assign" role="tabpanel" aria-labelledby="tab-auto-assign">
-                                                    <div class="section-head">
-                                                        <h2>Automatische Blockzuteilung</h2>
+                                            <div class="tab-pane fade" id="auto-assign" role="tabpanel" aria-labelledby="tab-auto-assign">
+                                                <div class="section-head">
+                                                    <h2>Automatische Blockzuteilung</h2>
+                                                    <p>Definiere die Gewichtungsformel für die automatische Zuweisung von Betreuungsblöcken.</p>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Gewichtungsformel</div>
+                                                    <div class="row g-4">
+                                                        <div class="col-lg-9">
+                                                            {{ form_row(form.autoAssign_formula) }}
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="mb-3">
+                                                                <label for="auto_assign_formula-result" class="form-label">Gewicht für Beispiel:</label>
+                                                                <input type="text" id="auto_assign_formula-result" class="form-control" disabled>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="config-card">
-                                                        <div class="card-title"></div>
-                                                        <div class="row g-3">
-                                                            <div class="col-lg-5">
-                                                                <div class="row">
-                                                                    {{ form_row(form.autoAssign_formula) }}
-                                                                </div>
-                                                                <div class="row">
+                                                    <div class="alert alert-info mt-3 mb-0">
+                                                        <strong>Hinweis:</strong> Alle Eigenschaften müssen per Getter geholt werden!<br>
+                                                        <code><del>kind.allergie</del></code> &rarr; <code>kind.getAllergie()</code>
+                                                    </div>
+                                                </div>
 
-                                                                    <div class="row">
-                                                                        <div class="col-lg-6">
-                                                                            <label for="auto_assign_formula-result">Gewicht für Beispiel:</label>
-                                                                        </div>
-                                                                        <div class="col-lg-6">
-                                                                            <input type="text" id="auto_assign_formula-result" disabled>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12">
-                                                                            Alle Eigenschaften müssen per getter geholt werden!
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12">
-                                                                            <del>kind.allergie</del> &rarr; kind.getAllergie()
-                                                                        </div>
-                                                                    </div>
+                                                <div class="config-card">
+                                                    <div class="card-title">Verfügbare Variablen</div>
+                                                    <p class="text-muted mb-3">Klicke auf eine Variable, um die verfügbaren Eigenschaften anzuzeigen.</p>
+                                                    <div id="accordion">
+                                                        <div class="card mb-2">
+                                                            <div class="card-header" id="card-head-kind" data-toggle="collapse" data-target="#collapse-kind" aria-expanded="true" aria-controls="collapse-kind">
+                                                                <h5 class="mb-0">
+                                                                    <span class="btn btn-link">
+                                                                        <i class="fa fa-child me-2"></i> kind
+                                                                    </span>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse-kind" class="collapse show" aria-labelledby="card-head-kind" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <pre class="bg-light p-3 rounded mb-0" style="max-height: 300px; overflow-y: auto;">{{ kind | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-7">
-                                                                <div class="row">
-                                                                    <div class="col-9">
-                                                                        <div id="accordion">
-                                                                            <div class="card">
-                                                                                <div class="card-header" id="card-head-kind">
-                                                                                    <h5 class="mb-0">
-                                                                                        <a class="btn btn-link" data-toggle="collapse" href="#collapse-kind" aria-expanded="true" aria-controls="collapse-kind">
-                                                                                            kind
-                                                                                        </a>
-                                                                                    </h5>
-                                                                                </div>
-
-                                                                                <div id="collapse-kind" class="collapse show" aria-labelledby="card-head-kind" data-parent="#accordion">
-                                                                                    <div class="card-body">
-                                                                                        <pre>{{ kind | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="card">
-                                                                                <div class="card-header" id="card-head-eltern">
-                                                                                    <h5 class="mb-0">
-                                                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-eltern" aria-expanded="false" aria-controls="collapse-eltern">
-                                                                                            eltern
-                                                                                        </a>
-                                                                                    </h5>
-                                                                                </div>
-                                                                                <div id="collapse-eltern" class="collapse" aria-labelledby="card-head-eltern" data-parent="#accordion">
-                                                                                    <div class="card-body">
-                                                                                        <pre>{{ eltern | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="card">
-                                                                                <div class="card-header" id="card-head-schule">
-                                                                                    <h5 class="mb-0">
-                                                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-schule" aria-expanded="false" aria-controls="collapse-schule">
-                                                                                            schule
-                                                                                        </a>
-                                                                                    </h5>
-                                                                                </div>
-                                                                                <div id="collapse-schule" class="collapse" aria-labelledby="card-head-schule" data-parent="#accordion">
-                                                                                    <div class="card-body">
-                                                                                        <pre>{{ schule | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="card">
-                                                                                <div class="card-header" id="card-head-orga">
-                                                                                    <h5 class="mb-0">
-                                                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-orga" aria-expanded="false" aria-controls="collapse-orga">
-                                                                                            organisation
-                                                                                        </a>
-                                                                                    </h5>
-                                                                                </div>
-                                                                                <div id="collapse-orga" class="collapse" aria-labelledby="card-head-orga" data-parent="#accordion">
-                                                                                    <div class="card-body">
-                                                                                        <pre>{{ organisation | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                        </div>
+                                                        <div class="card mb-2">
+                                                            <div class="card-header" id="card-head-eltern" data-toggle="collapse" data-target="#collapse-eltern" aria-expanded="false" aria-controls="collapse-eltern">
+                                                                <h5 class="mb-0">
+                                                                    <span class="btn btn-link collapsed">
+                                                                        <i class="fa fa-users me-2"></i> eltern
+                                                                    </span>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse-eltern" class="collapse" aria-labelledby="card-head-eltern" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <pre class="bg-light p-3 rounded mb-0" style="max-height: 300px; overflow-y: auto;">{{ eltern | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card mb-2">
+                                                            <div class="card-header" id="card-head-schule" data-toggle="collapse" data-target="#collapse-schule" aria-expanded="false" aria-controls="collapse-schule">
+                                                                <h5 class="mb-0">
+                                                                    <span class="btn btn-link collapsed">
+                                                                        <i class="fa fa-graduation-cap me-2"></i> schule
+                                                                    </span>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse-schule" class="collapse" aria-labelledby="card-head-schule" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <pre class="bg-light p-3 rounded mb-0" style="max-height: 300px; overflow-y: auto;">{{ schule | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card mb-2">
+                                                            <div class="card-header" id="card-head-orga" data-toggle="collapse" data-target="#collapse-orga" aria-expanded="false" aria-controls="collapse-orga">
+                                                                <h5 class="mb-0">
+                                                                    <span class="btn btn-link collapsed">
+                                                                        <i class="fa fa-building me-2"></i> organisation
+                                                                    </span>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse-orga" class="collapse" aria-labelledby="card-head-orga" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <pre class="bg-light p-3 rounded mb-0" style="max-height: 300px; overflow-y: auto;">{{ organisation | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
                                                                 </div>
                                                             </div>
                                                         </div>

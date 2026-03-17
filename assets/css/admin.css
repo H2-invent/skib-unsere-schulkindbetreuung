@@ -441,6 +441,23 @@ nav.navbar a.menu-btn:hover {
 .city-config-page .btn-primary { border-radius: 14px; font-weight: 600; min-height: 46px; }
 .city-config-page .btn-outline-primary { border-radius: 12px; font-weight: 600; }
 
+.config-nav .nav-link.active { color: #1f2937; }
+.config-nav .nav-link.active span { color: #1f2937; }
+.config-nav .nav-link.active small { color: #6b7280; }
+
+.city-config-page #accordion .card { border: 1px solid #e7edf5; border-radius: 14px; overflow: hidden; }
+.city-config-page #accordion .card-header { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-bottom: 1px solid #e7edf5; padding: 0; cursor: pointer; transition: background .2s ease; }
+.city-config-page #accordion .card-header:hover { background: linear-gradient(135deg, #eef4fb 0%, #e8f0f8 100%); }
+.city-config-page #accordion .card-header h5 { margin: 0; }
+.city-config-page #accordion .card-header .btn-link { display: flex; align-items: center; width: 100%; padding: 1rem 1.25rem; text-decoration: none; color: #1f2937; font-weight: 600; font-size: 1rem; text-align: left; pointer-events: none; }
+.city-config-page #accordion .card-header .btn-link i { color: #4b7bab; margin-right: .5rem; }
+.city-config-page #accordion .card-header::after { content: '\f107'; font-family: 'FontAwesome'; position: absolute; right: 1.25rem; top: 50%; transform: translateY(-50%); transition: transform .2s ease; color: #6b7280; }
+.city-config-page #accordion .card-header[aria-expanded="false"]::after { transform: translateY(-50%) rotate(-90deg); }
+.city-config-page #accordion .card-header[aria-expanded="true"]::after { transform: translateY(-50%) rotate(0); }
+.city-config-page #accordion .card-header { position: relative; }
+.city-config-page #accordion .card-body { padding: 1.25rem; background: #fff; }
+.city-config-page #accordion .card-header[aria-expanded="true"] { background: linear-gradient(135deg, #e8f4ff 0%, #dbeafe 100%); border-bottom-color: #bfdbfe; }
+
 @media (max-width: 1199.98px) {
     .config-sidebar { position: static !important; }
     .config-sidebar-wrap { border-right: 0 !important; border-bottom: 1px solid #e7edf5; }
