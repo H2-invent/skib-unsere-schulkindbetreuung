@@ -18,6 +18,8 @@
                                 <th></th>
                                 <th>{% trans %}Name{% endtrans %}</th>
                                 <th>{% trans %}Anzahl Anmeldungen{% endtrans %}</th>
+                                <th>{% trans %}PLZ{% endtrans %}</th>
+                                <th>{% trans %}Stadt{% endtrans %}</th>
                                 <th>{% trans %}Summe{% endtrans %}</th>
                                 <th>{% trans %}Bezahlart{% endtrans %}</th>
                             </tr>
@@ -44,6 +46,12 @@
                                     <td>{{ s.vorname }} {{ s.name }}</td>
                                     <td>
                                         {{ s.kinds|length }} {% trans %}Ferienanmeldungen{% endtrans %}
+                                    </td>
+                                    <td>
+                                        {{ s.plz }}
+                                    </td>
+                                    <td>
+                                        {{ s.stadt }}
                                     </td>
                                     <td>
                                         {% if s.paymentFerienforOrg(org) is null %}

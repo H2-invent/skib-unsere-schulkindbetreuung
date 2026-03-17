@@ -45,10 +45,12 @@
                                                 {% if is_granted ('ROLE_ORG_FERIEN_EDITOR') %}
                                                     <a class="dropdown-item"
                                                        href="{{ path('ferien_management_edit',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('admin_sepa_export_kurs_csv',{'kurs_id':b.id}) }}">{% trans %}SEPA Download{% endtrans %}</a>
                                                 {% endif %}
                                                 {% if is_granted ('ROLE_ORG_FERIEN_CHECKIN') %}
                                                     <a class="dropdown-item"
-                                                       href="{{ path('ferien_management_report_checkinlist',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Anwesenheitsliste{% endtrans %}</a>
+                                                       href="{{ path('ferien_management_report_checkinlist',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Kinderliste{% endtrans %}</a>
                                                     <a class="dropdown-item"
                                                        href="{{ path('ferien_report_nametag',{'ferien_id':b.id,'org_id':b.organisation.id}) }}">{% trans %}Namensschilder{% endtrans %}</a>
                                                 {% endif %}

@@ -182,8 +182,8 @@
         <target state="needs-translation">Neuen Organisationsmitarbeiter anlegen</target>
       </trans-unit>
       <trans-unit id="qZFHrCt" resname="Online Anmeldung für Ferienbetreuung">
-        <source>Online Anmeldung für Ferienbetreuung</source>
-        <target state="needs-translation">Online Anmeldung für Ferienbetreuung</target>
+        <source>Online Antrag für Ferienbetreuung</source>
+        <target state="needs-translation">Online Antrag für Ferienbetreuung</target>
       </trans-unit>
       <trans-unit id="eeXPIN4" resname="Adresse">
         <source>Adresse</source>
@@ -242,8 +242,8 @@
         <target state="needs-translation">Schulkindbetreuung SKiB</target>
       </trans-unit>
       <trans-unit id="bedt2uH" resname="Online Anmeldung und Verwaltung">
-        <source>Online Anmeldung und Verwaltung</source>
-        <target state="needs-translation">Online Anmeldung und Verwaltung</target>
+        <source>Online Antrag und Verwaltung</source>
+        <target state="needs-translation">Online Antrag und Verwaltung</target>
       </trans-unit>
       <trans-unit id="1Fj0jnL" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.">
         <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.</source>
@@ -674,8 +674,8 @@
         <target state="needs-translation">E-Mail Adresse</target>
       </trans-unit>
       <trans-unit id="lRPQnJ2" resname="Weitere personenberechtigte Personen">
-        <source>Weitere personenberechtigte Personen</source>
-        <target state="needs-translation">Weitere personenberechtigte Personen</target>
+        <source>Weitere sorgeberechtigte Personen</source>
+        <target state="needs-translation">Weitere sorgeberechtigte Personen</target>
       </trans-unit>
       <trans-unit id="ZEGhE2w" resname="Kinder im KiGa">
         <source>Kinder im KiGa</source>
@@ -930,8 +930,8 @@
         <target state="needs-translation">Einkommensgruppe</target>
       </trans-unit>
       <trans-unit id=".1m.g7w" resname="Anzahl weitere personenberechtigte Personen">
-        <source>Anzahl weitere personenberechtigte Personen</source>
-        <target state="needs-translation">Anzahl weitere personenberechtigte Personen</target>
+        <source>Anzahl weitere sorgeberechtigte Personen</source>
+        <target state="needs-translation">Anzahl weitere sorgeberechtigte Personen</target>
       </trans-unit>
       <trans-unit id="HiujKG." resname="Anzahl an Kindern in der Schulkindbetreuung">
         <source>Anzahl an Kindern in der Schulkindbetreuung</source>
@@ -1872,8 +1872,8 @@
         <target state="needs-translation">Mitarbeiter anlegen</target>
       </trans-unit>
       <trans-unit id="EfmaxLu" resname="Online Anmeldung">
-        <source>Online Anmeldung</source>
-        <target state="needs-translation">Online Anmeldung</target>
+        <source>Online Antrag</source>
+        <target state="needs-translation">Online Antrag</target>
       </trans-unit>
       <trans-unit id="JdUtfoZ" resname="Fertig">
         <source>Fertig</source>
@@ -2356,8 +2356,8 @@
         <target state="needs-translation">Mehr lesen</target>
       </trans-unit>
       <trans-unit id="n.c95W2" resname="Online Anmeldung und Verwaltung für die Schulkindbetreuung">
-        <source>Online Anmeldung und Verwaltung für die Schulkindbetreuung</source>
-        <target state="needs-translation">Online Anmeldung und Verwaltung für die Schulkindbetreuung</target>
+        <source>Online Antrag und Verwaltung für die Schulkindbetreuung</source>
+        <target state="needs-translation">Online Antrag und Verwaltung für die Schulkindbetreuung</target>
       </trans-unit>
       <trans-unit id="Dt7wRjx" resname="Die Schulkindbetreuung steht ihnen in folgenden Städten zur Verfügung">
         <source>Die Schulkindbetreuung steht ihnen in folgenden Städten zur Verfügung</source>
@@ -3010,12 +3010,12 @@
         <target state="needs-translation">Vielen Dank Ihr unsere-Schulkindbetreuung Team</target>
       </trans-unit>
       <trans-unit id="U9e4VJt" resname="Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung">
-        <source>Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung</source>
-        <target state="needs-translation">Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung</target>
+        <source>Online Antrag zur Schulkindbetreuung und Ferienbetreuung</source>
+        <target state="needs-translation">Online Antrag zur Schulkindbetreuung und Ferienbetreuung</target>
       </trans-unit>
       <trans-unit id="lpqZrbk" resname="Online Anmeldung zur Schulkindbetreuung">
-        <source>Online Anmeldung zur Schulkindbetreuung</source>
-        <target state="needs-translation">Online Anmeldung zur Schulkindbetreuung</target>
+        <source>Online Antrag zur Schulkindbetreuung</source>
+        <target state="needs-translation">Online Antrag zur Schulkindbetreuung</target>
       </trans-unit>
       <trans-unit id="AogfjhA" resname="Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an">
         <source>Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an</source>

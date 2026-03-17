@@ -2,583 +2,600 @@
 {% import "form/macros.html.twig" as a2lixTranslations %}
 
 {% block content %}
-    <section class="dashboard-counts section-padding">
-        <div class="container-fluid ">
-            <div class="row">
-                <!-- Count item widget-->
-                <div class=" col-12 card">
-                    <div class="card-header">
-                        <h1>{{ title }}</h1>
-                    </div>
-                    <div class="card-body">
-                        <ul>
-                            {% for error in errors %}
-                                <li>{{ error.message }}</li>
-                            {% endfor %}
-                        </ul>
-                        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-                        {{ form_row(form.submit) }}
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#allgemein" role="tab"
-                                   aria-controls="home" aria-selected="true">Allgemein</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#bilder" role="tab"
-                                   aria-controls="profile" aria-selected="false">Aussehen</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="home-tab" data-toggle="tab" href="#module" role="tab"
-                                   aria-controls="home" aria-selected="true">Module</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#texte" role="tab"
-                                   aria-controls="profile" aria-selected="false">Texte</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#rechtliches" role="tab"
-                                   aria-controls="profile" aria-selected="false">Rechtliches</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#schulkindbetreuung"
-                                   role="tab" aria-controls="contact" aria-selected="false">Schulkindbetreuung</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#ferienbetreeuung"
-                                   role="tab" aria-controls="contact" aria-selected="false">Ferienbetreuung</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="email-tab" data-toggle="tab" href="#emails"
-                                   role="tab" aria-controls="contact" aria-selected="false">Emails</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="auto-assign-tab" data-toggle="tab" href="#auto-assign"
-                                   role="tab" aria-controls="contact" aria-selected="false">Automatische Blockzuweisung</a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content" id="myTabContent">
-
-                            <div class="tab-pane fade show active" id="allgemein" role="tabpanel"
-                                 aria-labelledby="home-tab"><h2>Allgemein</h2>
-                                {% if form.slug is defined %}
-                                    {{ form_row(form.slug) }}
-                                {% endif %}
-
-                                {{ form_row(form.name) }}
-                                {{ form_row(form.email) }}
-                                {{ form_row(form.adresse) }}
-                                {{ form_row(form.adresszusatz) }}
-                                {{ form_row(form.plz) }}
-                                {{ form_row(form.ort) }}
-                                {{ form_row(form.telefon) }}
-                                {{ form_row(form.ansprechpartner) }}
-                                {{ form_row(form.stadtHomepage) }}
-                                {{ a2lixTranslations.partialTranslations(form.translations, ['coverText']) }}
-                                {{ form_row(form.emailDokumente_rechnung) }}
-                                {{ form_row(form.emailDokumente_confirm) }}
-                            </div>
-                            <div class="tab-pane fade" id="module" role="tabpanel" aria-labelledby="profile-tab"><h2>
-                                    Module</h2>
-                                {% if form.active is defined %}
-                                    {{ form_row(form.active) }}
-                                {% endif %}
-                                {% if form.onlineCheckinEnable %}
-                                    {{ form_row(form.onlineCheckinEnable) }}
-                                {% endif %}
-                                {% if form.schulkindBetreung is defined %}
-                                    {{ form_row(form.schulkindBetreung) }}
-                                {% endif %}
-                                {% if form.ferienprogramm is defined %}
-                                    {{ form_row(form.ferienprogramm) }}
-                                {% endif %}
-                                {% if form.settingEncryptEmailAttachment is defined %}
-                                    {{ form_row(form.settingEncryptEmailAttachment) }}
-                                {% endif %}
-                            </div>
-
-                            <div class="tab-pane fade" id="texte" role="tabpanel" aria-labelledby="profile-tab"><h2>
-                                    Texte</h2>
-
-                                {{ a2lixTranslations.partialTranslations(form.translations, ['infoText']) }}
-
-
-                            </div>
-                            <div class="tab-pane fade" id="rechtliches" role="tabpanel" aria-labelledby="profile-tab">
-                                <h2>Rechliches</h2>
-                                {{ form_row(form.imprint) }}
-
-                                {{ a2lixTranslations.partialTranslations(form.translations, ['datenschutz']) }}
-
-
-                            </div>
-                            <div class="tab-pane fade" id="bilder" role="tabpanel" aria-labelledby="profile-tab"><h2>
-                                    Aussehen</h2>
-                                {{ form_row(form.showShowMoreToggleOnHomescreen) }}
-                                {{ form_row(form.imageFile) }}
-                                {{ form_row(form.logoStadtFile) }}
-                                {{ form_row(form.logoUrl) }}
-                                {{ form_row(form.hauptfarbe) }}
-                                {{ form_row(form.akzentfarbe) }}
-                                {{ form_row(form.akzentfarbeFehler) }}
-
-                            </div>
-                            <div class="tab-pane fade" id="schulkindbetreuung" role="tabpanel"
-                                 aria-labelledby="profile-tab"><h2>Schulkindbetreuung</h2>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h2>Sec-Code-Options</h2>
-                                        {{ form_row(form.secCodeAlwaysNew) }}
-                                        {{ form_row(form.noSecCodeForChangeChilds) }}
-                                    </div>
-                                </div>
-
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h2>Allgemein</h2>
-                                        {{ form_row(form.minBlocksPerDay) }}
-                                        {{ form_row(form.minDaysperWeek) }}
-                                        {{ form_row(form.preiskategorien) }}
-                                        {{ form_row(form.gehaltsklassen) }}
-                                        {{ form_row(form.skibSettingsFinishButtonText) }}
-                                    </div>
-                                </div>
-
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h2>Upload-Options</h2>
-                                        {{ form_row(form.settingsDokumentUploadEnable) }}
-                                        {{ form_row(form.settingsDokumentUploadTitle) }}
-                                        {{ form_row(form.settingsDokumentUploadText) }}
-                                        {{ form_row(form.settingsDokumentTemplates) }}
-                                    </div>
-                                </div>
-
-
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h3 class="mt-3">{{ 'Stammdaten-Options'|trans }}</h3>
-                                        {{ form_row(form.hideChildQuestions) }}
-                                        <div class="row mb-3">
-                                            <div class="col-lg-4">
-                                                {{ form_row(form.settingsAnzahlKindergeldempfanger) }}
-                                            </div>
-                                            <div class="col-lg-4">
-                                                {{ form_row(form.settingsAnzahlKindergeldempfangerRequired) }}
-                                            </div>
-                                            <div class="col-lg-4">
-                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingsAnzahlKindergeldempfangerHelp']) }}
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-lg-4">
-                                                {{ form_row(form.settingsSozielHilfeEmpfanger) }}
-                                            </div>
-                                            <div class="col-lg-4">
-                                                {{ form_row(form.settingsSozielHilfeEmpfangerRequired) }}
-                                            </div>
-                                            <div class="col-lg-4">
-                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingsSozielHilfeEmpfangerHelp']) }}
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-lg-4">
-                                                {{ form_row(form.settingKinderimKiga) }}
-                                            </div>
-                                            <div class="col-lg-8">
-                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingKinderimKigaHelp']) }}
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-lg-4">
-                                                {{ form_row(form.settingGehaltsklassen) }}
-                                            </div>
-                                            <div class="col-lg-4">
-                                                {{ form_row(form.settingGehaltsklassenRequired) }}
-                                            </div>
-                                            <div class="col-lg-4">
-                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingGehaltsklassenHelp']) }}
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-lg-10">
-                                                {{ form_row(form.settingsweiterePersonenberechtigte) }}
-                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingsweiterePersonenberechtigteHelp']) }}
-                                            </div>
-
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <h3>Kinderfragen</h3>
-
-                                                        {{ form_widget(form.settingsSkibShowZeckenKinder) }}
-                                                        {{ form_widget(form.settingsSkibShowSonnencremeKinder) }}
-                                                        {{ form_widget(form.settingsSkibShowPflasterKinder) }}
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row mb-3 mt-3">
-                                            <div class="col-12">
-                                                <h3>Geschwisterfragen</h3>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                {{ form_row(form.settingsEingabeDerGeschwister) }}
-                                            </div>
-
-                                            <div class="col-lg-4">
-                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingsEingabeDerGeschwisterHelp']) }}
-                                            </div>
-                                            <div class="col-lg-4">
-                                                {{ a2lixTranslations.partialTranslations(form.translations, ['settingsEingabeDerGeschwisterHelpUpload']) }}
-                                            </div>
-
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <div class="col-lg-12">
-                                                {{ a2lixTranslations.partialTranslations(form.translations, ['schulkindbetreuungBlockDeaktiviertText']) }}
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="row mb-3">
-                                    <div class="col-lg-4">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h3>SEPA-Options</h3>
-                                                {{ form_row(form.settings_skib_sepaElektronisch) }}
-                                                {{ form_row(form.skibSettingsBypassBankdaten) }}
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-lg-4">
-                                        <div class="card-body card">
-                                            <h3>Abschluss-Optionen</h3>
-                                            {{ form_row(form.settingsSkibShowPopupOnRegistration) }}
-                                            {{ a2lixTranslations.partialTranslations(form.translations, ['settingsSkibPopupRegistrationText']) }}
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-lg-8">
-                                        <div class="card-body">
-                                            <h3>{{ 'Bezeichnung der Schuljahre (JSON-Objekt)'|trans }}</h3>
-                                            {{ a2lixTranslations.partialTranslations(form.translations, ['settings_skib_shoolyear_naming']) }}
-                                        </div>
-                                    </div>
-                                    </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h3>{{ 'Extra-Texte in Emails'|trans }}</h3>
-                                                <div class="col-lg-6">
-
-                                                    {{ a2lixTranslations.partialTranslations(form.translations, ['settingsExtraTextEmailAnmeldungMitBeworben']) }}
-                                                </div>
-                                                <div class="col-lg-6">
-
-                                                    {{ a2lixTranslations.partialTranslations(form.translations, ['settingsExtraTextEmailAnmeldung']) }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
-                                </div>
-                                <div class="card">
-                                    <h4 class="card-header">{{ 'Änderungen'|trans }}</h4>
-                                    <div class="card-body">
-                                        <div class="row mb-3">
-                                            <div class="col-lg-8">
-                                                <div class="row">
-                                                    <div class="col-lg-4 mb-3">
-                                                        {{ form_row(form.settingsSkibChangeDocumentChangeDateShow) }}
-                                                    </div>
-                                                    <div class="col-lg-4 mb-3">
-                                                        {{ form_row(form.settingSkibDefaultNextChange) }}
-                                                    </div>
-                                                    <div class="col-lg-4 mb-3">
-                                                        {{ form_row(form.settingsSkibShowSetStartDateOnChange) }}
-                                                    </div>
-                                                    <div class="col-lg-6 mb-3">
-                                                        {{ a2lixTranslations.partialTranslations(form.translations, ['settingsSkibTextWhenClosed']) }}
-                                                    </div>
-                                                    <div class="col-lg-6 mb-3">
-                                                        {{ a2lixTranslations.partialTranslations(form.translations, ['popUpTextVorBezahlung']) }}
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card">
-                                    <h4 class="card-header">{{ 'Abmeldung der Kinder wenn diese nicht kopiert werden'|trans }}</h4>
-                                    <div class="card-body">
-                                        <div class="row mb-3">
-                                            <div class="col-lg-8">
-                                                <div class="row">
-                                                    <div class="col-lg-4 mb-3">
-                                                        {{ form_row(form.skibSettingsAbmeldungEmailText) }}
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card">
-                                    <h3 class="card-header">Dokumente welche an die E-Mails angehängt werden
-                                        können</h3>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                {{ form_row(form.settings_skib_disableIcs) }}
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-
-                                            <div class="col-lg-3">
-                                                {{ form_row(form.emailDokumente_schulkindbetreuung_anmeldung) }}
-                                            </div>
-                                            <div class="col-lg-3">
-                                                {{ form_row(form.emailDokumente_schulkindbetreuung_buchung) }}
-                                            </div>
-                                            <div class="col-lg-3">
-                                                {{ form_row(form.emailDokumente_schulkindbetreuung_anderung) }}
-                                            </div>
-                                            <div class="col-lg-3">
-                                                {{ form_row(form.emailDokumente_schulkindbetreuung_abmeldung) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                {{ a2lixTranslations.partialTranslations(form.translations, ['agb','catererInfo','careBlockInfo','schulindbetreuungPreiseFreitext']) }}
-
-
-                            </div>
-                            <div class="tab-pane fade" id="ferienbetreeuung" role="tabpanel"
-                                 aria-labelledby="profile-tab"><h2>Ferienbetreuung</h2></div>
-
-                            <div class="tab-pane fade" id="emails" role="tabpanel"
-                                 aria-labelledby="profile-tab"><h2>E-Mails</h2>
-                                <hr>
-                                <div class="card card-body">
-                                    {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateAnmeldung']) }}
-                                    <a href="{{ path('app_send_test_email_for_template',{'template':'anmeldebestatigungBeworben','stadt':stadt.id}) }}"
-                                       target="_blank">Testmail senden, nach dem speichern des Templates</a>
-
-                                </div>
-                                <div class="card card-body">
-                                    {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateBuchung']) }}
-                                    <a href="{{ path('app_send_test_email_for_template',{'template':'anmeldebestatigung','stadt':stadt.id}) }}"
-                                       target="_blank">Testmail senden, nach dem speichern des Templates</a>
-                                </div>
-                                <div class="card card-body">
-                                    {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateAbmeldung']) }}
-                                    <a href="{{ path('app_send_test_email_for_template',{'template':'abmeldebestatigung','stadt':stadt.id}) }}"
-                                       target="_blank">Testmail senden, nach dem speichern des Templates</a>
-                                </div>
-                                <div class="card card-body">
-                                    {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateStammdatenEdit']) }}
-                                    <a href="{{ path('app_send_test_email_for_template',{'template':'stammdatenEdit','stadt':stadt.id}) }}"
-                                       target="_blank">Testmail senden, nach dem speichern des Templates</a>
-                                </div>
-                                <div class="card">
-                                    <div class="card-header">
-                                        {{ 'Variablen'|trans }}
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                eltern: Eltern-Daten
-                                                <ul class="list-group">
-                                                    <li class="list-group-item">.vorname: Vorname</li>
-                                                    <li class="list-group-item">.name: Nachname</li>
-                                                    <li class="list-group-item">.strasse: Straße</li>
-                                                    <li class="list-group-item">.adresszusatz: Adresszusatz</li>
-                                                    <li class="list-group-item">.plz: Postleitzahl</li>
-                                                    <li class="list-group-item">.stadt: Stadt</li>
-                                                    <li class="list-group-item">.email: E-Mail-Adresse</li>
-                                                    <li class="list-group-item">.phoneNumber: Telefonnummer</li>
-                                                    <li class="list-group-item">.secCode: Security Code</li>
-
-                                                </ul>
-                                            </div>
-                                            <div class="col-6">
-                                                kind: Kinder-Daten
-                                                <ul class="list-group">
-                                                    <li class="list-group-item">.vorname: Vorname</li>
-                                                    <li class="list-group-item">.nachname: Nachname</li>
-                                                    <li class="list-group-item">.geburtstag: Geburtsdatum (datetime)
-                                                    </li>
-
-                                                    <li class="list-group-item">.eltern: Verknüpfte Eltern-Entität</li>
-                                                    <li class="list-group-item">.zeitblocks: Zugewiesene Zeitblöcke
-                                                        (Collection)
-                                                    </li>
-                                                    <li class="list-group-item">.beworben: Beworbene Zeitblöcke
-                                                        (Collection)
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="tab-pane fade show active container-fluid" id="auto-assign" role="tabpanel"
-                                 aria-labelledby="home-tab"><h2>Automatische Blockzuteilung</h2>
-
-                                {{ form_row(form.autoAssign_formula) }}
-
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label for="auto_assign_formula-result">Formel Ergebnis für Beispiel:</label>
-                                        <input type="text" id="auto_assign_formula-result" disabled>
-                                        <br>Alle Eigenschaften müssen per getter geholt werden!<br>
-                                        <del>kind.allergie</del> &rarr; kind.getAllergie()
-                                    </div>
-                                    <div class="col-9">
-                                        <div id="accordion">
-                                            <div class="card">
-                                                <div class="card-header" id="card-head-kind">
-                                                    <h5 class="mb-0">
-                                                        <a class="btn btn-link" data-toggle="collapse" href="#collapse-kind" aria-expanded="true" aria-controls="collapse-kind">
-                                                            kind
-                                                        </a>
-                                                    </h5>
-                                                </div>
-
-                                                <div id="collapse-kind" class="collapse show" aria-labelledby="card-head-kind" data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <pre>{{ kind | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-header" id="card-head-eltern">
-                                                    <h5 class="mb-0">
-                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-eltern" aria-expanded="false" aria-controls="collapse-eltern">
-                                                            eltern
-                                                        </a>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapse-eltern" class="collapse" aria-labelledby="card-head-eltern" data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <pre>{{ eltern | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-header" id="card-head-schule">
-                                                    <h5 class="mb-0">
-                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-schule" aria-expanded="false" aria-controls="collapse-schule">
-                                                            schule
-                                                        </a>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapse-schule" class="collapse" aria-labelledby="card-head-schule" data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <pre>{{ schule | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-header" id="card-head-orga">
-                                                    <h5 class="mb-0">
-                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-orga" aria-expanded="false" aria-controls="collapse-orga">
-                                                            organisation
-                                                        </a>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapse-orga" class="collapse" aria-labelledby="card-head-orga" data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <pre>{{ organisation | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+    <section class="city-config-page py-4">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xxl-11">
+                    <div class="config-shell card border-0 shadow-sm">
+                        <div class="config-header card-body border-bottom">
+                            <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
+                                <div>
+                                    <div class="config-eyebrow">Verwaltung</div>
+                                    <h1 class="config-title mb-1">{{ title }}</h1>
+                                    <p class="config-subtitle mb-0">
+                                        Pflege hier alle Einstellungen, Texte, Module und E-Mail-Vorlagen für die Stadt.
+                                    </p>
                                 </div>
                             </div>
-
                         </div>
-                        {{ form_widget(form) }}
-                        {{ form_end(form) }}
-                        <hr>
-                        {% if stadt is defined and stadt.id is not null %}
-                            <h3 class="h3-responsive">{{ 'Dateien hochladen'|trans }}</h3>
-                            <form action="{{ path('upload_stadt',{'id':stadt.id}) }}"
-                                  class="dropzone"
-                                  id="my-awesome-dropzone"></form>
 
-                            <ul class="list-group">
-                                {% for f in stadt.uploads %}
-                                    <li class="list-group-item">
-                                        <a href="{{ path('login_download_file',{'fileName':f.fileName}) }}"> <i
-                                                    class="fa fa-download"></i></a><span>{{ f.originalName }}</span>
-                                        <a href="{{ path('login_remove_file',{'fileName':f.fileName}) }}"><i
-                                                    class="fa fa-trash"></i> </a>
-                                    </li>
+                        <div class="card-body p-0">
+                            {% if errors|length > 0 %}
+                                <div class="alert alert-danger rounded-0 border-0 border-bottom mb-0 px-4 py-3">
+                                    <div class="fw-bold mb-2">Bitte korrigiere folgende Fehler:</div>
+                                    <ul class="mb-0 ps-3">
+                                        {% for error in errors %}
+                                            <li>{{ error.message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
 
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
+                            {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': 'city-config-form'}}) }}
+
+                            <div class="row g-0">
+                                <div class="col-xl-3 border-end config-sidebar-wrap">
+                                    <div class="config-sidebar sticky-top">
+                                        <div class="sidebar-inner p-3 p-lg-4">
+                                            <div class="sidebar-title">Bereiche</div>
+                                            <div class="nav flex-column nav-pills config-nav" id="city-config-tabs" role="tablist" aria-orientation="vertical">
+                                                <a class="nav-link active" id="tab-allgemein-link" data-toggle="tab" href="#allgemein" role="tab" aria-controls="allgemein" aria-selected="true">
+                                                    <span>Allgemein</span>
+                                                    <small>Basisdaten</small>
+                                                </a>
+                                                <a class="nav-link" id="tab-bilder-link" data-toggle="tab" href="#bilder" role="tab" aria-controls="bilder" aria-selected="false">
+                                                    <span>Aussehen</span>
+                                                    <small>Farben, Logos, Medien</small>
+                                                </a>
+                                                <a class="nav-link" id="tab-module-link" data-toggle="tab" href="#module" role="tab" aria-controls="module" aria-selected="false">
+                                                    <span>Module</span>
+                                                    <small>Funktionen aktivieren</small>
+                                                </a>
+                                                <a class="nav-link" id="tab-texte-link" data-toggle="tab" href="#texte" role="tab" aria-controls="texte" aria-selected="false">
+                                                    <span>Texte</span>
+                                                    <small>Allgemeine Inhalte</small>
+                                                </a>
+                                                <a class="nav-link" id="tab-rechtliches-link" data-toggle="tab" href="#rechtliches" role="tab" aria-controls="rechtliches" aria-selected="false">
+                                                    <span>Rechtliches</span>
+                                                    <small>Impressum & Datenschutz</small>
+                                                </a>
+                                                <a class="nav-link" id="tab-schulkindbetreuung-link" data-toggle="tab" href="#schulkindbetreuung" role="tab" aria-controls="schulkindbetreuung" aria-selected="false">
+                                                    <span>Schulkindbetreuung</span>
+                                                    <small>Regeln & Sonderfälle</small>
+                                                </a>
+                                                <a class="nav-link" id="tab-ferienbetreeuung-link" data-toggle="tab" href="#ferienbetreeuung" role="tab" aria-controls="ferienbetreeuung" aria-selected="false">
+                                                    <span>Ferienbetreuung</span>
+                                                    <small>Erweiterbar</small>
+                                                </a>
+                                                <a class="nav-link" id="tab-emails-link" data-toggle="tab" href="#emails" role="tab" aria-controls="emails" aria-selected="false">
+                                                    <span>E-Mails</span>
+                                                    <small>Templates & Variablen</small>
+                                                </a>
+                                                <a class="nav-link" id="tab-auto-assign" data-toggle="tab" href="#auto-assign" role="tab" aria-controls="auto-assign" aria-selected="false">
+                                                    <span>Automatische Blockzuweisung</span>
+                                                    <small>Gewichtungsformel</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-9">
+                                    <div class="config-content">
+                                        <div class="config-toolbar d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+                                            <div>
+                                                <div class="toolbar-title">Stadt-Konfiguration</div>
+                                                <div class="toolbar-subtitle">Alle Einstellungen an einem Ort, klar gruppiert und deutlich lesbarer.</div>
+                                            </div>
+                                            <div class="d-flex gap-2">
+                                                {{ form_row(form.submit, {'attr': {'class': 'btn btn-primary px-4 mb-0'}}) }}
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-content" id="city-config-tab-content">
+                                            <div class="tab-pane fade show active" id="allgemein" role="tabpanel" aria-labelledby="tab-allgemein-link">
+                                                <div class="section-head">
+                                                    <h2>Allgemein</h2>
+                                                    <p>Basisinformationen und zentrale Kontaktdaten der Stadt.</p>
+                                                </div>
+                                                <div class="config-card">
+                                                    <div class="row g-4">
+                                                        {% if form.slug is defined %}
+                                                            <div class="col-lg-6">{{ form_row(form.slug) }}</div>
+                                                        {% endif %}
+                                                        <div class="col-lg-6">{{ form_row(form.name) }}</div>
+                                                        <div class="col-lg-6">{{ form_row(form.email) }}</div>
+                                                        <div class="col-lg-6">{{ form_row(form.telefon) }}</div>
+                                                        <div class="col-lg-6">{{ form_row(form.adresse) }}</div>
+                                                        <div class="col-lg-6">{{ form_row(form.adresszusatz) }}</div>
+                                                        <div class="col-md-4">{{ form_row(form.plz) }}</div>
+                                                        <div class="col-md-8">{{ form_row(form.ort) }}</div>
+                                                        <div class="col-lg-6">{{ form_row(form.ansprechpartner) }}</div>
+                                                        <div class="col-lg-6">{{ form_row(form.stadtHomepage) }}</div>
+                                                        <div class="col-12">{{ a2lixTranslations.partialTranslations(form.translations, ['coverText']) }}</div>
+                                                        <div class="col-lg-6">{{ form_row(form.emailDokumente_rechnung) }}</div>
+                                                        <div class="col-lg-6">{{ form_row(form.emailDokumente_confirm) }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="bilder" role="tabpanel" aria-labelledby="tab-bilder-link">
+                                                <div class="section-head">
+                                                    <h2>Aussehen</h2>
+                                                    <p>Lege Bildsprache, Farben und Logos für den Auftritt fest.</p>
+                                                </div>
+                                                <div class="config-card">
+                                                    <div class="row g-4">
+                                                        <div class="col-lg-6">{{ form_row(form.showShowMoreToggleOnHomescreen) }}</div>
+                                                        <div class="col-lg-6">{{ form_row(form.logoUrl) }}</div>
+                                                        <div class="col-lg-6">{{ form_row(form.imageFile) }}</div>
+                                                        <div class="col-lg-6">{{ form_row(form.logoStadtFile) }}</div>
+                                                        <div class="col-md-4">{{ form_row(form.hauptfarbe) }}</div>
+                                                        <div class="col-md-4">{{ form_row(form.akzentfarbe) }}</div>
+                                                        <div class="col-md-4">{{ form_row(form.akzentfarbeFehler) }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="module" role="tabpanel" aria-labelledby="tab-module-link">
+                                                <div class="section-head">
+                                                    <h2>Module</h2>
+                                                    <p>Schalte Funktionen gezielt frei oder aus.</p>
+                                                </div>
+                                                <div class="config-card">
+                                                    <div class="row g-4">
+                                                        {% if form.active is defined %}
+                                                            <div class="col-md-6">{{ form_row(form.active) }}</div>
+                                                        {% endif %}
+                                                        {% if form.onlineCheckinEnable %}
+                                                            <div class="col-md-6">{{ form_row(form.onlineCheckinEnable) }}</div>
+                                                        {% endif %}
+                                                        {% if form.schulkindBetreung is defined %}
+                                                            <div class="col-md-6">{{ form_row(form.schulkindBetreung) }}</div>
+                                                        {% endif %}
+                                                        {% if form.ferienprogramm is defined %}
+                                                            <div class="col-md-6">{{ form_row(form.ferienprogramm) }}</div>
+                                                        {% endif %}
+                                                        {% if form.settingEncryptEmailAttachment is defined %}
+                                                            <div class="col-md-6">{{ form_row(form.settingEncryptEmailAttachment) }}</div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="texte" role="tabpanel" aria-labelledby="tab-texte-link">
+                                                <div class="section-head">
+                                                    <h2>Texte</h2>
+                                                    <p>Pflege allgemeine Hinweise und Inhalte für die Oberfläche.</p>
+                                                </div>
+                                                <div class="config-card">
+                                                    {{ a2lixTranslations.partialTranslations(form.translations, ['infoText']) }}
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="rechtliches" role="tabpanel" aria-labelledby="tab-rechtliches-link">
+                                                <div class="section-head">
+                                                    <h2>Rechtliches</h2>
+                                                    <p>Rechtlich relevante Inhalte an einer Stelle gebündelt.</p>
+                                                </div>
+                                                <div class="config-card mb-4">{{ form_row(form.imprint) }}</div>
+                                                <div class="config-card">{{ a2lixTranslations.partialTranslations(form.translations, ['datenschutz']) }}</div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="schulkindbetreuung" role="tabpanel" aria-labelledby="tab-schulkindbetreuung-link">
+                                                <div class="section-head">
+                                                    <h2>Schulkindbetreuung</h2>
+                                                    <p>Alle Regeln, Formulare und Sonderoptionen in logisch getrennten Blöcken.</p>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Sec-Code-Optionen</div>
+                                                    <div class="row g-3">
+                                                        <div class="col-md-6">{{ form_row(form.secCodeAlwaysNew) }}</div>
+                                                        <div class="col-md-6">{{ form_row(form.noSecCodeForChangeChilds) }}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Allgemein</div>
+                                                    <div class="row g-3">
+                                                        <div class="col-md-6">{{ form_row(form.minBlocksPerDay) }}</div>
+                                                        <div class="col-md-6">{{ form_row(form.minDaysperWeek) }}</div>
+                                                        <div class="col-md-6">{{ form_row(form.preiskategorien) }}</div>
+                                                        <div class="col-md-6">{{ form_row(form.gehaltsklassen) }}</div>
+                                                        <div class="col-12">{{ form_row(form.skibSettingsFinishButtonText) }}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Upload-Optionen</div>
+                                                    <div class="row g-3">
+                                                        <div class="col-md-6">{{ form_row(form.settingsDokumentUploadEnable) }}</div>
+                                                        <div class="col-md-6">{{ form_row(form.settingsDokumentUploadTitle) }}</div>
+                                                        <div class="col-12">{{ form_row(form.settingsDokumentUploadText) }}</div>
+                                                        <div class="col-12">{{ form_row(form.settingsDokumentTemplates) }}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Stammdaten-Optionen</div>
+                                                    <div class="mb-3">{{ form_row(form.hideChildQuestions) }}</div>
+
+                                                    <div class="row g-3 align-items-start mb-3">
+                                                        <div class="col-lg-4">{{ form_row(form.settingsAnzahlKindergeldempfanger) }}</div>
+                                                        <div class="col-lg-4">{{ form_row(form.settingsAnzahlKindergeldempfangerRequired) }}</div>
+                                                        <div class="col-lg-4">{{ a2lixTranslations.partialTranslations(form.translations, ['settingsAnzahlKindergeldempfangerHelp']) }}</div>
+                                                    </div>
+
+                                                    <div class="row g-3 align-items-start mb-3">
+                                                        <div class="col-lg-4">{{ form_row(form.settingsSozielHilfeEmpfanger) }}</div>
+                                                        <div class="col-lg-4">{{ form_row(form.settingsSozielHilfeEmpfangerRequired) }}</div>
+                                                        <div class="col-lg-4">{{ a2lixTranslations.partialTranslations(form.translations, ['settingsSozielHilfeEmpfangerHelp']) }}</div>
+                                                    </div>
+
+                                                    <div class="row g-3 align-items-start mb-3">
+                                                        <div class="col-lg-4">{{ form_row(form.settingKinderimKiga) }}</div>
+                                                        <div class="col-lg-8">{{ a2lixTranslations.partialTranslations(form.translations, ['settingKinderimKigaHelp']) }}</div>
+                                                    </div>
+
+
+
+                                                    <div class="row g-3 align-items-start mb-3">
+                                                        <div class="col-lg-4">{{ form_row(form.settingGehaltsklassen) }}</div>
+                                                        <div class="col-lg-4">{{ form_row(form.settingGehaltsklassenRequired) }}</div>
+                                                        <div class="col-lg-4">{{ a2lixTranslations.partialTranslations(form.translations, ['settingGehaltsklassenHelp']) }}</div>
+                                                    </div>
+
+                                                    <div class="row g-3 align-items-start mb-3">
+                                                        <div class="col-lg-10">
+                                                            {{ form_row(form.settingsweiterePersonenberechtigte) }}
+                                                            {{ a2lixTranslations.partialTranslations(form.translations, ['settingsweiterePersonenberechtigteHelp']) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="sub-card mt-4">
+                                                        <div class="sub-card-title">Kinderfragen</div>
+                                                        <div class="row g-3">
+                                                            <div class="col-md-4">{{ form_widget(form.settingsSkibShowZeckenKinder) }}</div>
+                                                            <div class="col-md-4">{{ form_widget(form.settingsSkibShowSonnencremeKinder) }}</div>
+                                                            <div class="col-md-4">{{ form_widget(form.settingsSkibShowPflasterKinder) }}</div>
+                                                            <div class="col-md-4">{{ form_widget(form.skipSettingShowChronicalDeseas) }}</div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Geschwisterfragen</div>
+                                                    <div class="row g-3">
+                                                        <div class="col-lg-4">{{ form_row(form.settingsEingabeDerGeschwister) }}</div>
+                                                        <div class="col-lg-4">{{ a2lixTranslations.partialTranslations(form.translations, ['settingsEingabeDerGeschwisterHelp']) }}</div>
+                                                        <div class="col-lg-4">{{ a2lixTranslations.partialTranslations(form.translations, ['settingsEingabeDerGeschwisterHelpUpload']) }}</div>
+                                                        <div class="col-12">{{ a2lixTranslations.partialTranslations(form.translations, ['schulkindbetreuungBlockDeaktiviertText']) }}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row g-4">
+                                                    <div class="col-xl-4">
+                                                        <div class="config-card h-100">
+                                                            <div class="card-title">SEPA-Optionen</div>
+                                                            {{ form_row(form.settings_skib_sepaElektronisch) }}
+                                                            {{ form_row(form.skibSettingsBypassBankdaten) }}
+                                                            {{ form_row(form.allowCreateInvoiceInFuture) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4">
+                                                        <div class="config-card h-100">
+                                                            <div class="card-title">Abschluss-Optionen</div>
+                                                            {{ form_row(form.settingsSkibShowPopupOnRegistration) }}
+                                                            {{ a2lixTranslations.partialTranslations(form.translations, ['settingsSkibPopupRegistrationText']) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4">
+                                                        <div class="config-card h-100">
+                                                            <div class="card-title">Schuljahre</div>
+                                                            {{ a2lixTranslations.partialTranslations(form.translations, ['settings_skib_shoolyear_naming']) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Extra-Texte in E-Mails</div>
+                                                    <div class="row g-3">
+                                                        <div class="col-lg-6">{{ a2lixTranslations.partialTranslations(form.translations, ['settingsExtraTextEmailAnmeldungMitBeworben']) }}</div>
+                                                        <div class="col-lg-6">{{ a2lixTranslations.partialTranslations(form.translations, ['settingsExtraTextEmailAnmeldung']) }}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Änderungen</div>
+                                                    <div class="row g-3">
+                                                        <div class="col-lg-4">{{ form_row(form.settingsSkibChangeDocumentChangeDateShow) }}</div>
+                                                        <div class="col-lg-4">{{ form_row(form.settingSkibDefaultNextChange) }}</div>
+                                                        <div class="col-lg-4">{{ form_row(form.settingsSkibShowSetStartDateOnChange) }}</div>
+                                                        <div class="col-lg-6">{{ a2lixTranslations.partialTranslations(form.translations, ['settingsSkibTextWhenClosed']) }}</div>
+                                                        <div class="col-lg-6">{{ a2lixTranslations.partialTranslations(form.translations, ['popUpTextVorBezahlung']) }}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Abmeldung wenn Kinder nicht kopiert werden</div>
+                                                    {{ form_row(form.skibSettingsAbmeldungEmailText) }}
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Dokumente für E-Mail-Anhänge</div>
+                                                    <div class="row g-3">
+                                                        <div class="col-lg-4">{{ form_row(form.settings_skib_disableIcs) }}</div>
+                                                        <div class="col-lg-3">{{ form_row(form.emailDokumente_schulkindbetreuung_anmeldung) }}</div>
+                                                        <div class="col-lg-3">{{ form_row(form.emailDokumente_schulkindbetreuung_buchung) }}</div>
+                                                        <div class="col-lg-3">{{ form_row(form.emailDokumente_schulkindbetreuung_anderung) }}</div>
+                                                        <div class="col-lg-3">{{ form_row(form.emailDokumente_schulkindbetreuung_abmeldung) }}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    {{ a2lixTranslations.partialTranslations(form.translations, ['agb','catererInfo','careBlockInfo','schulindbetreuungPreiseFreitext']) }}
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="ferienbetreeuung" role="tabpanel" aria-labelledby="tab-ferienbetreeuung-link">
+                                                <div class="section-head">
+                                                    <h2>Ferienbetreuung</h2>
+                                                    <p>Der Bereich ist vorbereitet und kann im gleichen Stil erweitert werden.</p>
+                                                </div>
+                                                <div class="config-card empty-state">
+                                                    <div class="empty-state-icon">☀️</div>
+                                                    <h3>Noch keine Inhalte</h3>
+                                                    <p>Hier können später spezielle Einstellungen für die Ferienbetreuung ergänzt werden.</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="emails" role="tabpanel" aria-labelledby="tab-emails-link">
+                                                <div class="section-head">
+                                                    <h2>E-Mails</h2>
+                                                    <p>Templates zentral pflegen und direkt testen.</p>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Anmeldebestätigung beworben</div>
+                                                    {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateAnmeldung']) }}
+                                                    <a class="btn btn-outline-primary btn-sm mt-3" href="{{ path('app_send_test_email_for_template',{'template':'anmeldebestatigungBeworben','stadt':stadt.id}) }}" target="_blank">Testmail senden</a>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Buchungsbestätigung</div>
+                                                    {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateBuchung']) }}
+                                                    <a class="btn btn-outline-primary btn-sm mt-3" href="{{ path('app_send_test_email_for_template',{'template':'anmeldebestatigung','stadt':stadt.id}) }}" target="_blank">Testmail senden</a>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Abmeldebestätigung</div>
+                                                    {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateAbmeldung']) }}
+                                                    <a class="btn btn-outline-primary btn-sm mt-3" href="{{ path('app_send_test_email_for_template',{'template':'abmeldebestatigung','stadt':stadt.id}) }}" target="_blank">Testmail senden</a>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Stammdaten bearbeiten</div>
+                                                    {{ a2lixTranslations.partialTranslations(form.translations, ['emailtemplateStammdatenEdit']) }}
+                                                    <a class="btn btn-outline-primary btn-sm mt-3" href="{{ path('app_send_test_email_for_template',{'template':'stammdatenEdit','stadt':stadt.id}) }}" target="_blank">Testmail senden</a>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Verfügbare Variablen</div>
+                                                    <div class="row g-4">
+                                                        <div class="col-lg-6">
+                                                            <div class="variable-box">
+                                                                <div class="variable-title">eltern</div>
+                                                                <ul class="variable-list">
+                                                                    <li><code>.vorname</code> Vorname</li>
+                                                                    <li><code>.name</code> Nachname</li>
+                                                                    <li><code>.strasse</code> Straße</li>
+                                                                    <li><code>.adresszusatz</code> Adresszusatz</li>
+                                                                    <li><code>.plz</code> Postleitzahl</li>
+                                                                    <li><code>.stadt</code> Stadt</li>
+                                                                    <li><code>.email</code> E-Mail-Adresse</li>
+                                                                    <li><code>.phoneNumber</code> Telefonnummer</li>
+                                                                    <li><code>.secCode</code> Security Code</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="variable-box">
+                                                                <div class="variable-title">kind</div>
+                                                                <ul class="variable-list">
+                                                                    <li><code>.vorname</code> Vorname</li>
+                                                                    <li><code>.nachname</code> Nachname</li>
+                                                                    <li><code>.geburtstag</code> Geburtsdatum</li>
+                                                                    <li><code>.eltern</code> Verknüpfte Eltern-Entität</li>
+                                                                    <li><code>.zeitblocks</code> Zugewiesene Zeitblöcke</li>
+                                                                    <li><code>.beworben</code> Beworbene Zeitblöcke</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                                <div class="tab-pane fade" id="auto-assign" role="tabpanel" aria-labelledby="tab-auto-assign">
+                                                    <div class="section-head">
+                                                        <h2>Automatische Blockzuteilung</h2>
+                                                    </div>
+                                                    <div class="config-card">
+                                                        <div class="card-title"></div>
+                                                        <div class="row g-3">
+                                                            <div class="col-lg-5">
+                                                                <div class="row">
+                                                                    {{ form_row(form.autoAssign_formula) }}
+                                                                </div>
+                                                                <div class="row">
+
+                                                                    <div class="row">
+                                                                        <div class="col-lg-6">
+                                                                            <label for="auto_assign_formula-result">Gewicht für Beispiel:</label>
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                            <input type="text" id="auto_assign_formula-result" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12">
+                                                                            Alle Eigenschaften müssen per getter geholt werden!
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12">
+                                                                            <del>kind.allergie</del> &rarr; kind.getAllergie()
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-7">
+                                                                <div class="row">
+                                                                    <div class="col-9">
+                                                                        <div id="accordion">
+                                                                            <div class="card">
+                                                                                <div class="card-header" id="card-head-kind">
+                                                                                    <h5 class="mb-0">
+                                                                                        <a class="btn btn-link" data-toggle="collapse" href="#collapse-kind" aria-expanded="true" aria-controls="collapse-kind">
+                                                                                            kind
+                                                                                        </a>
+                                                                                    </h5>
+                                                                                </div>
+
+                                                                                <div id="collapse-kind" class="collapse show" aria-labelledby="card-head-kind" data-parent="#accordion">
+                                                                                    <div class="card-body">
+                                                                                        <pre>{{ kind | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="card">
+                                                                                <div class="card-header" id="card-head-eltern">
+                                                                                    <h5 class="mb-0">
+                                                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-eltern" aria-expanded="false" aria-controls="collapse-eltern">
+                                                                                            eltern
+                                                                                        </a>
+                                                                                    </h5>
+                                                                                </div>
+                                                                                <div id="collapse-eltern" class="collapse" aria-labelledby="card-head-eltern" data-parent="#accordion">
+                                                                                    <div class="card-body">
+                                                                                        <pre>{{ eltern | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="card">
+                                                                                <div class="card-header" id="card-head-schule">
+                                                                                    <h5 class="mb-0">
+                                                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-schule" aria-expanded="false" aria-controls="collapse-schule">
+                                                                                            schule
+                                                                                        </a>
+                                                                                    </h5>
+                                                                                </div>
+                                                                                <div id="collapse-schule" class="collapse" aria-labelledby="card-head-schule" data-parent="#accordion">
+                                                                                    <div class="card-body">
+                                                                                        <pre>{{ schule | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="card">
+                                                                                <div class="card-header" id="card-head-orga">
+                                                                                    <h5 class="mb-0">
+                                                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapse-orga" aria-expanded="false" aria-controls="collapse-orga">
+                                                                                            organisation
+                                                                                        </a>
+                                                                                    </h5>
+                                                                                </div>
+                                                                                <div id="collapse-orga" class="collapse" aria-labelledby="card-head-orga" data-parent="#accordion">
+                                                                                    <div class="card-body">
+                                                                                        <pre>{{ organisation | serialize('json', { 'groups': ['assign_formula_sample'], 'json_encode_options': constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')}) }}</pre>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="config-footer border-top mt-4 pt-3 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                                            <div class="text-muted small">Nicht gespeicherte Änderungen werden beim Verlassen erkannt.</div>
+
+                                        </div>
+                                    </div>
+
+                                    {{ form_widget(form) }}
+                                    {{ form_end(form) }}
+
+                                    {% if stadt is defined and stadt.id is not null %}
+                                        <div class="upload-section border-top px-4 py-4">
+                                            <div class="section-head mb-3">
+                                                <h2 class="mb-1">Dateien hochladen</h2>
+                                                <p class="mb-0">Verwalte Dokumente und Anhänge der Stadt zentral.</p>
+                                            </div>
+
+                                            <form action="{{ path('upload_stadt',{'id':stadt.id}) }}" class="dropzone modern-dropzone" id="my-awesome-dropzone"></form>
+
+                                            <ul class="list-group file-list mt-4">
+                                                {% for f in stadt.uploads %}
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
+                                                        <div class="d-flex align-items-center gap-3">
+                                                            <span class="file-icon"><i class="fa fa-file"></i></span>
+                                                            <span>{{ f.originalName }}</span>
+                                                        </div>
+                                                        <div class="d-flex align-items-center gap-3">
+                                                            <a href="{{ path('login_download_file',{'fileName':f.fileName}) }}" class="text-primary"><i class="fa fa-download"></i></a>
+                                                            <a href="{{ path('login_remove_file',{'fileName':f.fileName}) }}" class="text-danger"><i class="fa fa-trash"></i></a>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
     </section>
-
 {% endblock %}
+
+
+
 {% block jquery %}
     <script>
         $(document).ready(function () {
-            var form = $('form'),
-                original = form.serialize()
+            var form = $('#city-config-form'),
+                original = form.serialize();
 
-            form.submit(function () {
-                window.onbeforeunload = null
-            })
+            form.on('submit', function () {
+                window.onbeforeunload = null;
+            });
 
             window.onbeforeunload = function () {
-                if (form.serialize() != original)
-                    return 'Are you sure you want to leave?'
-            }
+                if (form.serialize() !== original) {
+                    return 'Ungespeicherte Änderungen gehen verloren. Wirklich verlassen?';
+                }
+            };
+
+            $('#city-config-tabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                try {
+                    localStorage.setItem('cityConfigActiveTab', $(e.target).attr('href'));
+                } catch (err) {}
+            });
+
+            try {
+                var activeTab = localStorage.getItem('cityConfigActiveTab');
+                if (activeTab && $('#city-config-tabs a[href="' + activeTab + '"]').length) {
+                    $('#city-config-tabs a[href="' + activeTab + '"]').tab('show');
+                }
+            } catch (err) {}
 
             // auto assign formula test
             const calculateTestValue = async function () {
@@ -603,8 +620,6 @@
             };
             $('#stadt_autoAssign_formula').on('change', calculateTestValue);
             calculateTestValue();
-        })
+        });
     </script>
-
-
 {% endblock %}

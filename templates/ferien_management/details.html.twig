@@ -293,48 +293,51 @@
                                             </th>
                                         </tr>
                                         </thead>
-                                        {% for r in payment.refunds %}
-                                            <tr>
-                                                <td>
-                                                    <button class="btn bmd-btn-icon dropdown-toggle" type="button"
-                                                            id="ex2" data-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                        <i class="material-icons">more_vert</i>
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-                                                        {% if is_granted('ROLE_ORG_FERIEN_STORNO') %}
-                                                            <a class="dropdown-item deleteBtn" type="PATCH"
-                                                               href="{{ path('ferien_storno_payPack',{'id':r.id}) }}">{% trans %}Zurückzahlung anstoßen{% endtrans %}</a>
-                                                        {% endif %}
+                                        {% if payment is not null %}
+                                            {% for r in payment.refunds %}
+                                                <tr>
+                                                    <td>
+                                                        <button class="btn bmd-btn-icon dropdown-toggle" type="button"
+                                                                id="ex2" data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                            <i class="material-icons">more_vert</i>
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-left"
+                                                             aria-labelledby="ex2">
+                                                            {% if is_granted('ROLE_ORG_FERIEN_STORNO') %}
+                                                                <a class="dropdown-item deleteBtn" type="PATCH"
+                                                                   href="{{ path('ferien_storno_payPack',{'id':r.id}) }}">{% trans %}Zurückzahlung anstoßen{% endtrans %}</a>
+                                                            {% endif %}
 
-                                                    </div>
-                                                </td>
+                                                        </div>
+                                                    </td>
 
-                                                <td>
-                                                    {{ r.typeAsString }}
-                                                </td>
-                                                <td>
-                                                    {{ r.createdAt|date('d.m.Y H:i') }}
-                                                </td>
-                                                <td>
-                                                    {{ r.summe|number_format ('2',',','.') }}€
-                                                </td>
-                                                <td>
-                                                    {{ r.refundFee|number_format ('2',',','.') }}€
-                                                </td>
-                                                <td>
-                                                    {{ r.summeGezahlt|number_format ('2',',','.') }}
-                                                </td>
-                                                <td>
-                                                    <p>
-                                                        <span class="badge {{ r.gezahlt?'badge-primary':'badge-danger' }} "> {{ r.gezahlt?'Ausgezahlt':'Nicht ausgezahlt'|trans }}</span>
-                                                    </p>
-                                                </td>
-                                                <td>
-                                                    {{ r.gezahlt?'Kein Fehler':r.errorMessage }}
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
+                                                    <td>
+                                                        {{ r.typeAsString }}
+                                                    </td>
+                                                    <td>
+                                                        {{ r.createdAt|date('d.m.Y H:i') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ r.summe|number_format ('2',',','.') }}€
+                                                    </td>
+                                                    <td>
+                                                        {{ r.refundFee|number_format ('2',',','.') }}€
+                                                    </td>
+                                                    <td>
+                                                        {{ r.summeGezahlt|number_format ('2',',','.') }}
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            <span class="badge {{ r.gezahlt?'badge-primary':'badge-danger' }} "> {{ r.gezahlt?'Ausgezahlt':'Nicht ausgezahlt'|trans }}</span>
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        {{ r.gezahlt?'Kein Fehler':r.errorMessage }}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endif %}
                                     </table>
                                 </div>
 

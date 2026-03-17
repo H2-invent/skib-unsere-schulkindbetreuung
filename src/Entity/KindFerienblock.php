@@ -168,5 +168,24 @@ class KindFerienblock
 
         return $this;
     }
-
+    public function getStateLabel(): string
+    {
+        return match ($this->state) {
+            0 => 'Beworben',
+            10 => 'Gebucht',
+            15 => 'Warteliste',
+            20 => 'Storniert',
+            default => 'Unbekannt',
+        };
+    }
+    public function getStateBadgeClass(): string
+    {
+        return match ($this->state) {
+            0 => 'badge-secondary',
+            10 => 'badge-primary',
+            15 => 'badge-warning',
+            20 => 'badge-danger',
+            default => 'badge-dark',
+        };
+    }
 }

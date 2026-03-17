@@ -5,6 +5,7 @@ namespace App\Entity;
 use ContainerM8BJPEV\getDoctrine_Orm_DefaultEntityManager_PropertyInfoExtractorService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -163,6 +164,10 @@ class Kind
 
     #[ORM\Column(nullable: true)]
     private ?bool $pflaster = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $chronicalDeseas = null;
+
 
 
     public function __serialize(): array
@@ -1032,4 +1037,17 @@ class Kind
 
         return $this;
     }
+
+    public function getChronicalDeseas(): ?string
+    {
+        return $this->chronicalDeseas;
+    }
+
+    public function setChronicalDeseas(?string $chronicalDeseas): self
+    {
+        $this->chronicalDeseas = $chronicalDeseas;
+
+        return $this;
+    }
+
 }

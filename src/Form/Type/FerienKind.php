@@ -23,7 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LoerrachKind extends AbstractType
+class FerienKind extends AbstractType
 {
     private $em;
 
@@ -40,20 +40,13 @@ class LoerrachKind extends AbstractType
         /**
          * @var Stadt $stadt
          */
-        $stadt = $options['data']->getSchule()->getStadt();
+        $stadt = $options['stadt'];
 
-        if (isset($options['schuljahr']) && $options['schuljahr']) {
-            $builder->add('startDate', DateType::class, ['attr' => array('class' => 'pickadate', 'data-min' => $options['schuljahr']->getVon()->format('d.m.Y'), 'data-max' => $options['schuljahr']->getBis()->format('d.m.Y')), 'widget' => 'single_text', 'label' => 'Startdatum', 'translation_domain' => 'form']);
-        }
+
         $builder->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
             ->add('nachname', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
             ->add('klasse', ChoiceType::class, [
                 'choices' => array_flip($stadt->translate()->getSettingsSkibShoolyearNamingArray()), 'label' => 'Jahrgangsstufe zu Betreuungsbeginn', 'translation_domain' => 'form'])
-            ->add('art', ChoiceType::class, [
-                'choices' => [
-                    'Ganztag' => 1,
-                    'Halbtag' => 2,
-                ], 'label' => 'Schulform', 'translation_domain' => 'form'])
             ->add('geburtstag', BirthdayType::class, ['attr' => array('class' => 'pickadate'), 'widget' => 'single_text', 'years' => range($today - 20, $today, 1), 'label' => 'Geburtstag', 'translation_domain' => 'form'])
             ->add('masernImpfung', CheckboxType::class, array('label' => 'Mein Kind ist gegen Masern geimpft / bereits immun'));
         if (!$stadt->isHideChildQuestions()) {
@@ -75,10 +68,6 @@ class LoerrachKind extends AbstractType
             if ($stadt->isSettingsSkibShowPflasterKinder() === true) {
                 $builder->add('pflaster', CheckboxType::class, ['required' => false, 'label' => 'Betreuer dürfen meinem Kind bei einer Verletzung ein Pflaster aufkleben', 'translation_domain' => 'form']);
             }
-            if ($stadt->isSkipSettingShowChronicalDeseas()){
-                $builder->add('chronicalDeseas', TextareaType::class, ['required' => false, 'label' => 'Chronische Erkrankungen', 'translation_domain' => 'form', 'attr' => ['rows' => 6]]);
-
-            }
 
             $builder->add('fotos', CheckboxType::class, ['required' => false, 'label' => 'Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.', 'translation_domain' => 'form']);
 
@@ -90,7 +79,8 @@ class LoerrachKind extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Kind::class,
-            'schuljahr' => Active::class
+            'schuljahr' => Active::class,
+            'stadt'=>Stadt::class,
         ]);
 
     }

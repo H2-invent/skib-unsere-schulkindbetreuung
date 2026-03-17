@@ -85,9 +85,12 @@ class FerienAbschluss
         }
 
         $adresse->setSaved(true);
+        $adresse->setFin(true);
+        $adresse->setCreatedAt(new \DateTime());
         $this->em->persist($adresse);
         foreach ($adresse->getKinds() as $data) {
             $data->setSaved(true);
+            $data->setFin(true);
             $this->em->persist($data);
         }
         $this->em->persist($adresse);
