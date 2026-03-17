@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -27,26 +28,33 @@ class Kind
     #[ORM\ManyToOne(targetEntity: \App\Entity\Stammdaten::class, inversedBy: 'kinds')]
     private $eltern;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $allergie;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $medikamente;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text', nullable: true)]
     private $vorname;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text', nullable: true)]
     private $nachname;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'integer', nullable: true)]
     private $klasse;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'integer', nullable: true)]
     private $art;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'datetime')]
     private $geburtstag;
@@ -58,6 +66,7 @@ class Kind
     #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, mappedBy: 'kind')]
     private $zeitblocks;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $bemerkung;
 
@@ -65,39 +74,50 @@ class Kind
     #[ORM\ManyToOne(targetEntity: \App\Entity\Schule::class, inversedBy: 'kinder')]
     private $schule;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $fin = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $gluten = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $laktose = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $schweinefleisch = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $vegetarisch = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $ausfluege = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $alleineHause = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $sonnencreme = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $fotos = false;
 
     #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, inversedBy: 'kinderBeworben')]
     private $beworben;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $saved = false;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'integer')]
     private $history = 0;
 
@@ -111,18 +131,22 @@ class Kind
     #[ORM\OneToMany(targetEntity: \App\Entity\KindFerienblock::class, mappedBy: 'kind', cascade: ['remove'])]
     private $kindFerienblocks;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $masernImpfung;
 
     #[ORM\OneToMany(targetEntity: \App\Entity\Anwesenheit::class, mappedBy: 'kind')]
     private $anwesenheitenSchulkindbetreuung;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $internalNotice;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'date', nullable: true)]
     private $startDate;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $zeckenEntfernen;
 

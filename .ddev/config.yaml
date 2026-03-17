@@ -4,20 +4,19 @@ docroot: public
 php_version: "8.1"
 webserver_type: nginx-fpm
 xdebug_enabled: false
-additional_hostnames: []
-additional_fqdns: []
+additional_hostnames: [ ]
+additional_fqdns: [ ]
 database:
-    type: mariadb
-    version: "10.11"
+  type: mariadb
+  version: "10.11"
 use_dns_when_possible: true
 composer_version: "2"
 corepack_enable: false
 
-#hooks:
-#  post-start:
-#    - exec: composer install
-#    - exec: npm install
-#    - exec: npm run watch
+web_extra_daemons:
+  - name: "messenger"
+    command: "php bin/console messenger:consume async -vv"
+    directory: /var/www/html
 
 # Key features of DDEV's config.yaml:
 

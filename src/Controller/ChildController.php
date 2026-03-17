@@ -15,6 +15,7 @@ use App\Service\ElternService;
 use App\Service\HistoryService;
 use App\Service\MailerService;
 use App\Service\PrintService;
+use App\Service\SchuljahrService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -287,7 +288,7 @@ class ChildController extends AbstractController
      */
     public function addNewChild(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
-        $request->getSession()->remove('schuljahr_to_add');
+        $request->getSession()->remove(SchuljahrService::SESSION_KEY_SCHULJAHR);
         if (!$this->getUser()){
             $route = $request->headers->get('referer');
 
@@ -299,7 +300,7 @@ class ChildController extends AbstractController
         $response->headers->clearCookie('UserID');
         $active = $this->entityManager->getRepository(Active::class)->findOneBy(array('id'=>$request->get('schuljahr'),'stadt'=>$this->getUser()->getOrganisation()->getStadt()));
         $session = $request->getSession();
-        $session->set('schuljahr_to_add', $active->getId());
+        $session->set(SchuljahrService::SESSION_KEY_SCHULJAHR, $active->getId());
         return $response;
     }
     /**

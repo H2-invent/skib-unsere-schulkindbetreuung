@@ -225,7 +225,8 @@ class EmployeeOrganisationController extends AbstractController
     {
         $user = $this->manager->findUserBy(array('id'=>$request->get('id')));
         $organisation = $user->getOrganisation();
-        if ($organisation->getStadt() != $this->getUser()->getStadt()) {
+        //TODO check if org has been set to user
+        if (!$this->getUser()->hasRole('ROLE_ADMIN') && $organisation->getStadt() != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong City');
         }
 

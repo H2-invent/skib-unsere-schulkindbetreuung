@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Active;
 use App\Entity\Kind;
+use App\Entity\Organisation;
 use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -21,34 +23,6 @@ class KindRepository extends ServiceEntityRepository
         parent::__construct($registry, Kind::class);
     }
 
-    // /**
-    //  * @return Kind[] Returns an array of Kind objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('k')
-            ->andWhere('k.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('k.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Kind
-    {
-        return $this->createQueryBuilder('k')
-            ->andWhere('k.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
     public function findBeworbenByZeitblock(Zeitblock $zeitblock)
     {
         return $this->createQueryBuilder('k')
@@ -172,5 +146,48 @@ class KindRepository extends ServiceEntityRepository
         return $kinder;
     }
 
+    public function findSampleKind(): ?Kind
+    {
+        return $this->createQueryBuilder('k')
+            ->innerJoin('k.eltern', 'eltern')
+            ->innerJoin('k.schule', 'schule')
+            ->innerJoin('schule.organisation', 'orga')
+            ->innerJoin('schule.stadt', 'stadt')
+            ->orderBy('k.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
+    /**
+     * @return Kind[]
+     */
+    public function findKindWithBeworbenZeitblocksForSchuljahr(Organisation $organisation, Active $schuljahr): array
+    {
+        $subQuery = $this->createQueryBuilder('kind2')
+            ->select('MAX(eltern2.created_at)')
+            ->innerJoin('kind2.eltern', 'eltern2')
+            ->where('kind2.tracing = kind.tracing')
+            ->andWhere('eltern2.created_at IS NOT NULL')
+            ->getDQL()
+        ;
+
+        return $this->createQueryBuilder('kind')
+            ->innerJoin('kind.beworben', 'beworben_zeitblock')
+            ->innerJoin('kind.eltern', 'eltern')
+            ->innerJoin('beworben_zeitblock.active', 'active')
+            ->innerJoin('beworben_zeitblock.schule', 'schule')
+            ->innerJoin('schule.organisation', 'organisation')
+            ->andWhere('active = :active')->setParameter('active', $schuljahr)
+            ->andWhere('kind.startDate is not NULL')
+            ->andWhere('eltern.created_at is not NULL')
+            ->andWhere('beworben_zeitblock.deleted = 0')
+            ->andWhere('organisation = :organisation')->setParameter('organisation', $organisation)
+            ->andWhere('DATE(active.von) = DATE(kind.startDate)')
+            ->andWhere('eltern.created_at = (' .$subQuery. ')')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

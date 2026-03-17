@@ -3105,6 +3105,10 @@
         <source>Zusätzliche Dokumente</source>
         <target state="needs-translation">Zusätzliche Dokumente</target>
       </trans-unit>
+      <trans-unit id="l0T3KG." resname="Autom. Zuteilung">
+        <source>Autom. Zuteilung</source>
+        <target state="needs-translation">Autom. Zuteilung</target>
+      </trans-unit>
       <trans-unit id="NvJQq9J" resname="Dokumente">
         <source>Dokumente</source>
         <target state="needs-translation">Dokumente</target>
@@ -3112,6 +3116,138 @@
       <trans-unit id="lSO_Agf" resname="Auszufüllende Dokumente">
         <source>Auszufüllende Dokumente</source>
         <target state="needs-translation">Auszufüllende Dokumente</target>
+      </trans-unit>
+      <trans-unit id="BqAUJNv" resname="Kind nicht vorhanden.">
+        <source>Kind nicht vorhanden.</source>
+        <target state="needs-translation">Kind nicht vorhanden.</target>
+      </trans-unit>
+      <trans-unit id="Hai7AgX" resname="Erfolgreich gesendet.">
+        <source>Erfolgreich gesendet.</source>
+        <target state="needs-translation">Erfolgreich gesendet.</target>
+      </trans-unit>
+      <trans-unit id="jQbb.Lf" resname="Bestätigung konnte nicht gesendet werden.">
+        <source>Bestätigung konnte nicht gesendet werden.</source>
+        <target state="needs-translation">Bestätigung konnte nicht gesendet werden.</target>
+      </trans-unit>
+      <trans-unit id="Ey72Rbc" resname="Pflaster dürfen angebracht werden">
+        <source>Pflaster dürfen angebracht werden</source>
+        <target state="needs-translation">Pflaster dürfen angebracht werden</target>
+      </trans-unit>
+      <trans-unit id="CHKYvTi" resname="Bestätigung erneut versenden">
+        <source>Bestätigung erneut versenden</source>
+        <target state="needs-translation">Bestätigung erneut versenden</target>
+      </trans-unit>
+      <trans-unit id="X_TPpgh" resname="Betreuer dürfen meinem Kind bei einer Verletzung ein Pflaster aufkleben">
+        <source>Betreuer dürfen meinem Kind bei einer Verletzung ein Pflaster aufkleben</source>
+        <target state="needs-translation">Betreuer dürfen meinem Kind bei einer Verletzung ein Pflaster aufkleben</target>
+      </trans-unit>
+      <trans-unit id="gWAsYVd" resname="Stammdaten-Options">
+        <source>Stammdaten-Options</source>
+        <target state="needs-translation">Stammdaten-Options</target>
+      </trans-unit>
+      <trans-unit id="LdER0CE" resname="Späte Anmeldung">
+        <source>Späte Anmeldung</source>
+        <target state="needs-translation">Späte Anmeldung</target>
+      </trans-unit>
+      <trans-unit id="FQApvCH" resname="Hochgeladene Dokumente">
+        <source>Hochgeladene Dokumente</source>
+        <target state="needs-translation">Hochgeladene Dokumente</target>
+      </trans-unit>
+      <trans-unit id="CtSvlxU" resname="Einmallink für die Nachmeldung zur Schulkindbetreuung">
+        <source>Einmallink für die Nachmeldung zur Schulkindbetreuung</source>
+        <target state="needs-translation">Einmallink für die Nachmeldung zur Schulkindbetreuung</target>
+      </trans-unit>
+      <trans-unit id="qz4B1Dh" resname="Sie wurden soeben für die Nachmeldung zur Schulkindbetreuung der">
+        <source>Sie wurden soeben für die Nachmeldung zur Schulkindbetreuung der</source>
+        <target state="needs-translation">Sie wurden soeben für die Nachmeldung zur Schulkindbetreuung der</target>
+      </trans-unit>
+      <trans-unit id="BTB4lqj" resname="freigeschaltet.">
+        <source>freigeschaltet.</source>
+        <target state="needs-translation">freigeschaltet.</target>
+      </trans-unit>
+      <trans-unit id="8uPp1mw" resname="Nutzen Sie diesen Link, um zur Nachmeldung zu gelangen. Er ist nur 24 Stunden gültig.">
+        <source>Nutzen Sie diesen Link, um zur Nachmeldung zu gelangen. Er ist nur 24 Stunden gültig.</source>
+        <target state="needs-translation">Nutzen Sie diesen Link, um zur Nachmeldung zu gelangen. Er ist nur 24 Stunden gültig.</target>
+      </trans-unit>
+      <trans-unit id="PLa1mmN" resname="Schuljahr">
+        <source>Schuljahr</source>
+        <target state="needs-translation">Schuljahr</target>
+      </trans-unit>
+      <trans-unit id="7EyQYYg" resname="Geschickt am">
+        <source>Geschickt am</source>
+        <target state="needs-translation">Geschickt am</target>
+      </trans-unit>
+      <trans-unit id="hkWGyw3" resname="Genutzt am">
+        <source>Genutzt am</source>
+        <target state="needs-translation">Genutzt am</target>
+      </trans-unit>
+      <trans-unit id="8tRpysb" resname="Ergebnisse der automatischen Blockzuteilung">
+        <source>Ergebnisse der automatischen Blockzuteilung</source>
+        <target state="needs-translation">Ergebnisse der automatischen Blockzuteilung</target>
+      </trans-unit>
+      <trans-unit id="qWMO.Hm" resname="Zuteilung verwerfen">
+        <source>Zuteilung verwerfen</source>
+        <target state="needs-translation">Zuteilung verwerfen</target>
+      </trans-unit>
+      <trans-unit id="ndnkIEu" resname="Lädt">
+        <source>Lädt</source>
+        <target state="needs-translation">Lädt</target>
+      </trans-unit>
+      <trans-unit id="nZvPy18" resname="Zuteilung akzeptieren">
+        <source>Zuteilung akzeptieren</source>
+        <target state="needs-translation">Zuteilung akzeptieren</target>
+      </trans-unit>
+      <trans-unit id="_QIoWtJ" resname="Anzahl akzeptierter Blöcke">
+        <source>Anzahl akzeptierter Blöcke</source>
+        <target state="needs-translation">Anzahl akzeptierter Blöcke</target>
+      </trans-unit>
+      <trans-unit id="JQr3qfF" resname="Anzahl Wartelisten">
+        <source>Anzahl Wartelisten</source>
+        <target state="needs-translation">Anzahl Wartelisten</target>
+      </trans-unit>
+      <trans-unit id="Aqw4wVh" resname="Anzahl hochgeladener Dokumente">
+        <source>Anzahl hochgeladener Dokumente</source>
+        <target state="needs-translation">Anzahl hochgeladener Dokumente</target>
+      </trans-unit>
+      <trans-unit id="yiJjT5k" resname="Kind Details">
+        <source>Kind Details</source>
+        <target state="needs-translation">Kind Details</target>
+      </trans-unit>
+      <trans-unit id="75J9B.d" resname="Details ansehen">
+        <source>Details ansehen</source>
+        <target state="needs-translation">Details ansehen</target>
+      </trans-unit>
+      <trans-unit id="BDOMkvT" resname="Automatische Blockzuteilung">
+        <source>Automatische Blockzuteilung</source>
+        <target state="needs-translation">Automatische Blockzuteilung</target>
+      </trans-unit>
+      <trans-unit id="mLfp3RX" resname="Blockzuteilung starten">
+        <source>Blockzuteilung starten</source>
+        <target state="needs-translation">Blockzuteilung starten</target>
+      </trans-unit>
+      <trans-unit id="oEF0NpX" resname="Anzahl Unzugeteilter Blöcke">
+        <source>Anzahl Unzugeteilter Blöcke</source>
+        <target state="needs-translation">Anzahl Unzugeteilter Blöcke</target>
+      </trans-unit>
+      <trans-unit id="l37ksI1" resname="Stadt Admin ernennen">
+        <source>Stadt Admin ernennen</source>
+        <target state="needs-translation">Stadt Admin ernennen</target>
+      </trans-unit>
+      <trans-unit id="sIsNyD0" resname="Organisations Admin ernennen">
+        <source>Organisations Admin ernennen</source>
+        <target state="needs-translation">Organisations Admin ernennen</target>
+      </trans-unit>
+      <trans-unit id="THpCAmG" resname="Stadt Admin">
+        <source>Stadt Admin</source>
+        <target state="needs-translation">Stadt Admin</target>
+      </trans-unit>
+      <trans-unit id="_UhQbPG" resname="Organisation Admin">
+        <source>Organisation Admin</source>
+        <target state="needs-translation">Organisation Admin</target>
+      </trans-unit>
+      <trans-unit id="zVX3M_I" resname="Super Admin">
+        <source>Super Admin</source>
+        <target state="needs-translation">Super Admin</target>
       </trans-unit>
     </body>
   </file>

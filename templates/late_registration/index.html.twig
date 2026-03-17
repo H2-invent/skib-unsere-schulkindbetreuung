@@ -1,0 +1,78 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+
+    <section class="dashboard-counts section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="card col-12">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12">
+                                <h1>{% trans %}Späte Anmeldung{% endtrans %}</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="col-12">
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card col-12">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12">
+                                <h1>{% trans %}Historie{% endtrans %}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-12">
+                            <table id="late-registration-table" class="table table-striped no-data-table">
+                                <thead>
+                                <tr>
+                                    <th>{% trans %}Email{% endtrans %}</th>
+                                    <th>{% trans %}Schuljahr{% endtrans %}</th>
+                                    <th>{% trans %}Geschickt am{% endtrans %}</th>
+                                    <th>{% trans %}Genutzt am{% endtrans %}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for entry in history %}
+                                    <tr>
+                                        <td>{{ entry.email }}</td>
+                                        <td>{{ entry.schuljahr.von | date('Y') }}/{{ entry.schuljahr.bis | date('Y') }}</td>
+                                        <td>{{ entry.createdAt | format_datetime() }}</td>
+                                        {% if entry.usedAt is null %}
+                                            <td>-</td>
+                                        {% else %}
+                                            <td>{{ entry.usedAt | format_datetime() }}</td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        $('#late-registration-table').DataTable({
+            order: [[2, 'desc']],
+        });
+    </script>
+{% endblock %}

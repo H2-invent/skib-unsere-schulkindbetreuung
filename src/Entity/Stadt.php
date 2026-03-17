@@ -4,11 +4,13 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -34,6 +36,7 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'string', length: 32, unique: true)]
     private $slug;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $Name;
@@ -47,6 +50,7 @@ class Stadt implements TranslatableInterface
     #[ORM\OneToMany(targetEntity: \App\Entity\Schule::class, mappedBy: 'stadt')]
     private $schules;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'datetime')]
     private $created_at;
 
@@ -108,14 +112,17 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $adresszusatz;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $plz;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $ort;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private $ansprechpartner;
@@ -133,6 +140,7 @@ class Stadt implements TranslatableInterface
     #[ORM\OneToMany(targetEntity: \App\Entity\Active::class, mappedBy: 'stadt')]
     private $actives;
 
+    #[Groups(['assign_formula_sample'])]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'integer')]
     private $preiskategorien;
@@ -167,6 +175,7 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'boolean')]
     private $ferienprogramm;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean')]
     private $schulkindBetreung;
 
@@ -174,6 +183,7 @@ class Stadt implements TranslatableInterface
     #[ORM\OneToMany(targetEntity: \App\Entity\Ferienblock::class, mappedBy: 'stadt')]
     private $ferienblocks;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'json')]
     private $gehaltsklassen = [];
 
@@ -183,9 +193,11 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'boolean')]
     private $active;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'integer')]
     private $minDaysperWeek = 1;
 
+    #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'integer')]
     private $minBlocksPerDay = 0;
 
@@ -298,15 +310,19 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $settingsDokumentUploadText = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $autoAssign_formula = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $settingsSkibShowPflasterKinder = null;
+
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $settingsDokumentUploadTitle = null;
 
     #[ORM\JoinTable(name: 'dokumente_upload_templates')]
     #[ORM\ManyToMany(targetEntity: \App\Entity\File::class)]
     private $settingsDokumentTemplates;
-
-    #[ORM\Column(nullable: true)]
-    private ?bool $settingsSkibShowPflasterKinder = null;
 
     #[ORM\Column(options: ['default' => false])]
     private ?bool $settingsDokumentUploadEnable = null;
@@ -1479,6 +1495,18 @@ class Stadt implements TranslatableInterface
     public function setSettingsDokumentUploadText(string $settingsDokumentUploadText): self
     {
         $this->settingsDokumentUploadText = $settingsDokumentUploadText;
+
+        return $this;
+    }
+
+    public function getAutoAssignFormula(): ?string
+    {
+        return $this->autoAssign_formula;
+    }
+
+    public function setAutoAssignFormula(?string $autoAssign_formula): self
+    {
+        $this->autoAssign_formula = $autoAssign_formula;
 
         return $this;
     }
