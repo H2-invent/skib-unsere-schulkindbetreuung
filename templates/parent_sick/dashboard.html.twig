@@ -35,10 +35,13 @@
                             <li>Offene Blöcke: {{ current.realBeworben|length }}</li>
                         </ul>
 
-                        {% if todayReports[current.id] is defined and todayReports[current.id] %}
+                        <h5>Krankentage</h5>
+                        <p><strong>{{ sickDaysPerChild[current.id]|default(0) }}</strong> Tage</p>
+
+                        {% if allReports[current.id] is defined and allReports[current.id]|length > 0 %}
                             <div class="alert alert-info">
-                                Letzte Krankmeldung: {{ todayReports[current.id].von|date('d.m.Y') }} bis {{ todayReports[current.id].bis|date('d.m.Y') }}
-                                {% if todayReports[current.id].bemerkung %}<br>{{ todayReports[current.id].bemerkung }}{% endif %}
+                                Letzte Krankmeldung: {{ allReports[current.id]|first.von|date('d.m.Y') }} bis {{ allReports[current.id]|first.bis|date('d.m.Y') }}
+                                {% if (allReports[current.id]|first).bemerkung %}<br>{{ (allReports[current.id]|first).bemerkung }}{% endif %}
                             </div>
                         {% endif %}
 
@@ -96,6 +99,34 @@
                                             <span>-</span>
                                         {% endfor %}
                                     </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <h5>Alle Krankmeldungen</h5>
+                        <table class="table table-sm table-striped">
+                            <thead>
+                            <tr>
+                                <th>Von</th>
+                                <th>Bis</th>
+                                <th>Kranktage</th>
+                                <th>Bemerkung</th>
+                                <th>Gemeldet am</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for report in allReports[current.id]|default([]) %}
+                                <tr>
+                                    <td>{{ report.von|date('d.m.Y') }}</td>
+                                    <td>{{ report.bis|date('d.m.Y') }}</td>
+                                    <td>{{ date(report.bis).diff(date(report.von)).days + 1 }}</td>
+                                    <td>{{ report.bemerkung ?: '-' }}</td>
+                                    <td>{{ report.createdAt|date('d.m.Y H:i') }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Keine Krankmeldungen vorhanden.</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

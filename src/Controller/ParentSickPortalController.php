@@ -116,12 +116,14 @@ class ParentSickPortalController extends AbstractController
             $registrations[$registrationKey]['children'][$historyEntry->getTracing()][] = $historyEntry;
         }
 
-        $todayReports = [];
+        $allReports = [];
+        $sickDaysPerChild = [];
         foreach ($registrations as $registrationData) {
             foreach ($registrationData['children'] as $entries) {
                 $latest = end($entries);
                 if ($latest) {
-                    $todayReports[$latest->getId()] = $this->sickReportRepository->findLatestForChild($latest);
+                    $allReports[$latest->getId()] = $this->sickReportRepository->findAllForChildTracing($latest->getTracing());
+                    $sickDaysPerChild[$latest->getId()] = $this->sickReportRepository->countSickDaysForChildTracing($latest->getTracing());
                 }
             }
         }
@@ -129,7 +131,8 @@ class ParentSickPortalController extends AbstractController
         return $this->render('parent_sick/dashboard.html.twig', [
             'access' => $access,
             'registrations' => $registrations,
-            'todayReports' => $todayReports,
+            'allReports' => $allReports,
+            'sickDaysPerChild' => $sickDaysPerChild,
         ]);
     }
 

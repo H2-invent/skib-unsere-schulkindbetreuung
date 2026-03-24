@@ -229,6 +229,27 @@
                                     <td>{% trans %} Erstellt am{% endtrans %}</td>
                                     <td>{{ k.eltern.createdAt|date('d.m.Y H:i') }}</td>
                                 </tr>
+                                <tr>
+                                    <td>{% trans %}Krankentage gesamt{% endtrans %}</td>
+                                    <td>{{ sickDays }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans %}Krankmeldungen{% endtrans %}</td>
+                                    <td>
+                                        <ul class="list-group">
+                                            {% for report in sickReports %}
+                                                <li class="list-group-item">
+                                                    {{ report.von|date('d.m.Y') }} - {{ report.bis|date('d.m.Y') }}
+                                                    ({{ date(report.bis).diff(date(report.von)).days + 1 }} Tage)
+                                                    {% if report.bemerkung %}<br>{{ report.bemerkung }}{% endif %}
+                                                    <br><small>Gemeldet am {{ report.createdAt|date('d.m.Y H:i') }}</small>
+                                                </li>
+                                            {% else %}
+                                                <li class="list-group-item">Keine Krankmeldungen vorhanden.</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                </tr>
                                 {% if k.betreungsblocksRealKontingent|length > 0 %}
                                     <hr>
                                     <tr>

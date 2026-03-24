@@ -25,6 +25,45 @@ class ChildSickReportRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    /**
+     * @return ChildSickReport[]
+     */
+    public function findAllForChild(Kind $kind): array
+    {
+        return $this->createQueryBuilder('report')
+            ->andWhere('report.kind = :kind')->setParameter('kind', $kind)
+            ->orderBy('report.von', 'DESC')
+            ->addOrderBy('report.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return ChildSickReport[]
+     */
+    public function findAllForChildTracing(string $tracing): array
+    {
+        return $this->createQueryBuilder('report')
+            ->innerJoin('report.kind', 'kind')
+            ->andWhere('kind.tracing = :tracing')->setParameter('tracing', $tracing)
+            ->orderBy('report.von', 'DESC')
+            ->addOrderBy('report.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countSickDaysForChildTracing(string $tracing): int
+    {
+        $reports = $this->findAllForChildTracing($tracing);
+        $days = 0;
+        foreach ($reports as $report) {
+            $interval = $report->getVon()->diff($report->getBis());
+            $days += $interval->days + 1;
+        }
+
+        return $days;
+    }
+
     /** @return ChildSickReport[] */
     public function findForTodayByOrganisation(Organisation $organisation): array
     {
