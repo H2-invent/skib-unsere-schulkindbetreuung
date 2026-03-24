@@ -38,5 +38,17 @@ class ZeitblockTranslation implements TranslationInterface
         return $this;
     }
 
+    public function getBlockbeschreibung(): ?string
+    {
+        return $this->extraText;
+    }
+
+    public function setBlockbeschreibung(?string $blockbeschreibung): self
+    {
+        $this->extraText = $blockbeschreibung;
+
+        return $this;
+    }
+
 
 }

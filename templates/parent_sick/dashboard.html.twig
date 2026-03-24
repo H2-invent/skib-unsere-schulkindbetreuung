@@ -75,7 +75,7 @@
                                                             <div>
                                                                 {{ block.wochentagString }} {{ block.von|date('H:i') }}-{{ block.bis|date('H:i') }}
                                                                 ({{ block.ganztagString }})
-                                                                {% if block.translate.extraText is not empty %} - {{ block.translate.extraText }}{% endif %}
+                                                                {% if block.translate.blockbeschreibung is not empty %} - {{ block.translate.blockbeschreibung }}{% endif %}
                                                                 - <strong>zugelassen</strong>
                                                             </div>
                                                         {% else %}
@@ -87,7 +87,7 @@
                                                             <div>
                                                                 {{ block.wochentagString }} {{ block.von|date('H:i') }}-{{ block.bis|date('H:i') }}
                                                                 ({{ block.ganztagString }})
-                                                                {% if block.translate.extraText is not empty %} - {{ block.translate.extraText }}{% endif %}
+                                                                {% if block.translate.blockbeschreibung is not empty %} - {{ block.translate.blockbeschreibung }}{% endif %}
                                                                 - <strong>offen</strong>
                                                             </div>
                                                         {% else %}
