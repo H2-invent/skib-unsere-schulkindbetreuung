@@ -92,22 +92,34 @@ class ParentSickPortalController extends AbstractController
         }
 
         $childHistory = $this->kindRepository->findChildHistoryForParentAndSchoolyear($access->getEmail(), $access->getSchuljahr());
-        $grouped = [];
+        $registrations = [];
         foreach ($childHistory as $historyEntry) {
-            $grouped[$historyEntry->getTracing()][] = $historyEntry;
+            $parent = $historyEntry->getEltern();
+            $registrationKey = $parent?->getTracing() ?? ('registration_' . $historyEntry->getId());
+
+            if (!isset($registrations[$registrationKey])) {
+                $registrations[$registrationKey] = [
+                    'parent' => $parent,
+                    'children' => [],
+                ];
+            }
+
+            $registrations[$registrationKey]['children'][$historyEntry->getTracing()][] = $historyEntry;
         }
 
         $todayReports = [];
-        foreach ($grouped as $entries) {
-            $latest = end($entries);
-            if ($latest) {
-                $todayReports[$latest->getId()] = $this->sickReportRepository->findLatestForChild($latest);
+        foreach ($registrations as $registrationData) {
+            foreach ($registrationData['children'] as $entries) {
+                $latest = end($entries);
+                if ($latest) {
+                    $todayReports[$latest->getId()] = $this->sickReportRepository->findLatestForChild($latest);
+                }
             }
         }
 
         return $this->render('parent_sick/dashboard.html.twig', [
             'access' => $access,
-            'children' => $grouped,
+            'registrations' => $registrations,
             'todayReports' => $todayReports,
         ]);
     }

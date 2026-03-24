@@ -12,81 +12,91 @@
             Schuljahr: <strong>{{ access.schuljahr.von|date('Y') }}/{{ access.schuljahr.bis|date('Y') }}</strong>
         </p>
 
-        {% for tracing, entries in children %}
-            {% set current = entries|last %}
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3>{{ current.vorname }} {{ current.nachname }}</h3>
-                    <small>Schule: {{ current.schule ? current.schule.name : '-' }}</small>
-                </div>
-                <div class="card-body">
-                    <h5>Aktueller Anmeldestatus</h5>
-                    <ul>
-                        <li>Zugelassene Blöcke: {{ current.realZeitblocks|length }}</li>
-                        <li>Offene Blöcke: {{ current.realBeworben|length }}</li>
-                    </ul>
-
-                    {% if todayReports[current.id] is defined and todayReports[current.id] %}
-                        <div class="alert alert-info">
-                            Letzte Krankmeldung: {{ todayReports[current.id].von|date('d.m.Y') }} bis {{ todayReports[current.id].bis|date('d.m.Y') }}
-                            {% if todayReports[current.id].bemerkung %}<br>{{ todayReports[current.id].bemerkung }}{% endif %}
-                        </div>
-                    {% endif %}
-
-                    <h5>Kind krankmelden</h5>
-                    <form method="post" action="{{ path('parent_sick_save', {'kind': current.id}) }}" class="mb-4">
-                        <div class="form-row">
-                            <div class="col-md-3">
-                                <label>Von</label>
-                                <input type="date" name="von" value="{{ 'now'|date('Y-m-d') }}" class="form-control" required>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Bis</label>
-                                <input type="date" name="bis" value="{{ 'now'|date('Y-m-d') }}" class="form-control" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Bemerkung</label>
-                                <input type="text" name="bemerkung" class="form-control" placeholder="z. B. Fieber">
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-3">Krankmeldung speichern</button>
-                    </form>
-
-                    <h5>Gesamte Historie</h5>
-                    <table class="table table-sm table-striped">
-                        <thead>
-                        <tr>
-                            <th>Stand gültig ab</th>
-                            <th>Änderung</th>
-                            <th>Gebuchte Blöcke</th>
-                            <th>Offene Blöcke</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for entry in entries %}
-                            <tr>
-                                <td>{{ entry.startDate ? entry.startDate|date('d.m.Y') : '-' }}</td>
-                                <td>{% if not loop.first %}Ja{% else %}Nein{% endif %}</td>
-                                <td>
-                                    {% for block in entry.realZeitblocks %}
-                                        <div>{{ block.name }} - <strong>zugelassen</strong></div>
-                                    {% else %}
-                                        <span>-</span>
-                                    {% endfor %}
-                                </td>
-                                <td>
-                                    {% for block in entry.realBeworben %}
-                                        <div>{{ block.name }} - <strong>offen</strong></div>
-                                    {% else %}
-                                        <span>-</span>
-                                    {% endfor %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+        {% for registrationId, registration in registrations %}
+            <div class="alert alert-secondary">
+                <strong>Anmeldung:</strong> {{ registration.parent ? registration.parent.vorname : '-' }}
+                {% if registration.parent and registration.parent.name %} {{ registration.parent.name }}{% endif %}
+                {% if registration.parent and registration.parent.createdAt %}
+                    (erstellt am {{ registration.parent.createdAt|date('d.m.Y H:i') }})
+                {% endif %}
             </div>
+
+            {% for tracing, entries in registration.children %}
+                {% set current = entries|last %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3>{{ current.vorname }} {{ current.nachname }}</h3>
+                        <small>Schule: {{ current.schule ? current.schule.name : '-' }}</small>
+                    </div>
+                    <div class="card-body">
+                        <h5>Aktueller Anmeldestatus</h5>
+                        <ul>
+                            <li>Zugelassene Blöcke: {{ current.realZeitblocks|length }}</li>
+                            <li>Offene Blöcke: {{ current.realBeworben|length }}</li>
+                        </ul>
+
+                        {% if todayReports[current.id] is defined and todayReports[current.id] %}
+                            <div class="alert alert-info">
+                                Letzte Krankmeldung: {{ todayReports[current.id].von|date('d.m.Y') }} bis {{ todayReports[current.id].bis|date('d.m.Y') }}
+                                {% if todayReports[current.id].bemerkung %}<br>{{ todayReports[current.id].bemerkung }}{% endif %}
+                            </div>
+                        {% endif %}
+
+                        <h5>Kind krankmelden</h5>
+                        <form method="post" action="{{ path('parent_sick_save', {'kind': current.id}) }}" class="mb-4">
+                            <div class="form-row">
+                                <div class="col-md-3">
+                                    <label>Von</label>
+                                    <input type="date" name="von" value="{{ 'now'|date('Y-m-d') }}" class="form-control" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Bis</label>
+                                    <input type="date" name="bis" value="{{ 'now'|date('Y-m-d') }}" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Bemerkung</label>
+                                    <input type="text" name="bemerkung" class="form-control" placeholder="z. B. Fieber">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Krankmeldung speichern</button>
+                        </form>
+
+                        <h5>Gesamte Historie</h5>
+                        <table class="table table-sm table-striped">
+                            <thead>
+                            <tr>
+                                <th>Stand gültig ab</th>
+                                <th>Änderung</th>
+                                <th>Gebuchte Blöcke</th>
+                                <th>Offene Blöcke</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for entry in entries %}
+                                <tr>
+                                    <td>{{ entry.startDate ? entry.startDate|date('d.m.Y') : '-' }}</td>
+                                    <td>{% if not loop.first %}Ja{% else %}Nein{% endif %}</td>
+                                    <td>
+                                        {% for block in entry.realZeitblocks %}
+                                            <div>{{ block.name }} - <strong>zugelassen</strong></div>
+                                        {% else %}
+                                            <span>-</span>
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for block in entry.realBeworben %}
+                                            <div>{{ block.name }} - <strong>offen</strong></div>
+                                        {% else %}
+                                            <span>-</span>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endfor %}
         {% else %}
             <div class="alert alert-warning">Keine Kinder für dieses Schuljahr gefunden.</div>
         {% endfor %}
