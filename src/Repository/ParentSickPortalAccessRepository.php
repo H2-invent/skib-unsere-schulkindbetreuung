@@ -16,7 +16,11 @@ class ParentSickPortalAccessRepository extends ServiceEntityRepository
 
     public function findByStringToken(string $stringToken): ?ParentSickPortalAccess
     {
-        $token = Uuid::v7()::fromRfc4122($stringToken);
+        try {
+            $token = Uuid::fromString($stringToken);
+        } catch (\InvalidArgumentException) {
+            return null;
+        }
 
         return $this->createQueryBuilder('access')
             ->innerJoin('access.schuljahr', 'schuljahr')

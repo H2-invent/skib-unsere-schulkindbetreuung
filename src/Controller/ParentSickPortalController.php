@@ -13,7 +13,6 @@ use App\Repository\KindRepository;
 use App\Repository\ParentSickPortalAccessRepository;
 use App\Service\ParentSickPortalService;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,9 +63,13 @@ class ParentSickPortalController extends AbstractController
     }
 
     #[Route('/eltern/krankmeldung/start/{token}', name: 'parent_sick_start', methods: ['GET'])]
-    #[Entity('access', expr: 'repository.findByStringToken(token)')]
-    public function start(Request $request, ParentSickPortalAccess $access): Response
+    public function start(Request $request, string $token): Response
     {
+        $access = $this->accessRepository->findByStringToken($token);
+        if (!$access instanceof ParentSickPortalAccess) {
+            throw $this->createNotFoundException('Der Zugangscode ist ungültig.');
+        }
+
         if (!$this->portalService->isLinkValid($access, $request)) {
             throw $this->createAccessDeniedException('Der Link ist ungültig oder abgelaufen.');
         }
