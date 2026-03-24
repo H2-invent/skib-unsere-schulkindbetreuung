@@ -78,14 +78,20 @@
                                     <td>{% if not loop.first %}Ja{% else %}Nein{% endif %}</td>
                                     <td>
                                         {% for block in entry.realZeitblocks %}
-                                            <div>{{ block.name }} - <strong>zugelassen</strong></div>
+                                            <div>
+                                                {{ block.wochentagString }} {{ block.von|date('H:i') }}-{{ block.bis|date('H:i') }}
+                                                ({{ block.ganztagString }}) - <strong>zugelassen</strong>
+                                            </div>
                                         {% else %}
                                             <span>-</span>
                                         {% endfor %}
                                     </td>
                                     <td>
                                         {% for block in entry.realBeworben %}
-                                            <div>{{ block.name }} - <strong>offen</strong></div>
+                                            <div>
+                                                {{ block.wochentagString }} {{ block.von|date('H:i') }}-{{ block.bis|date('H:i') }}
+                                                ({{ block.ganztagString }}) - <strong>offen</strong>
+                                            </div>
                                         {% else %}
                                             <span>-</span>
                                         {% endfor %}
