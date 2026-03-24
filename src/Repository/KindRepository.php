@@ -166,7 +166,6 @@ class KindRepository extends ServiceEntityRepository
     public function findChildHistoryForParentAndSchoolyear(string $email, Active $schuljahr): array
     {
         return $this->createQueryBuilder('kind')
-            ->distinct()
             ->innerJoin('kind.eltern', 'eltern')
             ->leftJoin('kind.zeitblocks', 'zeitblock')
             ->leftJoin('kind.beworben', 'beworben')
@@ -175,8 +174,7 @@ class KindRepository extends ServiceEntityRepository
             ->andWhere('kind.startDate IS NOT NULL')
             ->andWhere('(zeitblock.active = :schuljahr OR beworben.active = :schuljahr)')
             ->setParameter('schuljahr', $schuljahr)
-            ->orderBy('eltern.tracing', 'ASC')
-            ->addOrderBy('kind.vorname', 'ASC')
+            ->orderBy('kind.vorname', 'ASC')
             ->addOrderBy('kind.nachname', 'ASC')
             ->addOrderBy('kind.startDate', 'ASC')
             ->addOrderBy('kind.history', 'ASC')

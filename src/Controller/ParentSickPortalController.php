@@ -96,7 +96,13 @@ class ParentSickPortalController extends AbstractController
 
         $childHistory = $this->kindRepository->findChildHistoryForParentAndSchoolyear($access->getEmail(), $access->getSchuljahr());
         $registrations = [];
+        $seenKindIds = [];
         foreach ($childHistory as $historyEntry) {
+            if (in_array($historyEntry->getId(), $seenKindIds, true)) {
+                continue;
+            }
+            $seenKindIds[] = $historyEntry->getId();
+
             $parent = $historyEntry->getEltern();
             $registrationKey = $parent?->getTracing() ?? ('registration_' . $historyEntry->getId());
 
