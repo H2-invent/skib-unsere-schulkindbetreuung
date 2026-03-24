@@ -22,11 +22,6 @@ class ParentSickPortalAccessRepository extends ServiceEntityRepository
             return null;
         }
 
-        return $this->createQueryBuilder('access')
-            ->innerJoin('access.schuljahr', 'schuljahr')
-            ->innerJoin('access.stadt', 'stadt')
-            ->andWhere('access.token = :token')->setParameter('token', $token)
-            ->getQuery()
-            ->getOneOrNullResult();
+        return $this->findOneBy(['token' => $token]);
     }
 }
