@@ -70,7 +70,7 @@ class ParentSickPortalService
             $access->getStadt()?->getName() ?? 'Schulkindbetreuung',
             'noreply@unsere-schulkindbetreuung.de',
             $access->getEmail(),
-            'Ihr Zugang zur Krankmeldung',
+            'Ihr Zugang zum Elterndashboard',
             $mailContent,
             'noreply@unsere-schulkindbetreuung.de'
         );
