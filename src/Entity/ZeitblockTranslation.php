@@ -20,6 +20,9 @@ class ZeitblockTranslation implements TranslationInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $extraText;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $blockbezeichnung;
+
 
     public function getId(): ?int
     {
@@ -38,16 +41,20 @@ class ZeitblockTranslation implements TranslationInterface
         return $this;
     }
 
-    public function getBlockbeschreibung(): ?string
+    /**
+     * @return mixed
+     */
+    public function getBlockbezeichnung()
     {
-        return $this->extraText;
+        return $this->blockbezeichnung;
     }
 
-    public function setBlockbeschreibung(?string $blockbeschreibung): self
+    /**
+     * @param mixed $blockbezeichnung
+     */
+    public function setBlockbezeichnung($blockbezeichnung): void
     {
-        $this->extraText = $blockbeschreibung;
-
-        return $this;
+        $this->blockbezeichnung = $blockbezeichnung;
     }
 
 

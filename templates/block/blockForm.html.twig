@@ -1,57 +1,258 @@
 {% import "form/macros.html.twig" as a2lixTranslations %}
-<div class="modal-header">
-    <h5 class="modal-title">{% trans with {'%tag%':block.WochentagString|trans} %}Neues Zeitfenster anlegen am %tag%{% endtrans %}</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+<div class="modal-header border-0 pb-2">
+    <div>
+        <h5 class="modal-title fw-semibold mb-1">
+            {% trans with {'%tag%': block.WochentagString|trans} %}
+                Neues Zeitfenster anlegen am %tag%
+            {% endtrans %}
+        </h5>
+        <div class="text-muted small">
+            {% trans %}Bitte fülle die gewünschten Angaben aus.{% endtrans %}
+        </div>
+    </div>
+
+    <button type="button" class="close modern-modal-close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<div class="modal-body">
+
+<div class="modal-body pt-2">
     {{ form_start(form, {
-        'attr': {
-            'class':'ajaxForm'
+        attr: {
+            class: 'ajax-form-modern'
         }
     }) }}
+
     {{ form_errors(form) }}
-    <div class="row">
-        <div class="col-md-6">
-            {{ form_row(form.von) }}
+
+    <div class="time-window-form">
+        <div class="form-card">
+            <div class="form-card-title">
+                {% trans %}Zeitraum{% endtrans %}
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.von) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.bis) }}
+                </div>
+            </div>
+
+            {% if form.ganztag is defined %}
+                <div class="mt-2">
+                    {{ form_row(form.ganztag) }}
+                </div>
+            {% endif %}
         </div>
-        <div class="col-md-6">
-            {{ form_row(form.bis) }}
+
+        {% if form.min is defined or form.max is defined %}
+            <div class="form-card">
+                <div class="form-card-title">
+                    {% trans %}Kapazität{% endtrans %}
+                </div>
+
+                <div class="row">
+                    {% if form.min is defined %}
+                        <div class="col-md-6">
+                            {{ form_row(form.min) }}
+                        </div>
+                    {% endif %}
+                    {% if form.max is defined %}
+                        <div class="col-md-6">
+                            {{ form_row(form.max) }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if form.preise is defined or form.hidePrice is defined %}
+            <div class="form-card">
+                <div class="form-card-title">
+                    {% trans %}Preise{% endtrans %}
+                </div>
+
+                {% if form.preise is defined %}
+                    {{ form_row(form.preise) }}
+                {% endif %}
+
+                {% if form.hidePrice is defined %}
+                    <div class="mt-2">
+                        {{ form_row(form.hidePrice) }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="form-card">
+            <div class="form-card-title">
+                {% trans %}Texte{% endtrans %}
+            </div>
+
+            {{ a2lixTranslations.partialTranslations(form.translations, ['extraText']) }}
+            {{ a2lixTranslations.partialTranslations(form.translations, ['blockbezeichnung']) }}
         </div>
     </div>
-    {% if form.ganztag is defined %}
-        {{ form_row(form.ganztag) }}
-    {% endif %}
-    {% if form.min is defined %}
-        {{ form_row(form.min) }}
-    {% endif %}
-    {% if form.max is defined %}
-        {{ form_row(form.max) }}
-    {% endif %}
-    {% if form.preise is defined %}
-        {{ form_row(form.preise) }}
-    {% endif %}
-    {% if form.hidePrice is defined %}
-        {{ form_row(form.hidePrice) }}
-    {% endif %}
-    {{ a2lixTranslations.partialTranslations(form.translations, ['extraText']) }}
-    <button type="submit" class="btn btn-primary">{% trans %}Speichern{% endtrans %}</button>
+
+    <div class="modal-footer border-0 px-0 pb-0 pt-3">
+        <button type="button" class="btn btn-light" data-dismiss="modal">
+            {% trans %}Abbrechen{% endtrans %}
+        </button>
+        <button type="submit" class="btn btn-primary px-4 js-submit-btn">
+            {% trans %}Speichern{% endtrans %}
+        </button>
+    </div>
+
     {{ form_end(form) }}
 </div>
+
+<style>
+    #loadContentModal .modal-content {
+        border: 0;
+        border-radius: 18px;
+        box-shadow: 0 18px 50px rgba(17, 24, 39, 0.12);
+        background: #ffffff;
+    }
+
+    #loadContentModal .modal-header,
+    #loadContentModal .modal-body {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    #loadContentModal .modal-title {
+        font-size: 1.2rem;
+        color: #1f2937;
+    }
+
+    .modern-modal-close {
+        border: 0;
+        background: #f3f6fb;
+        color: #6b7280;
+        width: 38px;
+        height: 38px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        padding: 0;
+        line-height: 1;
+    }
+
+    .modern-modal-close:hover {
+        background: #e8eef8;
+        color: #111827;
+    }
+
+    .time-window-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .form-card {
+        background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+        border: 1px solid #e8eef5;
+        border-radius: 16px;
+        padding: 1rem 1rem 0.75rem;
+    }
+
+    .form-card-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 0.9rem;
+    }
+
+    #loadContentModal label {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.35rem;
+    }
+
+    #loadContentModal .form-control,
+    #loadContentModal .custom-select,
+    #loadContentModal select {
+        border-radius: 12px;
+        border: 1px solid #dbe4ee;
+        background: #f9fbfd;
+        min-height: 44px;
+        box-shadow: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    #loadContentModal .form-control:focus,
+    #loadContentModal .custom-select:focus,
+    #loadContentModal select:focus {
+        background: #ffffff;
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.12);
+    }
+
+    #loadContentModal textarea.form-control {
+        min-height: 110px;
+    }
+
+    #loadContentModal .btn-primary {
+        border-radius: 12px;
+        font-weight: 600;
+        box-shadow: 0 8px 20px rgba(13, 110, 253, 0.18);
+    }
+
+    #loadContentModal .btn-light {
+        border-radius: 12px;
+        background: #f3f6fb;
+        border-color: #e5ebf3;
+        color: #374151;
+    }
+
+    #loadContentModal .invalid-feedback,
+    #loadContentModal .form-error-message {
+        font-size: 0.875rem;
+    }
+</style>
+
 <script>
-    $('.ajaxForm').submit(function(e) {
-      e.preventDefault();
-      var $form = $(e.currentTarget);
-      $.ajax({
-          url: $form.attr('action'),
-          method: 'POST',
-          data: $form.serialize(),
-          success:function (data) {
-              $.snackbar({content: data.snack});
-              $('#loadContentModal').modal('hide');
-              $('#blockContent').load(LoadContentUrl)
-          }
-      });
-    })
+    (function () {
+        $(document)
+            .off('submit', '#loadContentModal .ajax-form-modern')
+            .on('submit', '#loadContentModal .ajax-form-modern', function (e) {
+                e.preventDefault();
+
+                var $form = $(this);
+                var $submitBtn = $form.find('.js-submit-btn');
+
+                $submitBtn.prop('disabled', true).addClass('disabled');
+
+                $.ajax({
+                    url: $form.attr('action'),
+                    method: 'POST',
+                    data: $form.serialize(),
+                    success: function (data) {
+                        if (data.snack) {
+                            $.snackbar({ content: data.snack });
+                        }
+
+                        $('#loadContentModal').modal('hide');
+                        $('#blockContent').load(LoadContentUrl);
+                    },
+                    error: function (xhr) {
+                        if (xhr.responseText) {
+                            $('#loadContentModal .modal-content').html(xhr.responseText);
+                        } else {
+                            $.snackbar({
+                                content: '{{ "Beim Speichern ist ein Fehler aufgetreten."|trans }}'
+                            });
+                        }
+                    },
+                    complete: function () {
+                        $submitBtn.prop('disabled', false).removeClass('disabled');
+                    }
+                });
+            });
+    })();
 </script>
