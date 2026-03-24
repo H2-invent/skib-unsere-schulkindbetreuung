@@ -44,8 +44,8 @@ class ImportZeitblockCommand extends Command
         $csv->setHeaderOffset(0);
 
         $notFoundIds = [];
-        $foundIds= [];
-        $newIds=[];
+        $foundIds = [];
+        $newIds = [];
         foreach ($csv as $record) {
 
             $id = $record['id'] ?? null;
@@ -54,24 +54,31 @@ class ImportZeitblockCommand extends Command
             // Preise extrahieren (Annahme: Spalten "Preis 1", "Preis 2", ... existieren)
             foreach ($record as $key => $value) {
 
-                if (str_starts_with($key, 'preis') ) {
-                
-                    $preise[] = (float) str_replace(',', '.', $value);
+                if (str_starts_with($key, 'preis')) {
+
+                    $preise[] = (float)str_replace(',', '.', $value);
                 }
             }
 
             $ganztag = $record['ganztag'] ?? null;
             $von = $record['von'] ?? null;
             $bis = $record['bis'] ?? null;
+            $maxRaw = array_key_exists('max', $record) ? trim((string)$record['max']) : null;
+            $minRaw = array_key_exists('min', $record) ? trim((string)$record['min']) : null;
+            $max = ($maxRaw === null || $maxRaw === '') ? null : (int)$maxRaw;
+            $min = ($minRaw === null || $minRaw === '')
+                ? (($max !== null) ? 0 : null)
+                : (int)$minRaw;
+
             $schulId = $record['schul_id'] ?? null;
             $schule = $this->entityManager->getRepository(Schule::class)->find($schulId);
-            if (!$schule){
-              $output->writeln('<error>Schule nicht gefunden</error>');
-              continue;
+            if (!$schule) {
+                $output->writeln('<error>Schule nicht gefunden</error>');
+                continue;
             }
 
-            $wochentag= $record['wochentag'] ?? null;
-            $schuljahrId= $record['schuljahr'] ?? null;
+            $wochentag = $record['wochentag'] ?? null;
+            $schuljahrId = $record['schuljahr'] ?? null;
             $schuljahr = $this->entityManager->getRepository(Active::class)->find($schuljahrId);
             if ($id) {
                 $zeitblock = $this->entityManager->getRepository(Zeitblock::class)->find($id);
@@ -79,7 +86,7 @@ class ImportZeitblockCommand extends Command
                     $notFoundIds[] = $id;
                     continue;
                 }
-                $foundIds[]=$id;
+                $foundIds[] = $id;
             } else {
                 $zeitblock = new Zeitblock();
                 $zeitblock->setDeleted(false)
@@ -89,15 +96,17 @@ class ImportZeitblockCommand extends Command
                     ->setHidePrice(false);
                 $newIds[] = $zeitblock;
             }
-            $anmerkung = $record['anmerkung']??null;
-            $zeitblock->setPreise($preise);
-            $zeitblock->setGanztag($ganztag);
-            $zeitblock->setVon(new \DateTime($von));
-            $zeitblock->setBis(new \DateTime($bis));
-            $zeitblock->setWochentag($wochentag);
-            $zeitblock->setSchule($schule);
-            $zeitblock->setActive($schuljahr);
-            if ($anmerkung){
+            $anmerkung = $record['anmerkung'] ?? null;
+            $zeitblock->setPreise($preise)
+                ->setGanztag($ganztag)
+                ->setMin($min)
+                ->setMax($max)
+                ->setVon(new \DateTime($von))
+                ->setBis(new \DateTime($bis))
+                ->setWochentag($wochentag)
+                ->setSchule($schule)
+                ->setActive($schuljahr);
+            if ($anmerkung) {
 
                 $translation = new ZeitblockTranslation();
                 $translation->setExtraText(mb_convert_encoding($anmerkung, 'UTF-8', 'ISO-8859-1'));
@@ -116,8 +125,8 @@ class ImportZeitblockCommand extends Command
         }
 
         $output->writeln('<info>Import abgeschlossen!</info>');
-        $io->success(sprintf('We found %s id in the database',sizeof($foundIds)));
-        $io->success(sprintf('We created %s new timeslots in the database',sizeof($newIds)));
+        $io->success(sprintf('We found %s id in the database', sizeof($foundIds)));
+        $io->success(sprintf('We created %s new timeslots in the database', sizeof($newIds)));
         return Command::SUCCESS;
     }
 }

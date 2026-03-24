@@ -72,3 +72,5 @@ Nach erfolgreichem Start ist die Anwendung unter der von DDEV bereitgestellten U
 
 - Keycloak Admin: `admin:password`
 - Keycloak SKiB Admin: `test@test.com:test`
+
+

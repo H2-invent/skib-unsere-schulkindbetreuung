@@ -28,7 +28,7 @@ class CheckinSchulkindservice
     }
 
     public
-    function checkin(Kind $kind, \DateTime $dateTime, Organisation $organisation)
+    function checkin(?Kind $kind, \DateTime $dateTime, Organisation $organisation)
     {
         $result['error'] = false;
         $result['errorText'] = 'Hallo ' . $kind->getVorname() . ', Willkommen in der Schulkindbetreuung.';

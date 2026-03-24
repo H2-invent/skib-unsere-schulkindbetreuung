@@ -53,6 +53,7 @@ class BlockType extends AbstractType
 
             ])
             ->add('hidePrice', CheckboxType::class, ['required' => false, 'label' => 'Preis in der Anzeige verstecken', 'translation_domain' => 'form'])
+
             ->add('translations', TranslationsType::class, [
 
                     'fields' => [
@@ -61,10 +62,18 @@ class BlockType extends AbstractType
                             'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
                             'label' => 'Text welcher bei einem Zeitblock angezeigt werden soll',
                             'translation_domain' => 'form'
+                        ],
+                        'blockbezeichnung' => [
+
+                            'attr' => array('rows' => 1, 'class' => 'onlineEditor'),
+                            'label' => 'Blockbezeichnung der Elternkommunikation',
+                            'translation_domain' => 'form'
                         ]
+
                     ]
                 ]
             )
+
             ->add('save', SubmitType::class, ['label' => 'Speichern', 'translation_domain' => 'form']);
 
 

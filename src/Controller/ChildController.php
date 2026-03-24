@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Active;
+use App\Entity\ChildSickReport;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
@@ -110,7 +111,10 @@ class ChildController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
 
-        return $this->render('child/childDetail.html.twig', array('beruflicheSituation' => array_flip($loerrachWorkflowController->beruflicheSituation), 'k' => $kind, 'eltern' => $eltern, 'his' => $historydate, 'date' => $date, 'history' => $historydate, 'formInternalNotice' => $form->createView()));
+        $sickReports = $this->managerRegistry->getRepository(ChildSickReport::class)->findAllForChildTracing($kind->getTracing());
+        $sickDays = $this->managerRegistry->getRepository(ChildSickReport::class)->countSickDaysForChildTracing($kind->getTracing());
+
+        return $this->render('child/childDetail.html.twig', array('beruflicheSituation' => array_flip($loerrachWorkflowController->beruflicheSituation), 'k' => $kind, 'eltern' => $eltern, 'his' => $historydate, 'date' => $date, 'history' => $historydate, 'formInternalNotice' => $form->createView(), 'sickReports' => $sickReports, 'sickDays' => $sickDays));
     }
 
     /**

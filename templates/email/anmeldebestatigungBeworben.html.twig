@@ -33,7 +33,7 @@
                         {% for block in blocks %}
                             {% if block.wochentag == day %}
                                 <div>
-                                    {{ block.von|date('H:i') }} - {{ block.bis|date('H:i') }}<br>
+                                    {{ block.von|date('H:i') }} - {{ block.bis|date('H:i') }} {% if block.translate.blockbezeichnung is not null %}({{ block.translate.blockbezeichnung }}){% endif %}<br>
 
                                 </div>
                             {% endif %}
