@@ -96,13 +96,7 @@ class ParentSickPortalController extends AbstractController
 
         $childHistory = $this->kindRepository->findChildHistoryForParentAndSchoolyear($access->getEmail(), $access->getSchuljahr());
         $registrations = [];
-        $seenKindIds = [];
         foreach ($childHistory as $historyEntry) {
-            if (in_array($historyEntry->getId(), $seenKindIds, true)) {
-                continue;
-            }
-            $seenKindIds[] = $historyEntry->getId();
-
             $parent = $historyEntry->getEltern();
             $registrationKey = $parent?->getTracing() ?? ('registration_' . $historyEntry->getId());
 
@@ -110,10 +104,20 @@ class ParentSickPortalController extends AbstractController
                 $registrations[$registrationKey] = [
                     'parent' => $parent,
                     'children' => [],
+                    'parentHistory' => [],
                 ];
             }
 
             $registrations[$registrationKey]['children'][$historyEntry->getTracing()][] = $historyEntry;
+        }
+
+        foreach ($registrations as $registrationKey => $registrationData) {
+            $parent = $registrationData['parent'];
+            if ($parent) {
+                $registrations[$registrationKey]['parentHistory'] = $this->entityManager
+                    ->getRepository(\App\Entity\Stammdaten::class)
+                    ->findHistoryStammdaten($parent);
+            }
         }
 
         $allReports = [];

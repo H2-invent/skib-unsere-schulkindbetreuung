@@ -165,7 +165,8 @@ class KindRepository extends ServiceEntityRepository
      */
     public function findChildHistoryForParentAndSchoolyear(string $email, Active $schuljahr): array
     {
-        return $this->createQueryBuilder('kind')
+        $tracingRows = $this->createQueryBuilder('kind')
+            ->select('DISTINCT kind.tracing AS tracing')
             ->innerJoin('kind.eltern', 'eltern')
             ->leftJoin('kind.zeitblocks', 'zeitblock')
             ->leftJoin('kind.beworben', 'beworben')
@@ -174,10 +175,26 @@ class KindRepository extends ServiceEntityRepository
             ->andWhere('kind.startDate IS NOT NULL')
             ->andWhere('(zeitblock.active = :schuljahr OR beworben.active = :schuljahr)')
             ->setParameter('schuljahr', $schuljahr)
-            ->orderBy('kind.vorname', 'ASC')
-            ->addOrderBy('kind.nachname', 'ASC')
+            ->getQuery()
+            ->getScalarResult();
+
+        $tracings = array_values(array_filter(array_map(static function (array $row) {
+            return $row['tracing'] ?? null;
+        }, $tracingRows)));
+
+        if (count($tracings) === 0) {
+            return [];
+        }
+
+        return $this->createQueryBuilder('kind')
+            ->innerJoin('kind.eltern', 'eltern')
+            ->andWhere('kind.tracing IN (:tracings)')->setParameter('tracings', $tracings)
+            ->andWhere('eltern.created_at IS NOT NULL')
+            ->andWhere('kind.startDate IS NOT NULL')
+            ->orderBy('kind.tracing', 'ASC')
             ->addOrderBy('kind.startDate', 'ASC')
             ->addOrderBy('kind.history', 'ASC')
+            ->addOrderBy('eltern.created_at', 'ASC')
             ->getQuery()
             ->getResult()
         ;

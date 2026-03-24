@@ -19,6 +19,18 @@
                 {% if registration.parent and registration.parent.createdAt %}
                     (erstellt am {{ registration.parent.createdAt|date('d.m.Y H:i') }})
                 {% endif %}
+                {% if registration.parentHistory|length > 0 %}
+                    <hr>
+                    <strong>Eltern-Historie:</strong>
+                    <ul class="mb-0 mt-2">
+                        {% for parentVersion in registration.parentHistory %}
+                            <li>
+                                {{ parentVersion.startDate ? parentVersion.startDate|date('d.m.Y') : '-' }}
+                                {% if parentVersion.createdAt %}(erstellt: {{ parentVersion.createdAt|date('d.m.Y H:i') }}){% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
 
             {% for tracing, entries in registration.children %}
@@ -65,6 +77,7 @@
                         </form>
 
                         <h5>Gesamte Historie</h5>
+                        <p><small>{{ entries|length }} Historien-Einträge gefunden.</small></p>
                         <table class="table table-sm table-striped">
                             <thead>
                             <tr>
