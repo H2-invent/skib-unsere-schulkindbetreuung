@@ -80,7 +80,8 @@ class CheckinSchulkindbetreuungController extends AbstractController
         $today = new \DateTime();
         $kinder = $checkinSchulkindservice->getAllKidsToday($organisation, $today,$this->getUser());
         $text = $translator->trans('Kinder Anwesend am %date%', array('%date%' => $today->format('d.m.Y')));
-        return $this->render('checkin_schulkindbetreuung/childList.twig', array('text' => $text, 'kinder' => $kinder));
+        $date = new \DateTime();
+        return $this->render('checkin_schulkindbetreuung/childList.twig', array('text' => $text, 'kinder' => $kinder, 'date'=> $date));
 
     }
 

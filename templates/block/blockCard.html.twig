@@ -4,7 +4,12 @@
             <div class="card-body text-center {% if b.deleted == true %}bg-danger collapse{% endif %}" id="deletedCollape-{{ b.id }}">
                 <div class="data">
                     <h5 class="mb-3">
+                        {% if b.translate.blockbezeichnung is not null %}
+
+                            {{ b.translate.blockbezeichnung }}
+                            {% else %}
                         {{ b.ganztagString }}{% if b.ganztag == 0 %}<i class="material-icons">restaurant</i>{% endif %}
+                        {% endif %}
                     </h5>
                     {% if b.deaktiviert %}
                         <div class="disabled">{{ 'Dieser Block ist nicht mehr buchbar'|trans }}</div>

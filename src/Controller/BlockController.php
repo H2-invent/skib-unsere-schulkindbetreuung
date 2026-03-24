@@ -24,31 +24,34 @@ class BlockController extends AbstractController
 
 
     }
+
     /**
      * @Route("/org_child/show/schule/show", name="block_schulen_schow",methods={"GET"})
      */
     public function showSchulen(Request $request)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
-        $schule = $this->managerRegistry->getRepository(Schule::class)->findBy(array('organisation'=>$organisation,'deleted'=>false));
-        if($organisation != $this->getUser()->getOrganisation()){
+        $schule = $this->managerRegistry->getRepository(Schule::class)->findBy(array('organisation' => $organisation, 'deleted' => false));
+        if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        return $this->render('block/schulen.html.twig',array('schule'=>$schule));
+        return $this->render('block/schulen.html.twig', array('schule' => $schule));
     }
+
     /**
      * @Route("/org_child/show/schule/block/show", name="block_schule_schow",methods={"GET"})
      */
     public function showBlocks(Request $request)
     {
         $schule = $this->managerRegistry->getRepository(Schule::class)->find($request->get('id'));
-        if($schule->getOrganisation() != $this->getUser()->getOrganisation()){
+        if ($schule->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $activity = $this->managerRegistry->getRepository(Active::class)->findBy(array('stadt'=>$schule->getStadt()),array('bis'=>'desc'));
+        $activity = $this->managerRegistry->getRepository(Active::class)->findBy(array('stadt' => $schule->getStadt()), array('bis' => 'desc'));
         $blocks = $this->managerRegistry->getRepository(Zeitblock::class)->findAll();
-        return $this->render('block/blocks.html.twig',array('schuljahre'=>$activity,'schule'=>$schule,'blocks'=>$blocks));
+        return $this->render('block/blocks.html.twig', array('schuljahre' => $activity, 'schule' => $schule, 'blocks' => $blocks));
     }
+
     /**
      * @Route("/org_child/show/schule/block/getBlocks", name="block_schule_getBlocks",methods={"GET"})
      */
@@ -58,22 +61,22 @@ class BlockController extends AbstractController
         if ($schule->getOrganisation() != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $activity = $this->managerRegistry->getRepository(Active::class)->findOneBy(array('id'=>$request->get('id'),'stadt'=>$schule->getStadt()));
-        $blocks = $this->managerRegistry->getRepository(Zeitblock::class)->findBy(array('schule'=>$schule,'active'=>$activity),array('von'=>'asc'));
+        $activity = $this->managerRegistry->getRepository(Active::class)->findOneBy(array('id' => $request->get('id'), 'stadt' => $schule->getStadt()));
+        $blocks = $this->managerRegistry->getRepository(Zeitblock::class)->findBy(array('schule' => $schule, 'active' => $activity), array('von' => 'asc'));
 
         $renderBlock = array();
-        foreach ($blocks as $data){
-            $renderBlock[$data->getWochentag()][]=$data;
+        foreach ($blocks as $data) {
+            $renderBlock[$data->getWochentag()][] = $data;
         }
 
-        return $this->render('block/blockContent.html.twig',array('blocks'=>$renderBlock,'year'=>$activity,'shool'=>$schule));
+        return $this->render('block/blockContent.html.twig', array('blocks' => $renderBlock, 'year' => $activity, 'shool' => $schule));
 
     }
 
     /**
      * @Route("/org_block/schule/block/newBlock", name="block_schule_newBlocks",methods={"GET","POST"})
      */
-    public function newBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function newBlock(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $activity = $this->managerRegistry->getRepository(Active::class)->find($request->get('year'));
         $shool = $this->managerRegistry->getRepository(Schule::class)->find($request->get('shool'));
@@ -84,10 +87,10 @@ class BlockController extends AbstractController
         $block->setSchule($shool);
         $block->setActive($activity);
         $block->setWochentag($request->get('weekday'));
-        $block->setPreise(array_fill(0,$shool->getStadt()->getpreiskategorien(), 0));
-        $form = $this->createForm(BlockType::class, $block,[
-            'action' => $this->generateUrl('block_schule_newBlocks',array('year'=>$activity->getId(),'shool'=>$shool->getId(),'weekday'=>$block->getWochentag())),
-            'anzahlPreise'=>$shool->getStadt()->getpreiskategorien()
+        $block->setPreise(array_fill(0, $shool->getStadt()->getpreiskategorien(), 0));
+        $form = $this->createForm(BlockType::class, $block, [
+            'action' => $this->generateUrl('block_schule_newBlocks', array('year' => $activity->getId(), 'shool' => $shool->getId(), 'weekday' => $block->getWochentag())),
+            'anzahlPreise' => $shool->getStadt()->getpreiskategorien()
         ]);
 
         $form->remove('save');
@@ -99,46 +102,40 @@ class BlockController extends AbstractController
             $block = $form->getData();
             $errors = $validator->validate($block);
 
-                if (count($errors) == 0) {
-                    $em = $this->managerRegistry->getManager();
-                    $em->persist($block);
-                    $em->flush();
-                    $text = $translator->trans('Erfolgreich gespeichert');
-                    return new JsonResponse(array('error' => 0, 'snack' => $text));
-                }
+            if (count($errors) == 0) {
+                $em = $this->managerRegistry->getManager();
+                $em->persist($block);
+                $em->flush();
+                $text = $translator->trans('Erfolgreich gespeichert');
+                return new JsonResponse(array('error' => 0, 'snack' => $text));
+            }
 
 
         }
-        return $this->render('block/blockForm.html.twig',array('block'=>$block,'form'=>$form->createView()));
+        return $this->render('block/blockForm.html.twig', array('block' => $block, 'form' => $form->createView()));
 
     }
-
-
 
 
     /**
      * @Route("/org_block/schule/block/editBlock", name="block_schule_editBlocks",methods={"GET","POST"})
      */
-    public function editBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function editBlock(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
-            return new JsonResponse(array('error'=>1,'snack'=>$text));
+            return new JsonResponse(array('error' => 1, 'snack' => $text));
 
 
         }
 
-        $form = $this->createForm(BlockType::class, $block,[
-            'action' => $this->generateUrl('block_schule_editBlocks',array('id'=>$block->getId())),
+        $form = $this->createForm(BlockType::class, $block, [
+            'action' => $this->generateUrl('block_schule_editBlocks', array('id' => $block->getId())),
         ]);
-
-        $form->remove('save');
-        $form->remove('ganztag');
-        $form->remove('preise');
-        $form->remove('min');
-        $form->remove('max');
-        $form->handleRequest($request);
+        $form->remove('ganztag')
+            ->remove('save')
+            ->handleRequest($request);
 
         $errors = array();
         if ($form->isSubmitted() && $form->isValid()) {
@@ -152,38 +149,39 @@ class BlockController extends AbstractController
                     $text = $translator->trans('Erfolgreich gespeichert');
                     return new JsonResponse(array('error' => 0, 'snack' => $text));
                 }
-            }catch (\Exception $e){
+            } catch (\Exception $e) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
                 return new JsonResponse(array('error' => 1, 'snack' => $text));
             }
 
         }
-        return $this->render('block/blockForm.html.twig',array('block'=>$block,'form'=>$form->createView()));
+        return $this->render('block/blockForm.html.twig', array('block' => $block, 'form' => $form->createView()));
 
     }
+
     /**
      * @Route("/org_block/schule/block/linkBlock", name="block_schule_linkBlock",methods={"GET","POST"})
      */
-    public function linkBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function linkBlock(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
-            return new JsonResponse(array('error'=>1,'snack'=>$text));
+            return new JsonResponse(array('error' => 1, 'snack' => $text));
         }
         $blocks1 = $this->managerRegistry->getRepository(Zeitblock::class)->findBy(
-            array('schule'=>$block->getSchule(),
-                'ganztag'=>$block->getGanztag(),
-                'active'=>$block->getActive(),'deleted'=>false),array('von'=>'ASC'),);
+            array('schule' => $block->getSchule(),
+                'ganztag' => $block->getGanztag(),
+                'active' => $block->getActive(), 'deleted' => false), array('von' => 'ASC'),);
         $blocks = array();
-        foreach ($blocks1 as $data){
-            if($data != $block){
+        foreach ($blocks1 as $data) {
+            if ($data != $block) {
                 $blocks[] = $data;
             }
         }
-        $form = $this->createForm(BlockAbhangigkeitType::class, $block,[
-            'action' => $this->generateUrl('block_schule_linkBlock',array('id'=>$block->getId())),
-            'blocks'=>$blocks
+        $form = $this->createForm(BlockAbhangigkeitType::class, $block, [
+            'action' => $this->generateUrl('block_schule_linkBlock', array('id' => $block->getId())),
+            'blocks' => $blocks
         ]);
 
         $form->handleRequest($request);
@@ -200,30 +198,31 @@ class BlockController extends AbstractController
                     $text = $translator->trans('Erfolgreich gespeichert');
                     return new JsonResponse(array('error' => 0, 'snack' => $text));
                 }
-            }catch (\Exception $e){
+            } catch (\Exception $e) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
                 return new JsonResponse(array('error' => 1, 'snack' => $text));
             }
 
         }
-        return $this->render('block/blockLinkForm.html.twig',array('block'=>$block,'form'=>$form->createView()));
+        return $this->render('block/blockLinkForm.html.twig', array('block' => $block, 'form' => $form->createView()));
     }
+
     /**
      * @Route("/org_block/schule/block/linkBlock/remove", name="block_schule_linkBlock_remove",methods={"DELETE"})
      */
-    public function removeLinkBlock(Request $request,ValidatorInterface $validator, TranslatorInterface $translator)
+    public function removeLinkBlock(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
-            return new JsonResponse(array('error'=>1,'snack'=>$text));
+            return new JsonResponse(array('error' => 1, 'snack' => $text));
         }
-        foreach ($block->getVorganger() as $data){
+        foreach ($block->getVorganger() as $data) {
             $block->removeVorganger($data);
         }
         $em = $this->managerRegistry->getManager();
         $em->persist($block);
         $em->flush();
-        return new JsonResponse(array('redirect'=>$this->generateUrl('block_schule_schow',array('id'=>$block->getSchule()->getId()))));
+        return new JsonResponse(array('redirect' => $this->generateUrl('block_schule_schow', array('id' => $block->getSchule()->getId()))));
     }
 }
