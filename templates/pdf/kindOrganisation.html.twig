@@ -122,7 +122,7 @@
                         <li><b>{{ day[0].wochentagString }}</b></li>
                         {% for z in day %}
                             <li class="list-group-item"> {{ z.von|date('H:i') }}
-                                - {{ z.bis|date('H:i') }}</li>
+                                - {{ z.bis|date('H:i') }} {% if z.translate.blockbezeichnung is not null %}({{ z.translate.blockbezeichnung }}){% endif %}</li>
                         {% endfor %}
                     {% endfor %}
                 </ul>
@@ -141,7 +141,7 @@
                         <li><b>{{ day[0].wochentagString }}</b></li>
                         {% for z in day %}
                             <li class="list-group-item"> {{ z.von|date('H:i') }}
-                                - {{ z.bis|date('H:i') }}</li>
+                                - {{ z.bis|date('H:i') }} {% if z.translate.blockbezeichnung is not null %}({{ z.translate.blockbezeichnung }}){% endif %}</li>
                         {% endfor %}
                     {% endfor %}
                 </ul>
