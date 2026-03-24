@@ -100,6 +100,7 @@ class WorkflowAbschluss
                 $zb->addKind($kindNew);
             }
 
+            //TODO beworben von altem Kind entfernen vermutlich -> nein, änder die ansicht damit die alten nicht zu sehen sind
             foreach ($data->getBeworben() as $zb) {//alle BEWORBENEN Zeitblöcke werden zu der Arbeitskopie hinzugefügt
                 $kindNew->addBeworben($zb);
             }
