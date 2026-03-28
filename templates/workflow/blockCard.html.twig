@@ -2,31 +2,47 @@
 {% if blocks is defined %}
     {% for b in blocks %}
 
-        <div class=" card    {% if b.wartelisteKinder|filter(k => k.tracing == kind.tracing)|length > 0 %}bg-info{% endif %}" >
-            {%if b.deaktiviert%}
-            <div class="blockdeactiviert">
-                {{ b.schule.organisation.stadt.translate.schulkindbetreuungBlockDeaktiviertText|raw }}
+        <div class=" card    {% if b.wartelisteKinder|filter(k => k.tracing == kind.tracing)|length > 0 %}bg-info{% endif %}">
+            {% if b.deaktiviert %}
+                <div class="blockdeactiviert">
+                    {{ b.schule.organisation.stadt.translate.schulkindbetreuungBlockDeaktiviertText|raw }}
+                </div>
+            {% endif %}
+            <div class="loader d-none mask flex-center rgba-black-strong"><span class="spinner-border mr-2"
+                                                                                role="status" aria-hidden="true"></span>
             </div>
-            {%endif%}
-            <div class="loader d-none mask flex-center rgba-black-strong"><span class="spinner-border mr-2" role="status" aria-hidden="true"></span></div>
 
 
-                {% if b.min is not null or b.max is not null %} <div class="card-header">
-                    {% trans %}Anmeldung{% endtrans %}
-                    {% if b.wartelisteKinder|filter(k => k.tracing == kind.tracing)|length > 0 %}<br>Bereits auf der Warteliste{% endif %}
-                    <i class="far fa-question-circle" data-toggle="popover" data-placement="top" title="{{ 'Information'|trans }}" data-content="{% trans %}Für diesen Block gibt es eine manuelle Zuweisung der Betreuungsplätze. Dies geschieht durch die Organisationen.{% endtrans %}"></i>
-                    </div>{% endif %}
+            {% if b.min is not null or b.max is not null %}
+                <div class="card-header">
+                {% trans %}Anmeldung{% endtrans %}
+                {% if b.wartelisteKinder|filter(k => k.tracing == kind.tracing)|length > 0 %}
+                    <br>Bereits auf der Warteliste{% endif %}
+                <i class="far fa-question-circle" data-toggle="popover" data-placement="top"
+                   title="{{ 'Information'|trans }}"
+                   data-content="{% trans %}Für diesen Block gibt es eine manuelle Zuweisung der Betreuungsplätze. Dies geschieht durch die Organisationen.{% endtrans %}"></i>
+                </div>{% endif %}
 
 
-            <div id="block-{{ b.id }}" href="{{ path('loerrach_workflow_kinder_block_toggle', {'slug':stadt.slug,'kinder_id':kind.id, 'block_id':b.id}) }}"  class="{% if b in kind.zeitblocks %}bg-success{% endif %}{% if b in kind.beworben %}bg-success{% endif %} chooseBlock mask rgba-white-slight card-body text-center">
+            <div id="block-{{ b.id }}"
+                 href="{{ path('loerrach_workflow_kinder_block_toggle', {'slug':stadt.slug,'kinder_id':kind.id, 'block_id':b.id}) }}"
+                 class="{% if b in kind.zeitblocks %}bg-success{% endif %}{% if b in kind.beworben %}bg-success{% endif %} chooseBlock mask rgba-white-slight card-body text-center">
 
-              {% if b.ganztag == 0 %} <b>{% trans %}Mittagessen{% endtrans %}<i class="fas fa-utensils"></i> </b> <br>{% endif %}
+                {% if b.ganztag == 0 %} <b>{% trans %}Mittagessen{% endtrans %}<i class="fas fa-utensils"></i> </b>
+                    <br>{% endif %}
                 <b>{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</b><br>
-              {% if not b.hidePrice%}  {{ 'Grundgebühr'|trans }}: {{ b.preise[eltern.einkommen]|number_format(2,',') }}€<br> {% endif %}
-                {% if b.translate.extraText != ''%} {{ b.translate.extraText|raw }}   <br>{% endif %}
-                {%if b.deaktiviert !=  true%}
-                <a href="#" class="btn gebucht-text">{% if b in kind.zeitblocks %}{{ 'Gebucht'|trans }}{% elseif b in kind.beworben %}{{ 'Angemeldet'|trans }} {% else %}{{ 'Hier buchen'|trans }}{% endif %}</a>
-                {%endif%}
+                {% if not b.hidePrice %}  {{ 'Grundgebühr'|trans }}: {{ b.preise[eltern.einkommen]|number_format(2,',') }}€
+                    <br> {% endif %}
+
+                {% if b.translate.blockbezeichnung is not null %}
+                   <b> {{ b.translate.blockbezeichnung }}</b>
+                {% endif %}
+
+                {% if b.translate.extraText != '' %} {{ b.translate.extraText|raw }}   <br>{% endif %}
+                {% if b.deaktiviert !=  true %}
+                    <a href="#"
+                       class="btn gebucht-text">{% if b in kind.zeitblocks %}{{ 'Gebucht'|trans }}{% elseif b in kind.beworben %}{{ 'Angemeldet'|trans }} {% else %}{{ 'Hier buchen'|trans }}{% endif %}</a>
+                {% endif %}
             </div>
         </div>
     {% endfor %}
