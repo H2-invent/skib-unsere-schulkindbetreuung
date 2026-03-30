@@ -244,7 +244,7 @@ class BlockController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ORG_BLOCK_MANAGEMENT');
 
         if ($request->isMethod('POST')) {
-            $weekdays = array_unique(array_map('intval', (array)$request->request->get('weekdays', [])));
+            $weekdays = array_unique(array_map('intval', $request->request->all('weekdays')));
             $weekdays = array_values(array_filter($weekdays, static function (int $weekday): bool {
                 return $weekday >= 0 && $weekday <= 4;
             }));
