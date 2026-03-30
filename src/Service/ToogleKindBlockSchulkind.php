@@ -116,7 +116,32 @@ class ToogleKindBlockSchulkind
             $tmp = $this->blockDelete($kind, $data);
             $res = array_merge($res, $tmp);
         }
+
+        foreach ($block->getVorganger() as $vorgaenger) {
+            if (!$vorgaenger->getDirektbuchungDeaktiviert()) {
+                continue;
+            }
+
+            $wirdNochVonAktivemNachfolgerBenoetigt = false;
+            foreach ($vorgaenger->getNachfolger() as $nachfolger) {
+                if ($this->isBlockSelectedByKind($kind, $nachfolger)) {
+                    $wirdNochVonAktivemNachfolgerBenoetigt = true;
+                    break;
+                }
+            }
+
+            if (!$wirdNochVonAktivemNachfolgerBenoetigt && $this->isBlockSelectedByKind($kind, $vorgaenger)) {
+                $tmp = $this->blockDelete($kind, $vorgaenger);
+                $res = array_merge($res, $tmp);
+            }
+        }
+
         return $res;
+    }
+
+    private function isBlockSelectedByKind(Kind $kind, Zeitblock $block): bool
+    {
+        return in_array($block, $kind->getBeworben()->toArray()) || in_array($block, $kind->getZeitblocks()->toArray());
     }
 
     private function blockAdd(Kind $kind, Zeitblock $block): array
