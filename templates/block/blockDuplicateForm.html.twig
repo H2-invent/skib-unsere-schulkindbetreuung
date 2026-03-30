@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h5 class="modal-title">Block duplizieren ({{ block.von|date('H:i') }}-{{ block.bis|date('H:i') }})</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form class="ajaxDuplicateForm" action="{{ path('block_schule_duplicateBlocks', {'id': block.id}) }}" method="post">
+        <p class="mb-2">Bitte wählen Sie die Wochentage aus, auf die dieser Block kopiert werden soll.</p>
+        {% for day, label in weekdayLabels %}
+            <div class="custom-control custom-checkbox mb-2">
+                <input class="custom-control-input" type="checkbox" id="weekday-{{ block.id }}-{{ day }}" name="weekdays[]" value="{{ day }}">
+                <label class="custom-control-label" for="weekday-{{ block.id }}-{{ day }}">{{ label|trans }}</label>
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary mt-2">Duplizieren</button>
+    </form>
+</div>
+<script>
+    $('.ajaxDuplicateForm').submit(function (e) {
+        e.preventDefault();
+        var $form = $(e.currentTarget);
+
+        $.ajax({
+            url: $form.attr('action'),
+            method: 'POST',
+            data: $form.serialize(),
+            success: function (data) {
+                $.snackbar({content: data.snack});
+                if (data.error === 0) {
+                    $('#loadContentModal').modal('hide');
+                    $('#blockContent').load(LoadContentUrl);
+                }
+            }
+        });
+    });
+</script>

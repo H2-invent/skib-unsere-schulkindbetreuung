@@ -14,4 +14,5 @@ __🐛 Bugfixes:__
 * Allow creat a SEPA in the future
 * * shcow blockbezeichnung in workflow blocks
 * create blocks which are no selectable but with vorganger
+* add posibility to duplicate blocks
 ## Files
