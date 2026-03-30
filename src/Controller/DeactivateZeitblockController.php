@@ -39,40 +39,10 @@ class DeactivateZeitblockController extends AbstractController
         }else{
             $block->setDeaktiviert(true);
         }
-
-        $this->syncDirektbuchungDeaktivierteVorgaenger($block);
-
         $em = $this->managerRegistry->getManager();
         $em->persist($block);
         $em->flush();
         $text = $translator->trans('Erfolgreich geändert');
         return new JsonResponse(array('error' => 0, 'snack' => $text));
-    }
-
-    private function syncDirektbuchungDeaktivierteVorgaenger(Zeitblock $zeitblock, array &$visited = []): void
-    {
-        if (isset($visited[$zeitblock->getId()])) {
-            return;
-        }
-        $visited[$zeitblock->getId()] = true;
-
-        $em = $this->managerRegistry->getManager();
-        foreach ($zeitblock->getVorganger() as $vorgaenger) {
-            if (!$vorgaenger->getDirektbuchungDeaktiviert()) {
-                continue;
-            }
-
-            $hasActiveNachfolger = false;
-            foreach ($vorgaenger->getNachfolger() as $nachfolger) {
-                if (!$nachfolger->getDeleted() && !$nachfolger->getDeaktiviert()) {
-                    $hasActiveNachfolger = true;
-                    break;
-                }
-            }
-
-            $vorgaenger->setDeaktiviert(!$hasActiveNachfolger);
-            $em->persist($vorgaenger);
-            $this->syncDirektbuchungDeaktivierteVorgaenger($vorgaenger, $visited);
-        }
     }
 }
