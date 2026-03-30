@@ -41,6 +41,7 @@ class CopySchuljahr
                 $newBlock->setPreise($data->getPreise());
                 $newBlock->setSchule($data->getSchule());
                 $newBlock->setWochentag($data->getWochentag());
+                $newBlock->setDirektbuchungDeaktiviert($data->getDirektbuchungDeaktiviert());
                 $newBlock->setCloneOf($data);
                 $this->em->persist($newBlock);
                 $newYear->addBlocks($newBlock);
