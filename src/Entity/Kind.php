@@ -372,6 +372,26 @@ class Kind
         return new ArrayCollection($block);
     }
 
+    /**
+     * @return Collection|Zeitblock[]
+     */
+    public function getRealWarteliste(): Collection
+    {
+        $block = array();
+        foreach ($this->warteliste->toArray() as $data) {
+            if (!$data->getDeleted()) {
+                $block[] = $data;
+            }
+        }
+
+        usort($block, function (Zeitblock $a, Zeitblock $b) {
+            return ($a->getVon() > $b->getVon() ? true : false);
+        });
+
+        return new ArrayCollection($block);
+    }
+
+
     public function addZeitblock(Zeitblock $zeitblock): self
     {
         if (!$this->zeitblocks->contains($zeitblock)) {
