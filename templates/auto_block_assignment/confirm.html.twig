@@ -27,7 +27,11 @@
                                     </button>
                                 {% else %}
                                     <a href="{{ path('org_child_auto_assign_accept', {'id': app.user.organisation.id}) }}"
-                                       id="button-auto-assign-accept">
+                                       id="button-auto-assign-accept" class="deleteAjaxConfirm"
+                                       data-title="{{ 'Automatische Zuteilung'|trans }}"
+                                       data-text="{{ 'Die Zuteilung so azeptieren und in die Datenbank schreiben?'|trans }}"
+                                    >
+
                                         <button type="button" class="btn btn-success">
                                             {% trans %}Zuteilung akzeptieren{% endtrans %}
                                         </button>
