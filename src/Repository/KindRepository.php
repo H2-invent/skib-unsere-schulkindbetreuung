@@ -224,7 +224,6 @@ class KindRepository extends ServiceEntityRepository
             ->andWhere('eltern.created_at is not NULL')
             ->andWhere('beworben_zeitblock.deleted = 0')
             ->andWhere('organisation = :organisation')->setParameter('organisation', $organisation)
-            ->andWhere('DATE(active.von) = DATE(kind.startDate)')
             ->andWhere('eltern.created_at = (' .$subQuery. ')')
             ->getQuery()
             ->getResult()
