@@ -50,17 +50,24 @@
                                 <th>{% trans %}Anzahl akzeptierter Blöcke{% endtrans %}</th>
                                 <th>{% trans %}Anzahl Wartelisten{% endtrans %}</th>
                                 <th>{% trans %}Anzahl hochgeladener Dokumente{% endtrans %}</th>
+                                <th>{% trans %}Schule{% endtrans %}</th>
+                                <th>{% trans %}Klasse{% endtrans %}</th>
+                                <th>{% trans %}Gewichtungsscore{% endtrans %}</th>
                                 <th>{% trans %}Kind Details{% endtrans %}</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for blockChild in autoBlockChildren %}
+                                {% set kind = blockChild.0.kind %}
                                 <tr id="{{ blockChild.0.id }}">
                                     <td class="dt-control"></td>
-                                    <td>{{ blockChild.0.kind.vorname ~ ' ' ~ blockChild.0.kind.nachname }}</td>
+                                    <td>{{ kind.vorname ~ ' ' ~ kind.nachname }}</td>
                                     <td>{{ blockChild.countAccepted }}</td>
                                     <td>{{ blockChild.countWarteschlange }}</td>
                                     <td>{{ blockChild.countFile }}</td>
+                                    <td>{{ kind.schule.name }}</td>
+                                    <td>{{ kind.klasse }}</td>
+                                    <td>{{ blockChild.0.weight }}</td>
                                     <td>
                                         <a href="{{ path('child_detail',{'kind_id':blockChild.0.kind.id,'spezial_kind_id':blockChild.0.kind.id,'date':blockChild.0.kind.startDate|date('d.m.Y')}) }}"
                                            target="_blank"
@@ -135,8 +142,8 @@
             }
 
             let table = $('#assignment-table').DataTable({
-                searching: false,
-                order: [[1, 'desc']],
+                searching: true,
+                order: [[7, 'desc']],
             });
             // table.on('click', 'tbody td.dt-control', function (e) {
             table.on('click', 'tbody tr', async function (e) {
