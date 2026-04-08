@@ -17,6 +17,9 @@ web_extra_daemons:
   - name: "messenger"
     command: "php bin/console messenger:consume async -vv"
     directory: /var/www/html
+  - name: "npm-watch"
+    command: "npm run watch"
+    directory: /var/www/html
 
 # Key features of DDEV's config.yaml:
 
