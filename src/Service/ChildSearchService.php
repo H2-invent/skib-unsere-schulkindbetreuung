@@ -182,7 +182,7 @@ class ChildSearchService
             }
         }
 
-        //Jahrgangsstufe uasgewält
+        //Jahrgangsstufe ausgewählt
         if (isset($parameters['klasse']) && $parameters['klasse'] !== "") {
             if ($kind->getKlasse() !== (int)$parameters['klasse']) {
                 return false;

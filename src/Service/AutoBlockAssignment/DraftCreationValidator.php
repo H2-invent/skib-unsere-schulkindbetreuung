@@ -62,7 +62,12 @@ class DraftCreationValidator implements ResetInterface
      * @param Zeitblock[] $accepted
      * @param Zeitblock[] $warteschlange
      */
-    private function validateDayZeitblocks(array $dayZeitblocks, array &$accepted, array &$warteschlange, ?int $minBlocksPerDay): void
+    private function validateDayZeitblocks(
+        array $dayZeitblocks,
+        array &$accepted,
+        array &$warteschlange,
+        ?int $minBlocksPerDay
+    ): void
     {
         $tempAccepted = [];
         $tempWarteschlange = [];
@@ -167,7 +172,8 @@ class DraftCreationValidator implements ResetInterface
             return true;
         }
 
-        $currentCount = $this->addedCountByZeitblock[$zeitblock->getId()] ?? $this->widgetService->calcBlocksNumberNow($zeitblock);
+        $currentCount = $this->addedCountByZeitblock[$zeitblock->getId(
+        )] ?? $this->widgetService->calcBlocksNumberNow($zeitblock);
 
         return $currentCount < $max;
     }
@@ -178,10 +184,27 @@ class DraftCreationValidator implements ResetInterface
     private function getAllVorgaengerBlocks(Zeitblock $zeitblock): array
     {
         $allVorgaenger = [];
-        foreach ($zeitblock->getVorganger() as $vorgaenger) {
+        $zeitblocks = $this->deduplicateEntities([
+            ...$zeitblock->getVorganger(),
+            ...$zeitblock->getNachfolger(),
+            ...$zeitblock->getVorgangerSilent(),
+            ...$zeitblock->getNachfolgerSilent()
+        ]);
+        foreach ($zeitblocks as $vorgaenger) {
             $allVorgaenger[] = $vorgaenger;
             array_push($allVorgaenger, ...$this->getAllVorgaengerBlocks($vorgaenger));
         }
-        return $allVorgaenger;
+
+        return $this->deduplicateEntities($allVorgaenger);
+    }
+
+    private function deduplicateEntities(array $entities): array
+    {
+        $unique = [];
+        foreach ($entities as $entity) {
+            $unique[$entity->getId()] = $entity;
+        }
+
+        return array_values($unique);
     }
 }
