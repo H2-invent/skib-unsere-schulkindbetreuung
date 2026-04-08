@@ -133,7 +133,7 @@ class ChildSearchService
     public
     function checkKindOfParameter($parameters, Kind $kind, $diff = false)
     {
-        if (sizeof($kind->getRealZeitblocks()) === 0 && !$diff) {
+        if (!$diff && count($kind->getRealZeitblocks()) === 0) {
             return false;
         }
         //Schuljahr als Filter
@@ -145,18 +145,22 @@ class ChildSearchService
         }
         //Wochentag als Filter
         if (isset($parameters['wochentag']) && $parameters['wochentag'] !== "") {
-            foreach ($kind->getRealZeitblocks() as $data) {
-                if ($data->getWochentag() == $parameters['wochentag']) {
-                    continue;
+            $hasMatchingWochentag = false;
+            foreach ($kind->getRealZeitblocks() as $zeitblock) {
+                if ($zeitblock->getWochentag() === (int)$parameters['wochentag']) {
+                    $hasMatchingWochentag = true;
+                    break;
                 }
+            }
+            if (!$hasMatchingWochentag) {
                 return false;
             }
         }
 
         //block ausgewählt
         if (isset($parameters['block']) && $parameters['block'] !== "") {   // wenn der Block angezeigt werden soll, dann auch von gelöschten Blöcken
-            foreach ($kind->getRealZeitblocks() as $data) {
-                if ($data->getId() == $parameters['block']) {
+            foreach ($kind->getRealZeitblocks() as $zeitblock) {
+                if ($zeitblock->getId() === (int)$parameters['block']) {
                     continue;
                 }
                 return false;
@@ -180,7 +184,7 @@ class ChildSearchService
 
         //Jahrgangsstufe uasgewält
         if (isset($parameters['klasse']) && $parameters['klasse'] !== "") {
-            if ($kind->getKlasse() != $parameters['klasse']) {
+            if ($kind->getKlasse() !== (int)$parameters['klasse']) {
                 return false;
             }
         }
