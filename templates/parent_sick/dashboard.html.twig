@@ -1,0 +1,178 @@
+{% extends 'workflow/base.html.twig' %}
+
+{% block content %}
+    <div class="container mt-5 mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>Elterndashboard</h1>
+            <a href="{{ path('parent_sick_logout') }}" class="btn btn-outline-secondary">Abmelden</a>
+        </div>
+
+        <p>
+            E-Mail: <strong>{{ access.email }}</strong><br>
+            Schuljahr: <strong>{{ access.schuljahr.von|date('Y') }}/{{ access.schuljahr.bis|date('Y') }}</strong>
+        </p>
+
+        {% for registrationId, registration in registrations %}
+            <div class="alert alert-secondary">
+                <strong>Anmeldung:</strong> {{ registration.parent ? registration.parent.vorname : '-' }}
+                {% if registration.parent and registration.parent.name %} {{ registration.parent.name }}{% endif %}
+                {% if registration.parent and registration.parent.createdAt %}
+                    (erstellt am {{ registration.parent.createdAt|date('d.m.Y H:i') }})
+                {% endif %}
+                {% if registration.parentHistory|length > 0 %}
+                    <hr>
+                    <strong>Eltern-Historie:</strong>
+                    <ul class="mb-0 mt-2">
+                        {% for parentVersion in registration.parentHistory %}
+                            <li>
+                                {{ parentVersion.startDate ? parentVersion.startDate|date('d.m.Y') : '-' }}
+                                {% if parentVersion.createdAt %}(erstellt: {{ parentVersion.createdAt|date('d.m.Y H:i') }}){% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            {% for tracing, entries in registration.children %}
+                {% set current = entries|last %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3>{{ current.vorname }} {{ current.nachname }}</h3>
+                        <small>Schule: {{ current.schule ? current.schule.name : '-' }}</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 mb-3">
+                                <div class="card h-100 border-info">
+                                    <div class="card-header bg-info text-white">
+                                        Meldungen & Historie
+                                    </div>
+                                    <div class="card-body">
+                                        <h5>Aktueller Anmeldestatus</h5>
+                                        <ul>
+                                            <li>Zugelassene Blöcke: {{ current.realZeitblocks|length }}</li>
+                                            <li>Offene Blöcke: {{ current.realBeworben|length }}</li>
+                                        </ul>
+
+                                        <h5>Gesamte Historie</h5>
+                                        <p><small>{{ entries|length }} Historien-Einträge gefunden.</small></p>
+                                        <table class="table table-sm table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Stand gültig ab</th>
+                                                <th>Änderung</th>
+                                                <th>Gebuchte Blöcke</th>
+                                                <th>Offene Blöcke</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for entry in entries %}
+                                                <tr>
+                                                    <td>{{ entry.startDate ? entry.startDate|date('d.m.Y') : '-' }}</td>
+                                                    <td>{% if not loop.first %}Ja{% else %}Nein{% endif %}</td>
+                                                    <td>
+                                                        {% for block in entry.realZeitblocks %}
+                                                            <div>
+                                                                {{ block.wochentagString }} {{ block.von|date('H:i') }}-{{ block.bis|date('H:i') }}
+                                                                ({{ block.ganztagString }})
+                                                                {% if block.translate.blockbeschreibung is not empty %} - {{ block.translate.blockbeschreibung }}{% endif %}
+                                                                - <strong>zugelassen</strong>
+                                                            </div>
+                                                        {% else %}
+                                                            <span>-</span>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td>
+                                                        {% for block in entry.realBeworben %}
+                                                            <div>
+                                                                {{ block.wochentagString }} {{ block.von|date('H:i') }}-{{ block.bis|date('H:i') }}
+                                                                ({{ block.ganztagString }})
+                                                                {% if block.translate.blockbeschreibung is not empty %} - {{ block.translate.blockbeschreibung }}{% endif %}
+                                                                - <strong>offen</strong>
+                                                            </div>
+                                                        {% else %}
+                                                            <span>-</span>
+                                                        {% endfor %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        Krankmeldungen
+                                    </div>
+                                    <div class="card-body">
+                                        <h5>Krankentage</h5>
+                                        <p><strong>{{ sickDaysPerChild[current.id]|default(0) }}</strong> Tage</p>
+
+                                        {% if allReports[current.id] is defined and allReports[current.id]|length > 0 %}
+                                            <div class="alert alert-info">
+                                                Letzte Krankmeldung: {{ allReports[current.id]|first.von|date('d.m.Y') }} bis {{ allReports[current.id]|first.bis|date('d.m.Y') }}
+                                                {% if (allReports[current.id]|first).bemerkung %}<br>{{ (allReports[current.id]|first).bemerkung }}{% endif %}
+                                            </div>
+                                        {% endif %}
+
+                                        <h5>Kind krankmelden</h5>
+                                        <form method="post" action="{{ path('parent_sick_save', {'kind': current.id}) }}" class="mb-4">
+                                            <div class="form-row">
+                                                <div class="col-md-3">
+                                                    <label>Von</label>
+                                                    <input type="date" name="von" value="{{ 'now'|date('Y-m-d') }}" class="form-control" required>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>Bis</label>
+                                                    <input type="date" name="bis" value="{{ 'now'|date('Y-m-d') }}" class="form-control" required>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Bemerkung</label>
+                                                    <input type="text" name="bemerkung" class="form-control" placeholder="z. B. Fieber">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary mt-3">Krankmeldung speichern</button>
+                                        </form>
+
+                                        <h5>Alle Krankmeldungen</h5>
+                                        <table class="table table-sm table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Von</th>
+                                                <th>Bis</th>
+                                                <th>Kranktage</th>
+                                                <th>Bemerkung</th>
+                                                <th>Gemeldet am</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for report in allReports[current.id]|default([]) %}
+                                                <tr>
+                                                    <td>{{ report.von|date('d.m.Y') }}</td>
+                                                    <td>{{ report.bis|date('d.m.Y') }}</td>
+                                                    <td>{{ date(report.bis).diff(date(report.von)).days + 1 }}</td>
+                                                    <td>{{ report.bemerkung ?: '-' }}</td>
+                                                    <td>{{ report.createdAt|date('d.m.Y H:i') }}</td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="5">Keine Krankmeldungen vorhanden.</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-warning">Keine Kinder für dieses Schuljahr gefunden.</div>
+        {% endfor %}
+    </div>
+{% endblock %}

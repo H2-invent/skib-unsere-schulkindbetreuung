@@ -3,11 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Active;
+use App\Entity\Schule;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,10 +17,12 @@ class KvjsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $schuljahre = $options['schuljahre'] ?? [];
+        $schulen = $options['schulen'] ?? [];
+
         $builder
             ->add('schuljahr', EntityType::class, [
                 'class' => Active::class,
-                'choices'=>$schuljahre,
+                'choices' => $schuljahre,
                 'choice_label' => function (Active $schuljahr) {
                     return sprintf('%s/%s', $schuljahr->getVon()->format('Y'), $schuljahr->getBis()->format('Y'));
                 },
@@ -34,24 +36,43 @@ class KvjsType extends AbstractType
                 'required' => true,
 
             ])
-            ->add('type',ChoiceType::class,[
+            ->add('type', ChoiceType::class, [
                 'label' => 'Betreuungstyp in Ihrer Organisation',
                 'required' => true,
-                'expanded'=>true,
-                'multiple'=>false,
-                'choices'=>[
+                'expanded' => true,
+                'multiple' => false,
+                'choices' => [
                     'B3: Kindertageseinrichtungen, Horte und Horte an der Schule mit Betriebser-
-laubnis gemäß § 45 SGB VII'=>'b3',
+laubnis gemäß § 45 SGB VII' => 'b3',
                     ' B4: Betreuungsangebote in kommunaler oder freier Trägerschaft gemäß § 8b
-SchG'=>'b4'
+SchG' => 'b4'
                 ]
             ])
-        ->add('submit',SubmitType::class,[
-            'label'=>'Erstellen',
-            'attr'=>[
-                'class'=>'btn btn-primary mt-3'
-            ]
-        ]);
+            ->add('schule', ChoiceType::class, [
+                'label' => 'Schule',
+                'required' => true,
+                'choices' => $this->buildSchoolChoices($schulen),
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Erstellen',
+                'attr' => [
+                    'class' => 'btn btn-primary mt-3'
+                ]
+            ]);
+    }
+
+    /**
+     * @param Schule[] $schulen
+     */
+    private function buildSchoolChoices(array $schulen): array
+    {
+        $choices = ['Alle verfügbaren Schulen (ZIP)' => '__all__'];
+
+        foreach ($schulen as $schule) {
+            $choices[$schule->getName()] = (string)$schule->getId();
+        }
+
+        return $choices;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -59,6 +80,7 @@ SchG'=>'b4'
         $resolver->setDefaults([
             'data_class' => null,
             'schuljahre' => [],
+            'schulen' => [],
         ]);
     }
 }

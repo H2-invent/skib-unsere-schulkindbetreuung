@@ -5,7 +5,9 @@ __🚀 Features:__
 * add table to kontingent
 * add csv download to kontingent page
 * Customize emails 
-
+* set min max to exports
+* fix app API
+* fix bezeichnung of block
 __🐛 Bugfixes:__
 * Fix error in berechnung when child has an appllied block
 * fix error not calculating the startdate when null

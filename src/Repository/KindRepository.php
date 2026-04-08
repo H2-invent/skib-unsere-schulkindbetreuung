@@ -163,6 +163,46 @@ class KindRepository extends ServiceEntityRepository
     /**
      * @return Kind[]
      */
+    public function findChildHistoryForParentAndSchoolyear(string $email, Active $schuljahr): array
+    {
+        $tracingRows = $this->createQueryBuilder('kind')
+            ->select('DISTINCT kind.tracing AS tracing')
+            ->innerJoin('kind.eltern', 'eltern')
+            ->leftJoin('kind.zeitblocks', 'zeitblock')
+            ->leftJoin('kind.beworben', 'beworben')
+            ->andWhere('eltern.email = :email')->setParameter('email', $email)
+            ->andWhere('eltern.created_at IS NOT NULL')
+            ->andWhere('kind.startDate IS NOT NULL')
+            ->andWhere('(zeitblock.active = :schuljahr OR beworben.active = :schuljahr)')
+            ->setParameter('schuljahr', $schuljahr)
+            ->getQuery()
+            ->getScalarResult();
+
+        $tracings = array_values(array_filter(array_map(static function (array $row) {
+            return $row['tracing'] ?? null;
+        }, $tracingRows)));
+
+        if (count($tracings) === 0) {
+            return [];
+        }
+
+        return $this->createQueryBuilder('kind')
+            ->innerJoin('kind.eltern', 'eltern')
+            ->andWhere('kind.tracing IN (:tracings)')->setParameter('tracings', $tracings)
+            ->andWhere('eltern.created_at IS NOT NULL')
+            ->andWhere('kind.startDate IS NOT NULL')
+            ->orderBy('kind.tracing', 'ASC')
+            ->addOrderBy('kind.startDate', 'ASC')
+            ->addOrderBy('kind.history', 'ASC')
+            ->addOrderBy('eltern.created_at', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Kind[]
+     */
     public function findKindWithBeworbenZeitblocksForSchuljahr(Organisation $organisation, Active $schuljahr): array
     {
         $subQuery = $this->createQueryBuilder('kind2')
@@ -184,7 +224,6 @@ class KindRepository extends ServiceEntityRepository
             ->andWhere('eltern.created_at is not NULL')
             ->andWhere('beworben_zeitblock.deleted = 0')
             ->andWhere('organisation = :organisation')->setParameter('organisation', $organisation)
-            ->andWhere('DATE(active.von) = DATE(kind.startDate)')
             ->andWhere('eltern.created_at = (' .$subQuery. ')')
             ->getQuery()
             ->getResult()

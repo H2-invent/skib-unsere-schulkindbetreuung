@@ -73,10 +73,16 @@ class ChildSearchService
             $qb->andWhere($orXSchule);
         }
 
+        if (isset($parameters['status']) && $parameters['status'] === 'beworben') {
+            $qb->leftJoin('k.beworben', 'beworben');
+        } else if (isset($parameters['status']) && $parameters['status'] === 'warteliste') {
+            $qb->leftJoin('k.warteliste', 'warteliste');
+        }
+
         if ($isApp) {
             $orX = $qb->expr()->orX();
 
-            if (sizeof($user->getSchulen()) == 0) {
+            if (count($user->getSchulen()) == 0) {
                 $orX->add('k.schule = -1');
             } else {
                 foreach ($user->getSchulen() as $data) {
@@ -93,9 +99,9 @@ class ChildSearchService
         $query = $qb->getQuery();
         $kinder = $query->getResult();
 
-        $kinderRes = array();
+        $kinderRes = [];
         foreach ($kinder as $data) {
-            $kindTmp = isset($kinderRes[$data->getTracing()]) ? $kinderRes[$data->getTracing()] : null;
+            $kindTmp = $kinderRes[$data->getTracing()] ?? null;
             if (!$kindTmp) {
                 $kinderRes[$data->getTracing()] = $data;
             } else {
@@ -110,7 +116,7 @@ class ChildSearchService
         }
 
 
-        if (sizeof($parameters) > 0) {
+        if (count($parameters) > 0) {
             foreach ($kinderRes as $key => $data) {
                 $check = $this->checkKindOfParameter($parameters, $data, $diff);
                 if (!$check) {
@@ -127,61 +133,58 @@ class ChildSearchService
     public
     function checkKindOfParameter($parameters, Kind $kind, $diff = false)
     {
-        $result = true;
         if (sizeof($kind->getRealZeitblocks()) === 0 && !$diff) {
             return false;
         }
-        //        //Schuljahr als Filter
+        //Schuljahr als Filter
         if (isset($parameters['schuljahr']) && $parameters['schuljahr'] !== "" && !$diff) {
             $jahr = $this->em->getRepository(Active::class)->find($parameters['schuljahr']);
             if ($kind->getRealZeitblocks()[0]->getActive() !== $jahr) {
                 return false;
             }
         }
-//        //Wochentag als Filter
+        //Wochentag als Filter
         if (isset($parameters['wochentag']) && $parameters['wochentag'] !== "") {
             foreach ($kind->getRealZeitblocks() as $data) {
                 if ($data->getWochentag() == $parameters['wochentag']) {
-                    $result = true;
-                    break;
+                    continue;
                 }
-                $result = false;
+                return false;
             }
         }
-        if ($result === false) {
 
-            return false;
-        }
-//        //block ausgewählt
-//
+        //block ausgewählt
         if (isset($parameters['block']) && $parameters['block'] !== "") {   // wenn der Block angezeigt werden soll, dann auch von gelöschten Blöcken
             foreach ($kind->getRealZeitblocks() as $data) {
                 if ($data->getId() == $parameters['block']) {
-                    $result = true;
-                    break;
+                    continue;
                 }
-                $result = false;
+                return false;
+            }
+        } else if (isset($parameters['status']) && $parameters['status'] === 'beworben') {
+            if (count($kind->getRealBeworben()) <= 0) {
+                return false;
+            }
+        } else if (isset($parameters['status']) && $parameters['status'] === 'warteliste') {
+            if (count($kind->getRealWarteliste()) <= 0) {
+                return false;
             }
         } else {// sonst immer nur die Kinder anzeigen die an activen Blöcken hängen
             foreach ($kind->getRealZeitblocks() as $data) {
                 if ($data->getDeleted() === false) {
-                    $result = true;
-                    break;
+                    continue;
                 }
-                $result = false;
+                return false;
             }
-        }
-        if ($result === false) {
-            return false;
         }
 
         //Jahrgangsstufe uasgewält
         if (isset($parameters['klasse']) && $parameters['klasse'] !== "") {
             if ($kind->getKlasse() != $parameters['klasse']) {
-
                 return false;
             }
         }
-        return $result;
+
+        return true;
     }
 }
