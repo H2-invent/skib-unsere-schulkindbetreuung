@@ -120,8 +120,8 @@ class KvjsController extends AbstractController
         $csvData = [];
         $csvData[] = [
             'Vorname', 'Nachname', 'Geburtsdatum (TT.MM.JJJJ)', 'Geschlecht (m/w/d)',
-            'Nimmt nimmt B3 in Anspruch (ja/nein)', 'Anzahl Stunden B3 (darf dann nicht leer oder 0 sein, wenn ja in Spalte davor bei Plausibilisierung',
-            'Nimmt nimmt B4 in Anspruch (ja/nein)', 'Anzahl Stunden B4'
+            'Nimmt B3 in Anspruch (ja/nein)', 'Anzahl Stunden B3 (darf nicht leer oder 0 sein, wenn B3 = ja)',
+            'Nimmt B4 in Anspruch (ja/nein)', 'Anzahl Stunden B4 (darf nicht leer oder 0 sein, wenn B4 = ja)'
         ];
 
         foreach ($childs as $child) {
@@ -134,7 +134,7 @@ class KvjsController extends AbstractController
             $csvData[] = [
                 $child->getVorname(),
                 $child->getNachname(),
-                $child->getGeburtstag()->format('d.m.Y'),
+                '"'.$child->getGeburtstag()->format('d.m.Y').'"',
                 'n/a',
                 $data['type'] === 'b3' ? 'ja' : 'nein',
                 $data['type'] === 'b3' ? number_format($time / 60, 2, ',', '') : '',
