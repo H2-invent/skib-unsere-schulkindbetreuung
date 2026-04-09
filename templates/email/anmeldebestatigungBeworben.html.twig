@@ -55,8 +55,14 @@
             <b>{{ kind.schule.organisation.name }}</b></p>
 
     {% endif %}
-{% endblock %}
 
+    {% if stadt.settingsSkibEnableParentSickDashboard %}
+        <p class="text-center">
+            {% trans %}Sie können den aktuellen Bearbeitungsstand Ihrer Anmeldung hier einsehen:{% endtrans %}<br>
+            <a href="{{ url('parent_sick_request', {'slug': stadt.slug}) }}">{{ url('parent_sick_request', {'slug': stadt.slug}) }}</a>
+        </p>
+    {% endif %}
+{% endblock %}
 
 
 

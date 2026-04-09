@@ -1,12 +1,16 @@
 {% extends 'email/base.html.twig' %}
 {% block header %}
-    Zugang zum Elterndashboard
+    {% trans %}Zugang zum Elterndashboard{% endtrans %}
 {% endblock %}
 
 {% block content %}
     <h4 class="text-center">
-        Hier ist Ihr persönlicher Link zum Elterndashboard bei {{ stadt.name }}.<br>
-        Der Link ist 24 Stunden gültig. Danach können Sie einfach einen neuen Link anfordern.
+        {% trans with {'%stadt%': stadt.name} %}Hier ist Ihr persönlicher Link zum Elterndashboard bei %stadt%.{% endtrans %}<br>
+        {% trans %}Der Link ist 24 Stunden gültig. Danach können Sie einfach einen neuen Link anfordern.{% endtrans %}
+        {% if stadt.settingsSkibEnableParentSickDashboard %}
+            <br>
+            {% trans %}Über diesen Link können Sie auch den Status Ihrer Anmeldung einsehen.{% endtrans %}
+        {% endif %}
     </h4>
 
     <spacer size="32"></spacer>

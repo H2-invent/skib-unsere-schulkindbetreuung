@@ -223,6 +223,10 @@ class StadtType extends AbstractType
                 CheckboxType::class,
                 ['required' => false, 'label' => 'Zeige die Frage bei den Kindern, ob Erzieher bei den Kindern Pflaster anbringen dürfen', 'translation_domain' => 'form']
             )
+            ->add('settingsSkibEnableParentSickDashboard',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Krankmeldung und Elterndashboard-Link aktivieren', 'translation_domain' => 'form']
+            )
             ->add('skipSettingShowChronicalDeseas',
                 CheckboxType::class,
                 ['required' => false, 'label' => 'Frage bei Kindern Chronische-Erkrankungen ab', 'translation_domain' => 'form']
@@ -557,4 +561,3 @@ class StadtType extends AbstractType
         $resolver->setAllowedTypes('gehaltsklasse', 'integer');
     }
 }
-
