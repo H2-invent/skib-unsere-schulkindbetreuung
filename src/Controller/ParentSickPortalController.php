@@ -31,14 +31,16 @@ class ParentSickPortalController extends AbstractController
     ) {
     }
 
-    #[Route('/eltern/krankmeldung', name: 'parent_sick_request', methods: ['GET', 'POST'])]
-    public function requestLink(Request $request): Response
+    #[Route('/eltern/dashboard/{slug}', name: 'parent_sick_request', methods: ['GET', 'POST'])]
+    public function requestLink(Request $request, string $slug): Response
     {
-        $stadtSlug = $request->query->get('stadt');
-        $stadt = $this->entityManager->getRepository(\App\Entity\Stadt::class)->findOneBy(['slug' => $stadtSlug]);
+        $stadt = $this->entityManager->getRepository(\App\Entity\Stadt::class)->findOneBy(['slug' => $slug]);
 
         if (!$stadt instanceof \App\Entity\Stadt) {
             throw $this->createNotFoundException('Stadt nicht gefunden.');
+        }
+        if (!$stadt->isSettingsSkibEnableParentSickDashboard()) {
+            throw $this->createNotFoundException('Die Funktion ist für diese Stadt nicht aktiviert.');
         }
         $request->getSession()->set(self::SESSION_KEY_STADT_SLUG, $stadt->getSlug());
 
@@ -53,7 +55,7 @@ class ParentSickPortalController extends AbstractController
             $this->portalService->createAndSendAccessLink($access, $stadt);
             $this->addFlash('success', 'Der Link wurde per E-Mail verschickt.');
 
-            return $this->redirectToRoute('parent_sick_request', ['stadt' => $stadt->getSlug()]);
+            return $this->redirectToRoute('parent_sick_request', ['slug' => $stadt->getSlug()]);
         }
 
         return $this->render('parent_sick/request.html.twig', [
@@ -62,12 +64,15 @@ class ParentSickPortalController extends AbstractController
         ]);
     }
 
-    #[Route('/eltern/krankmeldung/start/{token}', name: 'parent_sick_start', methods: ['GET'])]
-    public function start(Request $request, string $token): Response
+    #[Route('/eltern/dashboard/{slug}/start/{token}', name: 'parent_sick_start', methods: ['GET'])]
+    public function start(Request $request, string $slug, string $token): Response
     {
         $access = $this->accessRepository->findByStringToken($token);
         if (!$access instanceof ParentSickPortalAccess) {
             throw $this->createNotFoundException('Der Zugangscode ist ungültig.');
+        }
+        if ($access->getStadt()?->getSlug() !== $slug || !$access->getStadt()?->isSettingsSkibEnableParentSickDashboard()) {
+            throw $this->createAccessDeniedException('Der Link ist nicht für diese Stadt gültig.');
         }
 
         if (!$this->portalService->isLinkValid($access, $request)) {
@@ -81,17 +86,20 @@ class ParentSickPortalController extends AbstractController
         $this->entityManager->persist($access);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute('parent_sick_dashboard');
+        return $this->redirectToRoute('parent_sick_dashboard', ['slug' => $slug]);
     }
 
-    #[Route('/eltern/krankmeldung/dashboard', name: 'parent_sick_dashboard', methods: ['GET'])]
-    public function dashboard(Request $request): Response
+    #[Route('/eltern/dashboard/{slug}/status', name: 'parent_sick_dashboard', methods: ['GET'])]
+    public function dashboard(Request $request, string $slug): Response
     {
-        $access = $this->getAccessFromSession($request);
-        if (!$access instanceof ParentSickPortalAccess) {
-            $stadtSlug = $request->getSession()->get(self::SESSION_KEY_STADT_SLUG);
+        $stadt = $this->entityManager->getRepository(\App\Entity\Stadt::class)->findOneBy(['slug' => $slug]);
+        if (!$stadt instanceof \App\Entity\Stadt || !$stadt->isSettingsSkibEnableParentSickDashboard()) {
+            throw $this->createNotFoundException('Stadt nicht gefunden oder Funktion deaktiviert.');
+        }
 
-            return $this->redirectToRoute('parent_sick_request', ['stadt' => $stadtSlug]);
+        $access = $this->getAccessFromSession($request);
+        if (!$access instanceof ParentSickPortalAccess || $access->getStadt()?->getSlug() !== $slug) {
+            return $this->redirectToRoute('parent_sick_request', ['slug' => $stadt->getSlug()]);
         }
 
         $childHistory = $this->kindRepository->findChildHistoryForParentAndSchoolyear($access->getEmail(), $access->getSchuljahr());
@@ -134,20 +142,24 @@ class ParentSickPortalController extends AbstractController
 
         return $this->render('parent_sick/dashboard.html.twig', [
             'access' => $access,
+            'stadt' => $stadt,
             'registrations' => $registrations,
             'allReports' => $allReports,
             'sickDaysPerChild' => $sickDaysPerChild,
         ]);
     }
 
-    #[Route('/eltern/krankmeldung/{kind}/save', name: 'parent_sick_save', methods: ['POST'])]
-    public function saveReport(Request $request, int $kind): Response
+    #[Route('/eltern/dashboard/{slug}/{kind}/save', name: 'parent_sick_save', methods: ['POST'])]
+    public function saveReport(Request $request, string $slug, int $kind): Response
     {
-        $access = $this->getAccessFromSession($request);
-        if (!$access instanceof ParentSickPortalAccess) {
-            $stadtSlug = $request->getSession()->get(self::SESSION_KEY_STADT_SLUG);
+        $stadt = $this->entityManager->getRepository(\App\Entity\Stadt::class)->findOneBy(['slug' => $slug]);
+        if (!$stadt instanceof \App\Entity\Stadt || !$stadt->isSettingsSkibEnableParentSickDashboard()) {
+            throw $this->createNotFoundException('Stadt nicht gefunden oder Funktion deaktiviert.');
+        }
 
-            return $this->redirectToRoute('parent_sick_request', ['stadt' => $stadtSlug]);
+        $access = $this->getAccessFromSession($request);
+        if (!$access instanceof ParentSickPortalAccess || $access->getStadt()?->getSlug() !== $slug) {
+            return $this->redirectToRoute('parent_sick_request', ['slug' => $stadt->getSlug()]);
         }
 
         $childHistory = $this->kindRepository->findChildHistoryForParentAndSchoolyear($access->getEmail(), $access->getSchuljahr());
@@ -179,17 +191,16 @@ class ParentSickPortalController extends AbstractController
 
         $this->addFlash('success', 'Krankmeldung wurde gespeichert.');
 
-        return $this->redirectToRoute('parent_sick_dashboard');
+        return $this->redirectToRoute('parent_sick_dashboard', ['slug' => $slug]);
     }
 
-    #[Route('/eltern/krankmeldung/logout', name: 'parent_sick_logout', methods: ['GET'])]
-    public function logout(Request $request): Response
+    #[Route('/eltern/dashboard/{slug}/logout', name: 'parent_sick_logout', methods: ['GET'])]
+    public function logout(Request $request, string $slug): Response
     {
         $request->getSession()->remove(ParentSickPortalService::SESSION_KEY_ACCESS);
         $this->addFlash('success', 'Zugriff wurde beendet.');
-        $stadtSlug = $request->getSession()->get(self::SESSION_KEY_STADT_SLUG);
 
-        return $this->redirectToRoute('parent_sick_request', ['stadt' => $stadtSlug]);
+        return $this->redirectToRoute('parent_sick_request', ['slug' => $slug]);
     }
 
     #[Route('/org_child/krankmeldungen/heute', name: 'org_child_sick_today', methods: ['GET'])]

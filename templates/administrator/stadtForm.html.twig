@@ -159,6 +159,9 @@
                                                         {% if form.settingEncryptEmailAttachment is defined %}
                                                             <div class="col-md-6">{{ form_row(form.settingEncryptEmailAttachment) }}</div>
                                                         {% endif %}
+                                                        {% if form.settingsSkibEnableParentSickDashboard is defined %}
+                                                            <div class="col-md-6">{{ form_row(form.settingsSkibEnableParentSickDashboard) }}</div>
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>

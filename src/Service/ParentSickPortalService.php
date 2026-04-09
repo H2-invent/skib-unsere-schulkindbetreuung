@@ -52,7 +52,10 @@ class ParentSickPortalService
     {
         $uri = $this->router->generate(
             'parent_sick_start',
-            ['token' => $access->getToken()?->toRfc4122()],
+            [
+                'slug' => $access->getStadt()?->getSlug(),
+                'token' => $access->getToken()?->toRfc4122(),
+            ],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
 

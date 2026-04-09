@@ -333,6 +333,8 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(nullable: true)]
     private ?bool $skip_setting_show_chronicalDeseas = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $settingsSkibEnableParentSickDashboard = false;
 
 
 
@@ -1591,6 +1593,18 @@ class Stadt implements TranslatableInterface
     public function setSkipSettingShowChronicalDeseas(?bool $skip_setting_show_chronicalDeseas): self
     {
         $this->skip_setting_show_chronicalDeseas = $skip_setting_show_chronicalDeseas;
+
+        return $this;
+    }
+
+    public function isSettingsSkibEnableParentSickDashboard(): ?bool
+    {
+        return $this->settingsSkibEnableParentSickDashboard;
+    }
+
+    public function setSettingsSkibEnableParentSickDashboard(?bool $settingsSkibEnableParentSickDashboard): self
+    {
+        $this->settingsSkibEnableParentSickDashboard = $settingsSkibEnableParentSickDashboard;
 
         return $this;
     }

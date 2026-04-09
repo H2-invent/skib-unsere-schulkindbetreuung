@@ -4,7 +4,7 @@
     <div class="container mt-5 mb-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h1>Elterndashboard</h1>
-            <a href="{{ path('parent_sick_logout') }}" class="btn btn-outline-secondary">Abmelden</a>
+            <a href="{{ path('parent_sick_logout', {'slug': stadt.slug}) }}" class="btn btn-outline-secondary">Abmelden</a>
         </div>
 
         <p>
@@ -119,7 +119,7 @@
                                         {% endif %}
 
                                         <h5>Kind krankmelden</h5>
-                                        <form method="post" action="{{ path('parent_sick_save', {'kind': current.id}) }}" class="mb-4">
+                                        <form method="post" action="{{ path('parent_sick_save', {'slug': stadt.slug, 'kind': current.id}) }}" class="mb-4">
                                             <div class="form-row">
                                                 <div class="col-md-3">
                                                     <label>Von</label>
