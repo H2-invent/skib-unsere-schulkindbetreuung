@@ -3303,9 +3303,9 @@ Responsabilité pour les liens
         <source>Automatische Zuteilung</source>
         <target state="needs-translation">Automatische Zuteilung</target>
       </trans-unit>
-      <trans-unit id="EUYnRLI" resname="Die Zuteilung so azeptieren und in die Datenbank schreiben?">
-        <source>Die Zuteilung so azeptieren und in die Datenbank schreiben?</source>
-        <target state="needs-translation">Die Zuteilung so azeptieren und in die Datenbank schreiben?</target>
+      <trans-unit id="EUYnRLI" resname="Die Zuteilung so akzeptieren und in die Datenbank schreiben?">
+        <source>Die Zuteilung so akzeptieren und in die Datenbank schreiben?</source>
+        <target state="needs-translation">Die Zuteilung so akzeptieren und in die Datenbank schreiben?</target>
       </trans-unit>
     </body>
   </file>
