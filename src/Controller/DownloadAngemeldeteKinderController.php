@@ -72,7 +72,10 @@ class DownloadAngemeldeteKinderController extends AbstractController
         $schule = $this->schuleRepository->find($request->get('schule_id'));
         $active = $this->activeRepository->find($request->get('active_id'));
 
-        if (!in_array($schule, $this->getUser()->getSchulen()->toArray())) {
+        $orgSchulen = $this->getUser()?->getOrganisation()?->getSchule()?->toArray();
+        $userSchulen = $this->getUser()?->getSchulen()?->toArray();
+
+        if ($schule === null || !in_array($schule, [...$orgSchulen, ...$userSchulen], true)) {
             throw new NotFoundHttpException('Schule not found');
         }
         if (!$active) {
@@ -234,7 +237,7 @@ class DownloadAngemeldeteKinderController extends AbstractController
         $writer->save($temp_file);
 
         // Return the excel file as an attachment
-        return $this->file($temp_file, $fileName . '.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
+        return $this->file($temp_file, $fileName, ResponseHeaderBag::DISPOSITION_INLINE);
 
     }
 }
