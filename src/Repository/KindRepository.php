@@ -25,12 +25,20 @@ class KindRepository extends ServiceEntityRepository
 
     public function findBeworbenByZeitblock(Zeitblock $zeitblock)
     {
-        return $this->createQueryBuilder('k')
-            ->innerJoin('k.beworben', 'beworben')
-            ->innerJoin('k.eltern', 'eltern')
+        $newestElternCreatedAt = $this->createQueryBuilder('kind2')
+            ->select('MAX(eltern2.created_at)')
+            ->innerJoin('kind2.eltern', 'eltern2')
+            ->where('kind2.tracing = kind.tracing')
+            ->andWhere('eltern2.created_at IS NOT NULL')
+            ->getDQL()
+        ;
+
+        return $this->createQueryBuilder('kind')
+            ->innerJoin('kind.beworben', 'beworben')
+            ->innerJoin('kind.eltern', 'eltern')
             ->andWhere('beworben = :beworben')
-            ->andWhere('k.startDate is not NULL')
-            ->andWhere('eltern.created_at is not NULL')
+            ->andWhere('kind.startDate is not NULL')
+            ->andWhere('eltern.created_at = (' .$newestElternCreatedAt. ')')
             ->setParameter('beworben', $zeitblock)
             ->getQuery()
             ->getResult();

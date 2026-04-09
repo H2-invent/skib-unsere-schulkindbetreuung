@@ -68,6 +68,7 @@ function initTable() {
         const tables = document.querySelectorAll('table:not(.no-data-table)');
         tables.forEach((element) => {
             if (element.querySelector('thead')) {
+                const emptyTable = element.dataset.emptyTable || 'Diese Liste ist leer';
                 $(element).DataTable({
                     dom: 'Bfrtip',
                     buttons: [
@@ -80,7 +81,10 @@ function initTable() {
                                 }
                             }
                         }
-                    ]
+                    ],
+                    language: {
+                        emptyTable,
+                    }
                 });
             }
         });

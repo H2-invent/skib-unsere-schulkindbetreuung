@@ -25,9 +25,7 @@ class BlockAbhangigkeitType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-
-
+        $vorgangerProperty = $options['silent'] ? 'vorgangerSilent' : 'vorganger';
         $builder
             ->add('vorganger', EntityType::class, [
                 'class' => Zeitblock::class,
@@ -43,12 +41,10 @@ class BlockAbhangigkeitType extends AbstractType
                 'group_by' => function (Zeitblock $zeitblock, $key, $value) {
                     return $zeitblock->getWochentagString();
                 },
-            ]);
-
-
-
+                'property_path' => $vorgangerProperty,
+            ])
+        ;
     }
-
 
 
     public function configureOptions(OptionsResolver $resolver)
@@ -56,7 +52,8 @@ class BlockAbhangigkeitType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Zeitblock::class,
             'anzahlPreise' => 1,
-            'blocks'=>array()
+            'blocks' => [],
+            'silent' => false,
         ]);
         $resolver->setAllowedTypes('anzahlPreise', 'integer');
     }
@@ -64,7 +61,7 @@ class BlockAbhangigkeitType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'appbundle_zeitblock';
     }

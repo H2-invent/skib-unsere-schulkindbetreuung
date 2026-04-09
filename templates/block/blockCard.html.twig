@@ -24,6 +24,13 @@
                             {% endfor %}
                         </p>
                     {% endif %}
+                    {% if b.vorgangerSilent|length %}
+                        <p>Vorgänger (Autom. Zuteilung):
+                            {% for l in b.vorgangerSilent %}
+                                <br>{{ l.wochentagString }} {{ l.von|date('H:i') }} - {{ l.bis|date('H:i') }}
+                            {% endfor %}
+                        </p>
+                    {% endif %}
                 </div>
 
                 {% if getAnzahlBeworbenKids(b)|length > 0 %}
@@ -79,7 +86,9 @@
                             <a href="{{ path('block_schule_linkBlock',{'id':b.id}) }}"
                                class="loadContent dropdown-item"><i
                                         class="material-icons">link</i> Verknüpfen</a>
-
+                            <a href="{{ path('block_schule_linkBlockSilent',{'id':b.id}) }}"
+                               class="loadContent dropdown-item"><i
+                                        class="material-icons">link</i> Verknüpfen (Auto Zuteilung)</a>
                         {% endif %}
                         {% if is_granted('ROLE_ORG_BLOCK_DELETE') %}
                             <a href="{{ path('block_schule_deleteBlocks',{'id':b.id}) }}"
