@@ -3307,6 +3307,22 @@ The web application enables direct networking between parent or legal guardian, 
         <source>Die Zuteilung so akzeptieren und in die Datenbank schreiben?</source>
         <target state="needs-translation">Die Zuteilung so akzeptieren und in die Datenbank schreiben?</target>
       </trans-unit>
+      <trans-unit id="PSpMql2" resname="Hier ist Ihr persönlicher Link zum Elterndashboard bei %stadt%.">
+        <source>Hier ist Ihr persönlicher Link zum Elterndashboard bei %stadt%.</source>
+        <target state="needs-translation">Hier ist Ihr persönlicher Link zum Elterndashboard bei %stadt%.</target>
+      </trans-unit>
+      <trans-unit id="nyOQ0tQ" resname="Der Link ist 24 Stunden gültig. Danach können Sie einfach einen neuen Link anfordern.">
+        <source>Der Link ist 24 Stunden gültig. Danach können Sie einfach einen neuen Link anfordern.</source>
+        <target state="needs-translation">Der Link ist 24 Stunden gültig. Danach können Sie einfach einen neuen Link anfordern.</target>
+      </trans-unit>
+      <trans-unit id="R3M_Z1z" resname="Über diesen Link können Sie auch den Status Ihrer Anmeldung einsehen.">
+        <source>Über diesen Link können Sie auch den Status Ihrer Anmeldung einsehen.</source>
+        <target state="needs-translation">Über diesen Link können Sie auch den Status Ihrer Anmeldung einsehen.</target>
+      </trans-unit>
+      <trans-unit id="3fxnKGS" resname="Sie können den aktuellen Bearbeitungsstand Ihrer Anmeldung hier einsehen:">
+        <source>Sie können den aktuellen Bearbeitungsstand Ihrer Anmeldung hier einsehen:</source>
+        <target state="needs-translation">Sie können den aktuellen Bearbeitungsstand Ihrer Anmeldung hier einsehen:</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
