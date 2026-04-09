@@ -29,9 +29,12 @@ class AutoBlockAssignmentChildRepository extends ServiceEntityRepository
     public function findByAutoBlockAssignmentWeighted(AutoBlockAssignment $autoBlockAssignment): array
     {
         return $this->createQueryBuilder('child')
+            ->innerJoin('child.zeitblocks', 'zeitblocks')
             ->where('child.autoBlockAssignment = :autoBlockAssignment')
             ->setParameter('autoBlockAssignment', $autoBlockAssignment)
             ->orderBy('child.weight', 'DESC')
+            ->addOrderBy('COUNT(zeitblocks)', 'DESC')
+            ->addOrderBy('RAND()')
             ->getQuery()
             ->getResult();
     }
