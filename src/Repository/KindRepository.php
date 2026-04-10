@@ -29,6 +29,7 @@ class KindRepository extends ServiceEntityRepository
             ->select('MAX(eltern2.created_at)')
             ->innerJoin('kind2.eltern', 'eltern2')
             ->where('kind2.tracing = kind.tracing')
+            ->andWhere('kind2.startDate = kind.startDate')
             ->andWhere('eltern2.created_at IS NOT NULL')
             ->getDQL()
         ;
