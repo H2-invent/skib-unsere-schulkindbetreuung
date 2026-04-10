@@ -101,6 +101,9 @@ class Zeitblock implements TranslatableInterface
     #[ORM\ManyToMany(targetEntity: Kind::class, mappedBy: 'movedToWaiting')]
     private Collection $movedToWaitingKid;
 
+    #[ORM\OneToOne(mappedBy: 'zeitblock', targetEntity: AutoBlockAssignmentChildZeitblock::class, fetch: 'EAGER')]
+    private ?AutoBlockAssignmentChildZeitblock $autoBlockAssignmentChildZeitblock = null;
+
     public function __construct()
     {
         $this->kind = new ArrayCollection();
@@ -114,6 +117,11 @@ class Zeitblock implements TranslatableInterface
         $this->movedToWaitingKid = new ArrayCollection();
         $this->vorgangerSilent = new ArrayCollection();
         $this->nachfolgerSilent = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return (string)$this->id;
     }
 
     public function getId(): ?int
@@ -706,6 +714,23 @@ class Zeitblock implements TranslatableInterface
         if ($this->nachfolgerSilent->removeElement($nachfolgerSilent)) {
             $nachfolgerSilent->removeVorgangerSilent($this);
         }
+
+        return $this;
+    }
+
+    public function getAutoBlockAssignmentChildZeitblock(): ?AutoBlockAssignmentChildZeitblock
+    {
+        return $this->autoBlockAssignmentChildZeitblock;
+    }
+
+    public function setAutoBlockAssignmentChildZeitblock(AutoBlockAssignmentChildZeitblock $autoBlockAssignmentChildZeitblock): self
+    {
+        // set the owning side of the relation if necessary
+        if ($autoBlockAssignmentChildZeitblock->getZeitblock() !== $this) {
+            $autoBlockAssignmentChildZeitblock->setZeitblock($this);
+        }
+
+        $this->autoBlockAssignmentChildZeitblock = $autoBlockAssignmentChildZeitblock;
 
         return $this;
     }

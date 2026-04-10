@@ -237,4 +237,18 @@ class KindRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findAutoBlockAssignedKindByZeitblock(Zeitblock $zeitblock): array
+    {
+        return $this->createQueryBuilder('kind')
+            ->innerJoin('kind.autoBlockAssignmentChild', 'child')
+            ->innerJoin('child.zeitblocks', 'child_zeitblock')
+            ->innerJoin('child_zeitblock.zeitblock', 'zeitblock')
+            ->andWhere('zeitblock = :zeitblock')
+            ->andWhere('child_zeitblock.accepted = 1')
+            ->setParameter('zeitblock', $zeitblock)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

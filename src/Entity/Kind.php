@@ -168,7 +168,8 @@ class Kind
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $chronicalDeseas = null;
 
-
+    #[ORM\OneToOne(mappedBy: 'kind', targetEntity: AutoBlockAssignmentChild::class, fetch: 'EAGER')]
+    private ?AutoBlockAssignmentChild $autoBlockAssignmentChild = null;
 
     public function __serialize(): array
     {
@@ -1070,4 +1071,20 @@ class Kind
         return $this;
     }
 
+    public function getAutoBlockAssignmentChild(): ?AutoBlockAssignmentChild
+    {
+        return $this->autoBlockAssignmentChild;
+    }
+
+    public function setAutoBlockAssignmentChild(AutoBlockAssignmentChild $autoBlockAssignmentChild): self
+    {
+        // set the owning side of the relation if necessary
+        if ($autoBlockAssignmentChild->getKind() !== $this) {
+            $autoBlockAssignmentChild->setKind($this);
+        }
+
+        $this->autoBlockAssignmentChild = $autoBlockAssignmentChild;
+
+        return $this;
+    }
 }
