@@ -71,8 +71,17 @@ class Zeitblock implements TranslatableInterface
 
     #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, mappedBy: 'vorganger')]
     private $nachfolger;
+
     #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, inversedBy: 'nachfolger')]
     private $vorganger;
+
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'nachfolgerSilent')]
+    #[ORM\JoinTable(name: 'zeitblock_vorganger_silent')]
+    private Collection $vorgangerSilent;
+
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'vorgangerSilent')]
+    #[ORM\JoinTable(name: 'zeitblock_vorganger_silent')]
+    private Collection $nachfolgerSilent;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $deaktiviert;
@@ -95,6 +104,9 @@ class Zeitblock implements TranslatableInterface
     #[ORM\ManyToMany(targetEntity: Kind::class, mappedBy: 'movedToWaiting')]
     private Collection $movedToWaitingKid;
 
+    #[ORM\OneToOne(mappedBy: 'zeitblock', targetEntity: AutoBlockAssignmentChildZeitblock::class, fetch: 'EAGER')]
+    private ?AutoBlockAssignmentChildZeitblock $autoBlockAssignmentChildZeitblock = null;
+
     public function __construct()
     {
         $this->kind = new ArrayCollection();
@@ -106,6 +118,13 @@ class Zeitblock implements TranslatableInterface
         $this->parentOf = new ArrayCollection();
         $this->wartelisteKinder = new ArrayCollection();
         $this->movedToWaitingKid = new ArrayCollection();
+        $this->vorgangerSilent = new ArrayCollection();
+        $this->nachfolgerSilent = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return (string)$this->id;
     }
 
     public function getId(): ?int
@@ -659,6 +678,74 @@ class Zeitblock implements TranslatableInterface
         if ($this->movedToWaitingKid->removeElement($movedToWaitingKid)) {
             $movedToWaitingKid->removeMovedToWaiting($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getVorgangerSilent(): Collection
+    {
+        return $this->vorgangerSilent;
+    }
+
+    public function addVorgangerSilent(self $vorgangerSilent): self
+    {
+        if (!$this->vorgangerSilent->contains($vorgangerSilent)) {
+            $this->vorgangerSilent->add($vorgangerSilent);
+        }
+
+        return $this;
+    }
+
+    public function removeVorgangerSilent(self $vorgangerSilent): self
+    {
+        $this->vorgangerSilent->removeElement($vorgangerSilent);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getNachfolgerSilent(): Collection
+    {
+        return $this->nachfolgerSilent;
+    }
+
+    public function addNachfolgerSilent(self $nachfolgerSilent): self
+    {
+        if (!$this->nachfolgerSilent->contains($nachfolgerSilent)) {
+            $this->nachfolgerSilent->add($nachfolgerSilent);
+            $nachfolgerSilent->addVorgangerSilent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNachfolgerSilent(self $nachfolgerSilent): self
+    {
+        if ($this->nachfolgerSilent->removeElement($nachfolgerSilent)) {
+            $nachfolgerSilent->removeVorgangerSilent($this);
+        }
+
+        return $this;
+    }
+
+    public function getAutoBlockAssignmentChildZeitblock(): ?AutoBlockAssignmentChildZeitblock
+    {
+        return $this->autoBlockAssignmentChildZeitblock;
+    }
+
+    public function setAutoBlockAssignmentChildZeitblock(AutoBlockAssignmentChildZeitblock $autoBlockAssignmentChildZeitblock): self
+    {
+        // set the owning side of the relation if necessary
+        if ($autoBlockAssignmentChildZeitblock->getZeitblock() !== $this) {
+            $autoBlockAssignmentChildZeitblock->setZeitblock($this);
+        }
+
+        $this->autoBlockAssignmentChildZeitblock = $autoBlockAssignmentChildZeitblock;
 
         return $this;
     }

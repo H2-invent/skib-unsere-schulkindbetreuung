@@ -1,0 +1,39 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Heute krank gemeldete Kinder</h1>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped" data-empty-table="{% trans %}Heute liegt keine Krankmeldung vor.{% endtrans %}">
+                        <thead>
+                            <tr>
+                                <th>Kind</th>
+                                <th>Schule</th>
+                                <th>Von</th>
+                                <th>Bis</th>
+                                <th>Bemerkung</th>
+                                <th>Gemeldet am</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for report in reports %}
+                            <tr>
+                                <td>{{ report.kind.vorname }} {{ report.kind.nachname }}</td>
+                                <td>{{ report.kind.schule ? report.kind.schule.name : '-' }}</td>
+                                <td>{{ report.von|date('d.m.Y') }}</td>
+                                <td>{{ report.bis|date('d.m.Y') }}</td>
+                                <td>{{ report.bemerkung ?: '-' }}</td>
+                                <td>{{ report.createdAt|date('d.m.Y H:i') }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

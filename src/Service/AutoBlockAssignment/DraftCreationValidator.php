@@ -62,7 +62,12 @@ class DraftCreationValidator implements ResetInterface
      * @param Zeitblock[] $accepted
      * @param Zeitblock[] $warteschlange
      */
-    private function validateDayZeitblocks(array $dayZeitblocks, array &$accepted, array &$warteschlange, ?int $minBlocksPerDay): void
+    private function validateDayZeitblocks(
+        array $dayZeitblocks,
+        array &$accepted,
+        array &$warteschlange,
+        ?int $minBlocksPerDay
+    ): void
     {
         $tempAccepted = [];
         $tempWarteschlange = [];
@@ -167,7 +172,8 @@ class DraftCreationValidator implements ResetInterface
             return true;
         }
 
-        $currentCount = $this->addedCountByZeitblock[$zeitblock->getId()] ?? $this->widgetService->calcBlocksNumberNow($zeitblock);
+        $currentCount = $this->addedCountByZeitblock[$zeitblock->getId(
+        )] ?? $this->widgetService->calcBlocksNumberNow($zeitblock);
 
         return $currentCount < $max;
     }
@@ -178,10 +184,15 @@ class DraftCreationValidator implements ResetInterface
     private function getAllVorgaengerBlocks(Zeitblock $zeitblock): array
     {
         $allVorgaenger = [];
-        foreach ($zeitblock->getVorganger() as $vorgaenger) {
+        $zeitblocks = array_unique([
+            ...$zeitblock->getVorganger(),
+            ...$zeitblock->getVorgangerSilent(),
+        ]);
+        foreach ($zeitblocks as $vorgaenger) {
             $allVorgaenger[] = $vorgaenger;
             array_push($allVorgaenger, ...$this->getAllVorgaengerBlocks($vorgaenger));
         }
-        return $allVorgaenger;
+
+        return array_unique($allVorgaenger);
     }
 }

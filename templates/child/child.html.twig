@@ -111,6 +111,24 @@
 
                                 </div>
                             </div>
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                    {% trans %}Anmeldestatus: Bestätigt{% endtrans %}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="statusSelector dropdown-item" data-type="status" data-value=bestaetigt href="#">
+                                        {% trans %}Anmeldestatus: Bestätigt{% endtrans %}
+                                    </a>
+                                    <a class="statusSelector dropdown-item" data-type="status" data-value="warteliste" href="#">
+                                        {% trans %}Anmeldestatus: Warteliste{% endtrans %}
+                                    </a>
+                                    <a class="statusSelector dropdown-item" data-type="status" data-value="beworben" href="#">
+                                        {% trans %}Anmeldestatus: Angemeldet{% endtrans %}
+                                    </a>
+                                </div>
+                            </div>
                             <button class="print btn btn-primary" type="button">
                                 PDF
                             </button>
@@ -163,6 +181,7 @@
                 {% else %}
                 block: null,
                 {% endif %}
+                status: 'bestaetigt',
 
                 organisation: {{ organisation.id }},
             };

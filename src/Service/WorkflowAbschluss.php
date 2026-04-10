@@ -6,21 +6,13 @@ use App\Entity\Kind;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Security;
-
-
-// <- Add this
 
 class WorkflowAbschluss
 {
-
-
-    private $em;
-
-    public function __construct(Security $security, EntityManagerInterface $entityManager)
+    public function __construct(
+        private EntityManagerInterface $em,
+    )
     {
-        $this->em = $entityManager;
-        $this->user = $security;
     }
 
     public

@@ -6,6 +6,7 @@ use App\Entity\AutoBlockAssignment;
 use App\Entity\AutoBlockAssignmentChild;
 use App\Entity\Organisation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,12 +29,22 @@ class AutoBlockAssignmentChildRepository extends ServiceEntityRepository
      */
     public function findByAutoBlockAssignmentWeighted(AutoBlockAssignment $autoBlockAssignment): array
     {
-        return $this->createQueryBuilder('child')
-            ->where('child.autoBlockAssignment = :autoBlockAssignment')
-            ->setParameter('autoBlockAssignment', $autoBlockAssignment)
-            ->orderBy('child.weight', 'DESC')
-            ->getQuery()
-            ->getResult();
+        // we have to use Native SQL here since Doctrine doesn't allow ORDER BY RAND()
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata(AutoBlockAssignmentChild::class, 'child');
+
+        $sql = <<<SQL
+            SELECT child.*
+            FROM auto_block_assignment_child child
+            WHERE child.auto_block_assignment_id = :autoBlockAssignmentId
+            GROUP BY child.id, child.auto_block_assignment_id, child.kind_id, child.weight
+            ORDER BY child.weight DESC, RAND()
+        SQL;
+
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $query->setParameter('autoBlockAssignmentId', $autoBlockAssignment->getId());
+
+        return $query->getResult();
     }
 
     public function findByOrganisationAddZeitblocksCounts(Organisation $organisation): array
