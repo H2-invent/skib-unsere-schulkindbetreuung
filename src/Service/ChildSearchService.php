@@ -174,10 +174,14 @@ class ChildSearchService
                 return false;
             }
         } else {// sonst immer nur die Kinder anzeigen die an activen Blöcken hängen
+            $hasActualBlock = false;
             foreach ($kind->getRealZeitblocks() as $data) {
                 if ($data->getDeleted() === false) {
+                    $hasActualBlock = true;
                     break;
                 }
+            }
+            if (!$hasActualBlock) {
                 return false;
             }
         }
