@@ -225,4 +225,74 @@ class BlockController extends AbstractController
         $em->flush();
         return new JsonResponse(array('redirect' => $this->generateUrl('block_schule_schow', array('id' => $block->getSchule()->getId()))));
     }
+
+    /**
+     * @Route("/org_block/schule/block/duplicate", name="block_schule_duplicateBlocks",methods={"GET","POST"})
+     */
+    public function duplicateBlock(Request $request, TranslatorInterface $translator)
+    {
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));
+        if (!$block) {
+            return new JsonResponse(array('error' => 1, 'snack' => $translator->trans('Block nicht gefunden.')));
+        }
+
+        if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
+            $text = $translator->trans('Fehler: Falsche Organisation');
+            return new JsonResponse(array('error' => 1, 'snack' => $text));
+        }
+
+        $this->denyAccessUnlessGranted('ROLE_ORG_BLOCK_MANAGEMENT');
+
+        if ($request->isMethod('POST')) {
+            $weekdays = array_unique(array_map('intval', $request->request->all('weekdays')));
+            $weekdays = array_values(array_filter($weekdays, static function (int $weekday): bool {
+                return $weekday >= 0 && $weekday <= 4;
+            }));
+
+            if (count($weekdays) === 0) {
+                return new JsonResponse(array('error' => 1, 'snack' => $translator->trans('Bitte mindestens einen Tag auswählen.')));
+            }
+
+            $em = $this->managerRegistry->getManager();
+            foreach ($weekdays as $weekday) {
+                $newBlock = new Zeitblock();
+                $newBlock->setSchule($block->getSchule());
+                $newBlock->setActive($block->getActive());
+                $newBlock->setWochentag($weekday);
+                $newBlock->setVon(new \DateTime($block->getVon()->format('H:i:s')));
+                $newBlock->setBis(new \DateTime($block->getBis()->format('H:i:s')));
+                $newBlock->setGanztag($block->getGanztag());
+                $newBlock->setPreise($block->getPreise());
+                $newBlock->setMin($block->getMin());
+                $newBlock->setMax($block->getMax());
+                $newBlock->setDeaktiviert($block->getDeaktiviert());
+                $newBlock->setDirektbuchungDeaktiviert($block->getDirektbuchungDeaktiviert());
+                if ($block->getHidePrice() !== null) {
+                    $newBlock->setHidePrice($block->getHidePrice());
+                }
+                $newBlock->setCloneOf($block);
+
+                foreach (['de', 'en', 'fr'] as $locale) {
+                    $newBlock->translate($locale)->setExtraText($block->translate($locale)->getExtraText());
+                    $newBlock->translate($locale)->setBlockbezeichnung($block->translate($locale)->getBlockbezeichnung());
+                }
+                $newBlock->mergeNewTranslations();
+                $em->persist($newBlock);
+            }
+            $em->flush();
+
+            return new JsonResponse(array('error' => 0, 'snack' => $translator->trans('Block erfolgreich dupliziert.')));
+        }
+
+        return $this->render('block/blockDuplicateForm.html.twig', [
+            'block' => $block,
+            'weekdayLabels' => [
+                0 => 'Montag',
+                1 => 'Dienstag',
+                2 => 'Mittwoch',
+                3 => 'Donnerstag',
+                4 => 'Freitag',
+            ]
+        ]);
+    }
 }

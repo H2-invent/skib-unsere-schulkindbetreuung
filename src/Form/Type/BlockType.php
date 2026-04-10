@@ -53,6 +53,11 @@ class BlockType extends AbstractType
 
             ])
             ->add('hidePrice', CheckboxType::class, ['required' => false, 'label' => 'Preis in der Anzeige verstecken', 'translation_domain' => 'form'])
+            ->add('direktbuchungDeaktiviert', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Direkte Auswahl deaktivieren (nur über Abhängigkeiten auswählbar)',
+                'translation_domain' => 'form'
+            ])
 
             ->add('translations', TranslationsType::class, [
 

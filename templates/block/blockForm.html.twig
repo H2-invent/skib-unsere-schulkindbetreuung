@@ -69,7 +69,7 @@
             </div>
         {% endif %}
 
-        {% if form.preise is defined or form.hidePrice is defined %}
+        {% if form.preise is defined or form.hidePrice is defined or form.direktbuchungDeaktiviert is defined %}
             <div class="form-card">
                 <div class="form-card-title">
                     {% trans %}Preise{% endtrans %}
@@ -82,6 +82,12 @@
                 {% if form.hidePrice is defined %}
                     <div class="mt-2">
                         {{ form_row(form.hidePrice) }}
+                    </div>
+                {% endif %}
+
+                {% if form.direktbuchungDeaktiviert is defined %}
+                    <div class="mt-2">
+                        {{ form_row(form.direktbuchungDeaktiviert) }}
                     </div>
                 {% endif %}
             </div>

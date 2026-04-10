@@ -12,4 +12,7 @@ __🐛 Bugfixes:__
 * Fix error in berechnung when child has an appllied block
 * fix error not calculating the startdate when null
 * Allow creat a SEPA in the future
+* * shcow blockbezeichnung in workflow blocks
+* create blocks which are no selectable but with vorganger
+* add posibility to duplicate blocks
 ## Files
