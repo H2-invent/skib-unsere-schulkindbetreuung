@@ -87,6 +87,9 @@ class Zeitblock implements TranslatableInterface
     private $deaktiviert;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
+    private $direktbuchungDeaktiviert;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $hidePrice;
 
     #[ORM\ManyToOne(targetEntity: Zeitblock::class, inversedBy: 'parentOf')]
@@ -555,6 +558,18 @@ class Zeitblock implements TranslatableInterface
     public function setDeaktiviert(?bool $deaktiviert): self
     {
         $this->deaktiviert = $deaktiviert;
+
+        return $this;
+    }
+
+    public function getDirektbuchungDeaktiviert(): ?bool
+    {
+        return $this->direktbuchungDeaktiviert;
+    }
+
+    public function setDirektbuchungDeaktiviert(?bool $direktbuchungDeaktiviert): self
+    {
+        $this->direktbuchungDeaktiviert = $direktbuchungDeaktiviert;
 
         return $this;
     }
