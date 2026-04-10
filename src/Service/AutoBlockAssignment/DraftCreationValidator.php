@@ -184,7 +184,7 @@ class DraftCreationValidator implements ResetInterface
     private function getAllVorgaengerBlocks(Zeitblock $zeitblock): array
     {
         $allVorgaenger = [];
-        $zeitblocks = $this->deduplicateEntities([
+        $zeitblocks = array_unique([
             ...$zeitblock->getVorganger(),
             ...$zeitblock->getVorgangerSilent(),
         ]);
@@ -193,19 +193,6 @@ class DraftCreationValidator implements ResetInterface
             array_push($allVorgaenger, ...$this->getAllVorgaengerBlocks($vorgaenger));
         }
 
-        return $this->deduplicateEntities($allVorgaenger);
-    }
-
-    /**
-     * @return Zeitblock[]
-     */
-    private function deduplicateEntities(array $entities): array
-    {
-        $unique = [];
-        foreach ($entities as $entity) {
-            $unique[$entity->getId()] = $entity;
-        }
-
-        return array_values($unique);
+        return array_unique($allVorgaenger);
     }
 }
