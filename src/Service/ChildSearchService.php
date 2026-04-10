@@ -176,7 +176,7 @@ class ChildSearchService
         } else {// sonst immer nur die Kinder anzeigen die an activen Blöcken hängen
             foreach ($kind->getRealZeitblocks() as $data) {
                 if ($data->getDeleted() === false) {
-                    continue;
+                    break;
                 }
                 return false;
             }
