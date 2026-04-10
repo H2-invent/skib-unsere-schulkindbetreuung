@@ -15,6 +15,10 @@
                         <div class="disabled">{{ 'Dieser Block ist nicht mehr buchbar'|trans }}</div>
                         <hr>
                     {% endif %}
+                    {% if b.direktbuchungDeaktiviert %}
+                        <div class="disabled">{{ 'Direktbuchung deaktiviert (nur über Verknüpfungen auswählbar)'|trans }}</div>
+                        <hr>
+                    {% endif %}
                     <p class="mb-2 date">{{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</p>
                     <p class="mb-2 kids">{{ getChildsOnSpecificTimeCached(b) }}</p>
                     {% if b.vorganger|length %}
@@ -83,6 +87,9 @@
                             <a href="{{ path('block_schule_editBlocks',{'id':b.id}) }}"
                                class="loadContent dropdown-item"> <i
                                         class="material-icons">edit</i> Bearbeiten</a>
+                            <a href="{{ path('block_schule_duplicateBlocks',{'id':b.id}) }}"
+                               class="loadContent dropdown-item"> <i
+                                        class="material-icons">content_copy</i> Duplizieren</a>
                             <a href="{{ path('block_schule_linkBlock',{'id':b.id}) }}"
                                class="loadContent dropdown-item"><i
                                         class="material-icons">link</i> Verknüpfen</a>

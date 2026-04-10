@@ -5,8 +5,8 @@ namespace App\Repository;
 use App\Entity\AutoBlockAssignment;
 use App\Entity\AutoBlockAssignmentChild;
 use App\Entity\Organisation;
-use App\Entity\Zeitblock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**

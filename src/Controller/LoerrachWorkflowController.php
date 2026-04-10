@@ -403,7 +403,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $kind = $this->managerRegistry->getRepository(Kind::class)->findOneBy(array('eltern' => $adresse, 'id' => $request->get('kinder_id')));
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
-        if ($block->getDeaktiviert()) {
+        if ($block->getDeaktiviert() || $block->getDirektbuchungDeaktiviert()) {
             return new JsonResponse(array('error' => 1, 'snack' => 'Error, this action is not allowed'));
         }
 
