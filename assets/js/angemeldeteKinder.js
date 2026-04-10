@@ -29,6 +29,9 @@ $('.dropdown-item').click(function () {
         case 'klasse':
             search.klasse = value;
             break;
+        case 'status':
+            search.status = value;
+            break;
         default:
             break;
 

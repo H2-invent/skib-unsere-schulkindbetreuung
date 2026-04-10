@@ -208,12 +208,65 @@ class BlockController extends AbstractController
     }
 
     /**
+     * @Route("/org_block/schule/block/linkBlockSilent", name="block_schule_linkBlockSilent",methods={"GET","POST"})
+     */
+    public function linkBlockSilent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));
+        if ($block->getSchule()->getOrganisation() !== $this->getUser()->getOrganisation()) {
+            $text = $translator->trans('Fehler: Falsche Organisation');
+            return new JsonResponse(['error' => 1, 'snack' => $text]);
+        }
+        $blocks1 = $this->managerRegistry->getRepository(Zeitblock::class)->findBy([
+            'schule' => $block->getSchule(),
+            'ganztag' => $block->getGanztag(),
+            'active' => $block->getActive(),
+            'deleted' => false
+        ],
+            ['von' => 'ASC']
+        );
+        $blocks = [];
+        foreach ($blocks1 as $data) {
+            if ($data !== $block) {
+                $blocks[] = $data;
+            }
+        }
+        $form = $this->createForm(BlockAbhangigkeitType::class, $block, [
+            'action' => $this->generateUrl('block_schule_linkBlockSilent', ['id' => $block->getId()]),
+            'blocks' => $blocks,
+            'silent' => true,
+        ]);
+
+        $form->handleRequest($request);
+
+        $errors = [];
+        if ($form->isSubmitted() && $form->isValid()) {
+            $block = $form->getData();
+            $errors = $validator->validate($block);
+            try {
+                if (count($errors) === 0) {
+                    $em = $this->managerRegistry->getManager();
+                    $em->persist($block);
+                    $em->flush();
+                    $text = $translator->trans('Erfolgreich gespeichert');
+                    return new JsonResponse(['error' => 0, 'snack' => $text]);
+                }
+            } catch (\Exception $e) {
+                $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
+                return new JsonResponse(['error' => 1, 'snack' => $text]);
+            }
+
+        }
+        return $this->render('block/blockLinkForm.html.twig', ['block' => $block, 'form' => $form->createView(), 'silent' => true]);
+    }
+
+    /**
      * @Route("/org_block/schule/block/linkBlock/remove", name="block_schule_linkBlock_remove",methods={"DELETE"})
      */
     public function removeLinkBlock(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
-        if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
+        if ($block->getSchule()->getOrganisation() !== $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
             return new JsonResponse(array('error' => 1, 'snack' => $text));
         }
@@ -224,6 +277,25 @@ class BlockController extends AbstractController
         $em->persist($block);
         $em->flush();
         return new JsonResponse(array('redirect' => $this->generateUrl('block_schule_schow', array('id' => $block->getSchule()->getId()))));
+    }
+
+    /**
+     * @Route("/org_block/schule/block/linkBlockSilent/remove", name="block_schule_linkBlockSilent_remove",methods={"DELETE"})
+     */
+    public function removeLinkBlockSilent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
+        if ($block->getSchule()->getOrganisation() !== $this->getUser()->getOrganisation()) {
+            $text = $translator->trans('Fehler: Falsche Organisation');
+            return new JsonResponse(['error' => 1, 'snack' => $text]);
+        }
+        foreach ($block->getVorgangerSilent() as $data) {
+            $block->removeVorgangerSilent($data);
+        }
+        $em = $this->managerRegistry->getManager();
+        $em->persist($block);
+        $em->flush();
+        return new JsonResponse(['redirect' => $this->generateUrl('block_schule_schow', ['id' => $block->getSchule()->getId()])]);
     }
 
     /**

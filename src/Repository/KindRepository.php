@@ -25,12 +25,21 @@ class KindRepository extends ServiceEntityRepository
 
     public function findBeworbenByZeitblock(Zeitblock $zeitblock)
     {
-        return $this->createQueryBuilder('k')
-            ->innerJoin('k.beworben', 'beworben')
-            ->innerJoin('k.eltern', 'eltern')
+        $newestElternCreatedAt = $this->createQueryBuilder('kind2')
+            ->select('MAX(eltern2.created_at)')
+            ->innerJoin('kind2.eltern', 'eltern2')
+            ->where('kind2.tracing = kind.tracing')
+            ->andWhere('kind2.startDate = kind.startDate')
+            ->andWhere('eltern2.created_at IS NOT NULL')
+            ->getDQL()
+        ;
+
+        return $this->createQueryBuilder('kind')
+            ->innerJoin('kind.beworben', 'beworben')
+            ->innerJoin('kind.eltern', 'eltern')
             ->andWhere('beworben = :beworben')
-            ->andWhere('k.startDate is not NULL')
-            ->andWhere('eltern.created_at is not NULL')
+            ->andWhere('kind.startDate is not NULL')
+            ->andWhere('eltern.created_at = (' .$newestElternCreatedAt. ')')
             ->setParameter('beworben', $zeitblock)
             ->getQuery()
             ->getResult();
@@ -224,8 +233,21 @@ class KindRepository extends ServiceEntityRepository
             ->andWhere('eltern.created_at is not NULL')
             ->andWhere('beworben_zeitblock.deleted = 0')
             ->andWhere('organisation = :organisation')->setParameter('organisation', $organisation)
-            ->andWhere('DATE(active.von) = DATE(kind.startDate)')
             ->andWhere('eltern.created_at = (' .$subQuery. ')')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findAutoBlockAssignedKindByZeitblock(Zeitblock $zeitblock): array
+    {
+        return $this->createQueryBuilder('kind')
+            ->innerJoin('kind.autoBlockAssignmentChild', 'child')
+            ->innerJoin('child.zeitblocks', 'child_zeitblock')
+            ->innerJoin('child_zeitblock.zeitblock', 'zeitblock')
+            ->andWhere('zeitblock = :zeitblock')
+            ->andWhere('child_zeitblock.accepted = 1')
+            ->setParameter('zeitblock', $zeitblock)
             ->getQuery()
             ->getResult()
         ;

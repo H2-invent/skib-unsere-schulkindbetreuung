@@ -2,15 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Kind;
+use App\Entity\Zeitblock;
 use App\Repository\ActiveRepository;
+use App\Repository\AutoBlockAssignmentChildRepository;
+use App\Repository\KindRepository;
 use App\Repository\SchuleRepository;
 use App\Repository\ZeitblockRepository;
 use App\Service\BerechnungsService;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,170 +24,181 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/org_accept/download', name: 'download_angemeldete')]
 class DownloadAngemeldeteKinderController extends AbstractController
 {
-    private $writer;
-    private $spreadsheet;
-    private $activeSheet;
-
     public function __construct(
-        private SchuleRepository    $schuleRepository,
-        private ActiveRepository    $activeRepository,
+        private SchuleRepository $schuleRepository,
+        private ActiveRepository $activeRepository,
         private ZeitblockRepository $zeitblockRepository,
         private BerechnungsService $berechnungsService,
+        private KindRepository $kindRepository,
     )
     {
-        $this->spreadsheet = new Spreadsheet();
-        $this->writer = new Xlsx($this->spreadsheet);
-        $this->activeSheet = $this->spreadsheet->getActiveSheet();
-        $this->activeSheet->setCellValue('A1', 'Eltern Vorname');
-        $this->activeSheet->setCellValue('B1', 'Eltern Nachname');
-        $this->activeSheet->setCellValue('D1', 'Vorname');
-        $this->activeSheet->setCellValue('E1', 'Nachname');
-        $this->activeSheet->setCellValue('F1', 'Gebuchte Zeiten');
-        $this->activeSheet->setCellValue('F2', 'Montag');
-        $this->activeSheet->setCellValue('G2', 'Dienstag');
-        $this->activeSheet->setCellValue('H2', 'Mittwoch');
-        $this->activeSheet->setCellValue('I2', 'Donnerstag');
-        $this->activeSheet->setCellValue('J2', 'Freitag');
-        $this->activeSheet->setCellValue('K1', 'Angemeldete Zeiten');
-        $this->activeSheet->setCellValue('K2', 'Montag');
-        $this->activeSheet->setCellValue('L2', 'Dienstag');
-        $this->activeSheet->setCellValue('M2', 'Mittwoch');
-        $this->activeSheet->setCellValue('N2', 'Donnerstag');
-        $this->activeSheet->setCellValue('O2', 'Freitag');
-        $this->activeSheet->setCellValue('P1', 'Gebühr (€)');
     }
 
-    #[
-        Route('/kinder', name: '_kinder')]
-    public function kinder(Request $request)
+    /**
+     * @return list<Spreadsheet, Worksheet, Xlsx>
+     */
+    private function initSheet(): array
     {
+        $spreadsheet = new Spreadsheet();
+        $writer = new Xlsx($spreadsheet);
+        $activeSheet = $spreadsheet->getActiveSheet();
+        $activeSheet->setCellValue('A1', 'Eltern Vorname');
+        $activeSheet->setCellValue('B1', 'Eltern Nachname');
+        $activeSheet->setCellValue('C1', 'Vorname');
+        $activeSheet->setCellValue('D1', 'Nachname');
+        $activeSheet->setCellValue('E1', 'Gebuchte Zeiten');
+        $activeSheet->setCellValue('E2', 'Montag');
+        $activeSheet->setCellValue('F2', 'Dienstag');
+        $activeSheet->setCellValue('G2', 'Mittwoch');
+        $activeSheet->setCellValue('H2', 'Donnerstag');
+        $activeSheet->setCellValue('I2', 'Freitag');
+        $activeSheet->setCellValue('J1', 'Angemeldete Zeiten');
+        $activeSheet->setCellValue('J2', 'Montag');
+        $activeSheet->setCellValue('K2', 'Dienstag');
+        $activeSheet->setCellValue('L2', 'Mittwoch');
+        $activeSheet->setCellValue('M2', 'Donnerstag');
+        $activeSheet->setCellValue('N2', 'Freitag');
+        $activeSheet->setCellValue('O1', 'Potentielle Zeiten (Auto Zuteilung)');
+        $activeSheet->setCellValue('O2', 'Montag');
+        $activeSheet->setCellValue('P2', 'Dienstag');
+        $activeSheet->setCellValue('Q2', 'Mittwoch');
+        $activeSheet->setCellValue('R2', 'Donnerstag');
+        $activeSheet->setCellValue('S2', 'Freitag');
+        $activeSheet->setCellValue('T1', 'Gebühr (€)');
+        $activeSheet->getStyle('2')->getBorders()->getBottom()->setBorderStyle(Border::BORDER_MEDIUM);
+        foreach (range('A', 'T') as $column) {
+            $activeSheet->getColumnDimension($column)->setAutoSize(true);
+        }
+
+        return [$spreadsheet, $activeSheet, $writer];
+    }
+
+    #[Route('/kinder', name: '_kinder')]
+    public function kinder(Request $request): BinaryFileResponse
+    {
+        [$spreadsheet, $activeSheet, $writer] = $this->initSheet();
+
         $schule = $this->schuleRepository->find($request->get('schule_id'));
         $active = $this->activeRepository->find($request->get('active_id'));
 
-        if (!in_array($schule, $this->getUser()->getSchulen()->toArray())) {
+        $orgSchulen = $this->getUser()?->getOrganisation()?->getSchule()?->toArray();
+        $userSchulen = $this->getUser()?->getSchulen()?->toArray();
+
+        if ($schule === null || !in_array($schule, [...$orgSchulen, ...$userSchulen], true)) {
             throw new NotFoundHttpException('Schule not found');
         }
         if (!$active) {
             throw new NotFoundHttpException('Schule not found');
         }
-        $blocks = $this->zeitblockRepository->findBy(array('active' => $active, 'schule' => $schule));
+
+        $status = $request->get('status');
+        $autoBlocks = $this->zeitblockRepository->findBy(['active' => $active, 'schule' => $schule]);
         $kinder = [];
-        foreach ($blocks as $data) {
-            $kinder = array_merge($kinder, $data->getKinderBeworben()->toArray());
-        }
-        $kinder = array_unique($kinder);
-        $counter = 3;
-        foreach ($kinder as $data2) {
-            if ($data2->getStartDate() && $data2->getEltern()->getCreatedAt()) {
-                $this->activeSheet->setCellValue('A' . $counter, $data2->getEltern()->getVorname());
-                $this->activeSheet->setCellValue('B' . $counter, $data2->getEltern()->getVorname());
-                $this->activeSheet->setCellValue('D' . $counter, $data2->getVorname());
-                $this->activeSheet->setCellValue('E' . $counter, $data2->getNachname());
-                foreach ($data2->getZeitblocks() as $block) {
-                    switch ($block->getWochentag()) {
-                        case 0:
-                            $this->activeSheet->setCellValue('F' . $counter,
-                                $this->activeSheet->getCell('F' . $counter)->getValue()
-                                . "\n" . $block->getvon()->format('H:i') . '-' . $block->getbis()->format('H:i')
-                            );
-                            $this->activeSheet->getStyle('F' . $counter)->getAlignment()->setWrapText(true);
-                            break;
-                        case 1:
-                            $this->activeSheet->setCellValue('G' . $counter,
-                                $this->activeSheet->getCell('F' . $counter)->getValue()
-                                . "\n" . $block->getvon()->format('H:i') . '-' . $block->getbis()->format('H:i')
-                            );
-                            $this->activeSheet->getStyle('G' . $counter)->getAlignment()->setWrapText(true);
-                            break;
-                        case 2:
-                            $this->activeSheet->setCellValue('H' . $counter,
-                                $this->activeSheet->getCell('F' . $counter)->getValue()
-                                . "\n" . $block->getvon()->format('H:i') . '-' . $block->getbis()->format('H:i')
-                            );
-                            $this->activeSheet->getStyle('H' . $counter)->getAlignment()->setWrapText(true);
-                            break;
-                        case 3:
-                            $this->activeSheet->setCellValue('I' . $counter,
-                                $this->activeSheet->getCell('F' . $counter)->getValue()
-                                . "\n" . $block->getvon()->format('H:i') . '-' . $block->getbis()->format('H:i')
-                            );
-                            $this->activeSheet->getStyle('I' . $counter)->getAlignment()->setWrapText(true);
-                            break;
-                        case 4:
-                            $this->activeSheet->setCellValue('J' . $counter,
-                                $this->activeSheet->getCell('F' . $counter)->getValue()
-                                . "\n" . $block->getvon()->format('H:i') . '-' . $block->getbis()->format('H:i')
-                            );
-                            $this->activeSheet->getStyle('J' . $counter)->getAlignment()->setWrapText(true);
-                            break;
-                        default:
-                            break;
-                    }
-
-                }
-                foreach ($data2->getBeworben() as $block) {
-;                    switch ($block->getWochentag()) {
-                        case 0:
-                            $this->activeSheet->setCellValue('K' . $counter,
-                                $this->activeSheet->getCell('K' . $counter)->getValue()
-                                . "\n" . $block->getvon()->format('H:i') . '-' . $block->getbis()->format('H:i')
-                            );
-                            $this->activeSheet->getStyle('K' . $counter)->getAlignment()->setWrapText(true);
-                            break;
-                        case 1:
-                            $this->activeSheet->setCellValue('L' . $counter,
-                                $this->activeSheet->getCell('L' . $counter)->getValue()
-                                . "\n" . $block->getvon()->format('H:i') . '-' . $block->getbis()->format('H:i')
-
-                            );
-                            $this->activeSheet->getStyle('L' . $counter)->getAlignment()->setWrapText(true);
-                            break;
-                        case 2:
-                            $this->activeSheet->setCellValue('M' . $counter,
-                                $this->activeSheet->getCell('M' . $counter)->getValue()
-                                . "\n" . $block->getvon()->format('H:i') . '-' . $block->getbis()->format('H:i')
-                            );
-                            $this->activeSheet->getStyle('M' . $counter)->getAlignment()->setWrapText(true);
-                            break;
-                        case 3:
-                            $this->activeSheet->setCellValue('N' . $counter,
-                                $this->activeSheet->getCell('N' . $counter)->getValue()
-                                . "\n" . $block->getvon()->format('H:i') . '-' . $block->getbis()->format('H:i')
-                            );
-                            $this->activeSheet->getStyle('N' . $counter)->getAlignment()->setWrapText(true);
-                            break;
-                        case 4:
-                            $this->activeSheet->setCellValue('O' . $counter,
-                                $this->activeSheet->getCell('O' . $counter)->getValue()
-                                . "\n" . $block->getvon()->format('H:i') . '-' . $block->getbis()->format('H:i')
-                            );
-                            $this->activeSheet->getStyle('O' . $counter)->getAlignment()->setWrapText(true);
-                            break;
-                        default:
-                            break;
-                    }
-
-                }
-
-                $this->activeSheet->setCellValue('P' . $counter, $this->berechnungsService->getPreisforBetreuung($data2,true,$data2->getStartDate()));
+        foreach ($autoBlocks as $block) {
+            if ($status === 'alle') {
+                $kinder = array_merge(
+                    $kinder,
+                    $block->getKinderBeworben()->toArray(),
+                    $block->getKind()->toArray(),
+                    $this->kindRepository->findAutoBlockAssignedKindByZeitblock($block)
+                );
+            } else {
+                $kinder = array_merge($kinder, $block->getKinderBeworben()->toArray());
             }
+        }
+        $kinder = $this->deduplicateKinderChooseNewest($kinder);
+        $counter = 3;
+        foreach ($kinder as $kind) {
+            if ($kind->getStartDate() === null || $kind->getEltern()->getCreatedAt() === null) {
+                continue;
+            }
+
+            $activeSheet->setCellValue('A' . $counter, $kind->getEltern()->getVorname());
+            $activeSheet->setCellValue('B' . $counter, $kind->getEltern()->getVorname());
+            $activeSheet->setCellValue('C' . $counter, $kind->getVorname());
+            $activeSheet->setCellValue('D' . $counter, $kind->getNachname());
+
+            foreach ($kind->getZeitblocks() as $block) {
+                $this->writeTimesForBlock($block, $activeSheet, $counter, range('E', 'I'));
+            }
+            foreach ($kind->getBeworben() as $block) {
+                $this->writeTimesForBlock($block, $activeSheet, $counter, range('J', 'N'));
+            }
+            foreach ($this->getAcceptedAutoAssignedZeitblocks($kind) as $block) {
+                $this->writeTimesForBlock($block, $activeSheet, $counter, range('O', 'S'));
+            }
+
+            $activeSheet->setCellValue('T' . $counter,
+                $this->berechnungsService->getPreisforBetreuung($kind, true, $kind->getStartDate())
+            );
             $counter++;
         }
 
 
-        $this->spreadsheet->setActiveSheetIndex(0);
+        $spreadsheet->setActiveSheetIndex(0);
 
 
         // Create a Temporary file in the system
-        $fileName = 'Angemeldete Kinder_'.$schule->getName().'.xlsx';
+        $fileName = 'Angemeldete Kinder_' . $schule->getName() . '.xlsx';
         $temp_file = tempnam(sys_get_temp_dir(), $fileName);
 
         // Create the excel file in the tmp directory of the system
-        $this->writer->save($temp_file);
+        $writer->save($temp_file);
 
         // Return the excel file as an attachment
-        return $this->file($temp_file,  $fileName . '.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
+        return $this->file($temp_file, $fileName, ResponseHeaderBag::DISPOSITION_INLINE);
 
+    }
+
+    /**
+     * @param Kind[] $kinder
+     * @return Kind[]
+     */
+    private function deduplicateKinderChooseNewest(array $kinder): array
+    {
+        $unique = [];
+        foreach ($kinder as $kind) {
+            $tracing = $kind->getTracing();
+
+            if (!isset($unique[$tracing])) {
+                $unique[$tracing] = $kind;
+                continue;
+            }
+            if ($kind->getEltern()->getCreatedAt() > $unique[$tracing]->getEltern()->getCreatedAt()) {
+                $unique[$tracing] = $kind;
+            }
+        }
+
+        return $unique;
+    }
+
+    /**
+     * @param array{0: string, 1: string, 2: string, 3: string, 4: string} $columnRange
+     */
+    private function writeTimesForBlock(Zeitblock $block, Worksheet|Xlsx $activeSheet, int $counter, array $columnRange): void
+    {
+        $column = $columnRange[$block->getWochentag()];
+
+        $activeSheet->setCellValue($column . $counter,
+            ($activeSheet->getCell($column . $counter)->getValue()
+                ? $activeSheet->getCell($column . $counter)->getValue() . "\n"
+                : ''
+            )
+            . $block->getvon()->format('H:i') . '-' . $block->getbis()->format('H:i')
+        );
+        $activeSheet->getStyle($column . $counter)->getAlignment()->setWrapText(true);
+    }
+
+    /**
+     * @param Kind $kind
+     * @return Zeitblock[]
+     */
+    private function getAcceptedAutoAssignedZeitblocks(Kind $kind): array
+    {
+        $autoBlocks = $kind->getAutoBlockAssignmentChild()?->getZeitblocks()->toArray() ?? [];
+        $autoBlocks = array_filter($autoBlocks, static fn($autoBlock) => $autoBlock->isAccepted());
+
+        return array_map(static fn($autoBlock) => $autoBlock->getZeitblock(), $autoBlocks);
     }
 }
 
