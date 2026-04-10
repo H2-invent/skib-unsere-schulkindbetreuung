@@ -182,7 +182,7 @@
         <target state="translated">Add organizational employee</target>
       </trans-unit>
       <trans-unit id="qZFHrCt" resname="Online Anmeldung für Ferienbetreuung">
-        <source>Online Antrag für Ferienbetreuung</source>
+        <source>Online Anmeldung für Ferienbetreuung</source>
         <target state="needs-translation">Online Antrag für Ferienbetreuung</target>
       </trans-unit>
       <trans-unit id="eeXPIN4" resname="Adresse">
@@ -242,7 +242,7 @@
         <target state="translated">School child care SKiB</target>
       </trans-unit>
       <trans-unit id="bedt2uH" resname="Online Anmeldung und Verwaltung">
-        <source>Online Antrag und Verwaltung</source>
+        <source>Online Anmeldung und Verwaltung</source>
         <target state="needs-translation">Online Antrag und Verwaltung</target>
       </trans-unit>
       <trans-unit id="1Fj0jnL" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.">
@@ -676,7 +676,7 @@ The web application enables direct networking between parent or legal guardian, 
         <target state="translated">E-mail address</target>
       </trans-unit>
       <trans-unit id="lRPQnJ2" resname="Weitere personenberechtigte Personen">
-        <source>Weitere sorgeberechtigte Personen</source>
+        <source>Weitere personenberechtigte Personen</source>
         <target state="needs-translation">Weitere sorgeberechtigte Personen</target>
       </trans-unit>
       <trans-unit id="ZEGhE2w" resname="Kinder im KiGa">
@@ -932,7 +932,7 @@ The web application enables direct networking between parent or legal guardian, 
         <target state="translated">Income group</target>
       </trans-unit>
       <trans-unit id=".1m.g7w" resname="Anzahl weitere personenberechtigte Personen">
-        <source>Anzahl weitere sorgeberechtigte Personen</source>
+        <source>Anzahl weitere personenberechtigte Personen</source>
         <target state="needs-translation">Anzahl weitere sorgeberechtigte Personen</target>
       </trans-unit>
       <trans-unit id="HiujKG." resname="Anzahl an Kindern in der Schulkindbetreuung">
@@ -1874,7 +1874,7 @@ The web application enables direct networking between parent or legal guardian, 
         <target state="needs-translation">Mitarbeiter anlegen</target>
       </trans-unit>
       <trans-unit id="EfmaxLu" resname="Online Anmeldung">
-        <source>Online Antrag</source>
+        <source>Online Anmeldung</source>
         <target state="needs-translation">Online Antrag</target>
       </trans-unit>
       <trans-unit id="JdUtfoZ" resname="Fertig">
@@ -2358,7 +2358,7 @@ The web application enables direct networking between parent or legal guardian, 
         <target state="translated">Read more</target>
       </trans-unit>
       <trans-unit id="n.c95W2" resname="Online Anmeldung und Verwaltung für die Schulkindbetreuung">
-        <source>Online Antrag und Verwaltung für die Schulkindbetreuung</source>
+        <source>Online Anmeldung und Verwaltung für die Schulkindbetreuung</source>
         <target state="needs-translation">Online Antrag und Verwaltung für die Schulkindbetreuung</target>
       </trans-unit>
       <trans-unit id="Dt7wRjx" resname="Die Schulkindbetreuung steht ihnen in folgenden Städten zur Verfügung">
@@ -3000,11 +3000,11 @@ The web application enables direct networking between parent or legal guardian, 
         <target state="translated">Thank you Your SKiB Team</target>
       </trans-unit>
       <trans-unit id="U9e4VJt" resname="Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung">
-        <source>Online Antrag zur Schulkindbetreuung und Ferienbetreuung</source>
+        <source>Online Anmeldung zur Schulkindbetreuung und Ferienbetreuung</source>
         <target state="needs-translation">Online Antrag zur Schulkindbetreuung und Ferienbetreuung</target>
       </trans-unit>
       <trans-unit id="lpqZrbk" resname="Online Anmeldung zur Schulkindbetreuung">
-        <source>Online Antrag zur Schulkindbetreuung</source>
+        <source>Online Anmeldung zur Schulkindbetreuung</source>
         <target state="needs-translation">Online Antrag zur Schulkindbetreuung</target>
       </trans-unit>
       <trans-unit id="AogfjhA" resname="Diese Webseite ist aktuell in der Entwicklung. Bitte keine echten personenbezogenen Daten eintragen. Melden Sie hier ihr Kind/Kinder für die Schulkindbetreuung der %name% an">
@@ -3238,6 +3238,74 @@ The web application enables direct networking between parent or legal guardian, 
       <trans-unit id="zVX3M_I" resname="Super Admin">
         <source>Super Admin</source>
         <target state="needs-translation">Super Admin</target>
+      </trans-unit>
+      <trans-unit id="9wIla3K" resname="Anmeldestatus: Bestätigt">
+        <source>Anmeldestatus: Bestätigt</source>
+        <target state="needs-translation">Anmeldestatus: Bestätigt</target>
+      </trans-unit>
+      <trans-unit id="pmT9nlX" resname="Anmeldestatus: Warteliste">
+        <source>Anmeldestatus: Warteliste</source>
+        <target state="needs-translation">Anmeldestatus: Warteliste</target>
+      </trans-unit>
+      <trans-unit id="4L2V92U" resname="Anmeldestatus: Beworben">
+        <source>Anmeldestatus: Beworben</source>
+        <target state="needs-translation">Anmeldestatus: Beworben</target>
+      </trans-unit>
+      <trans-unit id="QuVgohg" resname="Krankentage gesamt">
+        <source>Krankentage gesamt</source>
+        <target state="needs-translation">Krankentage gesamt</target>
+      </trans-unit>
+      <trans-unit id="JUVv_uN" resname="Krankmeldungen">
+        <source>Krankmeldungen</source>
+        <target state="needs-translation">Krankmeldungen</target>
+      </trans-unit>
+      <trans-unit id="I28pt5e" resname="Summe:">
+        <source>Summe:</source>
+        <target state="needs-translation">Summe:</target>
+      </trans-unit>
+      <trans-unit id="huOR18x" resname="Krankmeldungen heute">
+        <source>Krankmeldungen heute</source>
+        <target state="needs-translation">Krankmeldungen heute</target>
+      </trans-unit>
+      <trans-unit id="scASqTg" resname="SEPA Download">
+        <source>SEPA Download</source>
+        <target state="needs-translation">SEPA Download</target>
+      </trans-unit>
+      <trans-unit id="y9T92AK" resname="Kinderliste">
+        <source>Kinderliste</source>
+        <target state="needs-translation">Kinderliste</target>
+      </trans-unit>
+      <trans-unit id="eVVpL93" resname="Beworbene">
+        <source>Beworbene</source>
+        <target state="needs-translation">Beworbene</target>
+      </trans-unit>
+      <trans-unit id="OAGjXFG" resname="Alle">
+        <source>Alle</source>
+        <target state="needs-translation">Alle</target>
+      </trans-unit>
+      <trans-unit id="SpB2O_F" resname="Bitte fülle die gewünschten Angaben aus.">
+        <source>Bitte fülle die gewünschten Angaben aus.</source>
+        <target state="needs-translation">Bitte fülle die gewünschten Angaben aus.</target>
+      </trans-unit>
+      <trans-unit id="l7FSI1k" resname="Kapazität">
+        <source>Kapazität</source>
+        <target state="needs-translation">Kapazität</target>
+      </trans-unit>
+      <trans-unit id="u7C9X.V" resname="Texte">
+        <source>Texte</source>
+        <target state="needs-translation">Texte</target>
+      </trans-unit>
+      <trans-unit id="_KORIMy" resname="Beim Speichern ist ein Fehler aufgetreten.">
+        <source>Beim Speichern ist ein Fehler aufgetreten.</source>
+        <target state="needs-translation">Beim Speichern ist ein Fehler aufgetreten.</target>
+      </trans-unit>
+      <trans-unit id="MUEY.V6" resname="Automatische Zuteilung">
+        <source>Automatische Zuteilung</source>
+        <target state="needs-translation">Automatische Zuteilung</target>
+      </trans-unit>
+      <trans-unit id="EUYnRLI" resname="Die Zuteilung so akzeptieren und in die Datenbank schreiben?">
+        <source>Die Zuteilung so akzeptieren und in die Datenbank schreiben?</source>
+        <target state="needs-translation">Die Zuteilung so akzeptieren und in die Datenbank schreiben?</target>
       </trans-unit>
     </body>
   </file>
