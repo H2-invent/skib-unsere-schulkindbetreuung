@@ -133,13 +133,10 @@ class ChildSearchService
     public
     function checkKindOfParameter($parameters, Kind $kind, $diff = false)
     {
-        if (!$diff && count($kind->getRealZeitblocks()) === 0) {
-            return false;
-        }
         //Schuljahr als Filter
         if (isset($parameters['schuljahr']) && $parameters['schuljahr'] !== "" && !$diff) {
             $jahr = $this->em->getRepository(Active::class)->find($parameters['schuljahr']);
-            if ($kind->getRealZeitblocks()[0]->getActive() !== $jahr) {
+            if ($kind->getSchuljahr() !== $jahr) {
                 return false;
             }
         }
@@ -173,11 +170,19 @@ class ChildSearchService
             if (count($kind->getRealWarteliste()) <= 0) {
                 return false;
             }
+        } else if ($diff) {
+            if (count($kind->getRealWarteliste()) === 0 && count($kind->getRealZeitblocks()) === 0 && count($kind->getRealBeworben()) === 0) {
+                return false;
+            }
         } else {// sonst immer nur die Kinder anzeigen die an activen Blöcken hängen
+            $hasActualBlock = false;
             foreach ($kind->getRealZeitblocks() as $data) {
                 if ($data->getDeleted() === false) {
-                    continue;
+                    $hasActualBlock = true;
+                    break;
                 }
+            }
+            if (!$hasActualBlock) {
                 return false;
             }
         }
