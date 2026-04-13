@@ -64,9 +64,11 @@ class DownloadAngemeldeteKinderController extends AbstractController
         $activeSheet->setCellValue('Q2', 'Mittwoch');
         $activeSheet->setCellValue('R2', 'Donnerstag');
         $activeSheet->setCellValue('S2', 'Freitag');
-        $activeSheet->setCellValue('T1', 'Gebühr (€)');
+        $activeSheet->setCellValue('T1', 'Gewichtungsscore');
+        $activeSheet->setCellValue('U1', 'Klasse');
+        $activeSheet->setCellValue('V1', 'Gebühr (€)');
         $activeSheet->getStyle('2')->getBorders()->getBottom()->setBorderStyle(Border::BORDER_MEDIUM);
-        foreach (range('A', 'T') as $column) {
+        foreach (range('A', 'V') as $column) {
             $activeSheet->getColumnDimension($column)->setAutoSize(true);
         }
 
@@ -128,7 +130,9 @@ class DownloadAngemeldeteKinderController extends AbstractController
                 $this->writeTimesForBlock($block, $activeSheet, $counter, range('O', 'S'));
             }
 
-            $activeSheet->setCellValue('T' . $counter,
+            $activeSheet->setCellValue('T' . $counter, $kind->getAutoBlockAssignmentChild()?->getWeight());
+            $activeSheet->setCellValue('U' . $counter, $kind->getKlasseString());
+            $activeSheet->setCellValue('V' . $counter,
                 $this->berechnungsService->getPreisforBetreuung($kind, true, $kind->getStartDate())
             );
             $counter++;
@@ -178,15 +182,16 @@ class DownloadAngemeldeteKinderController extends AbstractController
     private function writeTimesForBlock(Zeitblock $block, Worksheet|Xlsx $activeSheet, int $counter, array $columnRange): void
     {
         $column = $columnRange[$block->getWochentag()];
+        $cell = $column . $counter;
 
-        $activeSheet->setCellValue($column . $counter,
-            ($activeSheet->getCell($column . $counter)->getValue()
-                ? $activeSheet->getCell($column . $counter)->getValue() . "\n"
+        $activeSheet->setCellValue($cell,
+            ($activeSheet->getCell($cell)->getValue()
+                ? $activeSheet->getCell($cell)->getValue() . "\n"
                 : ''
             )
             . $block->getvon()->format('H:i') . '-' . $block->getbis()->format('H:i')
         );
-        $activeSheet->getStyle($column . $counter)->getAlignment()->setWrapText(true);
+        $activeSheet->getStyle($cell)->getAlignment()->setWrapText(true);
     }
 
     /**
