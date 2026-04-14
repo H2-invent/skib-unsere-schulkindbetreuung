@@ -19,11 +19,11 @@
       </trans-unit>
       <trans-unit id="34R6VMk" resname="Keine Berechtigung">
         <source>Keine Berechtigung</source>
-        <target state="needs-translation">Keine Berechtigung</target>
+        <target state="translated">Insufficient permissions</target>
       </trans-unit>
       <trans-unit id="2M_gsdT" resname="Email Adressen stimmen nicht überein.">
         <source>Email Adressen stimmen nicht überein.</source>
-        <target state="needs-translation">Email Adressen stimmen nicht überein.</target>
+        <target state="translated">Email addresses don't match.</target>
       </trans-unit>
       <trans-unit id="ojEwBSz" resname="Email adresse geändert">
         <source>Email adresse geändert</source>
@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="gwVxViX" resname="Schuljahr geändert">
         <source>Schuljahr geändert</source>
-        <target state="needs-translation">Schuljahr geändert</target>
+        <target state="translated">Changed grade</target>
       </trans-unit>
       <trans-unit id="yOSrRW_" resname="Kinder Anwesend am %date%">
         <source>Kinder Anwesend am %date%</source>
@@ -99,7 +99,7 @@
       </trans-unit>
       <trans-unit id="lBV5YKD" resname=" am %d% von %s% bis %e% Uhr">
         <source> am %d% von %s% bis %e% Uhr</source>
-        <target state="needs-translation"> am %d% von %s% bis %e% Uhr</target>
+        <target state="translated"> on %d% from %s% to %e%</target>
       </trans-unit>
       <trans-unit id="wyfWzSw" resname=" in der Klasse: %klasse%">
         <source> in der Klasse: %klasse%</source>
@@ -107,15 +107,15 @@
       </trans-unit>
       <trans-unit id="_S8zNXy" resname="Email mit Sicherheitscode">
         <source>Email mit Sicherheitscode</source>
-        <target state="needs-translation">Email mit Sicherheitscode</target>
+        <target state="translated">Email with security code</target>
       </trans-unit>
       <trans-unit id="EnnkoaW" resname="Sicherheitscode erneut zugesendet">
         <source>Sicherheitscode erneut zugesendet</source>
-        <target state="needs-translation">Sicherheitscode erneut zugesendet</target>
+        <target state="translated">Resent security code</target>
       </trans-unit>
       <trans-unit id="OqifTIq" resname="Sicherheitscode konnte nicht erneut zugesendet">
         <source>Sicherheitscode konnte nicht erneut zugesendet</source>
-        <target state="needs-translation">Sicherheitscode konnte nicht erneut zugesendet</target>
+        <target state="translated">Security code couldn't be resent</target>
       </trans-unit>
       <trans-unit id="2Hxrhyc" resname="Erfolgreich angelegt">
         <source>Erfolgreich angelegt</source>
@@ -143,7 +143,7 @@
       </trans-unit>
       <trans-unit id="BygxRwL" resname="Stammdaten gespeichert">
         <source>Stammdaten gespeichert</source>
-        <target state="needs-translation">Stammdaten gespeichert</target>
+        <target state="translated">Master data saved</target>
       </trans-unit>
       <trans-unit id="YXWA8Pf" resname="Unbekannter Fehler">
         <source>Unbekannter Fehler</source>
@@ -183,7 +183,7 @@
       </trans-unit>
       <trans-unit id="qZFHrCt" resname="Online Anmeldung für Ferienbetreuung">
         <source>Online Anmeldung für Ferienbetreuung</source>
-        <target state="needs-translation">Online Antrag für Ferienbetreuung</target>
+        <target state="translated">Holiday childcare application</target>
       </trans-unit>
       <trans-unit id="eeXPIN4" resname="Adresse">
         <source>Adresse</source>
@@ -227,7 +227,7 @@
       </trans-unit>
       <trans-unit id="RZid5J_" resname="Details">
         <source>Details</source>
-        <target state="needs-translation">Details</target>
+        <target state="translated">Details</target>
       </trans-unit>
       <trans-unit id="SRxx08g" resname="Ferieneinstellungen ändern">
         <source>Ferieneinstellungen ändern</source>
@@ -243,7 +243,7 @@
       </trans-unit>
       <trans-unit id="bedt2uH" resname="Online Anmeldung und Verwaltung">
         <source>Online Anmeldung und Verwaltung</source>
-        <target state="needs-translation">Online Antrag und Verwaltung</target>
+        <target state="translated">Online application and management</target>
       </trans-unit>
       <trans-unit id="1Fj0jnL" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.">
         <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.</source>
@@ -281,7 +281,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="F_1r.pz" resname="Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:">
         <source>Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:</source>
-        <target state="needs-translation">Hiermit bestägen wir Ihnen die Anmeldung Ihres Kindes:</target>
+        <target state="translated">We hereby confirm signing up your child:</target>
       </trans-unit>
       <trans-unit id="Stvfiqn" resname="Preis erfolgreich berechnet.">
         <source>Preis erfolgreich berechnet.</source>
@@ -329,11 +329,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="9AomjJd" resname="Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestend eine Schule aus">
         <source>Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestend eine Schule aus</source>
-        <target state="needs-translation">Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestend eine Schule aus</target>
+        <target state="translated">Message couldn't be sent. Please select at least one school</target>
       </trans-unit>
       <trans-unit id="KMeWLMp" resname="Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestens ein Schuljahr aus">
         <source>Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestens ein Schuljahr aus</source>
-        <target state="needs-translation">Nachricht konnte nicht versendet werden. Bitte wählen Sie eine mindestens ein Schuljahr aus</target>
+        <target state="translated">Message couldn't be sent. Please select at least one grade</target>
       </trans-unit>
       <trans-unit id="bRCf2Pa" resname="Organisation anlegen">
         <source>Organisation anlegen</source>
@@ -381,11 +381,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="EYjNw3R" resname="Fehler, bitte laden Sie die Seite neu">
         <source>Fehler, bitte laden Sie die Seite neu</source>
-        <target state="needs-translation">Fehler, bitte laden Sie die Seite neu</target>
+        <target state="translated">Error, please reload the page</target>
       </trans-unit>
       <trans-unit id="qVIPq3c" resname="Kind erfolgreich auf Warteliste verschoben.">
         <source>Kind erfolgreich auf Warteliste verschoben.</source>
-        <target state="needs-translation">Kind erfolgreich auf Warteliste verschoben.</target>
+        <target state="translated">Child added to the waiting list successfully.</target>
       </trans-unit>
       <trans-unit id="VtzD2VE" resname="Kind erfolgreich aus die Warteliste entfernt">
         <source>Kind erfolgreich aus die Warteliste entfernt</source>
