@@ -5,11 +5,11 @@ namespace App\Controller;
 use App\Entity\Kind;
 use App\Entity\Zeitblock;
 use App\Repository\ActiveRepository;
-use App\Repository\AutoBlockAssignmentChildRepository;
 use App\Repository\KindRepository;
 use App\Repository\SchuleRepository;
 use App\Repository\ZeitblockRepository;
 use App\Service\BerechnungsService;
+use Doctrine\Common\Collections\ArrayCollection;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -66,9 +66,12 @@ class DownloadAngemeldeteKinderController extends AbstractController
         $activeSheet->setCellValue('S2', 'Freitag');
         $activeSheet->setCellValue('T1', 'Gewichtungsscore');
         $activeSheet->setCellValue('U1', 'Klasse');
-        $activeSheet->setCellValue('V1', 'Gebühr (€)');
+        $activeSheet->setCellValue('V1', 'Berufsstatus');
+        $activeSheet->setCellValue('W1', 'Alleinerziehend');
+        $activeSheet->setCellValue('X1', 'Anzahl Dokumente');
+        $activeSheet->setCellValue('Y1', 'Gebühr (€)');
         $activeSheet->getStyle('2')->getBorders()->getBottom()->setBorderStyle(Border::BORDER_MEDIUM);
-        foreach (range('A', 'V') as $column) {
+        foreach (range('A', 'Y') as $column) {
             $activeSheet->getColumnDimension($column)->setAutoSize(true);
         }
 
@@ -132,7 +135,10 @@ class DownloadAngemeldeteKinderController extends AbstractController
 
             $activeSheet->setCellValue('T' . $counter, $kind->getAutoBlockAssignmentChild()?->getWeight());
             $activeSheet->setCellValue('U' . $counter, $kind->getKlasseString());
-            $activeSheet->setCellValue('V' . $counter,
+            $activeSheet->setCellValue('V' . $counter, $kind->getEltern()?->getBeruflicheSituationString());
+            $activeSheet->setCellValue('W' . $counter, $kind->getEltern()?->getAlleinerziehend());
+            $activeSheet->setCellValue('X' . $counter, count($kind->getEltern()?->getFile() ?? new ArrayCollection()));
+            $activeSheet->setCellValue('Y' . $counter,
                 $this->berechnungsService->getPreisforBetreuung($kind, true, $kind->getStartDate())
             );
             $counter++;
