@@ -29,7 +29,7 @@ jobs:
           major_pattern: "(MAJOR)"
           minor_pattern: "(MINOR)"
           change_path: .
-          version_format: "${major}.${minor}.${patch}-${increment}"
+          version_format: "${major}.${minor}.${patch}-${{ github.ref_name }}-${increment}"
 
       - name: Create new Release with semantic-version tag
         uses: ncipollo/release-action@v1
