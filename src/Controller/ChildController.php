@@ -221,6 +221,7 @@ class ChildController extends AbstractController
         if ($request->get('klasse')) {
             $text .= $translator->trans(' in der Klasse: %klasse%', array('%klasse%' => $request->get('klasse')));
         }
+        $status = $request->get('status', 'bestaetigt');
 
         $kinderU = $childSearchService->searchChild($parameter, $organisation, false, $this->getUser(), $startDate, $endDate);
         usort($kinderU, function (Kind $a, Kind $b): int {
@@ -231,21 +232,37 @@ class ChildController extends AbstractController
         });
 
         if ($request->get('print')) {
-
-            return $printService->printChildList($kinderU, $organisation, $text, $fileName, $TCPDFController, $request->get('wochentag') !== "" ? [$request->get('wochentag')] : [0, 1, 2, 3, 4], 'D',$startDate);
-
-        } elseif ($request->get('spread')) {
-            return $this->file($childExcelService->generateExcel($kinderU, $organisation->getStadt(), $request->get('wochentag') !== "" ? $request->get('wochentag') : null,$startDate), $fileName . '.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
-
-        } else {
-            return $this->render('child/childTable.html.twig', [
-                'kinder' => $kinderU,
-                'text' => $text,
-                'date' => $endDate ?: $startDate
-            ]);
+            return $printService->printChildList(
+                $kinderU,
+                $organisation,
+                $text,
+                $fileName,
+                $TCPDFController,
+                $status,
+                $request->get('wochentag') !== "" ? [$request->get('wochentag')] : [0, 1, 2, 3, 4],
+                'D',
+                $startDate
+            );
         }
 
+        if ($request->get('spread')) {
+            return $this->file($childExcelService->generateExcel(
+                $kinderU,
+                $organisation->getStadt(),
+                $request->get('wochentag') !== "" ? $request->get('wochentag') : null,
+                $status,
+                $startDate
+            ),
+                $fileName . '.xlsx',
+                ResponseHeaderBag::DISPOSITION_INLINE
+            );
+        }
 
+        return $this->render('child/childTable.html.twig', [
+            'kinder' => $kinderU,
+            'text' => $text,
+            'date' => $endDate ?: $startDate
+        ]);
     }
 
     /**

@@ -28,10 +28,9 @@ class TagesblockMerged extends AbstractExtension
         );
     }
 
-    public function getStringForBlocks(Kind  $kind, $wochentag)
+    public function getStringForBlocks(Kind  $kind, $wochentag, string $status)
     {
-    return $this->createExelDayService->getMergedTime($kind,$wochentag);
-
+        return $this->createExelDayService->getMergedTime($kind, $wochentag, $status);
     }
 
 }

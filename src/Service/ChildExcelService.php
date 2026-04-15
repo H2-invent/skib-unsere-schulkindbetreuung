@@ -51,17 +51,15 @@ class ChildExcelService
         $this->berechnungsService = $berechnungsService;
     }
 
-    public function generateExcel($kinder, Stadt $stadt, $wochentag, $stichtag = null)
+    public function generateExcel($kinder, Stadt $stadt, $wochentag, string $status, $stichtag = null)
     {
-
         $this->stichtag = $stichtag;
         $this->stadt = $stadt;
         $this->alphas = $this->createColumnsArray('ZZ');
-        $count = 0;
         if ($wochentag === null) {
-            $this->writeSpreadsheet($kinder);
+            $this->writeSpreadsheet($kinder, $status);
         } else {
-            $this->writeSpreadsheet($kinder, $this->translator->trans(ChildController::$WEEKDAY[$wochentag]), [$wochentag]);
+            $this->writeSpreadsheet($kinder, $status, $this->translator->trans(ChildController::$WEEKDAY[$wochentag]), [$wochentag]);
         }
 
         $this->spreadsheet->getSheetByName('Kinder');
@@ -122,143 +120,137 @@ class ChildExcelService
      * @param $title
      * @return void
      */
-    public function writeSpreadsheet($kinder, $title = 'Kinder', $weekdays = [0, 1, 2, 3, 4])
+    public function writeSpreadsheet($kinder, string $status, $title = 'Kinder', $weekdays = [0, 1, 2, 3, 4])
     {
-
         $beruflicheSituation = $this->loerrachWorkflowController;
-        $alphas = $this->createColumnsArray('ZZ');
-        $count = 0;
         $kindSheet = $this->spreadsheet->createSheet();
         $kindSheet->setTitle($this->translator->trans($title));
         $this->writeHeaderLine($kindSheet, $weekdays);
 
-
         $counter = 2;
         foreach ($kinder as $data) {
-            if ($this->checkIfChildhasBlockOnDayOfArray($data, $weekdays)) {
-                $eltern = $this->elternService->getElternForSpecificTimeAndKind($data, $this->stichtag ?: new \DateTime());
-                $count = 0;
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getVorname());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getNachname());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, ($data->getGeburtstag()->diff(new \DateTime()))->y);
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getKlasseString());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getArt());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getArtString());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSchule()->getName());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getVorname());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getName());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getStrasse());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getAdresszusatz());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getPlz());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getStadt());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getAlleinerziehend());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, array_flip($beruflicheSituation->beruflicheSituation)[$eltern->getBeruflicheSituation()]);
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getPhoneNumber());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getNotfallName());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getNotfallkontakt());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getAbholberechtigter());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getMasernImpfung());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getBemerkung());
-                if (!$data->getSchule()->getStadt()->isHideChildQuestions()) {
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getMedikamente());
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAllergie());
+            $eltern = $this->elternService->getElternForSpecificTimeAndKind($data, $this->stichtag ?: new \DateTime());
+            $count = 0;
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getVorname());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getNachname());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, ($data->getGeburtstag()->diff(new \DateTime()))->y);
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getKlasseString());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getArt());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getArtString());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSchule()->getName());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getVorname());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getName());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getStrasse());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getAdresszusatz());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getPlz());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getStadt());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getAlleinerziehend());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, array_flip($beruflicheSituation->beruflicheSituation)[$eltern->getBeruflicheSituation()]);
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getPhoneNumber());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getNotfallName());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getNotfallkontakt());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getAbholberechtigter());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getMasernImpfung());
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getBemerkung());
+            if (!$data->getSchule()->getStadt()->isHideChildQuestions()) {
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getMedikamente());
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAllergie());
 
-                    if ($data->getSchule()->getStadt()->isSettingsSkibShowZeckenKinder()) {
-                        $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getZeckenEntfernen());
+                if ($data->getSchule()->getStadt()->isSettingsSkibShowZeckenKinder()) {
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getZeckenEntfernen());
+                }
+                if ($data->getSchule()->getStadt()->isSettingsSkibShowPflasterKinder()) {
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->isPflaster());
+                }
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getGluten());
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSchweinefleisch());
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getLaktose());
+                if ($data->getSchule()->getStadt()->isSettingsSkibShowSonnencremeKinder()) {
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSonnencreme());
+                }
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAusfluege());
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAlleineHause());
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getFotos());
+            }
+
+            if (in_array(0, $weekdays)) {
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->createExcelDayService->getMergedTime($data, 0, $status));
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, '');
+            }
+            if (in_array(1, $weekdays)) {
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->createExcelDayService->getMergedTime($data, 1, $status));
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, '');
+            }
+            if (in_array(2, $weekdays)) {
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->createExcelDayService->getMergedTime($data, 2, $status));
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, '');
+            }
+            if (in_array(3, $weekdays)) {
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->createExcelDayService->getMergedTime($data, 3, $status));
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, '');
+            }
+            if (in_array(4, $weekdays)) {
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->createExcelDayService->getMergedTime($data, 4, $status));
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, '');
+            }
+            if ($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_VIEW_NOTICE')) {
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, strip_tags($data->getInternalNotice()));
+
+            }
+            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getEmail());
+
+            if ($this->stadt->getSettingsweiterePersonenberechtigte()) {
+                $persBErechtiger = array();
+                foreach ($eltern->getPersonenberechtigters() as $data3) {
+                    $persBErechtiger[] = $data3->getVorname() . " " . $data3->getNachname() . "\n" . $data3->getStrasse() . "\n" . $data3->getPlz() . ' ' . $data3->getStadt() . "\n" . ' Tel: ' . $data3->getPhone() . "\n" . ' Notfallkotakt: ' . $data3->getNotfallkontakt();
+                }
+                $kindSheet->setCellValue($this->alphas[$count] . $counter, implode("\n\n", $persBErechtiger));
+                $kindSheet->getStyle($this->alphas[$count++] . $counter)->getAlignment()->setWrapText(true);
+            }
+
+
+            if ($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')) {
+
+                if ($this->stadt->getSettingKinderimKiga()) {
+                    if ($eltern->getKinderImKiga()) {
+                        $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getKigaOfKids());
+                    } else {
+                        $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->translator->trans('Nein'));
                     }
-                    if ($data->getSchule()->getStadt()->isSettingsSkibShowPflasterKinder()) {
-                        $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->isPflaster());
-                    }
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getGluten());
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSchweinefleisch());
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getLaktose());
-                    if ($data->getSchule()->getStadt()->isSettingsSkibShowSonnencremeKinder()) {
-                        $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSonnencreme());
-                    }
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAusfluege());
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getAlleineHause());
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getFotos());
                 }
 
-                if (in_array(0, $weekdays)) {
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->createExcelDayService->getMergedTime($data, 0));
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, '');
-                }
-                if (in_array(1, $weekdays)) {
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->createExcelDayService->getMergedTime($data, 1));
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, '');
-                }
-                if (in_array(2, $weekdays)) {
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->createExcelDayService->getMergedTime($data, 2));
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, '');
-                }
-                if (in_array(3, $weekdays)) {
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->createExcelDayService->getMergedTime($data, 3));
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, '');
-                }
-                if (in_array(4, $weekdays)) {
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->createExcelDayService->getMergedTime($data, 4));
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, '');
-                }
-                if ($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_VIEW_NOTICE')) {
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, strip_tags($data->getInternalNotice()));
 
+                if ($this->stadt->getSettingGehaltsklassen()) {
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSchule()->getStadt()->getGehaltsklassen()[$eltern->getEinkommen()]);
                 }
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getEmail());
 
-                if ($this->stadt->getSettingsweiterePersonenberechtigte()) {
-                    $persBErechtiger = array();
-                    foreach ($eltern->getPersonenberechtigters() as $data3) {
-                        $persBErechtiger[] = $data3->getVorname() . " " . $data3->getNachname() . "\n" . $data3->getStrasse() . "\n" . $data3->getPlz() . ' ' . $data3->getStadt() . "\n" . ' Tel: ' . $data3->getPhone() . "\n" . ' Notfallkotakt: ' . $data3->getNotfallkontakt();
+                if ($this->stadt->getSettingsAnzahlKindergeldempfanger()) {
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getAnzahlKindergeldempfanger());
+                }
+                if ($this->stadt->getSettingsSozielHilfeEmpfanger()) {
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getSozialhilfeEmpanger());
+                }
+
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getCreatedAt()->format('d.m.Y'));
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId()) ? $eltern->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())->getKundennummer() : "");
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getIban());
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getBic());
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getKontoinhaber());
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->berechnungsService->getPreisforBetreuung($data, false, $this->stichtag ?: null));
+                if ($this->stadt->getSettingsEingabeDerGeschwister()) {
+                    $geschwister = '';
+                    foreach ($eltern->getGeschwisters() as $gesch) {
+                        $geschwister .= ($gesch->getVorname() . ' ' . $gesch->getNachname() . "\n" . $gesch->getGeburtsdatum()->format('d.m.Y') . "\n");
+                        foreach ($gesch->getFile() as $doc) {
+                            $geschwister .= $doc->getOriginalName() . "\n";
+                        }
+                        $geschwister .= "\n";
                     }
-                    $kindSheet->setCellValue($this->alphas[$count] . $counter, implode("\n\n", $persBErechtiger));
+                    $kindSheet->setCellValue($this->alphas[$count] . $counter, $geschwister);
                     $kindSheet->getStyle($this->alphas[$count++] . $counter)->getAlignment()->setWrapText(true);
                 }
-
-
-                if ($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')) {
-
-                    if ($this->stadt->getSettingKinderimKiga()) {
-                        if ($eltern->getKinderImKiga()) {
-                            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getKigaOfKids());
-                        } else {
-                            $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->translator->trans('Nein'));
-                        }
-                    }
-
-
-                    if ($this->stadt->getSettingGehaltsklassen()) {
-                        $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSchule()->getStadt()->getGehaltsklassen()[$eltern->getEinkommen()]);
-                    }
-
-                    if ($this->stadt->getSettingsAnzahlKindergeldempfanger()) {
-                        $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getAnzahlKindergeldempfanger());
-                    }
-                    if ($this->stadt->getSettingsSozielHilfeEmpfanger()) {
-                        $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getSozialhilfeEmpanger());
-                    }
-
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getCreatedAt()->format('d.m.Y'));
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId()) ? $eltern->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())->getKundennummer() : "");
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getIban());
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getBic());
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getKontoinhaber());
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->berechnungsService->getPreisforBetreuung($data, false, $this->stichtag ?: null));
-                    if ($this->stadt->getSettingsEingabeDerGeschwister()) {
-                        $geschwister = '';
-                        foreach ($eltern->getGeschwisters() as $gesch) {
-                            $geschwister .= ($gesch->getVorname() . ' ' . $gesch->getNachname() . "\n" . $gesch->getGeburtsdatum()->format('d.m.Y') . "\n");
-                            foreach ($gesch->getFile() as $doc) {
-                                $geschwister .= $doc->getOriginalName() . "\n";
-                            }
-                            $geschwister .= "\n";
-                        }
-                        $kindSheet->setCellValue($this->alphas[$count] . $counter, $geschwister);
-                        $kindSheet->getStyle($this->alphas[$count++] . $counter)->getAlignment()->setWrapText(true);
-                    }
-                }
-                $counter++;
             }
+            $counter++;
         }
 
     }
@@ -365,16 +357,5 @@ class ChildExcelService
                 $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Geschwister'));
             }
         }
-    }
-
-    public function checkIfChildhasBlockOnDayOfArray(Kind $kind, $weekdays)
-    {
-        $res = false;
-        foreach ($kind->getBetreungsblocksReal() as $data) {
-            if (in_array($data->getWochentag(), $weekdays)) {
-                return true;
-            };
-        }
-        return false;
     }
 }
