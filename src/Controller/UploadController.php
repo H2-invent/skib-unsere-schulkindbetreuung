@@ -26,10 +26,8 @@ class UploadController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/login/upload/{id}/file", name="upload_stadt",methods={"POST"})
-     * @ParamConverter ("stadt", options={"mapping": {"id": "id"}})
-     */
+    #[Route(path: '/login/upload/{id}/file', name: 'upload_stadt', methods: ['POST'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['id' => 'id']])]
     public function index(Request $request, UploadService $uploadService, Stadt $stadt, EntityManagerInterface $entityManager)
     {
         set_time_limit(300);
@@ -46,10 +44,8 @@ class UploadController extends AbstractController
         $entityManager->flush();
         return $file ? new JsonResponse(array('error' => 0)) : new JsonResponse(array('error' => 1));
     }
-    /**
-     * @Route("/upload/kind/{uid}/file", name="upload_kind",methods={"POST"})
-     * @ParamConverter ("geschwister", options={"mapping": {"uid": "uid"}})
-     */
+    #[Route(path: '/upload/kind/{uid}/file', name: 'upload_kind', methods: ['POST'])]
+    #[ParamConverter('geschwister', options: ['mapping' => ['uid' => 'uid']])]
     public function geschwister(Request $request, UploadService $uploadService, Geschwister $geschwister, EntityManagerInterface $entityManager)
     {
         set_time_limit(300);
@@ -64,10 +60,8 @@ class UploadController extends AbstractController
         return $file ? new JsonResponse(array('error' => 0)) : new JsonResponse(array('error' => 1));
     }
 
-    /**
-     * @Route("/download/{fileName}", name="login_download_file", methods={"GET"})
-     * @ParamConverter("file", options={"mapping": {"fileName": "fileName"}})
-     */
+    #[Route(path: '/download/{fileName}', name: 'login_download_file', methods: ['GET'])]
+    #[ParamConverter('file', options: ['mapping' => ['fileName' => 'fileName']])]
     public function downloadArticleReference(File $file, FilesystemOperator $internFileSystem)
     {
         if (!$file) {
@@ -85,10 +79,8 @@ class UploadController extends AbstractController
         return $response;
     }
 
-    /**
-     * @Route("/removeFile/{fileName}", name="login_remove_file", methods={"GET"})
-     * @ParamConverter("file", options={"mapping": {"fileName": "fileName"}})
-     */
+    #[Route(path: '/removeFile/{fileName}', name: 'login_remove_file', methods: ['GET'])]
+    #[ParamConverter('file', options: ['mapping' => ['fileName' => 'fileName']])]
     public function removeFile(File $file, FilesystemOperator $internFileSystem, Request $request)
     {
 
@@ -103,10 +95,8 @@ class UploadController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/upload/additional/{id}/file", name="upload_additional-documents",methods={"POST"})
-     * @ParamConverter ("Stammdaten", options={"mapping": {"id": "id"}})
-     */
+    #[Route(path: '/upload/additional/{id}/file', name: 'upload_additional-documents', methods: ['POST'])]
+    #[ParamConverter('Stammdaten', options: ['mapping' => ['id' => 'id']])]
     public function additionalDocuments(
         Request $request,
         UploadService $uploadService,

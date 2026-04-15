@@ -32,9 +32,7 @@ class FerienManagementController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/org_ferien/edit/show", name="ferien_management_show",methods={"GET"})
-     */
+    #[Route(path: '/org_ferien/edit/show', name: 'ferien_management_show', methods: ['GET'])]
     public function index(Request $request)
     {
 
@@ -48,9 +46,7 @@ class FerienManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_ferien/edit/neu", name="ferien_management_neu", methods={"GET","POST"})
-     */
+    #[Route(path: '/org_ferien/edit/neu', name: 'ferien_management_neu', methods: ['GET', 'POST'])]
     public function neu(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -83,9 +79,7 @@ class FerienManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_ferien/edit/preise", name="ferien_management_preise", methods={"GET","POST"})
-     */
+    #[Route(path: '/org_ferien/edit/preise', name: 'ferien_management_preise', methods: ['GET', 'POST'])]
     public function preise(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -118,9 +112,7 @@ class FerienManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_ferien/edit/voucher", name="ferien_management_voucher", methods={"GET","POST"})
-     */
+    #[Route(path: '/org_ferien/edit/voucher', name: 'ferien_management_voucher', methods: ['GET', 'POST'])]
     public function ferienblockVoucher(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -159,9 +151,7 @@ class FerienManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_ferien/edit/edit", name="ferien_management_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/org_ferien/edit/edit', name: 'ferien_management_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -195,9 +185,7 @@ class FerienManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_ferien/edit/delete", name="ferien_management_delete", methods={"DELETE"})
-     */
+    #[Route(path: '/org_ferien/edit/delete', name: 'ferien_management_delete', methods: ['DELETE'])]
     public function delte(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -214,9 +202,7 @@ class FerienManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_ferien/duplicate", name="ferien_management_duplicate", methods={"POST"})
-     */
+    #[Route(path: '/org_ferien/duplicate', name: 'ferien_management_duplicate', methods: ['POST'])]
     public function duplicate(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -245,9 +231,7 @@ class FerienManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_ferien/checkin/list", name="ferien_management_report_checkinlist", methods={"GET"})
-     */
+    #[Route(path: '/org_ferien/checkin/list', name: 'ferien_management_report_checkinlist', methods: ['GET'])]
     public function checkinListFerien(Request $request, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -277,9 +261,7 @@ class FerienManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_ferien/orders", name="ferien_management_orders", methods={"GET"})
-     */
+    #[Route(path: '/org_ferien/orders', name: 'ferien_management_orders', methods: ['GET'])]
     public function ordersOverview(Request $request, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -306,9 +288,7 @@ class FerienManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/org_ferien/orders/storno", name="ferien_management_orders_storno", methods={"GET"})
-     */
+    #[Route(path: '/org_ferien/orders/storno', name: 'ferien_management_orders_storno', methods: ['GET'])]
     public function storno(Request $request, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -322,9 +302,7 @@ class FerienManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_ferien/checkin/list/tag", name="ferien_management_report_checkinlist_tag", methods={"GET"})
-     */
+    #[Route(path: '/org_ferien/checkin/list/tag', name: 'ferien_management_report_checkinlist_tag', methods: ['GET'])]
     public function checkinListTagyFerien(Request $request, TranslatorInterface $translator, AnwesenheitslisteService $anwesenheitslisteService)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -354,9 +332,7 @@ class FerienManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_ferien/checkin/toggle/{checkinID}", name="ferien_management_report_checkin_toggle", methods={"PATCH"})
-     */
+    #[Route(path: '/org_ferien/checkin/toggle/{checkinID}', name: 'ferien_management_report_checkin_toggle', methods: ['PATCH'])]
     public function checkinBlockAction(Request $request, TranslatorInterface $translator, $checkinID, CheckinFerienService $checkinFerienService)
     {
         $result = $checkinFerienService->checkin($checkinID, $request->get('tag'));
@@ -365,9 +341,7 @@ class FerienManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_ferien/orders/detail", name="ferien_management_order_detail", methods={"GET"})
-     */
+    #[Route(path: '/org_ferien/orders/detail', name: 'ferien_management_order_detail', methods: ['GET'])]
     public function orderDetails(Request $request, TranslatorInterface $translator, AnwesenheitslisteService $anwesenheitslisteService)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -394,9 +368,7 @@ class FerienManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/org_ferien/orders/{kurs_id}/sepa-export.csv", name="admin_sepa_export_kurs_csv", methods={"GET"})
-     */
+    #[Route(path: '/org_ferien/orders/{kurs_id}/sepa-export.csv', name: 'admin_sepa_export_kurs_csv', methods: ['GET'])]
     public function exportKursSepaCsv(
         int                       $kurs_id,
         FerienblockRepository     $kursRepo,
@@ -540,9 +512,7 @@ class FerienManagementController extends AbstractController
         return $response;
     }
 
-    /**
-     * @Route("/org_ferien/orders/kinder/{kind_id}", name="ferien_management_kind_details",methods={"GET","POST"})
-     */
+    #[Route(path: '/org_ferien/orders/kinder/{kind_id}', name: 'ferien_management_kind_details', methods: ['GET', 'POST'])]
     public function kindDetails(
 
         int            $kind_id,
@@ -581,9 +551,7 @@ class FerienManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_ferien_admin/edit", name="ferien_admin_edit",methods={"GET","POST"})
-     */
+    #[Route(path: '/org_ferien_admin/edit', name: 'ferien_admin_edit', methods: ['GET', 'POST'])]
     public function ferienOrgEdit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
 

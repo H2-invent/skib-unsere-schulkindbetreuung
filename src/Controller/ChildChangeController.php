@@ -20,9 +20,7 @@ class ChildChangeController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/org_child/change/seccode", name="child_change_seccode")
-     */
+    #[Route(path: '/org_child/change/seccode', name: 'child_change_seccode')]
     public function changeSeccodeAction(Request $request, TranslatorInterface $translator, ElternService $elternService, EntityManagerInterface $entityManager)
     {
 

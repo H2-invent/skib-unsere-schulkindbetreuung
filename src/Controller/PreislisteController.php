@@ -14,11 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PreislisteController extends AbstractController
 {
-    /**
-     * @Route("/{slug}/preisliste/{schule}",name="trager_preisliste",methods={"GET"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     * * @ParamConverter("schule", options={"mapping"={"schule"="id"}})
-     */
+    #[Route(path: '/{slug}/preisliste/{schule}', name: 'trager_preisliste', methods: ['GET'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function adresseAction(PreisListeService $preisListeService, Stadt $stadt, Schule $schule, Request $request, SchuljahrService $schuljahrService)
     {
         $gehaltIst = $request->get('gehalt', sizeof($stadt->getGehaltsklassen()) - 1);

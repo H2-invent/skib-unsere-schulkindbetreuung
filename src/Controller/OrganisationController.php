@@ -17,9 +17,7 @@ class OrganisationController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/city_admin/organisation/show", name="city_admin_organisation_show")
-     */
+    #[Route(path: '/city_admin/organisation/show', name: 'city_admin_organisation_show')]
     public function index(Request $request)
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('id' => $request->get('id'), 'deleted' => false));
@@ -35,9 +33,7 @@ class OrganisationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/city_admin/organisation/new", name="city_admin_organisation_new",methods={"GET","POST"})
-     */
+    #[Route(path: '/city_admin/organisation/new', name: 'city_admin_organisation_new', methods: ['GET', 'POST'])]
     public function newOrg(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -67,9 +63,7 @@ class OrganisationController extends AbstractController
 
     }
 
-    /**
-     * @Route("/org_edit/organisation/edit", name="city_admin_organisation_edit",methods={"GET","POST"})
-     */
+    #[Route(path: '/org_edit/organisation/edit', name: 'city_admin_organisation_edit', methods: ['GET', 'POST'])]
     public function editOrg(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
 
@@ -102,9 +96,7 @@ class OrganisationController extends AbstractController
 
     }
 
-    /**
-     * @Route("/city_admin/organisation/delete", name="city_admin_organisation_delete",methods={"GET"})
-     */
+    #[Route(path: '/city_admin/organisation/delete', name: 'city_admin_organisation_delete', methods: ['GET'])]
     public function deleteSchool(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
@@ -121,9 +113,7 @@ class OrganisationController extends AbstractController
         return $this->redirectToRoute('city_admin_organisation_show', array('snack' => $text, 'id' => $city->getId()));
     }
 
-    /**
-     * @Route("/org_edit/organisation/detail", name="city_admin_organisation_detail",methods={"GET"})
-     */
+    #[Route(path: '/org_edit/organisation/detail', name: 'city_admin_organisation_detail', methods: ['GET'])]
     public function detailSchool(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));

@@ -14,9 +14,7 @@ class WidgetAdminController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/admin/show/mailgun/stats", name="admin_mailgun_stats")
-     */
+    #[Route(path: '/admin/show/mailgun/stats', name: 'admin_mailgun_stats')]
     public function index(Request $request, TranslatorInterface $translator)
     {
         $alert = $this->managerRegistry->getRepository(EmailResponse::class)->findBy(array('allert'=>true));

@@ -29,9 +29,7 @@ class EditStammdatenController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/org_child/stammdaten/edit/seccode", name="edit_stammdaten_seccode")
-     */
+    #[Route(path: '/org_child/stammdaten/edit/seccode', name: 'edit_stammdaten_seccode')]
     public function index(Request $request, TranslatorInterface $translator): Response
     {
 
@@ -65,9 +63,7 @@ class EditStammdatenController extends AbstractController
         return $this->render('child_change/seccode.html.twig', array('form' => $form->createView()));
     }
 
-    /**
-     * @Route("/org_child/stammdaten/edit/data/{eltern_id}", name="edit_stammdaten_edit")
-     */
+    #[Route(path: '/org_child/stammdaten/edit/data/{eltern_id}', name: 'edit_stammdaten_edit')]
     public function edit(
         Request                          $request,
         TranslatorInterface              $translator,

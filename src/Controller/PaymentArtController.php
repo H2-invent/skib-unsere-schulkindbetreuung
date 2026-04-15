@@ -16,9 +16,7 @@ class PaymentArtController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/org_ferien_admin/payment/art", name="org_ferien_admin_payment_art")
-     */
+    #[Route(path: '/org_ferien_admin/payment/art', name: 'org_ferien_admin_payment_art')]
     public function index(ValidatorInterface $validator, Request $request, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));

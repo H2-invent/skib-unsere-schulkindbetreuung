@@ -11,18 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/org_block_deactivate/block/deactivate/", name="app_deactivate_")
- */
+#[Route(path: '/org_block_deactivate/block/deactivate/', name: 'app_deactivate_')]
 class DeactivateZeitblockController extends AbstractController
 {
 
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("deactivate", name="zeitblock_index")
-     */
+    #[Route(path: 'deactivate', name: 'zeitblock_index')]
     public function index(Request $request, TranslatorInterface $translator): Response
     {
         if (!$this->getUser()->hasRole('ROLE_ORG_BLOCK_DEACTIVATE')){

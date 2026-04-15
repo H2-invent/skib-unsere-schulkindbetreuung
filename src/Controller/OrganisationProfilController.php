@@ -11,10 +11,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OrganisationProfilController extends AbstractController
 {
-    /**
-     * @Route("/profil/{slug}", name="organisation_profil")
-     * @ParamConverter("organisation", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/profil/{slug}', name: 'organisation_profil')]
+    #[ParamConverter('organisation', options: ['mapping' => ['slug' => 'slug']])]
     public function index(Request $request, Organisation $organisation, TranslatorInterface $translator)
     {
         return $this->render('organisation_profil/index.html.twig', [

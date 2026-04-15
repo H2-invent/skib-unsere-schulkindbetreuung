@@ -8,9 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractController
 {
 
-    /**
-     * @Route("/login/dashboard", name="dashboard")
-     */
+    #[Route(path: '/login/dashboard', name: 'dashboard')]
     public function dashboard()
     {
         return $this->render('dashboard/index.html.twig');

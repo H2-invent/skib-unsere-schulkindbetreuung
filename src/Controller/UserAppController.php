@@ -57,9 +57,7 @@ class UserAppController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/login/connect/user", name="connection_app_start", methods={"GET"})
-     */
+    #[Route(path: '/login/connect/user', name: 'connection_app_start', methods: ['GET'])]
     public function generateTOken(Request $request, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
     {
         $user = $this->getUser();
@@ -71,9 +69,7 @@ class UserAppController extends AbstractController
         return $this->render('user_app/index.html.twig', array('user' => $user));
     }
 
-    /**
-     * @Route("/connect/user/confirmation/{appToken}", name="connect_User", methods={"GET"})
-     */
+    #[Route(path: '/connect/user/confirmation/{appToken}', name: 'connect_User', methods: ['GET'])]
     public function confirmationToken(UserConnectionService $userConnectionService, MailerService $mailerService, TranslatorInterface $translator, $appToken, CheckinSchulkindservice $checkinSchulkindservice)
     {
         try {
@@ -84,9 +80,7 @@ class UserAppController extends AbstractController
         return new JsonResponse($userConnectionService->generateConfirmationToken($user));
     }
 
-    /**
-     * @Route("/connect/user/communicationToken", name="connect_communication_token", methods={"POST"})
-     */
+    #[Route(path: '/connect/user/communicationToken', name: 'connect_communication_token', methods: ['POST'])]
     public function communicationToken(UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
     {
 
@@ -110,9 +104,7 @@ class UserAppController extends AbstractController
 
     }
 
-    /**
-     * @Route("/connect/user/save", name="connect_communication_save", methods={"POST"})
-     */
+    #[Route(path: '/connect/user/save', name: 'connect_communication_save', methods: ['POST'])]
     public function saveToken(UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
     {
         $user = $this->managerRegistry->getRepository(User::class)->findOneBy(array('appCommunicationToken' => $request->get('token')));
@@ -121,9 +113,7 @@ class UserAppController extends AbstractController
 
     }
 
-    /**
-     * @Route("/get/user/information", name="connect_user_information", methods={"POST"})
-     */
+    #[Route(path: '/get/user/information', name: 'connect_user_information', methods: ['POST'])]
     public function userInformation(UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
     {
         $user = $this->managerRegistry->getRepository(User::class)->findOneBy(array(
@@ -134,9 +124,7 @@ class UserAppController extends AbstractController
 
     }
 
-    /**
-     * @Route("/get/user/kidsCheckin", name="connect_user_checkinKids", methods={"GET"})
-     */
+    #[Route(path: '/get/user/kidsCheckin', name: 'connect_user_checkinKids', methods: ['GET'])]
     public function userCheckinKids(CheckinSchulkindservice $checkinSchulkindservice, Request $request, MailerService $mailerService, TranslatorInterface $translator, ElternService $elternService)
     {
         $user = null;
@@ -183,9 +171,7 @@ class UserAppController extends AbstractController
 
     }
 
-    /**
-     * @Route("/get/user/kidsHeuteDa", name="connect_user_kidsDa", methods={"GET"})
-     */
+    #[Route(path: '/get/user/kidsHeuteDa', name: 'connect_user_kidsDa', methods: ['GET'])]
     public function userKidsHeuteDa(SchuljahrService $schuljahrService, ChildSearchService $childSearchService,  Request $request, CheckinSchulkindservice $checkinSchulkindservice, ElternService $elternService)
     {
         $user = null;
@@ -236,9 +222,7 @@ class UserAppController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/get/user/kindDetail/{id}", name="connect_user_kidsDetails", methods={"GET"})
-     */
+    #[Route(path: '/get/user/kindDetail/{id}', name: 'connect_user_kidsDetails', methods: ['GET'])]
     public function userKidsDetail($id,ElternService $elternService, Request $request)
     {
         $user = null;
@@ -287,9 +271,7 @@ class UserAppController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/get/user/checkinManuelChild/{id}", name="connect_user_chekcinManuel", methods={"GET"})
-     */
+    #[Route(path: '/get/user/checkinManuelChild/{id}', name: 'connect_user_chekcinManuel', methods: ['GET'])]
     public function userKidscheckin($id, CheckinSchulkindservice $checkinSchulkindservice, SchuljahrService $schuljahrService, ChildSearchService $childSearchService, UserConnectionService $userConnectionService, Request $request, MailerService $mailerService, TranslatorInterface $translator)
     {
         $user = null;
@@ -314,9 +296,7 @@ class UserAppController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/login/disconnect/user", name="connection_app_disconnect", methods={"GET"})
-     */
+    #[Route(path: '/login/disconnect/user', name: 'connection_app_disconnect', methods: ['GET'])]
     public function deleteConnection(Request $request, TranslatorInterface $translator, CheckinSchulkindservice $checkinSchulkindservice)
     {
         $user = $this->getUser();

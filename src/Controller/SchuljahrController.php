@@ -20,9 +20,7 @@ class SchuljahrController extends AbstractController
     {
     }
 
-    /**
-     * @Route("city_admin/stadtschuljahr/show", name="city_admin_schuljahr_anzeige")
-     */
+    #[Route(path: 'city_admin/stadtschuljahr/show', name: 'city_admin_schuljahr_anzeige')]
     public function index(Request $request)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -37,9 +35,7 @@ class SchuljahrController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("city_admin/stadtschuljahr/neu", name="city_admin_schuljahr_neu")
-     */
+    #[Route(path: 'city_admin/stadtschuljahr/neu', name: 'city_admin_schuljahr_neu')]
     public function neu(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -79,9 +75,7 @@ class SchuljahrController extends AbstractController
 
     }
 
-    /**
-     * @Route("city_admin/stadtschuljahr/edit", name="city_admin_schuljahr_edit")
-     */
+    #[Route(path: 'city_admin/stadtschuljahr/edit', name: 'city_admin_schuljahr_edit')]
     public function edit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $activity = $this->managerRegistry->getRepository(Active::class)->find($request->get('id'));
@@ -120,9 +114,7 @@ class SchuljahrController extends AbstractController
 
     }
 
-    /**
-     * @Route("city_admin/stadtschuljahr/delete", name="city_admin_schuljahr_delete")
-     */
+    #[Route(path: 'city_admin/stadtschuljahr/delete', name: 'city_admin_schuljahr_delete')]
     public function delete(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $activity = $this->managerRegistry->getRepository(Active::class)->find($request->get('id'));

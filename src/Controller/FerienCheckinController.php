@@ -11,9 +11,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FerienCheckinController extends AbstractController
 {
-    /**
-     * @Route("/checkin/id/{checkinID}", name="ferien_checkin",methods={"GET","POST"})
-     */
+    #[Route(path: '/checkin/id/{checkinID}', name: 'ferien_checkin', methods: ['GET', 'POST'])]
     public function index(Request $request, TranslatorInterface $translator, $checkinID, CheckinFerienService $checkinFerienService)
     {
         $today = (new \DateTime('today'))->format('Y-m-d');

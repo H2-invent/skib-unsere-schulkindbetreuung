@@ -21,10 +21,8 @@ class BrainTreeCheckoutController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/{slug}/ferien/braintree/prepare",name="ferien_braintree_start",methods={"Get"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/ferien/braintree/prepare', name: 'ferien_braintree_start', methods: ['Get'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function paymentPrepareAction( Stadt $stadt, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
@@ -35,9 +33,7 @@ class BrainTreeCheckoutController extends AbstractController
             return $this->render('ferien_checkout/braintreePayment.html.twig', array('payment' => $payment, 'stadt' => $stadt));
     }
 
-    /**
-     * @Route("/ferien/braintree/recieveNonce",name="ferien_braintree_nonce",methods={"POST"})
-     */
+    #[Route(path: '/ferien/braintree/recieveNonce', name: 'ferien_braintree_nonce', methods: ['POST'])]
     public function paymentrecieveNonceAction(TranslatorInterface $translator, CheckoutPaymentService $checkoutPaymentService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
         $braintree = $this->managerRegistry->getRepository(PaymentBraintree::class)->findOneBy(array('token' => $request->get('token')));

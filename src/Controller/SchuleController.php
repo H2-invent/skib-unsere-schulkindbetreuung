@@ -19,9 +19,7 @@ class SchuleController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/city_schule/show", name="city_admin_schule_show",methods={"GET"})
-     */
+    #[Route(path: '/city_schule/show', name: 'city_admin_schule_show', methods: ['GET'])]
     public function index(Request $request)
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('id'=>$request->get('id'),'deleted'=>false));
@@ -35,9 +33,7 @@ class SchuleController extends AbstractController
             'city'=>$this->getUser()->getStadt()
         ]);
     }
-    /**
-     * @Route("/city_schule/new", name="city_admin_schule_new",methods={"GET","POST"})
-     */
+    #[Route(path: '/city_schule/new', name: 'city_admin_schule_new', methods: ['GET', 'POST'])]
     public function newSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -68,9 +64,7 @@ class SchuleController extends AbstractController
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
 
     }
-    /**
-     * @Route("/org_shool/edit", name="city_admin_schule_edit",methods={"GET","POST"})
-     */
+    #[Route(path: '/org_shool/edit', name: 'city_admin_schule_edit', methods: ['GET', 'POST'])]
     public function editSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
         $school = $this->managerRegistry->getRepository(Schule::class)->find($request->get('id'));
@@ -101,9 +95,7 @@ class SchuleController extends AbstractController
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
 
     }
-    /**
-     * @Route("/city_schule/delete", name="city_admin_schule_delete",methods={"DELETE"})
-     */
+    #[Route(path: '/city_schule/delete', name: 'city_admin_schule_delete', methods: ['DELETE'])]
     public function deleteSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
         $school = $this->managerRegistry->getRepository(Schule::class)->find($request->get('id'));
@@ -118,9 +110,7 @@ class SchuleController extends AbstractController
         $em->flush();
         return new JsonResponse(array('redirect'=> $this->generateUrl('city_admin_schule_show',array('id'=>$city->getId()))));
     }
-    /**
-     * @Route("/org_shool/detail", name="city_admin_schule_detail",methods={"GET"})
-     */
+    #[Route(path: '/org_shool/detail', name: 'city_admin_schule_detail', methods: ['GET'])]
     public function detailSchool(Request $request, ValidatorInterface $validator,TranslatorInterface $translator)
     {
         $school = $this->managerRegistry->getRepository(Schule::class)->find($request->get('id'));

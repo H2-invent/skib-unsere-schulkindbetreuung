@@ -20,9 +20,7 @@ class BerichtController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/city_report/index", name="stadt_bericht_index")
-     */
+    #[Route(path: '/city_report/index', name: 'stadt_bericht_index')]
     public function index(Request $request)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('stadt_id'));
@@ -61,9 +59,7 @@ class BerichtController extends AbstractController
         return $this->render('bericht/index.html.twig', array('blocks' => $blocks, 'schuljahre' => $schuljahre, 'active' => $jahr, 'stadt' => $stadt));
     }
 
-    /**
-     * @Route("/city_report/export", name="stadt_bericht_export")
-     */
+    #[Route(path: '/city_report/export', name: 'stadt_bericht_export')]
     public function export(Request $request, TranslatorInterface $translator, StadtBerichtService $stadtBerichtService, ChildSearchService $childSearchService, ElternService $elternService)
     {
 

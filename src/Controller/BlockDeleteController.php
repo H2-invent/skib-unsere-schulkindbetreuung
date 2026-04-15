@@ -17,9 +17,7 @@ class BlockDeleteController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/org_block_delete/schule/block/delete", name="block_schule_deleteBlocks",methods={"PUT"})
-     */
+    #[Route(path: '/org_block_delete/schule/block/delete', name: 'block_schule_deleteBlocks', methods: ['PUT'])]
     public function deleteBlock(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, BlockDeleteService $blockDeleteService)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));
@@ -31,9 +29,7 @@ class BlockDeleteController extends AbstractController
         $text = $blockDeleteService->deleteBlock($block);
         return new JsonResponse(array('error' => 0, 'snack' => $text));
     }
-    /**
-     * @Route("/org_block_delete/schule/block/restore", name="block_schule_restoreBlocks",methods={"GET"})
-     */
+    #[Route(path: '/org_block_delete/schule/block/restore', name: 'block_schule_restoreBlocks', methods: ['GET'])]
     public function restoreBlock(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, BlockDeleteService $blockDeleteService)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));

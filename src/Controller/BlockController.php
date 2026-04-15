@@ -25,9 +25,7 @@ class BlockController extends AbstractController
 
     }
 
-    /**
-     * @Route("/org_child/show/schule/show", name="block_schulen_schow",methods={"GET"})
-     */
+    #[Route(path: '/org_child/show/schule/show', name: 'block_schulen_schow', methods: ['GET'])]
     public function showSchulen(Request $request)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
@@ -38,9 +36,7 @@ class BlockController extends AbstractController
         return $this->render('block/schulen.html.twig', array('schule' => $schule));
     }
 
-    /**
-     * @Route("/org_child/show/schule/block/show", name="block_schule_schow",methods={"GET"})
-     */
+    #[Route(path: '/org_child/show/schule/block/show', name: 'block_schule_schow', methods: ['GET'])]
     public function showBlocks(Request $request)
     {
         $schule = $this->managerRegistry->getRepository(Schule::class)->find($request->get('id'));
@@ -52,9 +48,7 @@ class BlockController extends AbstractController
         return $this->render('block/blocks.html.twig', array('schuljahre' => $activity, 'schule' => $schule, 'blocks' => $blocks));
     }
 
-    /**
-     * @Route("/org_child/show/schule/block/getBlocks", name="block_schule_getBlocks",methods={"GET"})
-     */
+    #[Route(path: '/org_child/show/schule/block/getBlocks', name: 'block_schule_getBlocks', methods: ['GET'])]
     public function getBlocks(Request $request)
     {
         $schule = $this->managerRegistry->getRepository(Schule::class)->find($request->get('shool'));
@@ -73,9 +67,7 @@ class BlockController extends AbstractController
 
     }
 
-    /**
-     * @Route("/org_block/schule/block/newBlock", name="block_schule_newBlocks",methods={"GET","POST"})
-     */
+    #[Route(path: '/org_block/schule/block/newBlock', name: 'block_schule_newBlocks', methods: ['GET', 'POST'])]
     public function newBlock(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $activity = $this->managerRegistry->getRepository(Active::class)->find($request->get('year'));
@@ -117,9 +109,7 @@ class BlockController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_block/schule/block/editBlock", name="block_schule_editBlocks",methods={"GET","POST"})
-     */
+    #[Route(path: '/org_block/schule/block/editBlock', name: 'block_schule_editBlocks', methods: ['GET', 'POST'])]
     public function editBlock(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));
@@ -159,9 +149,7 @@ class BlockController extends AbstractController
 
     }
 
-    /**
-     * @Route("/org_block/schule/block/linkBlock", name="block_schule_linkBlock",methods={"GET","POST"})
-     */
+    #[Route(path: '/org_block/schule/block/linkBlock', name: 'block_schule_linkBlock', methods: ['GET', 'POST'])]
     public function linkBlock(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));
@@ -207,9 +195,7 @@ class BlockController extends AbstractController
         return $this->render('block/blockLinkForm.html.twig', array('block' => $block, 'form' => $form->createView()));
     }
 
-    /**
-     * @Route("/org_block/schule/block/linkBlockSilent", name="block_schule_linkBlockSilent",methods={"GET","POST"})
-     */
+    #[Route(path: '/org_block/schule/block/linkBlockSilent', name: 'block_schule_linkBlockSilent', methods: ['GET', 'POST'])]
     public function linkBlockSilent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));
@@ -260,9 +246,7 @@ class BlockController extends AbstractController
         return $this->render('block/blockLinkForm.html.twig', ['block' => $block, 'form' => $form->createView(), 'silent' => true]);
     }
 
-    /**
-     * @Route("/org_block/schule/block/linkBlock/remove", name="block_schule_linkBlock_remove",methods={"DELETE"})
-     */
+    #[Route(path: '/org_block/schule/block/linkBlock/remove', name: 'block_schule_linkBlock_remove', methods: ['DELETE'])]
     public function removeLinkBlock(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
@@ -279,9 +263,7 @@ class BlockController extends AbstractController
         return new JsonResponse(array('redirect' => $this->generateUrl('block_schule_schow', array('id' => $block->getSchule()->getId()))));
     }
 
-    /**
-     * @Route("/org_block/schule/block/linkBlockSilent/remove", name="block_schule_linkBlockSilent_remove",methods={"DELETE"})
-     */
+    #[Route(path: '/org_block/schule/block/linkBlockSilent/remove', name: 'block_schule_linkBlockSilent_remove', methods: ['DELETE'])]
     public function removeLinkBlockSilent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
@@ -298,9 +280,7 @@ class BlockController extends AbstractController
         return new JsonResponse(['redirect' => $this->generateUrl('block_schule_schow', ['id' => $block->getSchule()->getId()])]);
     }
 
-    /**
-     * @Route("/org_block/schule/block/duplicate", name="block_schule_duplicateBlocks",methods={"GET","POST"})
-     */
+    #[Route(path: '/org_block/schule/block/duplicate', name: 'block_schule_duplicateBlocks', methods: ['GET', 'POST'])]
     public function duplicateBlock(Request $request, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));

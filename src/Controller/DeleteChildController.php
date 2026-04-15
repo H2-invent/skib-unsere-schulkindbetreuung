@@ -17,9 +17,7 @@ class DeleteChildController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/org_child/delete", name="delete_child_delete", methods={"DELETE"})
-     */
+    #[Route(path: '/org_child/delete', name: 'delete_child_delete', methods: ['DELETE'])]
     public function index(Request $request)
     {
         $child = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));

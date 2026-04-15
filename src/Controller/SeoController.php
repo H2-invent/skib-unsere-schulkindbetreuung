@@ -13,9 +13,7 @@ class SeoController extends AbstractController
         public function __construct(private ManagerRegistry $managerRegistry)
         {
         }
-        /**
-         * @Route("/sitemap.xml", name="sitemap")
-         */
+        #[Route(path: '/sitemap.xml', name: 'sitemap')]
         public function index()
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->findBy(array('active'=>true,'deleted'=>false));
@@ -27,9 +25,7 @@ class SeoController extends AbstractController
 		 $res->headers->set('Content-Type', 'text/xml');
 		 return $res;
     }
-    /**
-     * @Route("/robots.txt", name="robots")
-     */
+    #[Route(path: '/robots.txt', name: 'robots')]
     public function robots()
     {
              $res = $this->render('seo/robots.html.twig');

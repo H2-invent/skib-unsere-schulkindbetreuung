@@ -23,9 +23,7 @@ class KontingentController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/org_accept/accept_all", name="kontingent_accept_all_kids",methods={"GET"})
-     */
+    #[Route(path: '/org_accept/accept_all', name: 'kontingent_accept_all_kids', methods: ['GET'])]
     public function acceptAll(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
@@ -38,9 +36,7 @@ class KontingentController extends AbstractController
             return new JsonResponse(array('error' => 0, 'snack' => $translator->trans('Erfolgreich gespeichert')));
 
     }
-    /**
-     * @Route("/org_accept/resend_confirmation/{kindId}", name="kontingent_resend_confirmation",methods={"GET"})
-     */
+    #[Route(path: '/org_accept/resend_confirmation/{kindId}', name: 'kontingent_resend_confirmation', methods: ['GET'])]
     public function resendCOnfirmation(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, $kindId)
     {
         $kind = $this->managerRegistry->getRepository(Kind::class)->find($kindId);
@@ -60,9 +56,7 @@ class KontingentController extends AbstractController
 
     }
 
-    /**
-     * @Route("/org_accept/show_kids", name="kontingent_show_kids",methods={"GET"})
-     */
+    #[Route(path: '/org_accept/show_kids', name: 'kontingent_show_kids', methods: ['GET'])]
     public function schowAllKids(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $fictiveDate = $request->get('fictiveDate')?new \DateTime($request->get('fictiveDate')):(new \DateTime())->modify('first day of next month');
@@ -77,9 +71,7 @@ class KontingentController extends AbstractController
 
     }
 
-    /**
-     * @Route("/org_accept/download_kids", name="kontingent_download_kids",methods={"GET"})
-     */
+    #[Route(path: '/org_accept/download_kids', name: 'kontingent_download_kids', methods: ['GET'])]
     public function downloadAllKids(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
 
@@ -142,9 +134,7 @@ class KontingentController extends AbstractController
         rewind($output);
         return stream_get_contents($output);
     }
-    /**
-     * @Route("/org_accept/accept/kid", name="kontingent_accept_kid",methods={"GET"})
-     */
+    #[Route(path: '/org_accept/accept/kid', name: 'kontingent_accept_kid', methods: ['GET'])]
     public function acceptKid(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
@@ -161,9 +151,7 @@ class KontingentController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/org_accept/accept/kid/silent", name="kontingent_accept_kid_silent",methods={"GET"})
-     */
+    #[Route(path: '/org_accept/accept/kid/silent', name: 'kontingent_accept_kid_silent', methods: ['GET'])]
     public function acceptKidSilent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
@@ -179,9 +167,7 @@ class KontingentController extends AbstractController
             return new JsonResponse(array('snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
         }
     }
-    /**
-     * @Route("/org_accept/accept/kid/AllBlocks", name="kontingent_accept_kid_AllBlocks",methods={"GET"})
-     */
+    #[Route(path: '/org_accept/accept/kid/AllBlocks', name: 'kontingent_accept_kid_AllBlocks', methods: ['GET'])]
     public function acceptKidAllBlocks(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));
@@ -197,9 +183,7 @@ class KontingentController extends AbstractController
             return new JsonResponse(array('snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
         }
     }
-    /**
-     * @Route("/org_accept/remove/kid", name="kontingent_remove_kid",methods={"GET"})
-     */
+    #[Route(path: '/org_accept/remove/kid', name: 'kontingent_remove_kid', methods: ['GET'])]
     public function removeKid(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, LoggerInterface $logger)
     {
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('block_id'));

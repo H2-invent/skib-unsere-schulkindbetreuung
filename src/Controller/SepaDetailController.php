@@ -19,9 +19,7 @@ class SepaDetailController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/org_accounting/sepa/detail", name="accounting_sepa_detail")
-     */
+    #[Route(path: '/org_accounting/sepa/detail', name: 'accounting_sepa_detail')]
     public function index(Request $request,SepaCreateService $sepaCreateService)
     {
         set_time_limit(600);
@@ -34,9 +32,7 @@ class SepaDetailController extends AbstractController
        $stammdatenChange = $sepaCreateService->diffToThisMonth($sepa,$simDate);
        return $this->render('sepa_detail/detail.html.twig',array('sepa'=>$sepa,'diffs'=>$stammdatenChange,'simDate'=>$simDate));
     }
-    /**
-     * @Route("/org_accounting/print/detail", name="accounting_sepa_print")
-     */
+    #[Route(path: '/org_accounting/print/detail', name: 'accounting_sepa_print')]
     public function print(Request $request,PrintRechnungService $printRechnungService)
     {
         $rechnung = $this->managerRegistry->getRepository(Rechnung::class)->find($request->get('id'));
@@ -47,9 +43,7 @@ class SepaDetailController extends AbstractController
 
         return $printRechnungService->printRechnung('Test',$rechnung->getKinder()->toArray()[0]->getSchule()->getOrganisation(),$rechnung,'D');
     }
-    /**
-     * @Route("/org_accounting/print/sepaXML", name="accounting_sepa_printXML")
-     */
+    #[Route(path: '/org_accounting/print/sepaXML', name: 'accounting_sepa_printXML')]
     public function printXML(Request $request,PrintRechnungService $printRechnungService)
     {
         $sepa = $this->managerRegistry->getRepository(Sepa::class)->find($request->get('id'));
@@ -71,9 +65,7 @@ class SepaDetailController extends AbstractController
 
 
     }
-    /**
-     * @Route("/org_accounting/print/excel", name="accounting_sepa_printExcel")
-     */
+    #[Route(path: '/org_accounting/print/excel', name: 'accounting_sepa_printExcel')]
     public function printExcel(Request $request,PrintRechnungService $printRechnungService,SepaExcel $sepaExcel)
     {
         $sepa = $this->managerRegistry->getRepository(Sepa::class)->find($request->get('sepa_id'));

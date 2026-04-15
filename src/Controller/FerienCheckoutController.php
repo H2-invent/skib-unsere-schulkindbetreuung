@@ -17,10 +17,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FerienCheckoutController extends AbstractController
 {
-    /**
-     * @Route("/{slug}/ferien/payment/prepare",name="ferien_bezahlung_prepare",methods={"Get"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/ferien/payment/prepare', name: 'ferien_bezahlung_prepare', methods: ['Get'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function prepareAction(CheckoutPaymentService $checkoutPaymentService, Request $request, TranslatorInterface $translator, ValidatorInterface $validator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, CheckoutSepaService $checkoutSepaService)
     {
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
@@ -30,10 +28,8 @@ class FerienCheckoutController extends AbstractController
         return $this->redirectToRoute('ferien_bezahlung', array('slug' => $stadt->getSlug()));
     }
 
-    /**
-     * @Route("/{slug}/ferien/bezahlung",name="ferien_bezahlung",methods={"Get","POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/ferien/bezahlung', name: 'ferien_bezahlung', methods: ['Get', 'POST'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function paymentAction(CheckoutPaymentService $checkoutPaymentService, Request $request, TranslatorInterface $translator, ValidatorInterface $validator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, CheckoutSepaService $checkoutSepaService)
     {
 

@@ -19,11 +19,9 @@ class DownloadFormularController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/download/anmeldung/{schule}/{cat}/{schuljahr}", name="download_formular_schule")
-     * @ParamConverter("schule",class="App\Entity\Schule", options={"mapping"={"schule"="id"}})
-     * @ParamConverter("schuljahr",class="App\Entity\Active", options={"mapping"={"schuljahr"="id"}})
-     */
+    #[Route(path: '/download/anmeldung/{schule}/{cat}/{schuljahr}', name: 'download_formular_schule')]
+    #[ParamConverter('schule', class: Schule::class, options: ['mapping' => ['schule' => 'id']])]
+    #[ParamConverter('schuljahr', class: Active::class, options: ['mapping' => ['schuljahr' => 'id']])]
     public function index(Schule $schule, PrintService $printService, TCPDFController $TCPDFController, TranslatorInterface $translator, $cat, Active  $schuljahr)
     {
 

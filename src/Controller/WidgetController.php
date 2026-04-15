@@ -21,9 +21,7 @@ class WidgetController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/org_child/show/widget/kidsToday", name="widget_kids_today")
-     */
+    #[Route(path: '/org_child/show/widget/kidsToday', name: 'widget_kids_today')]
     public function index(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
@@ -46,9 +44,7 @@ class WidgetController extends AbstractController
         return new JsonResponse(array('title' => $translator->trans('Anwesende Kinder'), 'small' => 'Nach Liste', 'anzahl' => $total, 'symbol' => 'people'));
     }
 
-    /**
-     * @Route("/org_checkin/widget/kidsTodayReal", name="widget_kids_today_real")
-     */
+    #[Route(path: '/org_checkin/widget/kidsTodayReal', name: 'widget_kids_today_real')]
     public function indexCheckin(Request $request, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
@@ -76,9 +72,7 @@ class WidgetController extends AbstractController
         return new JsonResponse(array('title' => $translator->trans('Anwesende Kinder'), 'small' => 'Checkin', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));
     }
 
-    /**
-     * @Route("/org_child/show/widget/kidsSchuljahr", name="widget_kids_schuljahr")
-     */
+    #[Route(path: '/org_child/show/widget/kidsSchuljahr', name: 'widget_kids_schuljahr')]
     public function schuljahr(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
@@ -95,9 +89,7 @@ class WidgetController extends AbstractController
         return new JsonResponse(array('title' => $translator->trans('Kinder dieses Schuljahr'), 'small' => '', 'anzahl' => $total, 'symbol' => 'people'));
     }
 
-    /**
-     * @Route("/org_child/show/widget/kidsinSchule", name="widget_kids_schule")
-     */
+    #[Route(path: '/org_child/show/widget/kidsinSchule', name: 'widget_kids_schule')]
     public function childsInSchule(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -112,9 +104,7 @@ class WidgetController extends AbstractController
 
     }
 
-    /**
-     * @Route("/org_child/show/widget/stundenplan", name="widget_kids_stundenplan")
-     */
+    #[Route(path: '/org_child/show/widget/stundenplan', name: 'widget_kids_stundenplan')]
     public function blockansicht(Request $request, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -144,9 +134,7 @@ class WidgetController extends AbstractController
 
     }
 
-    /**
-     * @Route("/org_accounting/widget/overdueSepa", name="widget_overdue_sepa")
-     */
+    #[Route(path: '/org_accounting/widget/overdueSepa', name: 'widget_overdue_sepa')]
     public function sepa(Request $request, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));

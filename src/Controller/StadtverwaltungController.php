@@ -22,9 +22,7 @@ class StadtverwaltungController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/admin/index", name="admin_index",methods={"GET"})
-     */
+    #[Route(path: '/admin/index', name: 'admin_index', methods: ['GET'])]
     public function index()
     {
         return $this->render('administrator/index.html.twig', [
@@ -32,9 +30,7 @@ class StadtverwaltungController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/admin/stadtverwaltung", name="admin_stadt", methods={"GET"})
-     */
+    #[Route(path: '/admin/stadtverwaltung', name: 'admin_stadt', methods: ['GET'])]
     public function stadtverwaltung()
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->findBy(array('deleted' => false));
@@ -44,9 +40,7 @@ class StadtverwaltungController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/admin/stadtverwaltung/neu", name="admin_stadt_neu",methods={"GET","POST"} )
-     */
+    #[Route(path: '/admin/stadtverwaltung/neu', name: 'admin_stadt_neu', methods: ['GET', 'POST'])]
     public function newStadt(Request $request, TranslatorInterface $translator, ValidatorInterface $validator, KindRepository $kindRepository)
     {
         $city = new Stadt();
@@ -84,9 +78,7 @@ class StadtverwaltungController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/city_edit/stadtverwaltung/edit", name="admin_stadt_edit",methods={"GET","POST"} )
-     */
+    #[Route(path: '/city_edit/stadtverwaltung/edit', name: 'admin_stadt_edit', methods: ['GET', 'POST'])]
     public function editStadt(Request $request, TranslatorInterface $translator, ValidatorInterface $validator, KindRepository $kindRepository)
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -134,9 +126,7 @@ class StadtverwaltungController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/admin/stadtverwaltung/delete", name="admin_stadt_delete", methods={"GET"})
-     */
+    #[Route(path: '/admin/stadtverwaltung/delete', name: 'admin_stadt_delete', methods: ['GET'])]
     public function deleteStadt(Request $request)
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -147,9 +137,7 @@ class StadtverwaltungController extends AbstractController
         return $this->redirectToRoute('admin_stadt');
     }
 
-    /**
-     * @Route("/admin/berechner", name="admin_berechner",methods={"GET","POST"})
-     */
+    #[Route(path: '/admin/berechner', name: 'admin_berechner', methods: ['GET', 'POST'])]
     public function berechnerEdit(Request $request)
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -173,9 +161,7 @@ class StadtverwaltungController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/admin/formula-test", name="admin_formula_test", methods={"POST"})
-     */
+    #[Route(path: '/admin/formula-test', name: 'admin_formula_test', methods: ['POST'])]
     public function formulaTest(
         Request $request,
         ExpressionLanguage $expressionLanguage,
@@ -185,7 +171,7 @@ class StadtverwaltungController extends AbstractController
         try {
             $json = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
             $formula = $json['formula'] ?? throw new JsonException();
-        } catch (JsonException $e) {
+        } catch (JsonException) {
             return new JsonResponse([], 400);
         }
 

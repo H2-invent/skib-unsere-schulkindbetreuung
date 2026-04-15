@@ -22,9 +22,7 @@ class LateRegistrationController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/org_child/late_registration",name="late_registration",methods={"GET", "POST"})
-     */
+    #[Route(path: '/org_child/late_registration', name: 'late_registration', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         /** @var User $user */
@@ -53,10 +51,8 @@ class LateRegistrationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/late_registration/{token}", name="late_registration_start", methods={"GET"})
-     * @Entity("LateRegistration", expr="repository.findByStringToken(token)")
-     */
+    #[Route(path: '/late_registration/{token}', name: 'late_registration_start', methods: ['GET'])]
+    #[Entity('LateRegistration', expr: 'repository.findByStringToken(token)')]
     public function registerStart(Request $request, LateRegistration $lateRegistration): Response
     {
         if (!$this->lateRegisterService->isValid($lateRegistration, $request)) {

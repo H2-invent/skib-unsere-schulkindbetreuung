@@ -52,9 +52,7 @@ class ChildController extends AbstractController
         ];
     }
 
-    /**
-     * @Route("/org_child/show", name="child_show")
-     */
+    #[Route(path: '/org_child/show', name: 'child_show')]
     public function showAction(Request $request, TranslatorInterface $translator)
     {
 
@@ -83,9 +81,7 @@ class ChildController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/org_child/show/detail", name="child_detail")
-     */
+    #[Route(path: '/org_child/show/detail', name: 'child_detail')]
     public function childDetail(Request $request, TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController, ElternService $elternService, HistoryService $historyService)
     {
         $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
@@ -111,9 +107,7 @@ class ChildController extends AbstractController
         return $this->render('child/childDetail.html.twig', array('beruflicheSituation' => array_flip($loerrachWorkflowController->beruflicheSituation), 'k' => $kind, 'eltern' => $eltern, 'his' => $historydate, 'date' => $date, 'history' => $historydate, 'formInternalNotice' => $form->createView(), 'sickReports' => $sickReports, 'sickDays' => $sickDays));
     }
 
-    /**
-     * @Route("/org_child/show/detail/save/internal/notice/{childId}", name="child_detail_save_internal")
-     */
+    #[Route(path: '/org_child/show/detail/save/internal/notice/{childId}', name: 'child_detail_save_internal')]
     public function childSaveInternall(Request $request, TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController, $childId)
     {
         $kind = $this->managerRegistry->getRepository(Kind::class)->find($childId);
@@ -143,9 +137,7 @@ class ChildController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_child/print/detail", name="child_detail_print")
-     */
+    #[Route(path: '/org_child/print/detail', name: 'child_detail_print')]
     public function printChild(Request $request, TranslatorInterface $translator, PrintService $printService, TCPDFController $TCPDFController, ElternService $elternService)
     {
         $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
@@ -163,9 +155,7 @@ class ChildController extends AbstractController
         return $printService->printChildDetail($kind, $eltern, $TCPDFController, $fileName, $kind->getSchule()->getOrganisation(), 'D');
     }
 
-    /**
-     * @Route("/org_child/search/child/table", name="child_child_Table",methods={"GET","POST"})
-     */
+    #[Route(path: '/org_child/search/child/table', name: 'child_child_Table', methods: ['GET', 'POST'])]
     public function buildChildTable(ChildSearchService $childSearchService, Request $request, TranslatorInterface $translator, PrintService $printService, TCPDFController $TCPDFController, ChildExcelService $childExcelService)
     {
         set_time_limit(300);
@@ -242,9 +232,7 @@ class ChildController extends AbstractController
 
     }
 
-    /**
-     * @Route("/org_child/change/resend", name="child_resend_SecCode")
-     */
+    #[Route(path: '/org_child/change/resend', name: 'child_resend_SecCode')]
     public function resendSecCodeChild(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
         $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
@@ -281,9 +269,7 @@ class ChildController extends AbstractController
         return $this->redirectToRoute('child_show', ['id' => $kind->getSchule()->getOrganisation()->getId(), 'snack' => $text]);
     }
 
-    /**
-     * @Route("/org_child/addNew", name="child_add_new")
-     */
+    #[Route(path: '/org_child/addNew', name: 'child_add_new')]
     public function addNewChild(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
         $request->getSession()->remove(SchuljahrService::SESSION_KEY_SCHULJAHR);
@@ -301,9 +287,7 @@ class ChildController extends AbstractController
         $session->set(SchuljahrService::SESSION_KEY_SCHULJAHR, $active->getId());
         return $response;
     }
-    /**
-     * @Route("/admin/org_child/removeBlock/{childId}/{blockId}", name="child_admin_remove_block")
-     */
+    #[Route(path: '/admin/org_child/removeBlock/{childId}/{blockId}', name: 'child_admin_remove_block')]
     public function removeBlockByAdmin(Request $request,$childId,$blockId)
     {
         $child = $this->entityManager->getRepository(Kind::class)->find($childId);

@@ -22,10 +22,8 @@ class PaymentStripeController extends AbstractController
 
     }
 
-    /**
-     * @Route("/{slug}/ferien/stripe/prepare",name="ferien_stripe_start",methods={"Get"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/ferien/stripe/prepare', name: 'ferien_stripe_start', methods: ['Get'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function paymentPrepareAction(CheckoutPaymentService $checkoutPaymentService, Stadt $stadt, TranslatorInterface $translator, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
@@ -36,10 +34,8 @@ class PaymentStripeController extends AbstractController
         return $this->render('payment_stripe/index.html.twig', array('payment' => $payment, 'stadt' => $stadt,'org'=>$payment->getOrganisation()));
     }
 
-    /**
-     * @Route("/{slug}/ferien/stripe/recieveToken",name="ferien_stripe_token", methods={"POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/ferien/stripe/recieveToken', name: 'ferien_stripe_token', methods: ['POST'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function paymentrecieveNonceAction( Stadt $stadt, Request $request)
     {
         $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(array('uid' => $request->get('paymentId')));

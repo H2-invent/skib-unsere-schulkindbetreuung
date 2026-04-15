@@ -18,9 +18,7 @@ class FerienSurveyController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/org_ferien/edit/question", name="ferien_management_question", methods={"GET"})
-     */
+    #[Route(path: '/org_ferien/edit/question', name: 'ferien_management_question', methods: ['GET'])]
     public function ferienblockFragen(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
@@ -32,9 +30,7 @@ class FerienSurveyController extends AbstractController
 
         return $this->render('ferien_survey/index.html.twig',array('ferien'=>$ferienblock));
     }
-    /**
-     * @Route("/org_ferien/edit/question/save", name="ferien_management_question_save", methods={"POST"})
-     */
+    #[Route(path: '/org_ferien/edit/question/save', name: 'ferien_management_question_save', methods: ['POST'])]
     public function ferienblockFragenSave(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));

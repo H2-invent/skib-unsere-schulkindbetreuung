@@ -12,9 +12,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class InvitationController extends AbstractController
 {
 
-    /**
-     * @Route("/login/invitation/accept/{token}", name="invitation_accept")
-     */
+    #[Route(path: '/login/invitation/accept/{token}', name: 'invitation_accept')]
     public function accept($token, InvitationService $invitationService, TokenStorageInterface $tokenStorage, Request $request): Response
     {
 

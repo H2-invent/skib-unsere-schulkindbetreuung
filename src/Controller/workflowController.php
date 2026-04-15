@@ -34,9 +34,7 @@ class workflowController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/{slug}/home",name="workflow_start",methods={"GET"})
-     */
+    #[Route(path: '/{slug}/home', name: 'workflow_start', methods: ['GET'])]
     public function welcomeAction(TranslatorInterface $translator, Request $request, $slug, SchuljahrService $schuljahrService)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
@@ -73,36 +71,28 @@ class workflowController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/closed",name="workflow_closed",methods={"GET"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/closed', name: 'workflow_closed', methods: ['GET'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function closedAction(Request $request, Stadt $stadt)
     {
 
         return $this->render('workflow/closed.html.twig', array('stadt' => $stadt));
     }
 
-    /**
-     * @Route("/city-not-found",name="workflow_city_not_found",methods={"GET"})
-     */
+    #[Route(path: '/city-not-found', name: 'workflow_city_not_found', methods: ['GET'])]
     public function noCityAction(Request $request)
     {
 
         return $this->render('workflow/noCity.html.twig');
     }
 
-    /**
-     * @Route("/wartung",name="workflow_wartung",methods={"GET"})
-     */
+    #[Route(path: '/wartung', name: 'workflow_wartung', methods: ['GET'])]
     public function wartungAction(Request $request)
     {
         return $this->render('workflow/wartung.html.twig', array('referer' => $request->get('redirect')));
     }
 
-    /**
-     * @Route("/confirmEmail",name="workflow_confirm_Email",methods={"GET","POST"})
-     */
+    #[Route(path: '/confirmEmail', name: 'workflow_confirm_Email', methods: ['GET', 'POST'])]
     public function confirmAction(Request $request, MailerService $mailer, TranslatorInterface $translator, ConfirmEmailService $confirmEmailService)
     {
         $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
@@ -123,9 +113,7 @@ class workflowController extends AbstractController
     }
 
 
-    /**
-     * @Route("/resetMail",name="workflow_reset_Email",methods={"GET","POST"})
-     */
+    #[Route(path: '/resetMail', name: 'workflow_reset_Email', methods: ['GET', 'POST'])]
     public function resetAction(Request $request, MailerService $mailer, TranslatorInterface $translator)
     {
         $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
@@ -142,9 +130,7 @@ class workflowController extends AbstractController
         return $this->redirectToRoute('workflow_confirm_Email', array('stadt' => $stadt->getId(), 'snack' => $text, 'uid' => $stammdaten->getUid(), 'redirect' => $request->get('redirect')));
     }
 
-    /**
-     * @Route("/{slug}/{org_id}/datenschutz",name="workflow_datenschutz",methods={"GET"})
-     */
+    #[Route(path: '/{slug}/{org_id}/datenschutz', name: 'workflow_datenschutz', methods: ['GET'])]
     public function datenschutzAction($slug, $org_id, Request $request, TranslatorInterface $translator)
     {
 
@@ -168,9 +154,7 @@ class workflowController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/{org_id}/datenschutz/pdf",name="workflow_datenschutz_pdf",methods={"GET"})
-     */
+    #[Route(path: '/{slug}/{org_id}/datenschutz/pdf', name: 'workflow_datenschutz_pdf', methods: ['GET'])]
     public function datenschutzpdf(Request $request, TranslatorInterface $translator, PrintDatenschutzService $printDatenschutzService, $slug, $org_id)
     {
         if ($org_id == 'city') {
@@ -186,10 +170,8 @@ class workflowController extends AbstractController
 
     }
 
-    /**
-     * @Route("/{slug}/vertragsbedingungen",name="workflow_agb",methods={"GET"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/vertragsbedingungen', name: 'workflow_agb', methods: ['GET'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function agbAction(Request $request, TranslatorInterface $translator, Stadt $stadt)
     {
         $stadtAGB = $stadt->translate()->getAgb();
@@ -200,10 +182,8 @@ class workflowController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/agb/pdf",name="workflow_agb_pdf",methods={"GET"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/agb/pdf', name: 'workflow_agb_pdf', methods: ['GET'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function pdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService, Stadt $stadt)
     {
         return $printAGBService->printAGB($stadt->translate()->getAgb(), 'D', $stadt, null);
@@ -211,9 +191,7 @@ class workflowController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/imprint",name="workflow_imprint",methods={"GET"})
-     */
+    #[Route(path: '/{slug}/imprint', name: 'workflow_imprint', methods: ['GET'])]
     public function imprintAction($slug, Request $request, TranslatorInterface $translator)
     {
         if ($slug === null) {

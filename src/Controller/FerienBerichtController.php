@@ -16,9 +16,7 @@ class FerienBerichtController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/org_ferien/report/nametag", name="ferien_report_nametag")
-     */
+    #[Route(path: '/org_ferien/report/nametag', name: 'ferien_report_nametag')]
     public function nametag(Request $request, TranslatorInterface $translator, PrintFerienNameTagService $printFerienNameTagService)
     {
 

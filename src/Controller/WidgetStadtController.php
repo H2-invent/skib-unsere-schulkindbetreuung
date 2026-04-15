@@ -20,9 +20,7 @@ class WidgetStadtController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/city_dashboard/show/widget/kidsinSchule", name="widget_kids_schule_stadt")
-     */
+    #[Route(path: '/city_dashboard/show/widget/kidsinSchule', name: 'widget_kids_schule_stadt')]
     public function childsInSchule(Request $request, TranslatorInterface $translator, ChildSearchService $childSearchService)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('stadt_id'));
@@ -39,9 +37,7 @@ class WidgetStadtController extends AbstractController
 
     }
 
-    /**
-     * @Route("/city_dashboard/show/widget/kidsSchuljahr", name="widget_kids_schuljahr_stadt")
-     */
+    #[Route(path: '/city_dashboard/show/widget/kidsSchuljahr', name: 'widget_kids_schuljahr_stadt')]
     public function schuljahr(Request $request, TranslatorInterface $translator, ChildSearchService $childSearchService)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('stadt_id'));
@@ -62,9 +58,7 @@ class WidgetStadtController extends AbstractController
         return $a['active']->getVon() <=> $b['active']->getVon();
     }
 
-    /**
-     * @Route("/city_dashboard/show/widget/kidsOverYears", name="widget_stadt_over_years")
-     */
+    #[Route(path: '/city_dashboard/show/widget/kidsOverYears', name: 'widget_stadt_over_years')]
     public function overYears(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('stadt_id'));
@@ -86,9 +80,7 @@ class WidgetStadtController extends AbstractController
 
     }
 
-    /**
-     * @Route("/city_dashboard/show/widget/kidsinblocks", name="widget_stadt_kids_in_blocks")
-     */
+    #[Route(path: '/city_dashboard/show/widget/kidsinblocks', name: 'widget_stadt_kids_in_blocks')]
     public function kidsinBlocks(Request $request, TranslatorInterface $translator)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('stadt_id'));

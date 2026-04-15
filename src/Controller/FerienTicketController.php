@@ -17,9 +17,7 @@ class FerienTicketController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/ferien/ticket", name="ferien_ticket")
-     */
+    #[Route(path: '/ferien/ticket', name: 'ferien_ticket')]
     public function printAction(TranslatorInterface $translator,  FerienPrintService $print, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
 

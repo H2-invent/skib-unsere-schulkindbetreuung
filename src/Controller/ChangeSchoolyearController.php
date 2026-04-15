@@ -18,9 +18,7 @@ class ChangeSchoolyearController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_child/schoolyear_change", name="org_child_shoolyear_change")
-     */
+    #[Route(path: '/org_child/schoolyear_change', name: 'org_child_shoolyear_change')]
     public function index(TranslatorInterface $translator, Request $request, AnmeldeEmailService $anmeldeEmailService, ChildSchoolYearChangeService $childChoolYearChangeService)
     {
         $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));

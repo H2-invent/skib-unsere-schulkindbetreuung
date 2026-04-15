@@ -21,9 +21,7 @@ class FerienStornoController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/{slug}/ferien/storno", name="ferien_storno")
-     */
+    #[Route(path: '/{slug}/ferien/storno', name: 'ferien_storno')]
     public function index($slug, Request $request)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
@@ -39,9 +37,7 @@ class FerienStornoController extends AbstractController
     }
 
 
-    /**
-     * @Route("/ferien/storno/mark", name="ferien_storno_mark", methods={"PATCH"})
-     */
+    #[Route(path: '/ferien/storno/mark', name: 'ferien_storno_mark', methods: ['PATCH'])]
     public function markAction(TranslatorInterface $translator, Request $request,FerienStornoService $ferienStornoService)
     {
         $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
@@ -49,9 +45,7 @@ class FerienStornoController extends AbstractController
         return new JsonResponse($ferienStornoService->toggleBlock($kindFerienblock,$stammdaten));
     }
 
-    /**
-     * @Route("/{slug}/ferien/storno/abschluss", name="ferien_storno_abschluss", methods={"GET"})
-     */
+    #[Route(path: '/{slug}/ferien/storno/abschluss', name: 'ferien_storno_abschluss', methods: ['GET'])]
     public function stornoAbschluss(LoggerInterface $logger, $slug,TranslatorInterface $translator, Request $request,FerienStornoService $ferienStornoService)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
@@ -65,9 +59,7 @@ class FerienStornoController extends AbstractController
         return $res;
 
     }
-    /**
-     * @Route("/org_ferien/storno/payBack", name="ferien_storno_payPack", methods={"PATCH"})
-     */
+    #[Route(path: '/org_ferien/storno/payBack', name: 'ferien_storno_payPack', methods: ['PATCH'])]
     public function payBackAction(CheckoutPaymentService $checkoutPaymentService, TranslatorInterface $translator, Request $request,FerienStornoService $ferienStornoService)
     {
         $refund = $this->managerRegistry->getRepository(PaymentRefund::class)->find($request->get('id'));

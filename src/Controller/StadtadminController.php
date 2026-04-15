@@ -22,9 +22,7 @@ class StadtadminController extends AbstractController
     public function __construct(private UserManagerInterface $manager, private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/admin/stadtUser", name="admin_stadtadmin")
-     */
+    #[Route(path: '/admin/stadtUser', name: 'admin_stadtadmin')]
     public function index(Request $request)
     {
         $city= $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -35,9 +33,7 @@ class StadtadminController extends AbstractController
             'city'=>$city
         ]);
     }
-    /**
-     * @Route("/admin/allUser", name="admin_showAllUser")
-     */
+    #[Route(path: '/admin/allUser', name: 'admin_showAllUser')]
     public function allUSer(Request $request)
     {
 
@@ -49,9 +45,7 @@ class StadtadminController extends AbstractController
 
         ]);
     }
-    /**
-     * @Route("/admin/stadtUser/neu", name="admin_stadtadmin_neu")
-     */
+    #[Route(path: '/admin/stadtUser/neu', name: 'admin_stadtadmin_neu')]
     public function neu(Request $request,TranslatorInterface $translator,ValidatorInterface $validator,InvitationService $invitationService)
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -85,9 +79,7 @@ class StadtadminController extends AbstractController
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
 
     }
-    /**
-     * @Route("/admin/stadtUser/edit", name="admin_stadtadmin_edit")
-     */
+    #[Route(path: '/admin/stadtUser/edit', name: 'admin_stadtadmin_edit')]
     public function edit(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -119,9 +111,7 @@ class StadtadminController extends AbstractController
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
 
     }
-    /**
-     * @Route("/admin/stadtUser/changePw", name="admin_stadtadmin_changePw")
-     */
+    #[Route(path: '/admin/stadtUser/changePw', name: 'admin_stadtadmin_changePw')]
     public function changePw(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -160,9 +150,7 @@ class StadtadminController extends AbstractController
         return $this->render('administrator/neu.html.twig',array('title'=>$title,'stadt'=>$city,'form' => $form->createView(),'errors'=>$errors));
 
     }
-    /**
-     * @Route("/admin/stadtUser/toggleAdmin", name="admin_stadtadmin_toggleAdmin")
-     */
+    #[Route(path: '/admin/stadtUser/toggleAdmin', name: 'admin_stadtadmin_toggleAdmin')]
     public function toggleAdmin(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
         $user = $this->manager->findUserBy(array('id' => $request->get('id')));
@@ -178,9 +166,7 @@ class StadtadminController extends AbstractController
         return $this->redirect($referer);
     }
 
-    /**
-     * @Route("/admin/stadtUser/toggleSuperAdmin", name="admin_stadtadmin_toggleSuperAdmin")
-     */
+    #[Route(path: '/admin/stadtUser/toggleSuperAdmin', name: 'admin_stadtadmin_toggleSuperAdmin')]
     public function toggleSuperAdmin(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
         $user = $this->manager->findUserBy(array('id' => $request->get('id')));
@@ -196,9 +182,7 @@ class StadtadminController extends AbstractController
         return $this->redirect($referer);
     }
 
-    /**
-     * @Route("/admin/stadtUser/deactivate", name="admin_stadtadmin_deactivate")
-     */
+    #[Route(path: '/admin/stadtUser/deactivate', name: 'admin_stadtadmin_deactivate')]
     public function deactivateAccount(Request $request,TranslatorInterface $translator,ValidatorInterface $validator)
     {
         $user = $this->manager->findUserBy(array('id' => $request->get('id')));

@@ -27,9 +27,7 @@ class SepaController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/org_accounting/overview", name="accounting_overview",methods={"GET","POST"})
-     */
+    #[Route(path: '/org_accounting/overview', name: 'accounting_overview', methods: ['GET', 'POST'])]
     public function index(Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator)
     {
         set_time_limit(600);
@@ -60,9 +58,7 @@ class SepaController extends AbstractController
     }
 
 
-    /**
-     * @Route("/org_accounting/sendBill", name="accounting_send_bill",methods={"GET"})
-     */
+    #[Route(path: '/org_accounting/sendBill', name: 'accounting_send_bill', methods: ['GET'])]
     public function sendBill(TranslatorInterface $translator, Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator)
     {
         set_time_limit(600);
@@ -76,9 +72,7 @@ class SepaController extends AbstractController
 
     }
 
-    /**
-     * @Route("/org_accounting/showdata", name="accounting_showdata",methods={"GET"})
-     */
+    #[Route(path: '/org_accounting/showdata', name: 'accounting_showdata', methods: ['GET'])]
     public function showStammdaten(Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator, ElternService $elternService)
     {
         set_time_limit(6000);
@@ -123,9 +117,7 @@ class SepaController extends AbstractController
         return $this->render('sepa/showData.html.twig', array('organisation' => $organisation, 'stammdaten' => $sRes,'schuljahr'=>$year));
     }
 
-    /**
-     * @Route("/org_accounting/showdata/showMontly/{stammdatenId}", name="accounting_showdata_montly",methods={"GET"})
-     */
+    #[Route(path: '/org_accounting/showdata/showMontly/{stammdatenId}', name: 'accounting_showdata_montly', methods: ['GET'])]
     public function showStammdatenMontyly(HistoryService $historyService, $stammdatenId, ElternService $elternService)
     {
         $stammdaten = $this->em->getRepository(Stammdaten::class)->find($stammdatenId);
@@ -140,9 +132,7 @@ class SepaController extends AbstractController
         return $this->render('sepa/showDataMontly.html.twig', array('history' => $stammdatenArray, 'stammdaten' => $stammdaten));
     }
 
-    /**
-     * @Route("/org_accounting/showdata/customerid", name="accounting_showdata_customerid",methods={"GET","POST"})
-     */
+    #[Route(path: '/org_accounting/showdata/customerid', name: 'accounting_showdata_customerid', methods: ['GET', 'POST'])]
     public function customerIDStammdaten(Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));

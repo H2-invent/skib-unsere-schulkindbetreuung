@@ -17,9 +17,7 @@ class ContentController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/admin/content/show", name="content_show")
-     */
+    #[Route(path: '/admin/content/show', name: 'content_show')]
     public function index()
     {
         $content = $this->managerRegistry->getRepository(Content::class)->findAll();
@@ -29,9 +27,7 @@ class ContentController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/admin/content/new", name="content_new")
-     */
+    #[Route(path: '/admin/content/new', name: 'content_new')]
     public function newcontent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $content = new Content();
@@ -56,9 +52,7 @@ class ContentController extends AbstractController
         return $this->render('content/ContentForm.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
 
     }
-    /**
-     * @Route("/admin/content/edit", name="content_edit")
-     */
+    #[Route(path: '/admin/content/edit', name: 'content_edit')]
     public function editcontent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $content =$this->managerRegistry->getRepository(Content::class)->find($request->get('content_id'));
@@ -81,9 +75,7 @@ class ContentController extends AbstractController
         $title = $translator->trans('Content bearbeiten');
         return $this->render('content/ContentForm.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
     }
-    /**
-     * @Route("/admin/content/activate", name="content_activate")
-     */
+    #[Route(path: '/admin/content/activate', name: 'content_activate')]
     public function activatecontent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $content =$this->managerRegistry->getRepository(Content::class)->find($request->get('content_id'));
@@ -99,9 +91,7 @@ class ContentController extends AbstractController
         $text = $translator->trans('Erfolgreich geändert');
         return $this->redirectToRoute('content_show', array('snack' => $text));
     }
-    /**
-     * @Route("/admin/content/delete", name="content_delete",methods={"DELETE"})
-     */
+    #[Route(path: '/admin/content/delete', name: 'content_delete', methods: ['DELETE'])]
     public function deletecontent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $content =$this->managerRegistry->getRepository(Content::class)->find($request->get('content_id'));

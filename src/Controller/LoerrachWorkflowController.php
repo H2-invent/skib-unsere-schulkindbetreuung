@@ -64,10 +64,8 @@ class LoerrachWorkflowController extends AbstractController
 
     }
 
-    /**
-     * @Route("/{slug}/adresse",name="loerrach_workflow_adresse",methods={"GET","POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/adresse', name: 'loerrach_workflow_adresse', methods: ['GET', 'POST'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function adresseAction(ParameterBagInterface            $parameterBag,
                                   ErrorService                     $errorService,
                                   SchulkindBetreuungAdresseService $schulkindBetreuungAdresseService,
@@ -149,10 +147,8 @@ class LoerrachWorkflowController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/schulen",name="loerrach_workflow_schulen",methods={"GET"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/schulen', name: 'loerrach_workflow_schulen', methods: ['GET'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function schulenAction(Stadt $stadt, Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
 
@@ -197,10 +193,8 @@ class LoerrachWorkflowController extends AbstractController
         return $this->render('workflow/loerrach/schulen.html.twig', array('isEdit' => $isEdit, 'schule' => $schule, 'stadt' => $stadt, 'adresse' => $adresse, 'kinder' => $renderKinder));
     }
 
-    /**
-     * @Route("/{slug}/schulen/kind/neu",name="loerrach_workflow_schulen_kind_neu",methods={"GET","POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/schulen/kind/neu', name: 'loerrach_workflow_schulen_kind_neu', methods: ['GET', 'POST'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function neukindAction(SchulkindBetreuungKindNeuService $schulkindBetreuungKindNeuService, Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService, ParameterBagInterface $parameterBag)
     {
         $adresse = new Stammdaten;
@@ -247,10 +241,8 @@ class LoerrachWorkflowController extends AbstractController
         return $this->render('workflow/loerrach/kindForm.html.twig', array('schule' => $schule, 'form' => $form->createView()));
     }
 
-    /**
-     * @Route("/{slug}/schulen/kind/edit",name="loerrach_workflow_schulen_kind_edit",methods={"GET","POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/schulen/kind/edit', name: 'loerrach_workflow_schulen_kind_edit', methods: ['GET', 'POST'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function editkindAction(SchulkindBetreuungKindNeuService $schulkindBetreuungKindNeuService, Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
         $adresse = new Stammdaten;
@@ -297,10 +289,8 @@ class LoerrachWorkflowController extends AbstractController
         return $this->render('workflow/loerrach/kindForm.html.twig', array('form' => $form->createView()));
     }
 
-    /**
-     * @Route("/{slug}/schulen/kind/delete",name="loerrach_workflow_kind_delete",methods={"DELETE"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/schulen/kind/delete', name: 'loerrach_workflow_kind_delete', methods: ['DELETE'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function deleteAction(Stadt $stadt, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie)
     {
         //Include Parents in this route
@@ -315,9 +305,7 @@ class LoerrachWorkflowController extends AbstractController
         return new JsonResponse(array('redirect' => $this->generateUrl('loerrach_workflow_schulen', array('slug' => $stadt->getSlug()))));
     }
 
-    /**
-     * @Route("/org_child/change/schulen/kind/startDate",name="loerrach_workflow_schulen_kind_startDate",methods={"POST"})
-     */
+    #[Route(path: '/org_child/change/schulen/kind/startDate', name: 'loerrach_workflow_schulen_kind_startDate', methods: ['POST'])]
     public function kindStartDateAction(Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
         $adresse = new Stammdaten;
@@ -336,10 +324,8 @@ class LoerrachWorkflowController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/schulen/kind/zeitblock",name="loerrach_workflow_schulen_kind_zeitblock",methods={"GET"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/schulen/kind/zeitblock', name: 'loerrach_workflow_schulen_kind_zeitblock', methods: ['GET'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function kindzeitblockAction(Stadt $stadt, Request $request, StamdatenFromCookie $stamdatenFromCookie, SchuljahrService $schuljahrService)
     {
 
@@ -387,10 +373,8 @@ class LoerrachWorkflowController extends AbstractController
         return $this->render('workflow/loerrach/blockKinder.html.twig', array('stadt' => $stadt, 'kind' => $kind, 'blocks' => $renderBlocks, 'schuljahr' => $schuljahr));
     }
 
-    /**
-     * @Route("/{slug}/kinder/block/toggle",name="loerrach_workflow_kinder_block_toggle",methods={"PATCH"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/kinder/block/toggle', name: 'loerrach_workflow_kinder_block_toggle', methods: ['PATCH'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function kinderblocktoggleAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, ToogleKindBlockSchulkind $toogleKindBlockSchulkind)
     {
 
@@ -411,10 +395,8 @@ class LoerrachWorkflowController extends AbstractController
 
     }
 
-    /**
-     * @Route("/{slug}/mittagessen", name="loerrach_workflow_mittagessen")
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/mittagessen', name: 'loerrach_workflow_mittagessen')]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function mittagessenAction(Request $request, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
         $adresse = new Stammdaten;
@@ -434,10 +416,8 @@ class LoerrachWorkflowController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/bezahlen", name="loerrach_workflow_bezahlen")
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/bezahlen', name: 'loerrach_workflow_bezahlen')]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function sepaAction(ErrorService $errorService, SchulkindBetreuungKindSEPAService $schulkindBetreuungKindSEPAService, Request $request, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, ValidatorInterface $validator)
     {
         $adresse = new Stammdaten;
@@ -475,10 +455,8 @@ class LoerrachWorkflowController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/zusammenfassung",name="loerrach_workflow_zusammenfassung",methods={"GET"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/zusammenfassung', name: 'loerrach_workflow_zusammenfassung', methods: ['GET'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function zusammenfassungAction(
         SchulkindBetreuungKindSEPAService $schulkindBetreuungKindSEPAService,
         Stadt                             $stadt,
@@ -534,10 +512,8 @@ class LoerrachWorkflowController extends AbstractController
             'organisation' => $renderOrganisation));
     }
 
-    /**
-     * @Route("/{slug}/zusammenfassung/uploaded-documents",name="loerrach_workflow_zusammenfassung_uploaded-documents",methods={"GET"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/zusammenfassung/uploaded-documents', name: 'loerrach_workflow_zusammenfassung_uploaded-documents', methods: ['GET'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function zusammenfassungUploadedDocumentsAction(
         Request $request,
         StamdatenFromCookie $stammdatenFromCookie,
@@ -550,10 +526,8 @@ class LoerrachWorkflowController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{slug}/abschluss",name="loerrach_workflow_abschluss",methods={"GET","POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/abschluss', name: 'loerrach_workflow_abschluss', methods: ['GET', 'POST'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function abschlussAction(Request             $request,
                                     ValidatorInterface  $validator,
                                     TranslatorInterface $translator,
@@ -620,10 +594,8 @@ class LoerrachWorkflowController extends AbstractController
 
     }
 
-    /**
-     * @Route("/{slug}/berechnung/einKind",name="loerrach_workflow_preis_einKind",methods={"GET"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/berechnung/einKind', name: 'loerrach_workflow_preis_einKind', methods: ['GET'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public
     function berechnungAction(Stadt $stadt, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, StamdatenFromCookie $stamdatenFromCookie, BerechnungsService $berechnungsService)
     {
@@ -658,10 +630,8 @@ class LoerrachWorkflowController extends AbstractController
 
     }
 
-    /**
-     * @Route("/{slug}/berechnung/printPdf",name="loerrach_workflow_print_pdf",methods={"GET"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/berechnung/printPdf', name: 'loerrach_workflow_print_pdf', methods: ['GET'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public
     function prinPdf(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, PrintService $print, StamdatenFromCookie $stamdatenFromCookie)
     {
@@ -680,9 +650,7 @@ class LoerrachWorkflowController extends AbstractController
 
     }
 
-    /**
-     * @Route("/admin/adresse/bypass",name="loerrach_workflow_bypass",methods={"GET","POST"})
-     */
+    #[Route(path: '/admin/adresse/bypass', name: 'loerrach_workflow_bypass', methods: ['GET', 'POST'])]
     public
     function bypassAction(Request $request, ValidatorInterface $validator)
     {

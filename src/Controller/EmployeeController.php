@@ -31,9 +31,7 @@ class EmployeeController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/city_admin/mitarbeiter/stadt", name="city_employee_show")
-     */
+    #[Route(path: '/city_admin/mitarbeiter/stadt', name: 'city_employee_show')]
     public function index(Request $request)
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -50,9 +48,7 @@ class EmployeeController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/city_admin/mitarbeiter/stadt/neu", name="city_employee_new")
-     */
+    #[Route(path: '/city_admin/mitarbeiter/stadt/neu', name: 'city_employee_new')]
     public function newUser(Request $request, TranslatorInterface $translator, ValidatorInterface $validator,InvitationService $invitationService)
     {
         $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -105,9 +101,7 @@ class EmployeeController extends AbstractController
 
     }
 
-    /**
-     * @Route("/city_admin/mitarbeiter/stadt/edit", name="city_employee_edit")
-     */
+    #[Route(path: '/city_admin/mitarbeiter/stadt/edit', name: 'city_employee_edit')]
     public function edit(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
     {
 
@@ -150,9 +144,7 @@ class EmployeeController extends AbstractController
 
     }
 
-    /**
-     * @Route("/city_admin/stadtUser/deactivate", name="city_admin_city_employee_deactivate")
-     */
+    #[Route(path: '/city_admin/stadtUser/deactivate', name: 'city_admin_city_employee_deactivate')]
     public function deactivateAccount(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
     {
         $user = $this->manager->findUserBy(array('id' => $request->get('id')));
@@ -176,10 +168,7 @@ class EmployeeController extends AbstractController
 
     }
 
-    /**
-     * @Route("/city_admin/mitarbeiter/changePw", name="city_admin_mitarbeiter_changePw")
-     * * @Route("/org_admin/mitarbeiter/changePw", name="org_admin_mitarbeiter_changePw")
-     */
+    #[Route(path: '/city_admin/mitarbeiter/changePw', name: 'city_admin_mitarbeiter_changePw')]
     public function changePw(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
     {
         $user = $this->manager->findUserBy(array('id' => $request->get('id')));
@@ -233,9 +222,7 @@ class EmployeeController extends AbstractController
 
     }
 
-    /**
-     * @Route("/city_admin/mitarbeiter/delete", name="city_admin_mitarbeiter_delete")
-     */
+    #[Route(path: '/city_admin/mitarbeiter/delete', name: 'city_admin_mitarbeiter_delete')]
     public function delete(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
     {
         $user = $this->manager->findUserBy(array('id' => $request->get('id')));
@@ -256,9 +243,7 @@ class EmployeeController extends AbstractController
 
     }
 
-    /**
-     * @Route("login/city_admin/userRoles", name="city_admin_mitarbeiter_roles")
-     */
+    #[Route(path: 'login/city_admin/userRoles', name: 'city_admin_mitarbeiter_roles')]
     public function showUserRolesAction(Request $request, TranslatorInterface $translator)
     {
         $user = $this->manager->findUserBy(array('id' => $request->get('id')));

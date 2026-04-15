@@ -19,9 +19,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/checkin/schulkindbetreuung/{kindID}", name="checkin_schulkindbetreuung", methods={"POST"})
-     */
+    #[Route(path: '/checkin/schulkindbetreuung/{kindID}', name: 'checkin_schulkindbetreuung', methods: ['POST'])]
     public function index(Request $request, TranslatorInterface $translator, $kindID, CheckinSchulkindservice $checkinSchulkindservice)
     {
         $today = (new \DateTime());
@@ -33,9 +31,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
         return new JsonResponse($result);
     }
 
-    /**
-     * @Route("/connect/organisation/{orgID}", name="connect_Org", methods={"GET"})
-     */
+    #[Route(path: '/connect/organisation/{orgID}', name: 'connect_Org', methods: ['GET'])]
     public function connectOrg(Request $request, TranslatorInterface $translator, $orgID, CheckinSchulkindservice $checkinSchulkindservice)
     {
         $org = $this->managerRegistry->getRepository(Organisation::class)->find($orgID);
@@ -49,9 +45,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/get/organisation/{orgID}", name="getOrganisationfromId", methods={"GET"})
-     */
+    #[Route(path: '/get/organisation/{orgID}', name: 'getOrganisationfromId', methods: ['GET'])]
     public function getORg(Request $request, TranslatorInterface $translator, $orgID, CheckinSchulkindservice $checkinSchulkindservice)
     {
         $org = $this->managerRegistry->getRepository(Organisation::class)->find($orgID);
@@ -67,9 +61,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/org_checkin/show/all", name="orgCheckin_how_all_kids", methods={"GET"})
-     */
+    #[Route(path: '/org_checkin/show/all', name: 'orgCheckin_how_all_kids', methods: ['GET'])]
     public function getallKids(Request $request, CheckinSchulkindservice $checkinSchulkindservice, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
@@ -84,9 +76,7 @@ class CheckinSchulkindbetreuungController extends AbstractController
 
     }
 
-    /**
-     * @Route("/org_checkin/show/block", name="orgCheckin_how_block_kids", methods={"GET"})
-     */
+    #[Route(path: '/org_checkin/show/block', name: 'orgCheckin_how_block_kids', methods: ['GET'])]
     public function getBlockKids(Request $request, CheckinSchulkindservice $checkinSchulkindservice, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));

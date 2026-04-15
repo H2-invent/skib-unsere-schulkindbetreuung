@@ -52,9 +52,7 @@ class EmployeeOrganisationController extends AbstractController
             'ROLE_ORG_KVJS'=>'ROLE_ORG_KVJS'
         ];
     }
-    /**
-     * @Route("/org_edit/mitarbeiter/organisation", name="city_employee_org_show")
-     */
+    #[Route(path: '/org_edit/mitarbeiter/organisation', name: 'city_employee_org_show')]
     public function employeeOrg(Request $request)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
@@ -74,9 +72,7 @@ class EmployeeOrganisationController extends AbstractController
             ]
         );
     }
-    /**
-     * @Route("/org_admin/mitarbeiter/edit", name="org_employee_edit",methods={"POST","GET"})
-     */
+    #[Route(path: '/org_admin/mitarbeiter/edit', name: 'org_employee_edit', methods: ['POST', 'GET'])]
     public function edit(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
     {
 
@@ -118,9 +114,7 @@ class EmployeeOrganisationController extends AbstractController
         );
 
     }
-    /**
-     * @Route("/org_edit/mitarbeiter/organisation/neu", name="organisation_employee_new")
-     */
+    #[Route(path: '/org_edit/mitarbeiter/organisation/neu', name: 'organisation_employee_new')]
     public function newUser(Request $request, TranslatorInterface $translator, ValidatorInterface $validator,InvitationService $invitationService)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
@@ -176,9 +170,7 @@ class EmployeeOrganisationController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/org_edit/mitarbeiter/organisation/activate", name="organisation_employee_activate")
-     */
+    #[Route(path: '/org_edit/mitarbeiter/organisation/activate', name: 'organisation_employee_activate')]
     public function activate(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
     {
        $user = $this->manager->findUserBy(array('id'=>$request->get('id')));
@@ -197,9 +189,7 @@ class EmployeeOrganisationController extends AbstractController
                     ->get('referer');
         return $this->redirect($referer);
     }
-    /**
-     * @Route("/org_edit/mitarbeiter/organisation/delete", name="organisation_employee_delete")
-     */
+    #[Route(path: '/org_edit/mitarbeiter/organisation/delete', name: 'organisation_employee_delete')]
     public function delete(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
     {
         $user = $this->manager->findUserBy(array('id'=>$request->get('id')));
@@ -214,9 +204,7 @@ class EmployeeOrganisationController extends AbstractController
             ->get('referer');
         return $this->redirect($referer);
     }
-    /**
-     * @Route("/city_edit/mitarbeiter/organisation/toggleAdmin", name="organisation_employee_setAdmin")
-     */
+    #[Route(path: '/city_edit/mitarbeiter/organisation/toggleAdmin', name: 'organisation_employee_setAdmin')]
     public function makeAdmin(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
     {
         $user = $this->manager->findUserBy(array('id'=>$request->get('id')));
@@ -238,9 +226,7 @@ class EmployeeOrganisationController extends AbstractController
             ->get('referer');
         return $this->redirect($referer);
     }
-    /**
-     * @Route("login/org_edit/userRoles", name="org_admin_mitarbeiter_roles")
-     */
+    #[Route(path: 'login/org_edit/userRoles', name: 'org_admin_mitarbeiter_roles')]
     public function userRoles(Request $request, TranslatorInterface $translator)
     {
         $user = $this->manager->findUserBy(array('id'=>$request->get('id')));

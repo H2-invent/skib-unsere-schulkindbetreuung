@@ -24,9 +24,7 @@ class NewsController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("city_news/show", name="city_admin_news_anzeige")
-     */
+    #[Route(path: 'city_news/show', name: 'city_admin_news_anzeige')]
     public function index(Request $request)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -41,9 +39,7 @@ class NewsController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("city_news/neu", name="city_admin_news_neu")
-     */
+    #[Route(path: 'city_news/neu', name: 'city_admin_news_neu')]
     public function neu(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -79,9 +75,7 @@ class NewsController extends AbstractController
 
     }
 
-    /**
-     * @Route("city_news/edit", name="city_admin_news_edit")
-     */
+    #[Route(path: 'city_news/edit', name: 'city_admin_news_edit')]
     public function edit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $activity = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
@@ -116,9 +110,7 @@ class NewsController extends AbstractController
 
     }
 
-    /**
-     * @Route("city_news/delete", name="city_admin_news_delete")
-     */
+    #[Route(path: 'city_news/delete', name: 'city_admin_news_delete')]
     public function delete(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $activity = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
@@ -133,9 +125,7 @@ class NewsController extends AbstractController
         return $this->redirectToRoute('city_admin_news_anzeige', array('id' => $activity->getStadt()->getId(), 'snack' => $text));
     }
 
-    /**
-     * @Route("city_news/deactivate", name="city_admin_news_deactivate")
-     */
+    #[Route(path: 'city_news/deactivate', name: 'city_admin_news_deactivate')]
     public function deactivateAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
@@ -151,9 +141,7 @@ class NewsController extends AbstractController
         return $this->redirectToRoute('city_admin_news_anzeige', array('id' => $news->getStadt()->getId(), 'snack' => $text));
     }
 
-    /**
-     * @Route("city_news/activate", name="city_admin_news_activate")
-     */
+    #[Route(path: 'city_news/activate', name: 'city_admin_news_activate')]
     public function activateAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
@@ -173,9 +161,7 @@ class NewsController extends AbstractController
     }
 
 
-    /**
-     * @Route("org_news/show", name="org_news_anzeige", methods={"GET"})
-     */
+    #[Route(path: 'org_news/show', name: 'org_news_anzeige', methods: ['GET'])]
     public function orgIndex(Request $request)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
@@ -193,9 +179,7 @@ class NewsController extends AbstractController
     }
 
 
-    /**
-     * @Route("org_news/neu", name="org_news_neu", methods={"GET","POST"})
-     */
+    #[Route(path: 'org_news/neu', name: 'org_news_neu', methods: ['GET', 'POST'])]
     public function orgNewsNeu(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
@@ -233,9 +217,7 @@ class NewsController extends AbstractController
     }
 
 
-    /**
-     * @Route("org_news/edit", name="org_news_edit", methods={"GET","POST"})
-     */
+    #[Route(path: 'org_news/edit', name: 'org_news_edit', methods: ['GET', 'POST'])]
     public function orgNewsEdit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $activity = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
@@ -271,9 +253,7 @@ class NewsController extends AbstractController
 
     }
 
-    /**
-     * @Route("org_news/delete", name="org_news_delete",methods={"GET","POST"})
-     */
+    #[Route(path: 'org_news/delete', name: 'org_news_delete', methods: ['GET', 'POST'])]
     public function orgNewsDelete(Request $request, TranslatorInterface $translator)
     {
         $activity = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
@@ -288,9 +268,7 @@ class NewsController extends AbstractController
         return $this->redirectToRoute('org_news_anzeige', array('id' => $activity->getOrganisation()->getId(), 'snack' => $text));
     }
 
-    /**
-     * @Route("org_news/deactivate", name="org_news_deactivate", methods={"GET","POST"})
-     */
+    #[Route(path: 'org_news/deactivate', name: 'org_news_deactivate', methods: ['GET', 'POST'])]
     public function orgNewsDeactivate(Request $request, TranslatorInterface $translator)
     {
         $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
@@ -306,9 +284,7 @@ class NewsController extends AbstractController
         return $this->redirectToRoute('org_news_anzeige', array('id' => $news->getOrganisation()->getId(), 'snack' => $text));
     }
 
-    /**
-     * @Route("org_news/activate", name="org_news_activate", methods={"GET","POST"})
-     */
+    #[Route(path: 'org_news/activate', name: 'org_news_activate', methods: ['GET', 'POST'])]
     public function orgNewsActivate(Request $request, TranslatorInterface $translator)
     {
         $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));
@@ -328,9 +304,7 @@ class NewsController extends AbstractController
         return $this->redirectToRoute('org_news_anzeige', array('id' => $news->getOrganisation()->getId(), 'snack' => $text));
     }
 
-    /**
-     * @Route("/news/city/{slug}",name="news_show_page",methods={"GET"})
-     */
+    #[Route(path: '/news/city/{slug}', name: 'news_show_page', methods: ['GET'])]
     public function newsPageAction($slug, Request $request, TranslatorInterface $translator)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
@@ -344,9 +318,7 @@ class NewsController extends AbstractController
     }
 
 
-    /**
-     * @Route("/news/city/{slug}/{id}",name="news_show_all",methods={"GET"})
-     */
+    #[Route(path: '/news/city/{slug}/{id}', name: 'news_show_all', methods: ['GET'])]
     public function showNewsAction(Request $request, TranslatorInterface $translator)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $request->get('slug')));
@@ -368,9 +340,7 @@ class NewsController extends AbstractController
     }
 
 
-    /**
-     * @Route("org_news/send", name="org_news_send", methods={"GET"})
-     */
+    #[Route(path: 'org_news/send', name: 'org_news_send', methods: ['GET'])]
     public function orgNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
         set_time_limit(600);
@@ -428,9 +398,7 @@ class NewsController extends AbstractController
     }
 
 
-    /**
-     * @Route("city_news/send", name="city_news_send", methods={"GET"})
-     */
+    #[Route(path: 'city_news/send', name: 'city_news_send', methods: ['GET'])]
     public function cityNewsSendAction(Request $request, TranslatorInterface $translator, MailerService $mailerService, ElternService $elternService)
     {
         set_time_limit(600);
@@ -490,9 +458,7 @@ class NewsController extends AbstractController
     }
 
 
-    /**
-     * @Route("/news/email_online/id",name="org_email_news_show_online",methods={"GET"})
-     */
+    #[Route(path: '/news/email_online/id', name: 'org_email_news_show_online', methods: ['GET'])]
     public function orgShowNewsAction(Request $request)
     {
         $news = $this->managerRegistry->getRepository(News::class)->find($request->get('id'));

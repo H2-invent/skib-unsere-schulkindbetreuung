@@ -12,9 +12,7 @@ use it\thecsea\osticket_php_client\OsticketPhpClientException;
 
 class SupportController extends AbstractController
 {
-    /**
-     * @Route("/login/support/new", name="support")
-     */
+    #[Route(path: '/login/support/new', name: 'support')]
     public function index(Request $request, ParameterBagInterface $parameterBag)
     {
         $arr = array(

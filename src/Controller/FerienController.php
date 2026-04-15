@@ -34,9 +34,7 @@ class FerienController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/{slug}/ferien/adresse",name="ferien_adresse",methods={"GET","POST"})
-     */
+    #[Route(path: '/{slug}/ferien/adresse', name: 'ferien_adresse', methods: ['GET', 'POST'])]
     public function adresseAction(TranslatorInterface $translator, Request $request, ValidatorInterface $validator, $slug, StamdatenFromCookie $stamdatenFromCookie)
     {
 
@@ -91,10 +89,8 @@ class FerienController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/ferien/auswahl", name="ferien_auswahl", methods={"GET"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/ferien/auswahl', name: 'ferien_auswahl', methods: ['GET'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function ferienAction(Request $request, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
         // Load all schools from the city into the controller as $schulen
@@ -125,10 +121,8 @@ class FerienController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/ferien/kind/neu",name="ferien_kind_neu",methods={"GET","POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/ferien/kind/neu', name: 'ferien_kind_neu', methods: ['GET', 'POST'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function ferienNeukindAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, StadtRepository $stadtRepository)
     {
         //Include Parents in this route
@@ -164,9 +158,7 @@ class FerienController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/ferien/kind/edit",name="ferien_workflow_kind_edit",methods={"GET","POST"})
-     */
+    #[Route(path: '/{slug}/ferien/kind/edit', name: 'ferien_workflow_kind_edit', methods: ['GET', 'POST'])]
     public function kindEditAction($slug, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie, TranslatorInterface $translator)
     {
         //Include Parents in this route
@@ -202,9 +194,7 @@ class FerienController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/ferien/kind/delete",name="ferien_workflow_kind_delete",methods={"DELETE"})
-     */
+    #[Route(path: '/{slug}/ferien/kind/delete', name: 'ferien_workflow_kind_delete', methods: ['DELETE'])]
     public function deleteAction($slug, Request $request, ValidatorInterface $validator, StamdatenFromCookie $stamdatenFromCookie)
     {
         //Include Parents in this route
@@ -221,10 +211,8 @@ class FerienController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/ferien/programm",name="ferien_kind_programm",methods={"GET","POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/ferien/programm', name: 'ferien_kind_programm', methods: ['GET', 'POST'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function programAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
 
@@ -256,10 +244,8 @@ class FerienController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/ferien/programm/toggle",name="ferien_kinder_block_toggle",methods={"PATCH"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/ferien/programm/toggle', name: 'ferien_kinder_block_toggle', methods: ['PATCH'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function ferienblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, ToogleKindFerienblock $toogleKindFerienblock, StamdatenFromCookie $stamdatenFromCookie)
     {
 
@@ -276,10 +262,8 @@ class FerienController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/ferien/zusammenfassung",name="ferien_zusammenfassung",methods={"Get","POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
+    #[Route(path: '/{slug}/ferien/zusammenfassung', name: 'ferien_zusammenfassung', methods: ['Get', 'POST'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function zusammenfassungAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
         try {
@@ -300,9 +284,7 @@ class FerienController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{slug}/ferien/abschluss",name="ferien_abschluss",methods={"Get","POST"})
-     */
+    #[Route(path: '/{slug}/ferien/abschluss', name: 'ferien_abschluss', methods: ['Get', 'POST'])]
     public function abschlussAction(TranslatorInterface $translator, FerienAbschluss $ferienAbschluss, $slug, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
         //Include Parents in this route

@@ -16,9 +16,7 @@ class LandingController extends AbstractController
     public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
-    /**
-     * @Route("/", name="welcome_landing")
-     */
+    #[Route(path: '/', name: 'welcome_landing')]
     public function welcomeAction(TranslatorInterface $translator, Request $request)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->findBy(array('deleted' => false, 'active' => true));
@@ -30,10 +28,8 @@ class LandingController extends AbstractController
         return $this->render('landing/landing.html.twig', array('content' => $contentAll, 'contentSelect' => $content, 'metaDescription' => $metaDescription, 'title' => $title, 'stadt' => $stadt));
     }
 
-    /**
-     * @Route("/feature/{content}", name="welcome_landing_slug" )
-     * @ParamConverter("content", options={"mapping"={"content"="slug"}})
-     */
+    #[Route(path: '/feature/{content}', name: 'welcome_landing_slug')]
+    #[ParamConverter('content', options: ['mapping' => ['content' => 'slug']])]
     public function welcomeFeatureAction(Content $content, TranslatorInterface $translator, Request $request)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->findBy(array('deleted' => false, 'active' => true));

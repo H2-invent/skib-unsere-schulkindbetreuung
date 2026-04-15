@@ -16,9 +16,7 @@ class ChangeEmailController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/org_child/email_change", name="org_child_email_change")
-     */
+    #[Route(path: '/org_child/email_change', name: 'org_child_email_change')]
     public function index(TranslatorInterface $translator, Request $request, ChildEmailChangeService $childChangeEmailService)
     {
         $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
