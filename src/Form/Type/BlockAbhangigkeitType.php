@@ -29,18 +29,14 @@ class BlockAbhangigkeitType extends AbstractType
         $builder
             ->add('vorganger', EntityType::class, [
                 'class' => Zeitblock::class,
-                'choice_label' => function (Zeitblock $zeitblock) {
-                    return $zeitblock->getVon()->format('H:i') . '-' . $zeitblock->getBis()->format('H:i');
-                },
+                'choice_label' => fn(Zeitblock $zeitblock) => $zeitblock->getVon()->format('H:i') . '-' . $zeitblock->getBis()->format('H:i'),
                 'placeholder' => 'Ganztag oder Halbtag muss gewählt sein',
                 'label' => 'Muss auch gewählt sein (strg halten für Mehrfachauswahl)',
                 'translation_domain' => 'form',
                 'multiple' => true,
                 'expanded' => false,
                 'choices' => $options['blocks'],
-                'group_by' => function (Zeitblock $zeitblock, $key, $value) {
-                    return $zeitblock->getWochentagString();
-                },
+                'group_by' => fn(Zeitblock $zeitblock, $key, $value) => $zeitblock->getWochentagString(),
                 'property_path' => $vorgangerProperty,
             ])
         ;

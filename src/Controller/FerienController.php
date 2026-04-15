@@ -4,31 +4,19 @@ namespace App\Controller;
 
 use App\Entity\Ferienblock;
 use App\Entity\Kind;
-use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
-use App\Entity\Payment;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Entity\Tags;
 use App\Form\Type\ElternFerien;
 use App\Form\Type\FerienKind;
-use App\Form\Type\LoerrachEltern;
-use App\Form\Type\LoerrachKind;
-use App\Form\Type\PaymentType;
 use App\Repository\StadtRepository;
-use App\Service\CheckoutPaymentService;
 use App\Service\FerienAbschluss;
 use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindFerienblock;
 use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +25,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Braintree\Gateway;
 
 class FerienController extends AbstractController
 {
@@ -168,7 +155,7 @@ class FerienController extends AbstractController
                     $text = $translator->trans('Erfolgreich gespeichert');
                     return new JsonResponse(array('error' => 0, 'snack' => $text, 'next' => $this->generateUrl('ferien_kind_programm', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()))));
                 }
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
                 return new JsonResponse(array('error' => 1, 'snack' => $text));
             }
@@ -206,7 +193,7 @@ class FerienController extends AbstractController
                     $text = $translator->trans('Erfolgreich gespeichert');
                     return new JsonResponse(array('error' => 0, 'snack' => $text));
                 }
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
                 return new JsonResponse(array('error' => 1, 'snack' => $text));
             }
@@ -245,7 +232,7 @@ class FerienController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE);
         }
-        $param = json_decode($request->get('param'));
+        $param = json_decode((string) $request->get('param'));
 
         $startDate = null;
         $endDate = null;
@@ -254,7 +241,7 @@ class FerienController extends AbstractController
         if($param){
             $startDate = isset($param->start)?new \DateTime($param->start):null;
             $endDate = isset($param->end)?new \DateTime( $param->end):null;
-            $onlyEmptyCourse = isset($param->freeSpace)?$param->freeSpace:null;
+            $onlyEmptyCourse = $param->freeSpace ?? null;
             foreach ($param->tag as $data){
                 $tag[] = $this->managerRegistry->getRepository(Tags::class)->find($data);
             }
@@ -305,7 +292,7 @@ class FerienController extends AbstractController
             }
             $kind = $adresse->getKinds();
 
-        } catch (\Exception $e) {
+        } catch (\Exception) {
 
         }
 
@@ -331,7 +318,7 @@ class FerienController extends AbstractController
             return $this->redirectToRoute('ferien_auswahl', array('slug' => $stadt->getSlug(), 'snack' => $translator->trans('Das Ferienprogramm %kursname% ist bereits ausgebucht oder Sie haben zu viele Kinder angemeldet', array('%kursname%' => $check->translate()->getTitel()))));
 
         };
-        $res = $ferienAbschluss->startAbschluss($adresse, $stadt, $request->getClientIps() === true);
+        $res = $ferienAbschluss->startAbschluss($adresse, $stadt);
 
         if ($res === true) {
             $result = $this->render('ferien/abschluss.html.twig', array('stadt' => $stadt));

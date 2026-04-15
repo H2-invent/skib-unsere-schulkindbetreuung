@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Kind;
 use App\Entity\Zeitblock;
 use App\Repository\ActiveRepository;
@@ -19,7 +20,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/org_accept/download', name: 'download_angemeldete')]
 class DownloadAngemeldeteKinderController extends AbstractController

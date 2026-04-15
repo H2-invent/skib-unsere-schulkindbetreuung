@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\RechnungRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\RechnungRepository::class)]
+#[ORM\Entity(repositoryClass: RechnungRepository::class)]
 class Rechnung
 {
     #[ORM\Id]
@@ -23,21 +24,21 @@ class Rechnung
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, inversedBy: 'rechnungen')]
+    #[ORM\ManyToMany(targetEntity: Zeitblock::class, inversedBy: 'rechnungen')]
     private $zeitblocks;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stammdaten::class, inversedBy: 'rechnungs')]
+    #[ORM\ManyToOne(targetEntity: Stammdaten::class, inversedBy: 'rechnungs')]
     private $stammdaten;
 
     #[ORM\JoinColumn(nullable: true)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Sepa::class, inversedBy: 'rechnungen', cascade: ['persist'])]
+    #[ORM\ManyToOne(targetEntity: Sepa::class, inversedBy: 'rechnungen', cascade: ['persist'])]
     private $sepa;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $rechnungsnummer;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Kind::class, inversedBy: 'rechnungen')]
+    #[ORM\ManyToMany(targetEntity: Kind::class, inversedBy: 'rechnungen')]
     private $kinder;
 
     #[ORM\Column(type: 'datetime')]

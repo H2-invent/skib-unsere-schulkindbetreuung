@@ -6,7 +6,6 @@ use App\Entity\Kind;
 use App\Entity\Zeitblock;
 use App\Repository\KindRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 

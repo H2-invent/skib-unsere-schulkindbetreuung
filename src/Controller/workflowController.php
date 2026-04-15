@@ -67,7 +67,7 @@ class workflowController extends AbstractController
         }
         $news = $this->managerRegistry->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true), array('date' => 'DESC'));
         $text = $stadt->translate()->getInfoText();
-        $array = explode('. ', $text);
+        $array = explode('. ', (string) $text);
         $metaDescription = $this->buildMeta($array);
         return $this->render('workflow/start.html.twig', array('metaDescription' => $metaDescription, 'title' => $title, 'schule' => $schule, 'news' => $news, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'schuljahr' => $schuljahr, 'activeSchuljahr' => $schuljahre));
     }
@@ -109,7 +109,7 @@ class workflowController extends AbstractController
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('stadt'));
 
         $res = $confirmEmailService->confirm($stammdaten, $stadt, $request->get('redirect'), $request);
-        $url = parse_url($request->get('redirect'))['host'];
+        $url = parse_url((string) $request->get('redirect'))['host'];
         if ($res === null) {
             if ($url == $request->getHost()) {
                 return new RedirectResponse($request->get('redirect'));
@@ -241,7 +241,7 @@ class workflowController extends AbstractController
             } else {
                 break;
             }
-            $count += strlen($data);
+            $count += strlen((string) $data);
         }
 
         return $res;

@@ -28,7 +28,7 @@ class SEPASimpleService
             if ($myPmtInf->FDatum == $aDatum && $myPmtInf->FCtgyPurp == $aCtgyPurp && $myPmtInf->FSeqTp == $aSeqTp)
                 return $myPmtInf;
         }
-        $myPmtInf = new \App\Service\SEPAService($aCtgyPurp, $aDatum, $aSeqTp);
+        $myPmtInf = new SEPAService($aCtgyPurp, $aDatum, $aSeqTp);
         $this->FPmtInf[] = $myPmtInf;
         return $myPmtInf;
     }

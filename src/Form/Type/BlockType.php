@@ -18,7 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -26,11 +25,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BlockType extends AbstractType
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -98,18 +94,14 @@ class BlockType extends AbstractType
 
         $form->add('vorganger', EntityType::class, [
             'class' => Zeitblock::class,
-            'choice_label' => function (Zeitblock $zeitblock) {
-                return $zeitblock->getVon()->format('H:i') . '-' . $zeitblock->getBis()->format('H:i');
-            },
+            'choice_label' => fn(Zeitblock $zeitblock) => $zeitblock->getVon()->format('H:i') . '-' . $zeitblock->getBis()->format('H:i'),
             'placeholder' => 'Ganztag oder Halbtag muss gewählt sein',
             'label' => 'Muss auch gewählt sein (strg halten für Mehrfachauswahl)',
             'translation_domain' => 'form',
             'multiple' => true,
             'expanded' => false,
             'choices' => $vorganger,
-            'group_by' => function (Zeitblock $zeitblock, $key, $value) {
-                return $zeitblock->getWochentagString();
-            },
+            'group_by' => fn(Zeitblock $zeitblock, $key, $value) => $zeitblock->getWochentagString(),
         ]);
 
 

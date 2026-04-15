@@ -23,9 +23,7 @@ class KvjsType extends AbstractType
             ->add('schuljahr', EntityType::class, [
                 'class' => Active::class,
                 'choices' => $schuljahre,
-                'choice_label' => function (Active $schuljahr) {
-                    return sprintf('%s/%s', $schuljahr->getVon()->format('Y'), $schuljahr->getBis()->format('Y'));
-                },
+                'choice_label' => fn(Active $schuljahr) => sprintf('%s/%s', $schuljahr->getVon()->format('Y'), $schuljahr->getBis()->format('Y')),
                 'label' => 'Schuljahr',
                 'placeholder' => 'Bitte wählen',
                 'required' => true,

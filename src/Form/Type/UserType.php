@@ -8,21 +8,14 @@
 namespace App\Form\Type;
 
 use App\Entity\Schule;
-use App\Entity\Stadt;
 use App\Entity\User;
-use App\Entity\Zeitblock;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichFileType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class UserType extends AbstractType
 {
@@ -32,9 +25,7 @@ class UserType extends AbstractType
             ->add('email', EmailType::class,array('label'=>'Email','required'=>true,'translation_domain' => 'form'))
             ->add('schulen', EntityType::class, [
                 'class' => Schule::class,
-                'choice_label' => function (Schule $schule) {
-                    return $schule->getName();
-                },
+                'choice_label' => fn(Schule $schule) => $schule->getName(),
                 'label' => 'Zugeordnete Schulen ',
                 'translation_domain' => 'form',
                 'multiple' => true,

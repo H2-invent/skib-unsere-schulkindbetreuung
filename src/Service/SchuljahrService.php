@@ -3,14 +3,10 @@
 namespace App\Service;
 
 use App\Entity\Active;
-use App\Entity\Organisation;
 use App\Entity\Stadt;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 class SchuljahrService
@@ -18,16 +14,8 @@ class SchuljahrService
 
     public const SESSION_KEY_SCHULJAHR = 'schuljahr_to_add';
 
-    private $em;
-    private $user;
-
-    public function __construct(Security $security, EntityManagerInterface $entityManager, private RequestStack $requestStack)
+    public function __construct(private Security $user, private EntityManagerInterface $em, private RequestStack $requestStack)
     {
-
-
-        $this->em = $entityManager;
-
-        $this->user = $security;
     }
 
     public function getSchuljahr(Stadt $stadt): ?Active

@@ -7,10 +7,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserManager implements UserManagerInterface
 {
-    private $em;
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $entityManager;
     }
 
     public function createUser()

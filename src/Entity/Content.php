@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\ContentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable as Translatable;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
-#[ORM\Entity(repositoryClass: \App\Repository\ContentRepository::class)]
+#[ORM\Entity(repositoryClass: ContentRepository::class)]
 class Content implements TranslatableInterface
 {
     use TranslatableTrait;

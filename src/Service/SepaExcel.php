@@ -17,13 +17,11 @@ class SepaExcel
 {
     private $spreadsheet;
     private $writer;
-    private $translator;
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private TranslatorInterface $translator)
     {
         $this->spreadsheet = new Spreadsheet();
         $this->writer = new Xlsx($this->spreadsheet);
-        $this->translator = $translator;
     }
 
     public function generateExcel(Sepa $sepa)

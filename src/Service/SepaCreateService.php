@@ -12,7 +12,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
-use function Doctrine\ORM\QueryBuilder;
 
 
 // <- Add this
@@ -21,36 +20,8 @@ class SepaCreateService
 {
 
 
-    private $em;
-    private $translator;
-    private $sepaSimpleService;
-    private $printRechnungService;
-    private $mailerService;
-    private $environment;
-    private FilesystemOperator $internFileSystem;
-    private BerechnungsService $berechnungsService;
-    private ElternService $elternService;
-
-    public function __construct(FilesystemOperator     $internFileSystem,
-                                Environment            $environment,
-                                TranslatorInterface    $translator,
-                                EntityManagerInterface $entityManager,
-                                SEPASimpleService      $sepaSimpleService,
-                                PrintRechnungService   $printRechnungService,
-                                MailerService          $mailerService,
-                                BerechnungsService     $berechnungsService,
-                                ElternService          $elternService)
+    public function __construct(private FilesystemOperator     $internFileSystem, private Environment            $environment, private TranslatorInterface    $translator, private EntityManagerInterface $em, private SEPASimpleService      $sepaSimpleService, private PrintRechnungService   $printRechnungService, private MailerService          $mailerService, private BerechnungsService     $berechnungsService, private ElternService          $elternService)
     {
-        $this->em = $entityManager;
-        $this->translator = $translator;
-        $this->sepaSimpleService = $sepaSimpleService;
-        $this->printRechnungService = $printRechnungService;
-        $this->mailerService = $mailerService;
-        $this->environment = $environment;
-        $this->internFileSystem = $internFileSystem;
-        $this->berechnungsService = $berechnungsService;
-        $this->elternService = $elternService;
-
     }
 
     /**
@@ -112,7 +83,7 @@ class SepaCreateService
 
         $stammdatenRes = array();
         foreach ($stamdaten as $data) {
-            $stammdatenTmp = isset($stammdatenRes[$data->getTracing()]) ? $stammdatenRes[$data->getTracing()] : null;
+            $stammdatenTmp = $stammdatenRes[$data->getTracing()] ?? null;
             if (!$stammdatenTmp) {
                 $stammdatenRes[$data->getTracing()] = $data;
             }
@@ -261,7 +232,7 @@ class SepaCreateService
                 $this->sendRechnung($data);
             }
             return true;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return false;
         }
 

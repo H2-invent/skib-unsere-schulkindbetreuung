@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\PaymentBraintreeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\PaymentBraintreeRepository::class)]
+#[ORM\Entity(repositoryClass: PaymentBraintreeRepository::class)]
 class PaymentBraintree
 {
     #[ORM\Id]
@@ -24,7 +25,7 @@ class PaymentBraintree
     #[ORM\Column(type: 'text')]
     private $ipAdresse;
 
-    #[ORM\OneToOne(targetEntity: \App\Entity\Payment::class, mappedBy: 'braintree', cascade: ['persist'])]
+    #[ORM\OneToOne(targetEntity: Payment::class, mappedBy: 'braintree', cascade: ['persist'])]
     private $payment;
 
     #[ORM\Column(type: 'json', nullable: true)]

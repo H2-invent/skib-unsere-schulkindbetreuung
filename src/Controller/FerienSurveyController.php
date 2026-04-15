@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Ferienblock;
 use App\Entity\Organisation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class FerienSurveyController extends AbstractController
 {
 
-    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
     /**
@@ -47,7 +48,7 @@ class FerienSurveyController extends AbstractController
             $em->persist($ferienblock);
             $em->flush();
             return new JsonResponse(array('error'=>false,'text'=>$translator->trans('Erfolgreich gespeichert')));
-        }catch (\Exception $e){
+        }catch (\Exception){
             return new JsonResponse(array('error'=>true,'text'=>$translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
         }
 

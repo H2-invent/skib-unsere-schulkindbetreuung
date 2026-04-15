@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Organisation;
-use App\Entity\Stammdaten;
-use App\Form\Type\OrganisationType;
 use App\Form\Type\PaymentArtType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentArtController extends AbstractController
 {
-    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
     /**

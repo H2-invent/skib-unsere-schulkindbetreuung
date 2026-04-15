@@ -19,16 +19,12 @@ use Twig\Environment;
 class PrintFerienNameTagService
 {
 
-    private $templating;
     protected $parameterBag;
-    private $pdf;
 
-    public function __construct(TCPDFController $tcpdf, Environment $templating,ParameterBagInterface $parameterBag)
+    public function __construct(private TCPDFController $pdf, private Environment $templating,ParameterBagInterface $parameterBag)
     {
 
-        $this->templating = $templating;
         $this->parameterBag = $parameterBag;
-        $this->pdf = $tcpdf;
     }
 
 

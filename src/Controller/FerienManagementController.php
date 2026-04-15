@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\PaymentSepa;
 use App\Entity\Ferienblock;
 use App\Entity\Kind;
 use App\Entity\KindFerienblock;
@@ -23,11 +25,10 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function Doctrine\ORM\QueryBuilder;
 
 class FerienManagementController extends AbstractController
 {
-    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
 
@@ -440,7 +441,7 @@ class FerienManagementController extends AbstractController
 
         // Dateiname: ohne Sonderzeichen
         $kursName = $kurs->getTranslations()->get('de')->getTitel();
-        $kursName = preg_replace('/[^A-Za-z0-9_-]/', '_', $kursName);
+        $kursName = preg_replace('/[^A-Za-z0-9_-]/', '_', (string) $kursName);
 
         $filename = sprintf('SEPA_%s_%s.csv', $kursName, date('Y-m-d'));
 
@@ -478,10 +479,10 @@ class FerienManagementController extends AbstractController
 
 
             foreach ($eltern as $pid => $data) {
-                /** @var \App\Entity\Stammdaten $p */
+                /** @var Stammdaten $p */
                 $p = $data['eltern'];
                 $buchungen = $data['buchungen'];
-                /** @var \App\Entity\PaymentSepa $payment */
+                /** @var PaymentSepa $payment */
                 $payment = $data['payment']??null;
                 // Summe bilden
                 $sum = 0.0;

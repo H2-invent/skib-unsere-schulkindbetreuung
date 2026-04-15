@@ -19,14 +19,8 @@ class MailerService
 {
 
 
-    private $parameter;
-    private $mailer;
-
-    public function __construct(ParameterBagInterface $parameterBag, MailerInterface $mailer, private LoggerInterface $logger)
+    public function __construct(private ParameterBagInterface $parameter, private MailerInterface $mailer, private LoggerInterface $logger)
     {
-        $this->mailer = $mailer;
-        $this->parameter = $parameterBag;
-
     }
 
     public function sendEmail($sender, $from, $to, $betreff, $content, $replyTo, $attachment = array())

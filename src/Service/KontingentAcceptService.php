@@ -9,17 +9,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class KontingentAcceptService
 {
-    private EntityManagerInterface $em;
-    private AnmeldeEmailService $anmeldeEmailService;
-    private TranslatorInterface $translator;
-    private ElternService $elternService;
-
-    public function __construct(EntityManagerInterface $entityManager, AnmeldeEmailService $anmeldeEmailService, TranslatorInterface $translator, ElternService $elternService)
+    public function __construct(private EntityManagerInterface $em, private AnmeldeEmailService $anmeldeEmailService, private TranslatorInterface $translator, private ElternService $elternService)
     {
-        $this->em = $entityManager;
-        $this->anmeldeEmailService = $anmeldeEmailService;
-        $this->translator = $translator;
-        $this->elternService = $elternService;
     }
 
     public function acceptKind(Zeitblock $zeitblock, Kind $kind, $silent = false)
@@ -61,7 +52,7 @@ class KontingentAcceptService
 
             try {
                 $this->acceptKind($zeitblock, $data);
-            } catch (\Exception $exception) {
+            } catch (\Exception) {
 
             }
 

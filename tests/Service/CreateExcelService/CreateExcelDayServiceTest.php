@@ -4,7 +4,6 @@ namespace App\Tests\Service\CreateExcelService;
 
 use App\Entity\Kind;
 use App\Entity\Zeitblock;
-use App\Helper\ChildDateExcel;
 use App\Service\ExcelExport\CreateExcelDayService;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

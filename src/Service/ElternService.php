@@ -8,11 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ElternService
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $entityManager;
     }
 
     public function getLatestElternFromChild(Kind $kind): Stammdaten
@@ -24,7 +21,7 @@ class ElternService
         }
     }
 
-    public function getElternForSpecificTimeAndKind(Kind $kind, \DateTime $dateTime = null, $demo = false)
+    public function getElternForSpecificTimeAndKind(Kind $kind, ?\DateTime $dateTime = null, $demo = false)
     {
         if (!$dateTime){
             $dateTime = new \DateTime();
@@ -36,7 +33,7 @@ class ElternService
         return $parent;
     }
 
-    public function getElternForSpecificTimeAndStammdaten(Stammdaten $stammdaten, \DateTime $dateTime = null)
+    public function getElternForSpecificTimeAndStammdaten(Stammdaten $stammdaten, ?\DateTime $dateTime = null)
     {
         $parent = $this->em->getRepository(Stammdaten::class)->findStammdatenFromStammdatenByDate($stammdaten,$dateTime);
         return $parent;

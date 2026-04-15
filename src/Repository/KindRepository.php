@@ -187,9 +187,7 @@ class KindRepository extends ServiceEntityRepository
             ->getQuery()
             ->getScalarResult();
 
-        $tracings = array_values(array_filter(array_map(static function (array $row) {
-            return $row['tracing'] ?? null;
-        }, $tracingRows)));
+        $tracings = array_values(array_filter(array_map(static fn(array $row) => $row['tracing'] ?? null, $tracingRows)));
 
         if (count($tracings) === 0) {
             return [];

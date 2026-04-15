@@ -7,12 +7,10 @@ use App\Service\ChildSearchService;
 use App\Service\CopyChildToNewSchuljahr;
 use App\Service\ElternService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -21,10 +19,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ResendConfirmationCommand extends Command
 {
     protected static $defaultName = 'app:resend:confirmation';
-    private $em;
-    private $childSearchService;
-    private $elternService;
-    private $copyChildService;
 
     protected function configure(): void
     {
@@ -34,13 +28,9 @@ class ResendConfirmationCommand extends Command
             ->addArgument('text', InputArgument::REQUIRED, 'Text welcher oben in der E-Mail angezeigt wird');
     }
 
-    public function __construct(CopyChildToNewSchuljahr $copyChildService, ChildSearchService $childSearchService, ElternService $elternService, EntityManagerInterface $entityManager, string $name = null)
+    public function __construct(private CopyChildToNewSchuljahr $copyChildService, private ChildSearchService $childSearchService, private ElternService $elternService, private EntityManagerInterface $em, ?string $name = null)
     {
         parent::__construct($name);
-        $this->em = $entityManager;
-        $this->childSearchService = $childSearchService;
-        $this->elternService = $elternService;
-        $this->copyChildService = $copyChildService;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

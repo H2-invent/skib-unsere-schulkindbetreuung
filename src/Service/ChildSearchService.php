@@ -3,16 +3,13 @@
 namespace App\Service;
 
 use App\Entity\Active;
-use App\Entity\Anwesenheit;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\User;
-use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function Doctrine\ORM\QueryBuilder;
 
 
 // <- Add this
@@ -21,19 +18,14 @@ class ChildSearchService
 {
 
 
-    private $em;
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager)
+    public function __construct(private TranslatorInterface $translator, private EntityManagerInterface $em)
     {
-        $this->em = $entityManager;
-        $this->translator = $translator;
     }
 
     /**
      * @return Kind[]
      */
-    public function searchChild($parameters, ?Organisation $organisation, $isApp, ?User $user, ?\DateTime $dateFrom = null, ?\DateTime $dateTo = null, Stadt $stadt = null)
+    public function searchChild($parameters, ?Organisation $organisation, $isApp, ?User $user, ?\DateTime $dateFrom = null, ?\DateTime $dateTo = null, ?Stadt $stadt = null)
     {
         if (!$dateFrom) {
             $dateFrom = new \DateTime();

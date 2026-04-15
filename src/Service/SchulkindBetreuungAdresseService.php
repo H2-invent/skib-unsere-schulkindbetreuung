@@ -17,12 +17,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class SchulkindBetreuungAdresseService
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
-
     }
 
     public function setAdress(Stammdaten $addresse, bool $hasRole, $ipAdress)
@@ -31,7 +27,7 @@ class SchulkindBetreuungAdresseService
         if ($hasRole) {
             $addresse->setEmailConfirmed(true);
             $addresse->setConfirmEmailSend(true);
-            $addresse->setConfirmationCode(str_shuffle(MD5(microtime())), 0, 6);
+            $addresse->setConfirmationCode(str_shuffle(MD5(microtime())));
             $addresse->setIpAdresse($ipAdress);
             $addresse->setConfirmDate(new \DateTime());
         }

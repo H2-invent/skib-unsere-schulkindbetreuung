@@ -12,7 +12,6 @@ namespace App\Form\Type;
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use App\Entity\File;
 use App\Entity\Stadt;
-use App\Repository\FileRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

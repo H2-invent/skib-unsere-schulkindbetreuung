@@ -7,8 +7,6 @@ use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use App\Repository\KindRepository;
 use App\Service\ChildInBlockService;
-use App\Service\WidgetService;
-use App\Twig\Eltern;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

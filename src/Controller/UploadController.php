@@ -2,32 +2,24 @@
 
 namespace App\Controller;
 
+use App\Entity\File;
 use App\Entity\Geschwister;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Repository\StammdatenRepository;
 use App\Service\UploadService;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use League\Flysystem\FilesystemOperator;
-use PHPUnit\Util\Json;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\ConstraintViolation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class UploadController extends AbstractController
 {
@@ -76,7 +68,7 @@ class UploadController extends AbstractController
      * @Route("/download/{fileName}", name="login_download_file", methods={"GET"})
      * @ParamConverter("file", options={"mapping": {"fileName": "fileName"}})
      */
-    public function downloadArticleReference(\App\Entity\File $file, FilesystemOperator $internFileSystem)
+    public function downloadArticleReference(File $file, FilesystemOperator $internFileSystem)
     {
         if (!$file) {
             throw new NotFoundHttpException("File not found");
@@ -87,7 +79,7 @@ class UploadController extends AbstractController
         $response->headers->set('Content-Type', $file->getType());
         $disposition = HeaderUtils::makeDisposition(
             HeaderUtils::DISPOSITION_ATTACHMENT,
-            preg_replace('/[\x00-\x2D\x2F\x3A-\x40\x5B-\x60\x7B-\xFF]/', '', $file->getOriginalName())
+            preg_replace('/[\x00-\x2D\x2F\x3A-\x40\x5B-\x60\x7B-\xFF]/', '', (string) $file->getOriginalName())
         );
         $response->headers->set('Content-Disposition', $disposition);
         return $response;
@@ -97,7 +89,7 @@ class UploadController extends AbstractController
      * @Route("/removeFile/{fileName}", name="login_remove_file", methods={"GET"})
      * @ParamConverter("file", options={"mapping": {"fileName": "fileName"}})
      */
-    public function removeFile(\App\Entity\File $file, FilesystemOperator $internFileSystem, Request $request)
+    public function removeFile(File $file, FilesystemOperator $internFileSystem, Request $request)
     {
 
         $internFileSystem->delete($file->getFileName());

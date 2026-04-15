@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Repository\SepaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-#[ORM\Entity(repositoryClass: \App\Repository\SepaRepository::class)]
+#[ORM\Entity(repositoryClass: SepaRepository::class)]
 class Sepa
 {
     #[ORM\Id]
@@ -29,7 +30,7 @@ class Sepa
     private $sepaXML;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'sepas')]
+    #[ORM\ManyToOne(targetEntity: Organisation::class, inversedBy: 'sepas')]
     private $organisation;
 
     #[ORM\Column(type: 'datetime')]
@@ -42,7 +43,7 @@ class Sepa
     #[ORM\Column(type: 'blob')]
     private $pdf;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Rechnung::class, mappedBy: 'sepa', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: Rechnung::class, mappedBy: 'sepa', cascade: ['persist'])]
     private $rechnungen;
 
     #[ORM\Column(type: 'datetime')]

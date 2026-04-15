@@ -9,8 +9,6 @@ use App\Entity\Stammdaten;
 use App\Entity\User;
 use App\Form\Type\ChildChangeEmailType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -19,18 +17,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChildEmailChangeService
 {
-    private $em;
-    private $translator;
-    private $email;
-    private $form;
-    private ElternService $elternService;
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager, AnmeldeEmailService $anmeldeEmailService, FormFactoryInterface $formBuilder, ElternService $elternService)
+    public function __construct(private TranslatorInterface $translator, private EntityManagerInterface $em, private AnmeldeEmailService $email, private FormFactoryInterface $form, private ElternService $elternService)
     {
-        $this->em = $entityManager;
-        $this->translator = $translator;
-        $this->email = $anmeldeEmailService;
-        $this->form = $formBuilder;
-        $this->elternService = $elternService;
     }
 
     public function form(Kind $kind)

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\StadtRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -17,7 +18,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @Vich\Uploadable
  */
-#[ORM\Entity(repositoryClass: \App\Repository\StadtRepository::class)]
+#[ORM\Entity(repositoryClass: StadtRepository::class)]
 class Stadt implements TranslatableInterface
 {
     use TranslatableTrait;
@@ -41,13 +42,13 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'text')]
     private $Name;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Anmeldefristen::class, mappedBy: 'stadt')]
+    #[ORM\OneToMany(targetEntity: Anmeldefristen::class, mappedBy: 'stadt')]
     private $anmeldefristens;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Organisation::class, mappedBy: 'stadt')]
+    #[ORM\OneToMany(targetEntity: Organisation::class, mappedBy: 'stadt')]
     private $organisations;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Schule::class, mappedBy: 'stadt')]
+    #[ORM\OneToMany(targetEntity: Schule::class, mappedBy: 'stadt')]
     private $schules;
 
     #[Groups(['assign_formula_sample'])]
@@ -137,7 +138,7 @@ class Stadt implements TranslatableInterface
     private $akzentfarbeFehler;
 
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Active::class, mappedBy: 'stadt')]
+    #[ORM\OneToMany(targetEntity: Active::class, mappedBy: 'stadt')]
     private $actives;
 
     #[Groups(['assign_formula_sample'])]
@@ -151,7 +152,7 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $stadtHomepage;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\News::class, mappedBy: 'stadt')]
+    #[ORM\OneToMany(targetEntity: News::class, mappedBy: 'stadt')]
     private $news;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -180,7 +181,7 @@ class Stadt implements TranslatableInterface
     private $schulkindBetreung;
 
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Ferienblock::class, mappedBy: 'stadt')]
+    #[ORM\OneToMany(targetEntity: Ferienblock::class, mappedBy: 'stadt')]
     private $ferienblocks;
 
     #[Groups(['assign_formula_sample'])]
@@ -502,7 +503,7 @@ class Stadt implements TranslatableInterface
         return $this;
     }
 
-    public function setImageFile(File $image = null)
+    public function setImageFile(?File $image = null)
     {
         $this->imageFile = $image;
 
@@ -530,7 +531,7 @@ class Stadt implements TranslatableInterface
         return $this->image;
     }
 
-    public function setLogoStadtFile(File $logoStadtFile = null)
+    public function setLogoStadtFile(?File $logoStadtFile = null)
     {
         $this->logoStadtFile = $logoStadtFile;
 

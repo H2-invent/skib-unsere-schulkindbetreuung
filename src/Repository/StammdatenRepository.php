@@ -132,7 +132,7 @@ class StammdatenRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findStammdatenFromStammdatenByDate(Stammdaten $stammdaten, \DateTime $dateTime = null): ?Stammdaten
+    public function findStammdatenFromStammdatenByDate(Stammdaten $stammdaten, ?\DateTime $dateTime = null): ?Stammdaten
     {
 
         if (!$dateTime) {

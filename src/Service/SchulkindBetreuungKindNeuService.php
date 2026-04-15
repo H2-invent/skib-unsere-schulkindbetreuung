@@ -25,20 +25,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SchulkindBetreuungKindNeuService
 {
-    private $em;
-    private $translator;
-    private $validator;
-    private $generator;
-    private $error;
-    private SchuljahrService  $schuljahrService;
-    public function __construct(ErrorService $errorService, EntityManagerInterface $em, TranslatorInterface $translator, ValidatorInterface $validator,UrlGeneratorInterface $urlGenerator, SchuljahrService  $schuljahrService)
+    public function __construct(private ErrorService $error, private EntityManagerInterface $em, private TranslatorInterface $translator, private ValidatorInterface $validator, private UrlGeneratorInterface $generator, private SchuljahrService  $schuljahrService)
     {
-        $this->em = $em;
-        $this->translator = $translator;
-        $this->validator = $validator;
-        $this->generator = $urlGenerator;
-        $this->error = $errorService;
-        $this->schuljahrService  = $schuljahrService;
     }
     public function prepareKind(Kind $kind, Schule $schule, Stammdaten $eltern, Active $schuljahr){
         $kind->setEltern($eltern);

@@ -21,13 +21,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmployeeOrganisationController extends AbstractController
 {
-    private $manager;
     private $availRole;
-    private LoggerInterface $logger;
-    public function __construct(UserManagerInterface $manager, LoggerInterface $logger, private ManagerRegistry $managerRegistry)
+    public function __construct(private UserManagerInterface $manager, private LoggerInterface $logger, private ManagerRegistry $managerRegistry)
     {
-        $this->logger = $logger;
-        $this->manager = $manager;
         $this->availRole = [
             'ROLE_ORG_REPORT' => 'ROLE_ORG_REPORT',
             'ROLE_ORG_CHILD_CHANGE' => 'ROLE_ORG_CHILD_CHANGE',

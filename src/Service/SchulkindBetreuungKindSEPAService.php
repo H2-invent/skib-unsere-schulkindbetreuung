@@ -13,16 +13,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class SchulkindBetreuungKindSEPAService
 {
-    private $em;
-
-
-
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
-
-
     }
 
     public function findOrg(Stammdaten $adresse)

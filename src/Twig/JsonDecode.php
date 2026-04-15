@@ -5,7 +5,6 @@ namespace App\Twig;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use function GuzzleHttp\Psr7\str;
 
 class JsonDecode extends AbstractExtension
 {
@@ -18,13 +17,13 @@ class JsonDecode extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('json_decode', [$this, 'json_decode']),
+            new TwigFilter('json_decode', $this->json_decode(...)),
         ];
     }
 
     public function json_decode($string)
     {
-        $var = json_decode($string,true);
+        $var = json_decode((string) $string,true);
         return $var ;
     }
 }

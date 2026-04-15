@@ -3,16 +3,13 @@
 namespace App\Service\ExcelExport;
 
 use App\Entity\Kind;
-use App\Entity\Zeitblock;
 use App\Helper\ChildDateExcel;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CreateExcelDayService
 {
-    private TranslatorInterface $translator;
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
     /**
@@ -55,9 +52,7 @@ class CreateExcelDayService
             $helpberBlocks[] = $tmp;
         }
 
-        usort($helpberBlocks, function (ChildDateExcel $a, ChildDateExcel $b) {
-            return $a->getVon() > $b->getVon();
-        });
+        usort($helpberBlocks, fn(ChildDateExcel $a, ChildDateExcel $b) => $a->getVon() > $b->getVon());
 
         if (sizeof($helpberBlocks) === 0) {
             return $res;

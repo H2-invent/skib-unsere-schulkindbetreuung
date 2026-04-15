@@ -11,9 +11,7 @@ namespace App\Service;
 
 use App\Controller\LoerrachWorkflowController;
 use App\Entity\Active;
-use App\Entity\Kind;
 use App\Entity\Stadt;
-use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -22,20 +20,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class StadtBerichtService
 {
     private $spreadsheet;
-
-    private $translator;
     private $beruflicheSituationString;
-    private ChildInBlockService $childInBlockService;
-    private ElternService $elternService;
-    private $em;
-    public function __construct(TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController, ChildInBlockService $childInBlockService, ElternService $elternService,EntityManagerInterface $entityManager)
+    public function __construct(private TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController, private ChildInBlockService $childInBlockService, private ElternService $elternService,private EntityManagerInterface $em)
     {
         $this->spreadsheet = new Spreadsheet();
-        $this->translator = $translator;
         $this->beruflicheSituationString = array_flip($loerrachWorkflowController->beruflicheSituation);
-        $this->childInBlockService = $childInBlockService;
-        $this->elternService = $elternService;
-        $this->em = $entityManager;
     }
 
     public function generateExcel($blocks, $kinder, $eltern, Stadt $stadt)

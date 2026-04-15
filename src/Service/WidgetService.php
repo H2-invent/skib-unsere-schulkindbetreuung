@@ -5,27 +5,16 @@ namespace App\Service;
 use App\Entity\Active;
 use App\Entity\Schule;
 use App\Entity\Zeitblock;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
 class WidgetService
 {
-    private EntityManagerInterface $em;
-    private ChildSearchService $childSearchService;
-    private ChildInBlockService $childInBlockService;
     public static int $CACHE_TIME = 1200;
 
-    public function __construct(
-        EntityManagerInterface        $entityManager,
-        ChildSearchService            $childSearchService,
-        ChildInBlockService           $childInBlockService)
+    public function __construct(private EntityManagerInterface        $em, private ChildSearchService            $childSearchService, private ChildInBlockService           $childInBlockService)
     {
-        $this->em = $entityManager;
-        $this->childSearchService = $childSearchService;
-        $this->childInBlockService = $childInBlockService;
     }
 
     public function calculateSchulen(Schule $schule, \DateTime $now): int
@@ -81,7 +70,7 @@ class WidgetService
                 return sizeof($kinder);
             });
             return $value;
-        }catch (\Exception $exception){
+        }catch (\Exception){
 
         }
     return null;

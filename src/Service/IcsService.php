@@ -78,15 +78,10 @@ class IcsService
         return $ics_props;
     }
     private function sanitizeVal($val, $key = false) {
-        switch($key) {
-            case 'dtend':
-            case 'dtstamp':
-            case 'dtstart':
-                $val = $this->formatTimestamp($val);
-                break;
-            default:
-                $val = $this->escape_string($val);
-        }
+        $val = match ($key) {
+            'dtend', 'dtstamp', 'dtstart' => $this->formatTimestamp($val),
+            default => $this->escape_string($val),
+        };
         return $val;
     }
     private function formatTimestamp($timestamp) {
@@ -94,7 +89,7 @@ class IcsService
         return $dt->format(self::DT_FORMAT);
     }
     private function escape_string($str) {
-        return preg_replace('/([\,;])/','\\\$1', $str);
+        return preg_replace('/([\,;])/','\\\$1', (string) $str);
     }
 
 

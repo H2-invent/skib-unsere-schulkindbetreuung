@@ -16,8 +16,8 @@ class AppExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('dateChecker', [$this, 'getClassName']),
-            new TwigFunction('isActiveNav', [$this, 'isActiveNav']),
+            new TwigFunction('dateChecker', $this->getClassName(...)),
+            new TwigFunction('isActiveNav', $this->isActiveNav(...)),
         ];
     }
 
@@ -28,7 +28,7 @@ class AppExtension extends AbstractExtension
         }
         try {
             return new \DateTime($object);
-        }catch (\Exception $e){
+        }catch (\Exception){
             return false;
         }
     }

@@ -5,7 +5,6 @@ namespace App\Twig;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use function GuzzleHttp\Psr7\str;
 
 class ReplaceHttps extends AbstractExtension
 {
@@ -18,7 +17,7 @@ class ReplaceHttps extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('makeHttps', [$this, 'makeHttps']),
+            new TwigFilter('makeHttps', $this->makeHttps(...)),
         ];
     }
 

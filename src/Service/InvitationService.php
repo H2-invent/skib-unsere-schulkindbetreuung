@@ -10,19 +10,8 @@ use Twig\Environment;
 
 class InvitationService
 {
-    private EntityManagerInterface $em;
-    private Environment $environment;
-    private MailerService $mailerService;
-    private TranslatorInterface $translator;
-    private UrlGeneratorInterface $urlGenerator;
-
-    public function __construct(EntityManagerInterface $entityManager, Environment $environment, MailerService $mailerService, TranslatorInterface $translator, UrlGeneratorInterface $urlGenerator)
+    public function __construct(private EntityManagerInterface $em, private Environment $environment, private MailerService $mailerService, private TranslatorInterface $translator, private UrlGeneratorInterface $urlGenerator)
     {
-        $this->em = $entityManager;
-        $this->environment = $environment;
-        $this->mailerService = $mailerService;
-        $this->translator = $translator;
-        $this->urlGenerator = $urlGenerator;
     }
 
     public function inviteNewUser(User $user, User $creator)

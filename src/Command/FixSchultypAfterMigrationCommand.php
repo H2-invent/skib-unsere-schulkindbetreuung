@@ -6,25 +6,21 @@ use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Stadt;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 
 class FixSchultypAfterMigrationCommand extends Command
 {
-    private $em;
     protected static $defaultName = 'app:fix:schultypAfterMigration';
 
-    public function __construct(EntityManagerInterface $entityManager, string $name = null)
+    public function __construct(private EntityManagerInterface $em, ?string $name = null)
     {
         parent::__construct($name);
-        $this->em = $entityManager;
     }
 
     protected function configure(): void

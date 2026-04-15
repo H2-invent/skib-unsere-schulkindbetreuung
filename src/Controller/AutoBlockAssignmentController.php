@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Active;
 use App\Entity\Organisation;
 use App\Repository\ActiveRepository;
 use App\Repository\AutoBlockAssignmentChildRepository;

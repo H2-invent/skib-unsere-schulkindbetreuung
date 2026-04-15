@@ -8,7 +8,6 @@ use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Active|null find($id, $lockMode = null, $lockVersion = null)

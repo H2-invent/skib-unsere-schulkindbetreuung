@@ -12,14 +12,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UploadService
 {
-    private FilesystemOperator $internFileSystem;
-    private ValidatorInterface $validator;
-    private $em;
-    public function __construct(FilesystemOperator $internFileSystem, ValidatorInterface $validator, EntityManagerInterface $entityManager)
+    public function __construct(private FilesystemOperator $internFileSystem, private ValidatorInterface $validator, private EntityManagerInterface $em)
     {
-        $this->internFileSystem = $internFileSystem;
-        $this->validator = $validator;
-        $this->em = $entityManager;
     }
 
     public function uploadFile(UploadedFile $uploadedFile, string $maxSize = '50M')

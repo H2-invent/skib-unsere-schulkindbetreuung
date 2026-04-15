@@ -2,12 +2,10 @@
 
 namespace App\Entity;
 
-use ContainerM8BJPEV\getDoctrine_Orm_DefaultEntityManager_PropertyInfoExtractorService;
+use App\Repository\KindRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,8 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table]
 #[ORM\Index(name: 'idx_tracing', columns: ['tracing'])]
-#[ORM\Entity(repositoryClass: \App\Repository\KindRepository::class)]
-class Kind
+#[ORM\Entity(repositoryClass: KindRepository::class)]
+class Kind implements \Stringable
 {
 
     #[ORM\Id]
@@ -25,7 +23,7 @@ class Kind
     private $id;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stammdaten::class, inversedBy: 'kinds')]
+    #[ORM\ManyToOne(targetEntity: Stammdaten::class, inversedBy: 'kinds')]
     private $eltern;
 
     #[Groups(['assign_formula_sample'])]
@@ -60,10 +58,10 @@ class Kind
     private $geburtstag;
 
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Abwesend::class, mappedBy: 'kind')]
+    #[ORM\OneToMany(targetEntity: Abwesend::class, mappedBy: 'kind')]
     private $abwesends;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, mappedBy: 'kind')]
+    #[ORM\ManyToMany(targetEntity: Zeitblock::class, mappedBy: 'kind')]
     private $zeitblocks;
 
     #[Groups(['assign_formula_sample'])]
@@ -71,7 +69,7 @@ class Kind
     private $bemerkung;
 
     #[ORM\JoinColumn(nullable: true)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Schule::class, inversedBy: 'kinder')]
+    #[ORM\ManyToOne(targetEntity: Schule::class, inversedBy: 'kinder')]
     private $schule;
 
     #[Groups(['assign_formula_sample'])]
@@ -110,7 +108,7 @@ class Kind
     #[ORM\Column(type: 'boolean')]
     private $fotos = false;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, inversedBy: 'kinderBeworben')]
+    #[ORM\ManyToMany(targetEntity: Zeitblock::class, inversedBy: 'kinderBeworben')]
     private $beworben;
 
     #[Groups(['assign_formula_sample'])]
@@ -124,18 +122,18 @@ class Kind
     #[ORM\Column(type: 'string', nullable: true)]
     private $tracing;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Rechnung::class, mappedBy: 'kinder')]
+    #[ORM\ManyToMany(targetEntity: Rechnung::class, mappedBy: 'kinder')]
     private $rechnungen;
 
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\KindFerienblock::class, mappedBy: 'kind', cascade: ['remove'])]
+    #[ORM\OneToMany(targetEntity: KindFerienblock::class, mappedBy: 'kind', cascade: ['remove'])]
     private $kindFerienblocks;
 
     #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $masernImpfung;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Anwesenheit::class, mappedBy: 'kind')]
+    #[ORM\OneToMany(targetEntity: Anwesenheit::class, mappedBy: 'kind')]
     private $anwesenheitenSchulkindbetreuung;
 
     #[Groups(['assign_formula_sample'])]
@@ -176,9 +174,9 @@ class Kind
         return $this->tracing;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->tracing;
+        return (string) $this->tracing;
     }
 
     public function __clone()
@@ -281,7 +279,7 @@ class Kind
         $klassArr = $this->schule->getStadt()->translate()->getSettingsSkibShoolyearNamingArray();
         try {
             return $klassArr[$this->klasse];
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             return 'error! Contact the Administrator';
         }
 
@@ -366,9 +364,7 @@ class Kind
             }
         }
 
-        usort($block, function (Zeitblock $a, Zeitblock $b) {
-            return ($a->getVon() > $b->getVon() ? true : false);
-        });
+        usort($block, fn(Zeitblock $a, Zeitblock $b) => $a->getVon() > $b->getVon() ? true : false);
 
         return new ArrayCollection($block);
     }
@@ -385,9 +381,7 @@ class Kind
             }
         }
 
-        usort($block, function (Zeitblock $a, Zeitblock $b) {
-            return ($a->getVon() > $b->getVon() ? true : false);
-        });
+        usort($block, fn(Zeitblock $a, Zeitblock $b) => $a->getVon() > $b->getVon() ? true : false);
 
         return new ArrayCollection($block);
     }

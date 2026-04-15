@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\SchuleRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @Vich\Uploadable
  */
-#[ORM\Entity(repositoryClass: \App\Repository\SchuleRepository::class)]
+#[ORM\Entity(repositoryClass: SchuleRepository::class)]
 class Schule
 {
     public function __serialize(): array
@@ -32,11 +33,11 @@ class Schule
     private $name;
 
     #[ORM\JoinColumn(nullable: true)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'schule')]
+    #[ORM\ManyToOne(targetEntity: Organisation::class, inversedBy: 'schule')]
     private $organisation;
 
 
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'schules')]
+    #[ORM\ManyToOne(targetEntity: Stadt::class, inversedBy: 'schules')]
     private $stadt;
 
     #[Groups(['assign_formula_sample'])]
@@ -85,10 +86,10 @@ class Schule
     #[ORM\Column(type: 'text')]
     private $infoText;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Zeitblock::class, mappedBy: 'schule', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Zeitblock::class, mappedBy: 'schule', orphanRemoval: true)]
     private $zeitblocks;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Kind::class, mappedBy: 'schule')]
+    #[ORM\OneToMany(targetEntity: Kind::class, mappedBy: 'schule')]
     private $kinder;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -103,7 +104,7 @@ class Schule
     #[Assert\Email]
     private $catererEmail;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\News::class, mappedBy: 'schule')]
+    #[ORM\ManyToMany(targetEntity: News::class, mappedBy: 'schule')]
     private $news;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'schulen')]
@@ -251,7 +252,7 @@ class Schule
         return $this;
     }
 
-    public function setImageFile(File $image = null)
+    public function setImageFile(?File $image = null)
     {
         $this->imageFile = $image;
 

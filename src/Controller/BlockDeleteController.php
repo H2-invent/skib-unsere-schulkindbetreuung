@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Zeitblock;
-use App\Service\AnmeldeEmailService;
 use App\Service\BlockDeleteService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

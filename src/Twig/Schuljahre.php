@@ -3,8 +3,8 @@
 namespace App\Twig;
 
 
+use App\Entity\Stadt;
 use App\Entity\Active;
-use App\Entity\Stammdaten;
 
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -15,27 +15,25 @@ class Schuljahre extends AbstractExtension
 {
 
 
-    private $em;
     private $now;
-    public function __construct(EntityManagerInterface $entityManager )
+    public function __construct(private EntityManagerInterface $em )
     {
 
-      $this->em = $entityManager;
       $this->now = new \DateTime();
     }
 
     public function getFunctions()
     {
         return array(
-            new TwigFunction('getLaufendSchuljahr', array($this, 'getLaufendSchuljahr')),
-            new TwigFunction('getAnmeldeSchuljahr', array($this, 'getAnmeldeSchuljahr')),
+            new TwigFunction('getLaufendSchuljahr', $this->getLaufendSchuljahr(...)),
+            new TwigFunction('getAnmeldeSchuljahr', $this->getAnmeldeSchuljahr(...)),
         );
     }
 
-   public function getAnmeldeSchuljahr(\App\Entity\Stadt $stadt){
+   public function getAnmeldeSchuljahr(Stadt $stadt){
         return  $this->em->getRepository(Active::class)->findAnmeldeSchuljahreFromCity($stadt);
    }
-    public function getLaufendSchuljahr(\App\Entity\Stadt $stadt){
+    public function getLaufendSchuljahr(Stadt $stadt){
         return  $this->em->getRepository(Active::class)->findLaufendeSchuljahreFromCity($stadt);
     }
 }

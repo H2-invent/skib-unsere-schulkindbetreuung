@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Active;
 use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Zeitblock;
 use App\Form\Type\BlockAbhangigkeitType;
 use App\Form\Type\BlockType;
-use App\Service\AnmeldeEmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class BlockController extends AbstractController
 {
 
-    public function __construct(TranslatorInterface $translator, private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(TranslatorInterface $translator, private ManagerRegistry $managerRegistry)
     {
 
 
@@ -149,7 +149,7 @@ class BlockController extends AbstractController
                     $text = $translator->trans('Erfolgreich gespeichert');
                     return new JsonResponse(array('error' => 0, 'snack' => $text));
                 }
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
                 return new JsonResponse(array('error' => 1, 'snack' => $text));
             }
@@ -198,7 +198,7 @@ class BlockController extends AbstractController
                     $text = $translator->trans('Erfolgreich gespeichert');
                     return new JsonResponse(array('error' => 0, 'snack' => $text));
                 }
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
                 return new JsonResponse(array('error' => 1, 'snack' => $text));
             }
@@ -251,7 +251,7 @@ class BlockController extends AbstractController
                     $text = $translator->trans('Erfolgreich gespeichert');
                     return new JsonResponse(['error' => 0, 'snack' => $text]);
                 }
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
                 return new JsonResponse(['error' => 1, 'snack' => $text]);
             }
@@ -317,9 +317,7 @@ class BlockController extends AbstractController
 
         if ($request->isMethod('POST')) {
             $weekdays = array_unique(array_map('intval', $request->request->all('weekdays')));
-            $weekdays = array_values(array_filter($weekdays, static function (int $weekday): bool {
-                return $weekday >= 0 && $weekday <= 4;
-            }));
+            $weekdays = array_values(array_filter($weekdays, static fn(int $weekday): bool => $weekday >= 0 && $weekday <= 4));
 
             if (count($weekdays) === 0) {
                 return new JsonResponse(array('error' => 1, 'snack' => $translator->trans('Bitte mindestens einen Tag auswählen.')));

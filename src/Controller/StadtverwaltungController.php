@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Stadt;
 use App\Form\Type\FormelType;
 use App\Form\Type\StadtType;
@@ -18,7 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class StadtverwaltungController extends AbstractController
 {
-    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
     /**
@@ -200,7 +201,7 @@ class StadtverwaltungController extends AbstractController
                 'schule' => $kind->getSchule(),
                 'organisation' => $kind->getSchule()?->getOrganisation(),
             ]);
-        } catch (SyntaxError $e) {
+        } catch (SyntaxError) {
             return new JsonResponse([], 400);
         }
 

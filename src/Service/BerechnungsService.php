@@ -9,17 +9,13 @@ use Doctrine\ORM\EntityManagerInterface;
 class BerechnungsService
 {
 
-    private ElternService $elternService;
     private $withBeworben = true;
-    private EntityManagerInterface $entityManager;
 
-    public function __construct(ElternService $elternService, EntityManagerInterface $entityManager)
+    public function __construct(private ElternService $elternService, private EntityManagerInterface $entityManager)
     {
-        $this->elternService = $elternService;
-        $this->entityManager = $entityManager;
     }
 
-    public function getPreisforBetreuung(Kind $kind, $withBeworben = true, \DateTime $stichtag = null, $demo = false): float
+    public function getPreisforBetreuung(Kind $kind, $withBeworben = true, ?\DateTime $stichtag = null, $demo = false): float
     {
         $this->withBeworben = $withBeworben;
         $stadt = $kind->getSchule()->getStadt();

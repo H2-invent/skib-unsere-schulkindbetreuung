@@ -7,8 +7,6 @@
  */
 namespace App\Form\Type;
 
-use App\Entity\Active;
-
 use App\Entity\Sepa;
 
 use Symfony\Component\Form\AbstractType;

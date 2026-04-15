@@ -6,7 +6,6 @@ use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Stadt|null find($id, $lockMode = null, $lockVersion = null)

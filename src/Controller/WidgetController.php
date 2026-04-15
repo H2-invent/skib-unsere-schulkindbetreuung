@@ -4,12 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Active;
 use App\Entity\Anwesenheit;
-use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Sepa;
 use App\Entity\Zeitblock;
-use App\Service\ChildSearchService;
 use App\Service\WidgetService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function Doctrine\ORM\QueryBuilder;
 
 class WidgetController extends AbstractController
 {

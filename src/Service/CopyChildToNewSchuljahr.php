@@ -9,32 +9,14 @@ use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 class CopyChildToNewSchuljahr
 {
-    private ChildSearchService $childSearchService;
-    private EntityManagerInterface $entityManager;
-    private ElternService $elternService;
-    private WorkflowAbschluss $workflowAbschluss;
-    private MailerService $mailerService;
-    private Environment $twig;
-    private AnmeldeEmailService $anmeldeEmailService;
-    private TranslatorInterface $translator;
-
-    public function __construct(ChildSearchService $childSearchService, EntityManagerInterface $entityManager, ElternService $elternService, WorkflowAbschluss $workflowAbschluss, MailerService $mailerService, Environment $environment, AnmeldeEmailService $anmeldeEmailService, TranslatorInterface $translator)
+    public function __construct(private ChildSearchService $childSearchService, private EntityManagerInterface $entityManager, private ElternService $elternService, private WorkflowAbschluss $workflowAbschluss, private MailerService $mailerService, private Environment $twig, private AnmeldeEmailService $anmeldeEmailService, private TranslatorInterface $translator)
     {
-        $this->childSearchService = $childSearchService;
-        $this->entityManager = $entityManager;
-        $this->elternService = $elternService;
-        $this->workflowAbschluss = $workflowAbschluss;
-        $this->mailerService = $mailerService;
-        $this->twig = $environment;
-        $this->anmeldeEmailService = $anmeldeEmailService;
-        $this->translator = $translator;
     }
 
     public function copyKinderToSchuljahr(Active $source, Active $target, \DateTime $stichtag, $matrix, $blockmatrix, Output $output,$sendEmails=false): ?Active

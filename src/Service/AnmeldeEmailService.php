@@ -23,43 +23,25 @@ use Twig\Environment;
 
 class AnmeldeEmailService
 {
-    private $print;
-    private $tcpdf;
-    private $translator;
-    private $ics;
-    private $templating;
-    private $mailer;
-    private $abgService;
-    private $parameterbag;
     private $attachment;
     private $betreff;
     private $content;
-    private FilesystemOperator $internFileSystem;
 
     public function __construct(
-        FilesystemOperator                 $internFileSystem,
-        ParameterBagInterface              $parameterBag,
-        PrintAGBService                    $printAGBService,
-        PrintService                       $print,
-        TCPDFController                    $tcpdf,
-        TranslatorInterface                $translator,
-        IcsService                         $icsService,
-        Environment                        $templating,
-        MailerService                      $mailer,
+        private FilesystemOperator                 $internFileSystem,
+        private ParameterBagInterface              $parameterbag,
+        private PrintAGBService                    $abgService,
+        private PrintService                       $print,
+        private TCPDFController                    $tcpdf,
+        private TranslatorInterface                $translator,
+        private IcsService                         $ics,
+        private Environment                        $templating,
+        private MailerService                      $mailer,
         private LoerrachWorkflowController $loerrachWorkflowController)
     {
-        $this->print = $print;
-        $this->tcpdf = $tcpdf;
-        $this->translator = $translator;
-        $this->ics = $icsService;
-        $this->templating = $templating;
-        $this->mailer = $mailer;
-        $this->abgService = $printAGBService;
-        $this->parameterbag = $parameterBag;
         $this->attachment = null;
         $this->betreff = null;
         $this->content = null;
-        $this->internFileSystem = $internFileSystem;
     }
 
     /**
@@ -151,9 +133,7 @@ class AnmeldeEmailService
                 }
                 $this->betreff = $this->translator->trans('Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname%', array( '%vorname%'=>$kind->getVorname(), '%nachname%' => $kind->getNachname()));
                 $blocks = $kind->getBeworben()->toArray();
-                usort($blocks, function (Zeitblock $a, Zeitblock $b) {
-                    return $a->getVon() <=> $b->getVon();
-                });
+                usort($blocks, fn(Zeitblock $a, Zeitblock $b) => $a->getVon() <=> $b->getVon());
 
                 $this->content = $this->templating->render('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt,'blocks' => $blocks));
                 $this->translator->setLocale($sessionLocale);

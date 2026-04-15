@@ -2,7 +2,6 @@
 // src/Twig/AppExtension.php
 namespace App\Twig;
 
-use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Schule;
 use App\Entity\Zeitblock;
@@ -12,17 +11,15 @@ use Twig\TwigFunction;
 
 class SchulenExtension extends AbstractExtension
 {
-    private $em;
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $entityManager;
     }
 
     public function getFunctions()
     {
         return array(
-            new TwigFunction('getAnzahlBeworben', array($this, 'getAnzahlBeworben')),
-            new TwigFunction('getAnzahlBeworbenKids', array($this, 'getAnzahlBeworbenKids')),
+            new TwigFunction('getAnzahlBeworben', $this->getAnzahlBeworben(...)),
+            new TwigFunction('getAnzahlBeworbenKids', $this->getAnzahlBeworbenKids(...)),
         );
     }
 
@@ -31,7 +28,7 @@ class SchulenExtension extends AbstractExtension
 
         try {
             $blocks = $this->em->getRepository(Zeitblock::class)->findBeworbenBlocksBySchule($schule);
-        }catch (\Exception $exception){
+        }catch (\Exception){
             $blocks = array();
         }
 
@@ -42,7 +39,7 @@ class SchulenExtension extends AbstractExtension
 
         try {
             $kids = $this->em->getRepository(Kind::class)->findBeworbenByZeitblock($block);
-        }catch (\Exception $exception){
+        }catch (\Exception){
             $kids = array();
         }
 

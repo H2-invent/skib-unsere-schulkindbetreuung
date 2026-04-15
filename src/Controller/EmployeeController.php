@@ -19,12 +19,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmployeeController extends AbstractController
 {
-    private $manager;
     private $availRole;
 
-    public function __construct(UserManagerInterface $manager, private ManagerRegistry $managerRegistry)
+    public function __construct(private UserManagerInterface $manager, private ManagerRegistry $managerRegistry)
     {
-        $this->manager = $manager;
         $this->availRole = array(
             'ROLE_CITY_DASHBOARD' => 'ROLE_CITY_DASHBOARD',
             'ROLE_CITY_SCHOOL' => 'ROLE_CITY_SCHOOL',
@@ -77,7 +75,7 @@ class EmployeeController extends AbstractController
                 $text = $translator->trans('Erfolgreich angelegt');
                 $invitationService->inviteNewUser($defaultData,$this->getUser());
                 return $this->redirectToRoute('city_employee_show', array('snack' => $text, 'id' => $city->getId()));
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $userManager = $this->manager;
                 $errorText = $translator->trans(
                     'Unbekannter Fehler'
@@ -130,7 +128,7 @@ class EmployeeController extends AbstractController
                 $userManager->updateUser($defaultData);
                 $text = $translator->trans('Erfolgreich gespeichert');
                 return $this->redirectToRoute('city_employee_show', array('snack' => $text, 'id' => $defaultData->getStadt()->getId()));
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $errorText = $translator->trans(
                     'Die E-Mail existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse'
                 );
@@ -214,7 +212,7 @@ class EmployeeController extends AbstractController
                     );
 
                 }
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $errorText = $translator->trans(
                     'Das Passwort konnte nich geändert werden'
                 );

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\KindFerienblock;
 use App\Service\CheckinFerienService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

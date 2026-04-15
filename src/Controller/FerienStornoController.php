@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Ferienblock;
-use App\Entity\Kind;
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\KindFerienblock;
 use App\Entity\PaymentRefund;
 use App\Entity\Stadt;
@@ -16,11 +15,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function Doctrine\ORM\QueryBuilder;
 
 class FerienStornoController extends AbstractController
 {
-    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
     /**

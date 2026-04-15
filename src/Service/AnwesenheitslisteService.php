@@ -2,11 +2,9 @@
 
 namespace App\Service;
 
-use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 
 // <- Add this
@@ -15,13 +13,8 @@ class AnwesenheitslisteService
 {
 
 
-    private $em;
-
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $entityManager;
-
     }
 
     public

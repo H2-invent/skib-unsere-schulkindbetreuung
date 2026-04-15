@@ -6,14 +6,8 @@ use App\Entity\Kind;
 use App\Entity\Zeitblock;
 use App\Service\KontingentAcceptService;
 use Doctrine\Persistence\ManagerRegistry;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,16 +19,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class KontingentController extends AbstractController
 {
-    private KontingentAcceptService $acceptService;
-    private LoggerInterface $logger;
-    public function __construct(
-        KontingentAcceptService $kontingentAcceptService,
-        LoggerInterface $logger,
-        private ManagerRegistry $managerRegistry,
-    private LoerrachWorkflowController $loerrachWorkflowController)
+    public function __construct(private KontingentAcceptService $acceptService, private LoggerInterface $logger, private ManagerRegistry $managerRegistry, private LoerrachWorkflowController $loerrachWorkflowController)
     {
-        $this->acceptService = $kontingentAcceptService;
-        $this->logger = $logger;
     }
 
     /**
@@ -65,7 +51,7 @@ class KontingentController extends AbstractController
                 $this->addFlash('danger',$translator->trans('Kind nicht vorhanden.'));
             }
             $this->addFlash('success',$translator->trans('Erfolgreich gesendet.'));
-        }catch (\Exception $exception){
+        }catch (\Exception){
             $this->addFlash('danger',$translator->trans('Bestätigung konnte nicht gesendet werden.'));
         }
 
@@ -233,7 +219,7 @@ class KontingentController extends AbstractController
                 return new JsonResponse(array('snack' => $translator->trans('Erfolgreich gespeichert')));
 
             }
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $logger = $this->get('logger');
             $logger->err('Kind could not be removed from block: ' . json_encode($kind));
             return new JsonResponse(array('snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));

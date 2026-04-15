@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\EmailResponse;
 use App\Service\GroupORMService;
 use App\Service\MailgunWebhockService;
@@ -12,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MailgunWebhockController extends AbstractController
 {
-    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
     /**
@@ -27,7 +28,7 @@ class MailgunWebhockController extends AbstractController
                 $parametersAsArray = json_decode($content, true);
             }
             $res =$mailgunWebhockService->saveSuccess($parametersAsArray);
-        }catch(\Exception $e) {
+        }catch(\Exception) {
             return new JsonResponse(array('error'=>true));
         }
         return new JsonResponse(array('error'=>$res));
@@ -44,7 +45,7 @@ class MailgunWebhockController extends AbstractController
                 $parametersAsArray = json_decode($content, true);
             }
           $res= $mailgunWebhockService->saveFailure($parametersAsArray);
-        }catch(\Exception $e) {
+        }catch(\Exception) {
             return new JsonResponse(array('error'=>true));
         }
         return new JsonResponse(array('error'=>$res));
@@ -76,7 +77,7 @@ class MailgunWebhockController extends AbstractController
     public function detail(Request $request,MailgunWebhockService $mailgunWebhockService)
     {
         $email = $this->managerRegistry->getRepository(EmailResponse::class)->find($request->get('message-id'));
-        $json = json_decode($email->getPayload());
+        $json = json_decode((string) $email->getPayload());
 
         return $this->render('mailgun_webhock/detail.html.twig',array('json'=>$json,'emails'=>$email,'title'=>'Detail'));
 

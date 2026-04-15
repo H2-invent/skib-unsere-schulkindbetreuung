@@ -28,7 +28,7 @@ class OrganisationProfilController extends AbstractController
     {
         $count = 0;
         $res = '';
-        $array = explode('. ', $sentenceArray);
+        $array = explode('. ', (string) $sentenceArray);
         foreach ($array as $data) {
 
             if ($count <= 160) {

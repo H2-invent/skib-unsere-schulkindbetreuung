@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Active;
-use App\Entity\Kind;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\Zeitblock;
-use App\Service\ChildInBlockService;
 use App\Service\ChildSearchService;
 use App\Service\WidgetService;
 use Doctrine\Persistence\ManagerRegistry;
@@ -61,10 +59,7 @@ class WidgetStadtController extends AbstractController
 
     private function cmp($a, $b)
     {
-        if ($a['active']->getVon() == $b['active']->getVon()) {
-            return 0;
-        }
-        return ($a['active']->getVon() < $b['active']->getVon()) ? -1 : 1;
+        return $a['active']->getVon() <=> $b['active']->getVon();
     }
 
     /**

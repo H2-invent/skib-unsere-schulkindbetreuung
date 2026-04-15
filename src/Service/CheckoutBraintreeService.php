@@ -17,13 +17,8 @@ class CheckoutBraintreeService
 {
 
 
-    private $em;
-    private $logger;
-
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager)
+    public function __construct(private LoggerInterface $logger, private EntityManagerInterface $em)
     {
-        $this->em = $entityManager;
-        $this->logger = $logger;
     }
 
     public function prepareBraintree(Stammdaten $stammdaten, $ipAdresse, Payment $payment): bool
@@ -48,7 +43,7 @@ class CheckoutBraintreeService
             $this->em->persist($braintree);
             $this->em->flush();
             return true;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return false;
         }
     }

@@ -6,9 +6,7 @@ use App\Entity\Active;
 use App\Service\ChildSearchService;
 use App\Service\CopyChildToNewSchuljahr;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,16 +17,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CopyChildsCommand extends Command
 {
     protected static $defaultName = 'app:copy:childs';
-    private $em;
-    private CopyChildToNewSchuljahr $copyChildToNewSchuljahr;
-    private ChildSearchService $childSearchService;
 
-    public function __construct(EntityManagerInterface $entityManager, CopyChildToNewSchuljahr $copyChildToNewSchuljahr, ChildSearchService $childSearchService, string $name = null)
+    public function __construct(private EntityManagerInterface $em, private CopyChildToNewSchuljahr $copyChildToNewSchuljahr, private ChildSearchService $childSearchService, ?string $name = null)
     {
         parent::__construct($name);
-        $this->em = $entityManager;
-        $this->copyChildToNewSchuljahr = $copyChildToNewSchuljahr;
-        $this->childSearchService = $childSearchService;
     }
 
     protected function configure(): void
@@ -82,12 +74,12 @@ class CopyChildsCommand extends Command
         if ($input->getArgument('schuljahrsMatrix')) {
             $io->info($input->getArgument('schuljahrsMatrix'));
 
-            $matrix = json_decode($input->getArgument('schuljahrsMatrix'), true);
+            $matrix = json_decode((string) $input->getArgument('schuljahrsMatrix'), true);
             $io->info($matrix);
 
         }
         if ($input->getArgument('schuljahrsMatrix')) {
-            $blockMatrix = json_decode($input->getArgument('blockmatrix'), true);
+            $blockMatrix = json_decode((string) $input->getArgument('blockmatrix'), true);
         } else {
             $blockMatrix = array();
         }

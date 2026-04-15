@@ -13,13 +13,8 @@ class CheckinFerienService
 {
 
 
-    private $em;
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator,  EntityManagerInterface $entityManager)
+    public function __construct(private TranslatorInterface $translator, private EntityManagerInterface $em)
     {
-        $this->em = $entityManager;
-        $this->translator = $translator;
     }
 
     public
@@ -49,7 +44,7 @@ class CheckinFerienService
         }
 
         $result['checkinDate'] = $tag;
-        $status = $kindFerienBlock->getCheckinStatus() !== null ? $kindFerienBlock->getCheckinStatus() : array();
+        $status = $kindFerienBlock->getCheckinStatus() ?? array();
 
         if (in_array($result['checkinDate'], $status)) {
             $result['error'] = true;

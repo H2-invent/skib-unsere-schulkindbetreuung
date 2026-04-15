@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Stadt;
 use App\Entity\User;
 use App\Form\Type\UserType;
@@ -18,11 +19,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class StadtadminController extends AbstractController
 {
-    private $manager;
-
-    public function __construct(UserManagerInterface $manager, private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(private UserManagerInterface $manager, private ManagerRegistry $managerRegistry)
     {
-        $this->manager = $manager;
     }
     /**
      * @Route("/admin/stadtUser", name="admin_stadtadmin")
@@ -73,7 +71,7 @@ class StadtadminController extends AbstractController
                 $text = $translator->trans('Erfolgreich angelegt');
                 $invitationService->inviteNewUser($defaultData,$this->getUser());
                 return $this->redirectToRoute('admin_stadtadmin',array('snack'=>$text,'id'=>$city->getId()));
-            }catch ( \Exception $e) {
+            }catch ( \Exception) {
                 $errorText = $translator->trans('Die E-Mail existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse');
                 return $this->render(
                     'administrator/error.html.twig',
@@ -107,7 +105,7 @@ class StadtadminController extends AbstractController
                 $userManager->updateUser($defaultData);
                 $text = $translator->trans('Erfolgreich geändert');
                 return $this->redirectToRoute('admin_stadtadmin',array('snack'=>$text,'id'=>$defaultData->getStadt()->getId()));
-            }catch ( \Exception $e) {
+            }catch ( \Exception) {
                 $errorText = $translator->trans('Die E-Mail existriert Bereits. Bitte verwenden Sie eine andere Email-Adresse');
                 return $this->render(
                     'administrator/error.html.twig',
@@ -146,7 +144,7 @@ class StadtadminController extends AbstractController
                 $userManager->updateUser($defaultData);
                 $text = $translator->trans('Passwort erfolgreich geändert');
                 return $this->redirectToRoute('admin_stadtadmin', array('snack'=>$text,'id' => $defaultData->getStadt()->getId()));
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $errorText = $translator->trans(
                     'Das Passwort konnte nicht geändert werden'
                 );

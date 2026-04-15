@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\TagsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\TagsRepository::class)]
+#[ORM\Entity(repositoryClass: TagsRepository::class)]
 class Tags
 {
     #[ORM\Id]
@@ -17,7 +18,7 @@ class Tags
     #[ORM\Column(type: 'text')]
     private $name;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Ferienblock::class, mappedBy: 'kategorie')]
+    #[ORM\ManyToMany(targetEntity: Ferienblock::class, mappedBy: 'kategorie')]
     private $feriens;
 
 

@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class LoginController extends AbstractController
@@ -43,7 +42,7 @@ class LoginController extends AbstractController
             // e.g. $name = $user->getFirstName();
           die;
             // ...
-        } catch (IdentityProviderException $e) {
+        } catch (IdentityProviderException) {
             // something went wrong!
             // probably you should return the reason to the user
              die;

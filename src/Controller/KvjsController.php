@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Form\KvjsType;
@@ -11,7 +12,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/kvjs', name: 'app_kvjs_')]
 class KvjsController extends AbstractController

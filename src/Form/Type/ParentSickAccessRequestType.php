@@ -17,17 +17,13 @@ class ParentSickAccessRequestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $schuljahre = $options['schuljahre'];
-        usort($schuljahre, static function (Active $a, Active $b) {
-            return $b->getBis() <=> $a->getBis();
-        });
+        usort($schuljahre, static fn(Active $a, Active $b) => $b->getBis() <=> $a->getBis());
 
         $builder
             ->add('schuljahr', EntityType::class, [
                 'class' => Active::class,
                 'choices' => $schuljahre,
-                'choice_label' => static function (Active $schuljahr) {
-                    return $schuljahr->getVon()->format('Y') . '/' . $schuljahr->getBis()->format('Y');
-                },
+                'choice_label' => static fn(Active $schuljahr) => $schuljahr->getVon()->format('Y') . '/' . $schuljahr->getBis()->format('Y'),
                 'placeholder' => 'Bitte wählen',
                 'label' => 'Schuljahr',
                 'data' => $schuljahre[0] ?? null,

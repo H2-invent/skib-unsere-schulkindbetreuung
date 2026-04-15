@@ -9,12 +9,10 @@
 namespace App\Form\Type;
 
 use App\Entity\Ferienblock;
-use App\Entity\Organisation;
 use App\Entity\Tags;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -49,10 +47,8 @@ class FerienBlockType extends AbstractType
             ->add('kategorie', EntityType::class, [
                 'choice_label' => 'name',
                 'class' => Tags::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('t')
-                        ->orderBy('t.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('t')
+                    ->orderBy('t.name', 'ASC'),
                 'label' => 'Kategorie (strg halten für Mehrfachauswahl)',
                 'translation_domain' => 'form',
                 'multiple'=>true,

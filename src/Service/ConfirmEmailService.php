@@ -23,25 +23,9 @@ class ConfirmEmailService
 {
 
 
-    private $em;
-    private $translator;
-    private $router;
-    private $formBuilder;
-    private $twig;
-    private $mailer;
-    private $parameterbag;
-    private FilesystemOperator $internFileSystem;
-   public function __construct(FilesystemOperator $internFileSystem, ParameterBagInterface $parameterBag, MailerService $mailerService,Environment $twig, FormFactoryInterface $formBuilder,RouterInterface $router,TranslatorInterface $translator,Security $security,EntityManagerInterface $entityManager)
+    public function __construct(private FilesystemOperator $internFileSystem, private ParameterBagInterface $parameterbag, private MailerService $mailer,private Environment $twig, private FormFactoryInterface $formBuilder,private RouterInterface $router,private TranslatorInterface $translator,Security $security,private EntityManagerInterface $em)
    {
-       $this->em = $entityManager;
        $this->user = $security;
-       $this->translator = $translator;
-       $this->router = $router;
-       $this->formBuilder = $formBuilder;
-       $this->twig = $twig;
-       $this->mailer= $mailerService;
-       $this->parameterbag = $parameterBag;
-       $this->internFileSystem = $internFileSystem;
    }
 
     public

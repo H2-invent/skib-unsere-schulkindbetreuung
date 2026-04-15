@@ -5,7 +5,6 @@ namespace App\Service;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -16,18 +15,8 @@ class UserConnectionService
 {
 
 
-    private $em;
-    private $router;
-    private $twig;
-    private $mailer;
-
-    public function __construct(MailerService $mailerService, Environment $twig, RouterInterface $router, EntityManagerInterface $entityManager)
+    public function __construct(private MailerService $mailer, private Environment $twig, private RouterInterface $router, private EntityManagerInterface $em)
     {
-        $this->em = $entityManager;
-        $this->router = $router;
-        $this->twig = $twig;
-        $this->mailer = $mailerService;
-
     }
 
     public function generateConfirmationToken(?User $user)
@@ -58,7 +47,7 @@ class UserConnectionService
                     )
                 )
             );
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return array('error' => true);
         }
     }
@@ -90,7 +79,7 @@ class UserConnectionService
                 return array('error' => true);
             }
 
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return array('error' => true);
 
         }
@@ -138,7 +127,7 @@ class UserConnectionService
             }
 
 
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return array('error' => true);
         }
     }

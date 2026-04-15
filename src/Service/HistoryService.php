@@ -8,11 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class HistoryService
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $entityManager;
     }
 
     public function getAllHistoyPointsFromKind(Kind $kind)
@@ -51,7 +48,7 @@ class HistoryService
             try {
                 $aDate = $a->getStartDate() ?: $a->getKinds()[0]->getStartDate();
                 $bDate = $b->getStartDate() ?: $b->getKinds()[0]->getStartDate();
-            }catch (\Exception $exception){
+            }catch (\Exception){
 
             }
 
@@ -82,9 +79,7 @@ class HistoryService
 
         $historydate = array_unique($historydate, SORT_REGULAR);
 
-        usort($historydate, function (\DateTime $a, \DateTime $b) {
-            return $a->format('U') < $b->format('U') ? -1 : 1;
-        });
+        usort($historydate, fn(\DateTime $a, \DateTime $b) => $a->format('U') < $b->format('U') ? -1 : 1);
         return $historydate;
     }
 }

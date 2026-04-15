@@ -22,21 +22,10 @@ use Twig\Environment;
 class PreisListeService
 {
 
-    private $templating;
-    private $translator;
     protected $parameterBag;
-
-    private $generator;
-    private $schuljahrService;
-    private $em;
-    public function __construct(EntityManagerInterface $entityManager,SchuljahrService $schuljahrService, UrlGeneratorInterface $urlGenerator, Environment $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(private EntityManagerInterface $em,private SchuljahrService $schuljahrService, private UrlGeneratorInterface $generator, private Environment $templating, private TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
-        $this->em = $entityManager;
-        $this->templating = $templating;
-        $this->translator = $translator;
         $this->parameterBag = $parameterBag;
-        $this->generator = $urlGenerator;
-        $this->schuljahrService = $schuljahrService;
     }
 
     public function preisliste(Stadt $stadt, Schule $schule,$gehaltIst,$artIst ){

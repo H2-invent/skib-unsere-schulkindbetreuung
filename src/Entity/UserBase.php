@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Repository\UserBaseRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -115,7 +114,7 @@ class UserBase implements UserInterface
 
     public function addRole($role)
     {
-        $role = strtoupper($role);
+        $role = strtoupper((string) $role);
         if ($role === 'ROLE_USER') {
             return $this;
         }
@@ -129,12 +128,12 @@ class UserBase implements UserInterface
 
     public function hasRole($role)
     {
-        return in_array(strtoupper($role), $this->getRoles(), true);
+        return in_array(strtoupper((string) $role), $this->getRoles(), true);
     }
 
     public function removeRole($role)
     {
-        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+        if (false !== $key = array_search(strtoupper((string) $role), $this->roles, true)) {
             unset($this->roles[$key]);
             $this->roles = array_values($this->roles);
         }

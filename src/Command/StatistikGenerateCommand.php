@@ -10,32 +10,22 @@ use App\Service\WidgetService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Contracts\Cache\ItemInterface;
 
 
 class StatistikGenerateCommand extends Command
 {
     protected static $defaultName = 'app:statistik:generate';
     protected static $defaultDescription = 'Migrate Startdate from old to new version';
-    private $em;
 
-
-    private WidgetService $widgetService;
-
-    public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger, ChildSearchService $childSearchService, WidgetService $widgetService, string $name = null)
+    public function __construct(private EntityManagerInterface $em, LoggerInterface $logger, ChildSearchService $childSearchService, private WidgetService $widgetService, ?string $name = null)
     {
         parent::__construct($name);
-        $this->em = $entityManager;
         $this->logger = $logger;
-        $this->widgetService = $widgetService;
     }
 
 

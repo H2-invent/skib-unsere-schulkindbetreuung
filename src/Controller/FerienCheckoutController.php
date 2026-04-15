@@ -2,22 +2,16 @@
 
 namespace App\Controller;
 
-use App\Entity\Payment;
-use App\Entity\PaymentBraintree;
 use App\Entity\PaymentSepa;
 use App\Entity\Stadt;
 use App\Form\Type\PaymentType;
-use App\Service\CheckoutBraintreeService;
 use App\Service\CheckoutPaymentService;
 use App\Service\CheckoutSepaService;
 use App\Service\StamdatenFromCookie;
-use Braintree\Gateway;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 

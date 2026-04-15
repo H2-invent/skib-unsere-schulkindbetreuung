@@ -8,24 +8,14 @@ use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function Doctrine\ORM\QueryBuilder;
 
 
 class FerienStornoService
 {
 
 
-    private $em;
-    private $translator;
-    private $payment;
-    private $logger;
-
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager, TranslatorInterface $translator,CheckoutPaymentService $checkoutPaymentService)
+    public function __construct(private LoggerInterface $logger, private EntityManagerInterface $em, private TranslatorInterface $translator, private CheckoutPaymentService $payment)
     {
-        $this->em = $entityManager;
-        $this->translator = $translator;
-        $this->payment = $checkoutPaymentService;
-        $this->logger = $logger;
     }
 
     public function toggleBlock(KindFerienblock $kindFerienblock, Stammdaten $stammdaten)

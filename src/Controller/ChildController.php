@@ -20,19 +20,15 @@ use App\Service\SchuljahrService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
-use function Doctrine\ORM\QueryBuilder;
 
 class ChildController extends AbstractController
 {
     private $wochentag;
-    private EntityManagerInterface $entityManager;
-    private $translator;
     public static $WEEKDAY = [
         'Montag',
         'Dienstag',
@@ -43,10 +39,8 @@ class ChildController extends AbstractController
         'Sonntag',
     ];
 
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager, private ManagerRegistry $managerRegistry)
+    public function __construct(private TranslatorInterface $translator, private EntityManagerInterface $entityManager, private ManagerRegistry $managerRegistry)
     {
-        $this->translator = $translator;
-        $this->entityManager = $entityManager;
         $this->wochentag = [
             $this->translator->trans('Montag'),
             $this->translator->trans('Dienstag'),
@@ -225,7 +219,7 @@ class ChildController extends AbstractController
         $kinderU = $childSearchService->searchChild($parameter, $organisation, false, $this->getUser(), $startDate, $endDate);
         usort($kinderU, function (Kind $a, Kind $b): int {
             if ($a->getKlasse() === $b->getKlasse()) {
-                return strtolower($a->getNachname()) <=> strtolower($b->getNachname());
+                return strtolower((string) $a->getNachname()) <=> strtolower((string) $b->getNachname());
             }
             return $a->getKlasse() <=> $b->getKlasse();
         });
@@ -280,7 +274,7 @@ class ChildController extends AbstractController
                 $content,
                 $kind->getSchule()->getOrganisation()->getEmail());
             $text = $translator->trans('Sicherheitscode erneut zugesendet');
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
 
             $text = $translator->trans('Sicherheitscode konnte nicht erneut zugesendet');
         }

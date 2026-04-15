@@ -17,17 +17,9 @@ class ToogleKindBlockSchulkind
 {
 
 
-    private $em;
-    private $translator;
-    private $router;
-
-
-    public function __construct(RouterInterface $router, TranslatorInterface $translator, Security $security, EntityManagerInterface $entityManager)
+    public function __construct(private RouterInterface $router, private TranslatorInterface $translator, Security $security, private EntityManagerInterface $em)
     {
-        $this->em = $entityManager;
         $this->user = $security;
-        $this->translator = $translator;
-        $this->router = $router;
 
 
     }
@@ -54,7 +46,7 @@ class ToogleKindBlockSchulkind
                 $result['preisUrl'] = $this->router->generate('loerrach_workflow_preis_einKind', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()));
 
             }
-        } catch (\Exeption $e) {
+        } catch (\Exeption) {
             $result['snack'][] = array('type' => 'error', 'text' => $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.'));
             $result['error'] = 1;
         }

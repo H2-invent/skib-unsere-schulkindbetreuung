@@ -27,24 +27,12 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 class PrintService
 {
 
-    private $templating;
-    private $translator;
     protected $parameterBag;
-    private $fileSystem;
-    private $generator;
-    private $em;
-    private TCPDFController $TCPDFController;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, FilesystemOperator $publicUploadsFilesystem, Environment $templating, TranslatorInterface $translator, ParameterBagInterface $parameterBag, TCPDFController $TCPDFController)
+    public function __construct(private EntityManagerInterface $em, private UrlGeneratorInterface $generator, private FilesystemOperator $fileSystem, private Environment $templating, private TranslatorInterface $translator, ParameterBagInterface $parameterBag, private TCPDFController $TCPDFController)
     {
 
-        $this->templating = $templating;
-        $this->translator = $translator;
         $this->parameterBag = $parameterBag;
-        $this->fileSystem = $publicUploadsFilesystem;
-        $this->generator = $urlGenerator;
-        $this->em = $entityManager;
-        $this->TCPDFController = $TCPDFController;
     }
 
     public function printAnmeldebestaetigung(Kind $kind, Stammdaten $eltern, Stadt $stadt, $fileName, $beruflicheSituation, Organisation $organisation, $type = 'D', $encyption = false)

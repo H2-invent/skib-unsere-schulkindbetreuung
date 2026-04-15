@@ -5,13 +5,10 @@ namespace App\Controller;
 use App\Form\Type\SupportForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use it\thecsea\osticket_php_client\OsticketPhpClient;
 use it\thecsea\osticket_php_client\OsticketPhpClientException;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SupportController extends AbstractController
 {
@@ -42,7 +39,7 @@ class SupportController extends AbstractController
             $support->request('api/tickets.json', $arr);
 
             return $this->redirectToRoute('dashboard',array('snack'=>"Es wurde erfolgreich ein Ticket angelegt"));
-             }catch(OsticketPhpClientException $e){
+             }catch(OsticketPhpClientException){
                  return $this->redirectToRoute('dashboard',array('snack'=>"Fehler beim Anlegen des Tickets."));
 
              }

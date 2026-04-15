@@ -9,7 +9,6 @@ use App\Entity\User;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function Doctrine\ORM\QueryBuilder;
 
 
 // <- Add this
@@ -18,13 +17,8 @@ class CheckinSchulkindservice
 {
 
 
-    private $em;
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager)
+    public function __construct(private TranslatorInterface $translator, private EntityManagerInterface $em)
     {
-        $this->em = $entityManager;
-        $this->translator = $translator;
     }
 
     public

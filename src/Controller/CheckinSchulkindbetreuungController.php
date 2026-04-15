@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Kind;
 use App\Entity\Organisation;
-use App\Entity\User;
 use App\Entity\Zeitblock;
 use App\Service\CheckinSchulkindservice;
 use Doctrine\Persistence\ManagerRegistry;

@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Kind;
-use App\Entity\Organisation;
 use App\Service\ChildDeleteService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,12 +13,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DeleteChildController extends AbstractController
 {
-    private $deleteChildService;
-    private $translator;
-    public function __construct(ChildDeleteService $deleteChildService,TranslatorInterface $translator, private ManagerRegistry $managerRegistry)
+    public function __construct(private ChildDeleteService $deleteChildService, private TranslatorInterface $translator, private ManagerRegistry $managerRegistry)
     {
-        $this->deleteChildService = $deleteChildService;
-        $this->translator = $translator;
     }
 
     /**

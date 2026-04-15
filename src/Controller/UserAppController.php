@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Anwesenheit;
 use App\Entity\Kind;
 use App\Entity\User;
 use App\Service\CheckinSchulkindservice;
@@ -79,7 +78,7 @@ class UserAppController extends AbstractController
     {
         try {
             $user = $this->managerRegistry->getRepository(User::class)->findOneBy(array('appToken' => $appToken));
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return new JsonResponse(array('error' => true));
         }
         return new JsonResponse($userConnectionService->generateConfirmationToken($user));
@@ -103,7 +102,7 @@ class UserAppController extends AbstractController
             $user->setAppDevice($request->get("device"));
             $user->setAppImei($request->get('imei'));
 
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return new JsonResponse(array('error' => true));
 
         }

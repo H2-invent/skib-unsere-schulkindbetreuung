@@ -17,10 +17,10 @@ class User extends UserBase
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
     #[ORM\JoinColumn(nullable: true)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class)]
+    #[ORM\ManyToOne(targetEntity: Stadt::class)]
     private $stadt;
     #[ORM\JoinColumn(nullable: true)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class)]
+    #[ORM\ManyToOne(targetEntity: Organisation::class)]
     private $organisation;
 
     #[ORM\Column(type: 'text', nullable: true)]

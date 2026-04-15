@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
+use App\Repository\FerienblockRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable as Translatable;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: \App\Repository\FerienblockRepository::class)]
+#[ORM\Entity(repositoryClass: FerienblockRepository::class)]
 class Ferienblock  implements TranslatableInterface
 {
     use TranslatableTrait;
@@ -65,11 +65,11 @@ class Ferienblock  implements TranslatableInterface
 
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'ferienblocks')]
+    #[ORM\ManyToOne(targetEntity: Stadt::class, inversedBy: 'ferienblocks')]
     private $stadt;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'ferienblocks')]
+    #[ORM\ManyToOne(targetEntity: Organisation::class, inversedBy: 'ferienblocks')]
     private $organisation;
 
     #[ORM\Column(type: 'integer', nullable: true)]
@@ -78,7 +78,7 @@ class Ferienblock  implements TranslatableInterface
     #[ORM\Column(type: 'json', nullable: true)]
     private $namePreise = [];
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\KindFerienblock::class, mappedBy: 'ferienblock')]
+    #[ORM\OneToMany(targetEntity: KindFerienblock::class, mappedBy: 'ferienblock')]
     private $kindFerienblocks;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
@@ -99,7 +99,7 @@ class Ferienblock  implements TranslatableInterface
     #[ORM\Column(type: 'integer', nullable: true)]
     private $amountVoucher;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Tags::class, inversedBy: 'feriens')]
+    #[ORM\ManyToMany(targetEntity: Tags::class, inversedBy: 'feriens')]
     private $kategorie;
 
     #[ORM\Column(type: 'text', nullable: true)]

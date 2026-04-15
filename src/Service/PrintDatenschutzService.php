@@ -19,22 +19,13 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 class PrintDatenschutzService
 {
 
-    private $templating;
-
     protected $parameterBag;
-    private $pdf;
-    private $fileSystem;
-    private $printService;
     private $tcpdf;
-    public function __construct(FilesystemOperator $publicUploadsFilesystem,TCPDFController $tcpdf, Environment $templating,ParameterBagInterface $parameterBag, PrintService $printService)
+    public function __construct(private FilesystemOperator $fileSystem,private TCPDFController $pdf, private Environment $templating,ParameterBagInterface $parameterBag, private PrintService $printService)
     {
 
-        $this->templating = $templating;
-        $this->printService = $printService;
         $this->parameterBag = $parameterBag;
-        $this->pdf = $tcpdf;
-        $this->fileSystem = $publicUploadsFilesystem;
-        $this->tcpdf = $tcpdf;
+        $this->tcpdf = $this->pdf;
     }
 
     public function printDatenschutz($text, $type = 'D', ?Stadt $stadt=null, ?Organisation $organisation = null)

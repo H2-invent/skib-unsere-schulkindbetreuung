@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
-use App\Entity\Kind;
-use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
-use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * Auto-generated Migration: Please modify to your needs!

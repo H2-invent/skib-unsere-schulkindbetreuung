@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Symfony\Component\Routing\Attribute\Route;
+use App\Entity\Stadt;
+use App\Entity\Stammdaten;
 use App\Entity\ChildSickReport;
 use App\Entity\ParentSickPortalAccess;
 use App\Entity\User;
@@ -16,11 +19,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class ParentSickPortalController extends AbstractController
 {
-    private const SESSION_KEY_STADT_SLUG = 'parent_sick_stadt_slug';
+    private const string SESSION_KEY_STADT_SLUG = 'parent_sick_stadt_slug';
 
     public function __construct(
         private ParentSickPortalService $portalService,
@@ -35,9 +37,9 @@ class ParentSickPortalController extends AbstractController
     public function requestLink(Request $request): Response
     {
         $stadtSlug = $request->query->get('stadt');
-        $stadt = $this->entityManager->getRepository(\App\Entity\Stadt::class)->findOneBy(['slug' => $stadtSlug]);
+        $stadt = $this->entityManager->getRepository(Stadt::class)->findOneBy(['slug' => $stadtSlug]);
 
-        if (!$stadt instanceof \App\Entity\Stadt) {
+        if (!$stadt instanceof Stadt) {
             throw $this->createNotFoundException('Stadt nicht gefunden.');
         }
         $request->getSession()->set(self::SESSION_KEY_STADT_SLUG, $stadt->getSlug());
@@ -115,7 +117,7 @@ class ParentSickPortalController extends AbstractController
             $parent = $registrationData['parent'];
             if ($parent) {
                 $registrations[$registrationKey]['parentHistory'] = $this->entityManager
-                    ->getRepository(\App\Entity\Stammdaten::class)
+                    ->getRepository(Stammdaten::class)
                     ->findHistoryStammdaten($parent);
             }
         }

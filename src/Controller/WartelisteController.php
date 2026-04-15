@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Kind;
 use App\Entity\Zeitblock;
 use App\Service\WartelisteService;
@@ -12,7 +13,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WartelisteController extends AbstractController
@@ -29,7 +29,7 @@ class WartelisteController extends AbstractController
     public function showWarteliste(
         Request   $request,
         #[MapEntity(id: 'block_id')]
-        Zeitblock $zeitblock = null): Response
+        ?Zeitblock $zeitblock = null): Response
     {
         if (!$zeitblock) {
             throw new NotFoundHttpException('Zeitblock wurde nicht gefunden');
@@ -48,9 +48,9 @@ class WartelisteController extends AbstractController
     public function add(
         Request   $request,
         #[MapEntity(id: 'kind_id')]
-        Kind      $kind = null,
+        ?Kind      $kind = null,
         #[MapEntity(id: 'block_id')]
-        Zeitblock $zeitblock = null): Response
+        ?Zeitblock $zeitblock = null): Response
     {
         if (!$kind) {
             throw new NotFoundHttpException('Kind wurde nicht gefunden');
@@ -60,7 +60,7 @@ class WartelisteController extends AbstractController
         }
         try {
             $this->wartelisteService->addKindToWarteliste($kind, $zeitblock);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return new JsonResponse(['snack' => $this->translator->trans('Fehler, bitte laden Sie die Seite neu')]);
 
         }
@@ -71,7 +71,7 @@ class WartelisteController extends AbstractController
     public function addComplete(
         Request   $request,
         #[MapEntity(id: 'kind_id')]
-        Kind      $kind = null,
+        ?Kind      $kind = null,
         ): Response
     {
         if (!$kind) {
@@ -95,9 +95,9 @@ class WartelisteController extends AbstractController
     public function remove(
         Request   $request,
         #[MapEntity(id: 'kind_id')]
-        Kind      $kind = null,
+        ?Kind      $kind = null,
         #[MapEntity(id: 'block_id')]
-        Zeitblock $zeitblock = null): Response
+        ?Zeitblock $zeitblock = null): Response
     {
         if (!$kind || !$zeitblock) {
             throw new NotFoundHttpException('Kind wurde nicht gefunden');
@@ -115,9 +115,9 @@ class WartelisteController extends AbstractController
     public function accept(
         Request   $request,
         #[MapEntity(id: 'kind_id')]
-        Kind      $kind = null,
+        ?Kind      $kind = null,
         #[MapEntity(id: 'block_id')]
-        Zeitblock $zeitblock = null): Response
+        ?Zeitblock $zeitblock = null): Response
     {
         if (!$kind || !$zeitblock) {
             throw new NotFoundHttpException('Kind wurde nicht gefunden');

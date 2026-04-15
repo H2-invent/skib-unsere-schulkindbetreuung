@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Active;
-use App\Entity\Kind;
 use App\Entity\Kundennummern;
 use App\Entity\Organisation;
 use App\Entity\Sepa;
@@ -13,7 +13,6 @@ use App\Form\Type\SepaType;
 use App\Service\ElternService;
 use App\Service\HistoryService;
 use App\Service\SepaCreateService;
-use App\Twig\Eltern;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,15 +20,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function Doctrine\ORM\QueryBuilder;
 
 class SepaController extends AbstractController
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $entityManager, private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(private EntityManagerInterface $em, private ManagerRegistry $managerRegistry)
     {
-        $this->em = $entityManager;
     }
 
     /**

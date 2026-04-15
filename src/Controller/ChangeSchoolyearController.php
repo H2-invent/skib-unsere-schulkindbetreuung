@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Kind;
 use App\Service\AnmeldeEmailService;
 use App\Service\ChildSchoolYearChangeService;
-use App\Service\ChildEmailChangeService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +13,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChangeSchoolyearController extends AbstractController
 {
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator, private ManagerRegistry $managerRegistry)
+    public function __construct(private TranslatorInterface $translator, private ManagerRegistry $managerRegistry)
     {
-        $this->translator = $translator;
     }
 
 

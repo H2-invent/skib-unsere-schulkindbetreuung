@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Active;
-use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Form\Type\SchuljahrType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SchuljahrController extends AbstractController
 {
-    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry, private Security $security)
+    public function __construct(private ManagerRegistry $managerRegistry, private Security $security)
     {
     }
 

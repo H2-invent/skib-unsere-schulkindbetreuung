@@ -9,11 +9,8 @@
 namespace App\Service;
 
 
-use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Rechnung;
-use App\Entity\Stadt;
-use App\Entity\Stammdaten;
 
 
 use League\Flysystem\FilesystemOperator;
@@ -26,19 +23,13 @@ class PrintRechnungService
 {
 
 
-    private $translator;
     protected $parameterBag;
-    private $pdf;
-    private $fileSystem;
 
-    public function __construct(FilesystemOperator $publicUploadsFilesystem, TCPDFController $tcpdf,  TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(private FilesystemOperator $fileSystem, private TCPDFController $pdf,  private TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
 
 
-        $this->translator = $translator;
         $this->parameterBag = $parameterBag;
-        $this->pdf = $tcpdf;
-        $this->fileSystem = $publicUploadsFilesystem;
     }
 
     public function printRechnung($fileName, Organisation $organisation, Rechnung $rechnung, $type = 'D')

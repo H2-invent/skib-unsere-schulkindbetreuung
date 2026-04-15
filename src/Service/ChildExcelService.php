@@ -13,42 +13,30 @@ use App\Controller\ChildController;
 use App\Controller\LoerrachWorkflowController;
 use App\Entity\Kind;
 use App\Entity\Stadt;
-use App\Entity\Stammdaten;
 use App\Service\ExcelExport\CreateExcelDayService;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function Composer\Autoload\includeFile;
 
 class ChildExcelService
 {
     private $spreadsheet;
     private $writer;
-    private $translator;
-    private $tokenStorage;
-    private $createExcelDayService;
     private Stadt $stadt;
     private $alphas;
-    private ElternService $elternService;
-    private BerechnungsService $berechnungsService;
     private $stichtag = null;
 
     public function __construct(
-        TranslatorInterface                $translator,
-        TokenStorageInterface              $tokenStorage,
-        CreateExcelDayService              $createExcelDayService,
-        ElternService                      $elternService,
-        BerechnungsService                 $berechnungsService,
+        private TranslatorInterface                $translator,
+        private TokenStorageInterface              $tokenStorage,
+        private CreateExcelDayService              $createExcelDayService,
+        private ElternService                      $elternService,
+        private BerechnungsService                 $berechnungsService,
         private LoerrachWorkflowController $loerrachWorkflowController)
     {
         $this->spreadsheet = new Spreadsheet();
         $this->writer = new Xlsx($this->spreadsheet);
-        $this->translator = $translator;
-        $this->tokenStorage = $tokenStorage;
-        $this->createExcelDayService = $createExcelDayService;
-        $this->elternService = $elternService;
-        $this->berechnungsService = $berechnungsService;
     }
 
     public function generateExcel($kinder, Stadt $stadt, $wochentag, $stichtag = null)
@@ -87,7 +75,7 @@ class ChildExcelService
     private function createColumnsArray($end_column, $first_letters = '')
     {
         $columns = array();
-        $length = strlen($end_column);
+        $length = strlen((string) $end_column);
         $letters = range('A', 'Z');
 
         // Iterate over 26 letters.
@@ -201,7 +189,7 @@ class ChildExcelService
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, '');
                 }
                 if ($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_VIEW_NOTICE')) {
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, strip_tags($data->getInternalNotice()));
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, strip_tags((string) $data->getInternalNotice()));
 
                 }
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getEmail());

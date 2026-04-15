@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslationTrait;
 
@@ -174,10 +173,7 @@ class StadtTranslation implements TranslationInterface
         return $this->settingGehaltsklassenHelp;
     }
 
-    /**
-     * @param mixed $settingGehaltsklassenHelp
-     */
-    public function setSettingGehaltsklassenHelp($settingGehaltsklassenHelp): self
+    public function setSettingGehaltsklassenHelp(mixed $settingGehaltsklassenHelp): self
     {
         $this->settingGehaltsklassenHelp = $settingGehaltsklassenHelp;
         return $this;
@@ -191,10 +187,7 @@ class StadtTranslation implements TranslationInterface
         return $this->settingKinderimKigaHelp;
     }
 
-    /**
-     * @param mixed $settingKinderimKigaHelp
-     */
-    public function setSettingKinderimKigaHelp($settingKinderimKigaHelp): self
+    public function setSettingKinderimKigaHelp(mixed $settingKinderimKigaHelp): self
     {
         $this->settingKinderimKigaHelp = $settingKinderimKigaHelp;
         return $this;
@@ -208,10 +201,7 @@ class StadtTranslation implements TranslationInterface
         return $this->settingsAnzahlKindergeldempfangerHelp;
     }
 
-    /**
-     * @param mixed $settingsAnzahlKindergeldempfangerHelp
-     */
-    public function setSettingsAnzahlKindergeldempfangerHelp($settingsAnzahlKindergeldempfangerHelp): self
+    public function setSettingsAnzahlKindergeldempfangerHelp(mixed $settingsAnzahlKindergeldempfangerHelp): self
     {
         $this->settingsAnzahlKindergeldempfangerHelp = $settingsAnzahlKindergeldempfangerHelp;
         return $this;
@@ -225,10 +215,7 @@ class StadtTranslation implements TranslationInterface
         return $this->settingsSozielHilfeEmpfangerHelp;
     }
 
-    /**
-     * @param mixed $settingsSozielHilfeEmpfangerHelp
-     */
-    public function setSettingsSozielHilfeEmpfangerHelp($settingsSozielHilfeEmpfangerHelp): self
+    public function setSettingsSozielHilfeEmpfangerHelp(mixed $settingsSozielHilfeEmpfangerHelp): self
     {
         $this->settingsSozielHilfeEmpfangerHelp = $settingsSozielHilfeEmpfangerHelp;
         return $this;
@@ -242,10 +229,7 @@ class StadtTranslation implements TranslationInterface
         return $this->settingsEingabeDerGeschwisterHelp;
     }
 
-    /**
-     * @param mixed $settingsEingabeDerGeschwisterHelp
-     */
-    public function setSettingsEingabeDerGeschwisterHelp($settingsEingabeDerGeschwisterHelp): void
+    public function setSettingsEingabeDerGeschwisterHelp(mixed $settingsEingabeDerGeschwisterHelp): void
     {
         $this->settingsEingabeDerGeschwisterHelp = $settingsEingabeDerGeschwisterHelp;
     }
@@ -258,10 +242,7 @@ class StadtTranslation implements TranslationInterface
         return $this->settingsweiterePersonenberechtigteHelp;
     }
 
-    /**
-     * @param mixed $settingsweiterePersonenberechtigteHelp
-     */
-    public function setSettingsweiterePersonenberechtigteHelp($settingsweiterePersonenberechtigteHelp): void
+    public function setSettingsweiterePersonenberechtigteHelp(mixed $settingsweiterePersonenberechtigteHelp): void
     {
         $this->settingsweiterePersonenberechtigteHelp = $settingsweiterePersonenberechtigteHelp;
     }
@@ -274,10 +255,7 @@ class StadtTranslation implements TranslationInterface
         return $this->settingsEingabeDerGeschwisterHelpUpload;
     }
 
-    /**
-     * @param mixed $settingsEingabeDerGeschwisterHelpUpload
-     */
-    public function setSettingsEingabeDerGeschwisterHelpUpload($settingsEingabeDerGeschwisterHelpUpload): void
+    public function setSettingsEingabeDerGeschwisterHelpUpload(mixed $settingsEingabeDerGeschwisterHelpUpload): void
     {
         $this->settingsEingabeDerGeschwisterHelpUpload = $settingsEingabeDerGeschwisterHelpUpload;
     }
@@ -289,10 +267,7 @@ class StadtTranslation implements TranslationInterface
         return $this->schulindbetreuungPreiseFreitext;
     }
 
-    /**
-     * @param mixed $schulindbetreuungPreiseFreitext
-     */
-    public function setSchulindbetreuungPreiseFreitext($schulindbetreuungPreiseFreitext): void
+    public function setSchulindbetreuungPreiseFreitext(mixed $schulindbetreuungPreiseFreitext): void
     {
         $this->schulindbetreuungPreiseFreitext = $schulindbetreuungPreiseFreitext;
     }
@@ -305,10 +280,7 @@ class StadtTranslation implements TranslationInterface
         return $this->schulkindbetreuungBlockDeaktiviertText;
     }
 
-    /**
-     * @param mixed $schulkindbetreuungBlockDeaktiviertText
-     */
-    public function setSchulkindbetreuungBlockDeaktiviertText($schulkindbetreuungBlockDeaktiviertText): void
+    public function setSchulkindbetreuungBlockDeaktiviertText(mixed $schulkindbetreuungBlockDeaktiviertText): void
     {
         $this->schulkindbetreuungBlockDeaktiviertText = $schulkindbetreuungBlockDeaktiviertText;
     }
@@ -329,7 +301,7 @@ class StadtTranslation implements TranslationInterface
                 4 => '4.Klasse'
             );
         }
-        return json_decode($this->settings_skib_shoolyear_naming, true);
+        return json_decode((string) $this->settings_skib_shoolyear_naming, true);
     }
 
     public function setSettingsSkibShoolyearNaming(?string $settings_skib_shoolyear_naming): self
@@ -347,10 +319,7 @@ class StadtTranslation implements TranslationInterface
         return $this->settingsSkibTextWhenClosed;
     }
 
-    /**
-     * @param mixed $settingsSkibTextWhenClosed
-     */
-    public function setSettingsSkibTextWhenClosed($settingsSkibTextWhenClosed): void
+    public function setSettingsSkibTextWhenClosed(mixed $settingsSkibTextWhenClosed): void
     {
         $this->settingsSkibTextWhenClosed = $settingsSkibTextWhenClosed;
     }
@@ -363,10 +332,7 @@ class StadtTranslation implements TranslationInterface
         return $this->popUpTextVorBezahlung;
     }
 
-    /**
-     * @param mixed $popUpTextVorBezahlung
-     */
-    public function setPopUpTextVorBezahlung($popUpTextVorBezahlung): void
+    public function setPopUpTextVorBezahlung(mixed $popUpTextVorBezahlung): void
     {
         $this->popUpTextVorBezahlung = $popUpTextVorBezahlung;
     }
@@ -391,10 +357,7 @@ class StadtTranslation implements TranslationInterface
         return $this->settingsExtraTextEmailAnmeldungMitBeworben;
     }
 
-    /**
-     * @param mixed $settingsExtraTextEmailAnmeldungMitBeworben
-     */
-    public function setSettingsExtraTextEmailAnmeldungMitBeworben($settingsExtraTextEmailAnmeldungMitBeworben): void
+    public function setSettingsExtraTextEmailAnmeldungMitBeworben(mixed $settingsExtraTextEmailAnmeldungMitBeworben): void
     {
         $this->settingsExtraTextEmailAnmeldungMitBeworben = $settingsExtraTextEmailAnmeldungMitBeworben;
     }
@@ -407,10 +370,7 @@ class StadtTranslation implements TranslationInterface
         return $this->settingsExtraTextEmailAnmeldung;
     }
 
-    /**
-     * @param mixed $settingsExtraTextEmailAnmeldung
-     */
-    public function setSettingsExtraTextEmailAnmeldung($settingsExtraTextEmailAnmeldung): void
+    public function setSettingsExtraTextEmailAnmeldung(mixed $settingsExtraTextEmailAnmeldung): void
     {
         $this->settingsExtraTextEmailAnmeldung = $settingsExtraTextEmailAnmeldung;
     }
@@ -423,10 +383,7 @@ class StadtTranslation implements TranslationInterface
         return $this->emailtemplateAnmeldung;
     }
 
-    /**
-     * @param mixed $emailtemplateAnmeldung
-     */
-    public function setEmailtemplateAnmeldung($emailtemplateAnmeldung): void
+    public function setEmailtemplateAnmeldung(mixed $emailtemplateAnmeldung): void
     {
         $this->emailtemplateAnmeldung = $emailtemplateAnmeldung;
     }
@@ -439,10 +396,7 @@ class StadtTranslation implements TranslationInterface
         return $this->emailtemplateBuchung;
     }
 
-    /**
-     * @param mixed $emailtemplateBuchung
-     */
-    public function setEmailtemplateBuchung($emailtemplateBuchung): void
+    public function setEmailtemplateBuchung(mixed $emailtemplateBuchung): void
     {
         $this->emailtemplateBuchung = $emailtemplateBuchung;
     }
@@ -455,10 +409,7 @@ class StadtTranslation implements TranslationInterface
         return $this->emailtemplateAbmeldung;
     }
 
-    /**
-     * @param mixed $emailtemplateAbmeldung
-     */
-    public function setEmailtemplateAbmeldung($emailtemplateAbmeldung): void
+    public function setEmailtemplateAbmeldung(mixed $emailtemplateAbmeldung): void
     {
         $this->emailtemplateAbmeldung = $emailtemplateAbmeldung;
     }
@@ -471,10 +422,7 @@ class StadtTranslation implements TranslationInterface
         return $this->emailtemplateStammdatenEdit;
     }
 
-    /**
-     * @param mixed $emailtemplateStammdatenEdit
-     */
-    public function setEmailtemplateStammdatenEdit($emailtemplateStammdatenEdit): void
+    public function setEmailtemplateStammdatenEdit(mixed $emailtemplateStammdatenEdit): void
     {
         $this->emailtemplateStammdatenEdit = $emailtemplateStammdatenEdit;
     }
@@ -487,10 +435,7 @@ class StadtTranslation implements TranslationInterface
         return $this->settingsChronicalDesesHelp;
     }
 
-    /**
-     * @param mixed $settingsChronicalDesesHelp
-     */
-    public function setSettingsChronicalDesesHelp($settingsChronicalDesesHelp): void
+    public function setSettingsChronicalDesesHelp(mixed $settingsChronicalDesesHelp): void
     {
         $this->settingsChronicalDesesHelp = $settingsChronicalDesesHelp;
     }

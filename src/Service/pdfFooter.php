@@ -5,10 +5,6 @@ namespace App\Service;
 use App\Entity\Organisation;
 use App\Entity\Stadt;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 // <- Add this
 
 class pdfFooter extends \TCPDF

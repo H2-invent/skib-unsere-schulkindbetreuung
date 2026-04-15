@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\PaymentRefundRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\PaymentRefundRepository::class)]
+#[ORM\Entity(repositoryClass: PaymentRefundRepository::class)]
 class PaymentRefund
 {
     #[ORM\Id]
@@ -25,7 +26,7 @@ class PaymentRefund
     private $refundType;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Payment::class, inversedBy: 'refunds')]
+    #[ORM\ManyToOne(targetEntity: Payment::class, inversedBy: 'refunds')]
     private $payment;
 
     #[ORM\Column(type: 'float')]
@@ -154,17 +155,11 @@ class PaymentRefund
     }
     public function getTypeAsString(): ?string
     {
-        switch ($this->refundType){
-            case 0:
-                return 'Manuell';
-                break;
-            case 1:
-                return 'Automatisch';
-                break;
-            default:
-                return 'nicht angegebene';
-                break;
-        }
+        return match ($this->refundType) {
+            0 => 'Manuell',
+            1 => 'Automatisch',
+            default => 'nicht angegebene',
+        };
 
 
     }

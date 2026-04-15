@@ -2,48 +2,16 @@
 
 namespace App\Service;
 
-use App\Entity\Active;
-use App\Entity\Ferienblock;
-use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
 use App\Entity\Payment;
 use App\Entity\PaymentRefund;
 use App\Entity\PaymentSepa;
-use App\Entity\Rechnung;
-use App\Entity\Sepa;
-use App\Entity\Stadt;
 
 use App\Entity\Stammdaten;
-
-use App\Entity\Zeitblock;
-use App\Form\Type\ConfirmType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-
-use phpDocumentor\Reflection\Types\Boolean;
-use PHPUnit\Util\Json;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Security;
-
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Twig\Environment;
-use function Doctrine\ORM\QueryBuilder;
 
 
 // <- Add this
@@ -52,17 +20,8 @@ class CheckoutPaymentService
 {
 
 
-    private $em;
-    private $braintree;
-    private $logger;
-    private $stripe;
-
-    public function __construct(CheckoutStripeService $checkoutStripeService, LoggerInterface $logger, EntityManagerInterface $entityManager, CheckoutBraintreeService $checkoutBraintreeService)
+    public function __construct(private CheckoutStripeService $stripe, private LoggerInterface $logger, private EntityManagerInterface $em, private CheckoutBraintreeService $braintree)
     {
-        $this->em = $entityManager;
-        $this->braintree = $checkoutBraintreeService;
-        $this->logger = $logger;
-        $this->stripe = $checkoutStripeService;
     }
 
     public function getFerienBlocksKinder(Organisation $organisation, Stammdaten $stammdaten): ArrayCollection
@@ -128,7 +87,7 @@ class CheckoutPaymentService
             }
             $this->em->flush();
             return $res;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $res;
         }
     }
@@ -176,7 +135,7 @@ class CheckoutPaymentService
             $this->em->flush();
 
             return true;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return false;
         }
 

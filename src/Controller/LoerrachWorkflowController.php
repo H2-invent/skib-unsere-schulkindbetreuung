@@ -33,7 +33,6 @@ use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindBlockSchulkind;
 use App\Service\WorkflowAbschluss;
 use Doctrine\Persistence\ManagerRegistry;
-use phpDocumentor\Reflection\DocBlock;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -229,7 +228,7 @@ class LoerrachWorkflowController extends AbstractController
         $kind = $schulkindBetreuungKindNeuService->cleanUpKind($schuljahr, $schule, $kind);
         try {
             $form->handleRequest($request);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $text = $translator->trans('Überprüfe Sie Ihre Eingabe');
             return new JsonResponse(array('snack' => array(array('type' => 'error', 'text' => $text))));
         }
@@ -239,7 +238,7 @@ class LoerrachWorkflowController extends AbstractController
             try {
                 $kind = $form->getData();
                 return $schulkindBetreuungKindNeuService->saveKind($kind, $this->isGranted('ROLE_ORG_CHILD_CHANGE'), $stadt, $form);
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $text = $translator->trans('Fehler. Bitte versuchen Sie es erneut.');
                 return new JsonResponse(array('snack' => array(array('type' => 'error', 'text' => $text))));
             }
@@ -281,7 +280,7 @@ class LoerrachWorkflowController extends AbstractController
         }
         try {
             $form->handleRequest($request);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $text = $translator->trans('Überprüfe Sie Ihre Eingabe');
             return new JsonResponse(array('snack' => array(array('type' => 'error', 'text' => $text))));
         }
@@ -289,7 +288,7 @@ class LoerrachWorkflowController extends AbstractController
             try {
                 $kind = $form->getData();
                 return $schulkindBetreuungKindNeuService->saveKind($kind, $this->isGranted('ROLE_ORG_CHILD_CHANGE'), $stadt, $form);
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $text = array($translator->trans('Fehler. Bitte versuchen Sie es erneut.'));
                 return new JsonResponse(array('snack' => array(array('type' => 'error', 'text' => $text))));
             }

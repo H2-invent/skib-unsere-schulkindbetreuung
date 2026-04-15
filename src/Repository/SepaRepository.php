@@ -7,7 +7,6 @@ use App\Entity\Sepa;
 use App\Entity\Stammdaten;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Sepa|null find($id, $lockMode = null, $lockVersion = null)

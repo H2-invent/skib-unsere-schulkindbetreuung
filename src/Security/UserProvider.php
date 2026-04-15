@@ -4,6 +4,7 @@
 namespace App\Security;
 
 
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -12,8 +13,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface
 {
-    private $entityManager;
-
     /**
      * UserProvider constructor.
      * @param EntityManagerInterface $entityManager
@@ -24,9 +23,8 @@ class UserProvider implements UserProviderInterface
      * @internal param Session $session
      * @internal param UserOptionService $userOptionsService
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -39,7 +37,7 @@ class UserProvider implements UserProviderInterface
      *
      * @return UserInterface
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function loadUserByUsername($username)
     {
@@ -66,7 +64,7 @@ class UserProvider implements UserProviderInterface
     {
         if (!$user instanceof User) {
             throw new UnsupportedUserException(
-                sprintf('Instances of "%s" are not supported.', get_class($user))
+                sprintf('Instances of "%s" are not supported.', $user::class)
             );
         }
         return $user;

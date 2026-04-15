@@ -9,10 +9,7 @@
 namespace App\Service;
 
 
-use App\Controller\LoerrachWorkflowController;
-use App\Entity\Kind;
 use App\Entity\Organisation;
-use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use League\Flysystem\FilesystemOperator;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
@@ -23,33 +20,15 @@ use Twig\Environment;
 
 class StammdatenEditEmailService
 {
-    private $print;
-    private $tcpdf;
-    private $translator;
-    private $ics;
-    private $templating;
-    private $mailer;
-    private $abgService;
-    private $parameterbag;
     private $attachment;
     private $betreff;
     private $content;
-    private FilesystemOperator $internFileSystem;
 
-    public function __construct(FilesystemOperator $internFileSystem, ParameterBagInterface $parameterBag, PrintAGBService $printAGBService, PrintService $print, TCPDFController $tcpdf, TranslatorInterface $translator, IcsService $icsService, Environment $templating, MailerService $mailer)
+    public function __construct(private FilesystemOperator $internFileSystem, private ParameterBagInterface $parameterbag, private PrintAGBService $abgService, private PrintService $print, private TCPDFController $tcpdf, private TranslatorInterface $translator, private IcsService $ics, private Environment $templating, private MailerService $mailer)
     {
-        $this->print = $print;
-        $this->tcpdf = $tcpdf;
-        $this->translator = $translator;
-        $this->ics = $icsService;
-        $this->templating = $templating;
-        $this->mailer = $mailer;
-        $this->abgService = $printAGBService;
-        $this->parameterbag = $parameterBag;
         $this->attachment = null;
         $this->betreff = null;
         $this->content = null;
-        $this->internFileSystem = $internFileSystem;
     }
 
     public function sendEmail(Stammdaten $adresse, Organisation $organisation, $text)

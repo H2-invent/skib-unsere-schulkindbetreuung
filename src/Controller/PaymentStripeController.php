@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Payment;
-use App\Entity\PaymentBraintree;
 use App\Entity\PaymentStripe;
 use App\Entity\Stadt;
 use App\Service\CheckoutBraintreeService;
@@ -11,14 +11,13 @@ use App\Service\CheckoutPaymentService;
 use App\Service\StamdatenFromCookie;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentStripeController extends AbstractController
 {
-    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(private ManagerRegistry $managerRegistry)
     {
 
     }

@@ -16,15 +16,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MailgunWebhockService
 {
-    private $em;
-    private $mailer;
-    private $parameterBag;
-
-    public function __construct(ParameterBagInterface $parameterBag, EntityManagerInterface $entityManager, MailerService  $mailer)
+    public function __construct(private ParameterBagInterface $parameterBag, private EntityManagerInterface $em, private MailerService  $mailer)
     {
-        $this->em = $entityManager;
-        $this->mailer = $mailer;
-        $this->parameterBag = $parameterBag;
     }
 
     public function saveFailure($parametersAsArray)
@@ -54,7 +47,7 @@ class MailgunWebhockService
                 'Message: ' . $emailResult->getDescription() . PHP_EOL .
                 'Description: ' . $emailResult->getMessage() . PHP_EOL .
                 'Reciepent: ' . $emailResult->getReciever() . PHP_EOL .
-                'Complete: ' . print_r(json_decode($emailResult->getPayload()), true)
+                'Complete: ' . print_r(json_decode((string) $emailResult->getPayload()), true)
                 ,
                 'alarm@unsere-schulkindbetreuung.de'
             );
@@ -95,7 +88,7 @@ class MailgunWebhockService
     }
 
     public function checkHash($hash,$data){
-        $newhash = hash_hmac('sha256' , $data , $this->parameterBag->get('mailgunApiKEy'));
+        $newhash = hash_hmac('sha256' , (string) $data , $this->parameterBag->get('mailgunApiKEy'));
         return $newhash == $hash;
     }
 }

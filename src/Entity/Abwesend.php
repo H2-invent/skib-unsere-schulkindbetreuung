@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
+use App\Repository\AbwesendRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\AbwesendRepository::class)]
+#[ORM\Entity(repositoryClass: AbwesendRepository::class)]
 class Abwesend
 {
     #[ORM\Id]
@@ -17,7 +17,7 @@ class Abwesend
 
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\kind::class, inversedBy: 'abwesends')]
+    #[ORM\ManyToOne(targetEntity: kind::class, inversedBy: 'abwesends')]
     private $kind;
 
     #[ORM\Column(type: 'datetime')]
@@ -27,7 +27,7 @@ class Abwesend
     private $bis;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Zeitblock::class, inversedBy: 'abwesenheit')]
+    #[ORM\ManyToOne(targetEntity: Zeitblock::class, inversedBy: 'abwesenheit')]
     private $zeitblock;
 
 

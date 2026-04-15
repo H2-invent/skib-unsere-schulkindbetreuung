@@ -2,11 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Ferienblock;
 use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
-use App\Entity\Stadt;
-use App\Service\PrintAGBService;
 use App\Service\PrintFerienNameTagService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

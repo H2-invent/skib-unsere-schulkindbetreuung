@@ -2,11 +2,8 @@
 
 namespace App\Service;
 
-use App\Entity\Payment;
-use App\Entity\PaymentBraintree;
 use App\Entity\PaymentRefund;
 use App\Entity\PaymentStripe;
-use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Stripe\Charge;
@@ -20,13 +17,8 @@ class CheckoutStripeService
 {
 
 
-    private $em;
-    private $logger;
-
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager)
+    public function __construct(private LoggerInterface $logger, private EntityManagerInterface $em)
     {
-        $this->em = $entityManager;
-        $this->logger = $logger;
     }
 
 
@@ -59,7 +51,7 @@ class CheckoutStripeService
                     $this->em->remove($payment);
                     $paymentStripe = null;
                 }
-            }catch (\Exception $e){
+            }catch (\Exception){
                 $payment = $paymentStripe->getPayment();
                 $payment->setBraintree(null);
                 $this->em->remove($paymentStripe);

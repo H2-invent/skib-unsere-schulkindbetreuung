@@ -9,9 +9,7 @@
 namespace App\Service;
 
 
-use App\Entity\Kind;
 use App\Entity\KindFerienblock;
-use App\Entity\Organisation;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -21,18 +19,12 @@ use Twig\Environment;
 class FerienPrintService
 {
 
-    private $templating;
     protected $parameterBag;
-    private $router;
-    private $tcpdfController;
-    public function __construct(TCPDFController $tcpdf, Environment $templating, ParameterBagInterface $parameterBag, UrlGeneratorInterface $router)
+    public function __construct(private TCPDFController $tcpdfController, private Environment $templating, ParameterBagInterface $parameterBag, private UrlGeneratorInterface $router)
 
     {
 
-        $this->router = $router;
-        $this->templating = $templating;
         $this->parameterBag = $parameterBag;
-         $this->tcpdfController = $tcpdf;
 
     }
 

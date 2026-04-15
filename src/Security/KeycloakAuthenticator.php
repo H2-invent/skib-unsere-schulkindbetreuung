@@ -4,18 +4,10 @@
 namespace App\Security;
 
 
-use App\Entity\FosUser;
-use App\Entity\MyUser;
 use App\Entity\User;
-use App\Service\IndexUserService;
-use App\Service\ThemeService;
-use App\Service\UserCreatorService;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
-use KnpU\OAuth2ClientBundle\Client\Provider\KeycloakClient;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
-use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
-use League\OAuth2\Client\Provider\GoogleUser;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -24,7 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
@@ -35,30 +26,10 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 class KeycloakAuthenticator extends OAuth2Authenticator implements AuthenticationEntryPointInterface
 {
     use TargetPathTrait;
-
-    private $clientRegistry;
-    private $em;
-    private $router;
-    private $tokenStorage;
     private $userManager;
-    private $paramterBag;
-    private $logger;
 
-    public function __construct(
-        LoggerInterface        $logger,
-        ParameterBagInterface  $parameterBag,
-        TokenStorageInterface  $tokenStorage,
-        ClientRegistry         $clientRegistry,
-        EntityManagerInterface $em,
-        RouterInterface        $router,)
+    public function __construct(private LoggerInterface        $logger, private ParameterBagInterface  $paramterBag, private TokenStorageInterface  $tokenStorage, private ClientRegistry         $clientRegistry, private EntityManagerInterface $em, private RouterInterface        $router)
     {
-        $this->clientRegistry = $clientRegistry;
-        $this->em = $em;
-        $this->router = $router;
-        $this->tokenStorage = $tokenStorage;
-        $this->paramterBag = $parameterBag;
-        $this->logger = $logger;
-
     }
 
     public function supports(Request $request): bool
@@ -163,7 +134,7 @@ class KeycloakAuthenticator extends OAuth2Authenticator implements Authenticatio
      * Called when authentication is needed, but it's not sent.
      * This redirects to the 'login'.
      */
-    public function start(Request $request, AuthenticationException $authException = null)
+    public function start(Request $request, ?AuthenticationException $authException = null)
     {
         $targetUrl = $this->router->generate('login_keycloak');
         return new RedirectResponse($targetUrl);

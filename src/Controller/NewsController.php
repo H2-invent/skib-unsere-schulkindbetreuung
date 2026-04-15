@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Active;
 use App\Entity\News;
 use App\Entity\Organisation;
@@ -17,11 +18,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function Doctrine\ORM\QueryBuilder;
 
 class NewsController extends AbstractController
 {
-    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
     /**
@@ -387,7 +387,7 @@ class NewsController extends AbstractController
         }
 
         $stammdaten = $this->getStammdatenFromNEws($news);
-        $sendReport = $news->getSendHistory() ? $news->getSendHistory() : array();
+        $sendReport = $news->getSendHistory() ?: array();
         $mailContent = $this->renderView('email/news.html.twig', array('sender' => $news->getOrganisation(), 'news' => $news, 'stammdaten' => $stammdaten));
         foreach ($stammdaten as $data) {
             $data = $elternService->getLatestElternFromCEltern($data);
@@ -450,7 +450,7 @@ class NewsController extends AbstractController
 
         $stammdaten = $this->getStammdatenFromNEws($news);
         $mailContent = $this->renderView('email/news.html.twig', array('sender' => $news->getStadt(), 'news' => $news, 'stammdaten' => $stammdaten));
-        $sendReport = $news->getSendHistory() ? $news->getSendHistory() : array();
+        $sendReport = $news->getSendHistory() ?: array();
         foreach ($stammdaten as $data) {
             $data = $elternService->getLatestElternFromCEltern($data);
             if ($data){

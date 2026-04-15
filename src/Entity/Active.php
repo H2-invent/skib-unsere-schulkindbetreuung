@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Repository\ActiveRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
-#[ORM\Entity(repositoryClass: \App\Repository\ActiveRepository::class)]
+#[ORM\Entity(repositoryClass: ActiveRepository::class)]
 class Active
 {
     #[ORM\Id]
@@ -23,7 +24,7 @@ class Active
     private $bis;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'actives')]
+    #[ORM\ManyToOne(targetEntity: Stadt::class, inversedBy: 'actives')]
     private $stadt;
 
     #[ORM\Column(type: 'datetime')]
@@ -32,7 +33,7 @@ class Active
     #[ORM\Column(type: 'datetime')]
     private $anmeldeEnde;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Zeitblock::class, mappedBy: 'active')]
+    #[ORM\OneToMany(targetEntity: Zeitblock::class, mappedBy: 'active')]
     private $blocks;
 
     #[ORM\ManyToMany(targetEntity: News::class, mappedBy: 'schuljahre')]

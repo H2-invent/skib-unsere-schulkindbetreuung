@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Organisation;
 use App\Entity\Stadt;
 use App\Form\Type\OrganisationType;
@@ -13,7 +14,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OrganisationController extends AbstractController
 {
-    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
     /**
@@ -137,7 +138,7 @@ class OrganisationController extends AbstractController
     private function friendlyUrl($url)
     {
         // everything to lower and no spaces begin or end
-        $url = strtolower(trim($url));
+        $url = strtolower(trim((string) $url));
         //replace accent characters, depends your language is needed
 
         // decode html maybe needed if there's html I normally don't use this

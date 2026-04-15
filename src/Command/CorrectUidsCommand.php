@@ -14,12 +14,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CorrectUidsCommand extends Command
 {
     protected static $defaultName = 'app:correct:uids';
-    private $em;
 
-    public function __construct(EntityManagerInterface $entityManager, string $name = null)
+    public function __construct(private EntityManagerInterface $em, ?string $name = null)
     {
         parent::__construct($name);
-        $this->em = $entityManager;
     }
 
     protected function configure(): void
@@ -40,7 +38,7 @@ class CorrectUidsCommand extends Command
             $progressBar->advance();
             try {
                 $this->em->getRepository(Stammdaten::class)->findActualStammdatenByUid($data->getUid());
-            } catch (\Exception $exception) {
+            } catch (\Exception) {
                 $stammdatenLocal = $this->em->getRepository(Stammdaten::class)->findBy(array('uid' => $data->getUid()));
                 $tracingArrold = null;
                 $tracingDate = null;
@@ -49,7 +47,7 @@ class CorrectUidsCommand extends Command
                         $tracingDate = $data2->getCreatedAt();
                     $tracingArrold = $data2->getTracing();
                 }
-                    $data2->setUid(md5($data2->getTracing()));
+                    $data2->setUid(md5((string) $data2->getTracing()));
                     $this->em->persist($data2);
                     $io->info(sprintf('we replace uid from %s', $data2->getEmail()));
                     $count++;
