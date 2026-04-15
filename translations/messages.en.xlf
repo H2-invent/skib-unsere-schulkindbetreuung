@@ -725,11 +725,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="8vO5a9_" resname="Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:">
         <source>Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:</source>
-        <target state="needs-translation">Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert. Aus diesem Grund senden wir Ihnen die Buchungsbstätigung dieses Kindes nochmals zu:</target>
+        <target state="translated">Your child's school year has been changed by an employee of the caring organization. For this reason we will send you the booking confirmation of this child again:</target>
       </trans-unit>
       <trans-unit id="rmnpZcO" resname="Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert.">
         <source>Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert.</source>
-        <target state="needs-translation">Das Schuljahr Ihres Kindes wurde von einem Mitarbeiter der betreuenden Organisation geändert.</target>
+        <target state="translated">Your e-mail address has been changed by an employee of the organization in charge.</target>
       </trans-unit>
       <trans-unit id="CcWdhLi" resname="Bestätigungscode fehlerhaft">
         <source>Bestätigungscode fehlerhaft</source>
@@ -745,7 +745,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="QiG5uAg" resname="Uhr">
         <source>Uhr</source>
-        <target state="needs-translation">Uhr</target>
+        <target state="translated">clock</target>
       </trans-unit>
       <trans-unit id="yuOujiA" resname="Als Storniert vorgemerkt">
         <source>Als Storniert vorgemerkt</source>
@@ -973,19 +973,19 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="wDzoM92" resname="Warteliste für Ihr Kind %vorname%">
         <source>Warteliste für Ihr Kind %vorname%</source>
-        <target state="needs-translation">Warteliste für Ihr Kind %vorname%</target>
+        <target state="translated">Waitlist for your child %vorname%</target>
       </trans-unit>
       <trans-unit id="iaxN3xl" resname="Original Account">
         <source>Original Account</source>
-        <target state="needs-translation">Original Account</target>
+        <target state="translated">Original Account</target>
       </trans-unit>
       <trans-unit id="Z7aWRoY" resname="Dashboard">
         <source>Dashboard</source>
-        <target state="needs-translation">Dashboard</target>
+        <target state="translated">Dashboard</target>
       </trans-unit>
       <trans-unit id="wcIksDz" resname="Admin">
         <source>Admin</source>
-        <target state="needs-translation">Admin</target>
+        <target state="translated">Admin</target>
       </trans-unit>
       <trans-unit id="h7YL9VW" resname="Städte">
         <source>Städte</source>
@@ -997,11 +997,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="FhZB0Ue" resname="Frontpage Content">
         <source>Frontpage Content</source>
-        <target state="needs-translation">Frontpage Content</target>
+        <target state="translated">Front page Content</target>
       </trans-unit>
       <trans-unit id="UhAi66F" resname="Mailgun">
         <source>Mailgun</source>
-        <target state="needs-translation">Mailgun</target>
+        <target state="translated">Mailgun</target>
       </trans-unit>
       <trans-unit id="0rh74eB" resname="Organisationen">
         <source>Organisationen</source>
@@ -1025,7 +1025,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="_PBS_ja" resname="KVJS/Anfrage Gafög">
         <source>KVJS/Anfrage Gafög</source>
-        <target state="needs-translation">KVJS/Anfrage Gafög</target>
+        <target state="translated">KVJS/Inquiry GaFöG</target>
       </trans-unit>
       <trans-unit id="eDJe41j" resname="Meine Schulen">
         <source>Meine Schulen</source>
@@ -1069,7 +1069,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="lbGxc1S" resname="App Verbindung">
         <source>App Verbindung</source>
-        <target state="needs-translation">App Verbindung</target>
+        <target state="translated">App connection</target>
       </trans-unit>
       <trans-unit id="8qHMcfp" resname="Sprache">
         <source>Sprache</source>
@@ -1105,11 +1105,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="0VOH7Mb" resname="Slug">
         <source>Slug</source>
-        <target state="needs-translation">Slug</target>
+        <target state="translated">Slug</target>
       </trans-unit>
       <trans-unit id="56JB3rr" resname="URL">
         <source>URL</source>
-        <target state="needs-translation">URL</target>
+        <target state="translated">URL</target>
       </trans-unit>
       <trans-unit id="hORe5zQ" resname="Bearbeiten">
         <source>Bearbeiten</source>
@@ -1129,7 +1129,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="uBHOg4A" resname="Bezeichnung der Schuljahre (JSON-Objekt)">
         <source>Bezeichnung der Schuljahre (JSON-Objekt)</source>
-        <target state="needs-translation">Bezeichnung der Schuljahre (JSON-Objekt)</target>
+        <target state="translated">Designation of school years (JSON object)</target>
       </trans-unit>
       <trans-unit id="TwnidFf" resname="Extra-Texte in Emails">
         <source>Extra-Texte in Emails</source>
@@ -1137,7 +1137,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="NFOLrto" resname="Änderungen">
         <source>Änderungen</source>
-        <target state="needs-translation">Änderungen</target>
+        <target state="translated">Changes</target>
       </trans-unit>
       <trans-unit id="Lp4FSpG" resname="Abmeldung der Kinder wenn diese nicht kopiert werden">
         <source>Abmeldung der Kinder wenn diese nicht kopiert werden</source>
@@ -1145,7 +1145,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="iXpM6iD" resname="Variablen">
         <source>Variablen</source>
-        <target state="needs-translation">Variablen</target>
+        <target state="translated">Variables</target>
       </trans-unit>
       <trans-unit id="WnlgQc3" resname="Dateien hochladen">
         <source>Dateien hochladen</source>
@@ -1165,11 +1165,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="uVMhbvx" resname="Last Login">
         <source>Last Login</source>
-        <target state="needs-translation">Last Login</target>
+        <target state="translated">Last Login</target>
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target state="needs-translation">Status</target>
+        <target state="translated">Status</target>
       </trans-unit>
       <trans-unit id="VwsWrux" resname="Zu diesem User wechseln">
         <source>Zu diesem User wechseln</source>
@@ -1201,7 +1201,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="NmSJVXn" resname="Export">
         <source>Export</source>
-        <target state="needs-translation">Export</target>
+        <target state="translated">Export</target>
       </trans-unit>
       <trans-unit id="XqaB_1k" resname="Alle Schuljahre">
         <source>Alle Schuljahre</source>
@@ -1209,31 +1209,31 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="eJusolC" resname="Download Excel">
         <source>Download Excel</source>
-        <target state="needs-translation">Download Excel</target>
+        <target state="translated">Download Excel</target>
       </trans-unit>
       <trans-unit id="IR0LuM9" resname="Block">
         <source>Block</source>
-        <target state="needs-translation">Block</target>
+        <target state="translated">Block</target>
       </trans-unit>
       <trans-unit id="Qu8dlGM" resname="Dieser Block ist nicht mehr buchbar">
         <source>Dieser Block ist nicht mehr buchbar</source>
-        <target state="needs-translation">Dieser Block ist nicht mehr buchbar</target>
+        <target state="translated">This block is no longer bookable</target>
       </trans-unit>
       <trans-unit id="ChLZlxa" resname="Noch nicht zugelassene Kinder">
         <source>Noch nicht zugelassene Kinder</source>
-        <target state="needs-translation">Noch nicht zugelassene Kinder</target>
+        <target state="translated">Children not yet admitted</target>
       </trans-unit>
       <trans-unit id="gJ0FQdo" resname="Kinder auf der Warteliste">
         <source>Kinder auf der Warteliste</source>
-        <target state="needs-translation">Kinder auf der Warteliste</target>
+        <target state="translated">Children on the waiting list</target>
       </trans-unit>
       <trans-unit id="3qeTMhR" resname="Min">
         <source>Min</source>
-        <target state="needs-translation">Min</target>
+        <target state="translated">Min</target>
       </trans-unit>
       <trans-unit id="oaWTbTs" resname="Max">
         <source>Max</source>
-        <target state="needs-translation">Max</target>
+        <target state="translated">Max</target>
       </trans-unit>
       <trans-unit id="8HbTOEk" resname="gelöscht">
         <source>gelöscht</source>
@@ -1709,7 +1709,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="dM1xpTv" resname="Bestätigungscode zur Anmeldung bei der SKIBin App">
         <source>Bestätigungscode zur Anmeldung bei der SKIBin App</source>
-        <target state="needs-translation">Bestätigungscode zur Anmeldung bei der SKIBin App</target>
+        <target state="translated">Login confirmation code for the SKIBin App</target>
       </trans-unit>
       <trans-unit id="_PoH7Ws" resname="Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK">
         <source>Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK</source>
