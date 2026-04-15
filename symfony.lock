@@ -108,9 +108,6 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.7"
     },
-    "gjuric/i18n-routing-bundle": {
-        "version": "3.2.0"
-    },
     "guzzlehttp/guzzle": {
         "version": "6.5.2"
     },
@@ -360,18 +357,6 @@
     },
     "sebastian/version": {
         "version": "3.0.2"
-    },
-    "sensio/framework-extra-bundle": {
-        "version": "5.2",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "5.2",
-            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
-        },
-        "files": [
-            "./config/packages/sensio_framework_extra.yaml"
-        ]
     },
     "stevenmaguire/oauth2-keycloak": {
         "version": "2.2.2"
