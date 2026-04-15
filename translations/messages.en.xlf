@@ -493,7 +493,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="ewdRqId" resname="Erfolgreich wiederhergestellt">
         <source>Erfolgreich wiederhergestellt</source>
-        <target state="needs-translation">Erfolgreich wiederhergestellt</target>
+        <target state="translated">Restored successfully</target>
       </trans-unit>
       <trans-unit id="SX9ku_n" resname="Kind erfolgreich eingecheckt">
         <source>Kind erfolgreich eingecheckt</source>
@@ -573,11 +573,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="5sqs7xE" resname="Erziehungsberechtigter Vorname">
         <source>Erziehungsberechtigter Vorname</source>
-        <target state="needs-translation">Erziehungsberechtigter Vorname</target>
+        <target state="translated">Parent's first name</target>
       </trans-unit>
       <trans-unit id="5AAZuPH" resname="Erziehungsberechtigter Nachname">
         <source>Erziehungsberechtigter Nachname</source>
-        <target state="needs-translation">Erziehungsberechtigter Nachname</target>
+        <target state="translated">Parent's last name</target>
       </trans-unit>
       <trans-unit id="WKN3jBj" resname="Straße">
         <source>Straße</source>
@@ -633,11 +633,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="ep1anHh" resname="Zecken dürfen entfernt werden">
         <source>Zecken dürfen entfernt werden</source>
-        <target state="needs-translation">Zecken dürfen entfernt werden</target>
+        <target state="translated">Ticks can be removed</target>
       </trans-unit>
       <trans-unit id="KnjEKsZ" resname="Gluten intolerant">
         <source>Gluten intolerant</source>
-        <target state="needs-translation">Gluten intolerant</target>
+        <target state="translated">Gluten intolerant</target>
       </trans-unit>
       <trans-unit id="y.AkFG7" resname="Kein Schweinefleisch">
         <source>Kein Schweinefleisch</source>
@@ -665,11 +665,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="mvnu8x5" resname="AG">
         <source>AG</source>
-        <target state="needs-translation">AG</target>
+        <target state="translated">AG</target>
       </trans-unit>
       <trans-unit id="eAC9U4w" resname="Notizen">
         <source>Notizen</source>
-        <target state="needs-translation">Notizen</target>
+        <target state="translated">Notes</target>
       </trans-unit>
       <trans-unit id="Up_TjZv" resname="E-Mail Adresse">
         <source>E-Mail Adresse</source>
@@ -677,7 +677,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="lRPQnJ2" resname="Weitere personenberechtigte Personen">
         <source>Weitere personenberechtigte Personen</source>
-        <target state="needs-translation">Weitere sorgeberechtigte Personen</target>
+        <target state="translated">Additional authorized people</target>
       </trans-unit>
       <trans-unit id="ZEGhE2w" resname="Kinder im KiGa">
         <source>Kinder im KiGa</source>
@@ -697,7 +697,7 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="ZZohsay" resname="Angemeldet am:">
         <source>Angemeldet am:</source>
-        <target state="needs-translation">Angemeldet am:</target>
+        <target state="translated">Registered on:</target>
       </trans-unit>
       <trans-unit id="uEwfnJM" resname="Kundennummer">
         <source>Kundennummer</source>
@@ -705,11 +705,11 @@ The web application enables direct networking between parent or legal guardian, 
       </trans-unit>
       <trans-unit id="fjRcO6e" resname="IBAN">
         <source>IBAN</source>
-        <target state="needs-translation">IBAN</target>
+        <target state="translated">IBAN</target>
       </trans-unit>
       <trans-unit id="2Bz6Sw." resname="BIC">
         <source>BIC</source>
-        <target state="needs-translation">BIC</target>
+        <target state="translated">BIC</target>
       </trans-unit>
       <trans-unit id="4t3IU.b" resname="Kontoinhaber">
         <source>Kontoinhaber</source>
