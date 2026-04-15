@@ -6,7 +6,7 @@ use App\Entity\Content;
 use App\Entity\Stadt;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SeoController extends AbstractController
 {

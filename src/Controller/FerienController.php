@@ -15,12 +15,12 @@ use App\Service\FerienAbschluss;
 use App\Service\StamdatenFromCookie;
 use App\Service\ToogleKindFerienblock;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -84,12 +84,11 @@ class FerienController extends AbstractController
         }
         $title = $translator->trans('Online Anmeldung für Ferienbetreuung') . '->' . $translator->trans('Adresse') . ' | ' . $stadt->getName();
 
-        return $this->render('ferien/adresse.html.twig', ['title' => $title, 'stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('ferien/adresse.html.twig', ['title' => $title, 'stadt' => $stadt, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/{slug}/ferien/auswahl', name: 'ferien_auswahl', methods: ['GET'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function ferienAction(Request $request, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
+    public function ferienAction(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
         // Load all schools from the city into the controller as $schulen
         $org = $this->managerRegistry->getRepository(Organisation::class)->findBy(['stadt' => $stadt, 'deleted' => false]);
@@ -116,8 +115,7 @@ class FerienController extends AbstractController
     }
 
     #[Route(path: '/{slug}/ferien/kind/neu', name: 'ferien_kind_neu', methods: ['GET', 'POST'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function ferienNeukindAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, StadtRepository $stadtRepository)
+    public function ferienNeukindAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, #[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, StadtRepository $stadtRepository)
     {
         // Include Parents in this route
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE)) {
@@ -151,7 +149,7 @@ class FerienController extends AbstractController
             }
         }
 
-        return $this->render('ferien/kindForm.html.twig', ['stadt' => $stadt, 'form' => $form->createView()]);
+        return $this->render('ferien/kindForm.html.twig', ['stadt' => $stadt, 'form' => $form]);
     }
 
     #[Route(path: '/{slug}/ferien/kind/edit', name: 'ferien_workflow_kind_edit', methods: ['GET', 'POST'])]
@@ -189,7 +187,7 @@ class FerienController extends AbstractController
             }
         }
 
-        return $this->render('ferien/kindForm.html.twig', ['stadt' => $stadt, 'form' => $form->createView()]);
+        return $this->render('ferien/kindForm.html.twig', ['stadt' => $stadt, 'form' => $form]);
     }
 
     #[Route(path: '/{slug}/ferien/kind/delete', name: 'ferien_workflow_kind_delete', methods: ['DELETE'])]
@@ -210,8 +208,7 @@ class FerienController extends AbstractController
     }
 
     #[Route(path: '/{slug}/ferien/programm', name: 'ferien_kind_programm', methods: ['GET', 'POST'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function programAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
+    public function programAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, #[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
         // Include Parents in this route
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, self::BEZEICHNERCOOKIE)) {
@@ -241,7 +238,6 @@ class FerienController extends AbstractController
     }
 
     #[Route(path: '/{slug}/ferien/programm/toggle', name: 'ferien_kinder_block_toggle', methods: ['PATCH'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function ferienblocktoggleAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, ToogleKindFerienblock $toogleKindFerienblock, StamdatenFromCookie $stamdatenFromCookie)
     {
         $adresse = new Stammdaten();
@@ -257,8 +253,7 @@ class FerienController extends AbstractController
     }
 
     #[Route(path: '/{slug}/ferien/zusammenfassung', name: 'ferien_zusammenfassung', methods: ['Get', 'POST'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function zusammenfassungAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
+    public function zusammenfassungAction(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, #[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie)
     {
         try {
             // Include Parents in this route

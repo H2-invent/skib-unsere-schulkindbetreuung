@@ -9,7 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -74,7 +74,7 @@ class SchuljahrController extends AbstractController
         }
         $title = $translator->trans('Schuljahr anlegen');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: 'city_admin/stadtschuljahr/edit', name: 'city_admin_schuljahr_edit')]
@@ -113,7 +113,7 @@ class SchuljahrController extends AbstractController
         }
         $title = $translator->trans('Schuljahr bearbeiten');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: 'city_admin/stadtschuljahr/delete', name: 'city_admin_schuljahr_delete')]

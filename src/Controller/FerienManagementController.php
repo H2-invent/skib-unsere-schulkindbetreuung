@@ -22,7 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -74,7 +74,7 @@ class FerienManagementController extends AbstractController
         }
         $title = $translator->trans('Ferienprogramm erstellen');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/org_ferien/edit/preise', name: 'ferien_management_preise', methods: ['GET', 'POST'])]
@@ -107,7 +107,7 @@ class FerienManagementController extends AbstractController
         }
         $title = $translator->trans('Preise bearbeiten');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/org_ferien/edit/voucher', name: 'ferien_management_voucher', methods: ['GET', 'POST'])]
@@ -146,7 +146,7 @@ class FerienManagementController extends AbstractController
         }
         $title = $translator->trans('Gutscheine bearbeiten');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/org_ferien/edit/edit', name: 'ferien_management_edit', methods: ['GET', 'POST'])]
@@ -179,7 +179,7 @@ class FerienManagementController extends AbstractController
         }
         $title = $translator->trans('Ferienprogramm bearbeiten');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/org_ferien/edit/delete', name: 'ferien_management_delete', methods: ['DELETE'])]
@@ -560,6 +560,6 @@ class FerienManagementController extends AbstractController
         }
         $title = $translator->trans('Ferieneinstellungen ändern');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 }

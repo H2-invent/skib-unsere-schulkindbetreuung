@@ -7,11 +7,11 @@ use App\Entity\User;
 use App\Form\Type\LateRegistrationType;
 use App\Repository\LateRegistrationRepository;
 use App\Service\LateRegistrationService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class LateRegistrationController extends AbstractController
 {
@@ -45,14 +45,13 @@ class LateRegistrationController extends AbstractController
         $history = $this->lateRegistrationRepository->findBy(['stadt' => $stadt]);
 
         return $this->render('late_registration/index.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'history' => $history,
         ]);
     }
 
     #[Route(path: '/late_registration/{token}', name: 'late_registration_start', methods: ['GET'])]
-    #[Entity('LateRegistration', expr: 'repository.findByStringToken(token)')]
-    public function registerStart(Request $request, LateRegistration $lateRegistration): Response
+    public function registerStart(Request $request, #[MapEntity(expr: 'repository.findByStringToken(token)')] LateRegistration $lateRegistration): Response
     {
         if (!$this->lateRegisterService->isValid($lateRegistration, $request)) {
             throw $this->createAccessDeniedException();

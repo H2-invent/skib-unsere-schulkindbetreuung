@@ -27,6 +27,8 @@ return RectorConfig::configure()
         LevelSetList::UP_TO_PHP_84,
         SensiolabsSetList::ANNOTATIONS_TO_ATTRIBUTES,
         SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES,
+        SymfonySetList::SYMFONY_62,
+        SymfonySetList::SYMFONY_63,
         SymfonySetList::SYMFONY_64,
     ])
     ->withSkip([

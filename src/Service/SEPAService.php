@@ -11,17 +11,14 @@ namespace App\Service;
 
 class SEPAService
 {
-    public $FCtgyPurp;
-    public $FDatum;
-    public $FSeqTp;
     private $FBuchungen;
     private $FSumme;
 
-    public function __construct($aCtgyPurp = '', $aDatum = '', $aSeqTp = '')
-    {
-        $this->FCtgyPurp = $aCtgyPurp;
-        $this->FDatum = $aDatum;
-        $this->FSeqTp = $aSeqTp;
+    public function __construct(
+        public $FCtgyPurp = '',
+        public $FDatum = '',
+        public $FSeqTp = '',
+    ) {
         $this->FBuchungen = [];
         $this->FSumme = 0.00;
     }

@@ -28,7 +28,8 @@ class WartelisteController extends AbstractController
     public function showWarteliste(
         Request $request,
         #[MapEntity(id: 'block_id')]
-        ?Zeitblock $zeitblock = null): Response
+        ?Zeitblock $zeitblock = null
+    ): Response
     {
         if (!$zeitblock) {
             throw new NotFoundHttpException('Zeitblock wurde nicht gefunden');
@@ -49,7 +50,8 @@ class WartelisteController extends AbstractController
         #[MapEntity(id: 'kind_id')]
         ?Kind $kind = null,
         #[MapEntity(id: 'block_id')]
-        ?Zeitblock $zeitblock = null): Response
+        ?Zeitblock $zeitblock = null
+    ): Response
     {
         if (!$kind) {
             throw new NotFoundHttpException('Kind wurde nicht gefunden');
@@ -71,7 +73,8 @@ class WartelisteController extends AbstractController
         Request $request,
         #[MapEntity(id: 'kind_id')]
         ?Kind $kind = null,
-    ): Response {
+    ): Response
+    {
         if (!$kind) {
             throw new NotFoundHttpException('Kind wurde nicht gefunden');
         }
@@ -92,7 +95,8 @@ class WartelisteController extends AbstractController
         #[MapEntity(id: 'kind_id')]
         ?Kind $kind = null,
         #[MapEntity(id: 'block_id')]
-        ?Zeitblock $zeitblock = null): Response
+        ?Zeitblock $zeitblock = null,
+    ): Response
     {
         if (!$kind || !$zeitblock) {
             throw new NotFoundHttpException('Kind wurde nicht gefunden');
@@ -112,7 +116,8 @@ class WartelisteController extends AbstractController
         #[MapEntity(id: 'kind_id')]
         ?Kind $kind = null,
         #[MapEntity(id: 'block_id')]
-        ?Zeitblock $zeitblock = null): Response
+        ?Zeitblock $zeitblock = null,
+    ): Response
     {
         if (!$kind || !$zeitblock) {
             throw new NotFoundHttpException('Kind wurde nicht gefunden');

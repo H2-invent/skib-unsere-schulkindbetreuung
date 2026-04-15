@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -79,7 +79,7 @@ class StadtadminController extends AbstractController
 
         $title = $translator->trans('Neuen Stadtmitarbeiter anlegen');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'stadt' => $city, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/admin/stadtUser/edit', name: 'admin_stadtadmin_edit')]
@@ -113,7 +113,7 @@ class StadtadminController extends AbstractController
 
         $title = $translator->trans('Stadtmitarbeiter bearbeiten');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'stadt' => $city, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/admin/stadtUser/changePw', name: 'admin_stadtadmin_changePw')]
@@ -153,7 +153,7 @@ class StadtadminController extends AbstractController
         }
         $title = $translator->trans('Passwort ändern');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'stadt' => $city, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/admin/stadtUser/toggleAdmin', name: 'admin_stadtadmin_toggleAdmin')]

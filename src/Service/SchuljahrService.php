@@ -5,8 +5,8 @@ namespace App\Service;
 use App\Entity\Active;
 use App\Entity\Stadt;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Security;
 
 class SchuljahrService
 {

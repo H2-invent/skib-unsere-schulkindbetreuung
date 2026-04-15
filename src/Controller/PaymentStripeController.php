@@ -9,10 +9,10 @@ use App\Service\CheckoutBraintreeService;
 use App\Service\CheckoutPaymentService;
 use App\Service\StamdatenFromCookie;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentStripeController extends AbstractController
@@ -23,8 +23,7 @@ class PaymentStripeController extends AbstractController
     }
 
     #[Route(path: '/{slug}/ferien/stripe/prepare', name: 'ferien_stripe_start', methods: ['Get'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function paymentPrepareAction(CheckoutPaymentService $checkoutPaymentService, Stadt $stadt, TranslatorInterface $translator, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
+    public function paymentPrepareAction(CheckoutPaymentService $checkoutPaymentService, #[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt, TranslatorInterface $translator, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE);
@@ -35,8 +34,7 @@ class PaymentStripeController extends AbstractController
     }
 
     #[Route(path: '/{slug}/ferien/stripe/recieveToken', name: 'ferien_stripe_token', methods: ['POST'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function paymentrecieveNonceAction(Stadt $stadt, Request $request)
+    public function paymentrecieveNonceAction(#[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt, Request $request)
     {
         $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(['uid' => $request->get('paymentId')]);
         $stripe = new PaymentStripe();

@@ -15,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -74,7 +74,7 @@ class NewsController extends AbstractController
         }
         $title = $translator->trans('Neuigkeit erstellt');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: 'city_news/edit', name: 'city_admin_news_edit')]
@@ -109,7 +109,7 @@ class NewsController extends AbstractController
         }
         $title = $translator->trans('Neuigkeit bearbeiten');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: 'city_news/delete', name: 'city_admin_news_delete')]
@@ -217,7 +217,7 @@ class NewsController extends AbstractController
         }
         $title = $translator->trans('Ranzenpost erstellen');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: 'org_news/edit', name: 'org_news_edit', methods: ['GET', 'POST'])]
@@ -253,7 +253,7 @@ class NewsController extends AbstractController
         }
         $title = $translator->trans('Ranzenpost bearbeiten');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: 'org_news/delete', name: 'org_news_delete', methods: ['GET', 'POST'])]

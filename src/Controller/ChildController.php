@@ -23,7 +23,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChildController extends AbstractController
@@ -107,7 +107,7 @@ class ChildController extends AbstractController
         $sickReports = $this->managerRegistry->getRepository(ChildSickReport::class)->findAllForChildTracing($kind->getTracing());
         $sickDays = $this->managerRegistry->getRepository(ChildSickReport::class)->countSickDaysForChildTracing($kind->getTracing());
 
-        return $this->render('child/childDetail.html.twig', ['beruflicheSituation' => array_flip($loerrachWorkflowController->beruflicheSituation), 'k' => $kind, 'eltern' => $eltern, 'his' => $historydate, 'date' => $date, 'history' => $historydate, 'formInternalNotice' => $form->createView(), 'sickReports' => $sickReports, 'sickDays' => $sickDays]);
+        return $this->render('child/childDetail.html.twig', ['beruflicheSituation' => array_flip($loerrachWorkflowController->beruflicheSituation), 'k' => $kind, 'eltern' => $eltern, 'his' => $historydate, 'date' => $date, 'history' => $historydate, 'formInternalNotice' => $form, 'sickReports' => $sickReports, 'sickDays' => $sickDays]);
     }
 
     #[Route(path: '/org_child/show/detail/save/internal/notice/{childId}', name: 'child_detail_save_internal')]

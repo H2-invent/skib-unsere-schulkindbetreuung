@@ -5,10 +5,10 @@ namespace App\Controller;
 use App\Entity\Content;
 use App\Entity\Stadt;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LandingController extends AbstractController
@@ -31,8 +31,7 @@ class LandingController extends AbstractController
     }
 
     #[Route(path: '/feature/{content}', name: 'welcome_landing_slug')]
-    #[ParamConverter('content', options: ['mapping' => ['content' => 'slug']])]
-    public function welcomeFeatureAction(Content $content, TranslatorInterface $translator, Request $request)
+    public function welcomeFeatureAction(#[MapEntity(mapping: ['content' => 'slug'])] Content $content, TranslatorInterface $translator, Request $request)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->findBy(['deleted' => false, 'active' => true]);
         $title = $content->translate()->getTitle() . ' | unsere-Schulkindbetreuung.de';

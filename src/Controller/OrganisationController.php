@@ -8,7 +8,7 @@ use App\Form\Type\OrganisationType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -62,7 +62,7 @@ class OrganisationController extends AbstractController
         }
         $title = $translator->trans('Organisation anlegen');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'stadt' => $city, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/org_edit/organisation/edit', name: 'city_admin_organisation_edit', methods: ['GET', 'POST'])]
@@ -94,7 +94,7 @@ class OrganisationController extends AbstractController
         }
         $title = $translator->trans('Organisation anlegen');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/city_admin/organisation/delete', name: 'city_admin_organisation_delete', methods: ['GET'])]

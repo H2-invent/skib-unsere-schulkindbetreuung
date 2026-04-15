@@ -40,7 +40,7 @@ class AdminController extends AbstractController
 
         return $this->render('administrator/neu.html.twig', [
             'title' => 'User bearbeiten',
-            'form' => $form->createView(),
+            'form' => $form,
             'errors' => $errors,
         ]);
     }

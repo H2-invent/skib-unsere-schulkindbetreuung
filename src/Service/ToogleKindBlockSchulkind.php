@@ -6,8 +6,8 @@ use App\Entity\Kind;
 use App\Entity\Stadt;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 // <- Add this

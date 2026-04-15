@@ -70,7 +70,7 @@ class KvjsController extends AbstractController
 
         return $this->render('kvjs/index.html.twig', [
             'controller_name' => 'KvjsController',
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

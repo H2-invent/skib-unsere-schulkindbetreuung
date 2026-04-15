@@ -11,7 +11,7 @@ use App\Service\UploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use League\Flysystem\FilesystemOperator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\HeaderUtils;
@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class UploadController extends AbstractController
 {
@@ -29,8 +29,7 @@ class UploadController extends AbstractController
     }
 
     #[Route(path: '/login/upload/{id}/file', name: 'upload_stadt', methods: ['POST'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['id' => 'id']])]
-    public function index(Request $request, UploadService $uploadService, Stadt $stadt, EntityManagerInterface $entityManager)
+    public function index(Request $request, UploadService $uploadService, #[MapEntity(mapping: ['id' => 'id'])] Stadt $stadt, EntityManagerInterface $entityManager)
     {
         set_time_limit(300);
 
@@ -48,8 +47,7 @@ class UploadController extends AbstractController
     }
 
     #[Route(path: '/upload/kind/{uid}/file', name: 'upload_kind', methods: ['POST'])]
-    #[ParamConverter('geschwister', options: ['mapping' => ['uid' => 'uid']])]
-    public function geschwister(Request $request, UploadService $uploadService, Geschwister $geschwister, EntityManagerInterface $entityManager)
+    public function geschwister(Request $request, UploadService $uploadService, #[MapEntity(mapping: ['uid' => 'uid'])] Geschwister $geschwister, EntityManagerInterface $entityManager)
     {
         set_time_limit(300);
 
@@ -64,8 +62,7 @@ class UploadController extends AbstractController
     }
 
     #[Route(path: '/download/{fileName}', name: 'login_download_file', methods: ['GET'])]
-    #[ParamConverter('file', options: ['mapping' => ['fileName' => 'fileName']])]
-    public function downloadArticleReference(File $file, FilesystemOperator $internFileSystem)
+    public function downloadArticleReference(#[MapEntity(mapping: ['fileName' => 'fileName'])] File $file, FilesystemOperator $internFileSystem)
     {
         if (!$file) {
             throw new NotFoundHttpException('File not found');
@@ -84,8 +81,7 @@ class UploadController extends AbstractController
     }
 
     #[Route(path: '/removeFile/{fileName}', name: 'login_remove_file', methods: ['GET'])]
-    #[ParamConverter('file', options: ['mapping' => ['fileName' => 'fileName']])]
-    public function removeFile(File $file, FilesystemOperator $internFileSystem, Request $request)
+    public function removeFile(#[MapEntity(mapping: ['fileName' => 'fileName'])] File $file, FilesystemOperator $internFileSystem, Request $request)
     {
         $internFileSystem->delete($file->getFileName());
         $em = $this->managerRegistry->getManager();
@@ -100,10 +96,10 @@ class UploadController extends AbstractController
     }
 
     #[Route(path: '/upload/additional/{id}/file', name: 'upload_additional-documents', methods: ['POST'])]
-    #[ParamConverter('Stammdaten', options: ['mapping' => ['id' => 'id']])]
     public function additionalDocuments(
         Request $request,
         UploadService $uploadService,
+        #[MapEntity(mapping: ['id' => 'id'])]
         Stammdaten $stammdaten,
         EntityManagerInterface $entityManager,
         StammdatenRepository $stammdatenRepository,

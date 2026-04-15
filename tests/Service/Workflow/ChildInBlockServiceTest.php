@@ -321,7 +321,7 @@ class ChildInBlockServiceTest extends KernelTestCase
         $childInBlockService = self::getContainer()->get(ChildInBlockService::class);
 
         self::assertEquals(null, $childInBlockService->checkIfChildIsNowOrInFuture([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.11.2022')));
-        self::assertEquals(null,$childInBlockService->checkIfChildIsNow([$kind1, $kind2, $kind3, $kind4],$zeitblock,new \DateTime('15.11.2022')));
+        self::assertEquals(null, $childInBlockService->checkIfChildIsNow([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.11.2022')));
         // $routerService = static::getContainer()->get('router');
         // $myCustomService = static::getContainer()->get(CustomService::class);
     }

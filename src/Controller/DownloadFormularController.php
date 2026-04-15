@@ -6,9 +6,9 @@ use App\Entity\Active;
 use App\Entity\Schule;
 use App\Service\PrintService;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DownloadFormularController extends AbstractController
@@ -19,9 +19,7 @@ class DownloadFormularController extends AbstractController
     }
 
     #[Route(path: '/download/anmeldung/{schule}/{cat}/{schuljahr}', name: 'download_formular_schule')]
-    #[ParamConverter('schule', class: Schule::class, options: ['mapping' => ['schule' => 'id']])]
-    #[ParamConverter('schuljahr', class: Active::class, options: ['mapping' => ['schuljahr' => 'id']])]
-    public function index(Schule $schule, PrintService $printService, TCPDFController $TCPDFController, TranslatorInterface $translator, $cat, Active $schuljahr)
+    public function index(#[MapEntity(class: Schule::class, mapping: ['schule' => 'id'])] Schule $schule, PrintService $printService, TCPDFController $TCPDFController, TranslatorInterface $translator, $cat, #[MapEntity(class: Active::class, mapping: ['schuljahr' => 'id'])] Active $schuljahr)
     {
         return $printService->printAnmeldeformular($schule, $TCPDFController, $translator->trans('Aenderungsformular_%n%', ['%n%' => $schule->getName()]), $this->loerrachWorkflowController->beruflicheSituation, $schule->getStadt()->getGehaltsklassen(), $cat, $schuljahr, 'D');
     }

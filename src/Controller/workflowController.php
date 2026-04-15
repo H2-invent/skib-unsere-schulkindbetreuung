@@ -8,7 +8,6 @@ namespace App\Controller;
  * Date: 06.09.2019
  * Time: 12:21
  */
-
 use App\Entity\Active;
 use App\Entity\News;
 use App\Entity\Organisation;
@@ -21,12 +20,12 @@ use App\Service\PrintAGBService;
 use App\Service\PrintDatenschutzService;
 use App\Service\SchuljahrService;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class workflowController extends AbstractController
@@ -74,8 +73,7 @@ class workflowController extends AbstractController
     }
 
     #[Route(path: '/{slug}/closed', name: 'workflow_closed', methods: ['GET'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function closedAction(Request $request, Stadt $stadt)
+    public function closedAction(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt)
     {
         return $this->render('workflow/closed.html.twig', ['stadt' => $stadt]);
     }
@@ -162,8 +160,7 @@ class workflowController extends AbstractController
     }
 
     #[Route(path: '/{slug}/vertragsbedingungen', name: 'workflow_agb', methods: ['GET'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function agbAction(Request $request, TranslatorInterface $translator, Stadt $stadt)
+    public function agbAction(Request $request, TranslatorInterface $translator, #[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt)
     {
         $stadtAGB = $stadt->translate()->getAgb();
         $titel = $translator->trans('Vertragsbedingungen') . ' | ' . $stadt->getName() . ' | unsere-Schulkindbetreuung.de';
@@ -173,8 +170,7 @@ class workflowController extends AbstractController
     }
 
     #[Route(path: '/{slug}/agb/pdf', name: 'workflow_agb_pdf', methods: ['GET'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function pdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService, Stadt $stadt)
+    public function pdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService, #[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt)
     {
         return $printAGBService->printAGB($stadt->translate()->getAgb(), 'D', $stadt, null);
     }

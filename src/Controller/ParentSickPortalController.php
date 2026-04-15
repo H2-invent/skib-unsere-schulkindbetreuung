@@ -59,7 +59,7 @@ class ParentSickPortalController extends AbstractController
         }
 
         return $this->render('parent_sick/request.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'stadt' => $stadt,
         ]);
     }

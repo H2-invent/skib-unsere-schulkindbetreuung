@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChildChangeController extends AbstractController
@@ -60,6 +60,6 @@ class ChildChangeController extends AbstractController
             return $this->redirectToRoute('child_change_seccode', ['kind_id' => $kind->getId(), 'snack' => $text]);
         }
 
-        return $this->render('child_change/seccode.html.twig', ['form' => $form->createView()]);
+        return $this->render('child_change/seccode.html.twig', ['form' => $form]);
     }
 }

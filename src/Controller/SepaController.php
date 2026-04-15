@@ -17,7 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -55,7 +55,7 @@ class SepaController extends AbstractController
 
         $sepaData = $this->managerRegistry->getRepository(Sepa::class)->findBy(['organisation' => $organisation]);
 
-        return $this->render('sepa/show.html.twig', ['form' => $form->createView(), 'sepa' => $sepaData]);
+        return $this->render('sepa/show.html.twig', ['form' => $form, 'sepa' => $sepaData]);
     }
 
     #[Route(path: '/org_accounting/sendBill', name: 'accounting_send_bill', methods: ['GET'])]
@@ -173,6 +173,6 @@ class SepaController extends AbstractController
             return $response;
         }
 
-        return $this->render('sepa/customerID.html.twig', ['form' => $form->createView(), 'stammdaten' => $stammdaten]);
+        return $this->render('sepa/customerID.html.twig', ['form' => $form, 'stammdaten' => $stammdaten]);
     }
 }

@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -104,7 +104,7 @@ class BlockController extends AbstractController
             }
         }
 
-        return $this->render('block/blockForm.html.twig', ['block' => $block, 'form' => $form->createView()]);
+        return $this->render('block/blockForm.html.twig', ['block' => $block, 'form' => $form]);
     }
 
     #[Route(path: '/org_block/schule/block/editBlock', name: 'block_schule_editBlocks', methods: ['GET', 'POST'])]
@@ -144,7 +144,7 @@ class BlockController extends AbstractController
             }
         }
 
-        return $this->render('block/blockForm.html.twig', ['block' => $block, 'form' => $form->createView()]);
+        return $this->render('block/blockForm.html.twig', ['block' => $block, 'form' => $form]);
     }
 
     #[Route(path: '/org_block/schule/block/linkBlock', name: 'block_schule_linkBlock', methods: ['GET', 'POST'])]
@@ -193,7 +193,7 @@ class BlockController extends AbstractController
             }
         }
 
-        return $this->render('block/blockLinkForm.html.twig', ['block' => $block, 'form' => $form->createView()]);
+        return $this->render('block/blockLinkForm.html.twig', ['block' => $block, 'form' => $form]);
     }
 
     #[Route(path: '/org_block/schule/block/linkBlockSilent', name: 'block_schule_linkBlockSilent', methods: ['GET', 'POST'])]
@@ -247,7 +247,7 @@ class BlockController extends AbstractController
             }
         }
 
-        return $this->render('block/blockLinkForm.html.twig', ['block' => $block, 'form' => $form->createView(), 'silent' => true]);
+        return $this->render('block/blockLinkForm.html.twig', ['block' => $block, 'form' => $form, 'silent' => true]);
     }
 
     #[Route(path: '/org_block/schule/block/linkBlock/remove', name: 'block_schule_linkBlock_remove', methods: ['DELETE'])]

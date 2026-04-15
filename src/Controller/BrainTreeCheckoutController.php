@@ -9,11 +9,11 @@ use App\Service\CheckoutBraintreeService;
 use App\Service\CheckoutPaymentService;
 use App\Service\StamdatenFromCookie;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BrainTreeCheckoutController extends AbstractController
@@ -24,8 +24,7 @@ class BrainTreeCheckoutController extends AbstractController
     }
 
     #[Route(path: '/{slug}/ferien/braintree/prepare', name: 'ferien_braintree_start', methods: ['Get'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function paymentPrepareAction(Stadt $stadt, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
+    public function paymentPrepareAction(#[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE);

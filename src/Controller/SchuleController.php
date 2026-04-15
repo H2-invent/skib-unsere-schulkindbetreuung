@@ -10,7 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -65,7 +65,7 @@ class SchuleController extends AbstractController
 
         $title = $translator->trans('Schule anlegen');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'stadt' => $city, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/org_shool/edit', name: 'city_admin_schule_edit', methods: ['GET', 'POST'])]
@@ -96,7 +96,7 @@ class SchuleController extends AbstractController
         }
         $title = $translator->trans('Schule anlegen');
 
-        return $this->render('administrator/neu.html.twig', ['title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'stadt' => $city, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/city_schule/delete', name: 'city_admin_schule_delete', methods: ['DELETE'])]

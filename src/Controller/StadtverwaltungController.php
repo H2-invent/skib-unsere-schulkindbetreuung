@@ -12,7 +12,7 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\ExpressionLanguage\SyntaxError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -72,7 +72,7 @@ class StadtverwaltungController extends AbstractController
 
         return $this->render('administrator/stadtForm.html.twig',
             [
-                'title' => $title, 'stadt' => $city, 'form' => $form->createView(),
+                'title' => $title, 'stadt' => $city, 'form' => $form,
                 'errors' => $errors, 'kind' => $kind, 'eltern' => $kind?->getEltern(),
                 'schule' => $kind?->getSchule(), 'organisation' => $kind?->getSchule()?->getOrganisation(),
             ]
@@ -120,7 +120,7 @@ class StadtverwaltungController extends AbstractController
 
         return $this->render('administrator/stadtForm.html.twig',
             [
-                'title' => $title, 'stadt' => $city, 'form' => $form->createView(),
+                'title' => $title, 'stadt' => $city, 'form' => $form,
                 'errors' => $errors, 'kind' => $kind, 'eltern' => $kind?->getEltern(),
                 'schule' => $kind?->getSchule(), 'organisation' => $kind?->getSchule()?->getOrganisation(),
             ]
@@ -157,7 +157,7 @@ class StadtverwaltungController extends AbstractController
         }
 
         return $this->render('administrator/neu.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'title' => 'Berechnungsformel',
             'errors' => $error,
         ]);

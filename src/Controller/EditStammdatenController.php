@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -54,7 +54,7 @@ class EditStammdatenController extends AbstractController
             return $this->redirectToRoute('edit_stammdaten_seccode', ['eltern_id' => $adresseTmp->getId(), 'snack' => $text]);
         }
 
-        return $this->render('child_change/seccode.html.twig', ['form' => $form->createView()]);
+        return $this->render('child_change/seccode.html.twig', ['form' => $form]);
     }
 
     #[Route(path: '/org_child/stammdaten/edit/data/{eltern_id}', name: 'edit_stammdaten_edit')]
@@ -129,7 +129,7 @@ class EditStammdatenController extends AbstractController
             }
         }
 
-        return $this->render('edit_stammdaten/index.html.twig', ['title' => ' Stammdaten bearbeiten', 'stadt' => $stadt, 'form' => $form->createView(), 'errors' => $errorsString]);
+        return $this->render('edit_stammdaten/index.html.twig', ['title' => ' Stammdaten bearbeiten', 'stadt' => $stadt, 'form' => $form, 'errors' => $errorsString]);
     }
 
     private function getSchuljahrForStammdaten(Stammdaten $stammdaten): ?Active

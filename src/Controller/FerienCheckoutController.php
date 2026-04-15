@@ -8,18 +8,17 @@ use App\Form\Type\PaymentType;
 use App\Service\CheckoutPaymentService;
 use App\Service\CheckoutSepaService;
 use App\Service\StamdatenFromCookie;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FerienCheckoutController extends AbstractController
 {
     #[Route(path: '/{slug}/ferien/payment/prepare', name: 'ferien_bezahlung_prepare', methods: ['Get'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function prepareAction(CheckoutPaymentService $checkoutPaymentService, Request $request, TranslatorInterface $translator, ValidatorInterface $validator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, CheckoutSepaService $checkoutSepaService)
+    public function prepareAction(CheckoutPaymentService $checkoutPaymentService, Request $request, TranslatorInterface $translator, ValidatorInterface $validator, #[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, CheckoutSepaService $checkoutSepaService)
     {
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE);
@@ -30,8 +29,7 @@ class FerienCheckoutController extends AbstractController
     }
 
     #[Route(path: '/{slug}/ferien/bezahlung', name: 'ferien_bezahlung', methods: ['Get', 'POST'])]
-    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function paymentAction(CheckoutPaymentService $checkoutPaymentService, Request $request, TranslatorInterface $translator, ValidatorInterface $validator, Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, CheckoutSepaService $checkoutSepaService)
+    public function paymentAction(CheckoutPaymentService $checkoutPaymentService, Request $request, TranslatorInterface $translator, ValidatorInterface $validator, #[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt, StamdatenFromCookie $stamdatenFromCookie, CheckoutSepaService $checkoutSepaService)
     {
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE);
@@ -64,6 +62,6 @@ class FerienCheckoutController extends AbstractController
             }
         }
 
-        return $this->render('ferien_checkout/bezahlung.html.twig', ['payment' => $payment, 'stadt' => $stadt, 'form' => $form->createView()]);
+        return $this->render('ferien_checkout/bezahlung.html.twig', ['payment' => $payment, 'stadt' => $stadt, 'form' => $form]);
     }
 }

@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -112,7 +112,7 @@ class EmployeeOrganisationController extends AbstractController
 
         return $this->render(
             'administrator/neu.html.twig',
-            ['title' => $title, 'stadt' => $city, 'form' => $form->createView(), 'errors' => $errors]
+            ['title' => $title, 'stadt' => $city, 'form' => $form, 'errors' => $errors]
         );
     }
 
@@ -167,7 +167,7 @@ class EmployeeOrganisationController extends AbstractController
 
         return $this->render(
             'administrator/neu.html.twig',
-            ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]
+            ['title' => $title, 'form' => $form, 'errors' => $errors]
         );
     }
 
@@ -279,6 +279,6 @@ class EmployeeOrganisationController extends AbstractController
             return $this->redirectToRoute('city_employee_org_show', ['snack' => $text, 'id' => $user->getOrganisation()->getId()]);
         }
 
-        return $this->render('administrator/EditRoles.twig', ['user' => $user, 'form' => $formI->createView()]);
+        return $this->render('administrator/EditRoles.twig', ['user' => $user, 'form' => $formI]);
     }
 }

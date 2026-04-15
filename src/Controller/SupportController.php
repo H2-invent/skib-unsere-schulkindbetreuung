@@ -8,7 +8,7 @@ use it\thecsea\osticket_php_client\OsticketPhpClientException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SupportController extends AbstractController
 {
@@ -42,6 +42,6 @@ class SupportController extends AbstractController
             }
         }
 
-        return $this->render('administrator/neuValidate.html.twig', ['errors' => $errors, 'form' => $form->createView(), 'title' => 'Melden Sie hier ein Problem oder machen Sie einen Verbesserungsvorschlag']);
+        return $this->render('administrator/neuValidate.html.twig', ['errors' => $errors, 'form' => $form, 'title' => 'Melden Sie hier ein Problem oder machen Sie einen Verbesserungsvorschlag']);
     }
 }

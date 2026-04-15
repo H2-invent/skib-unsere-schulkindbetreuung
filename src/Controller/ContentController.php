@@ -8,7 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -53,7 +53,7 @@ class ContentController extends AbstractController
         }
         $title = $translator->trans('Content anlegen');
 
-        return $this->render('content/ContentForm.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('content/ContentForm.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/admin/content/edit', name: 'content_edit')]
@@ -79,7 +79,7 @@ class ContentController extends AbstractController
         }
         $title = $translator->trans('Content bearbeiten');
 
-        return $this->render('content/ContentForm.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+        return $this->render('content/ContentForm.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
     #[Route(path: '/admin/content/activate', name: 'content_activate')]
