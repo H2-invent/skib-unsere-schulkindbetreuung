@@ -22,10 +22,14 @@ class CreateExcelDayService
      * @param $weekday
      * @return string
      */
-    public function getMergedTime(Kind $kind, $weekday): string
+    public function getMergedTime(Kind $kind, $weekday, string $status): string
     {
-        $res = '';
-        $blocks = $kind->getBetreungsblocksReal();
+        $blocks = match ($status) {
+            'warteliste' => $kind->getRealWarteliste(),
+            'beworben' => $kind->getRealBeworben(),
+            default => $kind->getRealZeitblocks(),
+        };
+
         $cleanBlocks = array();
         foreach ($blocks as $data) {
             if ($data->getWochentag() === $weekday) {
