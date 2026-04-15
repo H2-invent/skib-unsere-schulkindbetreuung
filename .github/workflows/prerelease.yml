@@ -22,6 +22,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Slugify branch name
+        id: slugify
+        run: |
+          BRANCH_SLUG=$(echo "${{ github.ref_name }}" | sed -e 's/[^a-zA-Z0-9]/-/g' | tr '[:upper:]' '[:lower:]')
+          echo "branch_slug=$BRANCH_SLUG" >> $GITHUB_OUTPUT
+
       - uses: paulhatch/semantic-version@v5.0.2
         id: version
         with:
@@ -29,7 +35,7 @@ jobs:
           major_pattern: "(MAJOR)"
           minor_pattern: "(MINOR)"
           change_path: .
-          version_format: "${major}.${minor}.${patch}-${increment}"
+          version_format: "${major}.${minor}.${patch}-${{ steps.slugify.outputs.branch_slug }}-${increment}"
 
       - name: Create new Release with semantic-version tag
         uses: ncipollo/release-action@v1

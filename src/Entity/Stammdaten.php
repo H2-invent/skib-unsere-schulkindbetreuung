@@ -377,6 +377,18 @@ class Stammdaten implements GroupSequenceProviderInterface
         return $this->beruflicheSituation;
     }
 
+    public function getBeruflicheSituationString(): ?string
+    {
+        return match ($this->beruflicheSituation) {
+            '1' => 'Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig',
+            '2' => 'Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend',
+            '3' => 'Beide Elternteile / Erziehungsberechtigte sind berufstätig',
+            '4' => 'Beide Elternteile / Erziehungsberechtigte sind arbeitssuchend',
+            '5' => 'Ein Elternteil / Erziehungsberechtigter ist berufstätig // arbeitssuchend',
+            default => null,
+        };
+    }
+
     public function setBeruflicheSituation(?string $beruflicheSituation): self
     {
         $this->beruflicheSituation = $beruflicheSituation;

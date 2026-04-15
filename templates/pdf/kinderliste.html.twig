@@ -60,19 +60,19 @@
             <td>{{ k.alleineHause?'Ja'|trans:'Nein'|trans }}</td>
 
             {% if 0 in wochentag %}
-                <td>{{ getStringForBlocks(k,0)|nl2br }}</td>
+                <td>{{ getStringForBlocks(k,0,status)|nl2br }}</td>
             {% endif %}
             {% if 1 in wochentag %}
-                <td>{{ getStringForBlocks(k,1)|nl2br }}</td>
+                <td>{{ getStringForBlocks(k,1,status)|nl2br }}</td>
             {% endif %}
             {% if 2 in wochentag %}
-                <td>{{ getStringForBlocks(k,2)|nl2br }}</td>
+                <td>{{ getStringForBlocks(k,2,status)|nl2br }}</td>
             {% endif %}
             {% if 3 in wochentag %}
-                <td>{{ getStringForBlocks(k,3)|nl2br }}</td>
+                <td>{{ getStringForBlocks(k,3,status)|nl2br }}</td>
             {% endif %}
             {% if 4 in wochentag %}
-                <td>{{ getStringForBlocks(k,4)|nl2br }}</td>
+                <td>{{ getStringForBlocks(k,4,status)|nl2br }}</td>
             {% endif %}
             {% if is_granted('ROLE_ORG_VIEW_NOTICE') %}
                 <td>{{ k.internalNotice|raw }}</td>

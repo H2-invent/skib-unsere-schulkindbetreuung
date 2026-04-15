@@ -5,11 +5,11 @@ namespace App\Controller;
 use App\Entity\Kind;
 use App\Entity\Zeitblock;
 use App\Repository\ActiveRepository;
-use App\Repository\AutoBlockAssignmentChildRepository;
 use App\Repository\KindRepository;
 use App\Repository\SchuleRepository;
 use App\Repository\ZeitblockRepository;
 use App\Service\BerechnungsService;
+use Doctrine\Common\Collections\ArrayCollection;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -46,29 +46,33 @@ class DownloadAngemeldeteKinderController extends AbstractController
         $activeSheet->setCellValue('B1', 'Eltern Nachname');
         $activeSheet->setCellValue('C1', 'Vorname');
         $activeSheet->setCellValue('D1', 'Nachname');
-        $activeSheet->setCellValue('E1', 'Gebuchte Zeiten');
-        $activeSheet->setCellValue('E2', 'Montag');
-        $activeSheet->setCellValue('F2', 'Dienstag');
-        $activeSheet->setCellValue('G2', 'Mittwoch');
-        $activeSheet->setCellValue('H2', 'Donnerstag');
-        $activeSheet->setCellValue('I2', 'Freitag');
-        $activeSheet->setCellValue('J1', 'Angemeldete Zeiten');
-        $activeSheet->setCellValue('J2', 'Montag');
-        $activeSheet->setCellValue('K2', 'Dienstag');
-        $activeSheet->setCellValue('L2', 'Mittwoch');
-        $activeSheet->setCellValue('M2', 'Donnerstag');
-        $activeSheet->setCellValue('N2', 'Freitag');
-        $activeSheet->setCellValue('O1', 'Potentielle Zeiten (Auto Zuteilung)');
-        $activeSheet->setCellValue('O2', 'Montag');
-        $activeSheet->setCellValue('P2', 'Dienstag');
-        $activeSheet->setCellValue('Q2', 'Mittwoch');
-        $activeSheet->setCellValue('R2', 'Donnerstag');
-        $activeSheet->setCellValue('S2', 'Freitag');
-        $activeSheet->setCellValue('T1', 'Gewichtungsscore');
-        $activeSheet->setCellValue('U1', 'Klasse');
-        $activeSheet->setCellValue('V1', 'Gebühr (€)');
+        $activeSheet->setCellValue('E1', 'E-Mail');
+        $activeSheet->setCellValue('F1', 'Gebuchte Zeiten');
+        $activeSheet->setCellValue('F2', 'Montag');
+        $activeSheet->setCellValue('G2', 'Dienstag');
+        $activeSheet->setCellValue('H2', 'Mittwoch');
+        $activeSheet->setCellValue('I2', 'Donnerstag');
+        $activeSheet->setCellValue('J2', 'Freitag');
+        $activeSheet->setCellValue('K1', 'Angemeldete Zeiten');
+        $activeSheet->setCellValue('K2', 'Montag');
+        $activeSheet->setCellValue('L2', 'Dienstag');
+        $activeSheet->setCellValue('M2', 'Mittwoch');
+        $activeSheet->setCellValue('N2', 'Donnerstag');
+        $activeSheet->setCellValue('O2', 'Freitag');
+        $activeSheet->setCellValue('P1', 'Potentielle Zeiten (Auto Zuteilung)');
+        $activeSheet->setCellValue('P2', 'Montag');
+        $activeSheet->setCellValue('Q2', 'Dienstag');
+        $activeSheet->setCellValue('R2', 'Mittwoch');
+        $activeSheet->setCellValue('S2', 'Donnerstag');
+        $activeSheet->setCellValue('T2', 'Freitag');
+        $activeSheet->setCellValue('U1', 'Gewichtungsscore');
+        $activeSheet->setCellValue('V1', 'Klasse');
+        $activeSheet->setCellValue('W1', 'Berufsstatus');
+        $activeSheet->setCellValue('X1', 'Alleinerziehend');
+        $activeSheet->setCellValue('Y1', 'Anzahl Dokumente');
+        $activeSheet->setCellValue('Z1', 'Gebühr (€)');
         $activeSheet->getStyle('2')->getBorders()->getBottom()->setBorderStyle(Border::BORDER_MEDIUM);
-        foreach (range('A', 'V') as $column) {
+        foreach (range('A', 'Z') as $column) {
             $activeSheet->getColumnDimension($column)->setAutoSize(true);
         }
 
@@ -119,20 +123,24 @@ class DownloadAngemeldeteKinderController extends AbstractController
             $activeSheet->setCellValue('B' . $counter, $kind->getEltern()->getVorname());
             $activeSheet->setCellValue('C' . $counter, $kind->getVorname());
             $activeSheet->setCellValue('D' . $counter, $kind->getNachname());
+            $activeSheet->setCellValue('E' . $counter, $kind->getEltern()->getEmail());
 
             foreach ($kind->getZeitblocks() as $block) {
-                $this->writeTimesForBlock($block, $activeSheet, $counter, range('E', 'I'));
+                $this->writeTimesForBlock($block, $activeSheet, $counter, range('F', 'J'));
             }
             foreach ($kind->getBeworben() as $block) {
-                $this->writeTimesForBlock($block, $activeSheet, $counter, range('J', 'N'));
+                $this->writeTimesForBlock($block, $activeSheet, $counter, range('K', 'O'));
             }
             foreach ($this->getAcceptedAutoAssignedZeitblocks($kind) as $block) {
-                $this->writeTimesForBlock($block, $activeSheet, $counter, range('O', 'S'));
+                $this->writeTimesForBlock($block, $activeSheet, $counter, range('P', 'T'));
             }
 
-            $activeSheet->setCellValue('T' . $counter, $kind->getAutoBlockAssignmentChild()?->getWeight());
-            $activeSheet->setCellValue('U' . $counter, $kind->getKlasseString());
-            $activeSheet->setCellValue('V' . $counter,
+            $activeSheet->setCellValue('U' . $counter, $kind->getAutoBlockAssignmentChild()?->getWeight());
+            $activeSheet->setCellValue('V' . $counter, $kind->getKlasseString());
+            $activeSheet->setCellValue('W' . $counter, $kind->getEltern()?->getBeruflicheSituationString());
+            $activeSheet->setCellValue('X' . $counter, $kind->getEltern()?->getAlleinerziehend());
+            $activeSheet->setCellValue('Y' . $counter, count($kind->getEltern()?->getFile() ?? new ArrayCollection()));
+            $activeSheet->setCellValue('Z' . $counter,
                 $this->berechnungsService->getPreisforBetreuung($kind, true, $kind->getStartDate())
             );
             $counter++;
