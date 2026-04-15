@@ -153,6 +153,7 @@ class PaymentRefund
 
         return $this;
     }
+
     public function getTypeAsString(): ?string
     {
         return match ($this->refundType) {
@@ -160,7 +161,5 @@ class PaymentRefund
             1 => 'Automatisch',
             default => 'nicht angegebene',
         };
-
-
     }
 }

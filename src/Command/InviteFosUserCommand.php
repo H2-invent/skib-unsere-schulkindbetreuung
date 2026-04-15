@@ -18,8 +18,12 @@ class InviteFosUserCommand extends Command
     protected static $defaultName = 'app:invite:fosUser';
     protected static $defaultDescription = 'Add a short description for your command';
 
-    public function __construct(private EntityManagerInterface $em, private MailerService $mailer, private Environment $environment, ?string $name = null)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+        private MailerService $mailer,
+        private Environment $environment,
+        ?string $name = null,
+    ) {
         parent::__construct($name);
     }
 
@@ -30,6 +34,7 @@ class InviteFosUserCommand extends Command
             ->addArgument('url', InputArgument::OPTIONAL, 'This is the url of the page you want to send the invitation link from')
         ;
     }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -37,9 +42,9 @@ class InviteFosUserCommand extends Command
 
         if ($url) {
             $io->note(sprintf('You passed an argument: %s', $url));
-
-        }else{
+        } else {
             $io->error('Please enter the url for the link');
+
             return Command::FAILURE;
         }
         $qb = $this->em->getRepository(User::class)->createQueryBuilder('u');
@@ -51,18 +56,16 @@ class InviteFosUserCommand extends Command
         $count = 0;
         $progressBar = new ProgressBar($output, sizeof($users));
 
-
         $progressBar->start();
         foreach ($users as $data) {
             $data->setInvitationToken(md5(uniqid()));
             $this->em->persist($data);
             $this->em->flush();
             $progressBar->advance(1);
-            $html = $this->environment->render('email/invitationEmailInitial.html.twig', array('user' => $data, 'url'=>$url));
-            $this->mailer->sendEmail('Unsere Schulkinbetreuung', 'info@unsere-schulkindbetreuung.de', $data->getEmail(), 'Neue Anmeldung zur Software SKIB', $html,'info@unsere-schulkindbetreuung.de');
+            $html = $this->environment->render('email/invitationEmailInitial.html.twig', ['user' => $data, 'url' => $url]);
+            $this->mailer->sendEmail('Unsere Schulkinbetreuung', 'info@unsere-schulkindbetreuung.de', $data->getEmail(), 'Neue Anmeldung zur Software SKIB', $html, 'info@unsere-schulkindbetreuung.de');
             $count++;
         }
-
 
         $io->success(sprintf('We send %s emails', $count));
 

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Kind;
 use App\Entity\Zeitblock;
 use App\Repository\ActiveRepository;
@@ -20,6 +19,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/org_accept/download', name: 'download_angemeldete')]
 class DownloadAngemeldeteKinderController extends AbstractController
@@ -30,8 +30,7 @@ class DownloadAngemeldeteKinderController extends AbstractController
         private ZeitblockRepository $zeitblockRepository,
         private BerechnungsService $berechnungsService,
         private KindRepository $kindRepository,
-    )
-    {
+    ) {
     }
 
     /**
@@ -144,9 +143,7 @@ class DownloadAngemeldeteKinderController extends AbstractController
             $counter++;
         }
 
-
         $spreadsheet->setActiveSheetIndex(0);
-
 
         // Create a Temporary file in the system
         $fileName = 'Angemeldete Kinder_' . $schule->getName() . '.xlsx';
@@ -157,11 +154,11 @@ class DownloadAngemeldeteKinderController extends AbstractController
 
         // Return the excel file as an attachment
         return $this->file($temp_file, $fileName, ResponseHeaderBag::DISPOSITION_INLINE);
-
     }
 
     /**
      * @param Kind[] $kinder
+     *
      * @return Kind[]
      */
     private function deduplicateKinderChooseNewest(array $kinder): array
@@ -201,15 +198,13 @@ class DownloadAngemeldeteKinderController extends AbstractController
     }
 
     /**
-     * @param Kind $kind
      * @return Zeitblock[]
      */
     private function getAcceptedAutoAssignedZeitblocks(Kind $kind): array
     {
         $autoBlocks = $kind->getAutoBlockAssignmentChild()?->getZeitblocks()->toArray() ?? [];
-        $autoBlocks = array_filter($autoBlocks, static fn($autoBlock) => $autoBlock->isAccepted());
+        $autoBlocks = array_filter($autoBlocks, static fn ($autoBlock) => $autoBlock->isAccepted());
 
-        return array_map(static fn($autoBlock) => $autoBlock->getZeitblock(), $autoBlocks);
+        return array_map(static fn ($autoBlock) => $autoBlock->getZeitblock(), $autoBlocks);
     }
 }
-

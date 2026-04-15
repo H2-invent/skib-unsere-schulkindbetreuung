@@ -11,17 +11,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WidgetAdminController extends AbstractController
 {
-    public function __construct(private ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
+
     #[Route(path: '/admin/show/mailgun/stats', name: 'admin_mailgun_stats')]
     public function index(Request $request, TranslatorInterface $translator)
     {
-        $alert = $this->managerRegistry->getRepository(EmailResponse::class)->findBy(array('allert'=>true));
-        $delivered = $this->managerRegistry->getRepository(EmailResponse::class)->findBy(array('warning'=>false,'allert'=>false));
-        $warning = $this->managerRegistry->getRepository(EmailResponse::class)->findBy(array('warning'=>true));
-
+        $alert = $this->managerRegistry->getRepository(EmailResponse::class)->findBy(['allert' => true]);
+        $delivered = $this->managerRegistry->getRepository(EmailResponse::class)->findBy(['warning' => false, 'allert' => false]);
+        $warning = $this->managerRegistry->getRepository(EmailResponse::class)->findBy(['warning' => true]);
     }
-
-
 }

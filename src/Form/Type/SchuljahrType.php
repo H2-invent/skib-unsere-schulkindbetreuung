@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 17.09.2019
- * Time: 20:29
+ * Time: 20:29.
  */
+
 namespace App\Form\Type;
 
 use App\Entity\Active;
@@ -24,25 +26,25 @@ class SchuljahrType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'Schuljahresbegin',
                 'required' => true,
-                'translation_domain' => 'form'
+                'translation_domain' => 'form',
             ])
             ->add('bis', DateType::class, [
                 'widget' => 'single_text',
                 'label' => 'Schuljahresende',
                 'required' => true,
-                'translation_domain' => 'form'
+                'translation_domain' => 'form',
             ])
             ->add('anmeldeStart', DateType::class, [
                 'widget' => 'single_text',
                 'label' => 'Beginn der Anmeldung',
                 'required' => true,
-                'translation_domain' => 'form'
+                'translation_domain' => 'form',
             ])
             ->add('anmeldeEnde', DateType::class, [
                 'widget' => 'single_text',
                 'label' => 'Ende der Anmeldung',
                 'required' => true,
-                'translation_domain' => 'form'
+                'translation_domain' => 'form',
             ]);
 
         // Bedingte Anzeige des Felds

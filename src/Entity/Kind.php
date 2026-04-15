@@ -10,13 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 #[ORM\Table]
 #[ORM\Index(name: 'idx_tracing', columns: ['tracing'])]
 #[ORM\Entity(repositoryClass: KindRepository::class)]
 class Kind implements \Stringable
 {
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -56,7 +54,6 @@ class Kind implements \Stringable
     #[Assert\NotBlank]
     #[ORM\Column(type: 'datetime')]
     private $geburtstag;
-
 
     #[ORM\OneToMany(targetEntity: Abwesend::class, mappedBy: 'kind')]
     private $abwesends;
@@ -124,7 +121,6 @@ class Kind implements \Stringable
 
     #[ORM\ManyToMany(targetEntity: Rechnung::class, mappedBy: 'kinder')]
     private $rechnungen;
-
 
     #[ORM\OneToMany(targetEntity: KindFerienblock::class, mappedBy: 'kind', cascade: ['remove'])]
     private $kindFerienblocks;
@@ -201,7 +197,6 @@ class Kind implements \Stringable
         $this->anwesenheitenSchulkindbetreuung = new ArrayCollection();
         $this->warteliste = new ArrayCollection();
         $this->movedToWaiting = new ArrayCollection();
-
     }
 
     public function getId(): ?int
@@ -282,7 +277,6 @@ class Kind implements \Stringable
         } catch (\Exception) {
             return 'error! Contact the Administrator';
         }
-
     }
 
     public function setKlasse(?int $klasse): self
@@ -321,7 +315,6 @@ class Kind implements \Stringable
      */
     public function getZeitblocks(): Collection
     {
-
         return $this->zeitblocks;
     }
 
@@ -330,7 +323,7 @@ class Kind implements \Stringable
      */
     public function getRealZeitblocks(): Collection
     {
-        $block = array();
+        $block = [];
         foreach ($this->zeitblocks->toArray() as $data) {
             if (!$data->getDeleted()) {
                 $block[] = $data;
@@ -357,14 +350,14 @@ class Kind implements \Stringable
      */
     public function getRealBeworben(): Collection
     {
-        $block = array();
+        $block = [];
         foreach ($this->beworben->toArray() as $data) {
             if (!$data->getDeleted()) {
                 $block[] = $data;
             }
         }
 
-        usort($block, fn(Zeitblock $a, Zeitblock $b) => $a->getVon() > $b->getVon() ? true : false);
+        usort($block, fn (Zeitblock $a, Zeitblock $b) => $a->getVon() > $b->getVon() ? true : false);
 
         return new ArrayCollection($block);
     }
@@ -374,18 +367,17 @@ class Kind implements \Stringable
      */
     public function getRealWarteliste(): Collection
     {
-        $block = array();
+        $block = [];
         foreach ($this->warteliste->toArray() as $data) {
             if (!$data->getDeleted()) {
                 $block[] = $data;
             }
         }
 
-        usort($block, fn(Zeitblock $a, Zeitblock $b) => $a->getVon() > $b->getVon() ? true : false);
+        usort($block, fn (Zeitblock $a, Zeitblock $b) => $a->getVon() > $b->getVon() ? true : false);
 
         return new ArrayCollection($block);
     }
-
 
     public function addZeitblock(Zeitblock $zeitblock): self
     {
@@ -471,13 +463,13 @@ class Kind implements \Stringable
                 $summe++;
             }
         }
+
         return $summe;
     }
 
     public function getTageWithBlocks()
     {
-
-        $blocks2 = array();
+        $blocks2 = [];
 
         $blocks = $this->zeitblocks->toArray();
         $blocks = array_merge($blocks, $this->beworben->toArray());
@@ -487,9 +479,9 @@ class Kind implements \Stringable
                 $blocks2[$data->getWochentag()][] = $data;
             }
         }
+
         return sizeof($blocks2);
     }
-
 
     /**
      * @return Zeitblock[]
@@ -497,39 +489,41 @@ class Kind implements \Stringable
     public function getBetreungsblocksReal()
     {
         $blocks = $this->zeitblocks;
-        $realBlocks = array();
+        $realBlocks = [];
         foreach ($blocks as $data) {
             if ($data->getGanztag() != 0) {
                 $realBlocks[] = $data;
             }
         }
+
         return $realBlocks;
     }
 
     public function getBetreungsblocksRealKontingent()
     {
         $blocks = $this->beworben;
-        $realBlocks = array();
+        $realBlocks = [];
         foreach ($blocks as $data) {
             if ($data->getGanztag() != 0) {
                 $realBlocks[] = $data;
             }
         }
+
         return $realBlocks;
     }
 
     public function getMittagessenblocksReal()
     {
         $blocks = $this->zeitblocks;
-        $realBlocks = array();
+        $realBlocks = [];
         foreach ($blocks as $data) {
             if ($data->getGanztag() == 0) {
                 $realBlocks[] = $data;
             }
         }
+
         return $realBlocks;
     }
-
 
     public function getFin(): ?bool
     {
@@ -736,10 +730,11 @@ class Kind implements \Stringable
 
     public function getArtString()
     {
-        $type = array(
+        $type = [
             1 => 'Ganztagsbetreuung',
             2 => 'Halbtagsbetreuung',
-        );
+        ];
+
         return $type[$this->art];
     }
 
@@ -756,10 +751,11 @@ class Kind implements \Stringable
      */
     public function getFerienblocks(): Collection
     {
-        $ferien = array();
+        $ferien = [];
         foreach ($this->kindFerienblocks as $data) {
             $ferien[] = $data->getFerienblock();
         }
+
         return new ArrayCollection($ferien);
     }
 
@@ -773,6 +769,7 @@ class Kind implements \Stringable
                 return $data;
             }
         }
+
         return null;
     }
 
@@ -781,13 +778,14 @@ class Kind implements \Stringable
      */
     public function getKindFerienblocksBeworben(): Collection
     {
-        $res = array();
+        $res = [];
         $ferienblock = $this->kindFerienblocks->toArray();
         foreach ($ferienblock as $data) {
             if ($data->getState() == 0) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
 
@@ -796,13 +794,14 @@ class Kind implements \Stringable
      */
     public function getKindFerienblocksGebucht(): Collection
     {
-        $res = array();
+        $res = [];
         $ferienblock = $this->kindFerienblocks->toArray();
         foreach ($ferienblock as $data) {
             if ($data->getState() == 10) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
 
@@ -811,13 +810,14 @@ class Kind implements \Stringable
      */
     public function getKindFerienblocksStorniert(): Collection
     {
-        $res = array();
+        $res = [];
         $ferienblock = $this->kindFerienblocks->toArray();
         foreach ($ferienblock as $data) {
             if ($data->getState() == 20) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
 
@@ -826,18 +826,19 @@ class Kind implements \Stringable
      */
     public function getKindFerienblocksBezahlt(): Collection
     {
-        $res = array();
+        $res = [];
         $ferienblock = $this->kindFerienblocks->toArray();
         foreach ($ferienblock as $data) {
             if ($data->getBezahlt() === true) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
 
     /**
-     * @return Integer|Preis
+     * @return int|Preis
      */
     public function getFerienblockPreis(): float
     {
@@ -846,6 +847,7 @@ class Kind implements \Stringable
         foreach ($ferienblock as $data) {
             $preis += $data->getPreis();
         }
+
         return $preis;
     }
 
@@ -854,13 +856,14 @@ class Kind implements \Stringable
      */
     public function getKindFerienblocksNichtBezahlt(): Collection
     {
-        $res = array();
+        $res = [];
         $ferienblock = $this->kindFerienblocks->toArray();
         foreach ($ferienblock as $data) {
             if ($data->getBezahlt() === false) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
 
@@ -889,15 +892,14 @@ class Kind implements \Stringable
 
     public function getProgrammFromOrg(Organisation $organisation)
     {
-        $res = array();
+        $res = [];
         foreach ($this->kindFerienblocks as $data) {
             if ($data->getFerienblock()->getOrganisation() == $organisation) {
                 $res[] = $data;
             }
-
         }
-        return $res;
 
+        return $res;
     }
 
     public function getMasernImpfung(): ?bool
@@ -1038,6 +1040,7 @@ class Kind implements \Stringable
         if ($this->warteliste->count() > 0) {
             return $this->warteliste[0]->getActive();
         }
+
         return null;
     }
 

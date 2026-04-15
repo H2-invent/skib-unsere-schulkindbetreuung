@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 03.10.2019
- * Time: 19:01
+ * Time: 19:01.
  */
 
 namespace App\Service;
-
 
 use App\Entity\Active;
 use App\Entity\Kind;
@@ -18,20 +18,25 @@ use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
-use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
 class PrintService
 {
-
     protected $parameterBag;
 
-    public function __construct(private EntityManagerInterface $em, private UrlGeneratorInterface $generator, private FilesystemOperator $fileSystem, private Environment $templating, private TranslatorInterface $translator, ParameterBagInterface $parameterBag, private TCPDFController $TCPDFController)
-    {
-
+    public function __construct(
+        private EntityManagerInterface $em,
+        private UrlGeneratorInterface $generator,
+        private FilesystemOperator $fileSystem,
+        private Environment $templating,
+        private TranslatorInterface $translator,
+        ParameterBagInterface $parameterBag,
+        private TCPDFController $TCPDFController,
+    ) {
         $this->parameterBag = $parameterBag;
     }
 
@@ -42,9 +47,9 @@ class PrintService
         $pdf->setOrganisation($organisation);
         $pdf = $this->preparePDF($pdf, $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), $organisation->getName(), $this->translator->trans('Anmeldebestätigung für die Schulkindbetreuung'), null, $organisation);
         if ($encyption) {
-            $pdf->setProtection(array('modify'), $kind->getGeburtstag()->format('d.m.Y'), 'h2inventSkibIsTheBest', 3);
+            $pdf->setProtection(['modify'], $kind->getGeburtstag()->format('d.m.Y'), 'h2inventSkibIsTheBest', 3);
         }
-        $adressComp = '<p><small>' . $organisation->getName() . ' | ' . $organisation->getAdresse() . $organisation->getAdresszusatz() . ' | ' . $organisation->getPlz() . (' ') . $organisation->getOrt() . '</small><br><br>';
+        $adressComp = '<p><small>' . $organisation->getName() . ' | ' . $organisation->getAdresse() . $organisation->getAdresszusatz() . ' | ' . $organisation->getPlz() . ' ' . $organisation->getOrt() . '</small><br><br>';
 
         $adressComp = $adressComp . $eltern->getVorname() . ' ' . $eltern->getName();
         $adressComp .= '<br>' . $eltern->getStrasse();
@@ -67,15 +72,14 @@ class PrintService
             true
         );
 
-
         $kontaktDaten = '<table cellspacing="3px">' .
 
-            '<tr>' . '<td align="right">' . $this->translator->trans('Sicherheitscode') . ': </td><td  align="left" >' . $eltern->getSecCode() . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Anmeldedatum') . ': </td><td  align="left" >' . $eltern->getCreatedAt()->format('d.m.Y') . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Betreuende Organisation') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getName() . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Ansprechpartner') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getAnsprechpartner() . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Telefonnummer') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getTelefon() . '</td></tr>';
-        '<tr>' . '<td align="right">' . $this->translator->trans('E-Mail') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getEmail() . '</td></tr>';
+            '<tr><td align="right">' . $this->translator->trans('Sicherheitscode') . ': </td><td  align="left" >' . $eltern->getSecCode() . '</td></tr>' .
+            '<tr><td align="right">' . $this->translator->trans('Anmeldedatum') . ': </td><td  align="left" >' . $eltern->getCreatedAt()->format('d.m.Y') . '</td></tr>' .
+            '<tr><td align="right">' . $this->translator->trans('Betreuende Organisation') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getName() . '</td></tr>' .
+            '<tr><td align="right">' . $this->translator->trans('Ansprechpartner') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getAnsprechpartner() . '</td></tr>' .
+            '<tr><td align="right">' . $this->translator->trans('Telefonnummer') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getTelefon() . '</td></tr>';
+        '<tr><td align="right">' . $this->translator->trans('E-Mail') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getEmail() . '</td></tr>';
         $kontaktDaten .= '</table>';
         $pdf->writeHTMLCell(
             300,
@@ -90,7 +94,7 @@ class PrintService
             'L',
             true
         );
-        $elternDaten = $this->templating->render('pdf/eltern.html.twig', array('kind' => $kind, 'eltern' => $eltern, 'einkommen' => $stadt->getGehaltsklassen(), 'beruflicheSituation' => array_flip($beruflicheSituation)));
+        $elternDaten = $this->templating->render('pdf/eltern.html.twig', ['kind' => $kind, 'eltern' => $eltern, 'einkommen' => $stadt->getGehaltsklassen(), 'beruflicheSituation' => array_flip($beruflicheSituation)]);
         $pdf->writeHTMLCell(
             0,
             0,
@@ -108,12 +112,11 @@ class PrintService
         $pdf->AddPage('H', 'A4');
         $pdf = $this->addChildDetails($kind, $pdf);
 
-
         $pdf->AddPage('L', 'A4');
         $blocks = $kind->getRealZeitblocks()->toArray();
         $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
         $table = $this->generateTimeTable($blocks);
-        $kindData = $this->templating->render('pdf/kind.html.twig', array('kind' => $kind, 'table' => $table));
+        $kindData = $this->templating->render('pdf/kind.html.twig', ['kind' => $kind, 'table' => $table]);
         $pdf->writeHTMLCell(
             0,
             0,
@@ -132,7 +135,7 @@ class PrintService
             $pdf = $this->addCard($kind, $pdf);
         }
 
-        return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
+        return $pdf->Output($fileName . '.pdf', $type); // This will output the PDF as a Download
     }
 
     public function printElternDetail(Stammdaten $stammdaten, Organisation $organisation)
@@ -142,6 +145,7 @@ class PrintService
         $pdf = $this->preparePDF($pdf, $this->translator->trans('Änderung der Stammdaten'), $organisation->getName(), $this->translator->trans('Änderung der Stammdaten'), null, $organisation);
         $pdf->AddPage('H', 'A4');
         $pdf = $this->addEltern($stammdaten, $pdf);
+
         return $pdf->Output($stammdaten->getVorname() . ' ' . $stammdaten->getName() . '.pdf', 'S');
     }
 
@@ -158,28 +162,25 @@ class PrintService
             $pdf = $this->addCard($kind, $pdf);
         }
 
-        return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
+        return $pdf->Output($fileName . '.pdf', $type); // This will output the PDF as a Download
     }
 
     private function generateChildPage(Kind $kind)
     {
-        $zeitBloeckeGebucht = array();
+        $zeitBloeckeGebucht = [];
         foreach ($kind->getRealZeitblocks() as $data) {
             $zeitBloeckeGebucht[$data->getWochentag()][] = $data;
         }
-        $zeitBloeckeAngemeldet = array();
+        $zeitBloeckeAngemeldet = [];
         foreach ($kind->getBeworben() as $data) {
             $zeitBloeckeAngemeldet[$data->getWochentag()][] = $data;
         }
 
-        return $this->templating->render('pdf/kindOrganisation.html.twig', array('k' => $kind, 'beworben' => $zeitBloeckeAngemeldet, 'zeitblock' => $zeitBloeckeGebucht));
-
+        return $this->templating->render('pdf/kindOrganisation.html.twig', ['k' => $kind, 'beworben' => $zeitBloeckeAngemeldet, 'zeitblock' => $zeitBloeckeGebucht]);
     }
-
 
     public function printChildList($kinder, Organisation $organisation, $text, $fileName, TCPDFController $tcpdf, $wochentag = [0, 1, 2, 3, 4], $type = 'I', $stichtag = null)
     {
-
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
         $subject = 'Kinder in der Organisation ' . $organisation->getName();
@@ -203,11 +204,11 @@ class PrintService
             /**
              * @Kind $data
              */
-            if (!in_array($data->getSchule(),$schulen)){
+            if (!in_array($data->getSchule(), $schulen)) {
                 $schulen[] = $data->getSchule();
             }
         }
-        $kindData = $this->templating->render('pdf/kinderliste.html.twig', array('text' => $text, 'kinder' => $kinder,'schulen'=>$schulen, 'wochentag' => $wochentag, 'stichtag' => $stichtag));
+        $kindData = $this->templating->render('pdf/kinderliste.html.twig', ['text' => $text, 'kinder' => $kinder, 'schulen' => $schulen, 'wochentag' => $wochentag, 'stichtag' => $stichtag]);
         $pdf->writeHTMLCell(
             0,
             0,
@@ -222,13 +223,11 @@ class PrintService
             true
         );
 
-
-        return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
+        return $pdf->Output($fileName . '.pdf', $type); // This will output the PDF as a Download
     }
 
     public function preparePDF(\TCPDF $pdf, $title, $author, $subject, ?Stadt $stadt, ?Organisation $organisation)
     {
-
         $pdf->SetAuthor($author);
         $pdf->SetTitle($title);
         $pdf->SetSubject($subject);
@@ -236,7 +235,7 @@ class PrintService
         $pdf->SetFont('helvetica', '', 10, '', true);
         $pdf->SetMargins(20, 15, 20, true);
         $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
-        $pdf->setHeaderData('', 0, '', '', array(0, 0, 0), array(255, 255, 255));
+        $pdf->setHeaderData('', 0, '', '', [0, 0, 0], [255, 255, 255]);
         $pdf->setFooterData(1, 1);
         $pdf->AddPage();
         $pdf->setJPEGQuality(75);
@@ -270,21 +269,18 @@ class PrintService
                     $w = 0;
                 }
             }
-
         }
-
 
         if ($imgdata) {
             $pdf->Image('@' . $imgdata, 140, 20, $w, $h);
         }
+
         return $pdf;
     }
 
-
     public function addEltern(Stammdaten $eltern, \TCPDF $pdf)
     {
-
-        $elternDaten = $this->templating->render('pdf/elternOrganisation.html.twig', array('eltern' => $eltern));
+        $elternDaten = $this->templating->render('pdf/elternOrganisation.html.twig', ['eltern' => $eltern]);
         $pdf->writeHTMLCell(
             0,
             0,
@@ -298,12 +294,12 @@ class PrintService
             '',
             true
         );
+
         return $pdf;
     }
 
     public function addChildDetails(Kind $kind, \TCPDF $pdf)
     {
-
         $pdf->writeHTMLCell(
             0,
             0,
@@ -317,20 +313,20 @@ class PrintService
             '',
             true
         );
+
         return $pdf;
     }
 
-
     public function addCard(Kind $kind, \TCPDF $pdf)
     {
-        //die seite mit der kleinen checkin card
+        // die seite mit der kleinen checkin card
 
         $pdf->writeHTMLCell(
             0,
             0,
             20,
             30,
-            $this->templating->render('pdf/checkInAusweis.html.twig', array('kind' => $kind)),
+            $this->templating->render('pdf/checkInAusweis.html.twig', ['kind' => $kind]),
             0,
             1,
             0,
@@ -338,22 +334,22 @@ class PrintService
             '',
             true
         );
-        $style = array(
+        $style = [
             'border' => false,
             'padding' => 0,
-            'fgcolor' => array(0, 0, 0),
-            'bgcolor' => false
-        );
+            'fgcolor' => [0, 0, 0],
+            'bgcolor' => false,
+        ];
 
-// QRCODE,H : QR-CODE Best error correction
-        $pdf->write2DBarcode($this->generator->generate('checkin_schulkindbetreuung', array('kindID' => $kind->getId()), UrlGeneratorInterface::ABSOLUTE_URL), 'QRCODE,H', 25, 65, 31, 31, $style, 'N');
+        // QRCODE,H : QR-CODE Best error correction
+        $pdf->write2DBarcode($this->generator->generate('checkin_schulkindbetreuung', ['kindID' => $kind->getId()], UrlGeneratorInterface::ABSOLUTE_URL), 'QRCODE,H', 25, 65, 31, 31, $style, 'N');
 
         return $pdf;
     }
 
-    function printAnmeldeformular(Schule $schule, TCPDFController $tcpdf, $fileName, $beruflicheSituation, $gehaltsklassen, $cat, $schuljahr = null, $type = 'D')
+    public function printAnmeldeformular(Schule $schule, TCPDFController $tcpdf, $fileName, $beruflicheSituation, $gehaltsklassen, $cat, $schuljahr = null, $type = 'D')
     {
-        $catArr = array(1 => $this->translator->trans('Ganztag'), 2 => $this->translator->trans('Halbtag'));
+        $catArr = [1 => $this->translator->trans('Ganztag'), 2 => $this->translator->trans('Halbtag')];
         $pdf = $tcpdf->create();
         $organisation = $schule->getOrganisation();
         $pdf->setOrganisation($schule->getOrganisation());
@@ -365,7 +361,6 @@ class PrintService
             $imgdata = base64_decode($imdata);
             $pdf->Image('@' . $imgdata, 25, 30, 50, 0);
         }
-
 
         if ($schule->getStadt()->getLogoStadt()) {
             $im = $this->fileSystem->read($schule->getStadt()->getLogoStadt());
@@ -389,7 +384,6 @@ class PrintService
             'C',
             true
         );
-
 
         if ($schule->getImage()) {
             $im = $this->fileSystem->read($schule->getImage());
@@ -427,7 +421,7 @@ class PrintService
             true
         );
         // hier die Kinderdaten
-        $blocks = array();
+        $blocks = [];
         $block['type'] = $catArr[$cat];
         if ($schuljahr) {
             $schulJahr = $schuljahr;
@@ -435,9 +429,7 @@ class PrintService
             $schulJahr = $this->em->getRepository(Active::class)->findActiveSchuljahrFromCity($schule->getOrganisation()->getStadt());
         }
 
-
-
-        $blockTmp = $this->em->getRepository(Zeitblock::class)->findBy(array('active'=>$schulJahr,'schule'=>$schule),['von'=>'ASC']);
+        $blockTmp = $this->em->getRepository(Zeitblock::class)->findBy(['active' => $schulJahr, 'schule' => $schule], ['von' => 'ASC']);
         foreach ($blockTmp as $data) {
             if ($data->getGanztag() == $cat && !$data->getDeleted() && !$data->getDeaktiviert()) {
                 $block['data'][] = $data;
@@ -468,11 +460,11 @@ class PrintService
             0,
             20,
             30,
-            $this->templating->render('download_formular/__elter.html.twig', array(
+            $this->templating->render('download_formular/__elter.html.twig', [
                 'gehaltsklassen' => $gehaltsklassen,
                 'beruflicheSitutuation' => $beruflicheSituation,
                 'organisation' => $organisation,
-                'stadt' => $organisation->getStadt())),
+                'stadt' => $organisation->getStadt()]),
             0,
             1,
             0,
@@ -481,13 +473,10 @@ class PrintService
             true
         );
 
-
-        return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
-
+        return $pdf->Output($fileName . '.pdf', $type); // This will output the PDF as a Download
     }
 
-
-    function generateTimeTable($blocks, $cross = false)
+    public function generateTimeTable($blocks, $cross = false)
     {
         if (sizeof($blocks) === 0) {
             return '<tr><td colspan="7"><h3>' . $this->translator->trans('Keine Betreuungszeitblöcke gebucht') . '</h3></td></tr>';
@@ -497,7 +486,6 @@ class PrintService
             $render[$data->getWochentag()][] = $data;
         }
 
-
         $table = '';
         $t = 0;
         do {
@@ -505,13 +493,11 @@ class PrintService
             for ($i = 0; $i < 7; $i++) {
                 $table .= '<td align="center" valign="middle" style="border: 1px solid black">';
                 if (isset($render[$i])) {
-
                     $block = $render[$i][0];
                     if ($block->getGanztag() == 0) {
                         $table .= '<p>' . $this->translator->trans('Mittagessen') . '</p>';
-
                     }
-                    if (($block->getMin() || $block->getMax())) {
+                    if ($block->getMin() || $block->getMax()) {
                         $table .= '<p>' . $this->translator->trans('Warten auf Bestätigung') . '</p>';
                     }
                     $table .= $block->getVon()->format('H:i') . ' - ' . $block->getBis()->format('H:i');
@@ -522,9 +508,7 @@ class PrintService
 
                     if (count($render[$i]) == 0) {
                         unset($render[$i]);
-
                     }
-
                 }
                 $table .= '</td>';
             }
@@ -536,14 +520,16 @@ class PrintService
             }
             $t++;
         } while ($t < 100);
+
         return $table;
     }
 
-    function getBlocks($blocks)
+    public function getBlocks($blocks)
     {
         foreach ($blocks as $data) {
             $render[$data->getWochentag()][] = $data;
         }
+
         return $render;
     }
 }

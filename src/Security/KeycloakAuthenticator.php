@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Security;
-
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,8 +26,14 @@ class KeycloakAuthenticator extends OAuth2Authenticator implements Authenticatio
     use TargetPathTrait;
     private $userManager;
 
-    public function __construct(private LoggerInterface        $logger, private ParameterBagInterface  $paramterBag, private TokenStorageInterface  $tokenStorage, private ClientRegistry         $clientRegistry, private EntityManagerInterface $em, private RouterInterface        $router)
-    {
+    public function __construct(
+        private LoggerInterface $logger,
+        private ParameterBagInterface $paramterBag,
+        private TokenStorageInterface $tokenStorage,
+        private ClientRegistry $clientRegistry,
+        private EntityManagerInterface $em,
+        private RouterInterface $router,
+    ) {
     }
 
     public function supports(Request $request): bool
@@ -47,13 +51,13 @@ class KeycloakAuthenticator extends OAuth2Authenticator implements Authenticatio
     {
         $client = $this->clientRegistry->getClient('keycloak_main');
         $accessToken = $this->fetchAccessToken($client);
-        $request->getSession()->set('id_token',$accessToken->getValues()['id_token']);
-        $passport =  new SelfValidatingPassport(
+        $request->getSession()->set('id_token', $accessToken->getValues()['id_token']);
+        $passport = new SelfValidatingPassport(
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
                 /** @var KeycloakUser $keycloakUser */
                 $keycloakUser = $client->fetchUserFromToken($accessToken);
                 $id = $keycloakUser->getId();
-                $existingUser = $this->em->getRepository(User::class)->findOneBy(array('keycloakId' => $id));
+                $existingUser = $this->em->getRepository(User::class)->findOneBy(['keycloakId' => $id]);
                 $firstName = $keycloakUser->toArray()['given_name'];
                 $lastName = $keycloakUser->toArray()['family_name'];
                 $email = $keycloakUser->getEmail();
@@ -64,16 +68,18 @@ class KeycloakAuthenticator extends OAuth2Authenticator implements Authenticatio
                     $existingUser->setNachname($lastName);
                     $this->em->persist($existingUser);
                     $this->em->flush();
-                    if ($existingUser->getEnabled() == false){
-                        echo "This user is disabled. Please contact your admin or support@h2-invent.com";
+                    if ($existingUser->getEnabled() == false) {
+                        echo 'This user is disabled. Please contact your admin or support@h2-invent.com';
+
                         return null;
                     }
+
                     return $existingUser;
                 }
 
                 // 1) it is an old USer from FOS USer time never loged in from keycloak
                 $existingUser = null;
-                $existingUser = $this->em->getRepository(User::class)->findOneBy(array('email' => $email));
+                $existingUser = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
                 if ($existingUser) {
                     $existingUser->setKeycloakId($id);
                     $existingUser->setLastLogin(new \DateTime());
@@ -82,10 +88,12 @@ class KeycloakAuthenticator extends OAuth2Authenticator implements Authenticatio
                     $existingUser->setNachname($lastName);
                     $this->em->persist($existingUser);
                     $this->em->flush();
-                    if ($existingUser->getEnabled() == false){
-                        echo "This user is disabled. Please contact your admin or support@h2-invent.com";
+                    if ($existingUser->getEnabled() == false) {
+                        echo 'This user is disabled. Please contact your admin or support@h2-invent.com';
+
                         return null;
                     }
+
                     return $existingUser;
                 }
 
@@ -100,21 +108,18 @@ class KeycloakAuthenticator extends OAuth2Authenticator implements Authenticatio
                 $myUser->setLastLogin(new \DateTime());
                 $this->em->persist($myUser);
                 $this->em->flush();
-                return $myUser;
 
+                return $myUser;
             })
         );
-        $passport->setAttribute('id_token','null');
+        $passport->setAttribute('id_token', 'null');
         $passport->setAttribute('scope', 'openid');
 
         return $passport;
     }
 
-
-
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): ?Response
     {
-
         // change "app_homepage" to some route in your app
         $targetUrl = $this->getTargetPath($request->getSession(), 'main');
         if (!$targetUrl) {
@@ -122,7 +127,6 @@ class KeycloakAuthenticator extends OAuth2Authenticator implements Authenticatio
         }
 
         return new RedirectResponse($targetUrl);
-
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
@@ -137,10 +141,7 @@ class KeycloakAuthenticator extends OAuth2Authenticator implements Authenticatio
     public function start(Request $request, ?AuthenticationException $authException = null)
     {
         $targetUrl = $this->router->generate('login_keycloak');
+
         return new RedirectResponse($targetUrl);
     }
-
 }
-
-
-

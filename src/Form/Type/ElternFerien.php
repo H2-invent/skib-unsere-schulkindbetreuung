@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 17.09.2019
- * Time: 20:29
+ * Time: 20:29.
  */
 
 namespace App\Form\Type;
-
 
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
@@ -24,10 +24,9 @@ class ElternFerien extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
             ->add('email', EmailType::class, ['label' => 'E-Mail', 'translation_domain' => 'form'])
-            ->add('emailDoubleInput', EmailType::class, ['label' => 'E-Mail wiederholt eingeben', 'translation_domain' => 'form', 'attr' => array('class' => 'disablecopypaste')])
+            ->add('emailDoubleInput', EmailType::class, ['label' => 'E-Mail wiederholt eingeben', 'translation_domain' => 'form', 'attr' => ['class' => 'disablecopypaste']])
             ->add('phoneNumber', TextType::class, ['label' => 'Telefonnummer', 'translation_domain' => 'form'])
             ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
             ->add('name', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
@@ -39,25 +38,18 @@ class ElternFerien extends AbstractType
             ->add('notfallkontakt', TextType::class, ['required' => true, 'label' => 'Telefonnummer des Notfallkontakts', 'translation_domain' => 'form'])
             ->add('abholberechtigter', TextareaType::class, ['required' => false, 'label' => 'Weitere abholberechtigte Personen', 'translation_domain' => 'form', 'attr' => ['rows' => 6]])
             ->add('gdpr', CheckboxType::class, ['required' => true, 'label' => 'Ich bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet werden und an die betreuende Organisation weitergegeben werden.', 'translation_domain' => 'form'])
-            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-primary'), 'label' => 'weiter', 'translation_domain' => 'form']);
-
-
+            ->add('submit', SubmitType::class, ['attr' => ['class' => 'btn btn-primary'], 'label' => 'weiter', 'translation_domain' => 'form']);
 
         if ($options['stadt']->getsettingsSozielHilfeEmpfanger()) {
-            $builder->add('sozialhilfeEmpanger', CheckboxType::class, array('required' => $options['stadt']->getsettingsSozielHilfeEmpfangerRequired(), 'label' => 'Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?'));
+            $builder->add('sozialhilfeEmpanger', CheckboxType::class, ['required' => $options['stadt']->getsettingsSozielHilfeEmpfangerRequired(), 'label' => 'Beziehen Sie Leistungen nach dem SGB II, SGB XII, AsylbLG, Wohngeld oder Jugendhilfe?']);
         }
-
-
     }
-
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Stammdaten::class,
-            'stadt' => Stadt::class
+            'stadt' => Stadt::class,
         ]);
-
     }
 }
-

@@ -18,7 +18,6 @@ use Symfony\Component\Validator\GroupSequenceProviderInterface;
 #[Assert\GroupSequenceProvider]
 class Stammdaten implements GroupSequenceProviderInterface, \Stringable
 {
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -180,7 +179,6 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
     #[ORM\OneToMany(targetEntity: Payment::class, mappedBy: 'stammdaten')]
     private $paymentFerien;
 
-
     #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text', nullable: true)]
     private $language;
@@ -229,7 +227,6 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
 
     public function __construct()
     {
-
         $this->kinds = new ArrayCollection();
         $this->rechnungen = new ArrayCollection();
         $this->rechnungs = new ArrayCollection();
@@ -239,7 +236,6 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
         $this->personenberechtigters = new ArrayCollection();
         $this->geschwisters = new ArrayCollection();
         $this->file = new ArrayCollection();
-
     }
 
     public function __toString(): string
@@ -559,7 +555,6 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
         return $this;
     }
 
-
     public function getAlleinerziehend(): ?bool
     {
         return $this->alleinerziehend;
@@ -568,6 +563,7 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
     public function setAlleinerziehend(?bool $alleinerziehend): self
     {
         $this->alleinerziehend = $alleinerziehend;
+
         return $this;
     }
 
@@ -579,9 +575,9 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
     public function setEmailConfirmed(bool $emailConfirmed): self
     {
         $this->emailConfirmed = $emailConfirmed;
+
         return $this;
     }
-
 
     public function getAbholberechtigter(): ?string
     {
@@ -591,6 +587,7 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
     public function setAbholberechtigter(?string $abholberechtigter): self
     {
         $this->abholberechtigter = $abholberechtigter;
+
         return $this;
     }
 
@@ -602,9 +599,9 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
     public function setConfirmationCode(string $confirmationCode): self
     {
         $this->confirmationCode = $confirmationCode;
+
         return $this;
     }
-
 
     public function getNotfallName(): ?string
     {
@@ -614,6 +611,7 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
     public function setNotfallName(?string $notfallName): self
     {
         $this->notfallName = $notfallName;
+
         return $this;
     }
 
@@ -637,6 +635,7 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
     public function setResendEmail(?string $resendEmail): self
     {
         $this->resendEmail = $resendEmail;
+
         return $this;
     }
 
@@ -761,6 +760,7 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
                 return $data;
             }
         }
+
         return null;
     }
 
@@ -786,7 +786,6 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
 
         return $this;
     }
-
 
     public function getLanguage(): ?string
     {
@@ -864,6 +863,7 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
     public function setKigaOfKids(?string $kigaOfKids): self
     {
         $this->kigaOfKids = $kigaOfKids;
+
         return $this;
     }
 
@@ -879,10 +879,7 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getGroupSequence():array
+    public function getGroupSequence(): array
     {
         return [
             ['all',
@@ -1021,5 +1018,4 @@ class Stammdaten implements GroupSequenceProviderInterface, \Stringable
 
         return $this;
     }
-
 }

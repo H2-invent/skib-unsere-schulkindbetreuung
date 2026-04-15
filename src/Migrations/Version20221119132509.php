@@ -12,8 +12,6 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20221119132509 extends AbstractMigration
 {
-
-
     public function getDescription(): string
     {
         return '';
@@ -30,5 +28,4 @@ final class Version20221119132509 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE kind DROP start_date');
     }
-
 }

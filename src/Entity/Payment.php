@@ -130,21 +130,24 @@ class Payment
     {
         return $this->sepa;
     }
+
     public function getTypeAsString(): ?string
     {
-        $output =array();
-        if($this->sepa){
+        $output = [];
+        if ($this->sepa) {
             $output[] = 'SEPA';
         }
-        if ($this->braintree){
+        if ($this->braintree) {
             $output[] = 'Braintree';
         }
-        if ($this->paymentStripes){
+        if ($this->paymentStripes) {
             $output[] = 'Stripe';
         }
+
         // hier können noch mehr Zahlmetoden rein
-        return  implode(', ',$output );
+        return implode(', ', $output);
     }
+
     public function setSepa(?PaymentSepa $sepa): self
     {
         $this->sepa = $sepa;
@@ -254,6 +257,4 @@ class Payment
 
         return $this;
     }
-
-
 }

@@ -8,15 +8,16 @@ use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
-
 // <- Add this
 
 class UserConnectionService
 {
-
-
-    public function __construct(private MailerService $mailer, private Environment $twig, private RouterInterface $router, private EntityManagerInterface $em)
-    {
+    public function __construct(
+        private MailerService $mailer,
+        private Environment $twig,
+        private RouterInterface $router,
+        private EntityManagerInterface $em,
+    ) {
     }
 
     public function generateConfirmationToken(?User $user)
@@ -34,21 +35,22 @@ class UserConnectionService
                 $user->getEmail(),
                 'Bestätigungscode für die SKIBin App',
                 $this->twig->render('email/appConfirmationCode.html.twig',
-                    array('user' => $user, 'stadt' => $stadt)),
+                    ['user' => $user, 'stadt' => $stadt]),
                 $stadt->getEmail(),
                 null
             );
-            return array(
+
+            return [
                 'type' => 'USER',
                 'error' => false,
                 'token' => $user->getAppDetectionToken(),
                 'url' => str_replace('http', 'https',
                     str_replace('https', 'http', $this->router->generate('connect_communication_token', [], UrlGenerator::ABSOLUTE_URL)
                     )
-                )
-            );
+                ),
+            ];
         } catch (\Exception) {
-            return array('error' => true);
+            return ['error' => true];
         }
     }
 
@@ -60,54 +62,52 @@ class UserConnectionService
 
                 $this->em->persist($user);
                 $this->em->flush();
-                return array(
+
+                return [
                     'error' => false,
                     'token' => $user->getAppCommunicationToken(),
-                    'url' =>
-                        str_replace('http', 'https',
-                            str_replace('https', 'http',
-                                $this->router->generate('connect_user_information', [], UrlGenerator::ABSOLUTE_URL)
-                            )
-                        ),
+                    'url' => str_replace('http', 'https',
+                        str_replace('https', 'http',
+                            $this->router->generate('connect_user_information', [], UrlGenerator::ABSOLUTE_URL)
+                        )
+                    ),
                     'user' => $this->userInfo($user),
                     'urlSave' => str_replace('http', 'https',
                         str_replace('https', 'http', $this->router->generate('connect_communication_save', [], UrlGenerator::ABSOLUTE_URL)
                         )
-                    )
-                );
-            } else {
-                return array('error' => true);
+                    ),
+                ];
             }
 
+            return ['error' => true];
         } catch (\Exception) {
-            return array('error' => true);
-
+            return ['error' => true];
         }
-
     }
 
     public function userInfo(?User $user)
     {
         try {
             if ($user) {
-                $res = array();
-                $res['info'] = array(
+                $res = [];
+                $res['info'] = [
                     'firstName' => $user->getVorname(),
                     'lastName' => $user->getNachname(),
                     'email' => $user->getEmail(),
                     'organisation' => $user->getOrganisation()->getName(),
                     'urlCheckinKids' => str_replace('http', 'https',
-                        str_replace('https', 'http', $this->router->generate('connect_user_checkinKids',[],UrlGenerator::ABSOLUTE_URL))),
+                        str_replace('https', 'http', $this->router->generate('connect_user_checkinKids', [], UrlGenerator::ABSOLUTE_URL))),
                     'urlKinderListeHeute' => str_replace('http', 'https',
-                    str_replace('https', 'http', $this->router->generate('connect_user_kidsDa',[],UrlGenerator::ABSOLUTE_URL)
-                )))
+                        str_replace('https', 'http', $this->router->generate('connect_user_kidsDa', [], UrlGenerator::ABSOLUTE_URL)
+                        ))]
                 ;
+
                 return $res;
-            } else {
-                return array('error' => true);
             }
+
+            return ['error' => true];
         } catch (\Exception $e) {
-            return array('error' => $e->getMessage());
+            return ['error' => $e->getMessage()];
         }
     }
 
@@ -121,19 +121,17 @@ class UserConnectionService
                 $user->setAppToken(null);
                 $this->em->persist($user);
                 $this->em->flush();
-                return array('error' => false);
-            } else {
-                return array('error' => true);
+
+                return ['error' => false];
             }
 
-
+            return ['error' => true];
         } catch (\Exception) {
-            return array('error' => true);
+            return ['error' => true];
         }
     }
 
     public function kinderCheckedIn(User $user)
     {
-
     }
 }

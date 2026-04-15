@@ -13,13 +13,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 class FixSchultypAfterMigrationCommand extends Command
 {
     protected static $defaultName = 'app:fix:schultypAfterMigration';
 
-    public function __construct(private EntityManagerInterface $em, ?string $name = null)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+        ?string $name = null,
+    ) {
         parent::__construct($name);
     }
 
@@ -36,17 +37,18 @@ class FixSchultypAfterMigrationCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $progress = new ProgressBar($output);
 
-
         $schulJahrId = $input->getArgument('schuljahrID');
         $stadtId = $input->getArgument('stadtId');
         $stadt = $this->em->getRepository(Stadt::class)->find($stadtId);
-        if (!$stadt){
+        if (!$stadt) {
             $io->error('No City found');
+
             return Command::FAILURE;
         }
-        $schuljahr = $this->em->getRepository(Active::class)->findOneBy(array('stadt'=>$stadt, 'id'=>$schulJahrId));
-        if (!$schuljahr){
+        $schuljahr = $this->em->getRepository(Active::class)->findOneBy(['stadt' => $stadt, 'id' => $schulJahrId]);
+        if (!$schuljahr) {
             $io->error('No Schuljahr found');
+
             return Command::FAILURE;
         }
         $counter = 0;
@@ -64,7 +66,7 @@ class FixSchultypAfterMigrationCommand extends Command
                             if ($type !== $data->getGanztag()) {
                                 $type = null;
                                 $counterFail++;
-                                $io->info(sprintf('Kind nicht eindeutig %s',$kind->getVorname() .' '.$kind->getNachname()));
+                                $io->info(sprintf('Kind nicht eindeutig %s', $kind->getVorname() . ' ' . $kind->getNachname()));
                                 break;
                             }
                         }
@@ -82,7 +84,7 @@ class FixSchultypAfterMigrationCommand extends Command
         }
         $this->em->flush();
         $progress->finish();
-        $io->success(sprintf('We change %s Childs and we have %s childs with an error', $counter,$counterFail));
+        $io->success(sprintf('We change %s Childs and we have %s childs with an error', $counter, $counterFail));
 
         return Command::SUCCESS;
     }

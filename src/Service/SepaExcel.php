@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 03.10.2019
- * Time: 19:01
+ * Time: 19:01.
  */
 
 namespace App\Service;
@@ -18,8 +19,9 @@ class SepaExcel
     private $spreadsheet;
     private $writer;
 
-    public function __construct(private TranslatorInterface $translator)
-    {
+    public function __construct(
+        private TranslatorInterface $translator,
+    ) {
         $this->spreadsheet = new Spreadsheet();
         $this->writer = new Xlsx($this->spreadsheet);
     }
@@ -45,7 +47,7 @@ class SepaExcel
         $counter = 2;
         foreach ($sepa->getRechnungen() as $data) {
             $count = 0;
-            $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getKundennummerForOrg($sepa->getOrganisation()->getId()) ? $data->getStammdaten()->getKundennummerForOrg($sepa->getOrganisation()->getId())->getKundennummer() : "");
+            $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getKundennummerForOrg($sepa->getOrganisation()->getId()) ? $data->getStammdaten()->getKundennummerForOrg($sepa->getOrganisation()->getId())->getKundennummer() : '');
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getVorname());
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getName());
             $sepaSheet->setCellValue($alphas[$count++] . $counter, $data->getStammdaten()->getStrasse());
@@ -73,8 +75,5 @@ class SepaExcel
 
         // Return the excel file as an attachment
         return $temp_file;
-
     }
-
-
 }

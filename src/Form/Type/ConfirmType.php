@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 17.09.2019
- * Time: 20:29
+ * Time: 20:29.
  */
+
 namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -21,13 +23,12 @@ class ConfirmType extends AbstractType
         $builder
             ->add('confirmationCode', TextType::class, ['label' => 'Bestätigungscode', 'translation_domain' => 'form'])
             ->add('redirectUrl', HiddenType::class)
-            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-primary'), 'label' => 'weiter', 'translation_domain' => 'form']);
-
+            ->add('submit', SubmitType::class, ['attr' => ['class' => 'btn btn-primary'], 'label' => 'weiter', 'translation_domain' => 'form']);
     }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-
         ]);
     }
 }

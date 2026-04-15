@@ -3,14 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\SchuleRepository;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @Vich\Uploadable
@@ -20,7 +19,7 @@ class Schule
 {
     public function __serialize(): array
     {
-        return array('id'=>$this->id);
+        return ['id' => $this->id];
     }
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -35,7 +34,6 @@ class Schule
     #[ORM\JoinColumn(nullable: true)]
     #[ORM\ManyToOne(targetEntity: Organisation::class, inversedBy: 'schule')]
     private $organisation;
-
 
     #[ORM\ManyToOne(targetEntity: Stadt::class, inversedBy: 'schules')]
     private $stadt;
@@ -70,6 +68,7 @@ class Schule
 
     /**
      * @Vich\UploadableField(mapping="profil_picture", fileNameProperty="image")
+     *
      * @var File
      */
     private $imageFile;
@@ -109,7 +108,6 @@ class Schule
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'schulen')]
     private $users;
-
 
     public function __construct()
     {
@@ -415,23 +413,24 @@ class Schule
         return $this;
     }
 
-    public function getBlocksforThisYearAndType($art,?Active $active)
+    public function getBlocksforThisYearAndType($art, ?Active $active)
     {
-        $res = array();
-        foreach ($this->zeitblocks as $data){
-            if($data->getActive() === $active && $data->getGanztag() === $art && !$data->getDeleted() && !$data->getDeaktiviert()){
+        $res = [];
+        foreach ($this->zeitblocks as $data) {
+            if ($data->getActive() === $active && $data->getGanztag() === $art && !$data->getDeleted() && !$data->getDeaktiviert()) {
                 $res[] = $data;
             }
         }
+
         return $res;
     }
 
-    public function getUpdatedAt(): ?DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 

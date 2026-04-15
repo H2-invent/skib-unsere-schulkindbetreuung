@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Organisation;
 use App\Form\Type\PaymentArtType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,9 +13,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentArtController extends AbstractController
 {
-    public function __construct(private ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
+
     #[Route(path: '/org_ferien_admin/payment/art', name: 'org_ferien_admin_payment_art')]
     public function index(ValidatorInterface $validator, Request $request, TranslatorInterface $translator)
     {
@@ -25,21 +27,20 @@ class PaymentArtController extends AbstractController
         }
         $form = $this->createForm(PaymentArtType::class, $organisation);
         $form->handleRequest($request);
-        $errors = array();
+        $errors = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $organisation = $form->getData();
             $errors = $validator->validate($organisation);
-            if(count($errors)== 0) {
+            if (count($errors) == 0) {
                 $em = $this->managerRegistry->getManager();
                 $em->persist($organisation);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('dashboard',array('snack'=>$text));
-            }
 
+                return $this->redirectToRoute('dashboard', ['snack' => $text]);
+            }
         }
 
-        return $this->render('payment_art/index.html.twig',array('form' => $form->createView(),'errors'=>$errors));
-
+        return $this->render('payment_art/index.html.twig', ['form' => $form->createView(), 'errors' => $errors]);
     }
 }

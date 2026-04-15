@@ -14,31 +14,34 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route(path: '/org_block_deactivate/block/deactivate/', name: 'app_deactivate_')]
 class DeactivateZeitblockController extends AbstractController
 {
-
-    public function __construct(private ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
+
     #[Route(path: 'deactivate', name: 'zeitblock_index')]
     public function index(Request $request, TranslatorInterface $translator): Response
     {
-        if (!$this->getUser()->hasRole('ROLE_ORG_BLOCK_DEACTIVATE')){
-            return new JsonResponse(array('error' => 1, 'snack' => 'Fehler, Keine Berechtigung'));
+        if (!$this->getUser()->hasRole('ROLE_ORG_BLOCK_DEACTIVATE')) {
+            return new JsonResponse(['error' => 1, 'snack' => 'Fehler, Keine Berechtigung']);
         }
 
         $block = $this->managerRegistry->getRepository(Zeitblock::class)->find($request->get('id'));
         if ($block->getSchule()->getOrganisation() != $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Fehler: Falsche Organisation');
-            return new JsonResponse(array('error' => 1, 'snack' => $text));
+
+            return new JsonResponse(['error' => 1, 'snack' => $text]);
         }
-        if ($block->getDeaktiviert()){
+        if ($block->getDeaktiviert()) {
             $block->setDeaktiviert(false);
-        }else{
+        } else {
             $block->setDeaktiviert(true);
         }
         $em = $this->managerRegistry->getManager();
         $em->persist($block);
         $em->flush();
         $text = $translator->trans('Erfolgreich geändert');
-        return new JsonResponse(array('error' => 0, 'snack' => $text));
+
+        return new JsonResponse(['error' => 0, 'snack' => $text]);
     }
 }

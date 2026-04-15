@@ -10,72 +10,69 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-
 // <- Add this
 
 class ToogleKindBlockSchulkind
 {
-
-
-    public function __construct(private RouterInterface $router, private TranslatorInterface $translator, Security $security, private EntityManagerInterface $em)
-    {
+    public function __construct(
+        private RouterInterface $router,
+        private TranslatorInterface $translator,
+        Security $security,
+        private EntityManagerInterface $em,
+    ) {
         $this->user = $security;
-
-
     }
 
-    public
-    function toggleKind(Stadt $stadt, Kind $kind, Zeitblock $block)
+    public function toggleKind(Stadt $stadt, Kind $kind, Zeitblock $block)
     {
-        $result = array(
-            'snack' => array(),
+        $result = [
+            'snack' => [],
             'text' => $this->translator->trans('Betreuungszeitfenster erfolgreich gespeichert'),
             'error' => 0,
-            'blocks' => array(),
-        );
+            'blocks' => [],
+        ];
 
         try {
             $result['blocks'] = $this->toggleBlock($kind, $block);
             $blocks2 = $kind->getTageWithBlocks();
 
             if ($blocks2 < $stadt->getMinDaysperWeek()) {
-                $result['snack'][] = array('type' => 'warning', 'text' => $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)', array('%d%' => $stadt->getMinDaysperWeek())));
-                $result['text'] = $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)', array('%d%' => $stadt->getMinDaysperWeek()));
+                $result['snack'][] = ['type' => 'warning', 'text' => $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)', ['%d%' => $stadt->getMinDaysperWeek()])];
+                $result['text'] = $this->translator->trans('Bitte weiteres Betreuungszeitfenster auswählen (Es müssen mindestens %d% Tage ausgewählt werden)', ['%d%' => $stadt->getMinDaysperWeek()]);
                 $result['error'] = 2;
             } else {
-                $result['preisUrl'] = $this->router->generate('loerrach_workflow_preis_einKind', array('slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()));
-
+                $result['preisUrl'] = $this->router->generate('loerrach_workflow_preis_einKind', ['slug' => $stadt->getSlug(), 'kind_id' => $kind->getId()]);
             }
         } catch (\Exeption) {
-            $result['snack'][] = array('type' => 'error', 'text' => $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.'));
+            $result['snack'][] = ['type' => 'error', 'text' => $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.')];
             $result['error'] = 1;
         }
         if (sizeof($result['blocks']) > 1) {
-            $result['snack'][] = array('type' => 'info', 'text' => $this->translator->trans('Es wurden weitere Blöcke bearbeitet, da keine unbetreuten Zeiten in der Tagesbetreuung vorhanden sein dürfen'));
+            $result['snack'][] = ['type' => 'info', 'text' => $this->translator->trans('Es wurden weitere Blöcke bearbeitet, da keine unbetreuten Zeiten in der Tagesbetreuung vorhanden sein dürfen')];
         }
+
         return $result;
     }
 
     private function toggleBlock(Kind $kind, Zeitblock $block)
     {
-
-        $res = array();
+        $res = [];
         if (in_array($block, $kind->getBeworben()->toArray()) || in_array($block, $kind->getZeitblocks()->toArray())) {
             $res = $this->blockDelete($kind, $block);
         } else {
             $res = $this->blockAdd($kind, $block);
         }
-        return $res;
 
+        return $res;
     }
 
     private function blockDelete(Kind $kind, Zeitblock $block): array
     {
         $state = null;
-        $blockRes = array(
+        $blockRes = [
             'id' => $block->getId(),
             'cardText' => $this->translator->trans('Gebucht'),
-        );
+        ];
 
         if ($block->getMin() !== null || $block->getMax() !== null) {
             $blockRes['kontingent'] = true;
@@ -86,23 +83,22 @@ class ToogleKindBlockSchulkind
             $blockRes['state'] = 2;
             $state = 2;
             $blockRes['cardText'] = $this->translator->trans('Hier buchen');
-
         }
 
         if (in_array($block, $kind->getZeitblocks()->toArray())) {
-                $kind->removeZeitblock($block);
-                $blockRes['state'] = 2;
-                $state = 2;
-                $blockRes['cardText'] = $this->translator->trans('Hier buchen');
+            $kind->removeZeitblock($block);
+            $blockRes['state'] = 2;
+            $state = 2;
+            $blockRes['cardText'] = $this->translator->trans('Hier buchen');
         }
 
         if ($state === null) {
-            return array();
-        } else {
-            $this->em->persist($kind);
-            $this->em->flush();
+            return [];
         }
-        $res = array();
+        $this->em->persist($kind);
+        $this->em->flush();
+
+        $res = [];
         $res[] = $blockRes;
         foreach ($block->getNachfolger() as $data) {
             $tmp = $this->blockDelete($kind, $data);
@@ -139,11 +135,10 @@ class ToogleKindBlockSchulkind
     private function blockAdd(Kind $kind, Zeitblock $block): array
     {
         $state = null;
-        $blockRes = array(
+        $blockRes = [
             'id' => $block->getId(),
             'cardText' => $this->translator->trans('Gebucht'),
-        );
-
+        ];
 
         if (!in_array($block, $kind->getBeworben()->toArray()) && !in_array($block, $kind->getZeitblocks()->toArray())) {
             if ($block->getMin() !== null || $block->getMax() !== null) {
@@ -168,12 +163,12 @@ class ToogleKindBlockSchulkind
         }
 
         if ($state === null) {
-            return array();
-        } else {
-            $this->em->persist($kind);
-            $this->em->flush();
+            return [];
         }
-        $res = array();
+        $this->em->persist($kind);
+        $this->em->flush();
+
+        $res = [];
         if (!$block->getDeaktiviert()) {
             $res[] = $blockRes;
         }
@@ -181,6 +176,7 @@ class ToogleKindBlockSchulkind
             $tmp = $this->blockAdd($kind, $data);
             $res = array_merge($res, $tmp);
         }
+
         return $res;
     }
 }

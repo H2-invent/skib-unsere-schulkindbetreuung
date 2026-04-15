@@ -8,8 +8,6 @@ use Twig\TwigFunction;
 
 class WartelisteExtension extends AbstractExtension
 {
-
-
     public function getFunctions(): array
     {
         return [

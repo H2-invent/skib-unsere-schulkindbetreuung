@@ -1,5 +1,7 @@
 <?php
+
 // src/Twig/AppExtension.php
+
 namespace App\Twig;
 
 use App\Entity\Kind;
@@ -10,29 +12,28 @@ use Twig\TwigFunction;
 
 class Eltern extends AbstractExtension
 {
-
-
-    public function __construct(private ElternService $elternService)
-    {
+    public function __construct(
+        private ElternService $elternService,
+    ) {
     }
 
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction('getEltern', $this->getEltern(...)),
             new TwigFunction('getAllKinderWithHistory', $this->getAllKinderWithHistory(...)),
             new TwigFunction('getGetEarliestChildOfStammdaten', $this->getGetEarliestChildOfStammdaten(...)),
             new TwigFunction('getKinderFromStammdatenAnStichtag', $this->getKinderFromStammdatenAnStichtag(...)),
-        );
+        ];
     }
 
-    public function getEltern(Kind $kind,?\DateTime $dateTime = null)
+    public function getEltern(Kind $kind, ?\DateTime $dateTime = null)
     {
-        if (!$dateTime){
+        if (!$dateTime) {
             return $kind->getEltern();
         }
 
-        $eltern =  $this->elternService->getElternForSpecificTimeAndKind($kind,$dateTime);
+        $eltern = $this->elternService->getElternForSpecificTimeAndKind($kind, $dateTime);
 
         return $eltern;
     }
@@ -45,6 +46,7 @@ class Eltern extends AbstractExtension
     public function getGetEarliestChildOfStammdaten(Stammdaten $stammdaten)
     {
         $res = $this->elternService->getEarliestChildOfStammdaten($stammdaten);
+
         return $res;
     }
 
@@ -52,5 +54,4 @@ class Eltern extends AbstractExtension
     {
         return $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($stammdaten, $stichtag);
     }
-
 }

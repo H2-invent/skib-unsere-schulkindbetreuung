@@ -13,13 +13,15 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 class FixStartDateoFChildCommand extends Command
 {
     protected static $defaultName = 'app:fix:wrongShoolyear';
 
-    public function __construct(private EntityManagerInterface $em, private CopyChildToNewSchuljahr $copyChildToNewSchuljahr, ?string $name = null)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+        private CopyChildToNewSchuljahr $copyChildToNewSchuljahr,
+        ?string $name = null,
+    ) {
         parent::__construct($name);
     }
 

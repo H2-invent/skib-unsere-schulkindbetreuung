@@ -20,7 +20,7 @@ class PreislisteController extends AbstractController
     {
         $gehaltIst = $request->get('gehalt', sizeof($stadt->getGehaltsklassen()) - 1);
         $artIst = $request->get('art', 1);
-        return new Response($preisListeService->preisliste($stadt,$schule,$gehaltIst,$artIst));
 
+        return new Response($preisListeService->preisliste($stadt, $schule, $gehaltIst, $artIst));
     }
 }

@@ -50,18 +50,17 @@ class KundennummernRepository extends ServiceEntityRepository
     }
     */
 
-     /**
-      * @return Kundennummern[] Returns an array of Kundennummern objects
-      */
+    /**
+     * @return Kundennummern[] Returns an array of Kundennummern objects
+     */
     public function findAllKundennummernByStammdatenAndOrganisation(Stammdaten $stammdaten, Organisation $organisation)
     {
         return $this->createQueryBuilder('k')
-            ->innerJoin('k.stammdaten','stammdaten')
-            ->andWhere('stammdaten.tracing = :tracing')->setParameter('tracing',$stammdaten->getTracing())
-            ->andWhere('k.organisation =:organisation')->setParameter('organisation',$organisation)
+            ->innerJoin('k.stammdaten', 'stammdaten')
+            ->andWhere('stammdaten.tracing = :tracing')->setParameter('tracing', $stammdaten->getTracing())
+            ->andWhere('k.organisation =:organisation')->setParameter('organisation', $organisation)
             ->getQuery()
             ->getResult()
         ;
     }
-
 }

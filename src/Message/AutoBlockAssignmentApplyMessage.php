@@ -5,9 +5,8 @@ namespace App\Message;
 final class AutoBlockAssignmentApplyMessage
 {
     public function __construct(
-        private int $idOrganisation
-    )
-    {
+        private int $idOrganisation,
+    ) {
     }
 
     public function getIdOrganisation(): int

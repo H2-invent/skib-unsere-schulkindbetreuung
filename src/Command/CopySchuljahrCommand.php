@@ -14,8 +14,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CopySchuljahrCommand extends Command
 {
     protected static $defaultName = 'app:copySchuljahr';
-    public function __construct( private CopySchuljahr $copySchuljahr,private EntityManagerInterface $em, ?string $name = null)
-    {
+
+    public function __construct(
+        private CopySchuljahr $copySchuljahr,
+        private EntityManagerInterface $em,
+        ?string $name = null,
+    ) {
         parent::__construct($name);
     }
 
@@ -36,9 +40,7 @@ class CopySchuljahrCommand extends Command
             $io->note(sprintf('We copy the Schuljahr with ID: %s', $id));
             $year = $this->em->getRepository(Active::class)->find($id);
             $this->copySchuljahr->copyYear($year);
-
         }
-
 
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 

@@ -37,7 +37,7 @@ class News
 
     #[ORM\ManyToOne(targetEntity: Organisation::class, inversedBy: 'orgNews')]
     private $organisation;
-    
+
     #[ORM\Column(type: 'datetime')]
     private $createdDate;
 
@@ -57,6 +57,7 @@ class News
 
     /**
      * @Vich\UploadableField(mapping="data_upload", fileNameProperty="attachment")
+     *
      * @var File
      */
     private $attachmentFile;
@@ -150,7 +151,6 @@ class News
         return $this;
     }
 
-
     public function getCreatedDate(): ?\DateTimeInterface
     {
         return $this->createdDate;
@@ -225,7 +225,6 @@ class News
         return $this;
     }
 
-
     public function setAttachmentFile(?File $attachmentFile = null)
     {
         $this->attachmentFile = $attachmentFile;
@@ -277,5 +276,4 @@ class News
 
         return $this;
     }
-
 }

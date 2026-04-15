@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 17.09.2019
- * Time: 20:29
+ * Time: 20:29.
  */
 
 namespace App\Form\Type;
-
 
 use App\Entity\Stadt;
 use Symfony\Component\Form\AbstractType;
@@ -20,9 +20,8 @@ class FormelType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
-            ->add('berechnungsFormel', TextareaType::class, ['attr'=>array('rows'=>20),'label' => 'Formel zur Berechnung des Betreuungspreises für ein Kind', 'translation_domain' => 'form'])
+            ->add('berechnungsFormel', TextareaType::class, ['attr' => ['rows' => 20], 'label' => 'Formel zur Berechnung des Betreuungspreises für ein Kind', 'translation_domain' => 'form'])
             ->add('submit', SubmitType::class, ['label' => 'Speichern', 'translation_domain' => 'form']);
     }
 

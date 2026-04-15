@@ -18,30 +18,29 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WidgetController extends AbstractController
 {
-    public function __construct(private ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
+
     #[Route(path: '/org_child/show/widget/kidsToday', name: 'widget_kids_today')]
     public function index(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('id'));
-  
+
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
         $schulen = $this->getUser()->getSchulen();
         $total = 0;
         $now = new \DateTime();
-        foreach ($schulen as $data){
-            $total += $widgetService->calculateSchulenToday($data,$now);
+        foreach ($schulen as $data) {
+            $total += $widgetService->calculateSchulenToday($data, $now);
         }
 
         $today = (new \DateTime())->format('w');
 
-
-
-
-        return new JsonResponse(array('title' => $translator->trans('Anwesende Kinder'), 'small' => 'Nach Liste', 'anzahl' => $total, 'symbol' => 'people'));
+        return new JsonResponse(['title' => $translator->trans('Anwesende Kinder'), 'small' => 'Nach Liste', 'anzahl' => $total, 'symbol' => 'people']);
     }
 
     #[Route(path: '/org_checkin/widget/kidsTodayReal', name: 'widget_kids_today_real')]
@@ -68,8 +67,7 @@ class WidgetController extends AbstractController
         $query = $qb->getQuery();
         $kinder = $query->getResult();
 
-
-        return new JsonResponse(array('title' => $translator->trans('Anwesende Kinder'), 'small' => 'Checkin', 'anzahl' => sizeof($kinder), 'symbol' => 'people'));
+        return new JsonResponse(['title' => $translator->trans('Anwesende Kinder'), 'small' => 'Checkin', 'anzahl' => sizeof($kinder), 'symbol' => 'people']);
     }
 
     #[Route(path: '/org_child/show/widget/kidsSchuljahr', name: 'widget_kids_schuljahr')]
@@ -82,26 +80,24 @@ class WidgetController extends AbstractController
         $schulen = $this->getUser()->getSchulen();
         $total = 0;
         $now = new \DateTime();
-        foreach ($schulen as $data){
-            $total += $widgetService->calculateSchulen($data,$now);
+        foreach ($schulen as $data) {
+            $total += $widgetService->calculateSchulen($data, $now);
         }
 
-        return new JsonResponse(array('title' => $translator->trans('Kinder dieses Schuljahr'), 'small' => '', 'anzahl' => $total, 'symbol' => 'people'));
+        return new JsonResponse(['title' => $translator->trans('Kinder dieses Schuljahr'), 'small' => '', 'anzahl' => $total, 'symbol' => 'people']);
     }
 
     #[Route(path: '/org_child/show/widget/kidsinSchule', name: 'widget_kids_schule')]
     public function childsInSchule(Request $request, TranslatorInterface $translator, WidgetService $widgetService)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
-        $schule = $this->managerRegistry->getRepository(Schule::class)->findOneBy(array('organisation' => $organisation, 'id' => $request->get('schule_id')));
+        $schule = $this->managerRegistry->getRepository(Schule::class)->findOneBy(['organisation' => $organisation, 'id' => $request->get('schule_id')]);
 
-        if ($organisation != $this->getUser()->getOrganisation() || !in_array($schule,$this->getUser()->getSchulen()->toArray())){
+        if ($organisation != $this->getUser()->getOrganisation() || !in_array($schule, $this->getUser()->getSchulen()->toArray())) {
             throw new \Exception('Wrong Organisation');
         }
 
-
-        return new JsonResponse(array('title' => $schule->getName(), 'small' => $translator->trans('Kinder angemeldet'), 'anzahl' =>$widgetService->calculateSchulen($schule,new \DateTime()), 'symbol' => 'school'));
-
+        return new JsonResponse(['title' => $schule->getName(), 'small' => $translator->trans('Kinder angemeldet'), 'anzahl' => $widgetService->calculateSchulen($schule, new \DateTime()), 'symbol' => 'school']);
     }
 
     #[Route(path: '/org_child/show/widget/stundenplan', name: 'widget_kids_stundenplan')]
@@ -118,20 +114,19 @@ class WidgetController extends AbstractController
             ->andWhere('b.active = :jahr')->setParameter('jahr', $active)
             ->andWhere('b.deleted = false')
             ->innerJoin('b.schule', 'schule')
-            ->andWhere('schule.organisation =:org') ->setParameter('org', $organisation);
+            ->andWhere('schule.organisation =:org')->setParameter('org', $organisation);
         if ($request->get('schule_id')) {
             $schule = $this->managerRegistry->getRepository(Schule::class)->find($request->get('schule_id'));
             $qb->andWhere('b.schule =:schule')->setParameter('schule', $schule);
         }
         $blocks = $qb->getQuery()->getResult();
 
-        $blocksRender = array();
+        $blocksRender = [];
         foreach ($blocks as $data) {
             $blocksRender[$data->getWochentag()][] = $data;
         }
 
-        return $this->render('widget/blockContent.html.twig', array('org' => $organisation, 'blocks' => $blocksRender, 'schule' => $this->getUser()->getSchulen()));
-
+        return $this->render('widget/blockContent.html.twig', ['org' => $organisation, 'blocks' => $blocksRender, 'schule' => $this->getUser()->getSchulen()]);
     }
 
     #[Route(path: '/org_accounting/widget/overdueSepa', name: 'widget_overdue_sepa')]
@@ -153,11 +148,10 @@ class WidgetController extends AbstractController
         $query = $qb->getQuery();
         $sepa = $query->getResult();
 
-
         if (sizeof($sepa) == 0 && $active !== null) {
-            return new JsonResponse(array('title' => $translator->trans('SEPA Lastschrift fällig'), 'small' => '', 'anzahl' => 1, 'symbol' => 'attach_money'));
-        } else {
-            return 0;
+            return new JsonResponse(['title' => $translator->trans('SEPA Lastschrift fällig'), 'small' => '', 'anzahl' => 1, 'symbol' => 'attach_money']);
         }
+
+        return 0;
     }
 }

@@ -9,7 +9,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
-
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -25,7 +24,7 @@ class Stadt implements TranslatableInterface
 
     public function __serialize(): array
     {
-        return array('id' => $this->id);
+        return ['id' => $this->id];
     }
 
     #[ORM\Id]
@@ -63,6 +62,7 @@ class Stadt implements TranslatableInterface
 
     /**
      * @Vich\UploadableField(mapping="profil_picture", fileNameProperty="image")
+     *
      * @var File
      */
     private $imageFile;
@@ -74,6 +74,7 @@ class Stadt implements TranslatableInterface
 
     /**
      * @Vich\UploadableField(mapping="profil_picture", fileNameProperty="logoStadt")
+     *
      * @var File
      */
     private $logoStadtFile;
@@ -137,7 +138,6 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $akzentfarbeFehler;
 
-
     #[ORM\OneToMany(targetEntity: Active::class, mappedBy: 'stadt')]
     private $actives;
 
@@ -180,7 +180,6 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'boolean')]
     private $schulkindBetreung;
 
-
     #[ORM\OneToMany(targetEntity: Ferienblock::class, mappedBy: 'stadt')]
     private $ferienblocks;
 
@@ -222,7 +221,6 @@ class Stadt implements TranslatableInterface
 
     #[ORM\Column(type: 'boolean')]
     private $settingsSozielHilfeEmpfangerRequired = false;
-
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $settingKinderimKiga = false;
@@ -317,7 +315,6 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(nullable: true)]
     private ?bool $settingsSkibShowPflasterKinder = null;
 
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $settingsDokumentUploadTitle = null;
 
@@ -333,11 +330,6 @@ class Stadt implements TranslatableInterface
 
     #[ORM\Column(nullable: true)]
     private ?bool $skip_setting_show_chronicalDeseas = null;
-
-
-
-
-
 
     public function __construct()
     {
@@ -727,7 +719,6 @@ class Stadt implements TranslatableInterface
         return $this;
     }
 
-
     /**
      * @return Collection|Active[]
      */
@@ -861,7 +852,6 @@ class Stadt implements TranslatableInterface
 
         return $this;
     }
-
 
     /**
      * @return Collection|Ferienblock[]
@@ -1595,5 +1585,4 @@ class Stadt implements TranslatableInterface
 
         return $this;
     }
-
 }

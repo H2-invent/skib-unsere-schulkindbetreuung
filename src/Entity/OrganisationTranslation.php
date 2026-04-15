@@ -19,9 +19,6 @@ class OrganisationTranslation implements TranslationInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $datenschutz;
 
-    /**
-     * @return mixed
-     */
     public function getId()
     {
         return $this->id;
@@ -38,5 +35,4 @@ class OrganisationTranslation implements TranslationInterface
 
         return $this;
     }
-
 }

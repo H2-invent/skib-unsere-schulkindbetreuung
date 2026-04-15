@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 17.09.2019
- * Time: 20:29
+ * Time: 20:29.
  */
 
 namespace App\Form\Type;
@@ -22,7 +23,7 @@ class ChildChangeSchoolyearType extends AbstractType
         $stadt = $options['kind']->getSchule()->getStadt();
         $builder
             ->add('schoolyear', ChoiceType::class, ['choices' => array_flip($stadt->translate()->getSettingsSkibShoolyearNamingArray()), 'label' => 'Bitte das neue Schuljahr auswählen.', 'translation_domain' => 'form'])
-            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-primary'), 'label' => 'Speichern', 'translation_domain' => 'form']);
+            ->add('submit', SubmitType::class, ['attr' => ['class' => 'btn btn-primary'], 'label' => 'Speichern', 'translation_domain' => 'form']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -31,8 +31,6 @@ class File
     #[ORM\ManyToOne(targetEntity: Stadt::class, inversedBy: 'uploads')]
     private $stadt;
 
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -109,6 +107,4 @@ class File
 
         return $this;
     }
-
-
 }

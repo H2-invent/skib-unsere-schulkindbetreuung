@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 17.09.2019
- * Time: 20:29
+ * Time: 20:29.
  */
 
 namespace App\Form\Type;
@@ -21,16 +22,14 @@ class FerienBlockPreisType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-
         $builder
               ->add('namePreise', CollectionType::class, [
-                'entry_type' => TextType::class,
-                'entry_options' => array('label' => 'Preise', 'translation_domain' => 'form'),
-            ])
+                  'entry_type' => TextType::class,
+                  'entry_options' => ['label' => 'Preise', 'translation_domain' => 'form'],
+              ])
             ->add('preis', CollectionType::class, [
                 'entry_type' => NumberType::class,
-                'entry_options' => array('label' => 'Preise', 'translation_domain' => 'form')
+                'entry_options' => ['label' => 'Preise', 'translation_domain' => 'form'],
             ])
             ->add('save', SubmitType::class, ['label' => 'Speichern', 'translation_domain' => 'form']);
     }

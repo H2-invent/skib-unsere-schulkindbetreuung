@@ -10,30 +10,32 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-
 // <- Add this
 
 class ChildSchoolYearChangeService
 {
-    public function __construct(private TranslatorInterface $translator, private EntityManagerInterface $em, private AnmeldeEmailService $email, private FormFactoryInterface $form, private ElternService $elternService)
-    {
+    public function __construct(
+        private TranslatorInterface $translator,
+        private EntityManagerInterface $em,
+        private AnmeldeEmailService $email,
+        private FormFactoryInterface $form,
+        private ElternService $elternService,
+    ) {
     }
 
     public function form(Kind $kind)
     {
-        $input = array('schoolyear' => $kind->getKlasse());
+        $input = ['schoolyear' => $kind->getKlasse()];
 
-        $form = $this->form->create(ChildChangeSchoolyearType::class, $input,array('kind'=>$kind));
+        $form = $this->form->create(ChildChangeSchoolyearType::class, $input, ['kind' => $kind]);
 
         return $form;
     }
 
-
     public function changeSchoolyear(Kind $kind, $input, User $user)
     {
-
         $elternOne = $this->elternService->getLatestElternFromChild($kind);
-        $kindernAll = $this->em->getRepository(Kind::class)->findBy(array('tracing' => $kind->getTracing()));
+        $kindernAll = $this->em->getRepository(Kind::class)->findBy(['tracing' => $kind->getTracing()]);
 
         $message = 'Schoolyear changed from ' . $kind->getKlasse() . ' to ' . $input['schoolyear'] . '; ' .
             'kind_id: ' . $kind->getId() . '; ' .
@@ -56,6 +58,5 @@ class ChildSchoolYearChangeService
         $this->email->send($kind, $this->elternService->getLatestElternFromChild($kind));
 
         return true;
-
     }
 }

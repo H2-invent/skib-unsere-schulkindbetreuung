@@ -24,9 +24,6 @@ class ContentTranslation implements TranslationInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $meta;
 
-    /**
-     * @return mixed
-     */
     public function getId()
     {
         return $this->id;
@@ -43,6 +40,7 @@ class ContentTranslation implements TranslationInterface
 
         return $this;
     }
+
     public function getMeta(): ?string
     {
         return $this->meta;
@@ -54,6 +52,7 @@ class ContentTranslation implements TranslationInterface
 
         return $this;
     }
+
     public function getContent(): ?string
     {
         return $this->content;
@@ -65,5 +64,4 @@ class ContentTranslation implements TranslationInterface
 
         return $this;
     }
-
 }

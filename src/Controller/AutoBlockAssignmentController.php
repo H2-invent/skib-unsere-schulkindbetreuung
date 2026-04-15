@@ -8,8 +8,6 @@ use App\Repository\AutoBlockAssignmentChildRepository;
 use App\Repository\OrganisationRepository;
 use App\Repository\ZeitblockRepository;
 use App\Service\AutoBlockAssignmentService;
-use Exception;
-use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,12 +22,11 @@ class AutoBlockAssignmentController extends AbstractController
         private ZeitblockRepository $zeitblockRepository,
         private AutoBlockAssignmentService $autoBlockAssignmentService,
         private ActiveRepository $activeRepository,
-    )
-    {
+    ) {
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     #[Route(path: '/org_child/auto_assign', name: 'org_child_auto_assign')]
     public function index(Request $request): Response
@@ -55,7 +52,6 @@ class AutoBlockAssignmentController extends AbstractController
                 'count' => $countSchule,
             ];
         }
-
 
         return $this->render('auto_block_assignment/index.html.twig', [
             'schulData' => $schulDaten,
@@ -127,7 +123,7 @@ class AutoBlockAssignmentController extends AbstractController
 
         return $this->redirectToRoute('org_child_auto_assign_confirm', [
             'id' => $idOrganisation,
-            'assignment_started' => true
+            'assignment_started' => true,
         ]);
     }
 
@@ -168,13 +164,12 @@ class AutoBlockAssignmentController extends AbstractController
     }
 
     /**
-     * @param Organisation|null $organisation
-     * @throws Exception
+     * @throws \Exception
      */
     private function assertUserAndOrgaAllowed(?Organisation $organisation): void
     {
         if ($organisation === null || $organisation->getStadt() !== $this->getUser()?->getStadt()) {
-            throw new RuntimeException('Wrong City');
+            throw new \RuntimeException('Wrong City');
         }
     }
 }

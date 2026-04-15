@@ -11,14 +11,13 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class InvitationController extends AbstractController
 {
-
     #[Route(path: '/login/invitation/accept/{token}', name: 'invitation_accept')]
     public function accept($token, InvitationService $invitationService, TokenStorageInterface $tokenStorage, Request $request): Response
     {
-
         $invitationService->acceptInvitation($token, $this->getUser());
         $request->getSession()->invalidate();
         $tokenStorage->setToken(null);
+
         return $this->redirectToRoute('dashboard');
     }
 }

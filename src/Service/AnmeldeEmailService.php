@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 03.10.2019
- * Time: 19:01
+ * Time: 19:01.
  */
 
 namespace App\Service;
-
 
 use App\Controller\LoerrachWorkflowController;
 use App\Entity\Kind;
@@ -20,7 +20,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-
 class AnmeldeEmailService
 {
     private $attachment;
@@ -28,17 +27,17 @@ class AnmeldeEmailService
     private $content;
 
     public function __construct(
-        private FilesystemOperator                 $internFileSystem,
-        private ParameterBagInterface              $parameterbag,
-        private PrintAGBService                    $abgService,
-        private PrintService                       $print,
-        private TCPDFController                    $tcpdf,
-        private TranslatorInterface                $translator,
-        private IcsService                         $ics,
-        private Environment                        $templating,
-        private MailerService                      $mailer,
-        private LoerrachWorkflowController $loerrachWorkflowController)
-    {
+        private FilesystemOperator $internFileSystem,
+        private ParameterBagInterface $parameterbag,
+        private PrintAGBService $abgService,
+        private PrintService $print,
+        private TCPDFController $tcpdf,
+        private TranslatorInterface $translator,
+        private IcsService $ics,
+        private Environment $templating,
+        private MailerService $mailer,
+        private LoerrachWorkflowController $loerrachWorkflowController,
+    ) {
         $this->attachment = null;
         $this->betreff = null;
         $this->content = null;
@@ -52,14 +51,13 @@ class AnmeldeEmailService
         return $this->betreff;
     }
 
-
     public function sendEmail(Kind $kind, Stammdaten $adresse, Stadt $stadt, $text, $dontSendBeworben = false)
     {
-        $this->attachment = array();
+        $this->attachment = [];
         $sessionLocale = $this->translator->getLocale();
 
-        if (count($kind->getBeworben()->toArray()) == 0) {//Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
-            $fileName = $kind->getVorname() . '_' .  $kind->getSchule()->getName();
+        if (count($kind->getBeworben()->toArray()) == 0) {// Es gibt keine Zeitblöcke die nur beworben sind. Diese müssen erst noch genehmigt werden HIer werden  PDFs versandt
+            $fileName = $kind->getVorname() . '_' . $kind->getSchule()->getName();
             $beruflicheSituation = $this->loerrachWorkflowController->beruflicheSituation;
             $pdf = $this->print->printAnmeldebestaetigung(
                 $kind,
@@ -71,8 +69,8 @@ class AnmeldeEmailService
                 'S',
                 $stadt->getSettingEncryptEmailAttachment()
             );
-            $this->attachment[] = array('type' => 'application/pdf', 'filename' => $fileName . '.pdf', 'body' => $pdf);
-            $this->attachment[] = array(
+            $this->attachment[] = ['type' => 'application/pdf', 'filename' => $fileName . '.pdf', 'body' => $pdf];
+            $this->attachment[] = [
                 'type' => 'application/pdf',
                 'filename' => $this->translator->trans('Vertragsbedingungen ') . ' ' . $stadt->getSlug() . '.pdf',
                 'body' => $this->abgService->printAGB(
@@ -80,14 +78,14 @@ class AnmeldeEmailService
                     'S',
                     $stadt,
                     null
-                )
-            );
+                ),
+            ];
 
             // here we build the ics to import into a calendar
             foreach ($kind->getZeitblocks() as $data2) {
                 $startDate = $data2->getFirstDate()->format('Ymd');
                 $this->ics->add(
-                    array(
+                    [
                         'location' => $data2->getSchule()->getOrganisation()->getName(),
                         'description' => $data2->getGanztag() == 0 ? $this->translator->trans('Mittagessen') : $this->translator->trans(
                             'Betreuung'),
@@ -96,50 +94,52 @@ class AnmeldeEmailService
                         'summary' => $data2->getGanztag() == 0 ? $this->translator->trans('Mittagessen') : $this->translator->trans(
                             'Betreuung'),
                         'url' => '',
-                        'rrule' => 'FREQ=WEEKLY;UNTIL=' . $data2->getActive()->getBis()->format('Ymd') . 'T000000'
-                    )
+                        'rrule' => 'FREQ=WEEKLY;UNTIL=' . $data2->getActive()->getBis()->format('Ymd') . 'T000000',
+                    ]
                 );
             }
             if ($stadt->getSettingsSkibDisableIcs() !== true) {
-                $this->attachment[] = array('type' => 'text/calendar', 'filename' => $kind->getVorname() . '.ics', 'body' => $this->ics->toString());
+                $this->attachment[] = ['type' => 'text/calendar', 'filename' => $kind->getVorname() . '.ics', 'body' => $this->ics->toString()];
             }
 
             foreach ($stadt->getEmailDokumenteSchulkindbetreuungBuchung() as $att) {
-                $this->attachment[] = array(
+                $this->attachment[] = [
                     'body' => $this->internFileSystem->read($att->getFileName()),
                     'filename' => $att->getOriginalName(),
-                    'type' => $att->getType()
-                );
+                    'type' => $att->getType(),
+                ];
             }
 
             if ($adresse->getLanguage()) {
                 $this->translator->setLocale($adresse->getLanguage());
             }
-            $this->betreff = $this->translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $kind->getVorname() ;
-            $this->content = $this->templating->render('email/anmeldebestatigung.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt, 'text' => $text));
+            $this->betreff = $this->translator->trans('Buchungsbestätigung der Schulkindbetreuung für ') . $kind->getVorname();
+            $this->content = $this->templating->render('email/anmeldebestatigung.html.twig', ['eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt, 'text' => $text]);
             $this->translator->setLocale($sessionLocale);
-            return true;
-        } else {// es gibt noch beworbene Zeitblöcke
-            if (!$dontSendBeworben) {
-                foreach ($stadt->getEmailDokumenteSchulkindbetreuungAnmeldung() as $att) {
-                    $this->attachment[] = array(
-                        'body' => $this->internFileSystem->read($att->getFileName()),
-                        'filename' => $att->getOriginalName(),
-                        'type' => $att->getType()
-                    );
-                }
-                if ($adresse->getLanguage()) {
-                    $this->translator->setLocale($adresse->getLanguage());
-                }
-                $this->betreff = $this->translator->trans('Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname%', array( '%vorname%'=>$kind->getVorname(), '%nachname%' => $kind->getNachname()));
-                $blocks = $kind->getBeworben()->toArray();
-                usort($blocks, fn(Zeitblock $a, Zeitblock $b) => $a->getVon() <=> $b->getVon());
 
-                $this->content = $this->templating->render('email/anmeldebestatigungBeworben.html.twig', array('eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt,'blocks' => $blocks));
-                $this->translator->setLocale($sessionLocale);
-                return true;
+            return true;
+        }  // es gibt noch beworbene Zeitblöcke
+        if (!$dontSendBeworben) {
+            foreach ($stadt->getEmailDokumenteSchulkindbetreuungAnmeldung() as $att) {
+                $this->attachment[] = [
+                    'body' => $this->internFileSystem->read($att->getFileName()),
+                    'filename' => $att->getOriginalName(),
+                    'type' => $att->getType(),
+                ];
             }
+            if ($adresse->getLanguage()) {
+                $this->translator->setLocale($adresse->getLanguage());
+            }
+            $this->betreff = $this->translator->trans('Vorläufige Information über die Anmeldung zur Schulkindbetreuung für %vorname%', ['%vorname%' => $kind->getVorname(), '%nachname%' => $kind->getNachname()]);
+            $blocks = $kind->getBeworben()->toArray();
+            usort($blocks, fn (Zeitblock $a, Zeitblock $b) => $a->getVon() <=> $b->getVon());
+
+            $this->content = $this->templating->render('email/anmeldebestatigungBeworben.html.twig', ['eltern' => $adresse, 'kind' => $kind, 'stadt' => $stadt, 'blocks' => $blocks]);
+            $this->translator->setLocale($sessionLocale);
+
+            return true;
         }
+
         return false;
     }
 
@@ -161,8 +161,6 @@ class AnmeldeEmailService
 
     public function send(Kind $kind, Stammdaten $adresse)
     {
-
-
         $this->mailer->sendEmail(
             $kind->getSchule()->getOrganisation()->getName(),
             $kind->getSchule()->getOrganisation()->getEmail(),
@@ -172,7 +170,6 @@ class AnmeldeEmailService
             $kind->getSchule()->getOrganisation()->getEmail(),
             $this->attachment);
         foreach ($adresse->getPersonenberechtigters() as $data) {
-
             $this->mailer->sendEmail(
                 $kind->getSchule()->getOrganisation()->getName(),
                 $kind->getSchule()->getOrganisation()->getEmail(),
@@ -182,6 +179,7 @@ class AnmeldeEmailService
                 $kind->getSchule()->getOrganisation()->getEmail(),
                 $this->attachment);
         }
+
         return $this->betreff;
     }
 }

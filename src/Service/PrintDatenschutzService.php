@@ -1,72 +1,67 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 03.10.2019
- * Time: 19:01
+ * Time: 19:01.
  */
 
 namespace App\Service;
 
-
 use App\Entity\Organisation;
 use App\Entity\Stadt;
 use League\Flysystem\FilesystemOperator;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Environment;
-use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
 class PrintDatenschutzService
 {
-
     protected $parameterBag;
     private $tcpdf;
-    public function __construct(private FilesystemOperator $fileSystem,private TCPDFController $pdf, private Environment $templating,ParameterBagInterface $parameterBag, private PrintService $printService)
-    {
 
+    public function __construct(
+        private FilesystemOperator $fileSystem,
+        private TCPDFController $pdf,
+        private Environment $templating,
+        ParameterBagInterface $parameterBag,
+        private PrintService $printService,
+    ) {
         $this->parameterBag = $parameterBag;
         $this->tcpdf = $this->pdf;
     }
 
-    public function printDatenschutz($text, $type = 'D', ?Stadt $stadt=null, ?Organisation $organisation = null)
+    public function printDatenschutz($text, $type = 'D', ?Stadt $stadt = null, ?Organisation $organisation = null)
     {
-
         $pdf = $this->tcpdf->create();
-        if($stadt){
+        if ($stadt) {
             $pdf->setStadt($stadt);
-            $fileName = 'Datenschutzbestimmung_ '.$stadt->getName();
-
-
-        }else{
-            $fileName ='Datenschutz '.$organisation->getName();
+            $fileName = 'Datenschutzbestimmung_ ' . $stadt->getName();
+        } else {
+            $fileName = 'Datenschutz ' . $organisation->getName();
             $pdf->setOrganisation($organisation);
-
         }
 
-        $pdf =$this->printService->preparePDF($pdf, $fileName, '',  $fileName, $stadt, $organisation);
+        $pdf = $this->printService->preparePDF($pdf, $fileName, '', $fileName, $stadt, $organisation);
 
-
-
-        $table = $this->templating->render('pdf/agb.html.twig',array('text'=>$text));
+        $table = $this->templating->render('pdf/agb.html.twig', ['text' => $text]);
         $pdf->writeHTMLCell(
             0,
             0,
-           20,
-             70,
+            20,
+            70,
             $table,
-             0,
-             1,
+            0,
+            1,
             0,
             true,
             '',
-             true
+            true
         );
 
         // hier beginnt die Seite mit den Kindern
 
-
-  return  $pdf->Output($fileName.".pdf", $type); // This will output the PDF as a Download
+        return $pdf->Output($fileName . '.pdf', $type); // This will output the PDF as a Download
     }
-
-
 }

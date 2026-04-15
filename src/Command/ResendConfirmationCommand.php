@@ -15,7 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 class ResendConfirmationCommand extends Command
 {
     protected static $defaultName = 'app:resend:confirmation';
@@ -28,8 +27,13 @@ class ResendConfirmationCommand extends Command
             ->addArgument('text', InputArgument::REQUIRED, 'Text welcher oben in der E-Mail angezeigt wird');
     }
 
-    public function __construct(private CopyChildToNewSchuljahr $copyChildService, private ChildSearchService $childSearchService, private ElternService $elternService, private EntityManagerInterface $em, ?string $name = null)
-    {
+    public function __construct(
+        private CopyChildToNewSchuljahr $copyChildService,
+        private ChildSearchService $childSearchService,
+        private ElternService $elternService,
+        private EntityManagerInterface $em,
+        ?string $name = null,
+    ) {
         parent::__construct($name);
     }
 
@@ -40,6 +44,7 @@ class ResendConfirmationCommand extends Command
         $text = $input->getArgument('text');
         if (!$schuljahr) {
             $io->error('Kein Schuljahr gefunden');
+
             return Command::FAILURE;
         }
         $io->info(sprintf('Schuljahr von %s bis %s der Stadt %s', $schuljahr->getVon()->format('d.m.Y'), $schuljahr->getBis()->format('d.m.Y'), $schuljahr->getStadt()->getName()));
@@ -49,21 +54,20 @@ class ResendConfirmationCommand extends Command
 
         if (!$helper->ask($input, $output, $question)) {
             $io->info('Nichts gesendet');
+
             return Command::SUCCESS;
         }
 
-        $kinder = $this->childSearchService->searchChild(array('schuljahr' => $schuljahr->getId()), null, false, null, $schuljahr->getVon(), null, $schuljahr->getStadt());
+        $kinder = $this->childSearchService->searchChild(['schuljahr' => $schuljahr->getId()], null, false, null, $schuljahr->getVon(), null, $schuljahr->getStadt());
         $progressBar = new ProgressBar($output, sizeof($kinder));
         foreach ($kinder as $data) {
             $progressBar->advance();
 
             $eltern = $this->elternService->getElternForSpecificTimeAndKind($data, $schuljahr->getVon());
-            $this->copyChildService->sendAnmedebestaetigung($data, $eltern, $schuljahr->getStadt(), $text,true);
-
+            $this->copyChildService->sendAnmedebestaetigung($data, $eltern, $schuljahr->getStadt(), $text, true);
         }
 
         $progressBar->finish();
-
 
         return Command::SUCCESS;
     }

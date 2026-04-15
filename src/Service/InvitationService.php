@@ -10,8 +10,13 @@ use Twig\Environment;
 
 class InvitationService
 {
-    public function __construct(private EntityManagerInterface $em, private Environment $environment, private MailerService $mailerService, private TranslatorInterface $translator, private UrlGeneratorInterface $urlGenerator)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+        private Environment $environment,
+        private MailerService $mailerService,
+        private TranslatorInterface $translator,
+        private UrlGeneratorInterface $urlGenerator,
+    ) {
     }
 
     public function inviteNewUser(User $user, User $creator)
@@ -26,20 +31,19 @@ class InvitationService
                 '',
                 $user->getEmail(),
                 $this->translator->trans('Sie wurden als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt'),
-                $this->environment->render('email/invitationEmail.html.twig', array('user' => $user, 'url' => $this->urlGenerator->generate('invitation_accept', array('token' => $user->getInvitationToken()),UrlGeneratorInterface::ABSOLUTE_URL), 'stadt' => $user->getStadt())),
+                $this->environment->render('email/invitationEmail.html.twig', ['user' => $user, 'url' => $this->urlGenerator->generate('invitation_accept', ['token' => $user->getInvitationToken()], UrlGeneratorInterface::ABSOLUTE_URL), 'stadt' => $user->getStadt()]),
                 $creator->getEmail()
             );
         }
-
     }
 
     public function acceptInvitation($token, User $tempUser): ?User
     {
-        $user = $this->em->getRepository(User::class)->findOneBy(array('invitationToken' => $token));
+        $user = $this->em->getRepository(User::class)->findOneBy(['invitationToken' => $token]);
         if (!$user) {
             return null;
         }
-        $user = $this->em->getRepository(User::class)->findOneBy(array('invitationToken' => $token));
+        $user = $this->em->getRepository(User::class)->findOneBy(['invitationToken' => $token]);
         $user->setInvitationToken(null);
         $user->setKeycloakId($tempUser->getKeycloakId());
         $this->em->persist($user);
@@ -48,6 +52,7 @@ class InvitationService
         $this->em->remove($tempUser);
         $this->em->persist($user);
         $this->em->flush();
+
         return $user;
     }
 }

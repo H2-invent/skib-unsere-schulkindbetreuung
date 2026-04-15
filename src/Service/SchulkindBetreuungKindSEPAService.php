@@ -1,20 +1,23 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 03.10.2019
- * Time: 19:01
+ * Time: 19:01.
  */
 
 namespace App\Service;
+
 use App\Entity\Organisation;
 use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SchulkindBetreuungKindSEPAService
 {
-    public function __construct(private EntityManagerInterface $em)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+    ) {
     }
 
     public function findOrg(Stammdaten $adresse)
@@ -25,7 +28,7 @@ class SchulkindBetreuungKindSEPAService
             ->andWhere('kinder.eltern = :stammdaten')
             ->setParameter('stammdaten', $adresse);
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
-
 }

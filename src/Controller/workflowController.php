@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controller;
-/**
+
+/*
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 06.09.2019
@@ -30,14 +31,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class workflowController extends AbstractController
 {
-    public function __construct(private ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
 
     #[Route(path: '/{slug}/home', name: 'workflow_start', methods: ['GET'])]
     public function welcomeAction(TranslatorInterface $translator, Request $request, $slug, SchuljahrService $schuljahrService)
     {
-        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(['slug' => $slug]);
 
         if ($stadt === null) {
             return $this->redirectToRoute('workflow_city_not_found');
@@ -47,14 +49,14 @@ class workflowController extends AbstractController
         $anmeldeSchuljahr = $this->managerRegistry->getRepository(Active::class)->findAnmeldeSchuljahrFromCity($stadt);
         $aktiveSchuljahre = $this->managerRegistry->getRepository(Active::class)->findAllActualSchuljahrFromCity(stadt: $stadt, today: new \DateTime());
         $schuljahre = [];
-        foreach ($aktiveSchuljahre as $data){
-            if ($data !== $anmeldeSchuljahr){
+        foreach ($aktiveSchuljahre as $data) {
+            if ($data !== $anmeldeSchuljahr) {
                 $schuljahre[] = $data;
             }
         }
         $cityInfoText = $stadt->translate()->getInfoText();
         // Load all schools from the city into the controller as $schulen
-        $schule = $this->managerRegistry->getRepository(Schule::class)->findBy(['stadt' => $stadt, 'deleted' => false],['name'=>'DESC']);
+        $schule = $this->managerRegistry->getRepository(Schule::class)->findBy(['stadt' => $stadt, 'deleted' => false], ['name' => 'DESC']);
         $title = $translator->trans('Anmeldeportal') . ' ' . $stadt->getName();
         if ($stadt->getSchulkindBetreung() && $stadt->getFerienprogramm()) {
             $title = $translator->trans('Schulkindbetreuung und Ferienbetreuung der ') . ' ' . $stadt->getName() . ' | ' . $translator->trans(' Hier anmelden');
@@ -63,39 +65,37 @@ class workflowController extends AbstractController
         } elseif ($stadt->getFerienprogramm()) {
             $title = $translator->trans('Ferienprogramm buchen') . ' ' . $stadt->getName() . ' | ' . $translator->trans(' Hier anmelden');
         }
-        $news = $this->managerRegistry->getRepository(News::class)->findBy(array('stadt' => $stadt, 'activ' => true), array('date' => 'DESC'));
+        $news = $this->managerRegistry->getRepository(News::class)->findBy(['stadt' => $stadt, 'activ' => true], ['date' => 'DESC']);
         $text = $stadt->translate()->getInfoText();
         $array = explode('. ', (string) $text);
         $metaDescription = $this->buildMeta($array);
-        return $this->render('workflow/start.html.twig', array('metaDescription' => $metaDescription, 'title' => $title, 'schule' => $schule, 'news' => $news, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'schuljahr' => $schuljahr, 'activeSchuljahr' => $schuljahre));
-    }
 
+        return $this->render('workflow/start.html.twig', ['metaDescription' => $metaDescription, 'title' => $title, 'schule' => $schule, 'news' => $news, 'cityInfoText' => $cityInfoText, 'stadt' => $stadt, 'schuljahr' => $schuljahr, 'activeSchuljahr' => $schuljahre]);
+    }
 
     #[Route(path: '/{slug}/closed', name: 'workflow_closed', methods: ['GET'])]
     #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function closedAction(Request $request, Stadt $stadt)
     {
-
-        return $this->render('workflow/closed.html.twig', array('stadt' => $stadt));
+        return $this->render('workflow/closed.html.twig', ['stadt' => $stadt]);
     }
 
     #[Route(path: '/city-not-found', name: 'workflow_city_not_found', methods: ['GET'])]
     public function noCityAction(Request $request)
     {
-
         return $this->render('workflow/noCity.html.twig');
     }
 
     #[Route(path: '/wartung', name: 'workflow_wartung', methods: ['GET'])]
     public function wartungAction(Request $request)
     {
-        return $this->render('workflow/wartung.html.twig', array('referer' => $request->get('redirect')));
+        return $this->render('workflow/wartung.html.twig', ['referer' => $request->get('redirect')]);
     }
 
     #[Route(path: '/confirmEmail', name: 'workflow_confirm_Email', methods: ['GET', 'POST'])]
     public function confirmAction(Request $request, MailerService $mailer, TranslatorInterface $translator, ConfirmEmailService $confirmEmailService)
     {
-        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
+        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(['uid' => $request->get('uid')]);
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('stadt'));
 
         $res = $confirmEmailService->confirm($stammdaten, $stadt, $request->get('redirect'), $request);
@@ -103,20 +103,17 @@ class workflowController extends AbstractController
         if ($res === null) {
             if ($url == $request->getHost()) {
                 return new RedirectResponse($request->get('redirect'));
-            } else {
-                throw new \Exception('Wrong Redirect Adress');
             }
-
-
+            throw new \Exception('Wrong Redirect Adress');
         }
+
         return new Response($res);
     }
-
 
     #[Route(path: '/resetMail', name: 'workflow_reset_Email', methods: ['GET', 'POST'])]
     public function resetAction(Request $request, MailerService $mailer, TranslatorInterface $translator)
     {
-        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('uid')));
+        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(['uid' => $request->get('uid')]);
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('stadt'));
         $text = $translator->trans('Die E-Mail konnte nicht erneut vesandt werden');
         if ($request->get('resendEmail') == $stammdaten->getResendEmail()) {
@@ -127,47 +124,41 @@ class workflowController extends AbstractController
             $text = $translator->trans('Die E-Mail wurde erfolgreich versandt');
         }
 
-        return $this->redirectToRoute('workflow_confirm_Email', array('stadt' => $stadt->getId(), 'snack' => $text, 'uid' => $stammdaten->getUid(), 'redirect' => $request->get('redirect')));
+        return $this->redirectToRoute('workflow_confirm_Email', ['stadt' => $stadt->getId(), 'snack' => $text, 'uid' => $stammdaten->getUid(), 'redirect' => $request->get('redirect')]);
     }
 
     #[Route(path: '/{slug}/{org_id}/datenschutz', name: 'workflow_datenschutz', methods: ['GET'])]
     public function datenschutzAction($slug, $org_id, Request $request, TranslatorInterface $translator)
     {
-
         if ($org_id == 'city') {
-
-            $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+            $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(['slug' => $slug]);
             $org_datenschutz = $stadt->translate()->getDatenschutz();
-            $titel = $translator->trans('Datenschutzhinweis %organisation%', array('%organisation%' => $stadt->getName())) . ' | ' . $stadt->getName() . ' | unsere-Schulkindbetreuung.de';
-            $metaDescrition = $translator->trans('Datenschutzhinweis %organisation%', array('%organisation%' => $stadt->getName()));
+            $titel = $translator->trans('Datenschutzhinweis %organisation%', ['%organisation%' => $stadt->getName()]) . ' | ' . $stadt->getName() . ' | unsere-Schulkindbetreuung.de';
+            $metaDescrition = $translator->trans('Datenschutzhinweis %organisation%', ['%organisation%' => $stadt->getName()]);
 
-            return $this->render('workflow/datenschutz.html.twig', array('metaDescription' => $metaDescrition, 'title' => $titel, 'datenschutz' => $org_datenschutz, 'org' => $stadt, 'org_id' => $org_id, 'stadt' => $stadt));
-        } else {
-            $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
-            $org_datenschutz = $organisation->translate()->getDatenschutz();
-            $stadt = $organisation->getStadt();
-            $titel = $translator->trans('Datenschutzhinweis %organisation%', array('%organisation%' => $organisation->getName())) . ' | ' . $stadt->getName() . ' | unsere-Schulkindbetreuung.de';
-            $metaDescrition = $translator->trans('Datenschutzhinweis %organisation%', array('%organisation%' => $organisation->getName()));
-
-            return $this->render('workflow/datenschutz.html.twig', array('metaDescription' => $metaDescrition, 'title' => $titel, 'datenschutz' => $org_datenschutz, 'org' => $organisation, 'org_id' => $org_id, 'stadt' => $stadt));
+            return $this->render('workflow/datenschutz.html.twig', ['metaDescription' => $metaDescrition, 'title' => $titel, 'datenschutz' => $org_datenschutz, 'org' => $stadt, 'org_id' => $org_id, 'stadt' => $stadt]);
         }
-    }
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
+        $org_datenschutz = $organisation->translate()->getDatenschutz();
+        $stadt = $organisation->getStadt();
+        $titel = $translator->trans('Datenschutzhinweis %organisation%', ['%organisation%' => $organisation->getName()]) . ' | ' . $stadt->getName() . ' | unsere-Schulkindbetreuung.de';
+        $metaDescrition = $translator->trans('Datenschutzhinweis %organisation%', ['%organisation%' => $organisation->getName()]);
 
+        return $this->render('workflow/datenschutz.html.twig', ['metaDescription' => $metaDescrition, 'title' => $titel, 'datenschutz' => $org_datenschutz, 'org' => $organisation, 'org_id' => $org_id, 'stadt' => $stadt]);
+    }
 
     #[Route(path: '/{slug}/{org_id}/datenschutz/pdf', name: 'workflow_datenschutz_pdf', methods: ['GET'])]
     public function datenschutzpdf(Request $request, TranslatorInterface $translator, PrintDatenschutzService $printDatenschutzService, $slug, $org_id)
     {
         if ($org_id == 'city') {
+            $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(['slug' => $slug]);
 
-            $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
             return $printDatenschutzService->printDatenschutz($stadt->translate()->getDatenschutz(), 'D', $stadt, null);
-        } else {
-            $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
-            $stadt = $organisation->getStadt();
-            return $printDatenschutzService->printDatenschutz($organisation->translate()->getDatenschutz(), 'D', null, $organisation);
         }
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
+        $stadt = $organisation->getStadt();
 
-
+        return $printDatenschutzService->printDatenschutz($organisation->translate()->getDatenschutz(), 'D', null, $organisation);
     }
 
     #[Route(path: '/{slug}/vertragsbedingungen', name: 'workflow_agb', methods: ['GET'])]
@@ -176,20 +167,17 @@ class workflowController extends AbstractController
     {
         $stadtAGB = $stadt->translate()->getAgb();
         $titel = $translator->trans('Vertragsbedingungen') . ' | ' . $stadt->getName() . ' | unsere-Schulkindbetreuung.de';
-        $metaDescrition = $translator->trans('Allgemeine Vertragsbedingungen der %stadt%', array('%stadt%' => $stadt->getName()));
+        $metaDescrition = $translator->trans('Allgemeine Vertragsbedingungen der %stadt%', ['%stadt%' => $stadt->getName()]);
 
-        return $this->render('workflow/agb.html.twig', array('metaDescription' => $metaDescrition, 'title' => $titel, 'stadtAGB' => $stadtAGB, 'stadt' => $stadt, 'redirect' => $request->get('redirect')));
+        return $this->render('workflow/agb.html.twig', ['metaDescription' => $metaDescrition, 'title' => $titel, 'stadtAGB' => $stadtAGB, 'stadt' => $stadt, 'redirect' => $request->get('redirect')]);
     }
-
 
     #[Route(path: '/{slug}/agb/pdf', name: 'workflow_agb_pdf', methods: ['GET'])]
     #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
     public function pdf(Request $request, TranslatorInterface $translator, PrintAGBService $printAGBService, Stadt $stadt)
     {
         return $printAGBService->printAGB($stadt->translate()->getAgb(), 'D', $stadt, null);
-
     }
-
 
     #[Route(path: '/{slug}/imprint', name: 'workflow_imprint', methods: ['GET'])]
     public function imprintAction($slug, Request $request, TranslatorInterface $translator)
@@ -197,15 +185,14 @@ class workflowController extends AbstractController
         if ($slug === null) {
             return $this->redirectToRoute('impressum');
         }
-        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(array('slug' => $slug));
+        $stadt = $this->managerRegistry->getRepository(Stadt::class)->findOneBy(['slug' => $slug]);
         $titel = $translator->trans('Impressum') . ' | ' . $stadt->getName() . ' | unsere-Schulkindbetreuung.de';
-        $metaDescrition = $translator->trans('Impressum %stadt%', array('%stadt%' => $stadt->getName()));
+        $metaDescrition = $translator->trans('Impressum %stadt%', ['%stadt%' => $stadt->getName()]);
         if ($stadt->getImprint() !== null) {
-            return $this->render('workflow/imprint.html.twig', array('metaDescription' => $metaDescrition, 'title' => $titel, 'stadt' => $stadt));
-        } else {
-            return $this->redirectToRoute('impressum');
+            return $this->render('workflow/imprint.html.twig', ['metaDescription' => $metaDescrition, 'title' => $titel, 'stadt' => $stadt]);
         }
 
+        return $this->redirectToRoute('impressum');
     }
 
     private function buildMeta($sentenceArray)
@@ -213,7 +200,6 @@ class workflowController extends AbstractController
         $count = 0;
         $res = '';
         foreach ($sentenceArray as $data) {
-
             if ($count <= 160) {
                 $res .= $data . '. ';
             } else {

@@ -18,8 +18,7 @@ class LateRegistrationController extends AbstractController
     public function __construct(
         private LateRegistrationService $lateRegisterService,
         private LateRegistrationRepository $lateRegistrationRepository,
-    )
-    {
+    ) {
     }
 
     #[Route(path: '/org_child/late_registration', name: 'late_registration', methods: ['GET', 'POST'])]

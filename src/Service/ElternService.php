@@ -8,52 +8,53 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ElternService
 {
-    public function __construct(private EntityManagerInterface $em)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+    ) {
     }
 
     public function getLatestElternFromChild(Kind $kind): Stammdaten
     {
         if ($kind->getEltern()->getCreatedAt()) {
             return $this->em->getRepository(Stammdaten::class)->findlatestStammdatenfromKind($kind);
-        } else {
-            return $kind->getEltern();
         }
+
+        return $kind->getEltern();
     }
 
     public function getElternForSpecificTimeAndKind(Kind $kind, ?\DateTime $dateTime = null, $demo = false)
     {
-        if (!$dateTime){
+        if (!$dateTime) {
             $dateTime = new \DateTime();
         }
-       $parent = $this->em->getRepository(Stammdaten::class)->findStammdatenfromKindforSpecificDate($kind,$dateTime,$demo);
-        if (!$parent){
+        $parent = $this->em->getRepository(Stammdaten::class)->findStammdatenfromKindforSpecificDate($kind, $dateTime, $demo);
+        if (!$parent) {
             $parent = $kind->getEltern();
         }
+
         return $parent;
     }
 
     public function getElternForSpecificTimeAndStammdaten(Stammdaten $stammdaten, ?\DateTime $dateTime = null)
     {
-        $parent = $this->em->getRepository(Stammdaten::class)->findStammdatenFromStammdatenByDate($stammdaten,$dateTime);
+        $parent = $this->em->getRepository(Stammdaten::class)->findStammdatenFromStammdatenByDate($stammdaten, $dateTime);
+
         return $parent;
     }
-
 
     public function getLatestElternFromCEltern(Stammdaten $stammdaten): ?Stammdaten
     {
         if ($stammdaten->getCreatedAt()) {
             return $this->em->getRepository(Stammdaten::class)->findlatestStammdatenfromStammdaten($stammdaten);
-        } else {
-            return $stammdaten;
         }
+
+        return $stammdaten;
     }
 
     public function getKindervonElternMitHistorie(Stammdaten $eltern)
     {
         return $this->em->getRepository(Kind::class)->findAllChildrenWithHistoryFromParent($eltern);
     }
-
 
     public function getEarliestChildOfStammdaten(Stammdaten $stammdaten): ?Kind
     {
@@ -71,6 +72,4 @@ class ElternService
     {
         return $this->em->getRepository(Kind::class)->findKinderProStammdatenAnStichtag($stammdaten, $zeitpunkt, $demo);
     }
-
-
 }

@@ -2,12 +2,11 @@
 
 namespace App\Controller;
 
-use Doctrine\Persistence\ManagerRegistry;
-use App\Entity\PaymentSepa;
 use App\Entity\Ferienblock;
 use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
+use App\Entity\PaymentSepa;
 use App\Entity\Stammdaten;
 use App\Form\Type\FerienBlockPreisType;
 use App\Form\Type\FerienBlockType;
@@ -18,6 +17,7 @@ use App\Repository\KindFerienblockRepository;
 use App\Repository\KindRepository;
 use App\Service\AnwesenheitslisteService;
 use App\Service\CheckinFerienService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,23 +28,22 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FerienManagementController extends AbstractController
 {
-    public function __construct(private ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
 
     #[Route(path: '/org_ferien/edit/show', name: 'ferien_management_show', methods: ['GET'])]
     public function index(Request $request)
     {
-
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $blocks = $this->managerRegistry->getRepository(Ferienblock::class)->findBy(array('organisation' => $organisation), array('startDate' => 'asc'));
+        $blocks = $this->managerRegistry->getRepository(Ferienblock::class)->findBy(['organisation' => $organisation], ['startDate' => 'asc']);
 
-        return $this->render('ferien_management/index.html.twig', array('blocks' => $blocks, 'org' => $organisation));
+        return $this->render('ferien_management/index.html.twig', ['blocks' => $blocks, 'org' => $organisation]);
     }
-
 
     #[Route(path: '/org_ferien/edit/neu', name: 'ferien_management_neu', methods: ['GET', 'POST'])]
     public function neu(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
@@ -60,7 +59,7 @@ class FerienManagementController extends AbstractController
 
         $form->handleRequest($request);
 
-        $errors = array();
+        $errors = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $block = $form->getData();
             $errors = $validator->validate($block);
@@ -69,15 +68,14 @@ class FerienManagementController extends AbstractController
                 $em->persist($block);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
-                return $this->redirectToRoute('ferien_management_preise', array('ferien_id' => $block->getId(), 'org_id' => $organisation->getId(), 'snack' => $text));
-            }
 
+                return $this->redirectToRoute('ferien_management_preise', ['ferien_id' => $block->getId(), 'org_id' => $organisation->getId(), 'snack' => $text]);
+            }
         }
         $title = $translator->trans('Ferienprogramm erstellen');
-        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
 
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
     }
-
 
     #[Route(path: '/org_ferien/edit/preise', name: 'ferien_management_preise', methods: ['GET', 'POST'])]
     public function preise(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
@@ -86,7 +84,7 @@ class FerienManagementController extends AbstractController
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
+        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(['id' => $request->get('ferien_id'), 'organisation' => $organisation]);
         if ($ferienblock->getPreis() === null || $ferienblock->getNamePreise() === null || sizeof($ferienblock->getPreis()) != $ferienblock->getAnzahlPreise()) {
             $ferienblock->setNamePreise(array_fill(0, $ferienblock->getAnzahlPreise(), ''));
             $ferienblock->setPreis(array_fill(0, $ferienblock->getAnzahlPreise(), 0));
@@ -94,7 +92,7 @@ class FerienManagementController extends AbstractController
 
         $form = $this->createForm(FerienBlockPreisType::class, $ferienblock);
         $form->handleRequest($request);
-        $errors = array();
+        $errors = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $block = $form->getData();
             $errors = $validator->validate($block);
@@ -103,14 +101,14 @@ class FerienManagementController extends AbstractController
                 $em->persist($block);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('ferien_management_show', array('org_id' => $organisation->getId(), 'snack' => $text));
-            }
 
+                return $this->redirectToRoute('ferien_management_show', ['org_id' => $organisation->getId(), 'snack' => $text]);
+            }
         }
         $title = $translator->trans('Preise bearbeiten');
-        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
-    }
 
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+    }
 
     #[Route(path: '/org_ferien/edit/voucher', name: 'ferien_management_voucher', methods: ['GET', 'POST'])]
     public function ferienblockVoucher(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
@@ -119,7 +117,7 @@ class FerienManagementController extends AbstractController
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
-        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
+        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(['id' => $request->get('ferien_id'), 'organisation' => $organisation]);
 
         if ($ferienblock->getVoucher() === null || $ferienblock->getVoucherPrice() === null) {
             $ferienblock->setVoucher(array_fill(0, $ferienblock->getAmountVoucher(), ''));
@@ -133,7 +131,7 @@ class FerienManagementController extends AbstractController
 
         $form = $this->createForm(FerienBlockVoucherType::class, $ferienblock);
         $form->handleRequest($request);
-        $errors = array();
+        $errors = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $block = $form->getData();
             $errors = $validator->validate($block);
@@ -142,14 +140,14 @@ class FerienManagementController extends AbstractController
                 $em->persist($block);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('ferien_management_show', array('org_id' => $organisation->getId(), 'snack' => $text));
-            }
 
+                return $this->redirectToRoute('ferien_management_show', ['org_id' => $organisation->getId(), 'snack' => $text]);
+            }
         }
         $title = $translator->trans('Gutscheine bearbeiten');
-        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
-    }
 
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
+    }
 
     #[Route(path: '/org_ferien/edit/edit', name: 'ferien_management_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
@@ -159,13 +157,13 @@ class FerienManagementController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
 
-        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
+        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(['id' => $request->get('ferien_id'), 'organisation' => $organisation]);
 
         $form = $this->createForm(FerienBlockType::class, $ferienblock);
 
         $form->handleRequest($request);
 
-        $errors = array();
+        $errors = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $block = $form->getData();
 
@@ -175,15 +173,14 @@ class FerienManagementController extends AbstractController
                 $em->persist($block);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('ferien_management_show', array('org_id' => $organisation->getId(), 'snack' => $text));
-            }
 
+                return $this->redirectToRoute('ferien_management_show', ['org_id' => $organisation->getId(), 'snack' => $text]);
+            }
         }
         $title = $translator->trans('Ferienprogramm bearbeiten');
-        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
 
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
     }
-
 
     #[Route(path: '/org_ferien/edit/delete', name: 'ferien_management_delete', methods: ['DELETE'])]
     public function delte(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
@@ -193,14 +190,14 @@ class FerienManagementController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
 
-        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
+        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(['id' => $request->get('ferien_id'), 'organisation' => $organisation]);
         $em = $this->managerRegistry->getManager();
         $em->remove($ferienblock);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
-        return new JsonResponse(array('redirect' => $this->generateUrl('ferien_management_show', array('org_id' => $organisation->getId(), 'snack' => $text))));
-    }
 
+        return new JsonResponse(['redirect' => $this->generateUrl('ferien_management_show', ['org_id' => $organisation->getId(), 'snack' => $text])]);
+    }
 
     #[Route(path: '/org_ferien/duplicate', name: 'ferien_management_duplicate', methods: ['POST'])]
     public function duplicate(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
@@ -210,14 +207,13 @@ class FerienManagementController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
 
-        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
+        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(['id' => $request->get('ferien_id'), 'organisation' => $organisation]);
         $ferienblockNew = clone $ferienblock;
         $translations = $ferienblock->getTranslations();
         foreach ($translations as $locale => $fields) {
             $clone = clone $fields;
             $clone->setTitel('[copy]' . $clone->getTitel());
             $ferienblockNew->addTranslation($clone);
-
         }
         foreach ($ferienblock->getKategorie() as $data) {
             $ferienblockNew->addKategorie($data);
@@ -226,10 +222,9 @@ class FerienManagementController extends AbstractController
         $em->persist($ferienblockNew);
         $em->flush();
         $text = $translator->trans('Erfolgreich kopiert');
-        return new JsonResponse(array('redirect' => $this->generateUrl('ferien_management_edit', array('org_id' => $organisation->getId(), 'ferien_id' => $ferienblockNew->getId(), 'snack' => $text))));
 
+        return new JsonResponse(['redirect' => $this->generateUrl('ferien_management_edit', ['org_id' => $organisation->getId(), 'ferien_id' => $ferienblockNew->getId(), 'snack' => $text])]);
     }
-
 
     #[Route(path: '/org_ferien/checkin/list', name: 'ferien_management_report_checkinlist', methods: ['GET'])]
     public function checkinListFerien(Request $request, TranslatorInterface $translator)
@@ -259,7 +254,6 @@ class FerienManagementController extends AbstractController
             'mode' => $mode,
         ]);
     }
-
 
     #[Route(path: '/org_ferien/orders', name: 'ferien_management_orders', methods: ['GET'])]
     public function ordersOverview(Request $request, TranslatorInterface $translator)
@@ -292,15 +286,14 @@ class FerienManagementController extends AbstractController
     public function storno(Request $request, TranslatorInterface $translator)
     {
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
-        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(array('uid' => $request->get('parent_id')));
+        $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->findOneBy(['uid' => $request->get('parent_id')]);
 
         if ($organisation != $this->getUser()->getOrganisation()) {
             throw new \Exception('Wrong Organisation');
         }
 
-        return $this->redirectToRoute('ferien_storno', array('slug' => $organisation->getStadt()->getSlug(), 'parent_id' => $stammdaten->getUid()));
+        return $this->redirectToRoute('ferien_storno', ['slug' => $organisation->getStadt()->getSlug(), 'parent_id' => $stammdaten->getUid()]);
     }
-
 
     #[Route(path: '/org_ferien/checkin/list/tag', name: 'ferien_management_report_checkinlist_tag', methods: ['GET'])]
     public function checkinListTagyFerien(Request $request, TranslatorInterface $translator, AnwesenheitslisteService $anwesenheitslisteService)
@@ -322,6 +315,7 @@ class FerienManagementController extends AbstractController
 
         $titel = $translator->trans('Anwesenheitsliste');
         $mode = 'day';
+
         return $this->render('ferien_management/checkinList.html.twig', [
             'org' => $organisation,
             'list' => $kind,
@@ -331,7 +325,6 @@ class FerienManagementController extends AbstractController
         ]);
     }
 
-
     #[Route(path: '/org_ferien/checkin/toggle/{checkinID}', name: 'ferien_management_report_checkin_toggle', methods: ['PATCH'])]
     public function checkinBlockAction(Request $request, TranslatorInterface $translator, $checkinID, CheckinFerienService $checkinFerienService)
     {
@@ -339,7 +332,6 @@ class FerienManagementController extends AbstractController
 
         return new JsonResponse($result);
     }
-
 
     #[Route(path: '/org_ferien/orders/detail', name: 'ferien_management_order_detail', methods: ['GET'])]
     public function orderDetails(Request $request, TranslatorInterface $translator, AnwesenheitslisteService $anwesenheitslisteService)
@@ -370,16 +362,14 @@ class FerienManagementController extends AbstractController
 
     #[Route(path: '/org_ferien/orders/{kurs_id}/sepa-export.csv', name: 'admin_sepa_export_kurs_csv', methods: ['GET'])]
     public function exportKursSepaCsv(
-        int                       $kurs_id,
-        FerienblockRepository     $kursRepo,
-        KindFerienblockRepository $bookingRepo
-    )
-    {
+        int $kurs_id,
+        FerienblockRepository $kursRepo,
+        KindFerienblockRepository $bookingRepo,
+    ) {
         // optional: Rechteprüfung
         // $this->denyAccessUnlessGranted('ROLE_ORG_FERIEN_SEPA_EXPORT');
 
         $org = $this->getUser()->getOrganisation();
-
 
         $kurs = $kursRepo->find($kurs_id);
         if (!$kurs) {
@@ -402,11 +392,11 @@ class FerienManagementController extends AbstractController
                     'buchungen' => [],
                 ];
             }
-            if (isset( $parent->getPaymentFerien()[0]) && $parent->getPaymentFerien()[0]->getArtString() === 'SEPA'){
+            if (isset($parent->getPaymentFerien()[0]) && $parent->getPaymentFerien()[0]->getArtString() === 'SEPA') {
                 $eltern[$pid]['payment'] = $parent->getPaymentFerien()[0]->getSepa();
             }
 
-            if ($b->getState() === 10 &&isset( $parent->getPaymentFerien()[0]) && $parent->getPaymentFerien()[0]->getArtString() === 'SEPA'){
+            if ($b->getState() === 10 && isset($parent->getPaymentFerien()[0]) && $parent->getPaymentFerien()[0]->getArtString() === 'SEPA') {
                 $eltern[$pid]['buchungen'][] = $b;
             }
         }
@@ -443,27 +433,26 @@ class FerienManagementController extends AbstractController
                 'Telefon',
                 'Verwendungszweck',
                 'Kinder',
-                'BuchungsIDs'
+                'BuchungsIDs',
             ], $delimiter);
 
             // Optional: Kurs-Titel für Verwendungszweck
             $kursTitel = $kurs->getTranslations()->get('de')->getTitel();
-
 
             foreach ($eltern as $pid => $data) {
                 /** @var Stammdaten $p */
                 $p = $data['eltern'];
                 $buchungen = $data['buchungen'];
                 /** @var PaymentSepa $payment */
-                $payment = $data['payment']??null;
+                $payment = $data['payment'] ?? null;
                 // Summe bilden
                 $sum = 0.0;
                 $kids = [];
                 $bookingIds = [];
 
                 foreach ($buchungen as $b) {
-                    $sum += (float)$b->getPreis();
-                    $bookingIds[] = (string)$b->getId();
+                    $sum += (float) $b->getPreis();
+                    $bookingIds[] = (string) $b->getId();
 
                     $k = $b->getKind();
                     if ($k) {
@@ -478,9 +467,9 @@ class FerienManagementController extends AbstractController
 
                 // Optional: Eltern ohne SEPA-Daten trotzdem exportieren oder überspringen?
                 // Hier: wir exportieren trotzdem (damit du sie siehst), aber IBAN/BIC leer.
-                $iban = $payment->getIban()?? '';
-                $bic  = $payment->getBic()?? '';
-                $holder = $payment->getKontoinhaber()?? '';
+                $iban = $payment->getIban() ?? '';
+                $bic = $payment->getBic() ?? '';
+                $holder = $payment->getKontoinhaber() ?? '';
 
                 fputcsv($out, [
                     $p->getId(),
@@ -489,14 +478,14 @@ class FerienManagementController extends AbstractController
                     $bic,
                     number_format(round($sum, 2), 2, ',', ''), // deutsches Format
                     'EUR',
-                    (string)($p->getName() ?? ''),
-                    (string)($p->getVorname() ?? ''),
-                    (string)($p->getStrasse() ?? ''),
-                    (string)($p->getAdresszusatz() ?? ''),
-                    (string)($p->getPlz() ?? ''),
-                    (string)($p->getStadt() ?? ''),
-                    (string)($p->getEmail() ?? ''),
-                    (string)($p->getPhoneNumber() ?? ''),
+                    (string) ($p->getName() ?? ''),
+                    (string) ($p->getVorname() ?? ''),
+                    (string) ($p->getStrasse() ?? ''),
+                    (string) ($p->getAdresszusatz() ?? ''),
+                    (string) ($p->getPlz() ?? ''),
+                    (string) ($p->getStadt() ?? ''),
+                    (string) ($p->getEmail() ?? ''),
+                    (string) ($p->getPhoneNumber() ?? ''),
                     $verwendungszweck,
                     $kidsStr,
                     implode(',', $bookingIds),
@@ -507,21 +496,17 @@ class FerienManagementController extends AbstractController
         });
 
         $response->headers->set('Content-Type', 'text/csv; charset=UTF-8');
-        $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
 
         return $response;
     }
 
     #[Route(path: '/org_ferien/orders/kinder/{kind_id}', name: 'ferien_management_kind_details', methods: ['GET', 'POST'])]
     public function kindDetails(
+        int $kind_id,
 
-        int            $kind_id,
-
-        KindRepository $kindRepo
-    )
-    {
-
-
+        KindRepository $kindRepo,
+    ) {
         $kind = $kindRepo->find($kind_id);
         if (!$kind) {
             throw $this->createNotFoundException('Kind nicht gefunden');
@@ -550,11 +535,9 @@ class FerienManagementController extends AbstractController
         ]);
     }
 
-
     #[Route(path: '/org_ferien_admin/edit', name: 'ferien_admin_edit', methods: ['GET', 'POST'])]
     public function ferienOrgEdit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-
         $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
         if ($organisation->getStadt() != $this->getUser()->getStadt() && $this->getUser()->getOrganisation() != $organisation) {
             throw new \Exception('Wrong City');
@@ -562,7 +545,7 @@ class FerienManagementController extends AbstractController
 
         $form = $this->createForm(OrganisationFerienType::class, $organisation);
         $form->handleRequest($request);
-        $errors = array();
+        $errors = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $organisation = $form->getData();
             $errors = $validator->validate($organisation);
@@ -571,13 +554,12 @@ class FerienManagementController extends AbstractController
                 $em->persist($organisation);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('ferien_admin_edit', array('snack' => $text, 'org_id' => $organisation->getId()));
-            }
 
+                return $this->redirectToRoute('ferien_admin_edit', ['snack' => $text, 'org_id' => $organisation->getId()]);
+            }
         }
         $title = $translator->trans('Ferieneinstellungen ändern');
-        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
 
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
     }
-
 }

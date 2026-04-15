@@ -169,6 +169,7 @@ class KindFerienblock
 
         return $this;
     }
+
     public function getStateLabel(): string
     {
         return match ($this->state) {
@@ -179,6 +180,7 @@ class KindFerienblock
             default => 'Unbekannt',
         };
     }
+
     public function getStateBadgeClass(): string
     {
         return match ($this->state) {

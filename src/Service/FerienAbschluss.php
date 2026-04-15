@@ -8,44 +8,45 @@ use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
 use Twig\Environment;
 
-
 // <- Add this
 
 class FerienAbschluss
 {
-
-
-    public function __construct(private CheckoutPaymentService $checkoutPaymentService, private Environment $twig, private MailerService $mailer, private IcsService $ics, private EntityManagerInterface $em, private FerienPrintService $printer)
-    {
+    public function __construct(
+        private CheckoutPaymentService $checkoutPaymentService,
+        private Environment $twig,
+        private MailerService $mailer,
+        private IcsService $ics,
+        private EntityManagerInterface $em,
+        private FerienPrintService $printer,
+    ) {
     }
 
     public function startAbschluss(Stammdaten $stammdaten, $iPAdresse)
     {
-
         if ($this->checkoutPaymentService->createPayment($stammdaten, $iPAdresse)) {
             return false;
         }
 
         // finish the kind and the stammdaten
         $this->abschlussFin($stammdaten);
-        //tätige transaktionen
+        // tätige transaktionen
         $summe = $this->checkoutPaymentService->makePayment($stammdaten);
 
         if ($summe > 0) {
-            //wenn transaktioninen fehlgeschlagen sind
+            // wenn transaktioninen fehlgeschlagen sind
             return false;
         }
-        //setze alles auf saved. somit ist alles abgeschlossen
+        // setze alles auf saved. somit ist alles abgeschlossen
         $this->abschlussSave($stammdaten);
         $this->abschlussSendEmail($stammdaten);
-       return true;
+
+        return true;
     }
 
-
-    public
-    function abschlussFin(Stammdaten $adresse)
+    public function abschlussFin(Stammdaten $adresse)
     {
-        $adresse->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
+        $adresse->setSecCode(substr(str_shuffle(md5(microtime())), 0, 6));
 
         if (!$adresse->getTracing()) {
             $adresse->setTracing(md5(uniqid('stammdaten', true)));
@@ -60,10 +61,9 @@ class FerienAbschluss
         $this->em->flush();
     }
 
-    public
-    function abschlussSave(Stammdaten $adresse)
+    public function abschlussSave(Stammdaten $adresse)
     {
-        $adresse->setSecCode(substr(str_shuffle(MD5(microtime())), 0, 6));
+        $adresse->setSecCode(substr(str_shuffle(md5(microtime())), 0, 6));
 
         if (!$adresse->getTracing()) {
             $adresse->setTracing(md5(uniqid('stammdaten', true)));
@@ -82,77 +82,77 @@ class FerienAbschluss
         $this->em->flush();
     }
 
-    public
-    function abschlussSendEmail(Stammdaten $adresse)
+    public function abschlussSendEmail(Stammdaten $adresse)
     {
         $kinder = $adresse->getKinds();
-        $programm = array();
+        $programm = [];
         foreach ($kinder as $data) {
             $programm = array_merge($programm,
                 $data->getKindFerienblocksGebucht()->toArray());
         }
 
-
-        $attachment = array();
-        foreach ($programm as $data){
-            //pdf mit dem Tiket
+        $attachment = [];
+        foreach ($programm as $data) {
+            // pdf mit dem Tiket
             $ferienblock = $data->getFerienblock();
             $kind = $data->getKind();
             $fileName = $kind->getVorname() . '_' . $kind->getNachname() . '_' . $ferienblock->translate()->getTitel();
             $pdf = $this->printer->printPdfTicket(
                 $fileName . '.pdf',
                 $data, 'S');
-            $attachment[] = array('type' => 'application/pdf', 'filename' => $fileName . '.pdf', 'body' => $pdf);
-            //ICS mit dem Termin
+            $attachment[] = ['type' => 'application/pdf', 'filename' => $fileName . '.pdf', 'body' => $pdf];
+            // ICS mit dem Termin
             $startDate = $ferienblock->getStartDate()->format('Ymd');
             $this->ics->add(
-                array(
+                [
                     'location' => $ferienblock->getOrt(),
                     'description' => $data->getFerienblock()->translate()->getInfoText(),
                     'dtstart' => $startDate . 'T' . $ferienblock->getStartTime()->format('His'),
                     'dtend' => $startDate . 'T' . $ferienblock->getEndTime()->format('His'),
                     'summary' => $kind->getVorname() . ' ' . $kind->getNachname() . ' ' . $ferienblock->translate()->getTitel(),
                     'url' => '',
-                    'rrule' => 'FREQ=DAILY;UNTIL=' . $ferienblock->getEndDate()->format('Ymd') . 'T235900'
-                )
+                    'rrule' => 'FREQ=DAILY;UNTIL=' . $ferienblock->getEndDate()->format('Ymd') . 'T235900',
+                ]
             );
         }
-        $attachment[] = array('type' => 'text/calendar', 'filename' => 'Ferienprogramm.ics', 'body' => $this->ics->toString());
+        $attachment[] = ['type' => 'text/calendar', 'filename' => 'Ferienprogramm.ics', 'body' => $this->ics->toString()];
         $this->mailer->sendEmail(
             'SKIB Ferienprogramm',
             'info@h2-invent.com',
             $adresse->getEmail(),
             'Tickets zu dem gebuchten Ferienprogramm',
-            $this->twig->render('email/anmeldebestatigungFerien.html.twig', array('stammdaten' => $adresse)),
+            $this->twig->render('email/anmeldebestatigungFerien.html.twig', ['stammdaten' => $adresse]),
             'info@h2-invent.com',
             $attachment);
+
         return 0;
     }
-    public function checkIfStillSpace(Stammdaten $stammdaten){
+
+    public function checkIfStillSpace(Stammdaten $stammdaten)
+    {
         $qb = $this->em->getRepository(KindFerienblock::class)->createQueryBuilder('kf')
-            ->innerJoin('kf.kind','kind')
+            ->innerJoin('kf.kind', 'kind')
             ->andWhere('kind.eltern = :stammdaten')
             ->setParameter('stammdaten', $stammdaten);
         $kindFerienblock = $qb->getQuery()->getResult();
-        $check = array();
-        $max = array();
-        //alle Kinder zöhlen sowie Kinder, welche hinzukommen würde dazuzählen
-        foreach ($kindFerienblock as $data){
-            if(!array_key_exists($data->getFerienblock()->getId(),$check)){
+        $check = [];
+        $max = [];
+        // alle Kinder zöhlen sowie Kinder, welche hinzukommen würde dazuzählen
+        foreach ($kindFerienblock as $data) {
+            if (!array_key_exists($data->getFerienblock()->getId(), $check)) {
                 $check[$data->getFerienblock()->getId()] = sizeof($data->getFerienblock()->getKindFerienblocksGebucht()) + 1;
                 $max[$data->getFerienblock()->getId()] = $data->getFerienblock()->getMaxAnzahl();
-            }else{
+            } else {
                 $check[$data->getFerienblock()->getId()]++;
             }
-
         }
 
-        foreach ($check as $key=>$data){
-            if($max[$key] !== null && $data > $max[$key]){
+        foreach ($check as $key => $data) {
+            if ($max[$key] !== null && $data > $max[$key]) {
                 return $this->em->getRepository(Ferienblock::class)->find($key);
             }
         }
+
         return null;
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
+
 // src/Twig/AppExtension.php
+
 namespace App\Twig;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -8,10 +10,8 @@ use Twig\TwigFilter;
 
 class JsonDecode extends AbstractExtension
 {
-
     public function __construct(ParameterBagInterface $parameterBag)
     {
-
     }
 
     public function getFilters()
@@ -23,7 +23,8 @@ class JsonDecode extends AbstractExtension
 
     public function json_decode($string)
     {
-        $var = json_decode((string) $string,true);
-        return $var ;
+        $var = json_decode((string) $string, true);
+
+        return $var;
     }
 }

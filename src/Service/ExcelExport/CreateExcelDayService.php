@@ -8,33 +8,32 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CreateExcelDayService
 {
-    public function __construct(private TranslatorInterface $translator)
-    {
+    public function __construct(
+        private TranslatorInterface $translator,
+    ) {
     }
 
     /**
      * Returns the merged Time for a child for a given Day.
-     * The Weekday mus be given from Monday to Sunday where Monday=0
-     * @param Kind $kind
-     * @param $weekday
-     * @return string
+     * The Weekday mus be given from Monday to Sunday where Monday=0.
      */
     public function getMergedTime(Kind $kind, $weekday): string
     {
         $res = '';
         $blocks = $kind->getBetreungsblocksReal();
-        $cleanBlocks = array();
+        $cleanBlocks = [];
         foreach ($blocks as $data) {
             if ($data->getWochentag() === $weekday) {
                 $cleanBlocks[] = $data;
             }
         }
         $excelBlocks = $this->createmergedDateTime($cleanBlocks);
-        $tmp = array();
+        $tmp = [];
         foreach ($excelBlocks as $data) {
             $tmp[] =
                 $data->getVonBisAsStringWithUhr($this->translator->trans('Uhr'));
         }
+
         return implode("\n", $tmp);
     }
 
@@ -43,8 +42,8 @@ class CreateExcelDayService
      */
     public function createmergedDateTime($zeitblocks)
     {
-        $res = array();
-        $helpberBlocks = array();
+        $res = [];
+        $helpberBlocks = [];
         foreach ($zeitblocks as $data) {
             $tmp = new ChildDateExcel();
             $tmp->setVon(intval($data->getVon()->format('H')) * 60 + intval($data->getVon()->format('i')));
@@ -52,12 +51,11 @@ class CreateExcelDayService
             $helpberBlocks[] = $tmp;
         }
 
-        usort($helpberBlocks, fn(ChildDateExcel $a, ChildDateExcel $b) => $a->getVon() > $b->getVon());
+        usort($helpberBlocks, fn (ChildDateExcel $a, ChildDateExcel $b) => $a->getVon() > $b->getVon());
 
         if (sizeof($helpberBlocks) === 0) {
             return $res;
         }
-
 
         $res[] = $helpberBlocks[0];
 
@@ -70,6 +68,7 @@ class CreateExcelDayService
                 }
             }
         }
+
         return $res;
     }
 }

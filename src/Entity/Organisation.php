@@ -23,7 +23,7 @@ class Organisation implements TranslatableInterface
 
     public function __serialize(): array
     {
-        return array('id'=>$this->id);
+        return ['id' => $this->id];
     }
 
     #[ORM\Id]
@@ -120,6 +120,7 @@ class Organisation implements TranslatableInterface
 
     /**
      * @Vich\UploadableField(mapping="profil_picture", fileNameProperty="image")
+     *
      * @var File
      */
     private $imageFile;
@@ -130,7 +131,6 @@ class Organisation implements TranslatableInterface
     #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
-
 
     #[ORM\OneToMany(targetEntity: Sepa::class, mappedBy: 'organisation')]
     private $sepas;
@@ -224,7 +224,6 @@ class Organisation implements TranslatableInterface
     #[ORM\OneToOne(mappedBy: 'organisation', cascade: ['persist', 'remove'])]
     private ?AutoBlockAssignment $autoBlockAssignment = null;
 
-
     public function __construct()
     {
         $this->schule = new ArrayCollection();
@@ -260,13 +259,14 @@ class Organisation implements TranslatableInterface
      */
     public function getSchule(): Collection
     {
-        $schuleRet = array();
+        $schuleRet = [];
         foreach ($this->schule as $data) {
             if ($data->getDeleted() === false) {
                 $schuleRet[] = $data;
             }
         }
         $this->schule = (new ArrayCollection($schuleRet));
+
         return $this->schule;
     }
 
@@ -536,7 +536,6 @@ class Organisation implements TranslatableInterface
     {
         return $this->image;
     }
-
 
     /**
      * @return Collection|Sepa[]

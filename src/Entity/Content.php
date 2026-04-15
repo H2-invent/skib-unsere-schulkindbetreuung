@@ -16,7 +16,6 @@ class Content implements TranslatableInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
-
     #[ORM\Column(type: 'text')]
     private $slug;
 
@@ -40,8 +39,6 @@ class Content implements TranslatableInterface
         return $this->id;
     }
 
-
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -53,8 +50,6 @@ class Content implements TranslatableInterface
 
         return $this;
     }
-
-
 
     public function getActiv(): ?bool
     {

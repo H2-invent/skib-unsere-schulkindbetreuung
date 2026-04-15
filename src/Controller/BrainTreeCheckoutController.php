@@ -18,30 +18,34 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BrainTreeCheckoutController extends AbstractController
 {
-    public function __construct(private ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
+
     #[Route(path: '/{slug}/ferien/braintree/prepare', name: 'ferien_braintree_start', methods: ['Get'])]
     #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function paymentPrepareAction( Stadt $stadt, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
+    public function paymentPrepareAction(Stadt $stadt, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE);
         }
-        $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(array('uid'=>$request->get('id')));
-        $checkoutBraintreeService->prepareBraintree($adresse, $request->getClientIp(),$payment);
-            return $this->render('ferien_checkout/braintreePayment.html.twig', array('payment' => $payment, 'stadt' => $stadt));
+        $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(['uid' => $request->get('id')]);
+        $checkoutBraintreeService->prepareBraintree($adresse, $request->getClientIp(), $payment);
+
+        return $this->render('ferien_checkout/braintreePayment.html.twig', ['payment' => $payment, 'stadt' => $stadt]);
     }
 
     #[Route(path: '/ferien/braintree/recieveNonce', name: 'ferien_braintree_nonce', methods: ['POST'])]
     public function paymentrecieveNonceAction(TranslatorInterface $translator, CheckoutPaymentService $checkoutPaymentService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
-        $braintree = $this->managerRegistry->getRepository(PaymentBraintree::class)->findOneBy(array('token' => $request->get('token')));
+        $braintree = $this->managerRegistry->getRepository(PaymentBraintree::class)->findOneBy(['token' => $request->get('token')]);
         $braintree->setNonce($request->get('nonce'));
         $braintree->getPayment()->setFinished(true)->setArtString('Credit Card/Paypal');
         $em = $this->managerRegistry->getManager();
         $em->persist($braintree);
         $em->flush();
-        return new JsonResponse(array('error' => 0));
+
+        return new JsonResponse(['error' => 0]);
     }
 }

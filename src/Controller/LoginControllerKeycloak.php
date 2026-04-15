@@ -13,26 +13,27 @@ class LoginControllerKeycloak extends AbstractController
     #[Route(path: '/login', name: 'login_keycloak')]
     public function index(ClientRegistry $clientRegistry): Response
     {
-      return $clientRegistry->getClient('keycloak_main')->redirect(['email','openid','profile']);
+        return $clientRegistry->getClient('keycloak_main')->redirect(['email', 'openid', 'profile']);
     }
-
 
     public function check(ClientRegistry $clientRegistry, Request $request)
     {
-        //return $this->redirectToRoute('dashboard');
+        // return $this->redirectToRoute('dashboard');
     }
-
 
     #[Route(path: '/login/keycloak_edit', name: 'connect_keycloak_edit')]
     public function edit(ClientRegistry $clientRegistry, Request $request)
     {
-        $url = $this->getParameter('KEYCLOAK_URL').'/realms/'.$this->getParameter('KEYCLOAK_REALM').'/account/#/personal-info';
+        $url = $this->getParameter('KEYCLOAK_URL') . '/realms/' . $this->getParameter('KEYCLOAK_REALM') . '/account/#/personal-info';
+
         return $this->redirect($url);
     }
+
     #[Route(path: '/login/keycloak_password', name: 'connect_keycloak_password')]
     public function password(ClientRegistry $clientRegistry, Request $request)
     {
-        $url = $this->getParameter('KEYCLOAK_URL').'/realms/'.$this->getParameter('KEYCLOAK_REALM').'/account/#/security/signingin';
+        $url = $this->getParameter('KEYCLOAK_URL') . '/realms/' . $this->getParameter('KEYCLOAK_REALM') . '/account/#/security/signingin';
+
         return $this->redirect($url);
     }
 }

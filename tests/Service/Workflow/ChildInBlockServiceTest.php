@@ -37,14 +37,14 @@ class ChildInBlockServiceTest extends KernelTestCase
         $kind2->addZeitblock($zeitblock);
         $kind3->addZeitblock($zeitblock);
         $kind4->addZeitblock($zeitblock);
-        $childInBlockService= self::getContainer()->get(ChildInBlockService::class);
+        $childInBlockService = self::getContainer()->get(ChildInBlockService::class);
 
-        self::assertEquals($kind4,$childInBlockService->checkIfChildIsNowOrInFuture(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.11.2022')));
+        self::assertEquals($kind4, $childInBlockService->checkIfChildIsNowOrInFuture([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.11.2022')));
 
-        self::assertEquals($kind3,$childInBlockService->checkIfChildIsNow(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.11.2022')));
+        self::assertEquals($kind3, $childInBlockService->checkIfChildIsNow([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.11.2022')));
 
-        //$routerService = static::getContainer()->get('router');
-        //$myCustomService = static::getContainer()->get(CustomService::class);
+        // $routerService = static::getContainer()->get('router');
+        // $myCustomService = static::getContainer()->get(CustomService::class);
     }
 
     public function testendinDecember(): void
@@ -75,13 +75,14 @@ class ChildInBlockServiceTest extends KernelTestCase
         $kind2->addZeitblock($zeitblock);
         $kind3->addZeitblock($zeitblock);
 
-        $childInBlockService= self::getContainer()->get(ChildInBlockService::class);
+        $childInBlockService = self::getContainer()->get(ChildInBlockService::class);
 
-        self::assertEquals($kind3,$childInBlockService->checkIfChildIsNowOrInFuture(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.11.2022')));
-        self::assertEquals($kind3,$childInBlockService->checkIfChildIsNow(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.11.2022')));
-        //$routerService = static::getContainer()->get('router');
-        //$myCustomService = static::getContainer()->get(CustomService::class);
+        self::assertEquals($kind3, $childInBlockService->checkIfChildIsNowOrInFuture([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.11.2022')));
+        self::assertEquals($kind3, $childInBlockService->checkIfChildIsNow([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.11.2022')));
+        // $routerService = static::getContainer()->get('router');
+        // $myCustomService = static::getContainer()->get(CustomService::class);
     }
+
     public function testendinNovember(): void
     {
         $kernel = self::bootKernel();
@@ -109,15 +110,15 @@ class ChildInBlockServiceTest extends KernelTestCase
         $kind1->addZeitblock($zeitblock);
         $kind2->addZeitblock($zeitblock);
 
+        $childInBlockService = self::getContainer()->get(ChildInBlockService::class);
 
-        $childInBlockService= self::getContainer()->get(ChildInBlockService::class);
+        self::assertEquals(null, $childInBlockService->checkIfChildIsNowOrInFuture([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.11.2022')));
+        self::assertEquals(null, $childInBlockService->checkIfChildIsNow([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.11.2022')));
 
-        self::assertEquals(null,$childInBlockService->checkIfChildIsNowOrInFuture(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.11.2022')));
-        self::assertEquals(null,$childInBlockService->checkIfChildIsNow(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.11.2022')));
-
-        //$routerService = static::getContainer()->get('router');
-        //$myCustomService = static::getContainer()->get(CustomService::class);
+        // $routerService = static::getContainer()->get('router');
+        // $myCustomService = static::getContainer()->get(CustomService::class);
     }
+
     public function testendinNovemberButPresentisInOktober(): void
     {
         $kernel = self::bootKernel();
@@ -145,13 +146,12 @@ class ChildInBlockServiceTest extends KernelTestCase
         $kind1->addZeitblock($zeitblock);
         $kind2->addZeitblock($zeitblock);
 
+        $childInBlockService = self::getContainer()->get(ChildInBlockService::class);
 
-        $childInBlockService= self::getContainer()->get(ChildInBlockService::class);
-
-        self::assertEquals($kind2,$childInBlockService->checkIfChildIsNowOrInFuture(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.10.2022')));
-        self::assertEquals($kind2,$childInBlockService->checkIfChildIsNow(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.10.2022')));
-        //$routerService = static::getContainer()->get('router');
-        //$myCustomService = static::getContainer()->get(CustomService::class);
+        self::assertEquals($kind2, $childInBlockService->checkIfChildIsNowOrInFuture([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.10.2022')));
+        self::assertEquals($kind2, $childInBlockService->checkIfChildIsNow([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.10.2022')));
+        // $routerService = static::getContainer()->get('router');
+        // $myCustomService = static::getContainer()->get(CustomService::class);
     }
 
     public function testendinOctober(): void
@@ -180,14 +180,12 @@ class ChildInBlockServiceTest extends KernelTestCase
         $zeitblock->addKind($kind1);
         $kind1->addZeitblock($zeitblock);
 
+        $childInBlockService = self::getContainer()->get(ChildInBlockService::class);
 
-
-        $childInBlockService= self::getContainer()->get(ChildInBlockService::class);
-
-        self::assertEquals(null,$childInBlockService->checkIfChildIsNowOrInFuture(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.10.2022')));
-        self::assertEquals(null,$childInBlockService->checkIfChildIsNow(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.10.2022')));
-        //$routerService = static::getContainer()->get('router');
-        //$myCustomService = static::getContainer()->get(CustomService::class);
+        self::assertEquals(null, $childInBlockService->checkIfChildIsNowOrInFuture([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.10.2022')));
+        self::assertEquals(null, $childInBlockService->checkIfChildIsNow([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.10.2022')));
+        // $routerService = static::getContainer()->get('router');
+        // $myCustomService = static::getContainer()->get(CustomService::class);
     }
 
     public function teststartinDezeember(): void
@@ -216,14 +214,12 @@ class ChildInBlockServiceTest extends KernelTestCase
         $zeitblock->addKind($kind4);
         $kind4->addZeitblock($zeitblock);
 
+        $childInBlockService = self::getContainer()->get(ChildInBlockService::class);
 
-
-        $childInBlockService= self::getContainer()->get(ChildInBlockService::class);
-
-        self::assertEquals($kind4,$childInBlockService->checkIfChildIsNowOrInFuture(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.10.2022')));
-        self::assertEquals(null,$childInBlockService->checkIfChildIsNow(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.10.2022')));
-        //$routerService = static::getContainer()->get('router');
-        //$myCustomService = static::getContainer()->get(CustomService::class);
+        self::assertEquals($kind4, $childInBlockService->checkIfChildIsNowOrInFuture([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.10.2022')));
+        self::assertEquals(null, $childInBlockService->checkIfChildIsNow([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.10.2022')));
+        // $routerService = static::getContainer()->get('router');
+        // $myCustomService = static::getContainer()->get(CustomService::class);
     }
 
     public function teststartinDezeemberfirst(): void
@@ -252,15 +248,14 @@ class ChildInBlockServiceTest extends KernelTestCase
         $zeitblock->addKind($kind3);
         $kind3->addZeitblock($zeitblock);
 
+        $childInBlockService = self::getContainer()->get(ChildInBlockService::class);
 
-
-        $childInBlockService= self::getContainer()->get(ChildInBlockService::class);
-
-        self::assertEquals(null,$childInBlockService->checkIfChildIsNowOrInFuture(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.10.2022')));
-        self::assertEquals(null,$childInBlockService->checkIfChildIsNow(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.10.2022')));
-        //$routerService = static::getContainer()->get('router');
-        //$myCustomService = static::getContainer()->get(CustomService::class);
+        self::assertEquals(null, $childInBlockService->checkIfChildIsNowOrInFuture([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.10.2022')));
+        self::assertEquals(null, $childInBlockService->checkIfChildIsNow([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.10.2022')));
+        // $routerService = static::getContainer()->get('router');
+        // $myCustomService = static::getContainer()->get(CustomService::class);
     }
+
     public function teststartinDezeemberfirstandactober(): void
     {
         $kernel = self::bootKernel();
@@ -288,14 +283,12 @@ class ChildInBlockServiceTest extends KernelTestCase
         $kind3->addZeitblock($zeitblock);
         $kind1->addZeitblock($zeitblock);
 
+        $childInBlockService = self::getContainer()->get(ChildInBlockService::class);
 
-
-        $childInBlockService= self::getContainer()->get(ChildInBlockService::class);
-
-        self::assertEquals(null,$childInBlockService->checkIfChildIsNowOrInFuture(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.11.2022')));
-        self::assertEquals(null,$childInBlockService->checkIfChildIsNow(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.11.2022')));
-        //$routerService = static::getContainer()->get('router');
-        //$myCustomService = static::getContainer()->get(CustomService::class);
+        self::assertEquals(null, $childInBlockService->checkIfChildIsNowOrInFuture([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.11.2022')));
+        self::assertEquals(null, $childInBlockService->checkIfChildIsNow([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.11.2022')));
+        // $routerService = static::getContainer()->get('router');
+        // $myCustomService = static::getContainer()->get(CustomService::class);
     }
 
     public function teststartinDezeemberfirstandanovemberfirst(): void
@@ -325,14 +318,11 @@ class ChildInBlockServiceTest extends KernelTestCase
         $kind3->addZeitblock($zeitblock);
         $kind1->addZeitblock($zeitblock);
 
+        $childInBlockService = self::getContainer()->get(ChildInBlockService::class);
 
-
-        $childInBlockService= self::getContainer()->get(ChildInBlockService::class);
-
-        self::assertEquals(null,$childInBlockService->checkIfChildIsNowOrInFuture(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.11.2022')));
-        self::assertEquals(null,$childInBlockService->checkIfChildIsNow(array($kind1,$kind2,$kind3,$kind4),$zeitblock,new \DateTime('15.11.2022')));
-        //$routerService = static::getContainer()->get('router');
-        //$myCustomService = static::getContainer()->get(CustomService::class);
+        self::assertEquals(null, $childInBlockService->checkIfChildIsNowOrInFuture([$kind1, $kind2, $kind3, $kind4], $zeitblock, new \DateTime('15.11.2022')));
+        self::assertEquals(null,$childInBlockService->checkIfChildIsNow([$kind1, $kind2, $kind3, $kind4],$zeitblock,new \DateTime('15.11.2022')));
+        // $routerService = static::getContainer()->get('router');
+        // $myCustomService = static::getContainer()->get(CustomService::class);
     }
-
 }

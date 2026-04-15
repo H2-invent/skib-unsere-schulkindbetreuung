@@ -7,8 +7,7 @@ final class AutoBlockAssignmentCreateMessage
     public function __construct(
         private int $idOrganisation,
         private int $idSchuljahr,
-    )
-    {
+    ) {
     }
 
     public function getIdOrganisation(): int

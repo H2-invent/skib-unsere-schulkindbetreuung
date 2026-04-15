@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service;
-
 
 use App\Entity\Active;
 use App\Entity\Zeitblock;
@@ -11,17 +9,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CopySchuljahr
 {
-
-
     public function __construct(
         private ZeitblockRepository $zeitblockRepository,
-        private EntityManagerInterface $em
-    )
-    {
-
+        private EntityManagerInterface $em,
+    ) {
     }
 
-    function copyYear(Active $active)
+    public function copyYear(Active $active)
     {
         $newYear = new Active();
         $newYear->setStadt($active->getStadt());
@@ -30,7 +24,7 @@ class CopySchuljahr
         $newYear->setBis($active->getBis());
         $newYear->setVon($active->getVon());
         foreach ($active->getBlocks() as $data) {
-            if (!$data->getDeleted()){
+            if (!$data->getDeleted()) {
                 $newBlock = new Zeitblock();
                 $newBlock->setVon($data->getVon());
                 $newBlock->setBis($data->getBis());
@@ -46,18 +40,18 @@ class CopySchuljahr
                 $this->em->persist($newBlock);
                 $newYear->addBlocks($newBlock);
             }
-
         }
         $this->em->persist($newYear);
 
         $this->em->flush();
         $this->addVorganger($newYear);
-
     }
-    function addVorganger(Active $active){
-        foreach ($active->getBlocks() as $data){
-            foreach ($data->getCloneOf()->getVorganger() as $vorganger){
-                $newVorganger = $this->zeitblockRepository->findOneBy(array('cloneOf'=>$vorganger,'active'=>$active));
+
+    public function addVorganger(Active $active)
+    {
+        foreach ($active->getBlocks() as $data) {
+            foreach ($data->getCloneOf()->getVorganger() as $vorganger) {
+                $newVorganger = $this->zeitblockRepository->findOneBy(['cloneOf' => $vorganger, 'active' => $active]);
 
                 $data->addVorganger($newVorganger);
             }

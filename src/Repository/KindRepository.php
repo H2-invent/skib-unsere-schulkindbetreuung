@@ -39,7 +39,7 @@ class KindRepository extends ServiceEntityRepository
             ->innerJoin('kind.eltern', 'eltern')
             ->andWhere('beworben = :beworben')
             ->andWhere('kind.startDate is not NULL')
-            ->andWhere('eltern.created_at = (' .$newestElternCreatedAt. ')')
+            ->andWhere('eltern.created_at = (' . $newestElternCreatedAt . ')')
             ->setParameter('beworben', $zeitblock)
             ->getQuery()
             ->getResult();
@@ -59,7 +59,6 @@ class KindRepository extends ServiceEntityRepository
     /**
      * @return Kind[] Returns an array of Kind objects
      */
-
     public function findHistoryOfThisChild(Kind $kind)
     {
         return $this->createQueryBuilder('k')
@@ -101,12 +100,12 @@ class KindRepository extends ServiceEntityRepository
         $kind = $qb->andWhere('k.startDate <= :now')->setParameter('now', $dateTime)
             ->andWhere('k.startDate is NOT NULL')
             ->orderBy('k.startDate', 'DESC')
-            ->addOrderBy('eltern.created_at','DESC')
+            ->addOrderBy('eltern.created_at', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
-        return $kind;
 
+        return $kind;
     }
 
     public function findLatestKindforKind(Kind $kind): ?Kind
@@ -120,6 +119,7 @@ class KindRepository extends ServiceEntityRepository
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult();
+
         return $kinder;
     }
 
@@ -141,7 +141,7 @@ class KindRepository extends ServiceEntityRepository
             ->orderBy('eltern.created_at', 'DESC')
             ->getQuery()
             ->getResult();
-        $kinder = array();
+        $kinder = [];
 
         foreach ($kinderHistory as $data) {
             if (array_key_exists($data->getTracing(), $kinder)) {
@@ -152,6 +152,7 @@ class KindRepository extends ServiceEntityRepository
                 $kinder[$data->getTracing()] = $data;
             }
         }
+
         return $kinder;
     }
 
@@ -187,7 +188,7 @@ class KindRepository extends ServiceEntityRepository
             ->getQuery()
             ->getScalarResult();
 
-        $tracings = array_values(array_filter(array_map(static fn(array $row) => $row['tracing'] ?? null, $tracingRows)));
+        $tracings = array_values(array_filter(array_map(static fn (array $row) => $row['tracing'] ?? null, $tracingRows)));
 
         if (count($tracings) === 0) {
             return [];
@@ -231,7 +232,7 @@ class KindRepository extends ServiceEntityRepository
             ->andWhere('eltern.created_at is not NULL')
             ->andWhere('beworben_zeitblock.deleted = 0')
             ->andWhere('organisation = :organisation')->setParameter('organisation', $organisation)
-            ->andWhere('eltern.created_at = (' .$subQuery. ')')
+            ->andWhere('eltern.created_at = (' . $subQuery . ')')
             ->getQuery()
             ->getResult()
         ;

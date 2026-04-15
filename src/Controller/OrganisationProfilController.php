@@ -22,13 +22,13 @@ class OrganisationProfilController extends AbstractController
             'title' => $organisation->getName(),
         ]);
     }
+
     private function buildMeta($sentenceArray)
     {
         $count = 0;
         $res = '';
         $array = explode('. ', (string) $sentenceArray);
         foreach ($array as $data) {
-
             if ($count <= 160) {
                 $res .= $data . '. ';
             } else {
@@ -36,6 +36,7 @@ class OrganisationProfilController extends AbstractController
             }
             $count += strlen($data);
         }
+
         return $res;
     }
 }

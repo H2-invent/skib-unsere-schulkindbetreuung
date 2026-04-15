@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Symfony\Component\Routing\Attribute\Route;
-use App\Entity\Stadt;
-use App\Entity\Stammdaten;
 use App\Entity\ChildSickReport;
 use App\Entity\ParentSickPortalAccess;
+use App\Entity\Stadt;
+use App\Entity\Stammdaten;
 use App\Entity\User;
 use App\Form\Type\ParentSickAccessRequestType;
 use App\Repository\ChildSickReportRepository;
@@ -19,6 +18,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ParentSickPortalController extends AbstractController
 {
@@ -153,7 +153,7 @@ class ParentSickPortalController extends AbstractController
         }
 
         $childHistory = $this->kindRepository->findChildHistoryForParentAndSchoolyear($access->getEmail(), $access->getSchuljahr());
-        $allowedChildIds = array_map(static fn($child) => $child->getId(), $childHistory);
+        $allowedChildIds = array_map(static fn ($child) => $child->getId(), $childHistory);
         if (!in_array($kind, $allowedChildIds, true)) {
             throw $this->createAccessDeniedException('Kind nicht im Zugriff enthalten.');
         }
@@ -163,8 +163,8 @@ class ParentSickPortalController extends AbstractController
             throw $this->createNotFoundException('Kind nicht gefunden.');
         }
 
-        $von = new \DateTime((string)$request->request->get('von', 'today'));
-        $bis = new \DateTime((string)$request->request->get('bis', $von->format('Y-m-d')));
+        $von = new \DateTime((string) $request->request->get('von', 'today'));
+        $bis = new \DateTime((string) $request->request->get('bis', $von->format('Y-m-d')));
         if ($bis < $von) {
             $bis = clone $von;
         }
@@ -215,6 +215,6 @@ class ParentSickPortalController extends AbstractController
             return null;
         }
 
-        return $this->accessRepository->find((int)$id);
+        return $this->accessRepository->find((int) $id);
     }
 }

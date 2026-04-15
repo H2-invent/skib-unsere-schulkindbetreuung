@@ -14,9 +14,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ContentController extends AbstractController
 {
-    public function __construct(private ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
+
     #[Route(path: '/admin/content/show', name: 'content_show')]
     public function index()
     {
@@ -36,7 +38,7 @@ class ContentController extends AbstractController
         $content->setDate(new \DateTime());
         $form = $this->createForm(ContentType::class, $content);
         $form->handleRequest($request);
-        $errors = array();
+        $errors = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $content = $form->getData();
             $errors = $validator->validate($content);
@@ -45,22 +47,24 @@ class ContentController extends AbstractController
                 $em->persist($content);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
-                return $this->redirectToRoute('content_show', array('snack' => $text));
+
+                return $this->redirectToRoute('content_show', ['snack' => $text]);
             }
         }
         $title = $translator->trans('Content anlegen');
-        return $this->render('content/ContentForm.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
 
+        return $this->render('content/ContentForm.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
     }
+
     #[Route(path: '/admin/content/edit', name: 'content_edit')]
     public function editcontent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $content =$this->managerRegistry->getRepository(Content::class)->find($request->get('content_id'));
+        $content = $this->managerRegistry->getRepository(Content::class)->find($request->get('content_id'));
         $content->setDate(new \DateTime());
 
         $form = $this->createForm(ContentType::class, $content);
         $form->handleRequest($request);
-        $errors = array();
+        $errors = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $content = $form->getData();
             $errors = $validator->validate($content);
@@ -69,38 +73,43 @@ class ContentController extends AbstractController
                 $em->persist($content);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('content_edit', array('content_id'=>$content->getId(),'snack' => $text));
+
+                return $this->redirectToRoute('content_edit', ['content_id' => $content->getId(), 'snack' => $text]);
             }
         }
         $title = $translator->trans('Content bearbeiten');
-        return $this->render('content/ContentForm.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
+
+        return $this->render('content/ContentForm.html.twig', ['title' => $title, 'form' => $form->createView(), 'errors' => $errors]);
     }
+
     #[Route(path: '/admin/content/activate', name: 'content_activate')]
     public function activatecontent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $content =$this->managerRegistry->getRepository(Content::class)->find($request->get('content_id'));
+        $content = $this->managerRegistry->getRepository(Content::class)->find($request->get('content_id'));
         $content->setDate(new \DateTime());
-        if($content->getActiv()){
+        if ($content->getActiv()) {
             $content->setActiv(false);
-        }else{
+        } else {
             $content->setActiv(true);
         }
         $em = $this->managerRegistry->getManager();
         $em->persist($content);
         $em->flush();
         $text = $translator->trans('Erfolgreich geändert');
-        return $this->redirectToRoute('content_show', array('snack' => $text));
+
+        return $this->redirectToRoute('content_show', ['snack' => $text]);
     }
+
     #[Route(path: '/admin/content/delete', name: 'content_delete', methods: ['DELETE'])]
     public function deletecontent(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
-        $content =$this->managerRegistry->getRepository(Content::class)->find($request->get('content_id'));
+        $content = $this->managerRegistry->getRepository(Content::class)->find($request->get('content_id'));
 
         $em = $this->managerRegistry->getManager();
         $em->remove($content);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
-        return new JsonResponse(array('redirect'=> $this->generateUrl('content_show', array('snack' => $text))));
+
+        return new JsonResponse(['redirect' => $this->generateUrl('content_show', ['snack' => $text])]);
     }
 }
-

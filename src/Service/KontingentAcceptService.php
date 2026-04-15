@@ -9,13 +9,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class KontingentAcceptService
 {
-    public function __construct(private EntityManagerInterface $em, private AnmeldeEmailService $anmeldeEmailService, private TranslatorInterface $translator, private ElternService $elternService)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+        private AnmeldeEmailService $anmeldeEmailService,
+        private TranslatorInterface $translator,
+        private ElternService $elternService,
+    ) {
     }
 
     public function acceptKind(Zeitblock $zeitblock, Kind $kind, $silent = false)
     {
-
         if (!in_array($kind, $zeitblock->getKinderBeworben()->toArray())) {
             return false;
         }
@@ -34,14 +37,13 @@ class KontingentAcceptService
         return true;
     }
 
-    public function acceptAllZeitblockOfSpecificKind(Kind $kind, $silent = false):bool
+    public function acceptAllZeitblockOfSpecificKind(Kind $kind, $silent = false): bool
     {
-
-
         $beworbenBlocks = $kind->getBeworben();
         foreach ($beworbenBlocks as $beworbenBlock) {
             $this->acceptKind($beworbenBlock, $kind, $silent);
         }
+
         return true;
     }
 
@@ -49,20 +51,15 @@ class KontingentAcceptService
     {
         $kinder = $this->em->getRepository(Kind::class)->findBeworbenByZeitblock($zeitblock);
         foreach ($kinder as $data) {
-
             try {
                 $this->acceptKind($zeitblock, $data);
             } catch (\Exception) {
-
             }
-
         }
-
     }
 
     public function beworbenCheck(Kind $kind)
     {
-
         if (sizeof($kind->getBeworben()->toArray()) === 0) {// es gibt keine beworbenen Zeitblöcke mehr. Das kind soll nun eine Buchungsbestätigung erhalten
             foreach ($kind->getBeworben() as $data) {
                 $kind->removeBeworben($data);
@@ -70,6 +67,7 @@ class KontingentAcceptService
             $this->anmeldeEmailService->sendEmail($kind, $this->elternService->getLatestElternFromChild($kind), $kind->getZeitblocks()[0]->getSchule()->getStadt(), $this->translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:'));
             $this->anmeldeEmailService->send($kind, $this->elternService->getLatestElternFromChild($kind));
         }
+
         return false;
     }
 }

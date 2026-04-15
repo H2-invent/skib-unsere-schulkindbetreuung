@@ -5,7 +5,6 @@ namespace App\Service;
 use App\Entity\Kind;
 use App\Entity\Log;
 use App\Entity\Organisation;
-
 use App\Entity\Stammdaten;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,28 +14,34 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-
 // <- Add this
 
 class ChildDeleteService
 {
-    public function __construct(private FilesystemOperator $internFileSystem, private LoggerInterface $logger, private ParameterBagInterface $parameterBag, private WorkflowAbschluss $abschluss, private MailerService $mailer, private Environment $templating, private TranslatorInterface $translator, private EntityManagerInterface $em)
-    {
+    public function __construct(
+        private FilesystemOperator $internFileSystem,
+        private LoggerInterface $logger,
+        private ParameterBagInterface $parameterBag,
+        private WorkflowAbschluss $abschluss,
+        private MailerService $mailer,
+        private Environment $templating,
+        private TranslatorInterface $translator,
+        private EntityManagerInterface $em,
+    ) {
     }
 
     public function deleteChild(Kind $kind, User $user)
     {
-
         try {
             $childHist = $this->em->getRepository(Kind::class)->findHistoryOfThisChild($kind);
-            foreach ($childHist as $data){
+            foreach ($childHist as $data) {
                 $data->setStartDate(null);
                 $this->em->persist($data);
             }
             $this->em->flush();
 
             $message = 'child Deleted: Tracing' . $kind->getTracing() .
-                'Name: ' . $kind->getVorname().' '.$kind->getNachname() . '; ' .
+                'Name: ' . $kind->getVorname() . ' ' . $kind->getNachname() . '; ' .
                 'fos_user_id: ' . $user->getId() . '; ';
             $log = new Log();
             $log->setUser($user->getEmail());
@@ -57,14 +62,14 @@ class ChildDeleteService
     public function sendEmail(Stammdaten $stammdaten, Kind $kind, Organisation $organisation)
     {
         $mailBetreff = $this->translator->trans('Abmeldung der Schulkindbetreuung für ') . $kind->getVorname() . ' ' . $kind->getNachname();
-        $mailContent = $this->templating->render('email/abmeldebestatigung.html.twig', array('eltern' => $stammdaten, 'kind' => $kind, 'org' => $organisation, 'stadt' => $organisation->getStadt()));
-        $attachment = array();
+        $mailContent = $this->templating->render('email/abmeldebestatigung.html.twig', ['eltern' => $stammdaten, 'kind' => $kind, 'org' => $organisation, 'stadt' => $organisation->getStadt()]);
+        $attachment = [];
         foreach ($organisation->getStadt()->getEmailDokumenteSchulkindbetreuungAbmeldung() as $att) {
-            $attachment[] = array(
+            $attachment[] = [
                 'body' => $this->internFileSystem->read($att->getFileName()),
                 'filename' => $att->getOriginalName(),
-                'type' => $att->getType()
-            );
+                'type' => $att->getType(),
+            ];
         }
         $this->mailer->sendEmail(
             $kind->getSchule()->getOrganisation()->getName(),
@@ -75,7 +80,7 @@ class ChildDeleteService
             $kind->getSchule()->getOrganisation()->getEmail(),
             $attachment
         );
-        foreach ($stammdaten->getPersonenberechtigters() as $data){
+        foreach ($stammdaten->getPersonenberechtigters() as $data) {
             $this->mailer->sendEmail(
                 $kind->getSchule()->getOrganisation()->getName(),
                 $kind->getSchule()->getOrganisation()->getEmail(),
@@ -86,6 +91,5 @@ class ChildDeleteService
                 $attachment
             );
         }
-
     }
 }

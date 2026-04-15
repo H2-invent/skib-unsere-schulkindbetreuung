@@ -14,8 +14,6 @@ class Abwesend
     #[ORM\Column(type: 'integer')]
     private $id;
 
-
-
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: kind::class, inversedBy: 'abwesends')]
     private $kind;
@@ -30,8 +28,6 @@ class Abwesend
     #[ORM\ManyToOne(targetEntity: Zeitblock::class, inversedBy: 'abwesenheit')]
     private $zeitblock;
 
-
-
     public function __construct()
     {
         $this->zeitblock = new ArrayCollection();
@@ -41,7 +37,6 @@ class Abwesend
     {
         return $this->id;
     }
-
 
     public function getKind(): ?kind
     {

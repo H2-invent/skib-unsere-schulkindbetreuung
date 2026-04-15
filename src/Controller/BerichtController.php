@@ -17,9 +17,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BerichtController extends AbstractController
 {
-    public function __construct(private ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
+
     #[Route(path: '/city_report/index', name: 'stadt_bericht_index')]
     public function index(Request $request)
     {
@@ -29,7 +31,6 @@ class BerichtController extends AbstractController
         }
 
         $qb = $this->managerRegistry->getRepository(Zeitblock::class)->createQueryBuilder('b');
-
 
         foreach ($stadt->getSchules() as $key => $data) {
             $qb->orWhere('b.schule = :schule' . $key)
@@ -46,28 +47,26 @@ class BerichtController extends AbstractController
             $jahr = $this->managerRegistry->getRepository(Active::class)->findSchuljahrFromCity($stadt, new \DateTime());
         }
 
-
         if ($jahr) {
             $qb->andWhere('b.active = :jahr')
                 ->setParameter('jahr', $jahr);
         }
 
-
         $query = $qb->getQuery();
         $blocks = $query->getResult();
-        $schuljahre = $this->managerRegistry->getRepository(Active::class)->findBy(array('stadt' => $stadt));
-        return $this->render('bericht/index.html.twig', array('blocks' => $blocks, 'schuljahre' => $schuljahre, 'active' => $jahr, 'stadt' => $stadt));
+        $schuljahre = $this->managerRegistry->getRepository(Active::class)->findBy(['stadt' => $stadt]);
+
+        return $this->render('bericht/index.html.twig', ['blocks' => $blocks, 'schuljahre' => $schuljahre, 'active' => $jahr, 'stadt' => $stadt]);
     }
 
     #[Route(path: '/city_report/export', name: 'stadt_bericht_export')]
     public function export(Request $request, TranslatorInterface $translator, StadtBerichtService $stadtBerichtService, ChildSearchService $childSearchService, ElternService $elternService)
     {
-
-        $blocks = array();
-        $kinder = array();
-        $eltern = array();
-        $elternT = array();
-        $kinderT = array();
+        $blocks = [];
+        $kinder = [];
+        $eltern = [];
+        $elternT = [];
+        $kinderT = [];
 
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('stadt_id'));
         if ($stadt != $this->getUser()->getStadt()) {
@@ -75,24 +74,20 @@ class BerichtController extends AbstractController
         }
 
         if ($request->get('schuljahr')) {
-            $schuljahr = $this->managerRegistry->getRepository(Active::class)->findBy(array('stadt' => $stadt, 'id' => $request->get('schuljahr')));
-
+            $schuljahr = $this->managerRegistry->getRepository(Active::class)->findBy(['stadt' => $stadt, 'id' => $request->get('schuljahr')]);
         } else {
-            $schuljahr = $this->managerRegistry->getRepository(Active::class)->findBy(array('stadt' => $stadt));
-
+            $schuljahr = $this->managerRegistry->getRepository(Active::class)->findBy(['stadt' => $stadt]);
         }
 
         foreach ($schuljahr as $data) {
             $blocks = array_merge($blocks, $data->getBlocks()->toArray());
-            $kinder = $childSearchService->searchChild(array('schuljahr' => $data->getId()), null, false, null, $data->getBis(), null, $stadt);
+            $kinder = $childSearchService->searchChild(['schuljahr' => $data->getId()], null, false, null, $data->getBis(), null, $stadt);
             foreach ($kinder as $data2) {
                 $elternT[] = $elternService->getElternForSpecificTimeAndKind($data2, $data->getBis());
             }
         }
 
-
-        $eltern = array_unique($elternT);// Return the excel file as an attachment
-
+        $eltern = array_unique($elternT); // Return the excel file as an attachment
 
         return $this->file($stadtBerichtService->generateExcel($blocks, $kinder, $eltern, $stadt), 'Bericht.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
     }

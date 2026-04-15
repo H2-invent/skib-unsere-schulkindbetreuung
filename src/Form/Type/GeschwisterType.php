@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 17.09.2019
- * Time: 20:29
+ * Time: 20:29.
  */
 
 namespace App\Form\Type;
-
 
 use App\Entity\Geschwister;
 use App\Entity\Stadt;
@@ -26,17 +26,14 @@ class GeschwisterType extends AbstractType
         $builder
             ->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
             ->add('nachname', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
-            ->add('geburtsdatum', BirthdayType::class, ['attr'=>array('class'=>'pickadate'),'widget'=>'single_text','years'=>range($today-20,$today,1),'label' => 'Geburtstag', 'translation_domain' => 'form']);
+            ->add('geburtsdatum', BirthdayType::class, ['attr' => ['class' => 'pickadate'], 'widget' => 'single_text', 'years' => range($today - 20, $today, 1), 'label' => 'Geburtstag', 'translation_domain' => 'form']);
     }
-
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Geschwister::class,
-            'stadt' => Stadt::class
+            'stadt' => Stadt::class,
         ]);
-
     }
 }
-

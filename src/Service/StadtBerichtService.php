@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 03.10.2019
- * Time: 19:01
+ * Time: 19:01.
  */
 
 namespace App\Service;
-
 
 use App\Controller\LoerrachWorkflowController;
 use App\Entity\Active;
@@ -21,17 +21,21 @@ class StadtBerichtService
 {
     private $spreadsheet;
     private $beruflicheSituationString;
-    public function __construct(private TranslatorInterface $translator, LoerrachWorkflowController $loerrachWorkflowController, private ChildInBlockService $childInBlockService, private ElternService $elternService,private EntityManagerInterface $em)
-    {
+
+    public function __construct(
+        private TranslatorInterface $translator,
+        LoerrachWorkflowController $loerrachWorkflowController,
+        private ChildInBlockService $childInBlockService,
+        private ElternService $elternService,
+        private EntityManagerInterface $em,
+    ) {
         $this->spreadsheet = new Spreadsheet();
         $this->beruflicheSituationString = array_flip($loerrachWorkflowController->beruflicheSituation);
     }
 
     public function generateExcel($blocks, $kinder, $eltern, Stadt $stadt)
     {
-
         $writer = new Xlsx($this->spreadsheet);
-
 
         $alphas = range('a', 'z');
 
@@ -67,7 +71,7 @@ class StadtBerichtService
             $blocksheet->setCellValue($alphas[$count++] . $counter, json_encode($data->getPreise()));
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getActive()->getVon()->format('d.m.Y'));
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getActive()->getBis()->format('d.m.Y'));
-            $blocksheet->setCellValue($alphas[$count++] . $counter, sizeof($this->childInBlockService->getCurrentChildAndFuturerChildOfZeitblock($data,$data->getVon())));
+            $blocksheet->setCellValue($alphas[$count++] . $counter, sizeof($this->childInBlockService->getCurrentChildAndFuturerChildOfZeitblock($data, $data->getVon())));
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getOrganisation()->getName());
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getName());
             $blocksheet->setCellValue($alphas[$count++] . $counter, $data->getDeleted());
@@ -86,12 +90,12 @@ class StadtBerichtService
         foreach ($kinder as $data) {
             $count = 0;
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getId());
-            $kindSheet->setCellValue($alphas[$count++] . $counter, ($data->getGeburtstag()->diff($data->getEltern()->getCreatedAt()))->y);
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getGeburtstag()->diff($data->getEltern()->getCreatedAt())->y);
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getKlasseString());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getArt());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getArtString());
             $kindSheet->setCellValue($alphas[$count++] . $counter, $data->getSchule()->getName());
-            $kindSheet->setCellValue($alphas[$count++] . $counter, $this->elternService->getElternForSpecificTimeAndKind($data,$this->em->getRepository(Active::class)->findSchuljahrFromCity($data->getSchule()->getStadt(),$data->getStartDate())->getBis())->getId());
+            $kindSheet->setCellValue($alphas[$count++] . $counter, $this->elternService->getElternForSpecificTimeAndKind($data, $this->em->getRepository(Active::class)->findSchuljahrFromCity($data->getSchule()->getStadt(), $data->getStartDate())->getBis())->getId());
             $counter++;
         }
         $elternSheet = $this->spreadsheet->createSheet();
@@ -135,11 +139,9 @@ class StadtBerichtService
                 $elternSheet->setCellValue($alphas[$count++] . $counter, $stadt->getGehaltsklassen()[$data->getEinkommen()]);
             }
             if ($stadt->getSettingsAnzahlKindergeldempfanger()) {
-                $elternSheet->setCellValue($alphas[$count++] . $counter,  $data->getSozialhilfeEmpanger());
-
+                $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getSozialhilfeEmpanger());
             }
             if ($stadt->getSettingsSozielHilfeEmpfanger()) {
-
                 $elternSheet->setCellValue($alphas[$count++] . $counter, $data->getSozialhilfeEmpanger());
             }
             if ($stadt->getSettingsweiterePersonenberechtigte()) {
@@ -160,10 +162,6 @@ class StadtBerichtService
         // Create the excel file in the tmp directory of the system
         $writer->save($temp_file);
 
-
         return $temp_file;
-
     }
-
-
 }

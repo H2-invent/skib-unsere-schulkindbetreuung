@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service;
@@ -21,8 +22,7 @@ class AutoBlockAssignmentService
         private MessageBusInterface $messageBus,
         private AutoBlockAssignmentRepository $autoBlockAssignmentRepository,
         private EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
     public function createDraftAsync(Organisation $organisation, Active $schuljahr): void
@@ -41,7 +41,7 @@ class AutoBlockAssignmentService
         }
 
         $this->entityManager->wrapInTransaction(
-            fn() => $this->draftCreator->create($organisation, $schuljahr)
+            fn () => $this->draftCreator->create($organisation, $schuljahr)
         );
     }
 
@@ -60,7 +60,7 @@ class AutoBlockAssignmentService
         }
 
         $this->entityManager->wrapInTransaction(
-            fn() => $this->draftApplier->apply($autoBlockAssignment)
+            fn () => $this->draftApplier->apply($autoBlockAssignment)
         );
     }
 

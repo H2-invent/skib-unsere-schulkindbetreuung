@@ -8,11 +8,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class BerechnungsService
 {
-
     private $withBeworben = true;
 
-    public function __construct(private ElternService $elternService, private EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private ElternService $elternService,
+        private EntityManagerInterface $entityManager,
+    ) {
     }
 
     public function getPreisforBetreuung(Kind $kind, $withBeworben = true, ?\DateTime $stichtag = null, $demo = false): float
@@ -29,10 +30,11 @@ class BerechnungsService
         $kinder = $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($adresse, $stichtag, $demo);
         $summe = 0;
         $formel = $stadt->getBerechnungsFormel();
-        if ($kind->getSchuljahr() and $kind->getSchuljahr()->getSpecialCalculationFormular()){
+        if ($kind->getSchuljahr() and $kind->getSchuljahr()->getSpecialCalculationFormular()) {
             $formel = $kind->getSchuljahr()->getSpecialCalculationFormular();
         }
         eval($formel);
+
         return $summe;
     }
 
@@ -61,6 +63,7 @@ class BerechnungsService
         foreach ($kinder as $data) {
             $summe += $this->getPreisforBetreuung($data, false, $dateTime);
         }
+
         return $summe;
     }
 }

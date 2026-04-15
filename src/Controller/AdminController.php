@@ -2,20 +2,19 @@
 
 namespace App\Controller;
 
-use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\User;
 use App\Form\Type\AdminUserType;
 use App\Security\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class AdminController extends AbstractController
 {
     public function __construct(
         private UserManagerInterface $userManager,
-    )
-    {
+    ) {
     }
 
     #[Route('/admin/user/edit/{user}', name: 'admin_user_edit')]
@@ -36,14 +35,13 @@ class AdminController extends AbstractController
                     'administrator/error.html.twig',
                     ['error' => $e->getMessage()]
                 );
-
             }
         }
 
         return $this->render('administrator/neu.html.twig', [
-                'title' => 'User bearbeiten',
-                'form' => $form->createView(),
-                'errors' => $errors
+            'title' => 'User bearbeiten',
+            'form' => $form->createView(),
+            'errors' => $errors,
         ]);
     }
 }

@@ -21,8 +21,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class ImportZeitblockCommand extends Command
 {
-    public function __construct(private EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+    ) {
         parent::__construct();
     }
 
@@ -43,28 +44,25 @@ class ImportZeitblockCommand extends Command
         $foundIds = [];
         $newIds = [];
         foreach ($csv as $record) {
-
             $id = $record['id'] ?? null;
             $preise = [];
 
             // Preise extrahieren (Annahme: Spalten "Preis 1", "Preis 2", ... existieren)
             foreach ($record as $key => $value) {
-
                 if (str_starts_with($key, 'preis')) {
-
-                    $preise[] = (float)str_replace(',', '.', $value);
+                    $preise[] = (float) str_replace(',', '.', $value);
                 }
             }
 
             $ganztag = $record['ganztag'] ?? null;
             $von = $record['von'] ?? null;
             $bis = $record['bis'] ?? null;
-            $maxRaw = array_key_exists('max', $record) ? trim((string)$record['max']) : null;
-            $minRaw = array_key_exists('min', $record) ? trim((string)$record['min']) : null;
-            $max = ($maxRaw === null || $maxRaw === '') ? null : (int)$maxRaw;
+            $maxRaw = array_key_exists('max', $record) ? trim((string) $record['max']) : null;
+            $minRaw = array_key_exists('min', $record) ? trim((string) $record['min']) : null;
+            $max = ($maxRaw === null || $maxRaw === '') ? null : (int) $maxRaw;
             $min = ($minRaw === null || $minRaw === '')
                 ? (($max !== null) ? 0 : null)
-                : (int)$minRaw;
+                : (int) $minRaw;
 
             $schulId = $record['schul_id'] ?? null;
             $schule = $this->entityManager->getRepository(Schule::class)->find($schulId);
@@ -103,7 +101,6 @@ class ImportZeitblockCommand extends Command
                 ->setSchule($schule)
                 ->setActive($schuljahr);
             if ($anmerkung) {
-
                 $translation = new ZeitblockTranslation();
                 $translation->setExtraText(mb_convert_encoding($anmerkung, 'UTF-8', 'ISO-8859-1'));
                 $translation->setLocale('de');
@@ -123,6 +120,7 @@ class ImportZeitblockCommand extends Command
         $output->writeln('<info>Import abgeschlossen!</info>');
         $io->success(sprintf('We found %s id in the database', sizeof($foundIds)));
         $io->success(sprintf('We created %s new timeslots in the database', sizeof($newIds)));
+
         return Command::SUCCESS;
     }
 }

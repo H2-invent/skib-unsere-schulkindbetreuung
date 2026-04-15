@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 17.09.2019
- * Time: 20:29
+ * Time: 20:29.
  */
 
 namespace App\Form\Type;
-
 
 use App\Entity\Kundennummern;
 use Symfony\Component\Form\AbstractType;
@@ -20,10 +20,9 @@ class customerIDStammdatenType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
             ->add('kundennummer', TextType::class, ['required' => true, 'label' => 'Kundennummer', 'translation_domain' => 'form'])
-            ->add('submit', SubmitType::class, ['attr' => array('class' => 'btn btn-primary'), 'label' => 'weiter', 'translation_domain' => 'form']);
+            ->add('submit', SubmitType::class, ['attr' => ['class' => 'btn btn-primary'], 'label' => 'weiter', 'translation_domain' => 'form']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -31,6 +30,5 @@ class customerIDStammdatenType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Kundennummern::class,
         ]);
-
     }
 }

@@ -13,10 +13,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChangeSchoolyearController extends AbstractController
 {
-    public function __construct(private TranslatorInterface $translator, private ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        private TranslatorInterface $translator,
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
-
 
     #[Route(path: '/org_child/schoolyear_change', name: 'org_child_shoolyear_change')]
     public function index(TranslatorInterface $translator, Request $request, AnmeldeEmailService $anmeldeEmailService, ChildSchoolYearChangeService $childChoolYearChangeService)
@@ -25,21 +26,22 @@ class ChangeSchoolyearController extends AbstractController
 
         if ($kind->getSchule()->getOrganisation() !== $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Keine Berechtigung');
-            return $this->redirectToRoute('child_show', array('id' => $this->getUser()->getOrganisation()->getId(), 'snack' => $text));
-        }
 
+            return $this->redirectToRoute('child_show', ['id' => $this->getUser()->getOrganisation()->getId(), 'snack' => $text]);
+        }
 
         $form = $childChoolYearChangeService->form($kind);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $input = $form->getData();
             $childChoolYearChangeService->changeSchoolyear($kind, $input, $this->getUser());
 
             $text = $translator->trans('Schuljahr geändert');
-            return $this->redirectToRoute('child_show', array('id' => $this->getUser()->getOrganisation()->getId(), 'snack' => $text));
+
+            return $this->redirectToRoute('child_show', ['id' => $this->getUser()->getOrganisation()->getId(), 'snack' => $text]);
         }
-        return $this->render('child_change/schoolYear.html.twig', array('form' => $form->createView()));
+
+        return $this->render('child_change/schoolYear.html.twig', ['form' => $form->createView()]);
     }
 }

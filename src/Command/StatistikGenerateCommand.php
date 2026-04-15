@@ -16,18 +16,21 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 class StatistikGenerateCommand extends Command
 {
     protected static $defaultName = 'app:statistik:generate';
     protected static $defaultDescription = 'Migrate Startdate from old to new version';
 
-    public function __construct(private EntityManagerInterface $em, LoggerInterface $logger, ChildSearchService $childSearchService, private WidgetService $widgetService, ?string $name = null)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+        LoggerInterface $logger,
+        ChildSearchService $childSearchService,
+        private WidgetService $widgetService,
+        ?string $name = null,
+    ) {
         parent::__construct($name);
         $this->logger = $logger;
     }
-
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -54,7 +57,6 @@ class StatistikGenerateCommand extends Command
         $progressBar = new ProgressBar($output, sizeof($zeitblocks));
         $progressBar->start();
         foreach ($zeitblocks as $blocks) {
-
             $cache->delete('zeitblock_' . $blocks->getId());
             $this->widgetService->calcBlocksNumberNow($blocks);
 
@@ -74,7 +76,6 @@ class StatistikGenerateCommand extends Command
             $progressBar->advance();
         }
         $progressBar->finish();
-
 
         $io->success('We genearate a lot of cache values ;)');
 

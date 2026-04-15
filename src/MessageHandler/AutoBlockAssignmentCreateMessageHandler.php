@@ -15,8 +15,7 @@ final class AutoBlockAssignmentCreateMessageHandler
         private OrganisationRepository $organisationRepository,
         private ActiveRepository $activeRepository,
         private AutoBlockAssignmentService $assignmentService,
-    )
-    {
+    ) {
     }
 
     public function __invoke(AutoBlockAssignmentCreateMessage $message): void

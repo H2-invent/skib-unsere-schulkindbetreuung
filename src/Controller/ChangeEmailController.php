@@ -12,8 +12,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChangeEmailController extends AbstractController
 {
-    public function __construct(private TranslatorInterface $translator, private ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        private TranslatorInterface $translator,
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
 
     #[Route(path: '/org_child/email_change', name: 'org_child_email_change')]
@@ -23,26 +25,28 @@ class ChangeEmailController extends AbstractController
 
         if ($kind->getSchule()->getOrganisation() !== $this->getUser()->getOrganisation()) {
             $text = $translator->trans('Keine Berechtigung');
-            return $this->redirectToRoute('child_show', array('id' => $this->getUser()->getOrganisation()->getId(), 'snack' => $text));
-        }
 
+            return $this->redirectToRoute('child_show', ['id' => $this->getUser()->getOrganisation()->getId(), 'snack' => $text]);
+        }
 
         $form = $childChangeEmailService->form($kind);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $input = $form->getData();
             if ($input['email'] !== $input['emailDoubleInput']) {
                 $text = $this->translator->trans('Email Adressen stimmen nicht überein.');
-                return $this->redirectToRoute('org_child_email_change', array('kind_id' => $kind->getId(), 'snack' => $text));
+
+                return $this->redirectToRoute('org_child_email_change', ['kind_id' => $kind->getId(), 'snack' => $text]);
             }
 
             $childChangeEmailService->changeEmail($kind, $input, $this->getUser());
 
             $text = $translator->trans('Email adresse geändert');
-            return $this->redirectToRoute('child_show', array('id' => $this->getUser()->getOrganisation()->getId(), 'snack' => $text));
+
+            return $this->redirectToRoute('child_show', ['id' => $this->getUser()->getOrganisation()->getId(), 'snack' => $text]);
         }
-        return $this->render('child_change/email.html.twig', array('form' => $form->createView()));
+
+        return $this->render('child_change/email.html.twig', ['form' => $form->createView()]);
     }
 }

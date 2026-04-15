@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Service;
+
 use App\Entity\KindFerienblock;
 use App\Entity\Payment;
 use App\Entity\PaymentRefund;
@@ -9,13 +10,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-
 class FerienStornoService
 {
-
-
-    public function __construct(private LoggerInterface $logger, private EntityManagerInterface $em, private TranslatorInterface $translator, private CheckoutPaymentService $payment)
-    {
+    public function __construct(
+        private LoggerInterface $logger,
+        private EntityManagerInterface $em,
+        private TranslatorInterface $translator,
+        private CheckoutPaymentService $payment,
+    ) {
     }
 
     public function toggleBlock(KindFerienblock $kindFerienblock, Stammdaten $stammdaten)
@@ -40,6 +42,7 @@ class FerienStornoService
         $result['error'] = 0;
         $this->em->persist($kindFerienblock);
         $this->em->flush();
+
         return $result;
     }
 
@@ -53,17 +56,17 @@ class FerienStornoService
             ->setParameter('eltern', $stammdaten);
         $query = $qb->getQuery();
         $blocks = $query->getResult();
-        $org = array();
+        $org = [];
         foreach ($blocks as $data) {
             $data->setBezahlt(false);
             $this->em->persist($data);
-            $org[$data->getFerienblock()->getOrganisation()->getId()][]=$data;
-            $this->logger->info('storno Stammdaten '.$stammdaten->getId().' : '.$data->getId());
+            $org[$data->getFerienblock()->getOrganisation()->getId()][] = $data;
+            $this->logger->info('storno Stammdaten ' . $stammdaten->getId() . ' : ' . $data->getId());
         }
         $this->em->flush();
-        foreach ($org as $data){
+        foreach ($org as $data) {
             $organisation = $data[0]->getFerienblock()->getOrganisation();
-            $payment = $this->em->getRepository(Payment::class)->findOneBy(array('stammdaten'=>$stammdaten,'organisation'=>$organisation));
+            $payment = $this->em->getRepository(Payment::class)->findOneBy(['stammdaten' => $stammdaten, 'organisation' => $organisation]);
             $refund = new PaymentRefund();
             $refund->setSumme(0);
             $refund->setRefundFee($organisation->getStornoGebuehr());
@@ -71,8 +74,8 @@ class FerienStornoService
             $refund->setCreatedAt(new \DateTime());
             $refund->setPayment($payment);
 
-            foreach ($data as $block){
-                $refund->setSumme($refund->getSumme()+$block->getPreis());
+            foreach ($data as $block) {
+                $refund->setSumme($refund->getSumme() + $block->getPreis());
             }
 
             $this->payment->refund($refund);
@@ -86,5 +89,4 @@ class FerienStornoService
         }
         $this->em->flush();
     }
-
 }

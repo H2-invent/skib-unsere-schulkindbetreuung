@@ -16,14 +16,12 @@ class FerienCheckinController extends AbstractController
     {
         $today = (new \DateTime('today'))->format('Y-m-d');
         $result = $checkinFerienService->checkin($checkinID, $today);
-        if($request->isMethod('GET')){
-             return $this->render('ferien_checkin/index.html.twig', [
-                 'result'=>$result,
-             ]);
-        }elseif ($request->isMethod('POST')){
+        if ($request->isMethod('GET')) {
+            return $this->render('ferien_checkin/index.html.twig', [
+                'result' => $result,
+            ]);
+        } elseif ($request->isMethod('POST')) {
             return new JsonResponse($result);
         }
-
-
     }
 }

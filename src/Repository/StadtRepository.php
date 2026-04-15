@@ -49,28 +49,25 @@ class StadtRepository extends ServiceEntityRepository
     }
     */
 
+    public function findStadtByStammdaten(Stammdaten $stammdaten): ?Stadt
+    {
+        $qb = $this->createQueryBuilder('s');
 
-   public function findStadtByStammdaten(Stammdaten  $stammdaten): ?Stadt
-   {
-       $qb = $this->createQueryBuilder('s');
+        $qb
+            ->innerJoin('s.schules', 'schules')
+            ->innerJoin('schules.zeitblocks', 'blocks')
+            ->innerJoin('blocks.kind', 'kind')
+            ->innerJoin('kind.eltern', 'eltern')
+            ->leftJoin('blocks.kinderBeworben', 'kinderBeworben')
+            ->leftJoin('kinderBeworben.eltern', 'elternBeworben')
+            ->orWhere(
+                $qb->expr()->orX(
+                    'eltern.tracing = :eltern', 'elternBeworben.tracing =:eltern'
+                )
+            )
+            ->setParameter('eltern', $stammdaten->getTracing())
+            ->setMaxResults(1);
 
-       $qb
-           ->innerJoin('s.schules', 'schules')
-           ->innerJoin('schules.zeitblocks', 'blocks')
-           ->innerJoin('blocks.kind', 'kind')
-           ->innerJoin('kind.eltern', 'eltern')
-           ->leftJoin('blocks.kinderBeworben', 'kinderBeworben')
-           ->leftJoin('kinderBeworben.eltern', 'elternBeworben')
-           ->orWhere(
-               $qb->expr()->orX(
-                   'eltern.tracing = :eltern', 'elternBeworben.tracing =:eltern'
-               )
-           )
-           ->setParameter('eltern', $stammdaten->getTracing())
-           ->setMaxResults(1);
-
-       return $qb->getQuery()->getOneOrNullResult();
-   }
-
-
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }

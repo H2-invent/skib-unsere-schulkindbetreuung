@@ -7,16 +7,18 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserManager implements UserManagerInterface
 {
-    public function __construct(private EntityManagerInterface $em)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+    ) {
     }
 
     public function createUser()
     {
-       $user = new User();
-       $user->setCreatedAt(new \DateTime());
-       $user->setEnabled(true);
-       return $user;
+        $user = new User();
+        $user->setCreatedAt(new \DateTime());
+        $user->setEnabled(true);
+
+        return $user;
     }
 
     public function deleteUser(User $user)
@@ -31,24 +33,19 @@ class UserManager implements UserManagerInterface
 
     public function findUserByUsername($username)
     {
-        return $this->em->getRepository(User::class)->findOneBy(array('uuid'=>$username));
-
+        return $this->em->getRepository(User::class)->findOneBy(['uuid' => $username]);
     }
 
     public function findUserByEmail($email)
     {
-        return $this->em->getRepository(User::class)->findOneBy(array('email'=>$email));
-
+        return $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
     }
 
     public function findUserByUsernameOrEmail($usernameOrEmail)
     {
+        $user = $this->findUserByEmail($usernameOrEmail);
 
-            $user = $this->findUserByEmail($usernameOrEmail);
-
-            return $user;
-
-
+        return $user;
     }
 
     public function findUserByConfirmationToken($token)
@@ -74,9 +71,10 @@ class UserManager implements UserManagerInterface
     public function updateUser(User $user)
     {
         $userTest = $this->findUserByUsernameOrEmail($user->getEmail());
-        if (!$userTest || $userTest = $user){
+        if (!$userTest || $userTest = $user) {
             $this->em->persist($user);
             $this->em->flush();
+
             return true;
         }
         throw new \Exception('User already Exitsts with this username or E-Mail');

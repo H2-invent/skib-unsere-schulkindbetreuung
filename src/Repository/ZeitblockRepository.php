@@ -22,16 +22,15 @@ class ZeitblockRepository extends ServiceEntityRepository
         parent::__construct($registry, Zeitblock::class);
     }
 
-       /**
-        * @return Zeitblock[] Returns an array of Zeitblock objects
-        */
-
+    /**
+     * @return Zeitblock[] Returns an array of Zeitblock objects
+     */
     public function findBeworbenBlocksBySchule(Schule $schule)
     {
         return $this->createQueryBuilder('z')
-            ->innerJoin('z.schule','schule')
-            ->innerJoin('z.kinderBeworben','kinder_beworben')
-            ->innerJoin('kinder_beworben.eltern','eltern')
+            ->innerJoin('z.schule', 'schule')
+            ->innerJoin('z.kinderBeworben', 'kinder_beworben')
+            ->innerJoin('kinder_beworben.eltern', 'eltern')
             ->andWhere('kinder_beworben.startDate is not NULL')
             ->andWhere('eltern.created_at is not NULL')
             ->andWhere('schule =:schule')
@@ -64,18 +63,17 @@ class ZeitblockRepository extends ServiceEntityRepository
         ;
     }
 
-     /**
-      * @return Zeitblock[] Returns an array of Zeitblock objects
-      */
+    /**
+     * @return Zeitblock[] Returns an array of Zeitblock objects
+     */
     public function findWartelisteForChild(Kind $kind)
     {
         return $this->createQueryBuilder('z')
-            ->innerJoin('z.wartelisteKinder','warteliste_kinder')
+            ->innerJoin('z.wartelisteKinder', 'warteliste_kinder')
             ->andWhere('warteliste_kinder.tracing =:tracing')
-            ->setParameter('tracing',$kind->getTracing())
+            ->setParameter('tracing', $kind->getTracing())
             ->getQuery()
             ->getResult()
         ;
     }
-
 }

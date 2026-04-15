@@ -18,7 +18,7 @@ class LateRegistrationType extends AbstractType
     {
         $schuljahre = $options['schuljahre'];
         // sort schuljahre options for newest first
-        usort($schuljahre, static fn(Active $a, Active $b) => $b->getBis() <=> $a->getBis());
+        usort($schuljahre, static fn (Active $a, Active $b) => $b->getBis() <=> $a->getBis());
 
         $builder
             ->add('email', TextType::class, [
@@ -28,7 +28,7 @@ class LateRegistrationType extends AbstractType
             ->add('schuljahr', EntityType::class, [
                 'class' => Active::class,
                 'choices' => $schuljahre,
-                'choice_label' => fn(Active $schuljahr) => $schuljahr->getVon()->format('Y') . '/' . $schuljahr->getBis()->format('Y'),
+                'choice_label' => fn (Active $schuljahr) => $schuljahr->getVon()->format('Y') . '/' . $schuljahr->getBis()->format('Y'),
                 'label' => 'Schuljahr',
                 'placeholder' => 'Bitte wählen',
                 'data' => $schuljahre[0],
@@ -37,7 +37,7 @@ class LateRegistrationType extends AbstractType
                 'label' => 'Mail schicken',
                 'attr' => [
                     'class' => 'btn btn-primary mt-3',
-                ]
+                ],
             ])
         ;
     }

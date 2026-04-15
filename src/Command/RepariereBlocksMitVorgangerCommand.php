@@ -20,11 +20,10 @@ class RepariereBlocksMitVorgangerCommand extends Command
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private ZeitblockRepository    $zeitblockRepository,
-        private ActiveRepository       $activeRepository,
-        ?string                         $name = null
-    )
-    {
+        private ZeitblockRepository $zeitblockRepository,
+        private ActiveRepository $activeRepository,
+        ?string $name = null,
+    ) {
         parent::__construct($name);
     }
 
@@ -44,9 +43,9 @@ class RepariereBlocksMitVorgangerCommand extends Command
             $block = $data;
             if ($block) {
                 $io->info(sprintf('We work with block Nr.: %s', $block->getId()));
-                foreach ($block->getVorganger() as $cBlock){
-                    foreach ($block->getKind() as $child){
-                        if (!in_array($cBlock,$child->getZeitblocks()->toArray())){
+                foreach ($block->getVorganger() as $cBlock) {
+                    foreach ($block->getKind() as $child) {
+                        if (!in_array($cBlock, $child->getZeitblocks()->toArray())) {
                             $child->addZeitblock($cBlock);
                             $io->info(sprintf('Child %s %s added  to Block: %s', $child->getVorname(), $child->getNachname(), $cBlock->getId()));
                             $counter++;
@@ -54,9 +53,9 @@ class RepariereBlocksMitVorgangerCommand extends Command
 
                         $this->entityManager->persist($child);
                     }
-                    foreach ($block->getKinderBeworben() as $child){
+                    foreach ($block->getKinderBeworben() as $child) {
                         $io->info(sprintf('We check Child: %s %s', $child->getVorname(), $child->getNachname()));
-                        if (!in_array($cBlock,$child->getBeworben()->toArray())){
+                        if (!in_array($cBlock, $child->getBeworben()->toArray())) {
                             $child->addBeworben($cBlock);
                             $io->info(sprintf('Child %s %s added to BEWORBEN Block %s', $child->getVorname(), $child->getNachname(), $cBlock->getId()));
                         }

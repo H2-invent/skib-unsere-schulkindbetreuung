@@ -12,17 +12,17 @@ class WartelisteExtensionRuntime implements RuntimeExtensionInterface
     public function __construct(
         private ZeitblockRepository $zeitblockRepository,
         private KindRepository $kindrepository,
-    )
-    {
+    ) {
         // Inject dependencies if needed
     }
 
     public function showWarteListForChild(Kind $kind)
     {
-       return $this->zeitblockRepository->findWartelisteForChild($kind);
+        return $this->zeitblockRepository->findWartelisteForChild($kind);
     }
+
     public function findLatestChildForChild(Kind $kind)
     {
-        return $this->kindrepository->findOneBy(['tracing'=> $kind->getTracing()],['startDate'=>'DESC']);
+        return $this->kindrepository->findOneBy(['tracing' => $kind->getTracing()], ['startDate' => 'DESC']);
     }
 }

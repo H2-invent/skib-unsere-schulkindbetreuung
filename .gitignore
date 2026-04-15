@@ -40,10 +40,9 @@ yarn-error.log
 /public/media/cache/
 ###< liip/imagine-bundle ###
 
-###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
-###< phpunit/phpunit ###
-
 /data/
 /public/core.*
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###

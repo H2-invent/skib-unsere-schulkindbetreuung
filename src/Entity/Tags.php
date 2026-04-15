@@ -21,8 +21,6 @@ class Tags
     #[ORM\ManyToMany(targetEntity: Ferienblock::class, mappedBy: 'kategorie')]
     private $feriens;
 
-
-
     public function __construct()
     {
         $this->feriens = new ArrayCollection();
@@ -72,7 +70,4 @@ class Tags
 
         return $this;
     }
-
-   
-
 }

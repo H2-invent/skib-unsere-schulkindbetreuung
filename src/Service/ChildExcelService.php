@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 03.10.2019
- * Time: 19:01
+ * Time: 19:01.
  */
 
 namespace App\Service;
-
 
 use App\Controller\ChildController;
 use App\Controller\LoerrachWorkflowController;
@@ -25,23 +25,22 @@ class ChildExcelService
     private $writer;
     private Stadt $stadt;
     private $alphas;
-    private $stichtag = null;
+    private $stichtag;
 
     public function __construct(
-        private TranslatorInterface                $translator,
-        private TokenStorageInterface              $tokenStorage,
-        private CreateExcelDayService              $createExcelDayService,
-        private ElternService                      $elternService,
-        private BerechnungsService                 $berechnungsService,
-        private LoerrachWorkflowController $loerrachWorkflowController)
-    {
+        private TranslatorInterface $translator,
+        private TokenStorageInterface $tokenStorage,
+        private CreateExcelDayService $createExcelDayService,
+        private ElternService $elternService,
+        private BerechnungsService $berechnungsService,
+        private LoerrachWorkflowController $loerrachWorkflowController,
+    ) {
         $this->spreadsheet = new Spreadsheet();
         $this->writer = new Xlsx($this->spreadsheet);
     }
 
     public function generateExcel($kinder, Stadt $stadt, $wochentag, $stichtag = null)
     {
-
         $this->stichtag = $stichtag;
         $this->stadt = $stadt;
         $this->alphas = $this->createColumnsArray('ZZ');
@@ -59,7 +58,6 @@ class ChildExcelService
         $this->spreadsheet->removeSheetByIndex($sheetIndex);
         $this->spreadsheet->setActiveSheetIndex(0);
 
-
         // Create a Temporary file in the system
         $fileName = 'Kinder.xlsx';
         $temp_file = tempnam(sys_get_temp_dir(), $fileName);
@@ -69,12 +67,11 @@ class ChildExcelService
 
         // Return the excel file as an attachment
         return $temp_file;
-
     }
 
     private function createColumnsArray($end_column, $first_letters = '')
     {
-        $columns = array();
+        $columns = [];
         $length = strlen((string) $end_column);
         $letters = range('A', 'Z');
 
@@ -87,8 +84,9 @@ class ChildExcelService
             $columns[] = $column;
 
             // If it was the end column that was added, return the columns.
-            if ($column == $end_column)
+            if ($column == $end_column) {
                 return $columns;
+            }
         }
 
         // Add the column children.
@@ -107,19 +105,17 @@ class ChildExcelService
 
     /**
      * @param Kind[] $kinder
-     * @param $title
+     *
      * @return void
      */
     public function writeSpreadsheet($kinder, $title = 'Kinder', $weekdays = [0, 1, 2, 3, 4])
     {
-
         $beruflicheSituation = $this->loerrachWorkflowController;
         $alphas = $this->createColumnsArray('ZZ');
         $count = 0;
         $kindSheet = $this->spreadsheet->createSheet();
         $kindSheet->setTitle($this->translator->trans($title));
         $this->writeHeaderLine($kindSheet, $weekdays);
-
 
         $counter = 2;
         foreach ($kinder as $data) {
@@ -128,7 +124,7 @@ class ChildExcelService
                 $count = 0;
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getVorname());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getNachname());
-                $kindSheet->setCellValue($this->alphas[$count++] . $counter, ($data->getGeburtstag()->diff(new \DateTime()))->y);
+                $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getGeburtstag()->diff(new \DateTime())->y);
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getKlasseString());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getArt());
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getArtString());
@@ -190,22 +186,19 @@ class ChildExcelService
                 }
                 if ($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_VIEW_NOTICE')) {
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, strip_tags((string) $data->getInternalNotice()));
-
                 }
                 $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getEmail());
 
                 if ($this->stadt->getSettingsweiterePersonenberechtigte()) {
-                    $persBErechtiger = array();
+                    $persBErechtiger = [];
                     foreach ($eltern->getPersonenberechtigters() as $data3) {
-                        $persBErechtiger[] = $data3->getVorname() . " " . $data3->getNachname() . "\n" . $data3->getStrasse() . "\n" . $data3->getPlz() . ' ' . $data3->getStadt() . "\n" . ' Tel: ' . $data3->getPhone() . "\n" . ' Notfallkotakt: ' . $data3->getNotfallkontakt();
+                        $persBErechtiger[] = $data3->getVorname() . ' ' . $data3->getNachname() . "\n" . $data3->getStrasse() . "\n" . $data3->getPlz() . ' ' . $data3->getStadt() . "\n" . ' Tel: ' . $data3->getPhone() . "\n" . ' Notfallkotakt: ' . $data3->getNotfallkontakt();
                     }
                     $kindSheet->setCellValue($this->alphas[$count] . $counter, implode("\n\n", $persBErechtiger));
                     $kindSheet->getStyle($this->alphas[$count++] . $counter)->getAlignment()->setWrapText(true);
                 }
 
-
                 if ($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')) {
-
                     if ($this->stadt->getSettingKinderimKiga()) {
                         if ($eltern->getKinderImKiga()) {
                             $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getKigaOfKids());
@@ -213,7 +206,6 @@ class ChildExcelService
                             $kindSheet->setCellValue($this->alphas[$count++] . $counter, $this->translator->trans('Nein'));
                         }
                     }
-
 
                     if ($this->stadt->getSettingGehaltsklassen()) {
                         $kindSheet->setCellValue($this->alphas[$count++] . $counter, $data->getSchule()->getStadt()->getGehaltsklassen()[$eltern->getEinkommen()]);
@@ -227,7 +219,7 @@ class ChildExcelService
                     }
 
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getCreatedAt()->format('d.m.Y'));
-                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId()) ? $eltern->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())->getKundennummer() : "");
+                    $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId()) ? $eltern->getKundennummerForOrg($data->getSchule()->getOrganisation()->getId())->getKundennummer() : '');
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getIban());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getBic());
                     $kindSheet->setCellValue($this->alphas[$count++] . $counter, $eltern->getKontoinhaber());
@@ -248,7 +240,6 @@ class ChildExcelService
                 $counter++;
             }
         }
-
     }
 
     public function writeHeaderLine($kindSheet, $weekdays)
@@ -280,11 +271,9 @@ class ChildExcelService
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Allergien'));
             if ($this->stadt->isSettingsSkibShowZeckenKinder()) {
                 $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Zecken dürfen entfernt werden'));
-
             }
             if ($this->stadt->isSettingsSkibShowPflasterKinder()) {
                 $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Pflaster dürfen angebracht werden'));
-
             }
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Gluten intolerant'));
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Kein Schweinefleisch'));
@@ -296,7 +285,6 @@ class ChildExcelService
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Darf alleine nach Hause'));
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Fotos dürfen veröffentlicht werden'));
         }
-
 
         if (in_array(0, $weekdays)) {
             $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Montag'));
@@ -328,7 +316,7 @@ class ChildExcelService
         }
 
         if ($this->tokenStorage->getToken()->getUser()->hasRole('ROLE_ORG_ACCOUNTING')) {
-            //here are the configurable inputs from the parents
+            // here are the configurable inputs from the parents
             if ($this->stadt->getSettingKinderimKiga()) {
                 $kindSheet->setCellValue($this->alphas[$count++] . '1', $this->translator->trans('Kinder im KiGa'));
             }
@@ -361,8 +349,9 @@ class ChildExcelService
         foreach ($kind->getBetreungsblocksReal() as $data) {
             if (in_array($data->getWochentag(), $weekdays)) {
                 return true;
-            };
+            }
         }
+
         return false;
     }
 }

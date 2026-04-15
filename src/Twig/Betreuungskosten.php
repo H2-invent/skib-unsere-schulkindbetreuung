@@ -1,5 +1,7 @@
 <?php
+
 // src/Twig/AppExtension.php
+
 namespace App\Twig;
 
 use App\Entity\Kind;
@@ -10,33 +12,32 @@ use Twig\TwigFunction;
 
 class Betreuungskosten extends AbstractExtension
 {
-
-
-    public function __construct(private BerechnungsService $berechnungsService)
-    {
+    public function __construct(
+        private BerechnungsService $berechnungsService,
+    ) {
     }
 
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction('getPreisforBetreuung', $this->getPreisforBetreuung(...)),
             new TwigFunction('getPreisforBetreuungWithoutBeworben', $this->getPreisforBetreuungWithoutBeworben(...)),
             new TwigFunction('getPreisforBetreuungWithoutBeworbenActual', $this->getPreisforBetreuungWithoutBeworbenActual(...)),
-        );
+        ];
     }
 
-    public function getPreisforBetreuung(?Kind $kind=null,?\DateTime $dateTime = null)
+    public function getPreisforBetreuung(?Kind $kind = null, ?\DateTime $dateTime = null)
     {
-        if (!$dateTime){
+        if (!$dateTime) {
             $dateTime = new \DateTime();
         }
 
-        return $this->berechnungsService->getPreisforBetreuung($kind, true, $dateTime,true);
+        return $this->berechnungsService->getPreisforBetreuung($kind, true, $dateTime, true);
     }
 
-    public function getPreisforBetreuungWithoutBeworben(?Kind $kind=null,?\DateTime $dateTime = null)
+    public function getPreisforBetreuungWithoutBeworben(?Kind $kind = null, ?\DateTime $dateTime = null)
     {
-        if (!$dateTime){
+        if (!$dateTime) {
             $dateTime = new \DateTime();
         }
 
@@ -47,5 +48,4 @@ class Betreuungskosten extends AbstractExtension
     {
         return $this->berechnungsService->getGesamtPreisProStammdatenZeitpunk($stammdaten, $dateTime);
     }
-
 }

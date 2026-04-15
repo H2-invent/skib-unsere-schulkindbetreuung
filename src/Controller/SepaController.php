@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Active;
 use App\Entity\Kundennummern;
 use App\Entity\Organisation;
@@ -14,6 +13,7 @@ use App\Service\ElternService;
 use App\Service\HistoryService;
 use App\Service\SepaCreateService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,8 +23,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SepaController extends AbstractController
 {
-    public function __construct(private EntityManagerInterface $em, private ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
 
     #[Route(path: '/org_accounting/overview', name: 'accounting_overview', methods: ['GET', 'POST'])]
@@ -39,24 +41,22 @@ class SepaController extends AbstractController
         $sepa->setOrganisation($organisation);
         $form = $this->createForm(SepaType::class, $sepa);
         $form->handleRequest($request);
-        $errors = array();
+        $errors = [];
         if ($form->isSubmitted() && $form->isValid()) {
-
             $errors = $validator->validate($sepa);
             if (count($errors) == 0) {
                 $sepa = $form->getData();
                 $sepa->setBis((clone $sepa->getVon())->modify('last day of this month'));
                 $result = $sepaCreateService->createSepa($sepa);
-                return $this->redirectToRoute('accounting_overview', array('id' => $organisation->getId(), 'snack' => $result));
+
+                return $this->redirectToRoute('accounting_overview', ['id' => $organisation->getId(), 'snack' => $result]);
             }
         }
 
+        $sepaData = $this->managerRegistry->getRepository(Sepa::class)->findBy(['organisation' => $organisation]);
 
-        $sepaData = $this->managerRegistry->getRepository(Sepa::class)->findBy(array('organisation' => $organisation));
-
-        return $this->render('sepa/show.html.twig', array('form' => $form->createView(), 'sepa' => $sepaData));
+        return $this->render('sepa/show.html.twig', ['form' => $form->createView(), 'sepa' => $sepaData]);
     }
-
 
     #[Route(path: '/org_accounting/sendBill', name: 'accounting_send_bill', methods: ['GET'])]
     public function sendBill(TranslatorInterface $translator, Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator)
@@ -68,8 +68,7 @@ class SepaController extends AbstractController
         }
         $result = $sepaCreateService->collectallFromSepa($sepa) ? $translator->trans('Die Email wurde erfolgreich versandt') : $translator->trans('Die E-Mail konnte nicht vesandt werden');
 
-        return new JsonResponse(array('redirect' => $this->generateUrl('accounting_overview', array('id' => $sepa->getOrganisation()->getId(), 'snack' => $result))));
-
+        return new JsonResponse(['redirect' => $this->generateUrl('accounting_overview', ['id' => $sepa->getOrganisation()->getId(), 'snack' => $result])]);
     }
 
     #[Route(path: '/org_accounting/showdata', name: 'accounting_showdata', methods: ['GET'])]
@@ -90,31 +89,30 @@ class SepaController extends AbstractController
             ->andWhere($qb->expr()->isNotNull('stammdaten.created_at'));
         if (!$request->get('year_id')) {
             $year = $this->managerRegistry->getRepository(Active::class)->findActiveSchuljahrFromCity($this->getUser()->getOrganisation()->getStadt());
-        }else {
+        } else {
             if ($request->get('year_id') == 'all') {
                 $year = null;
-            }else{
+            } else {
                 $year = $this->managerRegistry->getRepository(Active::class)->find($request->get('year_id'));
             }
         }
 
         if ($year) {
-
             $qb->innerJoin('kinds.zeitblocks', 'zeitbocks')
                 ->andWhere('zeitbocks.active = :year')
                 ->setParameter('year', $year);
-        };
+        }
         $qb->orderBy('stammdaten.startDate', 'ASC');
         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
-        $sRes = array();
+        $sRes = [];
         foreach ($stammdaten as $data) {
             if (!isset($sRes[$data->getTracing()])) {
                 $sRes[$data->getTracing()] = $elternService->getLatestElternFromCEltern($data);
             }
         }
 
-        return $this->render('sepa/showData.html.twig', array('organisation' => $organisation, 'stammdaten' => $sRes,'schuljahr'=>$year));
+        return $this->render('sepa/showData.html.twig', ['organisation' => $organisation, 'stammdaten' => $sRes, 'schuljahr' => $year]);
     }
 
     #[Route(path: '/org_accounting/showdata/showMontly/{stammdatenId}', name: 'accounting_showdata_montly', methods: ['GET'])]
@@ -123,13 +121,13 @@ class SepaController extends AbstractController
         $stammdaten = $this->em->getRepository(Stammdaten::class)->find($stammdatenId);
         $history = $historyService->getAllHistoyPointsFromStammdaten($stammdaten);
 
-        $stammdatenArray = array();
+        $stammdatenArray = [];
         foreach ($history as $data) {
-            $tmp = array('date' => $data, 'stammdaten' => $this->em->getRepository(Stammdaten::class)->findStammdatenFromStammdatenByDate($stammdaten, $data), 'kinder' => $elternService->getKinderProStammdatenAnEinemZeitpunkt($stammdaten, $data));
+            $tmp = ['date' => $data, 'stammdaten' => $this->em->getRepository(Stammdaten::class)->findStammdatenFromStammdatenByDate($stammdaten, $data), 'kinder' => $elternService->getKinderProStammdatenAnEinemZeitpunkt($stammdaten, $data)];
             $stammdatenArray[] = $tmp;
         }
 
-        return $this->render('sepa/showDataMontly.html.twig', array('history' => $stammdatenArray, 'stammdaten' => $stammdaten));
+        return $this->render('sepa/showDataMontly.html.twig', ['history' => $stammdatenArray, 'stammdaten' => $stammdaten]);
     }
 
     #[Route(path: '/org_accounting/showdata/customerid', name: 'accounting_showdata_customerid', methods: ['GET', 'POST'])]
@@ -140,10 +138,9 @@ class SepaController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
 
-
         $stammdaten = $this->managerRegistry->getRepository(Stammdaten::class)->find($request->get('stammdaten_id'));
 
-        $kundennummer = $this->managerRegistry->getRepository(Kundennummern::class)->findOneBy(array('organisation' => $organisation, 'stammdaten' => $stammdaten));
+        $kundennummer = $this->managerRegistry->getRepository(Kundennummern::class)->findOneBy(['organisation' => $organisation, 'stammdaten' => $stammdaten]);
         if (!$kundennummer) {
             $kundennummer = new Kundennummern();
         }
@@ -153,30 +150,29 @@ class SepaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $kundennummern = $this->em->getRepository(Kundennummern::class)->findAllKundennummernByStammdatenAndOrganisation($stammdaten,$organisation);
+            $kundennummern = $this->em->getRepository(Kundennummern::class)->findAllKundennummernByStammdatenAndOrganisation($stammdaten, $organisation);
             foreach ($kundennummern as $data) {
                 $this->em->remove($data);
-
             }
-            $this->em->flush();;
+            $this->em->flush();
             $kundennummer = $form->getData();
             $kundennummer->setOrganisation($organisation);
             $kundennummer->setStammdaten($stammdaten);
 
-            $stammdaten = $this->em->getRepository(Stammdaten::class)->findBy(array('tracing'=>$stammdaten->getTracing()));
-            foreach ($stammdaten as $data){
-               $kdn = clone $kundennummer;
-               $kdn->setOrganisation($organisation);
-               $kdn->setStammdaten($data);
-               $this->em->persist($kdn);
+            $stammdaten = $this->em->getRepository(Stammdaten::class)->findBy(['tracing' => $stammdaten->getTracing()]);
+            foreach ($stammdaten as $data) {
+                $kdn = clone $kundennummer;
+                $kdn->setOrganisation($organisation);
+                $kdn->setStammdaten($data);
+                $this->em->persist($kdn);
             }
             $this->em->flush();
 
-            $response = $this->redirectToRoute('accounting_showdata', array('id' => $organisation->getId()));
+            $response = $this->redirectToRoute('accounting_showdata', ['id' => $organisation->getId()]);
+
             return $response;
         }
-        return $this->render('sepa/customerID.html.twig', array('form' => $form->createView(), 'stammdaten' => $stammdaten));
 
+        return $this->render('sepa/customerID.html.twig', ['form' => $form->createView(), 'stammdaten' => $stammdaten]);
     }
-
 }

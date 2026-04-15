@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Stammdaten;
@@ -12,14 +11,14 @@ use App\Service\MailerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SendTestEmailForTemplateController extends AbstractController
 {
     public function __construct(
         private MailerService $mailerService,
-    private StadtRepository $stadtRepository)
-    {
-
+        private StadtRepository $stadtRepository,
+    ) {
     }
 
     #[Route('/city_edit/stadtverwaltung/test/email/{template}', name: 'app_send_test_email_for_template')]
@@ -51,27 +50,26 @@ class SendTestEmailForTemplateController extends AbstractController
         $organisation = new Organisation();
         $organisation->setName('test ORganisation');
         $blockBeworben = new Zeitblock();
-        $blockBeworben->setVon((new \DateTimeImmutable())->setTime(7,15));
-        $blockBeworben->setBis((new \DateTimeImmutable())->setTime(9,15));
+        $blockBeworben->setVon((new \DateTimeImmutable())->setTime(7, 15));
+        $blockBeworben->setBis((new \DateTimeImmutable())->setTime(9, 15));
         $blockBeworben->setWochentag(1);
         $blockBeworben->setGanztag(1);
-        $blockBeworben->setPreise([1,2,3,4]);
+        $blockBeworben->setPreise([1, 2, 3, 4]);
         $kind->addBeworben($blockBeworben);
         $blockInBEtreuung = new Zeitblock();
-        $blockInBEtreuung->setVon((new \DateTimeImmutable())->setTime(10,15));
-        $blockInBEtreuung->setBis((new \DateTimeImmutable())->setTime(12,15));
+        $blockInBEtreuung->setVon((new \DateTimeImmutable())->setTime(10, 15));
+        $blockInBEtreuung->setBis((new \DateTimeImmutable())->setTime(12, 15));
         $blockInBEtreuung->setWochentag(1);
         $blockInBEtreuung->setGanztag(1);
-        $blockInBEtreuung->setPreise([1,2,3,4]);
+        $blockInBEtreuung->setPreise([1, 2, 3, 4]);
         $kind->addZeitblock($blockInBEtreuung);
         $blockwarteliste = new Zeitblock();
-        $blockwarteliste->setVon((new \DateTimeImmutable())->setTime(10,15));
-        $blockwarteliste->setBis((new \DateTimeImmutable())->setTime(12,15));
+        $blockwarteliste->setVon((new \DateTimeImmutable())->setTime(10, 15));
+        $blockwarteliste->setBis((new \DateTimeImmutable())->setTime(12, 15));
         $blockwarteliste->setWochentag(1);
         $blockwarteliste->setGanztag(1);
-        $blockwarteliste->setPreise([1,2,3,4]);
+        $blockwarteliste->setPreise([1, 2, 3, 4]);
         $kind->addWarteliste($blockwarteliste);
-
 
         // Dummy-Kind zu Eltern hinzufügen (falls Getter+Collection vorhanden)
         if (method_exists($eltern, 'addKind')) {
@@ -80,10 +78,10 @@ class SendTestEmailForTemplateController extends AbstractController
         try {
             $html = $this->renderView("email/{$template}.html.twig", [
                 'eltern' => $eltern,
-                'stammdaten'=>$eltern,
+                'stammdaten' => $eltern,
                 'kind' => $kind,
                 'stadt' => $stadt,
-                'organisation'=>$organisation
+                'organisation' => $organisation,
             ]);
 
             $this->mailerService->sendEmail(
@@ -94,8 +92,8 @@ class SendTestEmailForTemplateController extends AbstractController
                 $html,
                 'noreplay@unsere-schulkindbetreuung.de'
             );
-        }catch(\Exception $exception) {
-            return new Response("Fehler: " . $exception->getMessage());
+        } catch (\Exception $exception) {
+            return new Response('Fehler: ' . $exception->getMessage());
         }
 
         return new Response("Test-E-Mail für Template '{$template}' wurde gesendet.");

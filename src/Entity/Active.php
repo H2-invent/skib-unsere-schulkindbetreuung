@@ -42,14 +42,11 @@ class Active
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $specialCalculationFormular = null;
 
-
-
     public function __construct()
     {
         $this->blocks = new ArrayCollection();
         $this->news = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -79,7 +76,6 @@ class Active
 
         return $this;
     }
-
 
     public function getStadt(): ?Stadt
     {
@@ -183,6 +179,4 @@ class Active
 
         return $this;
     }
-
-
 }

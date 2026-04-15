@@ -1,4 +1,5 @@
 <?php
+
 // src/Entity/User.php
 
 namespace App\Entity;
@@ -6,7 +7,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 
 #[ORM\Table(name: 'fos_user')]
 #[ORM\Entity]
@@ -64,7 +64,6 @@ class User extends UserBase
     #[ORM\Column(type: 'text')]
     private $email;
 
-
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $lastLogin;
 
@@ -82,7 +81,6 @@ class User extends UserBase
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $invitationToken;
-
 
     public function __construct()
     {
@@ -301,7 +299,6 @@ class User extends UserBase
         return $this;
     }
 
-
     public function getLastLogin(): ?\DateTimeInterface
     {
         return $this->lastLogin;
@@ -337,7 +334,8 @@ class User extends UserBase
 
         return $this;
     }
-    public function getUserIdentifier():string
+
+    public function getUserIdentifier(): string
     {
         return $this->email;
     }
@@ -353,11 +351,10 @@ class User extends UserBase
 
         return $this;
     }
+
     public function isEnabled(): bool
     {
-       return $this->enabled;
-
-
+        return $this->enabled;
     }
 
     public function getInvitationToken(): ?string
@@ -371,6 +368,4 @@ class User extends UserBase
 
         return $this;
     }
-
-
 }

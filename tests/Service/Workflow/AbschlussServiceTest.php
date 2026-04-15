@@ -38,11 +38,11 @@ class AbschlussServiceTest extends KernelTestCase
             ->setEltern($stammdaten)
             ->setGeburtstag(new \DateTime('1.1.2010'));
         $zeitblock1 = new Zeitblock();
-        $zeitblock1->setPreise(array('1,2,3,4'));
+        $zeitblock1->setPreise(['1,2,3,4']);
         $zeitblock2 = new Zeitblock();
-        $zeitblock2->setPreise(array('2,3,4,5'));
+        $zeitblock2->setPreise(['2,3,4,5']);
         $zeitblock3 = new Zeitblock();
-        $zeitblock3->setPreise(array('3,4,5,6'));
+        $zeitblock3->setPreise(['3,4,5,6']);
         $manager = self::getContainer()->get(EntityManagerInterface::class);
         $kind1->addZeitblock($zeitblock1);
         $kind1->addBeworben($zeitblock2);
@@ -50,13 +50,13 @@ class AbschlussServiceTest extends KernelTestCase
         $kind2->addBeworben($zeitblock1);
         $stadt = new Stadt();
         $stadt->setSecCodeAlwaysNew(false);
-        $eltern =  $abschlussService->abschluss($stammdaten, $stadt);
+        $eltern = $abschlussService->abschluss($stammdaten, $stadt);
         $stammdatenRepo = self::getContainer()->get(StammdatenRepository::class);
         $kindRepo = self::getContainer()->get(KindRepository::class);
-        $allEltern = $stammdatenRepo->findBy(array('tracing'=>$eltern->getTracing()),array('created_at'=>'ASC'));
+        $allEltern = $stammdatenRepo->findBy(['tracing' => $eltern->getTracing()], ['created_at' => 'ASC']);
         self::assertEquals(2, sizeof($allEltern));
         self::assertNull($allEltern[0]->getCreatedAt());
-        //$routerService = static::getContainer()->get('router');
-        //$myCustomService = static::getContainer()->get(CustomService::class);
+        // $routerService = static::getContainer()->get('router');
+        // $myCustomService = static::getContainer()->get(CustomService::class);
     }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Payment;
 use App\Entity\PaymentStripe;
 use App\Entity\Stadt;
 use App\Service\CheckoutBraintreeService;
 use App\Service\CheckoutPaymentService;
 use App\Service\StamdatenFromCookie;
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,9 +17,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentStripeController extends AbstractController
 {
-    public function __construct(private ManagerRegistry $managerRegistry)
-    {
-
+    public function __construct(
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
 
     #[Route(path: '/{slug}/ferien/stripe/prepare', name: 'ferien_stripe_start', methods: ['Get'])]
@@ -29,16 +29,16 @@ class PaymentStripeController extends AbstractController
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE);
         }
-        $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(array('uid'=>$request->get('id')));
+        $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(['uid' => $request->get('id')]);
 
-        return $this->render('payment_stripe/index.html.twig', array('payment' => $payment, 'stadt' => $stadt,'org'=>$payment->getOrganisation()));
+        return $this->render('payment_stripe/index.html.twig', ['payment' => $payment, 'stadt' => $stadt, 'org' => $payment->getOrganisation()]);
     }
 
     #[Route(path: '/{slug}/ferien/stripe/recieveToken', name: 'ferien_stripe_token', methods: ['POST'])]
     #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
-    public function paymentrecieveNonceAction( Stadt $stadt, Request $request)
+    public function paymentrecieveNonceAction(Stadt $stadt, Request $request)
     {
-        $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(array('uid' => $request->get('paymentId')));
+        $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(['uid' => $request->get('paymentId')]);
         $stripe = new PaymentStripe();
         $stripe->setChargeId($request->get('stripeToken'));
         $payment->setPaymentStripe($stripe);
@@ -49,6 +49,7 @@ class PaymentStripeController extends AbstractController
         $em->persist($stripe);
         $em->persist($payment);
         $em->flush();
-        return $this->redirectToRoute('ferien_zusammenfassung',array('slug'=>$stadt->getSlug()));
+
+        return $this->redirectToRoute('ferien_zusammenfassung', ['slug' => $stadt->getSlug()]);
     }
 }

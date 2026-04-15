@@ -1,5 +1,7 @@
 <?php
+
 // src/Twig/AppExtension.php
+
 namespace App\Twig;
 
 use App\Controller\LoerrachWorkflowController;
@@ -14,46 +16,48 @@ use Twig\TwigFunction;
 
 class Kontingent extends AbstractExtension
 {
-
-    public function __construct(private TranslatorInterface                $translator, private ElternService                      $elternService, private ChildInBlockService                $childInBlockService, private WidgetService                      $widgetService, private LoerrachWorkflowController $loerrachWorkflowController)
-    {
+    public function __construct(
+        private TranslatorInterface $translator,
+        private ElternService $elternService,
+        private ChildInBlockService $childInBlockService,
+        private WidgetService $widgetService,
+        private LoerrachWorkflowController $loerrachWorkflowController,
+    ) {
     }
 
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction('getBerufstatig', $this->getBerufstatig(...)),
             new TwigFunction('getChildsOnSpecificTime', $this->getChildsOnSpecificTime(...)),
             new TwigFunction('getChildsOnSpecificTimeCached', $this->getChildsOnSpecificTimeCached(...)),
             new TwigFunction('getChildsOnSpecificTimeAndFuture', $this->getChildsOnSpecificTimeAndFuture(...)),
-        );
+        ];
     }
 
     public function getBerufstatig(Kind $kind)
     {
         $workflow = $this->loerrachWorkflowController;
-        return array_flip($workflow->beruflicheSituation)[$this->elternService->getLatestElternFromChild($kind)->getBeruflicheSituation()] ?? 'Keine Angabe';
 
+        return array_flip($workflow->beruflicheSituation)[$this->elternService->getLatestElternFromChild($kind)->getBeruflicheSituation()] ?? 'Keine Angabe';
     }
 
     public function getChildsOnSpecificTime(Zeitblock $zeitblock, \DateTime $dateTime)
     {
         $res = $this->childInBlockService->getCurrentChildOfZeitblock($zeitblock, $dateTime);
-        return $res;
 
+        return $res;
     }
 
     public function getChildsOnSpecificTimeCached(Zeitblock $zeitblock)
     {
         $res = $this->widgetService->calcBlocksNumberNow($zeitblock);
-        return $res;
 
+        return $res;
     }
 
     public function getChildsOnSpecificTimeAndFuture(Zeitblock $zeitblock, \DateTime $dateTime)
     {
         return $this->childInBlockService->getCurrentChildAndFuturerChildOfZeitblock($zeitblock, $dateTime);
-
     }
-
 }

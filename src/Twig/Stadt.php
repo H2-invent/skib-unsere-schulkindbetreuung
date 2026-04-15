@@ -1,5 +1,7 @@
 <?php
+
 // src/Twig/AppExtension.php
+
 namespace App\Twig;
 
 use App\Entity\Stammdaten;
@@ -9,22 +11,20 @@ use Twig\TwigFunction;
 
 class Stadt extends AbstractExtension
 {
-
-
-    public function __construct(private EntityManagerInterface $em)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+    ) {
     }
 
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction('getStadtFromEltern', $this->getStadtFromEltern(...)),
-
-        );
+        ];
     }
 
-   public function getStadtFromEltern(Stammdaten $stammdaten){
+    public function getStadtFromEltern(Stammdaten $stammdaten)
+    {
         return $this->em->getRepository(\App\Entity\Stadt::class)->findStadtByStammdaten($stammdaten);
-   }
-
+    }
 }

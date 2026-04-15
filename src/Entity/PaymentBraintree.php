@@ -37,8 +37,6 @@ class PaymentBraintree
     #[ORM\Column(type: 'text', nullable: true)]
     private $transactionId;
 
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -102,7 +100,7 @@ class PaymentBraintree
         $this->payment = $payment;
 
         // set (or unset) the owning side of the relation if necessary
-        $newBraintree = null === $payment ? null : $this;
+        $newBraintree = $payment === null ? null : $this;
         if ($payment->getBraintree() !== $newBraintree) {
             $payment->setBraintree($newBraintree);
         }
@@ -145,6 +143,4 @@ class PaymentBraintree
 
         return $this;
     }
-
-
 }
