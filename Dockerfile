@@ -44,7 +44,7 @@ LABEL version="${VERSION}" \
 USER root
 
 RUN apk --no-cache add \
-    php83-bcmath \
+    php84-bcmath \
     && rm -rf /var/cache/apk/*
 
 RUN echo "Europe/Berlin" > /etc/timezone
