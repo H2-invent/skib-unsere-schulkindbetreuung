@@ -23,7 +23,7 @@ class AutoBlockAssignmentChild
     #[ORM\OneToMany(mappedBy: 'child', targetEntity: AutoBlockAssignmentChildZeitblock::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $zeitblocks;
 
-    #[ORM\OneToOne]
+    #[ORM\OneToOne(inversedBy: 'autoBlockAssignmentChild')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Kind $kind = null;
 
