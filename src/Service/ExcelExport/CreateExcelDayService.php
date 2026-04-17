@@ -17,10 +17,14 @@ class CreateExcelDayService
      * Returns the merged Time for a child for a given Day.
      * The Weekday mus be given from Monday to Sunday where Monday=0.
      */
-    public function getMergedTime(Kind $kind, $weekday): string
+    public function getMergedTime(Kind $kind, $weekday, string $status): string
     {
-        $res = '';
-        $blocks = $kind->getBetreungsblocksReal();
+        $blocks = match ($status) {
+            'warteliste' => $kind->getRealWarteliste(),
+            'beworben' => $kind->getRealBeworben(),
+            default => $kind->getRealZeitblocks(),
+        };
+
         $cleanBlocks = [];
         foreach ($blocks as $data) {
             if ($data->getWochentag() === $weekday) {

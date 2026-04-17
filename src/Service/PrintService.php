@@ -172,7 +172,7 @@ class PrintService
         return $this->templating->render('pdf/kindOrganisation.html.twig', ['k' => $kind, 'beworben' => $zeitBloeckeAngemeldet, 'zeitblock' => $zeitBloeckeGebucht]);
     }
 
-    public function printChildList($kinder, Organisation $organisation, $text, $fileName, TCPDFController $tcpdf, $wochentag = [0, 1, 2, 3, 4], $type = 'I', $stichtag = null)
+    public function printChildList($kinder, Organisation $organisation, $text, $fileName, TCPDFController $tcpdf, string $status, $wochentag = [0, 1, 2, 3, 4], $type = 'I', $stichtag = null)
     {
         $pdf = $tcpdf->create();
         $pdf->setOrganisation($organisation);
@@ -201,7 +201,7 @@ class PrintService
                 $schulen[] = $data->getSchule();
             }
         }
-        $kindData = $this->templating->render('pdf/kinderliste.html.twig', ['text' => $text, 'kinder' => $kinder, 'schulen' => $schulen, 'wochentag' => $wochentag, 'stichtag' => $stichtag]);
+        $kindData = $this->templating->render('pdf/kinderliste.html.twig', ['text' => $text, 'kinder' => $kinder, 'schulen' => $schulen, 'wochentag' => $wochentag, 'stichtag' => $stichtag, 'status' => $status]);
         $pdf->writeHTMLCell(
             0,
             0,
