@@ -43,7 +43,7 @@ class KindFerienblockRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('k')
             ->andWhere('k.ferienblock = :ferienblock')
             ->setParameter('ferienblock', $ferienblock)
-            ->join('k.kind','kind')
+            ->join('k.kind', 'kind')
             ->andWhere('kind.fin = true')
             ->orderBy('k.id', 'ASC')
             ->setMaxResults(10)
@@ -51,7 +51,6 @@ class KindFerienblockRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
 
     /*
     public function findOneBySomeField($value): ?KindFerienblock

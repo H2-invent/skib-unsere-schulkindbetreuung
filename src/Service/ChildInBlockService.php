@@ -10,11 +10,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ChildInBlockService
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
+    public function __construct(
+        private EntityManagerInterface $em,
+    ) {
     }
 
     /**
@@ -23,8 +21,8 @@ class ChildInBlockService
     public function getCurrentChildOfZeitblock(Zeitblock $zeitblock, \DateTime $dateToCheck)
     {
         $kinder = $zeitblock->getKind();
-        $checkTracing = array();
-        $res = array();
+        $checkTracing = [];
+        $res = [];
         foreach ($kinder as $data) {
             $tracing = $data->getTracing();
             if (!in_array($tracing, $checkTracing)) {
@@ -39,7 +37,6 @@ class ChildInBlockService
             }
         }
 
-
         return $res;
     }
 
@@ -49,8 +46,8 @@ class ChildInBlockService
     public function getCurrentChildAndFuturerChildOfZeitblock(Zeitblock $zeitblock, \DateTime $dateToCheck)
     {
         $kinder = $zeitblock->getKind();
-        $checkTracing = array();
-        $res = array();
+        $checkTracing = [];
+        $res = [];
         foreach ($kinder as $data) {
             $tracing = $data->getTracing();
             if (!in_array($tracing, $checkTracing)) {
@@ -63,6 +60,7 @@ class ChildInBlockService
                 $checkTracing[] = $tracing;
             }
         }
+
         return $res;
     }
 
@@ -75,15 +73,15 @@ class ChildInBlockService
             if ($a->getStartDate() == $b->getStartDate()) {
                 return $a->getEltern()->getCreatedAt() <=> $b->getEltern()->getCreatedAt();
             }
+
             return $a->getStartDate() <=> $b->getStartDate();
         });
+
         return $kinds;
     }
 
     /**
      * @param Kind[] $kinds
-     * @param Zeitblock $zeitblock
-     * @param \DateTime $date
      */
     public function checkIfChildIsNowOrInFuture($kinds, Zeitblock $zeitblock, \DateTime $date): ?Kind
     {
@@ -96,54 +94,51 @@ class ChildInBlockService
                         return $data;
                     }
                 }
-
             } else {
                 // ich befinde mich nach dem start-datum
                 if (in_array($zeitblock, $data->getZeitblocks()->toArray())) {
                     return $data;
-                } else {
-                    return null;
                 }
+
+                return null;
             }
             $lastChecked = $data;
         }
+
         return null;
     }
 
     /**
      * @param Kind[] $kinds
-     * @param Zeitblock $zeitblock
-     * @param \DateTime $date
      */
     public function checkIfChildIsNow($kinds, Zeitblock $zeitblock, \DateTime $date): ?Kind
     {
         $lastChecked = null;
 
         foreach (array_reverse($kinds) as $data) {
-
             if ($data->getStartDate() <= $date) { // ich befinde mich vor dem start-datum
-
                 if (in_array($zeitblock, $data->getZeitblocks()->toArray())) {
                     return $data;
-                } else {
-                    return null;
                 }
-            }
 
+                return null;
+            }
         }
+
         return null;
     }
 
     public function getChildFOrShoolinFuture(Schule $schule, Active $active, \DateTime $startDate)
     {
-        $zb = $this->em->getRepository(Zeitblock::class)->findBy(array('deleted' => false, 'active' => $active, 'schule' => $schule));
-        $child = array();
+        $zb = $this->em->getRepository(Zeitblock::class)->findBy(['deleted' => false, 'active' => $active, 'schule' => $schule]);
+        $child = [];
 
         foreach ($zb as $data) {
             $ch = $this->getCurrentChildAndFuturerChildOfZeitblock($data, $startDate);
-            $child = array_merge($ch,$child);
+            $child = array_merge($ch, $child);
         }
         $child = array_unique($child);
+
         return $child;
     }
 }

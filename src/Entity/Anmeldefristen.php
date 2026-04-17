@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\AnmeldefristenRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\AnmeldefristenRepository::class)]
+#[ORM\Entity(repositoryClass: AnmeldefristenRepository::class)]
 class Anmeldefristen
 {
     #[ORM\Id]
@@ -19,7 +20,7 @@ class Anmeldefristen
     private $bis;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'anmeldefristens')]
+    #[ORM\ManyToOne(targetEntity: Stadt::class, inversedBy: 'anmeldefristens')]
     private $stadt;
 
     public function getId(): ?int

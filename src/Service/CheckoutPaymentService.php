@@ -2,67 +2,26 @@
 
 namespace App\Service;
 
-use App\Entity\Active;
-use App\Entity\Ferienblock;
-use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\Organisation;
 use App\Entity\Payment;
 use App\Entity\PaymentRefund;
 use App\Entity\PaymentSepa;
-use App\Entity\Rechnung;
-use App\Entity\Sepa;
-use App\Entity\Stadt;
-
 use App\Entity\Stammdaten;
-
-use App\Entity\Zeitblock;
-use App\Form\Type\ConfirmType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-
-use phpDocumentor\Reflection\Types\Boolean;
-use PHPUnit\Util\Json;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Security;
-
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Twig\Environment;
-use function Doctrine\ORM\QueryBuilder;
-
 
 // <- Add this
 
 class CheckoutPaymentService
 {
-
-
-    private $em;
-    private $braintree;
-    private $logger;
-    private $stripe;
-
-    public function __construct(CheckoutStripeService $checkoutStripeService, LoggerInterface $logger, EntityManagerInterface $entityManager, CheckoutBraintreeService $checkoutBraintreeService)
-    {
-        $this->em = $entityManager;
-        $this->braintree = $checkoutBraintreeService;
-        $this->logger = $logger;
-        $this->stripe = $checkoutStripeService;
+    public function __construct(
+        private CheckoutStripeService $stripe,
+        private LoggerInterface $logger,
+        private EntityManagerInterface $em,
+        private CheckoutBraintreeService $braintree,
+    ) {
     }
 
     public function getFerienBlocksKinder(Organisation $organisation, Stammdaten $stammdaten): ArrayCollection
@@ -75,6 +34,7 @@ class CheckoutPaymentService
             ->setParameter('eltern', $stammdaten)
             ->setParameter('organisation', $organisation);
         $query = $qb->getQuery();
+
         return new ArrayCollection($query->getResult());
     }
 
@@ -87,6 +47,7 @@ class CheckoutPaymentService
             ->andWhere('kind.eltern = :eltern')
             ->setParameter('eltern', $stammdaten);
         $query = $qb->getQuery();
+
         return new ArrayCollection($query->getResult());
     }
 
@@ -98,6 +59,7 @@ class CheckoutPaymentService
             ->andWhere('pay.stammdaten = :eltern')
             ->setParameter('eltern', $stammdaten);
         $query = $qb->getQuery();
+
         return new ArrayCollection($query->getResult());
     }
 
@@ -107,7 +69,7 @@ class CheckoutPaymentService
         try {
             $organisations = $this->getOrganisationFromStammdaten($stammdaten);
             foreach ($organisations as $data) {
-                if (!$this->em->getRepository(Payment::class)->findOneBy(array('organisation' => $data, 'stammdaten' => $stammdaten))) {
+                if (!$this->em->getRepository(Payment::class)->findOneBy(['organisation' => $data, 'stammdaten' => $stammdaten])) {
                     $res = true;
                     $blocks = $this->getFerienBlocksKinder($data, $stammdaten);
                     $summe = 0.0;
@@ -123,12 +85,13 @@ class CheckoutPaymentService
                     $payment->setBezahlt(0);
                     $payment->setUid(md5(uniqid()));
                     $payment->setFinished(false);
-                   $this->em->persist($payment);
+                    $this->em->persist($payment);
                 }
             }
             $this->em->flush();
+
             return $res;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $res;
         }
     }
@@ -156,8 +119,8 @@ class CheckoutPaymentService
         if ($secRes) {
             return $secRes;
         }
-        return new PaymentSepa();
 
+        return new PaymentSepa();
     }
 
     public function cleanPayment(Payment $payment): bool
@@ -176,32 +139,31 @@ class CheckoutPaymentService
             $this->em->flush();
 
             return true;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return false;
         }
-
     }
 
     public function getNextPayment(Stammdaten $stammdaten)
     {
-        $payment = $this->em->getRepository(Payment::class)->findBy(array('stammdaten' => $stammdaten, 'finished' => false), array('id' => 'asc'));
+        $payment = $this->em->getRepository(Payment::class)->findBy(['stammdaten' => $stammdaten, 'finished' => false], ['id' => 'asc']);
 
         if (sizeof($payment) > 0) {
             return $payment[0];
         }
-        return null;
 
+        return null;
     }
 
     public function makePayment(Stammdaten $stammdaten): float
     {
-        $payments = $this->em->getRepository(Payment::class)->findBy(array('stammdaten' => $stammdaten));
+        $payments = $this->em->getRepository(Payment::class)->findBy(['stammdaten' => $stammdaten]);
 
         $summe = 0;
         foreach ($payments as $data) {
             if ($data->getSepa()) {
                 $data->setBezahlt($data->getSumme());
-                $this->setKindFerienBlockAsPAyed($data->getOrganisation(),$data->getStammdaten());
+                $this->setKindFerienBlockAsPAyed($data->getOrganisation(), $data->getStammdaten());
             }
 
             if ($data->getBraintree()) {
@@ -209,8 +171,8 @@ class CheckoutPaymentService
                 if ($res === null) {
                     $summe++;
                 }
-                if($data->getBraintree()->getSuccess() === true){
-                    $this->setKindFerienBlockAsPAyed($data->getOrganisation(),$data->getStammdaten());
+                if ($data->getBraintree()->getSuccess() === true) {
+                    $this->setKindFerienBlockAsPAyed($data->getOrganisation(), $data->getStammdaten());
                 }
             }
             if ($data->getPaymentStripe()) {
@@ -218,12 +180,13 @@ class CheckoutPaymentService
                 if ($res === null) {
                     $summe++;
                 }
-                if($data->getPaymentStripe()->getStatus() === true){
-                    $this->setKindFerienBlockAsPAyed($data->getOrganisation(),$data->getStammdaten());
+                if ($data->getPaymentStripe()->getStatus() === true) {
+                    $this->setKindFerienBlockAsPAyed($data->getOrganisation(), $data->getStammdaten());
                 }
             }
             $summe += $data->getSumme() - $data->getBezahlt();
         }
+
         return $summe;
     }
 
@@ -235,13 +198,12 @@ class CheckoutPaymentService
             $paymentRefund->setRefundType(0);
             $paymentRefund->setGezahlt(false);
             $paymentRefund->setSummeGezahlt($paymentRefund->getSumme() - $paymentRefund->getRefundFee());
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundId' => $paymentRefund->getId(), 'type' => 'sepa'));
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('IP' => $paymentRefund->getIpAdresse(), 'type' => 'sepa'));
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('SummeGezahlt' => $paymentRefund->getSummeGezahlt(), 'type' => 'sepa'));
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Summe' => $paymentRefund->getSumme(), 'type' => 'sepa'));
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundFee' => $paymentRefund->getRefundFee(), 'type' => 'sepa'));
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundArt' => $paymentRefund->getTypeAsString(), 'type' => 'sepa'));
-
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), ['RefundId' => $paymentRefund->getId(), 'type' => 'sepa']);
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), ['IP' => $paymentRefund->getIpAdresse(), 'type' => 'sepa']);
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), ['SummeGezahlt' => $paymentRefund->getSummeGezahlt(), 'type' => 'sepa']);
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), ['Summe' => $paymentRefund->getSumme(), 'type' => 'sepa']);
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), ['RefundFee' => $paymentRefund->getRefundFee(), 'type' => 'sepa']);
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), ['RefundArt' => $paymentRefund->getTypeAsString(), 'type' => 'sepa']);
         }
         if ($payment->getBraintree()) {
             $paymentRefund->setRefundType(1);
@@ -253,8 +215,8 @@ class CheckoutPaymentService
             $paymentRefund->setGezahlt(false);
             $this->stripe->makeRefund($paymentRefund, $payment->getPaymentStripe());
         }
-        return $paymentRefund->getGezahlt();
 
+        return $paymentRefund->getGezahlt();
     }
 
     public function makeRefundPAyment(PaymentRefund $paymentRefund)
@@ -265,26 +227,28 @@ class CheckoutPaymentService
             $paymentRefund->setGezahlt(true);
             $this->em->persist($paymentRefund);
             $this->em->flush();
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('RefundId' => $paymentRefund->getId(), 'type' => 'sepa'));
-            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), array('Set Getzahlt' => $paymentRefund->getGezahlt(), 'type' => 'sepa'));
-
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), ['RefundId' => $paymentRefund->getId(), 'type' => 'sepa']);
+            $this->logger->info('storno Payment: ' . $paymentRefund->getPayment()->getId(), ['Set Getzahlt' => $paymentRefund->getGezahlt(), 'type' => 'sepa']);
         }
         if ($payment->getBraintree()) {
             $this->braintree->makeRefund($paymentRefund, $payment->getBraintree());
         }
-    return $paymentRefund->getGezahlt();
+
+        return $paymentRefund->getGezahlt();
     }
-    public function setKindFerienBlockAsPAyed(Organisation $organisation, Stammdaten $stammdaten){
+
+    public function setKindFerienBlockAsPAyed(Organisation $organisation, Stammdaten $stammdaten)
+    {
         $qb = $this->em->getRepository(KindFerienblock::class)->createQueryBuilder('kind_ferienblock')
-            ->innerJoin('kind_ferienblock.ferienblock','ferienblock')
-            ->innerJoin('kind_ferienblock.kind','kind')
+            ->innerJoin('kind_ferienblock.ferienblock', 'ferienblock')
+            ->innerJoin('kind_ferienblock.kind', 'kind')
             ->andWhere('kind.eltern = :stammdaten')
             ->andWhere('ferienblock.organisation = :org')
-            ->setParameter('stammdaten',$stammdaten)
-            ->setParameter('org',$organisation);
+            ->setParameter('stammdaten', $stammdaten)
+            ->setParameter('org', $organisation);
         $query = $qb->getQuery();
         $kindFerienblock = $query->getResult();
-        foreach ($kindFerienblock as $data){
+        foreach ($kindFerienblock as $data) {
             $data->setBezahlt(true);
             $this->em->persist($data);
         }

@@ -4,20 +4,14 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
-use App\Entity\Kind;
-use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
-use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
 final class Version20221119132509 extends AbstractMigration
 {
-
-
     public function getDescription(): string
     {
         return '';
@@ -34,5 +28,4 @@ final class Version20221119132509 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE kind DROP start_date');
     }
-
 }

@@ -9,26 +9,18 @@ use App\Entity\User;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function Doctrine\ORM\QueryBuilder;
-
 
 // <- Add this
 
 class CheckinSchulkindservice
 {
-
-
-    private $em;
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
-        $this->translator = $translator;
+    public function __construct(
+        private TranslatorInterface $translator,
+        private EntityManagerInterface $em,
+    ) {
     }
 
-    public
-    function checkin(?Kind $kind, \DateTime $dateTime, Organisation $organisation)
+    public function checkin(?Kind $kind, \DateTime $dateTime, Organisation $organisation)
     {
         $result['error'] = false;
         $result['errorText'] = 'Hallo ' . $kind->getVorname() . ', Willkommen in der Schulkindbetreuung.';
@@ -41,14 +33,12 @@ class CheckinSchulkindservice
             $result['error'] = true;
             $result['errorText'] = $this->translator->trans('Das Kind ist aktuell zu keiner Schulkindbetreuung angemeldet');
             $result['checkinText'] = $this->translator->trans('Nicht eingecheckt');
-
         } else {
             $this->getAnwesenheitToday($kind, $dateTime, $organisation);
         }
 
         return $result;
     }
-
 
     private function getZeitblock(\DateTime $dateTime, Kind $kind, Organisation $organisation)
     {
@@ -76,7 +66,6 @@ class CheckinSchulkindservice
                     ),
                     $qb->expr()->between('zb.von', ':time', ':timeLate')
                 )
-
             )
             ->setParameter('org', $organisation)
             ->setParameter('kind', $kind)
@@ -93,7 +82,6 @@ class CheckinSchulkindservice
 
     public function getAnwesenheitToday(Kind $kind, \DateTime $dateTime, Organisation $organisation)
     {
-
         $midnight = clone $dateTime;
         $midnight->setTime(0, 0, 0);
 
@@ -123,9 +111,8 @@ class CheckinSchulkindservice
         return $anwesenheit;
     }
 
-    public function getAllKidsToday(Organisation $organisation, \DateTime $dateTime,?User $user)
+    public function getAllKidsToday(Organisation $organisation, \DateTime $dateTime, ?User $user)
     {
-
         $midnight = clone $dateTime;
         $midnight->setTime(0, 0, 0);
         $dateTime->setTime(23, 59, 59);
@@ -140,25 +127,24 @@ class CheckinSchulkindservice
             ->setParameter('endDay', $dateTime)
             ->setParameter('org', $organisation);
         $orX = $qb->expr()->orX();
-        if($user){
-
-            if(sizeof($user->getSchulen()) == 0){
+        if ($user) {
+            if (sizeof($user->getSchulen()) == 0) {
                 $orX->add('k.schule = -1');
-            }else{
-                foreach ($user->getSchulen() as $data){
-                    $orX->add('k.schule =:schule'.$data->getId());
-                    $qb->setParameter('schule'.$data->getId(),$data);
+            } else {
+                foreach ($user->getSchulen() as $data) {
+                    $orX->add('k.schule =:schule' . $data->getId());
+                    $qb->setParameter('schule' . $data->getId(), $data);
                 }
             }
             $qb->andWhere($orX);
         }
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
 
     public function getAllKidsTodayandBlock(Organisation $organisation, \DateTime $dateTime, Zeitblock $zeitblock)
     {
-
         $midnight = clone $dateTime;
         $midnight->setTime(0, 0, 0);
         $dateTime->setTime(23, 59, 59);
@@ -177,6 +163,7 @@ class CheckinSchulkindservice
             ->setParameter('org', $organisation);
 
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
 }

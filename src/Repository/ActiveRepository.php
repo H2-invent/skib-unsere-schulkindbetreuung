@@ -8,7 +8,6 @@ use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Active|null find($id, $lockMode = null, $lockVersion = null)
@@ -52,10 +51,6 @@ class ActiveRepository extends ServiceEntityRepository
     }
     */
 
-
-    /**
-     * @return Active
-     */
     public function findActiveSchuljahrFromCity(Stadt $stadt): ?Active
     {
         $today = new \DateTime();
@@ -70,11 +65,11 @@ class ActiveRepository extends ServiceEntityRepository
             ->setMaxResults(1);
 
         return $qb->getOneOrNullResult();
-
     }
-     /**
-      * @return Active[] Returns an array of Active objects
-      */
+
+    /**
+     * @return Active[] Returns an array of Active objects
+     */
     public function findLaufendeSchuljahreFromCity(Stadt $stadt)
     {
         $today = new \DateTime();
@@ -87,9 +82,7 @@ class ActiveRepository extends ServiceEntityRepository
             ->orderBy('a.von', 'ASC')
             ->getQuery();
 
-
         return $qb->getResult();
-
     }
 
     /**
@@ -107,14 +100,9 @@ class ActiveRepository extends ServiceEntityRepository
             ->orderBy('a.von', 'ASC')
             ->getQuery();
 
-
         return $qb->getResult();
-
     }
 
-    /**
-     * @return Active|null
-     */
     public function findSchuljahrFromStamdaten(Stammdaten $stammdaten): ?Active
     {
         $qb = $this->createQueryBuilder('a');
@@ -136,10 +124,6 @@ class ActiveRepository extends ServiceEntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-
-    /**
-     * @return Active
-     */
     public function findSchuljahrFromKind(Kind $kind): ?Active
     {
         $qb = $this->createQueryBuilder('a');
@@ -153,14 +137,12 @@ class ActiveRepository extends ServiceEntityRepository
             ->setParameter('tracing1', $kind->getTracing())
             ->setParameter('tracing2', $kind->getTracing())
             ->setMaxResults(1);
+
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-//SELECT * FROM active INNER JOIN zeitblock ON active.id=zeitblock.active_id INNER JOIN zeitblock_kind ON zeitblock.id=zeitblock_kind.zeitblock_id INNER JOIN kind k4_ ON k4_.id=zeitblock_kind.kind_id INNER JOIN kind_zeitblock ON zeitblock.id=zeitblock_kind.zeitblock_id INNER JOIN kind k5_ ON k5_.id=zeitblock_kind.kind_id WHERE (k4_.tracing="a6e42d355167a63492c122056132d664" OR k5_.tracing="a6e42d355167a63492c122056132d664") LIMIT 1;
+    // SELECT * FROM active INNER JOIN zeitblock ON active.id=zeitblock.active_id INNER JOIN zeitblock_kind ON zeitblock.id=zeitblock_kind.zeitblock_id INNER JOIN kind k4_ ON k4_.id=zeitblock_kind.kind_id INNER JOIN kind_zeitblock ON zeitblock.id=zeitblock_kind.zeitblock_id INNER JOIN kind k5_ ON k5_.id=zeitblock_kind.kind_id WHERE (k4_.tracing="a6e42d355167a63492c122056132d664" OR k5_.tracing="a6e42d355167a63492c122056132d664") LIMIT 1;
 
-    /**
-     * @return Active
-     */
     public function findAnmeldeSchuljahrFromCity($stadt): ?Active
     {
         $today = new \DateTime();
@@ -176,10 +158,7 @@ class ActiveRepository extends ServiceEntityRepository
         return $qb->getOneOrNullResult();
     }
 
-    /**
-     * @return Active
-     */
-    public function findSchuljahrfromStadtAndStichtag(Stadt  $stadt, \DateTime $stichtag): ?Active
+    public function findSchuljahrfromStadtAndStichtag(Stadt $stadt, \DateTime $stichtag): ?Active
     {
         $qb = $this->createQueryBuilder('a')
             ->andWhere('a.stadt = :stadt')
@@ -208,9 +187,6 @@ class ActiveRepository extends ServiceEntityRepository
         return $qb->getOneOrNullResult();
     }
 
-    /**
-     * @return Active
-     */
     public function findSchuljahrFromCity(Stadt $stadt, \DateTime $today): ?Active
     {
         $qb = $this->createQueryBuilder('a');
@@ -221,6 +197,7 @@ class ActiveRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->setParameter('today', $today)
             ->setParameter('stadt', $stadt);
+
         return $qb->getQuery()->getOneOrNullResult();
     }
 
@@ -236,13 +213,13 @@ class ActiveRepository extends ServiceEntityRepository
             ->orderBy('a.bis', 'DESC')
             ->setParameter('today', $today)
             ->setParameter('stadt', $stadt);
+
         return $qb->getQuery()->getResult();
     }
 
     /**
      * @return Active[] Returns an array of Active objects
      */
-
     public function findFutureSchuljahreByCity(Stadt $stadt)
     {
         $now = new \DateTime();
@@ -258,5 +235,4 @@ class ActiveRepository extends ServiceEntityRepository
         return $qb->getQuery()
             ->getResult();
     }
-
 }

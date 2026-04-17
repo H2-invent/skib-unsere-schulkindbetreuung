@@ -7,7 +7,6 @@ use App\Entity\Sepa;
 use App\Entity\Stammdaten;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Sepa|null find($id, $lockMode = null, $lockVersion = null)
@@ -51,9 +50,8 @@ class SepaRepository extends ServiceEntityRepository
     }
     */
 
-
-     /**
-      * @return Sepa[] Returns an array of Sepa objects
+    /**
+     * @return Sepa[] Returns an array of Sepa objects
      */
     public function findSepaBetweenTwoDates(\DateTime $von, \DateTime $bis, Organisation $organisation)
     {
@@ -91,28 +89,24 @@ class SepaRepository extends ServiceEntityRepository
                             )
                         ),
 
-                            $qb->expr()->andX(
-                                $qb->expr()->gte(
-                                    's.bis',
-                                    ':bis'
-
-                                ),
-                                $qb->expr()->lte(
-                                    's.von',
-                                    ':von'
-                                )
-
-
-                        )
+                        $qb->expr()->andX(
+                            $qb->expr()->gte(
+                                's.bis',
+                                ':bis'
+                            ),
+                            $qb->expr()->lte(
+                                's.von',
+                                ':von'
+                            )
                         )
                     )
                 )
+            )
             ->setParameter('von', $von)
-            ->setParameter('bis',$bis)
+            ->setParameter('bis', $bis)
             ->setParameter('org', $organisation)
             ->setMaxResults(10)
             ->getQuery();
-
 
         return $query->getResult();
 
@@ -120,21 +114,19 @@ class SepaRepository extends ServiceEntityRepository
         // $product = ;
     }
 
-     /**
-      * @return Sepa[] Returns an array of Sepa objects
-      */
+    /**
+     * @return Sepa[] Returns an array of Sepa objects
+     */
     public function findOtherSepaBySepaAndStammdaten(Stammdaten $stammdaten, Sepa $sepa)
     {
         return $this->createQueryBuilder('s')
             ->innerJoin('s.rechnungen', 'rechnungen')
             ->innerJoin('s.organisation', 'organisation')
-            ->innerJoin('rechnungen.stammdaten','stammdaten')
-            ->andWhere('stammdaten = :stammdaten')->setParameter('stammdaten',$stammdaten)
+            ->innerJoin('rechnungen.stammdaten', 'stammdaten')
+            ->andWhere('stammdaten = :stammdaten')->setParameter('stammdaten', $stammdaten)
             ->andWhere('organisation = :organisation')->setParameter('organisation', $sepa->getOrganisation())
             ->getQuery()
             ->getResult()
         ;
     }
-
-
 }

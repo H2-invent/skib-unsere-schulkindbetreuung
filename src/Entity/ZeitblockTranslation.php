@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslationTrait;
 
@@ -23,7 +22,6 @@ class ZeitblockTranslation implements TranslationInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $blockbezeichnung;
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -41,21 +39,13 @@ class ZeitblockTranslation implements TranslationInterface
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getBlockbezeichnung()
     {
         return $this->blockbezeichnung;
     }
 
-    /**
-     * @param mixed $blockbezeichnung
-     */
-    public function setBlockbezeichnung($blockbezeichnung): void
+    public function setBlockbezeichnung(mixed $blockbezeichnung): void
     {
         $this->blockbezeichnung = $blockbezeichnung;
     }
-
-
 }

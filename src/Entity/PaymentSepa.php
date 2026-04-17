@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\PaymentSepaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-#[ORM\Entity(repositoryClass: \App\Repository\PaymentSepaRepository::class)]
+
+#[ORM\Entity(repositoryClass: PaymentSepaRepository::class)]
 class PaymentSepa
 {
     #[ORM\Id]
@@ -36,7 +38,7 @@ class PaymentSepa
     #[Assert\NotBlank]
     private $sepaAllowed;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Payment::class, mappedBy: 'sepa')]
+    #[ORM\OneToMany(targetEntity: Payment::class, mappedBy: 'sepa')]
     private $payments;
 
     public function __construct()

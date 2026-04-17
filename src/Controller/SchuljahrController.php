@@ -3,43 +3,41 @@
 namespace App\Controller;
 
 use App\Entity\Active;
-use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Form\Type\SchuljahrType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SchuljahrController extends AbstractController
 {
-    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry, private Security $security)
-    {
+    public function __construct(
+        private ManagerRegistry $managerRegistry,
+        private Security $security,
+    ) {
     }
 
-    /**
-     * @Route("city_admin/stadtschuljahr/show", name="city_admin_schuljahr_anzeige")
-     */
+    #[Route(path: 'city_admin/stadtschuljahr/show', name: 'city_admin_schuljahr_anzeige')]
     public function index(Request $request)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
         if ($stadt != $this->getUser()->getStadt()) {
             throw new \Exception('Wrong Organisation');
         }
-        $activity = $this->managerRegistry->getRepository(Active::class)->findBy(array('stadt' => $stadt));
+        $activity = $this->managerRegistry->getRepository(Active::class)->findBy(['stadt' => $stadt]);
 
         return $this->render('schuljahr/schuljahre.html.twig', [
             'city' => $stadt,
-            'schuljahre' => $activity
+            'schuljahre' => $activity,
         ]);
     }
 
-    /**
-     * @Route("city_admin/stadtschuljahr/neu", name="city_admin_schuljahr_neu")
-     */
+    #[Route(path: 'city_admin/stadtschuljahr/neu', name: 'city_admin_schuljahr_neu')]
     public function neu(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $stadt = $this->managerRegistry->getRepository(Stadt::class)->find($request->get('id'));
@@ -59,7 +57,7 @@ class SchuljahrController extends AbstractController
         ]);
         $form->handleRequest($request);
 
-        $errors = array();
+        $errors = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $activity = $form->getData();
 
@@ -70,18 +68,16 @@ class SchuljahrController extends AbstractController
                 $em->persist($activity);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich angelegt');
-                return $this->redirectToRoute('city_admin_schuljahr_anzeige', array('id' => $stadt->getId(), 'snack' => $text));
-            }
 
+                return $this->redirectToRoute('city_admin_schuljahr_anzeige', ['id' => $stadt->getId(), 'snack' => $text]);
+            }
         }
         $title = $translator->trans('Schuljahr anlegen');
-        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
 
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
-    /**
-     * @Route("city_admin/stadtschuljahr/edit", name="city_admin_schuljahr_edit")
-     */
+    #[Route(path: 'city_admin/stadtschuljahr/edit', name: 'city_admin_schuljahr_edit')]
     public function edit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $activity = $this->managerRegistry->getRepository(Active::class)->find($request->get('id'));
@@ -101,7 +97,7 @@ class SchuljahrController extends AbstractController
         ]);
         $form->handleRequest($request);
 
-        $errors = array();
+        $errors = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $activity = $form->getData();
             $errors = $validator->validate($activity);
@@ -111,18 +107,16 @@ class SchuljahrController extends AbstractController
                 $em->persist($activity);
                 $em->flush();
                 $text = $translator->trans('Erfolgreich geändert');
-                return $this->redirectToRoute('city_admin_schuljahr_anzeige', array('id' => $activity->getStadt()->getId(), 'snack' => $text));
-            }
 
+                return $this->redirectToRoute('city_admin_schuljahr_anzeige', ['id' => $activity->getStadt()->getId(), 'snack' => $text]);
+            }
         }
         $title = $translator->trans('Schuljahr bearbeiten');
-        return $this->render('administrator/neu.html.twig', array('title' => $title, 'form' => $form->createView(), 'errors' => $errors));
 
+        return $this->render('administrator/neu.html.twig', ['title' => $title, 'form' => $form, 'errors' => $errors]);
     }
 
-    /**
-     * @Route("city_admin/stadtschuljahr/delete", name="city_admin_schuljahr_delete")
-     */
+    #[Route(path: 'city_admin/stadtschuljahr/delete', name: 'city_admin_schuljahr_delete')]
     public function delete(Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
     {
         $activity = $this->managerRegistry->getRepository(Active::class)->find($request->get('id'));
@@ -139,7 +133,7 @@ class SchuljahrController extends AbstractController
         $em->remove($activity);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
-        return $this->redirectToRoute('city_admin_schuljahr_anzeige', array('id' => $activity->getStadt()->getId(), 'snack' => $text));
 
+        return $this->redirectToRoute('city_admin_schuljahr_anzeige', ['id' => $activity->getStadt()->getId(), 'snack' => $text]);
     }
 }

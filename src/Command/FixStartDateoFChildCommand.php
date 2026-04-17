@@ -5,7 +5,6 @@ namespace App\Command;
 use App\Entity\Kind;
 use App\Service\CopyChildToNewSchuljahr;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,18 +13,16 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 class FixStartDateoFChildCommand extends Command
 {
     protected static $defaultName = 'app:fix:wrongShoolyear';
-    private $em;
-    private CopyChildToNewSchuljahr $copyChildToNewSchuljahr;
 
-    public function __construct(EntityManagerInterface $entityManager, CopyChildToNewSchuljahr $copyChildToNewSchuljahr, string $name = null)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+        private CopyChildToNewSchuljahr $copyChildToNewSchuljahr,
+        ?string $name = null,
+    ) {
         parent::__construct($name);
-        $this->em = $entityManager;
-        $this->copyChildToNewSchuljahr = $copyChildToNewSchuljahr;
     }
 
     protected function configure(): void

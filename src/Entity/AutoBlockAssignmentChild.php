@@ -6,7 +6,6 @@ use App\Repository\AutoBlockAssignmentChildRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AutoBlockAssignmentChildRepository::class)]
 #[ORM\Index(fields: ['weight'])]
@@ -24,7 +23,7 @@ class AutoBlockAssignmentChild
     #[ORM\OneToMany(mappedBy: 'child', targetEntity: AutoBlockAssignmentChildZeitblock::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $zeitblocks;
 
-    #[ORM\OneToOne]
+    #[ORM\OneToOne(inversedBy: 'autoBlockAssignmentChild')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Kind $kind = null;
 

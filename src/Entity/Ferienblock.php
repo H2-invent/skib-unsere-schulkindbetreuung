@@ -2,16 +2,16 @@
 
 namespace App\Entity;
 
+use App\Repository\FerienblockRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable as Translatable;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: \App\Repository\FerienblockRepository::class)]
-class Ferienblock  implements TranslatableInterface
+#[ORM\Entity(repositoryClass: FerienblockRepository::class)]
+class Ferienblock implements TranslatableInterface
 {
     use TranslatableTrait;
     #[ORM\Id]
@@ -63,13 +63,12 @@ class Ferienblock  implements TranslatableInterface
     #[ORM\Column(type: 'json')]
     private $preis = [];
 
-
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'ferienblocks')]
+    #[ORM\ManyToOne(targetEntity: Stadt::class, inversedBy: 'ferienblocks')]
     private $stadt;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'ferienblocks')]
+    #[ORM\ManyToOne(targetEntity: Organisation::class, inversedBy: 'ferienblocks')]
     private $organisation;
 
     #[ORM\Column(type: 'integer', nullable: true)]
@@ -78,14 +77,14 @@ class Ferienblock  implements TranslatableInterface
     #[ORM\Column(type: 'json', nullable: true)]
     private $namePreise = [];
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\KindFerienblock::class, mappedBy: 'ferienblock')]
+    #[ORM\OneToMany(targetEntity: KindFerienblock::class, mappedBy: 'ferienblock')]
     private $kindFerienblocks;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $warteliste;
 
     #[ORM\Column(type: 'boolean')]
-    private $modeMaximal=false;
+    private $modeMaximal = false;
 
     #[ORM\Column(type: 'json', nullable: true)]
     private $customQuestion = [];
@@ -99,15 +98,11 @@ class Ferienblock  implements TranslatableInterface
     #[ORM\Column(type: 'integer', nullable: true)]
     private $amountVoucher;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Tags::class, inversedBy: 'feriens')]
+    #[ORM\ManyToMany(targetEntity: Tags::class, inversedBy: 'feriens')]
     private $kategorie;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $individualQuestions;
-
-
-
-
 
     public function __construct()
     {
@@ -117,8 +112,6 @@ class Ferienblock  implements TranslatableInterface
         $this->kinderStorniert = new ArrayCollection();
         $this->kindFerienblocks = new ArrayCollection();
         $this->kategorie = new ArrayCollection();
-
-
     }
 
     public function getId(): ?int
@@ -270,7 +263,6 @@ class Ferienblock  implements TranslatableInterface
         return $this;
     }
 
-
     public function getStadt(): ?Stadt
     {
         return $this->stadt;
@@ -349,98 +341,112 @@ class Ferienblock  implements TranslatableInterface
 
         return $this;
     }
+
     public function getKindFerienblocksGesamt(): Collection
     {
-        $res = array();
+        $res = [];
         $kind_ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($kind_ferienblock as $data){
-            if($data->getState() <20 && $data->getKind()->getFin()){
+        foreach ($kind_ferienblock as $data) {
+            if ($data->getState() < 20 && $data->getKind()->getFin()) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
+
     public function getKindFerienblocksBeworben(): Collection
     {
-        $res = array();
+        $res = [];
         $kind_ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($kind_ferienblock as $data){
-            if($data->getState() == 0 && $data->getKind()->getFin()){
+        foreach ($kind_ferienblock as $data) {
+            if ($data->getState() == 0 && $data->getKind()->getFin()) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
+
     /**
      * @return Collection|KindFerienblock[]
      */
     public function getKindFerienblocksGebucht(): Collection
     {
-        $res = array();
+        $res = [];
 
         $kind_ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($kind_ferienblock as $data){
-            if($data->getState() == 10 && $data->getKind()->getFin()){
+        foreach ($kind_ferienblock as $data) {
+            if ($data->getState() == 10 && $data->getKind()->getFin()) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
+
     /**
      * @return Collection|KindFerienblock[]
      */
     public function getKindFerienblocksWarteliste(): Collection
     {
-        $res = array();
+        $res = [];
 
         $kind_ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($kind_ferienblock as $data){
-            if($data->getState() == 15 && $data->getKind()->getFin()){
+        foreach ($kind_ferienblock as $data) {
+            if ($data->getState() == 15 && $data->getKind()->getFin()) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
+
     /**
      * @return Collection|KindFerienblock[]
      */
     public function getKindFerienblocksStorniert(): Collection
     {
-        $res = array();
+        $res = [];
         $kind_ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($kind_ferienblock as $data){
-            if($data->getState() == 20 && $data->getKind()->getFin()){
+        foreach ($kind_ferienblock as $data) {
+            if ($data->getState() == 20 && $data->getKind()->getFin()) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
+
     /**
      * @return Collection|KindFerienblock[]
      */
     public function getKindFerienblocksBezahlt(): Collection
     {
-        $res = array();
+        $res = [];
         $ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($ferienblock as $data){
-            if($data->getBezahlt() === true){
+        foreach ($ferienblock as $data) {
+            if ($data->getBezahlt() === true) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
+
     /**
      * @return Collection|KindFerienblock[]
      */
     public function getKindFerienblocksNichtBezahlt(): Collection
     {
-        $res = array();
+        $res = [];
         $ferienblock = $this->kindFerienblocks->toArray();
-        foreach ($ferienblock as $data){
-            if($data->getBezahlt() === false){
+        foreach ($ferienblock as $data) {
+            if ($data->getBezahlt() === false) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
 
@@ -553,7 +559,4 @@ class Ferienblock  implements TranslatableInterface
 
         return $this;
     }
-
-
-
 }

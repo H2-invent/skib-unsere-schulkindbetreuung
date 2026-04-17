@@ -3,24 +3,19 @@
 namespace App\Controller;
 
 use App\Form\Type\SupportForm;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use it\thecsea\osticket_php_client\OsticketPhpClient;
 use it\thecsea\osticket_php_client\OsticketPhpClientException;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SupportController extends AbstractController
 {
-    /**
-     * @Route("/login/support/new", name="support")
-     */
+    #[Route(path: '/login/support/new', name: 'support')]
     public function index(Request $request, ParameterBagInterface $parameterBag)
     {
-        $arr = array(
+        $arr = [
             'name' => $this->getUser()->getVorname() . '-' . $this->getUser()->getNachname(),
             'email' => $this->getUser()->getEmail(),
             'phone' => '',
@@ -29,25 +24,24 @@ class SupportController extends AbstractController
             'datenschutz' => true,
             'topicId' => '17',
             'user' => $this->getUser()->getUsername(),
-        );
+        ];
         $form = $this->createForm(SupportForm::class, $arr);
         $form->handleRequest($request);
 
-        $errors = array();
+        $errors = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $arr = $form->getData();
-            $arr['message']='data:text/html,'.$arr['message'];
+            $arr['message'] = 'data:text/html,' . $arr['message'];
             $support = new OsticketPhpClient($parameterBag->get('osTicketUrl'), $parameterBag->get('osTicketApi'));
-             try{
-            $support->request('api/tickets.json', $arr);
+            try {
+                $support->request('api/tickets.json', $arr);
 
-            return $this->redirectToRoute('dashboard',array('snack'=>"Es wurde erfolgreich ein Ticket angelegt"));
-             }catch(OsticketPhpClientException $e){
-                 return $this->redirectToRoute('dashboard',array('snack'=>"Fehler beim Anlegen des Tickets."));
-
-             }
+                return $this->redirectToRoute('dashboard', ['snack' => 'Es wurde erfolgreich ein Ticket angelegt']);
+            } catch (OsticketPhpClientException) {
+                return $this->redirectToRoute('dashboard', ['snack' => 'Fehler beim Anlegen des Tickets.']);
+            }
         }
-        return $this->render('administrator/neuValidate.html.twig', array('errors' => $errors, 'form' => $form->createView(), 'title' => "Melden Sie hier ein Problem oder machen Sie einen Verbesserungsvorschlag"));
 
+        return $this->render('administrator/neuValidate.html.twig', ['errors' => $errors, 'form' => $form, 'title' => 'Melden Sie hier ein Problem oder machen Sie einen Verbesserungsvorschlag']);
     }
 }

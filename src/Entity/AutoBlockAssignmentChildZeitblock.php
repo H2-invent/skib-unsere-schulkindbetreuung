@@ -19,7 +19,7 @@ class AutoBlockAssignmentChildZeitblock
     #[ORM\JoinColumn(nullable: false)]
     private ?AutoBlockAssignmentChild $child = null;
 
-    #[ORM\ManyToOne(cascade: ['persist'])]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'autoBlockAssignmentChildZeitblock')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['confirm_child'])]
     private ?Zeitblock $zeitblock = null;

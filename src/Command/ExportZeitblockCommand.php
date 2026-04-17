@@ -16,12 +16,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'app:export-zeitblock', description: 'Exportiert Zeitblöcke in eine CSV-Datei')]
 class ExportZeitblockCommand extends Command
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+    ) {
         parent::__construct();
-        $this->entityManager = $entityManager;
     }
 
     protected function configure(): void
@@ -41,9 +39,9 @@ class ExportZeitblockCommand extends Command
 
         if (empty($zeitbloecke)) {
             $io->warning('Keine Zeitblöcke für das Schuljahr gefunden.');
+
             return Command::FAILURE;
         }
-
 
         $preise_length = sizeof($zeitbloecke[0]->getPreise());
 
@@ -70,7 +68,7 @@ class ExportZeitblockCommand extends Command
                 $zeitblock->getBis()->diff($zeitblock->getVon())->format('%H:%i:%s'),
                 '',
                 $zeitblock->getWochentag(),
-                $zeitblock->getGanztag()
+                $zeitblock->getGanztag(),
             ];
             foreach ($zeitblock->getPreise() as $preis) {
                 $data[] = $preis;
@@ -80,6 +78,7 @@ class ExportZeitblockCommand extends Command
 
         $io->success('Export erfolgreich!');
         $io->success(sprintf('We print %s rows to the file "%s"', count($zeitbloecke), $csvFile));
+
         return Command::SUCCESS;
     }
 }

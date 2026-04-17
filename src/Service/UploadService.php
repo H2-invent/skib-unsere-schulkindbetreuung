@@ -12,14 +12,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UploadService
 {
-    private FilesystemOperator $internFileSystem;
-    private ValidatorInterface $validator;
-    private $em;
-    public function __construct(FilesystemOperator $internFileSystem, ValidatorInterface $validator, EntityManagerInterface $entityManager)
-    {
-        $this->internFileSystem = $internFileSystem;
-        $this->validator = $validator;
-        $this->em = $entityManager;
+    public function __construct(
+        private FilesystemOperator $internFileSystem,
+        private ValidatorInterface $validator,
+        private EntityManagerInterface $em,
+    ) {
     }
 
     public function uploadFile(UploadedFile $uploadedFile, string $maxSize = '50M')
@@ -28,7 +25,7 @@ class UploadService
             $uploadedFile,
             [
                 new NotBlank([
-                    'message' => 'Please select a file to upload'
+                    'message' => 'Please select a file to upload',
                 ]),
                 new File([
                     'maxSize' => $maxSize,
@@ -41,14 +38,15 @@ class UploadService
                         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                         'application/vnd.openxmlformats-officedocument.presentationml.presentation',
                         'text/plain',
-                        'application/zip'
-                    ]
-                ])
+                        'application/zip',
+                    ],
+                ]),
             ]
         );
         if ($violations->count() > 0) {
             /** @var ConstraintViolation $violation */
             $violation = $violations[0];
+
             return null;
         }
 
@@ -64,7 +62,7 @@ class UploadService
         $file->setSize($uploadedFile->getSize());
         $this->em->persist($file);
         $this->em->flush();
-        return $file;
 
+        return $file;
     }
 }

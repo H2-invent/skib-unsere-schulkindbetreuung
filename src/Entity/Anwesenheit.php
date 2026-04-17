@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\AnwesenheitRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\AnwesenheitRepository::class)]
+#[ORM\Entity(repositoryClass: AnwesenheitRepository::class)]
 class Anwesenheit
 {
     #[ORM\Id]
@@ -13,7 +14,7 @@ class Anwesenheit
     private $id;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Kind::class, inversedBy: 'anwesenheitenSchulkindbetreuung')]
+    #[ORM\ManyToOne(targetEntity: Kind::class, inversedBy: 'anwesenheitenSchulkindbetreuung')]
     private $kind;
 
     #[ORM\Column(type: 'datetime')]
@@ -23,7 +24,7 @@ class Anwesenheit
     private $arrivedAt;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'anwesenheitSchulkindbetreuung')]
+    #[ORM\ManyToOne(targetEntity: Organisation::class, inversedBy: 'anwesenheitSchulkindbetreuung')]
     private $organisation;
 
     public function getId(): ?int

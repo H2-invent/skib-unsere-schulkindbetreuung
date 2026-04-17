@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service\AutoBlockAssignment;
@@ -14,7 +15,6 @@ use App\Repository\KindRepository;
 use App\Repository\ZeitblockRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerAwareTrait;
-use RuntimeException;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 class DraftCreator
@@ -29,8 +29,7 @@ class DraftCreator
         private KindRepository $kindRepository,
         private EntityManagerInterface $entityManager,
         private DraftCreationValidator $draftCreationValidator,
-    )
-    {
+    ) {
     }
 
     public function create(Organisation $organisation, Active $schuljahr): void
@@ -47,7 +46,7 @@ class DraftCreator
     {
         $stadt = $organisation->getStadt();
         if ($stadt === null) {
-            throw new RuntimeException("No stadt found for organisation: " . $organisation->getId());
+            throw new \RuntimeException('No stadt found for organisation: ' . $organisation->getId());
         }
 
         $kinder = $this->kindRepository->findKindWithBeworbenZeitblocksForSchuljahr($organisation, $schuljahr);
@@ -66,7 +65,7 @@ class DraftCreator
             $autoBlockAssignmentChild = (new AutoBlockAssignmentChild())
                 ->setAutoBlockAssignment($autoBlockAssignment)
                 ->setKind($kind)
-                ->setWeight((float)$weight)
+                ->setWeight((float) $weight)
             ;
             $autoBlockAssignment->addChild($autoBlockAssignmentChild);
             $this->entityManager->persist($autoBlockAssignmentChild);

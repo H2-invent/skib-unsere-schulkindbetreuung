@@ -40,7 +40,7 @@ class Geschwister
 
     public function __construct()
     {
-        if (!$this->uid || $this->uid =''){
+        if (!$this->uid || $this->uid = '') {
             $this->uid = md5(uniqid());
         }
         $this->file = new ArrayCollection();

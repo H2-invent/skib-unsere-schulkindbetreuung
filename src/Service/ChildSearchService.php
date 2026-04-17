@@ -3,37 +3,28 @@
 namespace App\Service;
 
 use App\Entity\Active;
-use App\Entity\Anwesenheit;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Entity\User;
-use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function Doctrine\ORM\QueryBuilder;
-
 
 // <- Add this
 
 class ChildSearchService
 {
-
-
-    private $em;
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
-        $this->translator = $translator;
+    public function __construct(
+        private TranslatorInterface $translator,
+        private EntityManagerInterface $em,
+    ) {
     }
 
     /**
      * @return Kind[]
      */
-    public function searchChild($parameters, ?Organisation $organisation, $isApp, ?User $user, ?\DateTime $dateFrom = null, ?\DateTime $dateTo = null, Stadt $stadt = null)
+    public function searchChild($parameters, ?Organisation $organisation, $isApp, ?User $user, ?\DateTime $dateFrom = null, ?\DateTime $dateTo = null, ?Stadt $stadt = null)
     {
         if (!$dateFrom) {
             $dateFrom = new \DateTime();
@@ -51,10 +42,8 @@ class ChildSearchService
             $diff = true;
         }
 
-
-        //Schule als Filter ausgewählt
-        if (isset($parameters['schule']) && $parameters['schule'] !== "") {
-
+        // Schule als Filter ausgewählt
+        if (isset($parameters['schule']) && $parameters['schule'] !== '') {
             $schule = $this->em->getRepository(Schule::class)->find($parameters['schule']);
             $qb->innerJoin('k.schule', 'schule')
                 ->andWhere('schule = :schule')->setParameter('schule', $schule);
@@ -75,7 +64,7 @@ class ChildSearchService
 
         if (isset($parameters['status']) && $parameters['status'] === 'beworben') {
             $qb->leftJoin('k.beworben', 'beworben');
-        } else if (isset($parameters['status']) && $parameters['status'] === 'warteliste') {
+        } elseif (isset($parameters['status']) && $parameters['status'] === 'warteliste') {
             $qb->leftJoin('k.warteliste', 'warteliste');
         }
 
@@ -92,7 +81,6 @@ class ChildSearchService
             }
             $qb->andWhere($orX);
         }
-
 
         $qb->addOrderBy('k.startDate', 'ASC');
 
@@ -115,7 +103,6 @@ class ChildSearchService
             }
         }
 
-
         if (count($parameters) > 0) {
             foreach ($kinderRes as $key => $data) {
                 $check = $this->checkKindOfParameter($parameters, $data, $diff);
@@ -125,26 +112,23 @@ class ChildSearchService
             }
         }
 
-
         return $kinderRes;
-
     }
 
-    public
-    function checkKindOfParameter($parameters, Kind $kind, $diff = false)
+    public function checkKindOfParameter($parameters, Kind $kind, $diff = false)
     {
-        //Schuljahr als Filter
-        if (isset($parameters['schuljahr']) && $parameters['schuljahr'] !== "" && !$diff) {
+        // Schuljahr als Filter
+        if (isset($parameters['schuljahr']) && $parameters['schuljahr'] !== '' && !$diff) {
             $jahr = $this->em->getRepository(Active::class)->find($parameters['schuljahr']);
             if ($kind->getSchuljahr() !== $jahr) {
                 return false;
             }
         }
-        //Wochentag als Filter
-        if (isset($parameters['wochentag']) && $parameters['wochentag'] !== "") {
+        // Wochentag als Filter
+        if (isset($parameters['wochentag']) && $parameters['wochentag'] !== '') {
             $hasMatchingWochentag = false;
             foreach ($kind->getRealZeitblocks() as $zeitblock) {
-                if ($zeitblock->getWochentag() === (int)$parameters['wochentag']) {
+                if ($zeitblock->getWochentag() === (int) $parameters['wochentag']) {
                     $hasMatchingWochentag = true;
                     break;
                 }
@@ -154,23 +138,24 @@ class ChildSearchService
             }
         }
 
-        //block ausgewählt
-        if (isset($parameters['block']) && $parameters['block'] !== "") {   // wenn der Block angezeigt werden soll, dann auch von gelöschten Blöcken
+        // block ausgewählt
+        if (isset($parameters['block']) && $parameters['block'] !== '') {   // wenn der Block angezeigt werden soll, dann auch von gelöschten Blöcken
             foreach ($kind->getRealZeitblocks() as $zeitblock) {
-                if ($zeitblock->getId() === (int)$parameters['block']) {
+                if ($zeitblock->getId() === (int) $parameters['block']) {
                     continue;
                 }
+
                 return false;
             }
-        } else if (isset($parameters['status']) && $parameters['status'] === 'beworben') {
+        } elseif (isset($parameters['status']) && $parameters['status'] === 'beworben') {
             if (count($kind->getRealBeworben()) <= 0) {
                 return false;
             }
-        } else if (isset($parameters['status']) && $parameters['status'] === 'warteliste') {
+        } elseif (isset($parameters['status']) && $parameters['status'] === 'warteliste') {
             if (count($kind->getRealWarteliste()) <= 0) {
                 return false;
             }
-        } else if ($diff) {
+        } elseif ($diff) {
             if (count($kind->getRealWarteliste()) === 0 && count($kind->getRealZeitblocks()) === 0 && count($kind->getRealBeworben()) === 0) {
                 return false;
             }
@@ -187,9 +172,9 @@ class ChildSearchService
             }
         }
 
-        //Jahrgangsstufe ausgewählt
-        if (isset($parameters['klasse']) && $parameters['klasse'] !== "") {
-            if ($kind->getKlasse() !== (int)$parameters['klasse']) {
+        // Jahrgangsstufe ausgewählt
+        if (isset($parameters['klasse']) && $parameters['klasse'] !== '') {
+            if ($kind->getKlasse() !== (int) $parameters['klasse']) {
                 return false;
             }
         }

@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\PaymentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\PaymentRepository::class)]
+#[ORM\Entity(repositoryClass: PaymentRepository::class)]
 class Payment
 {
     #[ORM\Id]
@@ -18,11 +19,11 @@ class Payment
     private $summe;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'paymentsFerien')]
+    #[ORM\ManyToOne(targetEntity: Organisation::class, inversedBy: 'paymentsFerien')]
     private $organisation;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stammdaten::class, inversedBy: 'paymentFerien')]
+    #[ORM\ManyToOne(targetEntity: Stammdaten::class, inversedBy: 'paymentFerien')]
     private $stammdaten;
 
     #[ORM\Column(type: 'datetime')]
@@ -31,16 +32,16 @@ class Payment
     #[ORM\Column(type: 'text')]
     private $ipAdresse;
 
-    #[ORM\ManyToOne(targetEntity: \App\Entity\PaymentSepa::class, inversedBy: 'payments', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: PaymentSepa::class, inversedBy: 'payments', cascade: ['persist', 'remove'])]
     private $sepa;
 
-    #[ORM\OneToOne(targetEntity: \App\Entity\PaymentBraintree::class, inversedBy: 'payment', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: PaymentBraintree::class, inversedBy: 'payment', cascade: ['persist', 'remove'])]
     private $braintree;
 
     #[ORM\Column(type: 'float')]
     private $bezahlt;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\PaymentRefund::class, mappedBy: 'payment')]
+    #[ORM\OneToMany(targetEntity: PaymentRefund::class, mappedBy: 'payment')]
     private $refunds;
 
     #[ORM\Column(type: 'text')]
@@ -49,7 +50,7 @@ class Payment
     #[ORM\Column(type: 'boolean')]
     private $finished;
 
-    #[ORM\OneToOne(targetEntity: \App\Entity\PaymentStripe::class, inversedBy: 'payment', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: PaymentStripe::class, inversedBy: 'payment', cascade: ['persist', 'remove'])]
     private $paymentStripes;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -129,21 +130,24 @@ class Payment
     {
         return $this->sepa;
     }
+
     public function getTypeAsString(): ?string
     {
-        $output =array();
-        if($this->sepa){
+        $output = [];
+        if ($this->sepa) {
             $output[] = 'SEPA';
         }
-        if ($this->braintree){
+        if ($this->braintree) {
             $output[] = 'Braintree';
         }
-        if ($this->paymentStripes){
+        if ($this->paymentStripes) {
             $output[] = 'Stripe';
         }
+
         // hier können noch mehr Zahlmetoden rein
-        return  implode(', ',$output );
+        return implode(', ', $output);
     }
+
     public function setSepa(?PaymentSepa $sepa): self
     {
         $this->sepa = $sepa;
@@ -253,6 +257,4 @@ class Payment
 
         return $this;
     }
-
-
 }

@@ -3,47 +3,40 @@
 namespace App\Controller;
 
 use App\Entity\Payment;
-use App\Entity\PaymentBraintree;
 use App\Entity\PaymentStripe;
 use App\Entity\Stadt;
 use App\Service\CheckoutBraintreeService;
 use App\Service\CheckoutPaymentService;
 use App\Service\StamdatenFromCookie;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentStripeController extends AbstractController
 {
-    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
-    {
-
+    public function __construct(
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
 
-    /**
-     * @Route("/{slug}/ferien/stripe/prepare",name="ferien_stripe_start",methods={"Get"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
-    public function paymentPrepareAction(CheckoutPaymentService $checkoutPaymentService, Stadt $stadt, TranslatorInterface $translator, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
+    #[Route(path: '/{slug}/ferien/stripe/prepare', name: 'ferien_stripe_start', methods: ['Get'])]
+    public function paymentPrepareAction(CheckoutPaymentService $checkoutPaymentService, #[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt, TranslatorInterface $translator, CheckoutBraintreeService $checkoutBraintreeService, Request $request, StamdatenFromCookie $stamdatenFromCookie)
     {
         if ($stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE)) {
             $adresse = $stamdatenFromCookie->getStammdatenFromCookie($request, FerienController::BEZEICHNERCOOKIE);
         }
-        $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(array('uid'=>$request->get('id')));
+        $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(['uid' => $request->get('id')]);
 
-        return $this->render('payment_stripe/index.html.twig', array('payment' => $payment, 'stadt' => $stadt,'org'=>$payment->getOrganisation()));
+        return $this->render('payment_stripe/index.html.twig', ['payment' => $payment, 'stadt' => $stadt, 'org' => $payment->getOrganisation()]);
     }
 
-    /**
-     * @Route("/{slug}/ferien/stripe/recieveToken",name="ferien_stripe_token", methods={"POST"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
-    public function paymentrecieveNonceAction( Stadt $stadt, Request $request)
+    #[Route(path: '/{slug}/ferien/stripe/recieveToken', name: 'ferien_stripe_token', methods: ['POST'])]
+    public function paymentrecieveNonceAction(#[MapEntity(mapping: ['slug' => 'slug'])] Stadt $stadt, Request $request)
     {
-        $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(array('uid' => $request->get('paymentId')));
+        $payment = $this->managerRegistry->getRepository(Payment::class)->findOneBy(['uid' => $request->get('paymentId')]);
         $stripe = new PaymentStripe();
         $stripe->setChargeId($request->get('stripeToken'));
         $payment->setPaymentStripe($stripe);
@@ -54,6 +47,7 @@ class PaymentStripeController extends AbstractController
         $em->persist($stripe);
         $em->persist($payment);
         $em->flush();
-        return $this->redirectToRoute('ferien_zusammenfassung',array('slug'=>$stadt->getSlug()));
+
+        return $this->redirectToRoute('ferien_zusammenfassung', ['slug' => $stadt->getSlug()]);
     }
 }

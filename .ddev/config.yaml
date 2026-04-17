@@ -1,7 +1,7 @@
 name: skib-unsere-schulkindbetreuung
 type: symfony
 docroot: public
-php_version: "8.2"
+php_version: "8.4"
 webserver_type: nginx-fpm
 xdebug_enabled: false
 additional_hostnames: [ ]
@@ -14,12 +14,15 @@ composer_version: "2"
 corepack_enable: false
 
 web_extra_daemons:
-  - name: "messenger"
-    command: "php bin/console messenger:consume async -vv"
-    directory: /var/www/html
   - name: "npm-watch"
     command: "npm run watch"
     directory: /var/www/html
+
+hooks:
+  post-start:
+    - exec: npm install
+    - exec: composer install
+    - exec: symfony run --daemon --watch=config,src,templates,vendor php bin/console messenger:consume async -vv
 
 # Key features of DDEV's config.yaml:
 

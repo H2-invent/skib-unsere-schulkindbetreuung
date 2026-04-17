@@ -7,8 +7,6 @@ use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use App\Repository\KindRepository;
 use App\Service\ChildInBlockService;
-use App\Service\WidgetService;
-use App\Twig\Eltern;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -20,7 +18,6 @@ class ChildInBlockSizeTest extends KernelTestCase
     private $k4;
     private $k5;
     private $zeitblock;
-
 
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
@@ -54,7 +51,7 @@ class ChildInBlockSizeTest extends KernelTestCase
             $this->k1,
             $this->k5,
             $this->k2,
-            $this->k3
+            $this->k3,
         ], $res);
     }
 
@@ -79,7 +76,6 @@ class ChildInBlockSizeTest extends KernelTestCase
             $this->k2,
             $this->k4,
             $this->k3,
-
         ], $res);
     }
 
@@ -95,7 +91,6 @@ class ChildInBlockSizeTest extends KernelTestCase
             $this->k2,
             $this->k4,
             $this->k3,
-
         ];
 
         self::assertEquals(null, $widgetService->checkIfChildIsNow($kinder, $this->zeitblock, new \DateTime('31.12.2021')));
@@ -105,7 +100,6 @@ class ChildInBlockSizeTest extends KernelTestCase
         self::assertEquals($this->k3, $widgetService->checkIfChildIsNow($kinder, $this->zeitblock, new \DateTime('01.04.2022')));
         self::assertEquals($this->k3, $widgetService->checkIfChildIsNow($kinder, $this->zeitblock, new \DateTime('01.06.2022')));
     }
-
 
     public function testNumberBlock()
     {
@@ -140,5 +134,4 @@ class ChildInBlockSizeTest extends KernelTestCase
         self::assertEquals([], $widgetService->getCurrentChildOfZeitblock($this->zeitblock, new \DateTime('01.03.2022')));
         self::assertEquals([$this->k3], $widgetService->getCurrentChildOfZeitblock($this->zeitblock, new \DateTime('01.04.2022')));
     }
-
 }

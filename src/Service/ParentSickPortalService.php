@@ -8,7 +8,7 @@ use App\Entity\ParentSickPortalAccess;
 use App\Entity\Stadt;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\UriSigner;
+use Symfony\Component\HttpFoundation\UriSigner;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
@@ -16,7 +16,7 @@ use Twig\Environment;
 class ParentSickPortalService
 {
     public const SESSION_KEY_ACCESS = 'parent_sick_access_id';
-    private const VALIDITY_TIME = '24 hours';
+    private const string VALIDITY_TIME = '24 hours';
 
     public function __construct(
         private UriSigner $uriSigner,

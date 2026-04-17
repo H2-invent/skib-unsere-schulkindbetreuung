@@ -1,4 +1,4 @@
-FROM thecodingmachine/php:8.2-v4-fpm-node22 AS builder
+FROM thecodingmachine/php:8.4-v5-fpm-node22 AS builder
 ARG VERSION=development
 
 ENV PHP_EXTENSION_LDAP=1
@@ -26,7 +26,7 @@ RUN tar \
     --exclude='./var/log' \
     -zcvf /artifact.tgz .
 
-FROM reg.h2-invent.com/public-system-design/alpine-php8-cron-webserver:3.23.3
+FROM reg.h2-invent.com/public-system-design/alpine-php84-cron-webserver:3.23.3-4303
 ARG VERSION=development
 
 LABEL version="${VERSION}" \

@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 03.10.2019
- * Time: 19:01
+ * Time: 19:01.
  */
 
 namespace App\Service;
-
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -17,31 +17,25 @@ use Symfony\Component\Mime\Email;
 
 class MailerService
 {
-
-
-    private $parameter;
-    private $mailer;
-
-    public function __construct(ParameterBagInterface $parameterBag, MailerInterface $mailer, private LoggerInterface $logger)
-    {
-        $this->mailer = $mailer;
-        $this->parameter = $parameterBag;
-
+    public function __construct(
+        private ParameterBagInterface $parameter,
+        private MailerInterface $mailer,
+        private LoggerInterface $logger,
+    ) {
     }
 
-    public function sendEmail($sender, $from, $to, $betreff, $content, $replyTo, $attachment = array())
+    public function sendEmail($sender, $from, $to, $betreff, $content, $replyTo, $attachment = [])
     {
         $from = $this->parameter->get('confirmEmailSender');
-        if (!$to){
+        if (!$to) {
             return false;
         }
         $this->sendViaMailer($sender, $to, $betreff, $content, $replyTo, $attachment);
     }
 
-    private function sendViaMailer($sender, $to, $betreff, $content, $replyTo, $attachment = array())
+    private function sendViaMailer($sender, $to, $betreff, $content, $replyTo, $attachment = [])
     {
         try {
-
             $message = (new Email())
                 ->subject($betreff)
                 ->from(new Address('noreply@unsere-schulkindbetreuung.de', $sender))
@@ -51,13 +45,12 @@ class MailerService
 
             foreach ($attachment as $data) {
                 $message->attach($data['body'], $data['filename'], $data['type']);
-            };
+            }
 
             $this->mailer->send($message);
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             $this->logger->error($exception->getMessage());
-            $this->logger->error('to EMail',['email'=>$to]);
+            $this->logger->error('to EMail', ['email' => $to]);
         }
-
     }
 }

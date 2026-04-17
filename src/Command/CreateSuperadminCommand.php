@@ -17,12 +17,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class CreateSuperadminCommand extends Command
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+    ) {
         parent::__construct();
-        $this->entityManager = $entityManager;
     }
 
     protected function configure(): void
@@ -51,6 +49,7 @@ class CreateSuperadminCommand extends Command
 
         if (!$email) {
             $io->error('The --email option is required.');
+
             return Command::FAILURE;
         }
 

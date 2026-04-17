@@ -19,9 +19,7 @@ final class Version20251227080454 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-
         $this->addSql('ALTER TABLE kind ADD pflaster TINYINT(1) DEFAULT NULL');
-
     }
 
     public function down(Schema $schema): void

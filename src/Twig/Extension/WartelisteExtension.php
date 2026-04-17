@@ -4,13 +4,10 @@ namespace App\Twig\Extension;
 
 use App\Twig\Runtime\WartelisteExtensionRuntime;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class WartelisteExtension extends AbstractExtension
 {
-
-
     public function getFunctions(): array
     {
         return [

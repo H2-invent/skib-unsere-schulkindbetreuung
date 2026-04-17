@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\OrganisationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,14 +16,14 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @Vich\Uploadable
  */
-#[ORM\Entity(repositoryClass: \App\Repository\OrganisationRepository::class)]
+#[ORM\Entity(repositoryClass: OrganisationRepository::class)]
 class Organisation implements TranslatableInterface
 {
     use TranslatableTrait;
 
     public function __serialize(): array
     {
-        return array('id'=>$this->id);
+        return ['id' => $this->id];
     }
 
     #[ORM\Id]
@@ -35,10 +36,10 @@ class Organisation implements TranslatableInterface
     #[ORM\Column(type: 'text')]
     private $name;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Schule::class, mappedBy: 'organisation')]
+    #[ORM\OneToMany(targetEntity: Schule::class, mappedBy: 'organisation')]
     private $schule;
 
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'organisations')]
+    #[ORM\ManyToOne(targetEntity: Stadt::class, inversedBy: 'organisations')]
     private $stadt;
 
     #[Groups(['assign_formula_sample'])]
@@ -119,6 +120,7 @@ class Organisation implements TranslatableInterface
 
     /**
      * @Vich\UploadableField(mapping="profil_picture", fileNameProperty="image")
+     *
      * @var File
      */
     private $imageFile;
@@ -130,8 +132,7 @@ class Organisation implements TranslatableInterface
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
-
-    #[ORM\OneToMany(targetEntity: \App\Entity\Sepa::class, mappedBy: 'organisation')]
+    #[ORM\OneToMany(targetEntity: Sepa::class, mappedBy: 'organisation')]
     private $sepas;
 
     #[Assert\NotBlank]
@@ -176,16 +177,16 @@ class Organisation implements TranslatableInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $ansprechpartnerFerienEmail;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Ferienblock::class, mappedBy: 'organisation')]
+    #[ORM\OneToMany(targetEntity: Ferienblock::class, mappedBy: 'organisation')]
     private $ferienblocks;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Payment::class, mappedBy: 'organisation')]
+    #[ORM\OneToMany(targetEntity: Payment::class, mappedBy: 'organisation')]
     private $paymentsFerien;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $ferienRegulation;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\News::class, mappedBy: 'organisation')]
+    #[ORM\OneToMany(targetEntity: News::class, mappedBy: 'organisation')]
     private $orgNews;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
@@ -211,10 +212,10 @@ class Organisation implements TranslatableInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $slug;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Kundennummern::class, mappedBy: 'organisation')]
+    #[ORM\OneToMany(targetEntity: Kundennummern::class, mappedBy: 'organisation')]
     private $kundennummerns;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Anwesenheit::class, mappedBy: 'organisation')]
+    #[ORM\OneToMany(targetEntity: Anwesenheit::class, mappedBy: 'organisation')]
     private $anwesenheitSchulkindbetreuung;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -222,7 +223,6 @@ class Organisation implements TranslatableInterface
 
     #[ORM\OneToOne(mappedBy: 'organisation', cascade: ['persist', 'remove'])]
     private ?AutoBlockAssignment $autoBlockAssignment = null;
-
 
     public function __construct()
     {
@@ -259,13 +259,14 @@ class Organisation implements TranslatableInterface
      */
     public function getSchule(): Collection
     {
-        $schuleRet = array();
+        $schuleRet = [];
         foreach ($this->schule as $data) {
             if ($data->getDeleted() === false) {
                 $schuleRet[] = $data;
             }
         }
         $this->schule = (new ArrayCollection($schuleRet));
+
         return $this->schule;
     }
 
@@ -508,7 +509,7 @@ class Organisation implements TranslatableInterface
         return $this;
     }
 
-    public function setImageFile(File $image = null)
+    public function setImageFile(?File $image = null)
     {
         $this->imageFile = $image;
 
@@ -535,7 +536,6 @@ class Organisation implements TranslatableInterface
     {
         return $this->image;
     }
-
 
     /**
      * @return Collection|Sepa[]

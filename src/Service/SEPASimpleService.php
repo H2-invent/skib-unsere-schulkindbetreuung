@@ -1,41 +1,45 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 03.10.2019
- * Time: 19:01
+ * Time: 19:01.
  */
 
 namespace App\Service;
 
-
 class SEPASimpleService
 {
-    private $FVersion, $FPmtInf, $FAnzahl, $FSumme;
+    private $FVersion;
+    private $FPmtInf;
+    private $FAnzahl;
+    private $FSumme;
 
     public function __construct()
     {
         $this->FVersion = '1';
-        $this->FPmtInf = array();
+        $this->FPmtInf = [];
         $this->FAnzahl = 0;
         $this->FSumme = 0.00;
-
     }
 
     private function GetPmtInf($aDatum, $aCtgyPurp, $aSeqTp)
     {
         foreach ($this->FPmtInf as $myPmtInf) {
-            if ($myPmtInf->FDatum == $aDatum && $myPmtInf->FCtgyPurp == $aCtgyPurp && $myPmtInf->FSeqTp == $aSeqTp)
+            if ($myPmtInf->FDatum == $aDatum && $myPmtInf->FCtgyPurp == $aCtgyPurp && $myPmtInf->FSeqTp == $aSeqTp) {
                 return $myPmtInf;
+            }
         }
-        $myPmtInf = new \App\Service\SEPAService($aCtgyPurp, $aDatum, $aSeqTp);
+        $myPmtInf = new SEPAService($aCtgyPurp, $aDatum, $aSeqTp);
         $this->FPmtInf[] = $myPmtInf;
+
         return $myPmtInf;
     }
 
-    public function Add($aDatum, $aBetrag, $aName, $aIban, $aBic = NULL, $aCtgyPurp = NULL, $aPurp = NULL, $aRef = NULL, $aVerwend = NULL,
-                        $aSeqTp = NULL, $aMandatRef = NULL, $aMandatDate = NULL,
-                        $aOldMandatRef = NULL, $aOldName = NULL, $aOldCreditorId = NULL, $aOldIban = NULL, $aOldBic = NULL)
+    public function Add($aDatum, $aBetrag, $aName, $aIban, $aBic = null, $aCtgyPurp = null, $aPurp = null, $aRef = null, $aVerwend = null,
+        $aSeqTp = null, $aMandatRef = null, $aMandatDate = null,
+        $aOldMandatRef = null, $aOldName = null, $aOldCreditorId = null, $aOldIban = null, $aOldBic = null)
     {
         $myPmtInf = $this->GetPmtInf($aDatum, $aCtgyPurp, $aSeqTp);
         $myPmtInf->Add($aBetrag, $aName, $aIban, $aBic, $aPurp, $aRef, $aVerwend,
@@ -43,11 +47,12 @@ class SEPASimpleService
             $aOldMandatRef, $aOldName, $aOldCreditorId, $aOldIban, $aOldBic);
         $this->FAnzahl++;
         $this->FSumme += $aBetrag;
-        if ($aDatum < '2013-11-01')
+        if ($aDatum < '2013-11-01') {
             $this->FVersion = '2';
+        }
     }
 
-    public function GetXML($aType, $aMsgId, $aPmtInfId, $aInitgPty, $aAuftraggeber, $aIban, $aBic, $aCreditorId = NULL)
+    public function GetXML($aType, $aMsgId, $aPmtInfId, $aInitgPty, $aAuftraggeber, $aIban, $aBic, $aCreditorId = null)
     {
         // Diverse Vorbelegungen
         $myLast = $aType != 'TRF';
@@ -76,7 +81,7 @@ class SEPASimpleService
         // Ende
         $result .= $myLast ? "  </CstmrDrctDbtInitn>\n" : "  </CstmrCdtTrfInitn>\n";
         $result .= "</Document>\n";
+
         return $result;
     }
 }
-

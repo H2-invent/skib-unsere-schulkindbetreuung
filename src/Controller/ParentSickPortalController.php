@@ -6,6 +6,8 @@ namespace App\Controller;
 
 use App\Entity\ChildSickReport;
 use App\Entity\ParentSickPortalAccess;
+use App\Entity\Stadt;
+use App\Entity\Stammdaten;
 use App\Entity\User;
 use App\Form\Type\ParentSickAccessRequestType;
 use App\Repository\ChildSickReportRepository;
@@ -16,11 +18,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ParentSickPortalController extends AbstractController
 {
-    private const SESSION_KEY_STADT_SLUG = 'parent_sick_stadt_slug';
+    private const string SESSION_KEY_STADT_SLUG = 'parent_sick_stadt_slug';
 
     public function __construct(
         private ParentSickPortalService $portalService,
@@ -34,9 +36,9 @@ class ParentSickPortalController extends AbstractController
     #[Route('/eltern/dashboard/{slug}', name: 'parent_sick_request', methods: ['GET', 'POST'])]
     public function requestLink(Request $request, string $slug): Response
     {
-        $stadt = $this->entityManager->getRepository(\App\Entity\Stadt::class)->findOneBy(['slug' => $slug]);
+        $stadt = $this->entityManager->getRepository(Stadt::class)->findOneBy(['slug' => $slug]);
 
-        if (!$stadt instanceof \App\Entity\Stadt) {
+        if (!$stadt instanceof Stadt) {
             throw $this->createNotFoundException('Stadt nicht gefunden.');
         }
         if (!$stadt->isSettingsSkibEnableParentSickDashboard()) {
@@ -59,7 +61,7 @@ class ParentSickPortalController extends AbstractController
         }
 
         return $this->render('parent_sick/request.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'stadt' => $stadt,
         ]);
     }
@@ -92,8 +94,8 @@ class ParentSickPortalController extends AbstractController
     #[Route('/eltern/dashboard/{slug}/status', name: 'parent_sick_dashboard', methods: ['GET'])]
     public function dashboard(Request $request, string $slug): Response
     {
-        $stadt = $this->entityManager->getRepository(\App\Entity\Stadt::class)->findOneBy(['slug' => $slug]);
-        if (!$stadt instanceof \App\Entity\Stadt || !$stadt->isSettingsSkibEnableParentSickDashboard()) {
+        $stadt = $this->entityManager->getRepository(Stadt::class)->findOneBy(['slug' => $slug]);
+        if (!$stadt instanceof Stadt || !$stadt->isSettingsSkibEnableParentSickDashboard()) {
             throw $this->createNotFoundException('Stadt nicht gefunden oder Funktion deaktiviert.');
         }
 
@@ -123,7 +125,7 @@ class ParentSickPortalController extends AbstractController
             $parent = $registrationData['parent'];
             if ($parent) {
                 $registrations[$registrationKey]['parentHistory'] = $this->entityManager
-                    ->getRepository(\App\Entity\Stammdaten::class)
+                    ->getRepository(Stammdaten::class)
                     ->findHistoryStammdaten($parent);
             }
         }
@@ -152,8 +154,8 @@ class ParentSickPortalController extends AbstractController
     #[Route('/eltern/dashboard/{slug}/{kind}/save', name: 'parent_sick_save', methods: ['POST'])]
     public function saveReport(Request $request, string $slug, int $kind): Response
     {
-        $stadt = $this->entityManager->getRepository(\App\Entity\Stadt::class)->findOneBy(['slug' => $slug]);
-        if (!$stadt instanceof \App\Entity\Stadt || !$stadt->isSettingsSkibEnableParentSickDashboard()) {
+        $stadt = $this->entityManager->getRepository(Stadt::class)->findOneBy(['slug' => $slug]);
+        if (!$stadt instanceof Stadt || !$stadt->isSettingsSkibEnableParentSickDashboard()) {
             throw $this->createNotFoundException('Stadt nicht gefunden oder Funktion deaktiviert.');
         }
 
@@ -163,7 +165,7 @@ class ParentSickPortalController extends AbstractController
         }
 
         $childHistory = $this->kindRepository->findChildHistoryForParentAndSchoolyear($access->getEmail(), $access->getSchuljahr());
-        $allowedChildIds = array_map(static fn($child) => $child->getId(), $childHistory);
+        $allowedChildIds = array_map(static fn ($child) => $child->getId(), $childHistory);
         if (!in_array($kind, $allowedChildIds, true)) {
             throw $this->createAccessDeniedException('Kind nicht im Zugriff enthalten.');
         }
@@ -173,8 +175,8 @@ class ParentSickPortalController extends AbstractController
             throw $this->createNotFoundException('Kind nicht gefunden.');
         }
 
-        $von = new \DateTime((string)$request->request->get('von', 'today'));
-        $bis = new \DateTime((string)$request->request->get('bis', $von->format('Y-m-d')));
+        $von = new \DateTime((string) $request->request->get('von', 'today'));
+        $bis = new \DateTime((string) $request->request->get('bis', $von->format('Y-m-d')));
         if ($bis < $von) {
             $bis = clone $von;
         }
@@ -224,6 +226,6 @@ class ParentSickPortalController extends AbstractController
             return null;
         }
 
-        return $this->accessRepository->find((int)$id);
+        return $this->accessRepository->find((int) $id);
     }
 }

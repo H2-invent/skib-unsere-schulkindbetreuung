@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\KindFerienblockRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\KindFerienblockRepository::class)]
+#[ORM\Entity(repositoryClass: KindFerienblockRepository::class)]
 class KindFerienblock
 {
     #[ORM\Id]
@@ -13,11 +14,11 @@ class KindFerienblock
     private $id;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Kind::class, inversedBy: 'kindFerienblocks')]
+    #[ORM\ManyToOne(targetEntity: Kind::class, inversedBy: 'kindFerienblocks')]
     private $kind;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Ferienblock::class, inversedBy: 'kindFerienblocks')]
+    #[ORM\ManyToOne(targetEntity: Ferienblock::class, inversedBy: 'kindFerienblocks')]
     private $ferienblock;
 
     #[ORM\Column(type: 'float')]
@@ -168,6 +169,7 @@ class KindFerienblock
 
         return $this;
     }
+
     public function getStateLabel(): string
     {
         return match ($this->state) {
@@ -178,6 +180,7 @@ class KindFerienblock
             default => 'Unbekannt',
         };
     }
+
     public function getStateBadgeClass(): string
     {
         return match ($this->state) {

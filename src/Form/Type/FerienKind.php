@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emanuel
  * Date: 17.09.2019
- * Time: 20:29
+ * Time: 20:29.
  */
 
 namespace App\Form\Type;
-
 
 use App\Entity\Active;
 use App\Entity\Kind;
@@ -17,7 +17,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,30 +24,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FerienKind extends AbstractType
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
+    public function __construct(
+        private EntityManagerInterface $em,
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-
         $today = intval((new \DateTime())->format('Y'));
         /**
          * @var Stadt $stadt
          */
         $stadt = $options['stadt'];
 
-
         $builder->add('vorname', TextType::class, ['label' => 'Vorname', 'translation_domain' => 'form'])
             ->add('nachname', TextType::class, ['label' => 'Nachname', 'translation_domain' => 'form'])
             ->add('klasse', ChoiceType::class, [
                 'choices' => array_flip($stadt->translate()->getSettingsSkibShoolyearNamingArray()), 'label' => 'Jahrgangsstufe zu Betreuungsbeginn', 'translation_domain' => 'form'])
-            ->add('geburtstag', BirthdayType::class, ['attr' => array('class' => 'pickadate'), 'widget' => 'single_text', 'years' => range($today - 20, $today, 1), 'label' => 'Geburtstag', 'translation_domain' => 'form'])
-            ->add('masernImpfung', CheckboxType::class, array('label' => 'Mein Kind ist gegen Masern geimpft / bereits immun'));
+            ->add('geburtstag', BirthdayType::class, ['attr' => ['class' => 'pickadate'], 'widget' => 'single_text', 'years' => range($today - 20, $today, 1), 'label' => 'Geburtstag', 'translation_domain' => 'form'])
+            ->add('masernImpfung', CheckboxType::class, ['label' => 'Mein Kind ist gegen Masern geimpft / bereits immun']);
         if (!$stadt->isHideChildQuestions()) {
             $builder->add('allergie', TextType::class, ['required' => false, 'label' => 'Mein Kind hat folgende Allergien', 'translation_domain' => 'form'])
                 ->add('medikamente', TextType::class, ['required' => false, 'label' => 'Mein Kind benötigt folgende Medikamente', 'translation_domain' => 'form'])
@@ -63,14 +57,12 @@ class FerienKind extends AbstractType
             }
             if ($stadt->isSettingsSkibShowZeckenKinder() !== true) {
                 $builder->add('zeckenEntfernen', CheckboxType::class, ['required' => false, 'label' => 'Die Betreuer dürfen bei meinem Kinder Zecken entfernen', 'translation_domain' => 'form']);
-
             }
             if ($stadt->isSettingsSkibShowPflasterKinder() === true) {
                 $builder->add('pflaster', CheckboxType::class, ['required' => false, 'label' => 'Betreuer dürfen meinem Kind bei einer Verletzung ein Pflaster aufkleben', 'translation_domain' => 'form']);
             }
 
             $builder->add('fotos', CheckboxType::class, ['required' => false, 'label' => 'Fotos, auf welchen mein Kind zu sehen ist, dürfen sowohl in der öffentlichen Presse veröffentlicht, als auch für die Öffentlichkeitsarbeit der betreuenden Organisationen genutzt werden.', 'translation_domain' => 'form']);
-
         }
         $builder->add('bemerkung', TextareaType::class, ['required' => false, 'label' => 'Bemerkung', 'translation_domain' => 'form', 'attr' => ['rows' => 6]]);
     }
@@ -80,8 +72,7 @@ class FerienKind extends AbstractType
         $resolver->setDefaults([
             'data_class' => Kind::class,
             'schuljahr' => Active::class,
-            'stadt'=>Stadt::class,
+            'stadt' => Stadt::class,
         ]);
-
     }
 }

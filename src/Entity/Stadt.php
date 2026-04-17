@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\StadtRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
-
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,14 +17,14 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @Vich\Uploadable
  */
-#[ORM\Entity(repositoryClass: \App\Repository\StadtRepository::class)]
+#[ORM\Entity(repositoryClass: StadtRepository::class)]
 class Stadt implements TranslatableInterface
 {
     use TranslatableTrait;
 
     public function __serialize(): array
     {
-        return array('id' => $this->id);
+        return ['id' => $this->id];
     }
 
     #[ORM\Id]
@@ -41,13 +41,13 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'text')]
     private $Name;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Anmeldefristen::class, mappedBy: 'stadt')]
+    #[ORM\OneToMany(targetEntity: Anmeldefristen::class, mappedBy: 'stadt')]
     private $anmeldefristens;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Organisation::class, mappedBy: 'stadt')]
+    #[ORM\OneToMany(targetEntity: Organisation::class, mappedBy: 'stadt')]
     private $organisations;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Schule::class, mappedBy: 'stadt')]
+    #[ORM\OneToMany(targetEntity: Schule::class, mappedBy: 'stadt')]
     private $schules;
 
     #[Groups(['assign_formula_sample'])]
@@ -62,6 +62,7 @@ class Stadt implements TranslatableInterface
 
     /**
      * @Vich\UploadableField(mapping="profil_picture", fileNameProperty="image")
+     *
      * @var File
      */
     private $imageFile;
@@ -73,6 +74,7 @@ class Stadt implements TranslatableInterface
 
     /**
      * @Vich\UploadableField(mapping="profil_picture", fileNameProperty="logoStadt")
+     *
      * @var File
      */
     private $logoStadtFile;
@@ -136,8 +138,7 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $akzentfarbeFehler;
 
-
-    #[ORM\OneToMany(targetEntity: \App\Entity\Active::class, mappedBy: 'stadt')]
+    #[ORM\OneToMany(targetEntity: Active::class, mappedBy: 'stadt')]
     private $actives;
 
     #[Groups(['assign_formula_sample'])]
@@ -151,7 +152,7 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $stadtHomepage;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\News::class, mappedBy: 'stadt')]
+    #[ORM\OneToMany(targetEntity: News::class, mappedBy: 'stadt')]
     private $news;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -179,8 +180,7 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'boolean')]
     private $schulkindBetreung;
 
-
-    #[ORM\OneToMany(targetEntity: \App\Entity\Ferienblock::class, mappedBy: 'stadt')]
+    #[ORM\OneToMany(targetEntity: Ferienblock::class, mappedBy: 'stadt')]
     private $ferienblocks;
 
     #[Groups(['assign_formula_sample'])]
@@ -221,7 +221,6 @@ class Stadt implements TranslatableInterface
 
     #[ORM\Column(type: 'boolean')]
     private $settingsSozielHilfeEmpfangerRequired = false;
-
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $settingKinderimKiga = false;
@@ -316,7 +315,6 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(nullable: true)]
     private ?bool $settingsSkibShowPflasterKinder = null;
 
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $settingsDokumentUploadTitle = null;
 
@@ -335,10 +333,6 @@ class Stadt implements TranslatableInterface
 
     #[ORM\Column(nullable: true)]
     private ?bool $settingsSkibEnableParentSickDashboard = false;
-
-
-
-
 
     public function __construct()
     {
@@ -504,7 +498,7 @@ class Stadt implements TranslatableInterface
         return $this;
     }
 
-    public function setImageFile(File $image = null)
+    public function setImageFile(?File $image = null)
     {
         $this->imageFile = $image;
 
@@ -532,7 +526,7 @@ class Stadt implements TranslatableInterface
         return $this->image;
     }
 
-    public function setLogoStadtFile(File $logoStadtFile = null)
+    public function setLogoStadtFile(?File $logoStadtFile = null)
     {
         $this->logoStadtFile = $logoStadtFile;
 
@@ -728,7 +722,6 @@ class Stadt implements TranslatableInterface
         return $this;
     }
 
-
     /**
      * @return Collection|Active[]
      */
@@ -862,7 +855,6 @@ class Stadt implements TranslatableInterface
 
         return $this;
     }
-
 
     /**
      * @return Collection|Ferienblock[]
@@ -1608,5 +1600,4 @@ class Stadt implements TranslatableInterface
 
         return $this;
     }
-
 }

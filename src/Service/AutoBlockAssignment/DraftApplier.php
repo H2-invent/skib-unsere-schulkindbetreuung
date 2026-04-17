@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service\AutoBlockAssignment;
@@ -8,7 +9,6 @@ use App\Repository\AutoBlockAssignmentChildZeitblockRepository;
 use App\Service\KontingentAcceptService;
 use App\Service\WartelisteService;
 use Doctrine\ORM\EntityManagerInterface;
-use RuntimeException;
 
 class DraftApplier
 {
@@ -17,15 +17,14 @@ class DraftApplier
         private WartelisteService $wartelisteService,
         private AutoBlockAssignmentChildZeitblockRepository $autoZeitblockRepository,
         private EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
     public function apply(AutoBlockAssignment $autoBlockAssignment): void
     {
         $organisation = $autoBlockAssignment->getOrganisation();
         if ($organisation === null) {
-            throw new RuntimeException('Could not find Organisation of AutoBlockAssignment: ' . $autoBlockAssignment->getId());
+            throw new \RuntimeException('Could not find Organisation of AutoBlockAssignment: ' . $autoBlockAssignment->getId());
         }
 
         $autoZeitblocks = $this->autoZeitblockRepository->findByOrganisationJoinChildAndKind($organisation);
@@ -34,17 +33,17 @@ class DraftApplier
         foreach ($autoZeitblocks as $autoZeitblock) {
             $kind = $autoZeitblock->getChild()?->getKind();
             if ($kind === null) {
-                throw new RuntimeException('Could not find Kind of AutoBlockAssignmentChildZeitblock: ' . $autoZeitblock->getId());
+                throw new \RuntimeException('Could not find Kind of AutoBlockAssignmentChildZeitblock: ' . $autoZeitblock->getId());
             }
 
             $zeitblock = $autoZeitblock->getZeitblock();
             if ($zeitblock === null) {
-                throw new RuntimeException('Could not find Zeitblock of AutoBlockAssignmentChildZeitblock: ' . $autoZeitblock->getId());
+                throw new \RuntimeException('Could not find Zeitblock of AutoBlockAssignmentChildZeitblock: ' . $autoZeitblock->getId());
             }
 
             if ($autoZeitblock->isAccepted()) {
                 $this->kontingentAcceptService->acceptKind($zeitblock, $kind);
-            } else if ($autoZeitblock->isWarteschlange()) {
+            } elseif ($autoZeitblock->isWarteschlange()) {
                 $this->wartelisteService->addKindToWarteliste($kind, $zeitblock, true);
                 $lastWarteSchlangePerKind[$kind->getId()] = [$kind, $zeitblock];
             }
@@ -55,7 +54,6 @@ class DraftApplier
             [$kind, $zeitblock] = $lastWarteschlange;
             $this->wartelisteService->sendEmailForWartelisteAdding($kind, $zeitblock);
         }
-
 
         $this->entityManager->remove($autoBlockAssignment);
     }

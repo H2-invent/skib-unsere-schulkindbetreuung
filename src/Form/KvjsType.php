@@ -23,9 +23,7 @@ class KvjsType extends AbstractType
             ->add('schuljahr', EntityType::class, [
                 'class' => Active::class,
                 'choices' => $schuljahre,
-                'choice_label' => function (Active $schuljahr) {
-                    return sprintf('%s/%s', $schuljahr->getVon()->format('Y'), $schuljahr->getBis()->format('Y'));
-                },
+                'choice_label' => fn (Active $schuljahr) => sprintf('%s/%s', $schuljahr->getVon()->format('Y'), $schuljahr->getBis()->format('Y')),
                 'label' => 'Schuljahr',
                 'placeholder' => 'Bitte wählen',
                 'required' => true,
@@ -34,7 +32,6 @@ class KvjsType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'Stichtag auswählen',
                 'required' => true,
-
             ])
             ->add('type', ChoiceType::class, [
                 'label' => 'Betreuungstyp in Ihrer Organisation',
@@ -45,8 +42,8 @@ class KvjsType extends AbstractType
                     'B3: Kindertageseinrichtungen, Horte und Horte an der Schule mit Betriebser-
 laubnis gemäß § 45 SGB VII' => 'b3',
                     ' B4: Betreuungsangebote in kommunaler oder freier Trägerschaft gemäß § 8b
-SchG' => 'b4'
-                ]
+SchG' => 'b4',
+                ],
             ])
             ->add('schule', ChoiceType::class, [
                 'label' => 'Schule',
@@ -56,8 +53,8 @@ SchG' => 'b4'
             ->add('submit', SubmitType::class, [
                 'label' => 'Erstellen',
                 'attr' => [
-                    'class' => 'btn btn-primary mt-3'
-                ]
+                    'class' => 'btn btn-primary mt-3',
+                ],
             ]);
     }
 
@@ -69,7 +66,7 @@ SchG' => 'b4'
         $choices = ['Alle verfügbaren Schulen (ZIP)' => '__all__'];
 
         foreach ($schulen as $schule) {
-            $choices[$schule->getName()] = (string)$schule->getId();
+            $choices[$schule->getName()] = (string) $schule->getId();
         }
 
         return $choices;

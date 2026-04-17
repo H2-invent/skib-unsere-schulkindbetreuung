@@ -1,5 +1,7 @@
 <?php
+
 // src/Twig/AppExtension.php
+
 namespace App\Twig;
 
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -8,27 +10,27 @@ use Twig\TwigFunction;
 
 class AppExtension extends AbstractExtension
 {
-    public function __construct(protected RequestStack $requestStack)
-    {
-
+    public function __construct(
+        protected RequestStack $requestStack,
+    ) {
     }
 
     public function getFunctions()
     {
         return [
-            new TwigFunction('dateChecker', [$this, 'getClassName']),
-            new TwigFunction('isActiveNav', [$this, 'isActiveNav']),
+            new TwigFunction('dateChecker', $this->getClassName(...)),
+            new TwigFunction('isActiveNav', $this->isActiveNav(...)),
         ];
     }
 
     public function getClassName($object)
     {
-        if($object === ''){
+        if ($object === '') {
             return false;
         }
         try {
             return new \DateTime($object);
-        }catch (\Exception $e){
+        } catch (\Exception) {
             return false;
         }
     }

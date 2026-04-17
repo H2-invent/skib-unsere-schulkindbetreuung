@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\LateRegistrationRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
@@ -32,7 +31,7 @@ class LateRegistration
     private ?Active $schuljahr = null;
 
     #[ORM\Column]
-    private ?DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $used_at = null;
@@ -48,12 +47,12 @@ class LateRegistration
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
     {
-        $this->created_at = new DateTimeImmutable();
+        $this->created_at = new \DateTimeImmutable();
     }
 
     public function setUsedAtValue(): void
     {
-        $this->used_at = new DateTimeImmutable();
+        $this->used_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -109,12 +108,12 @@ class LateRegistration
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
 

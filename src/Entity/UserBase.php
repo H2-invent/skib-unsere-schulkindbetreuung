@@ -2,14 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\UserBaseRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-
 class UserBase implements UserInterface
 {
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -58,16 +55,15 @@ class UserBase implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string)$this->uuid;
+        return (string) $this->uuid;
     }
-
 
     /**
      * @see UserInterface
      */
     public function getPassword(): string
     {
-        return (string)$this->password;
+        return (string) $this->password;
     }
 
     public function setPassword(string $password): self
@@ -102,9 +98,9 @@ class UserBase implements UserInterface
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
+
         return array_unique($roles);
     }
-
 
     public function setRoles(array $roles): self
     {
@@ -115,7 +111,7 @@ class UserBase implements UserInterface
 
     public function addRole($role)
     {
-        $role = strtoupper($role);
+        $role = strtoupper((string) $role);
         if ($role === 'ROLE_USER') {
             return $this;
         }
@@ -129,19 +125,18 @@ class UserBase implements UserInterface
 
     public function hasRole($role)
     {
-        return in_array(strtoupper($role), $this->getRoles(), true);
+        return in_array(strtoupper((string) $role), $this->getRoles(), true);
     }
 
     public function removeRole($role)
     {
-        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+        if (false !== $key = array_search(strtoupper((string) $role), $this->roles, true)) {
             unset($this->roles[$key]);
             $this->roles = array_values($this->roles);
         }
 
         return $this;
     }
-
 
     public function getUserIdentifier(): string
     {

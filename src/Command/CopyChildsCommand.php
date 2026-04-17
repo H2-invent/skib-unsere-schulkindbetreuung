@@ -6,29 +6,24 @@ use App\Entity\Active;
 use App\Service\ChildSearchService;
 use App\Service\CopyChildToNewSchuljahr;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 class CopyChildsCommand extends Command
 {
     protected static $defaultName = 'app:copy:childs';
-    private $em;
-    private CopyChildToNewSchuljahr $copyChildToNewSchuljahr;
-    private ChildSearchService $childSearchService;
 
-    public function __construct(EntityManagerInterface $entityManager, CopyChildToNewSchuljahr $copyChildToNewSchuljahr, ChildSearchService $childSearchService, string $name = null)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+        private CopyChildToNewSchuljahr $copyChildToNewSchuljahr,
+        private ChildSearchService $childSearchService,
+        ?string $name = null,
+    ) {
         parent::__construct($name);
-        $this->em = $entityManager;
-        $this->copyChildToNewSchuljahr = $copyChildToNewSchuljahr;
-        $this->childSearchService = $childSearchService;
     }
 
     protected function configure(): void
@@ -41,7 +36,6 @@ class CopyChildsCommand extends Command
             ->addArgument('schuljahrsMatrix', null, InputOption::VALUE_NONE, 'Wie sollen sich die Schuljahre ändern, wie sollen diese hochgezählt werden')
             ->addArgument('sendEmail', null, InputOption::VALUE_NONE, 'sollen emails an die Eltnern der Kinder gesendet werden? [FALSE/true]')
             ->addArgument('blockmatrix', null, InputOption::VALUE_OPTIONAL, 'Soll die Mitgliedschaft in einem BLock zu einem Block im nächsten Shculjahr gemappt werden, kann diese matrix hier angegeben werden {"start_id":["end_id1","end_id2"....]}');
-
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -52,61 +46,58 @@ class CopyChildsCommand extends Command
         $stichtag = null;
         $matrix = null;
 
-
         if ($input->getArgument('source')) {
             $sourceActive = $this->em->getRepository(Active::class)->find($input->getArgument('source'));
-
         }
         if ($input->getArgument('target')) {
             $targetActive = $this->em->getRepository(Active::class)->find($input->getArgument('target'));
-
         }
         if ($sourceActive->getStadt() !== $targetActive->getStadt()) {
             $io->error('Schuljahre passen nicht zur selben Stadt');
+
             return Command::FAILURE;
         }
 
         if ($input->getArgument('date')) {
             $stichtag = new \DateTime($input->getArgument('date'));
-
         }
         if ($input->getArgument('sendEmail')) {
-            $sendEmail = $input->getArgument('sendEmail')==='true'?true:false;
-
+            $sendEmail = $input->getArgument('sendEmail') === 'true' ? true : false;
         }
         if ($stichtag < $sourceActive->getVon() || $stichtag > $sourceActive->getBis()) {
             $io->error('Stichtag liegt außerhalb des Schuljahrs');
+
             return Command::FAILURE;
         }
 
         if ($input->getArgument('schuljahrsMatrix')) {
             $io->info($input->getArgument('schuljahrsMatrix'));
 
-            $matrix = json_decode($input->getArgument('schuljahrsMatrix'), true);
+            $matrix = json_decode((string) $input->getArgument('schuljahrsMatrix'), true);
             $io->info($matrix);
-
         }
         if ($input->getArgument('schuljahrsMatrix')) {
-            $blockMatrix = json_decode($input->getArgument('blockmatrix'), true);
+            $blockMatrix = json_decode((string) $input->getArgument('blockmatrix'), true);
         } else {
-            $blockMatrix = array();
+            $blockMatrix = [];
         }
-        $kinderTarget = $this->childSearchService->searchChild(array('schuljahr' => $targetActive), null, false, null, $targetActive->getVon(), null, $sourceActive->getStadt());
+        $kinderTarget = $this->childSearchService->searchChild(['schuljahr' => $targetActive], null, false, null, $targetActive->getVon(), null, $sourceActive->getStadt());
         if (sizeof($kinderTarget) > 0) {
             $helper = $this->getHelper('question');
-            $question = new ConfirmationQuestion(sprintf('Es existieren bereits %s Kinder in dem ZielSchuljahr. Wollen Sie fortfahren?(y|N)',sizeof($kinderTarget)), false,
+            $question = new ConfirmationQuestion(sprintf('Es existieren bereits %s Kinder in dem ZielSchuljahr. Wollen Sie fortfahren?(y|N)', sizeof($kinderTarget)), false,
                 '/^(y|j)/i');
 
             if (!$helper->ask($input, $output, $question)) {
                 $io->info('We stop the transfer.');
+
                 return Command::SUCCESS;
             }
-
         }
 
-        $res = $this->copyChildToNewSchuljahr->copyKinderToSchuljahr($sourceActive, $targetActive, $stichtag, $matrix, $blockMatrix, $output,$sendEmail);
+        $res = $this->copyChildToNewSchuljahr->copyKinderToSchuljahr($sourceActive, $targetActive, $stichtag, $matrix, $blockMatrix, $output, $sendEmail);
         if (!$res) {
             $io->error('Target ist nicht mehr leer. Es wurden keine Kinder kopiert');
+
             return Command::FAILURE;
         }
 

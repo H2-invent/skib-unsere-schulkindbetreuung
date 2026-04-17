@@ -1,48 +1,39 @@
 <?php
+
 // src/Twig/AppExtension.php
+
 namespace App\Twig;
 
-use App\Controller\LoerrachWorkflowController;
-use App\Entity\Active;
 use App\Entity\Kind;
-use App\Entity\Schule;
 use App\Entity\Stammdaten;
-use App\Entity\Zeitblock;
 use App\Service\ElternService;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class Eltern extends AbstractExtension
 {
-
-
-    private ElternService $elternService;
-
-    public function __construct(ElternService $elternService)
-    {
-
-        $this->elternService = $elternService;
+    public function __construct(
+        private ElternService $elternService,
+    ) {
     }
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('getEltern', array($this, 'getEltern')),
-            new TwigFunction('getAllKinderWithHistory', array($this, 'getAllKinderWithHistory')),
-            new TwigFunction('getGetEarliestChildOfStammdaten', array($this, 'getGetEarliestChildOfStammdaten')),
-            new TwigFunction('getKinderFromStammdatenAnStichtag', array($this, 'getKinderFromStammdatenAnStichtag')),
-        );
+        return [
+            new TwigFunction('getEltern', $this->getEltern(...)),
+            new TwigFunction('getAllKinderWithHistory', $this->getAllKinderWithHistory(...)),
+            new TwigFunction('getGetEarliestChildOfStammdaten', $this->getGetEarliestChildOfStammdaten(...)),
+            new TwigFunction('getKinderFromStammdatenAnStichtag', $this->getKinderFromStammdatenAnStichtag(...)),
+        ];
     }
 
-    public function getEltern(Kind $kind,\DateTime $dateTime = null)
+    public function getEltern(Kind $kind, ?\DateTime $dateTime = null)
     {
-        if (!$dateTime){
+        if (!$dateTime) {
             return $kind->getEltern();
         }
 
-        $eltern =  $this->elternService->getElternForSpecificTimeAndKind($kind,$dateTime);
+        $eltern = $this->elternService->getElternForSpecificTimeAndKind($kind, $dateTime);
 
         return $eltern;
     }
@@ -55,6 +46,7 @@ class Eltern extends AbstractExtension
     public function getGetEarliestChildOfStammdaten(Stammdaten $stammdaten)
     {
         $res = $this->elternService->getEarliestChildOfStammdaten($stammdaten);
+
         return $res;
     }
 
@@ -62,5 +54,4 @@ class Eltern extends AbstractExtension
     {
         return $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($stammdaten, $stichtag);
     }
-
 }

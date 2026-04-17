@@ -6,33 +6,26 @@ use App\Entity\KindFerienblock;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-
 // <- Add this
 
 class CheckinFerienService
 {
-
-
-    private $em;
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator,  EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
-        $this->translator = $translator;
+    public function __construct(
+        private TranslatorInterface $translator,
+        private EntityManagerInterface $em,
+    ) {
     }
 
-    public
-    function    checkin($checkinID, $tag)
+    public function checkin($checkinID, $tag)
     {
         $tagDate = new \DateTime($tag);
-        $kindFerienBlock = $this->em->getRepository(KindFerienblock::class)->findOneBy(array('checkinID' => $checkinID));
+        $kindFerienBlock = $this->em->getRepository(KindFerienblock::class)->findOneBy(['checkinID' => $checkinID]);
 
         $result['error'] = false;
         $result['errorText'] = $this->translator->trans('Kind erfolgreich eingecheckt');
         $result['checkinText'] = $this->translator->trans('Eingecheckt');
-        $result['name']= 'Name: '. $kindFerienBlock->getKind()->getVorname().' '.$kindFerienBlock->getKind()->getNachname();
-        $result['kurs']= 'Kurs: '.$kindFerienBlock->getFerienblock()->translate()->getTitel();
+        $result['name'] = 'Name: ' . $kindFerienBlock->getKind()->getVorname() . ' ' . $kindFerienBlock->getKind()->getNachname();
+        $result['kurs'] = 'Kurs: ' . $kindFerienBlock->getFerienblock()->translate()->getTitel();
         if ($kindFerienBlock === null) {
             $result['error'] = true;
             $result['errorText'] = $this->translator->trans('Ticket ist falsch oder ungültig');
@@ -49,7 +42,7 @@ class CheckinFerienService
         }
 
         $result['checkinDate'] = $tag;
-        $status = $kindFerienBlock->getCheckinStatus() !== null ? $kindFerienBlock->getCheckinStatus() : array();
+        $status = $kindFerienBlock->getCheckinStatus() ?? [];
 
         if (in_array($result['checkinDate'], $status)) {
             $result['error'] = true;
@@ -67,7 +60,7 @@ class CheckinFerienService
             $this->em->persist($kindFerienBlock);
             $this->em->flush();
         }
+
         return $result;
     }
-
 }

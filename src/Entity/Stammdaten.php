@@ -2,23 +2,22 @@
 
 namespace App\Entity;
 
+use App\Repository\StammdatenRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\GroupSequence;
 use Symfony\Component\Validator\GroupSequenceProviderInterface;
 
 // importing @Encrypted annotation
 #[ORM\Table]
 #[ORM\Index(name: 'idx_tracing', columns: ['tracing'])]
 #[ORM\Index(name: 'idx_tracing_of_last_year', columns: ['tracing_of_last_year'])]
-#[ORM\Entity(repositoryClass: \App\Repository\StammdatenRepository::class)]
+#[ORM\Entity(repositoryClass: StammdatenRepository::class)]
 #[Assert\GroupSequenceProvider]
-class Stammdaten implements GroupSequenceProviderInterface
+class Stammdaten implements GroupSequenceProviderInterface, \Stringable
 {
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -86,7 +85,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $iban;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Kind::class, mappedBy: 'eltern')]
+    #[ORM\OneToMany(targetEntity: Kind::class, mappedBy: 'eltern')]
     private $kinds;
 
     #[Assert\Bic(groups: ['Schulkind'])]
@@ -152,7 +151,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $resendEmail;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Rechnung::class, mappedBy: 'stammdaten')]
+    #[ORM\OneToMany(targetEntity: Rechnung::class, mappedBy: 'stammdaten')]
     private $rechnungs;
 
     #[Groups(['assign_formula_sample'])]
@@ -177,9 +176,8 @@ class Stammdaten implements GroupSequenceProviderInterface
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $confirmDate;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Payment::class, mappedBy: 'stammdaten')]
+    #[ORM\OneToMany(targetEntity: Payment::class, mappedBy: 'stammdaten')]
     private $paymentFerien;
-
 
     #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'text', nullable: true)]
@@ -189,7 +187,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $phoneNumber;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Kundennummern::class, mappedBy: 'stammdaten')]
+    #[ORM\OneToMany(targetEntity: Kundennummern::class, mappedBy: 'stammdaten')]
     private $kundennummerns;
 
     #[Groups(['assign_formula_sample'])]
@@ -229,7 +227,6 @@ class Stammdaten implements GroupSequenceProviderInterface
 
     public function __construct()
     {
-
         $this->kinds = new ArrayCollection();
         $this->rechnungen = new ArrayCollection();
         $this->rechnungs = new ArrayCollection();
@@ -239,12 +236,11 @@ class Stammdaten implements GroupSequenceProviderInterface
         $this->personenberechtigters = new ArrayCollection();
         $this->geschwisters = new ArrayCollection();
         $this->file = new ArrayCollection();
-
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->tracing;
+        return (string) $this->tracing;
     }
 
     public function getId(): ?int
@@ -559,7 +555,6 @@ class Stammdaten implements GroupSequenceProviderInterface
         return $this;
     }
 
-
     public function getAlleinerziehend(): ?bool
     {
         return $this->alleinerziehend;
@@ -568,6 +563,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     public function setAlleinerziehend(?bool $alleinerziehend): self
     {
         $this->alleinerziehend = $alleinerziehend;
+
         return $this;
     }
 
@@ -579,9 +575,9 @@ class Stammdaten implements GroupSequenceProviderInterface
     public function setEmailConfirmed(bool $emailConfirmed): self
     {
         $this->emailConfirmed = $emailConfirmed;
+
         return $this;
     }
-
 
     public function getAbholberechtigter(): ?string
     {
@@ -591,6 +587,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     public function setAbholberechtigter(?string $abholberechtigter): self
     {
         $this->abholberechtigter = $abholberechtigter;
+
         return $this;
     }
 
@@ -602,9 +599,9 @@ class Stammdaten implements GroupSequenceProviderInterface
     public function setConfirmationCode(string $confirmationCode): self
     {
         $this->confirmationCode = $confirmationCode;
+
         return $this;
     }
-
 
     public function getNotfallName(): ?string
     {
@@ -614,6 +611,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     public function setNotfallName(?string $notfallName): self
     {
         $this->notfallName = $notfallName;
+
         return $this;
     }
 
@@ -637,6 +635,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     public function setResendEmail(?string $resendEmail): self
     {
         $this->resendEmail = $resendEmail;
+
         return $this;
     }
 
@@ -761,6 +760,7 @@ class Stammdaten implements GroupSequenceProviderInterface
                 return $data;
             }
         }
+
         return null;
     }
 
@@ -786,7 +786,6 @@ class Stammdaten implements GroupSequenceProviderInterface
 
         return $this;
     }
-
 
     public function getLanguage(): ?string
     {
@@ -864,6 +863,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     public function setKigaOfKids(?string $kigaOfKids): self
     {
         $this->kigaOfKids = $kigaOfKids;
+
         return $this;
     }
 
@@ -879,10 +879,7 @@ class Stammdaten implements GroupSequenceProviderInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getGroupSequence():array
+    public function getGroupSequence(): array
     {
         return [
             ['all',
@@ -1021,5 +1018,4 @@ class Stammdaten implements GroupSequenceProviderInterface
 
         return $this;
     }
-
 }

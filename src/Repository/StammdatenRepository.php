@@ -49,7 +49,7 @@ class StammdatenRepository extends ServiceEntityRepository
     }
     */
 
-    public function findActualStammdatenByUid($uid, $kindID= null): ?Stammdaten
+    public function findActualStammdatenByUid($uid, $kindID = null): ?Stammdaten
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.uid = :uid')
@@ -83,7 +83,6 @@ class StammdatenRepository extends ServiceEntityRepository
 
     public function findlatestStammdatenfromKind(Kind $kind): ?Stammdaten
     {
-
         $tracing = $kind->getEltern()->getTracing();
 
         return $this->createQueryBuilder('s')
@@ -97,7 +96,6 @@ class StammdatenRepository extends ServiceEntityRepository
 
     public function findStammdatenfromKindforSpecificDate(Kind $kind, \DateTime $dateTime, $demo = false): ?Stammdaten
     {
-
         $tracing = $kind->getEltern()->getTracing();
 
         $qb = $this->createQueryBuilder('s')
@@ -109,17 +107,14 @@ class StammdatenRepository extends ServiceEntityRepository
         return $qb->andWhere('s.startDate <= :datetime')->setParameter('datetime', $dateTime)
             ->andWhere('s.startDate IS NOT NULL')
             ->orderBy('s.startDate', 'DESC')
-            ->addOrderBy('s.created_at','DESC')
+            ->addOrderBy('s.created_at', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
-
     }
-
 
     public function findlatestStammdatenfromStammdaten(Stammdaten $stammdaten): ?Stammdaten
     {
-
         $tracing = $stammdaten->getTracing();
 
         return $this->createQueryBuilder('s')
@@ -132,9 +127,8 @@ class StammdatenRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findStammdatenFromStammdatenByDate(Stammdaten $stammdaten, \DateTime $dateTime = null): ?Stammdaten
+    public function findStammdatenFromStammdatenByDate(Stammdaten $stammdaten, ?\DateTime $dateTime = null): ?Stammdaten
     {
-
         if (!$dateTime) {
             $dateTime = new \DateTime();
         }
@@ -157,7 +151,6 @@ class StammdatenRepository extends ServiceEntityRepository
      */
     public function findHistoryStammdaten(Stammdaten $stammdaten)
     {
-
         $tracing = $stammdaten->getTracing();
 
         return $this->createQueryBuilder('s')
@@ -167,5 +160,4 @@ class StammdatenRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
 }

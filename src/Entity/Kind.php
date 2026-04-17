@@ -2,30 +2,26 @@
 
 namespace App\Entity;
 
-use ContainerM8BJPEV\getDoctrine_Orm_DefaultEntityManager_PropertyInfoExtractorService;
+use App\Repository\KindRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 #[ORM\Table]
 #[ORM\Index(name: 'idx_tracing', columns: ['tracing'])]
-#[ORM\Entity(repositoryClass: \App\Repository\KindRepository::class)]
-class Kind
+#[ORM\Entity(repositoryClass: KindRepository::class)]
+class Kind implements \Stringable
 {
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stammdaten::class, inversedBy: 'kinds')]
+    #[ORM\ManyToOne(targetEntity: Stammdaten::class, inversedBy: 'kinds')]
     private $eltern;
 
     #[Groups(['assign_formula_sample'])]
@@ -59,11 +55,10 @@ class Kind
     #[ORM\Column(type: 'datetime')]
     private $geburtstag;
 
-
-    #[ORM\OneToMany(targetEntity: \App\Entity\Abwesend::class, mappedBy: 'kind')]
+    #[ORM\OneToMany(targetEntity: Abwesend::class, mappedBy: 'kind')]
     private $abwesends;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, mappedBy: 'kind')]
+    #[ORM\ManyToMany(targetEntity: Zeitblock::class, mappedBy: 'kind')]
     private $zeitblocks;
 
     #[Groups(['assign_formula_sample'])]
@@ -71,7 +66,7 @@ class Kind
     private $bemerkung;
 
     #[ORM\JoinColumn(nullable: true)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Schule::class, inversedBy: 'kinder')]
+    #[ORM\ManyToOne(targetEntity: Schule::class, inversedBy: 'kinder')]
     private $schule;
 
     #[Groups(['assign_formula_sample'])]
@@ -110,7 +105,7 @@ class Kind
     #[ORM\Column(type: 'boolean')]
     private $fotos = false;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, inversedBy: 'kinderBeworben')]
+    #[ORM\ManyToMany(targetEntity: Zeitblock::class, inversedBy: 'kinderBeworben')]
     private $beworben;
 
     #[Groups(['assign_formula_sample'])]
@@ -124,18 +119,17 @@ class Kind
     #[ORM\Column(type: 'string', nullable: true)]
     private $tracing;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Rechnung::class, mappedBy: 'kinder')]
+    #[ORM\ManyToMany(targetEntity: Rechnung::class, mappedBy: 'kinder')]
     private $rechnungen;
 
-
-    #[ORM\OneToMany(targetEntity: \App\Entity\KindFerienblock::class, mappedBy: 'kind', cascade: ['remove'])]
+    #[ORM\OneToMany(targetEntity: KindFerienblock::class, mappedBy: 'kind', cascade: ['remove'])]
     private $kindFerienblocks;
 
     #[Groups(['assign_formula_sample'])]
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $masernImpfung;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Anwesenheit::class, mappedBy: 'kind')]
+    #[ORM\OneToMany(targetEntity: Anwesenheit::class, mappedBy: 'kind')]
     private $anwesenheitenSchulkindbetreuung;
 
     #[Groups(['assign_formula_sample'])]
@@ -176,9 +170,9 @@ class Kind
         return $this->tracing;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->tracing;
+        return (string) $this->tracing;
     }
 
     public function __clone()
@@ -203,7 +197,6 @@ class Kind
         $this->anwesenheitenSchulkindbetreuung = new ArrayCollection();
         $this->warteliste = new ArrayCollection();
         $this->movedToWaiting = new ArrayCollection();
-
     }
 
     public function getId(): ?int
@@ -281,10 +274,9 @@ class Kind
         $klassArr = $this->schule->getStadt()->translate()->getSettingsSkibShoolyearNamingArray();
         try {
             return $klassArr[$this->klasse];
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             return 'error! Contact the Administrator';
         }
-
     }
 
     public function setKlasse(?int $klasse): self
@@ -323,7 +315,6 @@ class Kind
      */
     public function getZeitblocks(): Collection
     {
-
         return $this->zeitblocks;
     }
 
@@ -332,7 +323,7 @@ class Kind
      */
     public function getRealZeitblocks(): Collection
     {
-        $block = array();
+        $block = [];
         foreach ($this->zeitblocks->toArray() as $data) {
             if (!$data->getDeleted()) {
                 $block[] = $data;
@@ -359,16 +350,14 @@ class Kind
      */
     public function getRealBeworben(): Collection
     {
-        $block = array();
+        $block = [];
         foreach ($this->beworben->toArray() as $data) {
             if (!$data->getDeleted()) {
                 $block[] = $data;
             }
         }
 
-        usort($block, function (Zeitblock $a, Zeitblock $b) {
-            return ($a->getVon() > $b->getVon() ? true : false);
-        });
+        usort($block, fn (Zeitblock $a, Zeitblock $b) => $a->getVon() > $b->getVon() ? true : false);
 
         return new ArrayCollection($block);
     }
@@ -378,20 +367,17 @@ class Kind
      */
     public function getRealWarteliste(): Collection
     {
-        $block = array();
+        $block = [];
         foreach ($this->warteliste->toArray() as $data) {
             if (!$data->getDeleted()) {
                 $block[] = $data;
             }
         }
 
-        usort($block, function (Zeitblock $a, Zeitblock $b) {
-            return ($a->getVon() > $b->getVon() ? true : false);
-        });
+        usort($block, fn (Zeitblock $a, Zeitblock $b) => $a->getVon() > $b->getVon() ? true : false);
 
         return new ArrayCollection($block);
     }
-
 
     public function addZeitblock(Zeitblock $zeitblock): self
     {
@@ -477,13 +463,13 @@ class Kind
                 $summe++;
             }
         }
+
         return $summe;
     }
 
     public function getTageWithBlocks()
     {
-
-        $blocks2 = array();
+        $blocks2 = [];
 
         $blocks = $this->zeitblocks->toArray();
         $blocks = array_merge($blocks, $this->beworben->toArray());
@@ -493,9 +479,9 @@ class Kind
                 $blocks2[$data->getWochentag()][] = $data;
             }
         }
+
         return sizeof($blocks2);
     }
-
 
     /**
      * @return Zeitblock[]
@@ -503,39 +489,41 @@ class Kind
     public function getBetreungsblocksReal()
     {
         $blocks = $this->zeitblocks;
-        $realBlocks = array();
+        $realBlocks = [];
         foreach ($blocks as $data) {
             if ($data->getGanztag() != 0) {
                 $realBlocks[] = $data;
             }
         }
+
         return $realBlocks;
     }
 
     public function getBetreungsblocksRealKontingent()
     {
         $blocks = $this->beworben;
-        $realBlocks = array();
+        $realBlocks = [];
         foreach ($blocks as $data) {
             if ($data->getGanztag() != 0) {
                 $realBlocks[] = $data;
             }
         }
+
         return $realBlocks;
     }
 
     public function getMittagessenblocksReal()
     {
         $blocks = $this->zeitblocks;
-        $realBlocks = array();
+        $realBlocks = [];
         foreach ($blocks as $data) {
             if ($data->getGanztag() == 0) {
                 $realBlocks[] = $data;
             }
         }
+
         return $realBlocks;
     }
-
 
     public function getFin(): ?bool
     {
@@ -742,10 +730,11 @@ class Kind
 
     public function getArtString()
     {
-        $type = array(
+        $type = [
             1 => 'Ganztagsbetreuung',
             2 => 'Halbtagsbetreuung',
-        );
+        ];
+
         return $type[$this->art];
     }
 
@@ -762,10 +751,11 @@ class Kind
      */
     public function getFerienblocks(): Collection
     {
-        $ferien = array();
+        $ferien = [];
         foreach ($this->kindFerienblocks as $data) {
             $ferien[] = $data->getFerienblock();
         }
+
         return new ArrayCollection($ferien);
     }
 
@@ -779,6 +769,7 @@ class Kind
                 return $data;
             }
         }
+
         return null;
     }
 
@@ -787,13 +778,14 @@ class Kind
      */
     public function getKindFerienblocksBeworben(): Collection
     {
-        $res = array();
+        $res = [];
         $ferienblock = $this->kindFerienblocks->toArray();
         foreach ($ferienblock as $data) {
             if ($data->getState() == 0) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
 
@@ -802,13 +794,14 @@ class Kind
      */
     public function getKindFerienblocksGebucht(): Collection
     {
-        $res = array();
+        $res = [];
         $ferienblock = $this->kindFerienblocks->toArray();
         foreach ($ferienblock as $data) {
             if ($data->getState() == 10) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
 
@@ -817,13 +810,14 @@ class Kind
      */
     public function getKindFerienblocksStorniert(): Collection
     {
-        $res = array();
+        $res = [];
         $ferienblock = $this->kindFerienblocks->toArray();
         foreach ($ferienblock as $data) {
             if ($data->getState() == 20) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
 
@@ -832,18 +826,19 @@ class Kind
      */
     public function getKindFerienblocksBezahlt(): Collection
     {
-        $res = array();
+        $res = [];
         $ferienblock = $this->kindFerienblocks->toArray();
         foreach ($ferienblock as $data) {
             if ($data->getBezahlt() === true) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
 
     /**
-     * @return Integer|Preis
+     * @return int|Preis
      */
     public function getFerienblockPreis(): float
     {
@@ -852,6 +847,7 @@ class Kind
         foreach ($ferienblock as $data) {
             $preis += $data->getPreis();
         }
+
         return $preis;
     }
 
@@ -860,13 +856,14 @@ class Kind
      */
     public function getKindFerienblocksNichtBezahlt(): Collection
     {
-        $res = array();
+        $res = [];
         $ferienblock = $this->kindFerienblocks->toArray();
         foreach ($ferienblock as $data) {
             if ($data->getBezahlt() === false) {
                 $res[] = $data;
             }
         }
+
         return new ArrayCollection($res);
     }
 
@@ -895,15 +892,14 @@ class Kind
 
     public function getProgrammFromOrg(Organisation $organisation)
     {
-        $res = array();
+        $res = [];
         foreach ($this->kindFerienblocks as $data) {
             if ($data->getFerienblock()->getOrganisation() == $organisation) {
                 $res[] = $data;
             }
-
         }
-        return $res;
 
+        return $res;
     }
 
     public function getMasernImpfung(): ?bool
@@ -1044,6 +1040,7 @@ class Kind
         if ($this->warteliste->count() > 0) {
             return $this->warteliste[0]->getActive();
         }
+
         return null;
     }
 

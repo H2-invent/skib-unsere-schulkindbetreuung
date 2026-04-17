@@ -2,17 +2,16 @@
 
 namespace App\Entity;
 
+use App\Repository\ZeitblockRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
-
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
-#[ORM\Entity(repositoryClass: \App\Repository\ZeitblockRepository::class)]
-class Zeitblock implements TranslatableInterface
+#[ORM\Entity(repositoryClass: ZeitblockRepository::class)]
+class Zeitblock implements TranslatableInterface, \Stringable
 {
     use TranslatableTrait;
     #[ORM\Id]
@@ -30,18 +29,18 @@ class Zeitblock implements TranslatableInterface
     private $bis;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Schule::class, inversedBy: 'zeitblocks')]
+    #[ORM\ManyToOne(targetEntity: Schule::class, inversedBy: 'zeitblocks')]
     #[Groups(['confirm_child'])]
     private $schule;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Kind::class, inversedBy: 'zeitblocks')]
+    #[ORM\ManyToMany(targetEntity: Kind::class, inversedBy: 'zeitblocks')]
     private $kind;
 
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Active::class, inversedBy: 'blocks')]
+    #[ORM\ManyToOne(targetEntity: Active::class, inversedBy: 'blocks')]
     #[Groups(['confirm_child'])]
     private $active;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Abwesend::class, mappedBy: 'zeitblock')]
+    #[ORM\OneToMany(targetEntity: Abwesend::class, mappedBy: 'zeitblock')]
     private $abwesenheit;
 
     #[ORM\Column(type: 'integer')]
@@ -63,16 +62,16 @@ class Zeitblock implements TranslatableInterface
     #[ORM\Column(type: 'integer', nullable: true)]
     private $max;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Kind::class, mappedBy: 'beworben')]
+    #[ORM\ManyToMany(targetEntity: Kind::class, mappedBy: 'beworben')]
     private $kinderBeworben;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Rechnung::class, mappedBy: 'zeitblocks')]
+    #[ORM\ManyToMany(targetEntity: Rechnung::class, mappedBy: 'zeitblocks')]
     private $rechnungen;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, mappedBy: 'vorganger')]
+    #[ORM\ManyToMany(targetEntity: Zeitblock::class, mappedBy: 'vorganger')]
     private $nachfolger;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Zeitblock::class, inversedBy: 'nachfolger')]
+    #[ORM\ManyToMany(targetEntity: Zeitblock::class, inversedBy: 'nachfolger')]
     private $vorganger;
 
     #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'nachfolgerSilent')]
@@ -124,7 +123,7 @@ class Zeitblock implements TranslatableInterface
 
     public function __toString(): string
     {
-        return (string)$this->id;
+        return (string) $this->id;
     }
 
     public function getId(): ?int
@@ -178,29 +177,28 @@ class Zeitblock implements TranslatableInterface
 
     public function getKindwithFin()
     {
-        $kind= array();
-        foreach($this->kind->toArray() as $data) {
-
-            if($data->getFin() === true) {
-                $kind[] = $data;
-            }
-        }
-
-            return $kind;
-    }
-
-    public function getBeworbenwithFin()
-    {
-        $kind= array();
-        foreach($this->kinderBeworben->toArray() as $data) {
-
-            if($data->getEltern()->getCreatedAt()) {
+        $kind = [];
+        foreach ($this->kind->toArray() as $data) {
+            if ($data->getFin() === true) {
                 $kind[] = $data;
             }
         }
 
         return $kind;
     }
+
+    public function getBeworbenwithFin()
+    {
+        $kind = [];
+        foreach ($this->kinderBeworben->toArray() as $data) {
+            if ($data->getEltern()->getCreatedAt()) {
+                $kind[] = $data;
+            }
+        }
+
+        return $kind;
+    }
+
     public function addKind(Kind $kind): self
     {
         if (!$this->kind->contains($kind)) {
@@ -273,65 +271,33 @@ class Zeitblock implements TranslatableInterface
 
         return $this;
     }
-    public function getWochentagString(){
 
-       switch ($this->wochentag){
-           case 0:
-               return "Montag";
-               break;
-           case 1:
-               return "Dienstag";
-               break;
-           case 2:
-               return "Mittwoch";
-               break;
-           case 3:
-               return "Donnerstag";
-               break;
-           case 4:
-               return "Freitag";
-               break;
-           case 5:
-               return "Samstag";
-               break;
-           case 6:
-               return "Sonntag";
-               break;
-           default:
-               return "keine Angabe";
-               break;
-
-       }
+    public function getWochentagString()
+    {
+        return match ($this->wochentag) {
+            0 => 'Montag',
+            1 => 'Dienstag',
+            2 => 'Mittwoch',
+            3 => 'Donnerstag',
+            4 => 'Freitag',
+            5 => 'Samstag',
+            6 => 'Sonntag',
+            default => 'keine Angabe',
+        };
     }
-    public function getWochentagStringShort(){
 
-        switch ($this->wochentag){
-            case 0:
-                return "Mo";
-                break;
-            case 1:
-                return "Di";
-                break;
-            case 2:
-                return "Mi";
-                break;
-            case 3:
-                return "Do";
-                break;
-            case 4:
-                return "Fr";
-                break;
-            case 5:
-                return "Sa";
-                break;
-            case 6:
-                return "So";
-                break;
-            default:
-                return "keine Angabe";
-                break;
-
-        }
+    public function getWochentagStringShort()
+    {
+        return match ($this->wochentag) {
+            0 => 'Mo',
+            1 => 'Di',
+            2 => 'Mi',
+            3 => 'Do',
+            4 => 'Fr',
+            5 => 'Sa',
+            6 => 'So',
+            default => 'keine Angabe',
+        };
     }
 
     public function getGanztag(): ?int
@@ -358,21 +324,14 @@ class Zeitblock implements TranslatableInterface
         return $this;
     }
 
-    public function getGanztagString(){
-        switch ($this->ganztag){
-            case 0:
-                return 'Mittagessen';
-                break;
-            case 1:
-                return 'Ganztagsbetreuung';
-                break;
-            case 2:
-                return 'Halbtagsbetreuung';
-                break;
-            default:
-                return "keine Angabe";
-                break;
-        }
+    public function getGanztagString()
+    {
+        return match ($this->ganztag) {
+            0 => 'Mittagessen',
+            1 => 'Ganztagsbetreuung',
+            2 => 'Halbtagsbetreuung',
+            default => 'keine Angabe',
+        };
     }
 
     public function getDeleted(): ?bool
@@ -380,39 +339,27 @@ class Zeitblock implements TranslatableInterface
         return $this->deleted;
     }
 
-
     public function setDeleted(bool $deleted): self
     {
         $this->deleted = $deleted;
 
         return $this;
     }
-    public function getFirstDate() : \DateTimeInterface{
-        $date = clone ($this->getActive()->getVon());
-        switch ($this->wochentag){
-            case 0:
-                return $date->modify('next mon');
-                break;
-            case 1:
-                 return $date->modify('next tue');
-                break;
-            case 2:
-                return $date->modify('next wed');
-                break;
-            case 3:
-                return $date->modify('next thu');
-                break;
-            case 4:
-                return $date->modify('next fri');
-                break;
-            case 5:
-                return $date->modify('next sat');
-                break;
-            case 6:
-                return $date->modify('next sun');
-                break;
-        }
-        return $date;
+
+    public function getFirstDate(): \DateTimeInterface
+    {
+        $date = clone $this->getActive()->getVon();
+
+        return match ($this->wochentag) {
+            0 => $date->modify('next mon'),
+            1 => $date->modify('next tue'),
+            2 => $date->modify('next wed'),
+            3 => $date->modify('next thu'),
+            4 => $date->modify('next fri'),
+            5 => $date->modify('next sat'),
+            6 => $date->modify('next sun'),
+            default => $date,
+        };
     }
 
     public function getMin(): ?int
@@ -522,6 +469,7 @@ class Zeitblock implements TranslatableInterface
 
         return $this;
     }
+
     /**
      * @return Collection|Zeitblock[]
      */

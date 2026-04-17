@@ -20,5 +20,4 @@ class AutoBlockAssignmentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, AutoBlockAssignment::class);
     }
-
 }

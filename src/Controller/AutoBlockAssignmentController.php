@@ -2,20 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Active;
 use App\Entity\Organisation;
 use App\Repository\ActiveRepository;
 use App\Repository\AutoBlockAssignmentChildRepository;
 use App\Repository\OrganisationRepository;
 use App\Repository\ZeitblockRepository;
 use App\Service\AutoBlockAssignmentService;
-use Exception;
-use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class AutoBlockAssignmentController extends AbstractController
 {
@@ -25,14 +22,13 @@ class AutoBlockAssignmentController extends AbstractController
         private ZeitblockRepository $zeitblockRepository,
         private AutoBlockAssignmentService $autoBlockAssignmentService,
         private ActiveRepository $activeRepository,
-    )
-    {
+    ) {
     }
 
     /**
-     * @Route("/org_child/auto_assign", name="org_child_auto_assign")
-     * @throws Exception
+     * @throws \Exception
      */
+    #[Route(path: '/org_child/auto_assign', name: 'org_child_auto_assign')]
     public function index(Request $request): Response
     {
         $idOrganisation = $request->get('id');
@@ -57,7 +53,6 @@ class AutoBlockAssignmentController extends AbstractController
             ];
         }
 
-
         return $this->render('auto_block_assignment/index.html.twig', [
             'schulData' => $schulDaten,
             'schuljahre' => $schuljahre,
@@ -65,9 +60,7 @@ class AutoBlockAssignmentController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/org_child/auto_assign/start", name="org_child_auto_assign_start")
-     */
+    #[Route(path: '/org_child/auto_assign/start', name: 'org_child_auto_assign_start')]
     public function start(Request $request): Response
     {
         $idOrganisation = $request->get('id');
@@ -86,9 +79,7 @@ class AutoBlockAssignmentController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/org_child/auto_assign/confirm", name="org_child_auto_assign_confirm")
-     */
+    #[Route(path: '/org_child/auto_assign/confirm', name: 'org_child_auto_assign_confirm')]
     public function confirm(Request $request): Response
     {
         $idOrganisation = $request->get('id');
@@ -108,9 +99,7 @@ class AutoBlockAssignmentController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/org_child/auto_assign/confirm/child/{id}", name="org_child_auto_assign_confirm_child")
-     */
+    #[Route(path: '/org_child/auto_assign/confirm/child/{id}', name: 'org_child_auto_assign_confirm_child')]
     public function confirmChildRow(Request $request): JsonResponse
     {
         $idChild = $request->get('id');
@@ -123,9 +112,7 @@ class AutoBlockAssignmentController extends AbstractController
         return $this->json($autoZeitblocks, context: ['groups' => 'confirm_child']);
     }
 
-    /**
-     * @Route("/org_child/auto_assign/accept", name="org_child_auto_assign_accept")
-     */
+    #[Route(path: '/org_child/auto_assign/accept', name: 'org_child_auto_assign_accept')]
     public function accept(Request $request): Response
     {
         $idOrganisation = $request->get('id');
@@ -136,13 +123,11 @@ class AutoBlockAssignmentController extends AbstractController
 
         return $this->redirectToRoute('org_child_auto_assign_confirm', [
             'id' => $idOrganisation,
-            'assignment_started' => true
+            'assignment_started' => true,
         ]);
     }
 
-    /**
-     * @Route("/org_child/auto_assign/reject", name="org_child_auto_assign_reject")
-     */
+    #[Route(path: '/org_child/auto_assign/reject', name: 'org_child_auto_assign_reject')]
     public function reject(Request $request): Response
     {
         $idOrganisation = $request->get('id');
@@ -154,9 +139,7 @@ class AutoBlockAssignmentController extends AbstractController
         return $this->redirectToRoute('org_child_auto_assign', ['id' => $idOrganisation]);
     }
 
-    /**
-     * @Route("/org_child/auto_assign/status", name="org_child_auto_assign_status")
-     */
+    #[Route(path: '/org_child/auto_assign/status', name: 'org_child_auto_assign_status')]
     public function status(Request $request): JsonResponse
     {
         $idOrganisation = $request->get('id');
@@ -168,9 +151,7 @@ class AutoBlockAssignmentController extends AbstractController
         return $this->json(['done' => $isDone]);
     }
 
-    /**
-     * @Route("/org_child/auto_assign/status-apply", name="org_child_auto_assign_status_apply")
-     */
+    #[Route(path: '/org_child/auto_assign/status-apply', name: 'org_child_auto_assign_status_apply')]
     public function statusApply(Request $request): JsonResponse
     {
         $idOrganisation = $request->get('id');
@@ -183,13 +164,12 @@ class AutoBlockAssignmentController extends AbstractController
     }
 
     /**
-     * @param Organisation|null $organisation
-     * @throws Exception
+     * @throws \Exception
      */
     private function assertUserAndOrgaAllowed(?Organisation $organisation): void
     {
         if ($organisation === null || $organisation->getStadt() !== $this->getUser()?->getStadt()) {
-            throw new RuntimeException('Wrong City');
+            throw new \RuntimeException('Wrong City');
         }
     }
 }

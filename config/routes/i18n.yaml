@@ -1,0 +1,7 @@
+controllers:
+  resource: '../../src/Controller/'
+  type: attribute
+  prefix:
+    de: ''
+    en: '/en'
+    fr: '/fr'

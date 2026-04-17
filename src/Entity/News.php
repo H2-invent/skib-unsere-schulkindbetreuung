@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\NewsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @Vich\Uploadable
  */
-#[ORM\Entity(repositoryClass: \App\Repository\NewsRepository::class)]
+#[ORM\Entity(repositoryClass: NewsRepository::class)]
 class News
 {
     #[ORM\Id]
@@ -25,7 +26,7 @@ class News
     #[ORM\Column(type: 'text')]
     private $message;
 
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'news')]
+    #[ORM\ManyToOne(targetEntity: Stadt::class, inversedBy: 'news')]
     private $stadt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -34,13 +35,13 @@ class News
     #[ORM\Column(type: 'boolean')]
     private $activ;
 
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'orgNews')]
+    #[ORM\ManyToOne(targetEntity: Organisation::class, inversedBy: 'orgNews')]
     private $organisation;
-    
+
     #[ORM\Column(type: 'datetime')]
     private $createdDate;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Schule::class, inversedBy: 'news')]
+    #[ORM\ManyToMany(targetEntity: Schule::class, inversedBy: 'news')]
     private $schule;
 
     #[ORM\ManyToMany(targetEntity: Active::class, inversedBy: 'news')]
@@ -56,6 +57,7 @@ class News
 
     /**
      * @Vich\UploadableField(mapping="data_upload", fileNameProperty="attachment")
+     *
      * @var File
      */
     private $attachmentFile;
@@ -149,7 +151,6 @@ class News
         return $this;
     }
 
-
     public function getCreatedDate(): ?\DateTimeInterface
     {
         return $this->createdDate;
@@ -224,8 +225,7 @@ class News
         return $this;
     }
 
-
-    public function setAttachmentFile(File $attachmentFile = null)
+    public function setAttachmentFile(?File $attachmentFile = null)
     {
         $this->attachmentFile = $attachmentFile;
 
@@ -276,5 +276,4 @@ class News
 
         return $this;
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service;
@@ -7,14 +8,14 @@ use App\Entity\LateRegistration;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpKernel\UriSigner;
+use Symfony\Component\HttpFoundation\UriSigner;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
 class LateRegistrationService
 {
-    private const VALIDITY_TIME = '24 hours';
+    private const string VALIDITY_TIME = '24 hours';
 
     public function __construct(
         private UriSigner $uriSigner,
@@ -23,8 +24,7 @@ class LateRegistrationService
         private RouterInterface $router,
         private RequestStack $requestStack,
         private EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
     public function create(LateRegistration $lateRegistration): void

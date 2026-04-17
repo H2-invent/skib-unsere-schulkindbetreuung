@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service\AutoBlockAssignment;
@@ -6,14 +7,14 @@ namespace App\Service\AutoBlockAssignment;
 use App\Entity\Zeitblock;
 use App\Service\WidgetService;
 use Symfony\Contracts\Service\ResetInterface;
-use function usort;
 
 class DraftCreationValidator implements ResetInterface
 {
     private array $addedCountByZeitblock;
 
-    public function __construct(private WidgetService $widgetService)
-    {
+    public function __construct(
+        private WidgetService $widgetService,
+    ) {
     }
 
     public function reset(): void
@@ -23,6 +24,7 @@ class DraftCreationValidator implements ResetInterface
 
     /**
      * @param Zeitblock[] $zeitblocks
+     *
      * @return array<Zeitblock[], Zeitblock[]>
      */
     public function validateZeitblocks(array $zeitblocks, ?int $minBlocksPerDay): array
@@ -40,6 +42,7 @@ class DraftCreationValidator implements ResetInterface
 
     /**
      * @param Zeitblock[] $zeitblocks
+     *
      * @return array<int, Zeitblock[]>
      */
     private function sortZeitblocksByDayAndTime(array $zeitblocks): array
@@ -66,9 +69,8 @@ class DraftCreationValidator implements ResetInterface
         array $dayZeitblocks,
         array &$accepted,
         array &$warteschlange,
-        ?int $minBlocksPerDay
-    ): void
-    {
+        ?int $minBlocksPerDay,
+    ): void {
         $tempAccepted = [];
         $tempWarteschlange = [];
 
@@ -83,11 +85,12 @@ class DraftCreationValidator implements ResetInterface
 
     /**
      * @param Zeitblock[] $zeitblocks
+     *
      * @return Zeitblock[]
      */
     private function sortByTime(array $zeitblocks): array
     {
-        usort($zeitblocks, static function (Zeitblock $a, Zeitblock $b) {
+        \usort($zeitblocks, static function (Zeitblock $a, Zeitblock $b) {
             $vonA = $a->getVon();
             $vonB = $b->getVon();
 
@@ -127,8 +130,8 @@ class DraftCreationValidator implements ResetInterface
         foreach ($tempAccepted as $key => $block) {
             $vorgaenger = $this->getAllVorgaengerBlocks($block);
 
-            $vorgaengerIds = array_map(static fn($v) => $v->getId(), $vorgaenger);
-            $acceptedIds = array_map(static fn($a) => $a->getId(), $tempAccepted);
+            $vorgaengerIds = array_map(static fn ($v) => $v->getId(), $vorgaenger);
+            $acceptedIds = array_map(static fn ($a) => $a->getId(), $tempAccepted);
             $allInAccepted = empty(array_diff($vorgaengerIds, $acceptedIds));
 
             if (!$allInAccepted) {
@@ -139,7 +142,6 @@ class DraftCreationValidator implements ResetInterface
     }
 
     /**
-     * @param int|null $minBlocksPerDay
      * @param Zeitblock[] $tempAccepted
      * @param Zeitblock[] $tempWarteschlange
      */

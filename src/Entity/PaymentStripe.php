@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\PaymentStripeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\PaymentStripeRepository::class)]
+#[ORM\Entity(repositoryClass: PaymentStripeRepository::class)]
 class PaymentStripe
 {
     #[ORM\Id]
@@ -18,7 +19,7 @@ class PaymentStripe
     #[ORM\Column(type: 'boolean')]
     private $status;
 
-    #[ORM\OneToOne(targetEntity: \App\Entity\Payment::class, mappedBy: 'paymentStripes', cascade: ['persist'])]
+    #[ORM\OneToOne(targetEntity: Payment::class, mappedBy: 'paymentStripes', cascade: ['persist'])]
     private $payment;
 
     #[ORM\Column(type: 'json', nullable: true)]

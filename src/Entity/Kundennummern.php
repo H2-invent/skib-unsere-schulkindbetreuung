@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\KundennummernRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\KundennummernRepository::class)]
+#[ORM\Entity(repositoryClass: KundennummernRepository::class)]
 class Kundennummern
 {
     #[ORM\Id]
@@ -13,11 +14,11 @@ class Kundennummern
     private $id;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\organisation::class, inversedBy: 'kundennummerns')]
+    #[ORM\ManyToOne(targetEntity: organisation::class, inversedBy: 'kundennummerns')]
     private $organisation;
 
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\stammdaten::class, inversedBy: 'kundennummerns')]
+    #[ORM\ManyToOne(targetEntity: stammdaten::class, inversedBy: 'kundennummerns')]
     private $stammdaten;
 
     #[ORM\Column(type: 'text')]

@@ -2,24 +2,24 @@
 
 namespace App\Entity;
 
-use DateTimeInterface;
+use App\Repository\SchuleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @Vich\Uploadable
  */
-#[ORM\Entity(repositoryClass: \App\Repository\SchuleRepository::class)]
+#[ORM\Entity(repositoryClass: SchuleRepository::class)]
 class Schule
 {
     public function __serialize(): array
     {
-        return array('id'=>$this->id);
+        return ['id' => $this->id];
     }
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -32,11 +32,10 @@ class Schule
     private $name;
 
     #[ORM\JoinColumn(nullable: true)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Organisation::class, inversedBy: 'schule')]
+    #[ORM\ManyToOne(targetEntity: Organisation::class, inversedBy: 'schule')]
     private $organisation;
 
-
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stadt::class, inversedBy: 'schules')]
+    #[ORM\ManyToOne(targetEntity: Stadt::class, inversedBy: 'schules')]
     private $stadt;
 
     #[Groups(['assign_formula_sample'])]
@@ -69,6 +68,7 @@ class Schule
 
     /**
      * @Vich\UploadableField(mapping="profil_picture", fileNameProperty="image")
+     *
      * @var File
      */
     private $imageFile;
@@ -85,10 +85,10 @@ class Schule
     #[ORM\Column(type: 'text')]
     private $infoText;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Zeitblock::class, mappedBy: 'schule', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Zeitblock::class, mappedBy: 'schule', orphanRemoval: true)]
     private $zeitblocks;
 
-    #[ORM\OneToMany(targetEntity: \App\Entity\Kind::class, mappedBy: 'schule')]
+    #[ORM\OneToMany(targetEntity: Kind::class, mappedBy: 'schule')]
     private $kinder;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -103,12 +103,11 @@ class Schule
     #[Assert\Email]
     private $catererEmail;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\News::class, mappedBy: 'schule')]
+    #[ORM\ManyToMany(targetEntity: News::class, mappedBy: 'schule')]
     private $news;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'schulen')]
     private $users;
-
 
     public function __construct()
     {
@@ -251,7 +250,7 @@ class Schule
         return $this;
     }
 
-    public function setImageFile(File $image = null)
+    public function setImageFile(?File $image = null)
     {
         $this->imageFile = $image;
 
@@ -414,23 +413,24 @@ class Schule
         return $this;
     }
 
-    public function getBlocksforThisYearAndType($art,?Active $active)
+    public function getBlocksforThisYearAndType($art, ?Active $active)
     {
-        $res = array();
-        foreach ($this->zeitblocks as $data){
-            if($data->getActive() === $active && $data->getGanztag() === $art && !$data->getDeleted() && !$data->getDeaktiviert()){
+        $res = [];
+        foreach ($this->zeitblocks as $data) {
+            if ($data->getActive() === $active && $data->getGanztag() === $art && !$data->getDeleted() && !$data->getDeaktiviert()) {
                 $res[] = $data;
             }
         }
+
         return $res;
     }
 
-    public function getUpdatedAt(): ?DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 

@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\ContentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable as Translatable;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
-#[ORM\Entity(repositoryClass: \App\Repository\ContentRepository::class)]
+#[ORM\Entity(repositoryClass: ContentRepository::class)]
 class Content implements TranslatableInterface
 {
     use TranslatableTrait;
@@ -15,7 +15,6 @@ class Content implements TranslatableInterface
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
-
 
     #[ORM\Column(type: 'text')]
     private $slug;
@@ -40,8 +39,6 @@ class Content implements TranslatableInterface
         return $this->id;
     }
 
-
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -53,8 +50,6 @@ class Content implements TranslatableInterface
 
         return $this;
     }
-
-
 
     public function getActiv(): ?bool
     {

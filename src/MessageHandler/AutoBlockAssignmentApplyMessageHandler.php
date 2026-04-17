@@ -13,8 +13,7 @@ final class AutoBlockAssignmentApplyMessageHandler
     public function __construct(
         private OrganisationRepository $organisationRepository,
         private AutoBlockAssignmentService $assignmentService,
-    )
-    {
+    ) {
     }
 
     public function __invoke(AutoBlockAssignmentApplyMessage $message): void

@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\EmailResponseRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\EmailResponseRepository::class)]
+#[ORM\Entity(repositoryClass: EmailResponseRepository::class)]
 class EmailResponse
 {
     #[ORM\Id]
@@ -18,7 +19,7 @@ class EmailResponse
     #[ORM\Column(type: 'boolean')]
     private $status;
 
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Stammdaten::class)]
+    #[ORM\ManyToOne(targetEntity: Stammdaten::class)]
     private $stammdaten;
 
     #[ORM\Column(type: 'boolean')]

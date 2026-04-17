@@ -6,65 +6,33 @@ use App\Entity\Ferienblock;
 use App\Entity\Kind;
 use App\Entity\KindFerienblock;
 use App\Entity\Payment;
-use App\Entity\Stadt;
-
-use App\Entity\Stammdaten;
-
-use App\Entity\Zeitblock;
-use App\Form\Type\ConfirmType;
 use Doctrine\ORM\EntityManagerInterface;
-
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Security;
-
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Twig\Environment;
-
 
 // <- Add this
 
 class ToogleKindFerienblock
 {
-
-
-    private $em;
-    private $translator;
-    private ElternService $elternService;
-
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager, ElternService $elternService)
-    {
-        $this->em = $entityManager;
-        $this->translator = $translator;
-        $this->elternService = $elternService;
+    public function __construct(
+        private TranslatorInterface $translator,
+        private EntityManagerInterface $em,
+        private ElternService $elternService,
+    ) {
     }
 
-    public
-    function toggleKind(Kind $kind, Ferienblock $block, $preisId)
+    public function toggleKind(Kind $kind, Ferienblock $block, $preisId)
     {
-        $result = array(
+        $result = [
             'text' => $this->translator->trans('Ferienprogramm erfolgreich gespeichert'),
             'error' => 0,
             'kontingent' => false,
-            'cardText' => $this->translator->trans('Gebucht')
-        );
+            'cardText' => $this->translator->trans('Gebucht'),
+        ];
 
         try {
             // gibt es bereits eine Paymentverbindung zwischen Den Eltern un der Org, dann lösche  diese.
 
-            $payment = $this->em->getRepository(Payment::class)->findOneBy(array('organisation' => $block->getOrganisation(), 'stammdaten' => $this->elternService->getLatestElternFromChild($kind)));
+            $payment = $this->em->getRepository(Payment::class)->findOneBy(['organisation' => $block->getOrganisation(), 'stammdaten' => $this->elternService->getLatestElternFromChild($kind)]);
             if ($payment) {
                 $this->em->remove($payment);
                 $this->em->flush();
@@ -73,15 +41,15 @@ class ToogleKindFerienblock
             if ($block->getMinAnzahl() || $block->getMaxAnzahl()) {
                 $result['kontingent'] = true;
             }
-            $kindFerienBlock = $this->em->getRepository(KindFerienblock::class)->findOneBy(array('kind' => $kind, 'ferienblock' => $block));
+            $kindFerienBlock = $this->em->getRepository(KindFerienblock::class)->findOneBy(['kind' => $kind, 'ferienblock' => $block]);
 
             if ($kindFerienBlock !== null) {
-
                 $this->em->remove($kindFerienBlock);
                 $result['cardText'] = $this->translator->trans('Hier buchen');
                 $result['state'] = -1;
                 $this->em->flush();
                 $result['preis'] = number_format($kind->getFerienblockPreis(), 2, ',', '.') . '€';
+
                 return $result;
             }
 
@@ -92,17 +60,15 @@ class ToogleKindFerienblock
             $kindFerienBlock->setPreisId($preisId);
             $kindFerienBlock->setCheckinID(md5(uniqid()));
 
-
-            if (null === $block->getMinAnzahl() || null === $block->getMaxAnzahl()) {
+            if ($block->getMinAnzahl() === null || $block->getMaxAnzahl() === null) {
                 // State: Ohne Kontingent direkt angemeldet (Gebucht)
                 $kindFerienBlock->setState(10);
                 $result['cardText'] = $this->translator->trans('Gebucht');
             } else {
-
                 $aktuell = sizeof($block->getKindFerienblocksGesamt()) + 1;
 
                 // Fall 1: aktuell ist kleiner  max und kind automatisch hinzugefügt
-                //==> dann state auf 10 da das Kind gebuct ist.
+                // ==> dann state auf 10 da das Kind gebuct ist.
                 if ($aktuell <= $block->getMaxAnzahl() && $block->getModeMaximal() === false) {
                     $kindFerienBlock->setState(10);
                     $result['cardText'] = $this->translator->trans('Gebucht');
@@ -120,20 +86,19 @@ class ToogleKindFerienblock
                     $result['cardText'] = $this->translator->trans('Hier buchen');
                     $result['text'] = $this->translator->trans('Es sind keine Plätze mehr verfügbar.');
                     $result['preis'] = number_format($kind->getFerienblockPreis(), 2, ',', '.') . '€';
+
                     return $result;
                 }
-
             }
             $this->em->persist($kindFerienBlock);
             $this->em->flush();
-
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $result['text'] = $this->translator->trans('Fehler. Bitte versuchen Sie es erneut.');
             $result['error'] = 1;
         }
         $result['state'] = $kindFerienBlock->getState();
         $result['preis'] = number_format($kind->getFerienblockPreis(), 2, ',', '.') . '€';
+
         return $result;
     }
-
 }

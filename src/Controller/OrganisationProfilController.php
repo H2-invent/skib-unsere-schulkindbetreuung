@@ -3,19 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Organisation;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OrganisationProfilController extends AbstractController
 {
-    /**
-     * @Route("/profil/{slug}", name="organisation_profil")
-     * @ParamConverter("organisation", options={"mapping"={"slug"="slug"}})
-     */
-    public function index(Request $request, Organisation $organisation, TranslatorInterface $translator)
+    #[Route(path: '/profil/{slug}', name: 'organisation_profil')]
+    public function index(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Organisation $organisation, TranslatorInterface $translator)
     {
         return $this->render('organisation_profil/index.html.twig', [
             'organisation' => $organisation,
@@ -24,13 +21,13 @@ class OrganisationProfilController extends AbstractController
             'title' => $organisation->getName(),
         ]);
     }
+
     private function buildMeta($sentenceArray)
     {
         $count = 0;
         $res = '';
-        $array = explode('. ', $sentenceArray);
+        $array = explode('. ', (string) $sentenceArray);
         foreach ($array as $data) {
-
             if ($count <= 160) {
                 $res .= $data . '. ';
             } else {
@@ -38,6 +35,7 @@ class OrganisationProfilController extends AbstractController
             }
             $count += strlen($data);
         }
+
         return $res;
     }
 }

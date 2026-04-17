@@ -6,7 +6,6 @@ use App\Entity\Kind;
 use App\Entity\Zeitblock;
 use App\Repository\KindRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
@@ -14,15 +13,14 @@ class WartelisteService
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private KindRepository         $kindRepository,
-        private ElternService          $elternService,
-        private AnmeldeEmailService    $anmeldeEmailService,
-        private TranslatorInterface    $translator,
-        private WorkflowAbschluss      $workflowAbschluss,
-        private MailerService          $mailerService,
-        private Environment            $environment
-    )
-    {
+        private KindRepository $kindRepository,
+        private ElternService $elternService,
+        private AnmeldeEmailService $anmeldeEmailService,
+        private TranslatorInterface $translator,
+        private WorkflowAbschluss $workflowAbschluss,
+        private MailerService $mailerService,
+        private Environment $environment,
+    ) {
     }
 
     public function addKindToWarteliste(Kind $kind, Zeitblock $zeitblock, bool $silent = false): bool
@@ -38,11 +36,13 @@ class WartelisteService
         if (!$silent) {
             $this->sendEmailForWartelisteAdding($kind, $zeitblock);
         }
+
         return true;
     }
+
     public function sendEmailForWartelisteAdding(Kind $kind, Zeitblock $zeitblock): void
     {
-        $content = $this->environment->render('email/childAddedToWarteliste.html.twig', array('kind' => $kind, 'block' => $zeitblock));
+        $content = $this->environment->render('email/childAddedToWarteliste.html.twig', ['kind' => $kind, 'block' => $zeitblock]);
         $this->mailerService->sendEmail(
             $kind->getSchule()->getOrganisation()->getName(),
             $kind->getSchule()->getOrganisation()->getEmail(),
@@ -51,6 +51,7 @@ class WartelisteService
             $content,
             $kind->getSchule()->getOrganisation()->getEmail());
     }
+
     public function removeKindFromWarteliste(Kind $kind, Zeitblock $zeitblock): bool
     {
         if (!$kind->getWarteliste()->contains($zeitblock)) {
@@ -59,6 +60,7 @@ class WartelisteService
         $kind->removeWarteliste($zeitblock);
         $this->entityManager->persist($kind);
         $this->entityManager->flush();
+
         return true;
     }
 
@@ -68,7 +70,6 @@ class WartelisteService
         $kindForTime->getZeitblocks();
 
         $kindNew = clone $kindForTime;
-
 
         foreach ($kindForTime->getZeitblocks() as $data) {
             $kindNew->addZeitblock($data);
@@ -81,7 +82,6 @@ class WartelisteService
         }
         $kindNew->addZeitblock($zeitblock);
         $kindNew->setStartDate($date);
-
 
         $kind->removeWarteliste($zeitblock);
         $this->entityManager->persist($kind);
@@ -96,10 +96,8 @@ class WartelisteService
         }
         $stammdatenNew->addKind($kindNew);
 
-
         $this->entityManager->persist($kindNew);
         $this->entityManager->persist($stammdatenNew);
-
 
         $this->entityManager->flush();
 
@@ -108,6 +106,5 @@ class WartelisteService
         $this->anmeldeEmailService->send($kindNew, $adresse);
 
         return true;
-
     }
 }
