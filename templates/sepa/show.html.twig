@@ -94,8 +94,9 @@
                                                                href="{{ path('accounting_sepa_printXML',{'id':s.id}) }}">{% trans %}Download SEPA-XML{% endtrans %}</a>
                                                             <a class="dropdown-item"
                                                                href="{{ path('accounting_sepa_printExcel',{'sepa_id':s.id}) }}">{% trans %}Download Excel{% endtrans %}</a>
-                                                            <a class="dropdown-item"
-                                                               href="{{ path('accounting_sepa_printExcel_monthly',{'sepa_id':s.id}) }}">{% trans %}Download als COM ONE Excel{% endtrans %}</a>
+                                                            <a class="dropdown-item js-com-one-download"
+                                                               href="#"
+                                                               data-url="{{ path('accounting_sepa_printExcel_monthly',{'sepa_id':s.id}) }}">{% trans %}Download als COM ONE Excel{% endtrans %}</a>
                                                             <a class="dropdown-item deleteBtn" type="GET"
                                                                href="{{ path('accounting_send_bill',{'sepa_id':s.id}) }}">{% trans %}Rechnung an alle Erziehungsberechtigten versenden{% endtrans %}</a>
 
@@ -129,7 +130,32 @@
 
 {% block jquery %}
 <script>
-    $()
+    $(function () {
+        $('.js-com-one-download').on('click', function (event) {
+            event.preventDefault();
+            const targetUrl = $(this).data('url');
+            const string1 = prompt('Bitte String 1 eingeben:', '');
+            if (string1 === null) {
+                return;
+            }
+            const string2 = prompt('Bitte String 2 eingeben:', '');
+            if (string2 === null) {
+                return;
+            }
+            const string3 = prompt('Bitte String 3 eingeben:', '');
+            if (string3 === null) {
+                return;
+            }
+
+            const query = new URLSearchParams({
+                string1: string1,
+                string2: string2,
+                string3: string3
+            }).toString();
+
+            window.location.href = targetUrl + '?' + query;
+        });
+    });
 </script>
 
 {% endblock %}

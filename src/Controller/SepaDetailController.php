@@ -92,9 +92,12 @@ class SepaDetailController extends AbstractController
         if($sepa->getOrganisation() != $this->getUser()->getOrganisation()){
             throw new \Exception('Wrong Organisation');
         }
+        $firstString = (string)$request->query->get('string1', '');
+        $secondString = (string)$request->query->get('string2', '');
+        $thirdString = (string)$request->query->get('string3', '');
 
         return $this->file(
-            $sepaExcel->generateChildMonthlyExcel($sepa),
+            $sepaExcel->generateChildMonthlyExcel($sepa, $firstString, $secondString, $thirdString),
             'SEPA_MONTHLY_ID'.$sepa->getId().'.xlsx',
             ResponseHeaderBag::DISPOSITION_INLINE
         );

@@ -79,7 +79,7 @@ class SepaExcel
 
     }
 
-    public function generateChildMonthlyExcel(Sepa $sepa): string
+    public function generateChildMonthlyExcel(Sepa $sepa, string $string1 = '', string $string2 = '', string $string3 = ''): string
     {
         $sheet = new Spreadsheet();
         $excelWriter = new Xlsx($sheet);
@@ -132,6 +132,9 @@ class SepaExcel
                 $rowData[62] = (string)$stammdaten->getIban();
                 $rowData[63] = $mandatsReferenz;
                 $rowData[64] = $buchungsdatum;
+                $rowData[68] = $string1;
+                $rowData[69] = $string2;
+                $rowData[70] = $string3;
 
                 for ($column = 1; $column <= 70; $column++) {
                     $columnName = Coordinate::stringFromColumnIndex($column);
