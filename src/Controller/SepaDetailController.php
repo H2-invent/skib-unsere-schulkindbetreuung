@@ -82,4 +82,21 @@ class SepaDetailController extends AbstractController
         }
         return $this->file($sepaExcel->generateExcel($sepa),'SEPA_ID'.$sepa->getId().'.xlsx', ResponseHeaderBag::DISPOSITION_INLINE);
     }
+
+    /**
+     * @Route("/org_accounting/print/excel/monthly", name="accounting_sepa_printExcel_monthly")
+     */
+    public function printMonthlyExcel(Request $request, SepaExcel $sepaExcel): Response
+    {
+        $sepa = $this->managerRegistry->getRepository(Sepa::class)->find($request->get('sepa_id'));
+        if($sepa->getOrganisation() != $this->getUser()->getOrganisation()){
+            throw new \Exception('Wrong Organisation');
+        }
+
+        return $this->file(
+            $sepaExcel->generateChildMonthlyExcel($sepa),
+            'SEPA_MONTHLY_ID'.$sepa->getId().'.xlsx',
+            ResponseHeaderBag::DISPOSITION_INLINE
+        );
+    }
 }

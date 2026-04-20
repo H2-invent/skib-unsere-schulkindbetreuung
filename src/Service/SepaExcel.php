@@ -10,6 +10,7 @@ namespace App\Service;
 
 use App\Entity\Sepa;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -76,6 +77,42 @@ class SepaExcel
         // Return the excel file as an attachment
         return $temp_file;
 
+    }
+
+    public function generateChildMonthlyExcel(Sepa $sepa): string
+    {
+        $sheet = new Spreadsheet();
+        $excelWriter = new Xlsx($sheet);
+        $monthlySheet = $sheet->createSheet();
+        $monthlySheet->setTitle($this->translator->trans('SEPA Monat Kind'));
+
+        for ($column = 1; $column <= 70; $column++) {
+            $columnName = Coordinate::stringFromColumnIndex($column);
+            $monthlySheet->setCellValue($columnName . '1', 'Collum ' . $column);
+        }
+
+        $row = 2;
+        foreach ($sepa->getRechnungen() as $rechnung) {
+            foreach ($rechnung->getKinder() as $kind) {
+                $monthlySheet->setCellValue('A' . $row, $rechnung->getId());
+                $monthlySheet->setCellValue('B' . $row, $rechnung->getStammdaten()->getKundennummerForOrg($sepa->getOrganisation()->getId()) ? $rechnung->getStammdaten()->getKundennummerForOrg($sepa->getOrganisation()->getId())->getKundennummer() : "");
+                $monthlySheet->setCellValue('C' . $row, $kind->getVorname());
+                $monthlySheet->setCellValue('D' . $row, $kind->getNachname());
+                $row++;
+            }
+        }
+
+        $sheetIndex = $sheet->getIndex(
+            $sheet->getSheetByName('Worksheet')
+        );
+        $sheet->removeSheetByIndex($sheetIndex);
+
+        $fileName = 'Sepa_Child_Monthly_ID' . $sepa->getId() . '.xlsx';
+        $tempFile = tempnam(sys_get_temp_dir(), $fileName);
+
+        $excelWriter->save($tempFile);
+
+        return $tempFile;
     }
 
 
