@@ -134,18 +134,9 @@
         $('.js-com-one-download').on('click', function (event) {
             event.preventDefault();
             const targetUrl = $(this).data('url');
-            const string1 = prompt('Bitte String 1 eingeben:', '');
-            if (string1 === null) {
-                return;
-            }
-            const string2 = prompt('Bitte String 2 eingeben:', '');
-            if (string2 === null) {
-                return;
-            }
-            const string3 = prompt('Bitte String 3 eingeben:', '');
-            if (string3 === null) {
-                return;
-            }
+            const string1 = 'Sachkonto Schule';
+            const string2 = 'Kostenstelle Grundschulbetreeung';
+            const string3 = 'Kostenträger';
 
             const query = new URLSearchParams({
                 string1: string1,
