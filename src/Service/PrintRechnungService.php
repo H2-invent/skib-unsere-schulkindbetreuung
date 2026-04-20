@@ -11,22 +11,15 @@ namespace App\Service;
 
 use App\Entity\Organisation;
 use App\Entity\Rechnung;
-use League\Flysystem\FilesystemOperator;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PrintRechnungService
 {
-    protected $parameterBag;
-
     public function __construct(
-        private FilesystemOperator $fileSystem,
         private TCPDFController $pdf,
         private TranslatorInterface $translator,
-        ParameterBagInterface $parameterBag,
     ) {
-        $this->parameterBag = $parameterBag;
     }
 
     public function printRechnung($fileName, Organisation $organisation, Rechnung $rechnung, $type = 'D')

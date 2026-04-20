@@ -168,6 +168,7 @@ class EmployeeController extends AbstractController
     }
 
     #[Route(path: '/city_admin/mitarbeiter/changePw', name: 'city_admin_mitarbeiter_changePw')]
+    #[Route(path: '/org_admin/mitarbeiter/changePw', name: 'org_admin_mitarbeiter_changePw')]
     public function changePw(Request $request, TranslatorInterface $translator, ValidatorInterface $validator)
     {
         $user = $this->manager->findUserBy(['id' => $request->get('id')]);
@@ -180,7 +181,7 @@ class EmployeeController extends AbstractController
             ->add(
                 'plainPassword',
                 TextType::class,
-                ['label' => 'Passwort', 'required' => true, 'translation_domain' => 'form']
+                ['label' => 'Passwort', 'required' => true, 'translation_domain' => 'form', 'mapped' => false]
             )
             ->add('save', SubmitType::class, ['label' => 'Save'])
             ->getForm();
