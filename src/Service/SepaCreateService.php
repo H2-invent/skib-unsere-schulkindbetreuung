@@ -98,24 +98,27 @@ class SepaCreateService
         }
 
 
-        $stammdatenQb = $this->em->getRepository(Stammdaten::class)->createQueryBuilder('s');
-        $stammdatenQb->innerJoin('s.kinds', 'kinds')
-            ->innerJoin('kinds.schule', 'schule')
+        $kinderQb = $this->em->getRepository(Kind::class)->createQueryBuilder('k');
+        $kinderQb->innerJoin('k.eltern', 's')
+            ->innerJoin('k.schule', 'schule')
             ->andWhere('schule.organisation = :organisation')->setParameter('organisation', $sepa->getOrganisation())
-            ->innerJoin('kinds.zeitblocks', 'zeitblocks')
+            ->innerJoin('k.zeitblocks', 'zeitblocks')
             ->andWhere('zeitblocks.active = :active')->setParameter('active', $active)// suche alle Blöcke, wo im aktuellen SChuljahr sind
             ->andWhere('zeitblocks.deleted != TRUE')
             ->andWhere('s.created_at IS NOT NULL')
             ->andWhere('s.startDate IS NOT NULL')
-            ->andWhere('s.startDate <= :datetime')->setParameter('datetime', $sepa->getVon());
-        $stamdaten = $stammdatenQb->getQuery()->getResult();
+            ->andWhere('s.startDate <= :datetime')->setParameter('datetime', $sepa->getVon())
+            ->andWhere('k.startDate IS NOT NULL')
+            ->andWhere('k.startDate <= :datetime');
+        $kinder = $kinderQb->getQuery()->getResult();
 
-        $stammdatenRes = array();
-        foreach ($stamdaten as $data) {
-            $stammdatenTmp = isset($stammdatenRes[$data->getTracing()]) ? $stammdatenRes[$data->getTracing()] : null;
-            if (!$stammdatenTmp) {
-                $stammdatenRes[$data->getTracing()] = $data;
+        $kinderRes = array();
+        foreach ($kinder as $data) {
+            $kindStichtag = $this->em->getRepository(Kind::class)->findLatestKindForDate($data, $sepa->getVon());
+            if (!$kindStichtag) {
+                continue;
             }
+            $kinderRes[$kindStichtag->getTracing()] = $kindStichtag;
         }
 
 
@@ -127,8 +130,8 @@ class SepaCreateService
         $sepa->setSepaXML('');
         $sepa->setPdf('');
 
-        foreach ($stammdatenRes as $data) {
-            $rechnung = $this->createRechnungFromStammdaten($data, $sepa, $sepa->getVon());
+        foreach ($kinderRes as $data) {
+            $rechnung = $this->createRechnungFromKind($data, $sepa, $organisation, $sepa->getVon());
             $sepa->addRechnungen($rechnung);
         }
 
@@ -147,10 +150,10 @@ class SepaCreateService
     }
 
 
-    private function createRechnungFromKind(Kind $kind, Sepa $sepa, Organisation $organisation): Rechnung
+    private function createRechnungFromKind(Kind $kind, Sepa $sepa, Organisation $organisation, \DateTime $dateTime): Rechnung
     {
         $type = 'FRST'; // setzte SEPA auf First Sepa
-        $eltern = $this->elternService->getLatestElternFromChild($kind);
+        $eltern = $this->elternService->getElternForSpecificTimeAndKind($kind, $dateTime);
 
         $otherSepa = $this->em->getRepository(Sepa::class)->findOtherSepaBySepaAndStammdaten($eltern, $sepa);
 
@@ -187,7 +190,7 @@ class SepaCreateService
         }
 
         $rechnung->addKinder($kind);
-        $rechnung->setSumme($rechnung->getSumme() + $this->berechnungsService->getPreisforBetreuung($kind, false));
+        $rechnung->setSumme($rechnung->getSumme() + $this->berechnungsService->getPreisforBetreuung($kind, false, $dateTime));
 
 
         $table = $this->environment->render('rechnung/tabelle.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
