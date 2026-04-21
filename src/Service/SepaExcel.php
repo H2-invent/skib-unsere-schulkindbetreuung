@@ -101,26 +101,23 @@ class SepaExcel
             $buchungsdatum = $rechnung->getCreatedAt() ? $rechnung->getCreatedAt()->format('d.m.Y') : '';
             $mandatsReferenz = $stammdaten->getConfirmationCode() ? 'BAH CIG ' . $stammdaten->getConfirmationCode() : '';
 
-            foreach ($rechnung->getKinder() as $kind) {
+            foreach ($rechnung->getRechnungKindBetrags() as $kindBetrag) {
                 $beschreibung = sprintf(
                     'Betreuungsentgelt_%s_%s_%s',
                     $rechnung->getVon() ? $rechnung->getVon()->format('m/Y') : '',
-                    (string)$kind->getVorname(),
-                    (string)$kind->getNachname()
+                    (string)$kindBetrag->getKind()->getVorname(),
+                    (string)$kindBetrag->getKind()->getNachname()
                 );
                 $rowData = array_fill(1, 70, '');
                 $rowData[1] = 'Finanzbuchhaltung';
-                $rowData[2] = (string)$bookingNumber;
                 $rowData[3] = 'Rechnung';
-                $rowData[4] = $kundennummer . $receiptCounter;
-                $rowData[5] = $kundennummer . '510';
                 $rowData[7] = $leistungsdatum;
                 $rowData[8] = $leistungsdatum;
                 $rowData[9] = 'Debitor';
                 $rowData[10] = (string)$kundennummer;
                 $rowData[11] = (string)$kundennummer;
                 $rowData[14] = 'Normale MwSt.';
-                $rowData[15] = number_format((float)$rechnung->getSumme(), 2, ',', '');
+                $rowData[15] = number_format((float)$kindBetrag->getBetrag(), 2, ',', '');
                 $rowData[16] = $beschreibung;
                 $rowData[18] = $leistungsdatum;
                 $rowData[29] = '01';

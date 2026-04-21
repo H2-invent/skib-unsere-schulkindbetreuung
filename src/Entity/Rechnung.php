@@ -49,10 +49,14 @@ class Rechnung
     #[ORM\Column(type: 'text', nullable: true)]
     private $sepaType;
 
+    #[ORM\OneToMany(mappedBy: 'rechnung', targetEntity: RechnungKindBetrag::class, cascade: ['persist'])]
+    private Collection $rechnungKindBetrags;
+
     public function __construct()
     {
         $this->zeitblocks = new ArrayCollection();
         $this->kinder = new ArrayCollection();
+        $this->rechnungKindBetrags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -216,6 +220,36 @@ class Rechnung
     public function setSepaType(?string $sepaType): self
     {
         $this->sepaType = $sepaType;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RechnungKindBetrag>
+     */
+    public function getRechnungKindBetrags(): Collection
+    {
+        return $this->rechnungKindBetrags;
+    }
+
+    public function addRechnungKindBetrag(RechnungKindBetrag $rechnungKindBetrag): self
+    {
+        if (!$this->rechnungKindBetrags->contains($rechnungKindBetrag)) {
+            $this->rechnungKindBetrags->add($rechnungKindBetrag);
+            $rechnungKindBetrag->setRechnung($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRechnungKindBetrag(RechnungKindBetrag $rechnungKindBetrag): self
+    {
+        if ($this->rechnungKindBetrags->removeElement($rechnungKindBetrag)) {
+            // set the owning side to null (unless already changed)
+            if ($rechnungKindBetrag->getRechnung() === $this) {
+                $rechnungKindBetrag->setRechnung(null);
+            }
+        }
 
         return $this;
     }

@@ -6,6 +6,7 @@ use App\Entity\Active;
 use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Rechnung;
+use App\Entity\RechnungKindBetrag;
 use App\Entity\Sepa;
 use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
@@ -230,7 +231,14 @@ class SepaCreateService
                 $rechnung->addZeitblock($data);
             }
             $rechnung->addKinder($kind);
-            $rechnung->setSumme($rechnung->getSumme() + $this->berechnungsService->getPreisforBetreuung($kind, false, $dateTime));
+            $summeKind = $this->berechnungsService->getPreisforBetreuung($kind, false, $dateTime);
+            $rechnung->setSumme($rechnung->getSumme() + $summeKind);
+            $rechnungKind = new RechnungKindBetrag();
+            $rechnungKind->setBetrag($summeKind);
+            $rechnungKind->setRechnung($rechnung);
+            $rechnungKind->setKind($kind);
+            $rechnung->addRechnungKindBetrag($rechnungKind);
+
         }
 
 
