@@ -99,27 +99,42 @@ class SepaCreateService
         }
 
 
-        $kinderQb = $this->em->getRepository(Kind::class)->createQueryBuilder('k');
-        $kinderQb->innerJoin('k.eltern', 's')
+        $stammdatenQb = $this->em->getRepository(Stammdaten::class)->createQueryBuilder('s');
+        $stammdatenQb->innerJoin('s.kinds', 'k')
             ->innerJoin('k.schule', 'schule')
             ->andWhere('schule.organisation = :organisation')->setParameter('organisation', $sepa->getOrganisation())
             ->innerJoin('k.zeitblocks', 'zeitblocks')
-            ->andWhere('zeitblocks.active = :active')->setParameter('active', $active)// suche alle Blöcke, wo im aktuellen SChuljahr sind
+            ->andWhere('zeitblocks.active = :active')->setParameter('active', $active)
             ->andWhere('zeitblocks.deleted != TRUE')
             ->andWhere('s.created_at IS NOT NULL')
             ->andWhere('s.startDate IS NOT NULL')
-            ->andWhere('s.startDate <= :datetime')->setParameter('datetime', $sepa->getVon())
-            ->andWhere('k.startDate IS NOT NULL')
-            ->andWhere('k.startDate <= :datetime');
-        $kinder = $kinderQb->getQuery()->getResult();
+            ->andWhere('s.startDate <= :datetime')->setParameter('datetime', $sepa->getVon());
+
+        $stammdatenList = $stammdatenQb->getQuery()->getResult();
 
         $kinderRes = array();
-        foreach ($kinder as $data) {
-            $kindStichtag = $this->em->getRepository(Kind::class)->findLatestKindForDate($data, $sepa->getVon());
-            if (!$kindStichtag) {
+        foreach ($stammdatenList as $stammdaten) {
+            $stammdatenAmStichtag = $this->elternService->getElternForSpecificTimeAndStammdaten($stammdaten, $sepa->getVon());
+            if (!$stammdatenAmStichtag) {
                 continue;
             }
-            $kinderRes[$kindStichtag->getTracing()] = $kindStichtag;
+
+            $kinderAmStichtag = $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($stammdatenAmStichtag, $sepa->getVon());
+            foreach ($kinderAmStichtag as $kindAmStichtag) {
+                $hatAktivenBlockImSchuljahr = false;
+                foreach ($kindAmStichtag->getRealZeitblocks() as $zeitblock) {
+                    if ($zeitblock->getActive() === $active) {
+                        $hatAktivenBlockImSchuljahr = true;
+                        break;
+                    }
+                }
+
+                if (!$hatAktivenBlockImSchuljahr) {
+                    continue;
+                }
+
+                $kinderRes[$kindAmStichtag->getTracing()] = $kindAmStichtag;
+            }
         }
 
 
