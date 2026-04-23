@@ -54,11 +54,14 @@
                             <div  id="blockContentContent">
                                 <div id="tileView">
                                     <div class="row">
-
-                                    {% for k in kinder %}
+                                        {% set sorted = kinder|sort((a, b) =>
+                                            (a.tracing <=> b.tracing)
+                                            ) %}
+                                    {% for k in sorted %}
                                         {% set eltern = getEltern(k,k.startDate) %}
                                         <div class="col-3 pb-4">
-                                            <div class="card h-100 text-center">
+                                            <div class="card h-100 text-center"
+                                            style="border-top: solid 10px {{ k.tracing|pastel_color }} ">
                                                 <div class="card-body">
                                                     <h2>{{ k.vorname }} {{ k.nachname }}</h2>
                                                     <p>
