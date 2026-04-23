@@ -105,6 +105,7 @@ class KindRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
+        $query = $qb->getQuery();
         return $kind;
 
     }

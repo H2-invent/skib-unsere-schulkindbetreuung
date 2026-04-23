@@ -94,6 +94,9 @@
                                                                href="{{ path('accounting_sepa_printXML',{'id':s.id}) }}">{% trans %}Download SEPA-XML{% endtrans %}</a>
                                                             <a class="dropdown-item"
                                                                href="{{ path('accounting_sepa_printExcel',{'sepa_id':s.id}) }}">{% trans %}Download Excel{% endtrans %}</a>
+                                                            <a class="dropdown-item js-com-one-download"
+                                                               href="#"
+                                                               data-url="{{ path('accounting_sepa_printExcel_monthly',{'sepa_id':s.id}) }}">{% trans %}Download als INFOMA Excel{% endtrans %}</a>
                                                             <a class="dropdown-item deleteBtn" type="GET"
                                                                href="{{ path('accounting_send_bill',{'sepa_id':s.id}) }}">{% trans %}Rechnung an alle Erziehungsberechtigten versenden{% endtrans %}</a>
 
@@ -123,11 +126,70 @@
         </div>
     </section>
 
+    <div class="modal fade" id="comOneExportModal" tabindex="-1" role="dialog" aria-labelledby="comOneExportModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="comOneExportModalLabel">INFOMA Export</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="comOneExportTargetUrl" value="">
+                    <div class="form-group">
+                        <label for="comOneString1">String 1</label>
+                        <input type="text" class="form-control" id="comOneString1" value="Sachkonto Schule">
+                    </div>
+                    <div class="form-group">
+                        <label for="comOneString2">String 2</label>
+                        <input type="text" class="form-control" id="comOneString2" value="Kostenstelle Grundschulbetreeung">
+                    </div>
+                    <div class="form-group mb-0">
+                        <label for="comOneString3">String 3</label>
+                        <input type="text" class="form-control" id="comOneString3" value="Kostenträger">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">{{ 'Schließen'|trans }}</button>
+                    <button type="button" class="btn btn-primary" id="comOneExportStartBtn">Download starten</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block jquery %}
 <script>
-    $()
+    $(function () {
+        $('.js-com-one-download').on('click', function (event) {
+            event.preventDefault();
+            const targetUrl = $(this).data('url') || '';
+            $('#comOneExportTargetUrl').val(targetUrl);
+            $('#comOneExportModal').modal('show');
+        });
+
+        $('#comOneExportStartBtn').on('click', function () {
+            const targetUrl = $('#comOneExportTargetUrl').val();
+            if (!targetUrl) {
+                return;
+            }
+
+            const string1 = $('#comOneString1').val() || '';
+            const string2 = $('#comOneString2').val() || '';
+            const string3 = $('#comOneString3').val() || '';
+
+            const query = new URLSearchParams({
+                string1: string1,
+                string2: string2,
+                string3: string3
+            }).toString();
+
+            $('#comOneExportModal').modal('hide');
+            window.location.href = targetUrl + '?' + query;
+        });
+    });
 </script>
 
 {% endblock %}

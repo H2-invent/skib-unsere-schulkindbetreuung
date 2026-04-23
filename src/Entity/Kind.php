@@ -171,6 +171,9 @@ class Kind
     #[ORM\OneToOne(mappedBy: 'kind', targetEntity: AutoBlockAssignmentChild::class, fetch: 'EAGER')]
     private ?AutoBlockAssignmentChild $autoBlockAssignmentChild = null;
 
+    #[ORM\OneToMany(mappedBy: 'kind', targetEntity: RechnungKindBetrag::class)]
+    private Collection $rechnungKindBetrags;
+
     public function __serialize(): array
     {
         return $this->tracing;
@@ -203,6 +206,7 @@ class Kind
         $this->anwesenheitenSchulkindbetreuung = new ArrayCollection();
         $this->warteliste = new ArrayCollection();
         $this->movedToWaiting = new ArrayCollection();
+        $this->rechnungKindBetrags = new ArrayCollection();
 
     }
 
@@ -1084,6 +1088,36 @@ class Kind
         }
 
         $this->autoBlockAssignmentChild = $autoBlockAssignmentChild;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RechnungKindBetrag>
+     */
+    public function getRechnungKindBetrags(): Collection
+    {
+        return $this->rechnungKindBetrags;
+    }
+
+    public function addRechnungKindBetrag(RechnungKindBetrag $rechnungKindBetrag): self
+    {
+        if (!$this->rechnungKindBetrags->contains($rechnungKindBetrag)) {
+            $this->rechnungKindBetrags->add($rechnungKindBetrag);
+            $rechnungKindBetrag->setKind($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRechnungKindBetrag(RechnungKindBetrag $rechnungKindBetrag): self
+    {
+        if ($this->rechnungKindBetrags->removeElement($rechnungKindBetrag)) {
+            // set the owning side to null (unless already changed)
+            if ($rechnungKindBetrag->getKind() === $this) {
+                $rechnungKindBetrag->setKind(null);
+            }
+        }
 
         return $this;
     }
