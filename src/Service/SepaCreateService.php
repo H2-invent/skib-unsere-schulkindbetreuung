@@ -206,8 +206,13 @@ class SepaCreateService
         }
 
         $rechnung->addKinder($kind);
-        $rechnung->setSumme($rechnung->getSumme() + $this->berechnungsService->getPreisforBetreuung($kind, false, $dateTime));
-
+        $summe = $this->berechnungsService->getPreisforBetreuung($kind, false, $dateTime);
+        $rechnung->setSumme($rechnung->getSumme() + $summe);
+        $kindBetrag = new RechnungKindBetrag();
+        $kindBetrag->setKind($kind)
+        ->setRechnung($rechnung)
+        ->setBetrag($summe);
+        $rechnung->addRechnungKindBetrag($kindBetrag);
 
         $table = $this->environment->render('rechnung/tabelle.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
         $rechnung->setPdf($table);

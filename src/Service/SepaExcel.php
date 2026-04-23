@@ -120,15 +120,15 @@ class SepaExcel
                 $rowData[15] = number_format((float)$kindBetrag->getBetrag(), 2, ',', '');
                 $rowData[16] = $beschreibung;
                 $rowData[18] = $leistungsdatum;
-                $rowData[29] = '01';
-                $rowData[30] = (string)$kundennummer;
-                $rowData[31] = '510';
-                $rowData[38] = 'ABBUCHUNG';
-                $rowData[47] = $beschreibung;
-                $rowData[61] = (string)$stammdaten->getBic();
-                $rowData[62] = (string)$stammdaten->getIban();
-                $rowData[63] = $mandatsReferenz;
-                $rowData[64] = $buchungsdatum;
+                $rowData[31] = '01';
+                $rowData[32] = (string)$kundennummer;
+                $rowData[33] = '510';
+                $rowData[40] = 'ABBUCHUNG';
+                $rowData[51] = $beschreibung;
+                $rowData[65] = (string)$stammdaten->getBic();
+                $rowData[66] = (string)$stammdaten->getIban();
+
+
                 $rowData[68] = $string1;
                 $rowData[69] = $string2;
                 $rowData[70] = $string3;
@@ -143,6 +143,51 @@ class SepaExcel
                 $receiptCounter++;
             }
         }
+        foreach ($sepa->getRechnungen() as $rechnung) {
+            $stammdaten = $rechnung->getStammdaten();
+            $kundennummer = $stammdaten->getKundennummerForOrg($sepa->getOrganisation()->getId()) ? $stammdaten->getKundennummerForOrg($sepa->getOrganisation()->getId())->getKundennummer() : "";
+            $leistungsdatum = $rechnung->getVon() ? $rechnung->getVon()->format('d.m.Y') : '';
+            $buchungsdatum = $rechnung->getCreatedAt() ? $rechnung->getCreatedAt()->format('d.m.Y') : '';
+            $mandatsReferenz = $stammdaten->getConfirmationCode() ? 'BAH CIG ' . $stammdaten->getConfirmationCode() : '';
+
+            foreach ($rechnung->getRechnungKindBetrags() as $kindBetrag) {
+                $beschreibung = sprintf(
+                    'Betreuungsentgelt_%s_%s_%s',
+                    $rechnung->getVon() ? $rechnung->getVon()->format('m/Y') : '',
+                    (string)$kindBetrag->getKind()->getVorname(),
+                    (string)$kindBetrag->getKind()->getNachname()
+                );
+                $rowData = array_fill(1, 70, '');
+                $rowData[1] = 'Gegenkonto';
+                $rowData[3] = 'Rechnung';
+                $rowData[6] = 'Sachkonto';
+                $rowData[7] = $string1;
+                $rowData[8] = 'Verkauf';
+                $rowData[10] = 'Normale MwSt.';
+                $rowData[11] = '-'.number_format((float)$kindBetrag->getBetrag(), 2, ',', '');
+                $rowData[12] = $beschreibung;
+                $rowData[13] = $string2;
+                $rowData[14] = $string3;
+                $rowData[18] = '01';
+                $rowData[20] = '510';
+                $rowData[38] = $beschreibung;
+
+
+                $rowData[68] = $string1;
+                $rowData[69] = $string2;
+                $rowData[70] = $string3;
+
+                for ($column = 1; $column <= 70; $column++) {
+                    $columnName = Coordinate::stringFromColumnIndex($column);
+                    $monthlySheet->setCellValue($columnName . $row, $rowData[$column]);
+                }
+
+                $row++;
+                $bookingNumber += 10000;
+                $receiptCounter++;
+            }
+        }
+
 
         $sheetIndex = $sheet->getIndex(
             $sheet->getSheetByName('Worksheet')
