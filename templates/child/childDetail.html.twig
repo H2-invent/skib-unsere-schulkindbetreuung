@@ -201,7 +201,11 @@
                                         <td>{% trans %} Gebuchte Betreuungszeitfenster {% endtrans %}</td>
                                         <td>
                                             <ul class="list-group">
-                                                {% for z in k.BetreungsblocksReal %}
+                                                {% set sorted = k.BetreungsblocksReal|sort((a, b) =>
+                                                    (a.wochentag <=> b.wochentag)
+                                                    ?: (a.von <=> b.von)
+                                                    ) %}
+                                                {% for z in sorted %}
                                                     {% if z.deleted == false %}
                                                         <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }}
                                                             - {{ z.bis|date('H:i') }} {% if is_granted('ROLE_PREVIOUS_ADMIN') %} {% if z.translate.blockbezeichnung is not null %}({{ z.translate.blockbezeichnung }}){% endif %}
@@ -256,7 +260,11 @@
                                         <td>{% trans %} Angemeldete Betreuungsblöcke {% endtrans %}</td>
                                         <td>
                                             <ul class="list-group">
-                                                {% for z in k.betreungsblocksRealKontingent %}
+                                                {% set sorted = k.betreungsblocksRealKontingent|sort((a, b) =>
+                                                    (a.wochentag <=> b.wochentag)
+                                                    ?: (a.von <=> b.von)
+                                                    ) %}
+                                                {% for z in sorted %}
                                                     <li class="list-group-item">
                                                         {{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }} {% if z.translate.blockbezeichnung is not null %}({{ z.translate.blockbezeichnung }}){% endif %}
                                                     </li>
