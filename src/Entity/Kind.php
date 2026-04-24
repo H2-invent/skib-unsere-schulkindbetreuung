@@ -496,6 +496,18 @@ class Kind
         return sizeof($blocks2);
     }
 
+    private function sortZeitblocks(Zeitblock $a, Zeitblock $b)
+    {
+        // 1. Wochentag (int → perfekt sortierbar)
+        $dayCompare = $a->getWochentag() <=> $b->getWochentag();
+
+        if ($dayCompare !== 0) {
+            return $dayCompare;
+        }
+
+        // 2. Startzeit
+        return $a->getVon() <=> $b->getVon();
+    }
 
     /**
      * @return Zeitblock[]
@@ -509,6 +521,9 @@ class Kind
                 $realBlocks[] = $data;
             }
         }
+
+        usort($realBlocks, [$this, 'sortZeitblocks']);
+
         return $realBlocks;
     }
 
@@ -521,6 +536,7 @@ class Kind
                 $realBlocks[] = $data;
             }
         }
+        usort($realBlocks, [$this, 'sortZeitblocks']);
         return $realBlocks;
     }
 

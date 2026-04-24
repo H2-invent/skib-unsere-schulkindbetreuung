@@ -48,7 +48,7 @@ class ChildDateExcel
     public function getVonBisAsStringWithUhr($uhrString){
         $res =  $this->getVonBisAsString().$uhrString;
         if ($this->getBlockName()){
-            $res .= (' '.$this->getBlockName());
+            $res .= ' '.$this->getBlockName();
         }
         return $res;
     }

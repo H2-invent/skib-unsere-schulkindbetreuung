@@ -59,8 +59,10 @@
                                             ?: (a.startDate <=> b.startDate)
                                             ?: (a.eltern.createdAt <=> b.eltern.createdAt)
                                             ) %}
+
                                     {% for k in sorted %}
-                                        {% set next = sorted[loop.index] is defined ? sorted[loop.index] : null %}
+
+                                        {% set next = sorted[loop.index+1] ?? null %}
 
                                         {% set isOverwritten =
                                             next is not null

@@ -10,7 +10,7 @@ class PastelColorExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('pastel_color', [$this, 'stringToPastelColor']),
+            new TwigFilter('pastel_color', $this->stringToPastelColor(...)),
         ];
     }
 
