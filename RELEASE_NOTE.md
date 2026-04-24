@@ -15,4 +15,5 @@ __🐛 Bugfixes:__
 * * shcow blockbezeichnung in workflow blocks
 * create blocks which are no selectable but with vorganger
 * add posibility to duplicate blocks
+* add loki logging
 ## Files
