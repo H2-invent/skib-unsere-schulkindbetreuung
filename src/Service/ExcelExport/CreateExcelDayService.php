@@ -56,6 +56,9 @@ class CreateExcelDayService
             $tmp = new ChildDateExcel();
             $tmp->setVon(intval($data->getVon()->format('H')) * 60 + intval($data->getVon()->format('i')));
             $tmp->setBis(intval($data->getBis()->format('H')) * 60 + intval($data->getBis()->format('i')));
+            if ($data->translate()->getBlockbezeichnung()){
+                $tmp->setBlockName($data->translate()->getBlockbezeichnung());
+            }
             $helpberBlocks[] = $tmp;
         }
 
