@@ -17,6 +17,7 @@
         "doctrine/orm": "^2.11",
         "endroid/qr-code-bundle": "^4.3",
         "gjuric/i18n-routing-bundle": "^3.2",
+        "itspire/monolog-loki": "^2.1",
         "knplabs/doctrine-behaviors": "^2.6",
         "knpuniversity/oauth2-client-bundle": "^2.10",
         "league/commonmark": "^1.0",
