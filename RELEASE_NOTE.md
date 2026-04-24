@@ -15,4 +15,7 @@ __🐛 Bugfixes:__
 * * shcow blockbezeichnung in workflow blocks
 * create blocks which are no selectable but with vorganger
 * add posibility to duplicate blocks
+* Color contingent Blocks with same child in same color
+* Add block name to excel export and to pdf download
+
 ## Files
