@@ -528,9 +528,7 @@ class PrintService
                     }
                     $table .= $block->getVon()->format('H:i') . ' - ' . $block->getBis()->format('H:i') ;
                     if ($block->translate()->getBlockbezeichnung()){
-                        $table .= ' (';
-                       $table.= $block->translate()->getBlockbezeichnung();
-                        $table .= ')';
+                        $table .= ' (' . $block->translate()->getBlockbezeichnung() . ')';
                     }
                     if ($cross) {
                         $table .= '<br><div><table width="100%" style="border:none"><tr style="border: none"><td style="border: 1px solid black; width:18px"></td><td style="border: none">' . $this->translator->trans('buchen') . '</td></tr></table></div>';

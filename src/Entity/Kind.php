@@ -517,12 +517,11 @@ class Kind
         $blocks = $this->zeitblocks;
         $realBlocks = array();
         foreach ($blocks as $data) {
-            if ($data->getGanztag() != 0) {
+            if ($data->getGanztag() !== 0) {
                 $realBlocks[] = $data;
             }
         }
-
-        usort($realBlocks, [$this, 'sortZeitblocks']);
+        usort($realBlocks, $this->sortZeitblocks(...));
 
         return $realBlocks;
     }
@@ -536,7 +535,8 @@ class Kind
                 $realBlocks[] = $data;
             }
         }
-        usort($realBlocks, [$this, 'sortZeitblocks']);
+        usort($realBlocks, $this->sortZeitblocks(...));
+
         return $realBlocks;
     }
 
@@ -545,10 +545,12 @@ class Kind
         $blocks = $this->zeitblocks;
         $realBlocks = array();
         foreach ($blocks as $data) {
-            if ($data->getGanztag() == 0) {
+            if ($data->getGanztag() === 0) {
                 $realBlocks[] = $data;
             }
         }
+        usort($realBlocks, $this->sortZeitblocks(...));
+
         return $realBlocks;
     }
 
