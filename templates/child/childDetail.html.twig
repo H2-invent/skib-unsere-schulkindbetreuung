@@ -275,7 +275,7 @@
                                             <ul class="list-group">
                                                 {% for z in showWarteListForChild(k) %}
                                                     <li class="list-group-item">
-                                                        {{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}
+                                                        {{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}  {% if z.translate.blockbezeichnung is not null %}({{ z.translate.blockbezeichnung }}){% endif %}
                                                     </li>
                                                 {% endfor %}
                                             </ul>
@@ -290,7 +290,7 @@
                                             <ul class="list-group">
                                                 {% for z in k.movedToWaiting %}
                                                     <li class="list-group-item">
-                                                        {{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}
+                                                        {{ z.WochentagString }} {{ z.von|date('H:i') }} - {{ z.bis|date('H:i') }}  {% if z.translate.blockbezeichnung is not null %}({{ z.translate.blockbezeichnung }}){% endif %}
                                                     </li>
                                                 {% endfor %}
                                             </ul>

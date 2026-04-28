@@ -165,6 +165,26 @@ class PrintService
         $pdf = $this->addChildDetails($kind, $pdf);
         $pdf->AddPage('H    ', 'A4');
         $pdf = $this->addEltern($elter, $pdf);
+
+        $pdf->AddPage('L', 'A4');
+        $blocks = $kind->getRealZeitblocks()->toArray();
+        $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
+        $table = $this->generateTimeTable($blocks);
+        $kindData = $this->templating->render('pdf/kind_no_price.html.twig', array('kind' => $kind, 'table' => $table));
+        $pdf->writeHTMLCell(
+            0,
+            0,
+            20,
+            20,
+            $kindData,
+            0,
+            1,
+            0,
+            true,
+            '',
+            true
+        );
+
         if ($kind->getSchule()->getOrganisation()->getStadt()->getOnlineCheckinEnable()) {
             $pdf->AddPage('H    ', 'A4');
             $pdf = $this->addCard($kind, $pdf);
