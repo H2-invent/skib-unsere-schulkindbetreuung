@@ -49,7 +49,7 @@ RUN apk --no-cache add \
 
 RUN echo "Europe/Berlin" > /etc/timezone
 
-# FIXME remove rollup and do doc:mig:mig again
+# FIXME remove rollup and do doc:mig:mig again after it's done
 RUN echo "#!/bin/sh" > /docker-entrypoint-init.d/02-symfony.sh \
     && echo "php bin/console doc:mig:rollup --no-interaction" >> /docker-entrypoint-init.d/02-symfony.sh \
     && chmod +x /docker-entrypoint-init.d/02-symfony.sh
