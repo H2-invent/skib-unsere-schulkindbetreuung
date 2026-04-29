@@ -43,10 +43,6 @@ LABEL version="${VERSION}" \
 
 USER root
 
-RUN apk --no-cache add \
-    php84-bcmath \
-    && rm -rf /var/cache/apk/*
-
 RUN echo "Europe/Berlin" > /etc/timezone
 
 # FIXME remove rollup and do doc:mig:mig again after it's done
