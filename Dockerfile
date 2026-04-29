@@ -26,7 +26,7 @@ RUN tar \
     --exclude='./var/log' \
     -zcvf /artifact.tgz .
 
-FROM reg.h2-invent.com/public-system-design/alpine-php84-cron-webserver:3.23.3-4303
+FROM reg.h2-invent.com/public-system-design/alpine-php84-cron-webserver:3.23.3-4357
 ARG VERSION=development
 
 LABEL version="${VERSION}" \
@@ -44,13 +44,14 @@ LABEL version="${VERSION}" \
 USER root
 
 RUN apk --no-cache add \
-    php83-bcmath \
+    php84-bcmath \
     && rm -rf /var/cache/apk/*
 
 RUN echo "Europe/Berlin" > /etc/timezone
 
+# FIXME remove rollup and do doc:mig:mig again after it's done
 RUN echo "#!/bin/sh" > /docker-entrypoint-init.d/02-symfony.sh \
-    && echo "php bin/console doc:mig:mig --no-interaction" >> /docker-entrypoint-init.d/02-symfony.sh \
+    && echo "php bin/console doc:mig:rollup --no-interaction" >> /docker-entrypoint-init.d/02-symfony.sh \
     && chmod +x /docker-entrypoint-init.d/02-symfony.sh
 
 USER nobody
