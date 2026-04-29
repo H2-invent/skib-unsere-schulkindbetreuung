@@ -19,6 +19,7 @@ RUN composer install --no-scripts
 RUN sed -i "s/^laF_version=.*/laF_version=${VERSION}/" .env
 
 RUN tar \
+    --exclude='./.ddev' \
     --exclude='./.github' \
     --exclude='./.git' \
     --exclude='./node_modules' \
@@ -43,12 +44,6 @@ LABEL version="${VERSION}" \
 
 USER root
 
-RUN apk --no-cache add \
-    php84-bcmath \
-    && rm -rf /var/cache/apk/*
-
-RUN echo "Europe/Berlin" > /etc/timezone
-
 # FIXME remove rollup and do doc:mig:mig again after it's done
 RUN echo "#!/bin/sh" > /docker-entrypoint-init.d/02-symfony.sh \
     && echo "php bin/console doc:mig:rollup --no-interaction" >> /docker-entrypoint-init.d/02-symfony.sh \
@@ -59,7 +54,7 @@ USER nobody
 COPY --from=builder /artifact.tgz artifact.tgz
 
 RUN tar -zxvf artifact.tgz \
-    && mkdir data \
+    && mkdir -p data \
     && mkdir -p var/log \
     && mkdir -p var/cache \
     && rm artifact.tgz
