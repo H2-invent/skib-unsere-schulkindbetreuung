@@ -163,14 +163,14 @@ class PrintService
         $pdf->setOrganisation($organisation);
         $pdf = $this->preparePDF($pdf, 'Test', 'Kinder Details', 'test', null, $organisation);
         $pdf = $this->addChildDetails($kind, $pdf);
-        $pdf->AddPage('H    ', 'A4');
+        $pdf->AddPage('P', 'A4');
         $pdf = $this->addEltern($elter, $pdf);
 
         $pdf->AddPage('L', 'A4');
         $blocks = $kind->getRealZeitblocks()->toArray();
         $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
         $table = $this->generateTimeTable($blocks);
-        $kindData = $this->templating->render('pdf/kind_no_price.html.twig', array('kind' => $kind, 'table' => $table));
+        $kindData = $this->templating->render('pdf/kind.html.twig', array('kind' => $kind, 'table' => $table, 'show_no_price'=>1));
         $pdf->writeHTMLCell(
             0,
             0,
