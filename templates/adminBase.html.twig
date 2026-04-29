@@ -73,7 +73,7 @@
                         </a></li>
                 {% endif %}
                 {% if is_granted('ROLE_CITY_ADMIN') %}
-                    <li><a href="{{ path('org_admin_mitarbeiter_roles',{'id':app.user.stadt.id}) }}"{{ isActiveNav('city_admin_organisation_show') ? ' class="active"' }}> <i
+                    <li><a href="{{ path('city_admin_organisation_show',{'id':app.user.stadt.id}) }}"{{ isActiveNav('city_admin_organisation_show') ? ' class="active"' }}> <i
                                     class="material-icons">home</i>{% trans %}Organisationen{% endtrans %}</a></li>
 
                     <li><a href="#exampledropdownDropdown" aria-expanded="{{ isActiveNav('city_employee_show') ? 'true' : 'false' }}" data-toggle="collapse"> <i
