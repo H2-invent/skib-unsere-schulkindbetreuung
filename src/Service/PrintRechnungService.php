@@ -17,6 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PrintRechnungService
 {
     public function __construct(
+        private FilesystemOperator $internFileSystem,
         private TCPDFController $pdf,
         private TranslatorInterface $translator,
     ) {
@@ -25,7 +26,6 @@ class PrintRechnungService
     public function printRechnung($fileName, Organisation $organisation, Rechnung $rechnung, $type = 'D')
     {
         $eltern = $rechnung->getStammdaten();
-        $pdf = $this->pdf;
         $pdf = $this->pdf->create();
         $pdf->setOrganisation($organisation);
         $fileName = $organisation->getName() . '_' . $rechnung->getRechnungsnummer();
@@ -68,7 +68,7 @@ class PrintRechnungService
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
         if ($organisation->getImage()) {
-            $im = $this->fileSystem->read($organisation->getImage());
+            $im = $this->internFileSystem->read($organisation->getImage());
             $imdata = base64_encode($im);
             $imgdata = base64_decode($imdata);
             $pdf->Image('@' . $imgdata, 140, 20, 0, 30);

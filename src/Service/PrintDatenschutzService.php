@@ -11,25 +11,17 @@ namespace App\Service;
 
 use App\Entity\Organisation;
 use App\Entity\Stadt;
-use League\Flysystem\FilesystemOperator;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Environment;
 
 class PrintDatenschutzService
 {
-    protected $parameterBag;
-    private $tcpdf;
-
     public function __construct(
-        private FilesystemOperator $fileSystem,
-        private TCPDFController $pdf,
+        private TCPDFController $tcpdf,
         private Environment $templating,
-        ParameterBagInterface $parameterBag,
         private PrintService $printService,
-    ) {
-        $this->parameterBag = $parameterBag;
-        $this->tcpdf = $this->pdf;
+    )
+    {
     }
 
     public function printDatenschutz($text, $type = 'D', ?Stadt $stadt = null, ?Organisation $organisation = null)

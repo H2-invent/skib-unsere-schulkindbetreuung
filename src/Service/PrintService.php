@@ -17,6 +17,7 @@ use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FilesystemOperator;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -27,10 +28,12 @@ class PrintService
     public function __construct(
         private EntityManagerInterface $em,
         private UrlGeneratorInterface $generator,
+        private FilesystemOperator $internFileSystem,
         private Environment $templating,
         private TranslatorInterface $translator,
         private TCPDFController $TCPDFController,
-    ) {
+    )
+    {
     }
 
     public function printAnmeldebestaetigung(Kind $kind, Stammdaten $eltern, Stadt $stadt, $fileName, $beruflicheSituation, Organisation $organisation, $type = 'D', $encyption = false)
@@ -238,7 +241,7 @@ class PrintService
         $imgdata = null;
         if ($organisation) {
             if ($organisation->getImage()) {
-                $im = $this->internFiles->read($organisation->getImage());
+                $im = $this->internFileSystem->read($organisation->getImage());
                 $imdata = base64_encode($im);
                 $imgdata = base64_decode($imdata);
 
@@ -252,7 +255,7 @@ class PrintService
 
         if ($stadt) {
             if ($stadt->getLogoStadt()) {
-                $im = $this->internFiles->read($stadt->getLogoStadt());
+                $im = $this->internFileSystem->read($stadt->getLogoStadt());
                 $imdata = base64_encode($im);
                 $imgdata = base64_decode($imdata);
                 $dimensions = getimagesizefromstring($im);
@@ -349,14 +352,14 @@ class PrintService
         $pdf = $this->preparePDF($pdf, $this->translator->trans('Änderungsformular für die Schulkindbetreuung'), $organisation->getName(), $this->translator->trans('Änderungsformular für die Schulkindbetreuung'), null, null);
 
         if ($schule->getOrganisation()->getImage()) {
-            $im = $this->internFiles->read($schule->getOrganisation()->getImage());
+            $im = $this->internFileSystem->read($schule->getOrganisation()->getImage());
             $imdata = base64_encode($im);
             $imgdata = base64_decode($imdata);
             $pdf->Image('@' . $imgdata, 25, 30, 50, 0);
         }
 
         if ($schule->getStadt()->getLogoStadt()) {
-            $im = $this->internFiles->read($schule->getStadt()->getLogoStadt());
+            $im = $this->internFileSystem->read($schule->getStadt()->getLogoStadt());
             $imdata = base64_encode($im);
             $imgdata = base64_decode($imdata);
             $pdf->Image('@' . $imgdata, 100, 30, 50, 0);
@@ -379,7 +382,7 @@ class PrintService
         );
 
         if ($schule->getImage()) {
-            $im = $this->internFiles->read($schule->getImage());
+            $im = $this->internFileSystem->read($schule->getImage());
             $imdata = base64_encode($im);
             $imgdata = base64_decode($imdata);
             $pdf->Image('@' . $imgdata, 30, 130, 150, 0);
