@@ -26,7 +26,7 @@ RUN tar \
     --exclude='./var/log' \
     -zcvf /artifact.tgz .
 
-FROM reg.h2-invent.com/public-system-design/alpine-php8-cron-webserver:3.23.4
+FROM reg.h2-invent.com/public-system-design/debian-php83-cron-webserver:3.23.6
 ARG VERSION=development
 
 LABEL version="${VERSION}" \
@@ -43,15 +43,15 @@ LABEL version="${VERSION}" \
 
 USER root
 
-RUN apk --no-cache add \
-    php83-bcmath \
-    && rm -rf /var/cache/apk/*
-
 RUN echo "Europe/Berlin" > /etc/timezone
 
-RUN echo "#!/bin/sh" > /docker-entrypoint-init.d/02-symfony.sh \
-    && echo "php bin/console doc:mig:mig --no-interaction" >> /docker-entrypoint-init.d/02-symfony.sh \
-    && chmod +x /docker-entrypoint-init.d/02-symfony.sh
+RUN echo "" >> /etc/php/active/fpm/conf.d/custom.ini \
+    && echo "opcache.enable=1" >> /etc/php/active/fpm/conf.d/custom.ini \
+    && echo "opcache.enable_cli=1" >> /etc/php/active/fpm/conf.d/custom.ini \
+    && echo "opcache.memory_consumption=256" >> /etc/php/active/fpm/conf.d/custom.ini \
+    && echo "opcache.max_accelerated_files=32531" >> /etc/php/active/fpm/conf.d/custom.ini \
+    && echo "opcache.interned_strings_buffer=32" >> /etc/php/active/fpm/conf.d/custom.ini \
+    && echo "opcache.validate_timestamps=0" >> /etc/php/active/fpm/conf.d/custom.ini
 
 USER nobody
 
@@ -63,7 +63,8 @@ RUN tar -zxvf artifact.tgz \
     && mkdir -p var/cache \
     && rm artifact.tgz
 
-ENV CRON_COMMAND_0="*/10 * * * * php /var/www/html/bin/console app:statistik:generate" \
+ENV STARTUP_COMMAND_0="php bin/console doc:mig:mig --no-interaction" \
+    CRON_COMMAND_0="*/10 * * * * php /var/www/html/bin/console app:statistik:generate" \
     nginx_root_directory=/var/www/html/public \
     memory_limit=1024M \
     client_max_body_size=20M \
