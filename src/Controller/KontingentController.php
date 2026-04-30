@@ -85,9 +85,16 @@ class KontingentController extends AbstractController
             throw new \Exception('Wrong Organisation');
         }
 
-        $kind = $this->managerRegistry->getRepository(Kind::class)->findBeworbenByZeitblock($block);
+        $kinder = $this->managerRegistry->getRepository(Kind::class)->findBeworbenByZeitblock($block);
+        usort($kinder, static function (Kind $a, Kind $b) {
+            return
+                $a->getTracing() <=> $b->getTracing() ?:
+                $a->getStartDate() <=> $b->getStartDate() ?:
+                $a->getEltern()?->getCreatedAt() <=> $b->getEltern()?->getCreatedAt()
+            ;
+        });
 
-        return $this->render('kontingent/child.html.twig', array('fictiveDate'=>$fictiveDate,'text' => $translator->trans('Akzeptieren oder lehnen Sie ein Kind für diesen Block ab'), 'block' => $block, 'kinder' => $kind));
+        return $this->render('kontingent/child.html.twig', array('fictiveDate'=>$fictiveDate,'text' => $translator->trans('Akzeptieren oder lehnen Sie ein Kind für diesen Block ab'), 'block' => $block, 'kinder' => $kinder));
 
     }
 

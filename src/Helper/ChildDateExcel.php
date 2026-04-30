@@ -6,6 +6,7 @@ class ChildDateExcel
 {
     private int $von;
     private int $bis;
+    private ?string $blockName = null;
 
     /**
      * @return int
@@ -38,14 +39,34 @@ class ChildDateExcel
     {
         $this->bis = $bis;
     }
-    public function getVonBisAsString(){
-       return str_pad(floor($this->von / 60), 2, 0, STR_PAD_LEFT)
-        . ':' . str_pad($this->von % 60, 2, 0, STR_PAD_LEFT)
-        . ' - ' . str_pad(floor($this->bis/ 60), 2, 0, STR_PAD_LEFT)
-        . ':' . str_pad($this->bis % 60, 2, 0, STR_PAD_LEFT);
+
+    public function getVonBisAsString(): string
+    {
+        return str_pad(floor($this->von / 60), 2, 0, STR_PAD_LEFT)
+            . ':' . str_pad($this->von % 60, 2, 0, STR_PAD_LEFT)
+            . ' - ' . str_pad(floor($this->bis / 60), 2, 0, STR_PAD_LEFT)
+            . ':' . str_pad($this->bis % 60, 2, 0, STR_PAD_LEFT);
     }
-    public function getVonBisAsStringWithUhr($uhrString){
-        return $this->getVonBisAsString().$uhrString;
+
+    public function getVonBisAsStringWithUhr($uhrString): string
+    {
+        $res = $this->getVonBisAsString() . $uhrString;
+        if ($this->getBlockName()) {
+            $res .= " ({$this->blockName})";
+        }
+
+        return $res;
     }
+
+    public function getBlockName(): ?string
+    {
+        return $this->blockName;
+    }
+
+    public function setBlockName(string $blockName): void
+    {
+        $this->blockName = $blockName;
+    }
+
 
 }
