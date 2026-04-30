@@ -17,5 +17,5 @@ __🐛 Bugfixes:__
 * add posibility to duplicate blocks
 * Color contingent Blocks with same child in same color
 * Add block name to excel export and to pdf download
-
+* fix not showing double kids when accepting
 ## Files
