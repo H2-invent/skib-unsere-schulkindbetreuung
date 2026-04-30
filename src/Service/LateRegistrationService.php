@@ -14,7 +14,7 @@ use Twig\Environment;
 
 class LateRegistrationService
 {
-    private const VALIDITY_TIME = '3 days';
+    private const VALIDITY_TIME = '24 hours';
     private const SESSION_KEY_LATE_REGISTRATION = 'late_registration_id';
 
     public function __construct(
