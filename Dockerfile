@@ -48,8 +48,6 @@ RUN echo "Europe/Berlin" > /etc/timezone
 RUN echo "" >> /etc/php/active/fpm/conf.d/custom.ini \
     && echo "opcache.enable=1" >> /etc/php/active/fpm/conf.d/custom.ini \
     && echo "opcache.enable_cli=1" >> /etc/php/active/fpm/conf.d/custom.ini \
-    && echo "opcache.preload=/var/www/html/config/preload.php" >> /etc/php/active/fpm/conf.d/custom.ini \
-    && echo "opcache.preload_user=nobody" >> /etc/php/active/fpm/conf.d/custom.ini \
     && echo "opcache.memory_consumption=256" >> /etc/php/active/fpm/conf.d/custom.ini \
     && echo "opcache.max_accelerated_files=32531" >> /etc/php/active/fpm/conf.d/custom.ini \
     && echo "opcache.interned_strings_buffer=32" >> /etc/php/active/fpm/conf.d/custom.ini \
