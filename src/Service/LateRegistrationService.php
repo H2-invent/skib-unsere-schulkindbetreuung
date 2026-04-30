@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\LateRegistration;
+use App\Repository\LateRegistrationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\UriSigner;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -14,15 +14,16 @@ use Twig\Environment;
 
 class LateRegistrationService
 {
-    private const VALIDITY_TIME = '24 hours';
+    private const VALIDITY_TIME = '3 days';
+    private const SESSION_KEY_LATE_REGISTRATION = 'late_registration_id';
 
     public function __construct(
         private UriSigner $uriSigner,
         private MailerService $mailerService,
         private Environment $twig,
         private RouterInterface $router,
-        private RequestStack $requestStack,
         private EntityManagerInterface $entityManager,
+        private LateRegistrationRepository $lateRegistrationRepository,
     )
     {
     }
@@ -35,15 +36,22 @@ class LateRegistrationService
         $this->entityManager->flush();
     }
 
-    public function start(LateRegistration $lateRegistration): void
+    public function start(LateRegistration $lateRegistration, Request $request): void
+    {
+        $session = $request->getSession();
+        $session->set(SchuljahrService::SESSION_KEY_SCHULJAHR, $lateRegistration->getSchuljahr()->getId());
+        $session->set(self::SESSION_KEY_LATE_REGISTRATION, $lateRegistration->getId());
+    }
+
+    public function finish(LateRegistration $lateRegistration, Request $request): void
     {
         $lateRegistration->setUsedAtValue();
         $this->entityManager->persist($lateRegistration);
         $this->entityManager->flush();
 
-        $this->requestStack->getSession()->set(SchuljahrService::SESSION_KEY_SCHULJAHR,
-            $lateRegistration->getSchuljahr()->getId()
-        );
+        $session = $request->getSession();
+        $session->remove(self::SESSION_KEY_LATE_REGISTRATION);
+        $session->remove(SchuljahrService::SESSION_KEY_SCHULJAHR);
     }
 
     public function isValid(LateRegistration $lateRegistration, Request $request): bool
@@ -59,6 +67,16 @@ class LateRegistrationService
         }
 
         return true;
+    }
+
+    public function getStartedLateRegistration(Request $request): ?LateRegistration
+    {
+        $lateRegistrationId = $request->getSession()->get(self::SESSION_KEY_LATE_REGISTRATION, null);
+        if ($lateRegistrationId === null) {
+            return null;
+        }
+
+        return $this->lateRegistrationRepository->find($lateRegistrationId);
     }
 
     private function addSignedUri(LateRegistration $lateRegistration): void

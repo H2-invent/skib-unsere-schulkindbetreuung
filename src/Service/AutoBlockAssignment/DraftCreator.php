@@ -80,6 +80,7 @@ class DraftCreator
     {
         $children = $this->autoBlockAssignmentChildRepository->findByAutoBlockAssignmentWeighted($autoBlockAssignment);
         $minBlocksPerDay = $organisation->getStadt()?->getMinBlocksPerDay();
+        $minDaysPerWeek = $organisation->getStadt()->getMinDaysperWeek();
 
         foreach ($children as $child) {
             $kind = $child->getKind();
@@ -88,8 +89,9 @@ class DraftCreator
             }
 
             $beworbenZeitblocks = $this->zeitblockRepository->findBeworbenBlocksByKindAndSchuljahr($kind, $schuljahr);
+            $bookedZeitblocks = $this->zeitblockRepository->findBookedBlocksByKindAndSchuljahr($kind, $schuljahr);
 
-            [$accepted, $warteschlange] = $this->draftCreationValidator->validateZeitblocks($beworbenZeitblocks, $minBlocksPerDay);
+            [$accepted, $warteschlange] = $this->draftCreationValidator->validateZeitblocks($beworbenZeitblocks, $bookedZeitblocks, $minBlocksPerDay, $minDaysPerWeek);
 
             foreach ($accepted as $acceptedZeitblock) {
                 $autoBlockAssignmentZeitblock = (new AutoBlockAssignmentChildZeitblock())

@@ -120,7 +120,7 @@ class DownloadAngemeldeteKinderController extends AbstractController
             }
 
             $activeSheet->setCellValue('A' . $counter, $kind->getEltern()->getVorname());
-            $activeSheet->setCellValue('B' . $counter, $kind->getEltern()->getVorname());
+            $activeSheet->setCellValue('B' . $counter, $kind->getEltern()->getName());
             $activeSheet->setCellValue('C' . $counter, $kind->getVorname());
             $activeSheet->setCellValue('D' . $counter, $kind->getNachname());
             $activeSheet->setCellValue('E' . $counter, $kind->getEltern()->getEmail());
