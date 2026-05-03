@@ -14,12 +14,15 @@ composer_version: "2"
 corepack_enable: false
 
 web_extra_daemons:
-  - name: "messenger"
-    command: "php bin/console messenger:consume async -vv"
-    directory: /var/www/html
   - name: "npm-watch"
     command: "npm run watch"
     directory: /var/www/html
+
+hooks:
+  post-start:
+    - exec: npm install
+    - exec: composer install
+    - exec: symfony run --daemon --watch=config,src,templates,vendor php bin/console messenger:consume async -vv
 
 # Key features of DDEV's config.yaml:
 
