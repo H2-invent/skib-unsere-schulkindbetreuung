@@ -543,9 +543,7 @@ class PrintService
                         $table .= '<p>' . $this->translator->trans('Mittagessen') . '</p>';
 
                     }
-                    if (($block->getMin() || $block->getMax())) {
-                        $table .= '<p>' . $this->translator->trans('Warten auf Bestätigung') . '</p>';
-                    }
+
                     $table .= $block->getVon()->format('H:i') . ' - ' . $block->getBis()->format('H:i') ;
                     if ($block->translate()->getBlockbezeichnung()){
                         $table .= ' (' . $block->translate()->getBlockbezeichnung() . ')';
