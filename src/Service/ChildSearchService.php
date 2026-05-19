@@ -43,14 +43,16 @@ class ChildSearchService
             ->innerJoin('k.eltern', 'eltern')
             ->andWhere('eltern.created_at IS NOT NULL');
 
-        if (!$dateTo) {
-            $qb->andWhere('k.startDate <= :fromDate')->setParameter('fromDate', $dateFrom);
-        } else {
-            $qb->andWhere('k.startDate >= :fromDate')->setParameter('fromDate', $dateFrom)
-                ->andWhere('k.startDate <= :endDate')->setParameter('endDate', $dateTo);
-            $diff = true;
-        }
 
+        if ($parameters['status'] === 'bestaetigt') {
+            if (!$dateTo) {
+                $qb->andWhere('k.startDate <= :fromDate')->setParameter('fromDate', $dateFrom);
+            } else {
+                $qb->andWhere('k.startDate >= :fromDate')->setParameter('fromDate', $dateFrom)
+                    ->andWhere('k.startDate <= :endDate')->setParameter('endDate', $dateTo);
+                $diff = true;
+            }
+        }
 
         //Schule als Filter ausgewählt
         if (isset($parameters['schule']) && $parameters['schule'] !== "") {
@@ -155,34 +157,43 @@ class ChildSearchService
         }
 
         //block ausgewählt
-        if (isset($parameters['block']) && $parameters['block'] !== "") {   // wenn der Block angezeigt werden soll, dann auch von gelöschten Blöcken
-            foreach ($kind->getRealZeitblocks() as $zeitblock) {
+        if (isset($parameters['block']) && $parameters['block'] !== "") {
+            // wenn der Block angezeigt werden soll, dann auch von gelöschten Blöcken
+            $zeitblocks = match ($parameters['status'] ?? null) {
+                'warteliste' => $kind->getWarteliste(),
+                'beworben' => $kind->getBeworben(),
+                default => $kind->getZeitblocks(),
+            };
+            $hasMatchingBlock = false;
+            foreach ($zeitblocks as $zeitblock) {
                 if ($zeitblock->getId() === (int)$parameters['block']) {
-                    continue;
+                    $hasMatchingBlock = true;
+                    break;
                 }
+            }
+            if (!$hasMatchingBlock) {
                 return false;
             }
-        } else if (isset($parameters['status']) && $parameters['status'] === 'beworben') {
-            if (count($kind->getRealBeworben()) <= 0) {
-                return false;
-            }
-        } else if (isset($parameters['status']) && $parameters['status'] === 'warteliste') {
-            if (count($kind->getRealWarteliste()) <= 0) {
-                return false;
-            }
-        } else if ($diff) {
-            if (count($kind->getRealWarteliste()) === 0 && count($kind->getRealZeitblocks()) === 0 && count($kind->getRealBeworben()) === 0) {
-                return false;
-            }
-        } else {// sonst immer nur die Kinder anzeigen die an activen Blöcken hängen
+        } else {
+            // sonst immer nur die Kinder anzeigen die an aktiven Blöcken hängen
+            $zeitblocks = match ($parameters['status'] ?? null) {
+                'warteliste' => $kind->getRealWarteliste(),
+                'beworben' => $kind->getRealBeworben(),
+                default => $kind->getRealZeitblocks(),
+            };
             $hasActualBlock = false;
-            foreach ($kind->getRealZeitblocks() as $data) {
+            foreach ($zeitblocks as $data) {
                 if ($data->getDeleted() === false) {
                     $hasActualBlock = true;
                     break;
                 }
             }
             if (!$hasActualBlock) {
+                return false;
+            }
+        }
+        if ($diff) {
+            if (count($kind->getRealWarteliste()) === 0 && count($kind->getRealZeitblocks()) === 0 && count($kind->getRealBeworben()) === 0) {
                 return false;
             }
         }
