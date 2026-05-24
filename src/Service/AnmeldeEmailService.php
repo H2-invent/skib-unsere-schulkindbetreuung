@@ -100,7 +100,7 @@ class AnmeldeEmailService
                     null
                 )
             );
-
+            $this->ics->clearAllAppointments();
             // here we build the ics to import into a calendar
             foreach ($kind->getZeitblocks() as $data2) {
                 $startDate = $data2->getFirstDate()->format('Ymd');
