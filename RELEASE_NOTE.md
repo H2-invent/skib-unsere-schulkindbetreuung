@@ -18,4 +18,6 @@ __🐛 Bugfixes:__
 * Color contingent Blocks with same child in same color
 * Add block name to excel export and to pdf download
 * fix not showing double kids when accepting
+* Fix resend confirmation
+* FIx clear ics
 ## Files
