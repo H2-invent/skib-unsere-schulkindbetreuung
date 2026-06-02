@@ -209,7 +209,7 @@ class FerienManagementController extends AbstractController
         $em->remove($ferienblock);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
-        return $this->redirectToRoute('ferien_management_show', array('org_id' => $organisation->getId(), 'snack' => $text));
+        return new JsonResponse(['redirect' => $this->generateUrl('ferien_management_show', ['org_id' => $organisation->getId(), 'snack' => $text])]);
     }
 
 
