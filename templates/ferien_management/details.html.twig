@@ -211,7 +211,7 @@
                                                     BIC: {{ payment.sepa.bic }}
                                                 </td>
                                                 <td>
-                                                    {{ payment.createdAt|date('d.m.y g:i') }}
+                                                    {{ payment.createdAt|date('d.m.y H:i') }}
                                                 </td>
                                                 <td>
                                                     {{ payment.bezahlt|number_format ('2',',','.') }}€
@@ -228,7 +228,7 @@
                                                     {{ 'IP Adresse'|trans }}: {{ payment.braintree.ipAdresse }}
                                                 </td>
                                                 <td>
-                                                    {{ payment.createdAt|date('d.m.y g:i') }}
+                                                    {{ payment.createdAt|date('d.m.y H:i') }}
                                                 </td>
                                                 <td>
                                                     {{ payment.bezahlt|number_format ('2',',','.') }}€
@@ -245,7 +245,7 @@
                                                     {{ 'IP Adresse'|trans }}: {{ payment.ipAdresse }}
                                                 </td>
                                                 <td>
-                                                    {{ payment.createdAt|date('d.m.y g:i') }}
+                                                    {{ payment.createdAt|date('d.m.y H:i') }}
                                                 </td>
                                                 <td>
                                                     {{ payment.bezahlt|number_format ('2',',','.') }}€
