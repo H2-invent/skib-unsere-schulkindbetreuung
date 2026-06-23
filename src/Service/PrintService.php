@@ -84,10 +84,14 @@ class PrintService
 
             '<tr>' . '<td align="right">' . $this->translator->trans('Sicherheitscode') . ': </td><td  align="left" >' . $eltern->getSecCode() . '</td></tr>' .
             '<tr>' . '<td align="right">' . $this->translator->trans('Anmeldedatum') . ': </td><td  align="left" >' . $eltern->getCreatedAt()->format('d.m.Y') . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Betreuende Organisation') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getName() . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Ansprechpartner') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getAnsprechpartner() . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Telefonnummer') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getTelefon() . '</td></tr>';
-        '<tr>' . '<td align="right">' . $this->translator->trans('E-Mail') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getEmail() . '</td></tr>';
+            '<tr>' . '<td align="right">' . $this->translator->trans('Betreuende Organisation') . ': </td><td></td></tr>'.
+            '<tr><td  align="left" >' . $kind->getSchule()->getOrganisation()->getName() . '</td><td></td></tr>' .
+
+            '<tr>' . '<td align="right">' . $this->translator->trans('Ansprechpartner') . ': </td><td></td></tr>'.
+            '<tr><td  align="left" >' . $kind->getSchule()->getOrganisation()->getAnsprechpartner() . '</td><td></td></tr>' .
+            '<tr>' . '<td align="right">' . $this->translator->trans('Telefonnummer') . ': </td><td></td></tr>'.
+            '<tr><td  align="left" >' . $kind->getSchule()->getOrganisation()->getTelefon() . '</td><td></td></tr>';
+        '<tr>' . '<td align="right">' . $this->translator->trans('E-Mail') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getEmail() . '</td><td></td></tr>';
         $kontaktDaten .= '</table>';
         $pdf->writeHTMLCell(
             300,
