@@ -20,4 +20,5 @@ __🐛 Bugfixes:__
 * fix not showing double kids when accepting
 * Fix resend confirmation
 * FIx clear ics
+* Fix parent table in pdf
 ## Files
