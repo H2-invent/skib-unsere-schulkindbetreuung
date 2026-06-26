@@ -379,6 +379,10 @@ class StadtType extends AbstractType
                 TextType::class,
                 ['required' => false, 'label' => 'Akzentfarbe Fehler (HTML Code)', 'translation_domain' => 'form']
             )
+            ->add('customCss',
+                TextareaType::class,
+                ['attr' => ['rows' => 10], 'required' => false, 'label' => 'Individuelles CSS', 'translation_domain' => 'form', 'help' => 'Dieses CSS wird auf allen Frontend-Seiten dieser Stadt im Header ausgegeben.']
+            )
             ->add('translations', TranslationsType::class, [
 
                     'fields' => [

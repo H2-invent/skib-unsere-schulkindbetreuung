@@ -136,6 +136,9 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $akzentfarbeFehler;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $customCss;
+
 
     #[ORM\OneToMany(targetEntity: \App\Entity\Active::class, mappedBy: 'stadt')]
     private $actives;
@@ -1591,6 +1594,18 @@ class Stadt implements TranslatableInterface
     public function setSkipSettingShowChronicalDeseas(?bool $skip_setting_show_chronicalDeseas): self
     {
         $this->skip_setting_show_chronicalDeseas = $skip_setting_show_chronicalDeseas;
+
+        return $this;
+    }
+
+    public function getCustomCss(): ?string
+    {
+        return $this->customCss;
+    }
+
+    public function setCustomCss(?string $customCss): self
+    {
+        $this->customCss = $customCss;
 
         return $this;
     }
