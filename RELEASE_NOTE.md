@@ -22,5 +22,5 @@ __🐛 Bugfixes:__
 * Fix resend confirmation
 * FIx clear ics
 * Fix parent table in pdf
-* Add miration for custom css
+* Add miration for custom css and fix
 ## Files
