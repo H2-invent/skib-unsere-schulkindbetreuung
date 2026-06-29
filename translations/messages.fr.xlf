@@ -3317,11 +3317,11 @@
       </trans-unit>
       <trans-unit id="QRQRdxi" resname="pdf.buchung.eltern.header">
         <source>pdf.buchung.eltern.header</source>
-        <target state="needs-translation">Zulassung</target>
+        <target state="needs-translation">Zusammenfassung</target>
       </trans-unit>
       <trans-unit id="FzKF.EF" resname="pdf.buchung.kind.header">
         <source>pdf.buchung.kind.header</source>
-        <target state="needs-translation">Zulassung</target>
+        <target state="needs-translation">Zusammenfassung</target>
       </trans-unit>
       <trans-unit id="55nj28I" resname="Dieser Block ist nur über eine Abhängigkeit auswählbar.">
         <source>Dieser Block ist nur über eine Abhängigkeit auswählbar.</source>
