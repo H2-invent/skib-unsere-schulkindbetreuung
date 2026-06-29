@@ -4,8 +4,7 @@
     </p>
 {%endif%}
 {% if stadt is not defined or not stadt.NoSecCodeForChangeChilds %}
-    <p class="text-center">{% trans %}Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.
-            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.{% endtrans %}</p>
+    <p class="text-center">{% trans %}email.seccode.explain.main{% endtrans %}</p>
 
     <h3 class="text-center">
         {{ 'Sicherheitscode'|trans }}: {{ eltern.secCode }}

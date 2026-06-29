@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93da2eaf80b5d349fb7356c4f17f5f1a",
+    "content-hash": "b7b71ecfc687df937169e84707e06dd0",
     "packages": [
         {
             "name": "a2lix/auto-form-bundle",
@@ -3530,6 +3530,80 @@
                 "source": "https://github.com/thephpleague/oauth2-client/tree/2.6.1"
             },
             "time": "2021-12-22T16:42:49+00:00"
+        },
+        {
+            "name": "lexik/translation-bundle",
+            "version": "v6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lexik/LexikTranslationBundle.git",
+                "reference": "3042cdf01ea4728be5a7606acda9f558e270abed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lexik/LexikTranslationBundle/zipball/3042cdf01ea4728be5a7606acda9f558e270abed",
+                "reference": "3042cdf01ea4728be5a7606acda9f558e270abed",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0",
+                "symfony/framework-bundle": "~5.2|~6.0"
+            },
+            "require-dev": {
+                "doctrine/data-fixtures": "~1.1",
+                "doctrine/doctrine-bundle": "^2.2",
+                "doctrine/mongodb-odm": "^2.1",
+                "doctrine/mongodb-odm-bundle": "~4.2",
+                "doctrine/orm": ">=2.4",
+                "ext-mongodb": "*",
+                "ext-pdo": "*",
+                "mikey179/vfsstream": "^1.6",
+                "mongodb/mongodb": "^1.8",
+                "phpunit/phpunit": "^9.5",
+                "propel/propel": "2.0.0-alpha12|dev-master",
+                "symfony/symfony": "~5.0|~6.0"
+            },
+            "suggest": {
+                "doctrine/orm": ">=2.4"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lexik\\Bundle\\TranslationBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cedric Girard",
+                    "email": "c.girard@lexik.fr"
+                },
+                {
+                    "name": "Dev Lexik",
+                    "email": "dev@lexik.fr"
+                }
+            ],
+            "description": "This bundle allows to import translation files content into the database and provide a GUI to edit translations.",
+            "homepage": "https://github.com/lexik/LexikTranslationBundle",
+            "keywords": [
+                "bundle",
+                "i18n",
+                "symfony",
+                "translation"
+            ],
+            "support": {
+                "issues": "https://github.com/lexik/LexikTranslationBundle/issues",
+                "source": "https://github.com/lexik/LexikTranslationBundle/tree/v6.0"
+            },
+            "time": "2022-06-12T08:02:35+00:00"
         },
         {
             "name": "liip/imagine-bundle",
@@ -14232,7 +14306,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -14240,6 +14314,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
