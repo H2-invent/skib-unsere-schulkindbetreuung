@@ -328,7 +328,7 @@
                 </tr>
             </table>
         </td>
-        <td style="color: red" colspan="5">{% trans %}Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen widerrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.{% endtrans %}
+        <td style="color: red" colspan="5">{% trans %}template.zusammenfassung.checkbox.storniermoeglichkeit{% endtrans %}
         </td>
     </tr>
     <tr>
@@ -342,7 +342,7 @@
                 </tr>
             </table>
         </td>
-        <td style="color: red" colspan="5">{% trans with{'%s%':organisation.stadt.name} %}Ich habe die Datenschutzerklärung der %s%  gelesen und bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet und an die betreuende Organisation weitergegeben werden.{% endtrans %}
+        <td style="color: red" colspan="5">{% trans with{'%s%':organisation.stadt.name} %}template.zusammenfassung.checkbox.datenschutz{% endtrans %}
         </td>
     </tr>
     </tbody>

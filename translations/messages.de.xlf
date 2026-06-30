@@ -197,10 +197,7 @@
         <source>Ferienprogramm erstellen</source>
         <target state="needs-translation">Ferienprogramm erstellen</target>
       </trans-unit>
-      <trans-unit id="8oUMrku" resname="Preise bearbeiten">
-        <source>Preise bearbeiten</source>
-        <target state="needs-translation">Preise bearbeiten</target>
-      </trans-unit>
+
       <trans-unit id="4BJxmLO" resname="Gutscheine bearbeiten">
         <source>Gutscheine bearbeiten</source>
         <target state="needs-translation">Gutscheine bearbeiten</target>
@@ -244,14 +241,6 @@
       <trans-unit id="bedt2uH" resname="Online Anmeldung und Verwaltung">
         <source>Online Anmeldung und Verwaltung</source>
         <target state="needs-translation">Online Antrag und Verwaltung</target>
-      </trans-unit>
-      <trans-unit id="1Fj0jnL" resname="SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.">
-        <source>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.</source>
-        <target state="needs-translation">SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.</target>
-      </trans-unit>
-      <trans-unit id="3r4L_M3" resname="Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig">
-        <source>Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig</source>
-        <target state="needs-translation">Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig</target>
       </trans-unit>
       <trans-unit id="oM8HA8j" resname="Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend">
         <source>Alleinerziehender Elternteil / Erziehungsberechtigter ist arbeitssuchend</source>
@@ -452,10 +441,6 @@
       <trans-unit id="1C61Lnb" resname="Impressum %stadt%">
         <source>Impressum %stadt%</source>
         <target state="needs-translation">Impressum %stadt%</target>
-      </trans-unit>
-      <trans-unit id="395JNMl" resname="Vertragsbedingungen ">
-        <source>Vertragsbedingungen </source>
-        <target state="needs-translation">Vertragsbedingungen </target>
       </trans-unit>
       <trans-unit id="BvWUZMy" resname="Mittagessen">
         <source>Mittagessen</source>
@@ -737,10 +722,6 @@
         <source>Bestätigung der E-Mail-Adresse</source>
         <target state="needs-translation">Bestätigung der E-Mail-Adresse</target>
       </trans-unit>
-      <trans-unit id="syeYwkW" resname="Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch in Ihrem Spamordner nach.">
-        <source>Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch in Ihrem Spamordner nach.</source>
-        <target state="needs-translation">Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch in Ihrem Spamordner nach.</target>
-      </trans-unit>
       <trans-unit id="QiG5uAg" resname="Uhr">
         <source>Uhr</source>
         <target state="needs-translation">Uhr</target>
@@ -777,10 +758,7 @@
         <source>Rechnungsnummer</source>
         <target state="needs-translation">Rechnungsnummer</target>
       </trans-unit>
-      <trans-unit id="BqL27j3" resname="Betreuende Organisation">
-        <source>Betreuende Organisation</source>
-        <target state="needs-translation">Betreuende Organisation</target>
-      </trans-unit>
+
       <trans-unit id="OsNmCHb" resname="Ansprechpartner">
         <source>Ansprechpartner</source>
         <target state="needs-translation">Ansprechpartner</target>
@@ -1189,10 +1167,6 @@
         <source>Kein Admin</source>
         <target state="needs-translation">Kein Admin</target>
       </trans-unit>
-      <trans-unit id="47DEQpj" resname="">
-        <source></source>
-        <target></target>
-      </trans-unit>
       <trans-unit id="1j_378O" resname="Berichte von %active%">
         <source>Berichte von %active%</source>
         <target state="needs-translation">Berichte von %active%</target>
@@ -1236,10 +1210,6 @@
       <trans-unit id="8HbTOEk" resname="gelöscht">
         <source>gelöscht</source>
         <target state="needs-translation">gelöscht</target>
-      </trans-unit>
-      <trans-unit id="EPM_Vi." resname="deaktiviert">
-        <source>deaktiviert</source>
-        <target state="needs-translation">deaktiviert</target>
       </trans-unit>
       <trans-unit id="uTIH2Fl" resname="Neues Zeitfenster anlegen am %tag%">
         <source>Neues Zeitfenster anlegen am %tag%</source>
@@ -1577,12 +1547,12 @@
         <source>Ich habe die allgemeinen Vertragsbedingungen der %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese.</source>
         <target state="needs-translation">Ich habe die allgemeinen Vertragsbedingungen der %stadt% zur Schulkindbetreuung gelesen und akzeptiere diese.</target>
       </trans-unit>
-      <trans-unit id="R08_cOg" resname="Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen widerrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.">
-        <source>Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen widerrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.</source>
+      <trans-unit id="aIJemdN" resname="template.zusammenfassung.checkbox.storniermoeglichkeit">
+        <source>template.zusammenfassung.checkbox.storniermoeglichkeit</source>
         <target state="needs-translation">Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen widerrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.</target>
       </trans-unit>
-      <trans-unit id="a90sKGv" resname="Ich habe die Datenschutzerklärung der %s%  gelesen und bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet und an die betreuende Organisation weitergegeben werden.">
-        <source>Ich habe die Datenschutzerklärung der %s%  gelesen und bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet und an die betreuende Organisation weitergegeben werden.</source>
+      <trans-unit id="9LD2IxO" resname="template.zusammenfassung.checkbox.datenschutz">
+        <source>template.zusammenfassung.checkbox.datenschutz</source>
         <target state="needs-translation">Ich habe die Datenschutzerklärung der %s%  gelesen und bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet und an die betreuende Organisation weitergegeben werden.</target>
       </trans-unit>
       <trans-unit id="9Th.m7b" resname="Kind">
@@ -1655,10 +1625,8 @@
         <source>Buchungsbestätigung für die Schulkindbetreuung</source>
         <target state="needs-translation">Buchungsbestätigung für die Schulkindbetreuung</target>
       </trans-unit>
-      <trans-unit id="PDp.4Mo" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.&#10;                Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.&#10;                Die Kontaktdaten sind in dem angehängten PDF angegeben.">
-        <source>Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
-                Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
-                Die Kontaktdaten sind in dem angehängten PDF angegeben.</source>
+      <trans-unit id="CTi_GrM" resname="pdf.informationstext.main">
+        <source>pdf.informationstext.main</source>
         <target state="needs-translation">Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
                 Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
                 Die Kontaktdaten sind in dem angehängten PDF angegeben.</target>
@@ -1667,9 +1635,8 @@
         <source>Sie haben Ihr Kind für die Schulkindbetreuung angemeldet:</source>
         <target state="needs-translation">Sie haben Ihr Kind für die Schulkindbetreuung angemeldet:</target>
       </trans-unit>
-      <trans-unit id="cX3OlGY" resname="Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.&#10;                Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.">
-        <source>Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.
-                Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.</source>
+      <trans-unit id="mL01wtz" resname="email.anmeldung.vorlaufig.main">
+        <source>email.anmeldung.vorlaufig.main</source>
         <target state="needs-translation">Dies ist eine vorläufige Information über die Anmeldung Ihres Kindes.
                 Wenn die Organisation Ihre Anmeldung bearbeitet hat, bekommen sie eine Zusammenfassung Ihrer akzeptierten Betreuungsblöcke.</target>
       </trans-unit>
@@ -1689,18 +1656,7 @@
         <source>Hiermit bestägen wir Ihnen die Anmeldung Ihrer Kinder</source>
         <target state="needs-translation">Hiermit bestägen wir Ihnen die Anmeldung Ihrer Kinder</target>
       </trans-unit>
-      <trans-unit id="TSpfBCd" resname="Über diesen Link können Sie ihre Bestellung bearbeiten.">
-        <source>Über diesen Link können Sie ihre Bestellung bearbeiten.</source>
-        <target state="needs-translation">Über diesen Link können Sie ihre Bestellung bearbeiten.</target>
-      </trans-unit>
-      <trans-unit id="8216kgx" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.&#10;            Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.&#10;            Die Kontaktdaten sind in dem angehängten PDF angegeben.">
-        <source>Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
-            Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.
-            Die Kontaktdaten sind in dem angehängten PDF angegeben.</source>
-        <target state="needs-translation">Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
-            Bitte überprüfen Sie Daten und melden Sie sich bei Fragen an Ihre zuständige Organisation.
-            Die Kontaktdaten sind in dem angehängten PDF angegeben.</target>
-      </trans-unit>
+
       <trans-unit id="L3ZouTV" resname="Mit freundlichen Grüßen Ihr">
         <source>Mit freundlichen Grüßen Ihr</source>
         <target state="needs-translation">Mit freundlichen Grüßen Ihr</target>
@@ -1708,10 +1664,6 @@
       <trans-unit id="dM1xpTv" resname="Bestätigungscode zur Anmeldung bei der SKIBin App">
         <source>Bestätigungscode zur Anmeldung bei der SKIBin App</source>
         <target state="needs-translation">Bestätigungscode zur Anmeldung bei der SKIBin App</target>
-      </trans-unit>
-      <trans-unit id="_PoH7Ws" resname="Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK">
-        <source>Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK</source>
-        <target state="needs-translation">Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK</target>
       </trans-unit>
       <trans-unit id="e7yUUjO" resname="Bestätigungscode">
         <source>Bestätigungscode</source>
@@ -1725,16 +1677,6 @@
         <source>Bestätigungscode für die Anmeldung zur Schulkindbetreuung</source>
         <target state="needs-translation">Bestätigungscode für die Anmeldung zur Schulkindbetreuung</target>
       </trans-unit>
-      <trans-unit id="dhhPs7h" resname="Bestätigungscode zur Überprüfung der E-Mail Adresse">
-        <source>Bestätigungscode zur Überprüfung der E-Mail Adresse</source>
-        <target state="needs-translation">Bestätigungscode zur Überprüfung der E-Mail Adresse</target>
-      </trans-unit>
-      <trans-unit id="6kYrCka" resname="Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.&#10;            &lt;br&gt;Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.">
-        <source>Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.
-            &lt;br&gt;Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.</source>
-        <target state="needs-translation"><![CDATA[Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.
-            <br>Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.]]></target>
-      </trans-unit>
       <trans-unit id="9RKgXyO" resname="Ende der Schulkindbetreuung">
         <source>Ende der Schulkindbetreuung</source>
         <target state="needs-translation">Ende der Schulkindbetreuung</target>
@@ -1747,16 +1689,16 @@
         <source>Ihr Kind %vorname% wurde auf die Warteliste für den Betreuungsblock am %day% von %von% bis %bis% verschoben</source>
         <target state="needs-translation">Ihr Kind %vorname% wurde auf die Warteliste für den Betreuungsblock am %day% von %von% bis %bis% verschoben</target>
       </trans-unit>
-      <trans-unit id="WgiPgTH" resname="Die Anmeldung für den oben genannten Betreuungsblock konnte derzeit nicht berücksichtigt werden, da alle verfügbaren Plätze bereits vergeben sind. Ihr Kind wurde daher auf die Warteliste gesetzt.">
-        <source>Die Anmeldung für den oben genannten Betreuungsblock konnte derzeit nicht berücksichtigt werden, da alle verfügbaren Plätze bereits vergeben sind. Ihr Kind wurde daher auf die Warteliste gesetzt.</source>
+      <trans-unit id="Xqr_6.s" resname="email.warteliste.added.main">
+        <source>email.warteliste.added.main</source>
         <target state="needs-translation">Die Anmeldung für den oben genannten Betreuungsblock konnte derzeit nicht berücksichtigt werden, da alle verfügbaren Plätze bereits vergeben sind. Ihr Kind wurde daher auf die Warteliste gesetzt.</target>
       </trans-unit>
       <trans-unit id="kkWpMnP" resname="Aktuell befindet sich Ihr Kind für folgende Zeitblöcke auf der Warteliste:">
         <source>Aktuell befindet sich Ihr Kind für folgende Zeitblöcke auf der Warteliste:</source>
         <target state="needs-translation">Aktuell befindet sich Ihr Kind für folgende Zeitblöcke auf der Warteliste:</target>
       </trans-unit>
-      <trans-unit id="lsdbRTK" resname="Bitte beachten Sie, dass die Platzvergabe nach Verfügbarkeit und gegebenenfalls nach festgelegten Kriterien erfolgt. Es ist nicht erforderlich, weitere Schritte zu unternehmen – wir informieren Sie automatisch über Änderungen am Wartelistenstatus.">
-        <source>Bitte beachten Sie, dass die Platzvergabe nach Verfügbarkeit und gegebenenfalls nach festgelegten Kriterien erfolgt. Es ist nicht erforderlich, weitere Schritte zu unternehmen – wir informieren Sie automatisch über Änderungen am Wartelistenstatus.</source>
+      <trans-unit id="kuPNoi." resname="email.warteliste.added.footer">
+        <source>email.warteliste.added.footer</source>
         <target state="needs-translation">Bitte beachten Sie, dass die Platzvergabe nach Verfügbarkeit und gegebenenfalls nach festgelegten Kriterien erfolgt. Es ist nicht erforderlich, weitere Schritte zu unternehmen – wir informieren Sie automatisch über Änderungen am Wartelistenstatus.</target>
       </trans-unit>
       <trans-unit id="D3OXC28" resname="Vielen Dank für Ihr Verständnis.">
@@ -1767,9 +1709,8 @@
         <source>Hallo %firstName% %lastName%</source>
         <target state="needs-translation">Hallo %firstName% %lastName%</target>
       </trans-unit>
-      <trans-unit id="B6fcDma" resname="Sie wurden von einem Administrator als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt.&#10;            &lt;br&gt;Um den Registrierungsvorgang abzuschließen klicken Sie bitte auf den nachfolgenden Link oder kopieren Sie den Link in Ihren Browser:">
-        <source>Sie wurden von einem Administrator als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt.
-            &lt;br&gt;Um den Registrierungsvorgang abzuschließen klicken Sie bitte auf den nachfolgenden Link oder kopieren Sie den Link in Ihren Browser:</source>
+      <trans-unit id="QVHrR2n" resname="email.invitation.user.main">
+        <source>email.invitation.user.main</source>
         <target state="needs-translation"><![CDATA[Sie wurden von einem Administrator als Mitarbeiter zu SKIB-Unsere Schulkindbetreuung hinzugefügt.
             <br>Um den Registrierungsvorgang abzuschließen klicken Sie bitte auf den nachfolgenden Link oder kopieren Sie den Link in Ihren Browser:]]></target>
       </trans-unit>
@@ -1825,10 +1766,8 @@
         <source>Guten Tag</source>
         <target state="needs-translation">Guten Tag</target>
       </trans-unit>
-      <trans-unit id="ypy3v5k" resname="Im Anhang finden Sie zur Kontrolle Ihre Daten als PDF.&#10;                Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.&#10;                Die Kontaktdaten sind in dem angehängten PDF angegeben.">
-        <source>Im Anhang finden Sie zur Kontrolle Ihre Daten als PDF.
-                Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
-                Die Kontaktdaten sind in dem angehängten PDF angegeben.</source>
+      <trans-unit id="XXRjsNq" resname="email.anmeldung.edit.main">
+        <source>email.anmeldung.edit.main</source>
         <target state="needs-translation">Im Anhang finden Sie zur Kontrolle Ihre Daten als PDF.
                 Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
                 Die Kontaktdaten sind in dem angehängten PDF angegeben.</target>
@@ -1837,9 +1776,8 @@
         <source>Das Passwort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (z.B. 01.01.2010)</source>
         <target state="needs-translation">Das Passwort für das PDF ist das Geburtstdatum des Kindes im Format: tt.mm.jjjj (z.B. 01.01.2010)</target>
       </trans-unit>
-      <trans-unit id="nL_.c2k" resname="Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.&#10;            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.">
-        <source>Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.
-            Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.</source>
+      <trans-unit id="MTQwkbr" resname="email.seccode.explain.main">
+        <source>email.seccode.explain.main</source>
         <target state="needs-translation">Für die Kommunikation mit der betreuenden Organisation und für Änderungen Ihrer Daten durch die betreuende Organisation müssen Sie diesen Sicherheitscode angeben.
             Dieser Mechanismus verhindert einen missbräuchlichen Zugriff auf die Daten Ihrer Kinder durch Dritte.</target>
       </trans-unit>
@@ -2031,10 +1969,7 @@
         <source>Anmeldezeitraum</source>
         <target state="needs-translation">Anmeldezeitraum</target>
       </trans-unit>
-      <trans-unit id="lhR82.1" resname="bis">
-        <source>bis</source>
-        <target state="needs-translation">bis</target>
-      </trans-unit>
+
       <trans-unit id="g.B9xuk" resname="Termin">
         <source>Termin</source>
         <target state="needs-translation">Termin</target>
@@ -2159,10 +2094,7 @@
         <source>Bezahlmethode</source>
         <target state="needs-translation">Bezahlmethode</target>
       </trans-unit>
-      <trans-unit id="UvJ2Yqo" resname="bezahlt">
-        <source>bezahlt</source>
-        <target state="needs-translation">bezahlt</target>
-      </trans-unit>
+
       <trans-unit id="QVYIDc4" resname="IP Adresse">
         <source>IP Adresse</source>
         <target state="needs-translation">IP Adresse</target>
@@ -2219,10 +2151,7 @@
         <source>Preise Bearbeiten</source>
         <target state="needs-translation">Preise Bearbeiten</target>
       </trans-unit>
-      <trans-unit id="CvBzQW1" resname="Gutscheine Bearbeiten">
-        <source>Gutscheine Bearbeiten</source>
-        <target state="needs-translation">Gutscheine Bearbeiten</target>
-      </trans-unit>
+
       <trans-unit id="bTQW9ci" resname="Fragen bearbeiten">
         <source>Fragen bearbeiten</source>
         <target state="needs-translation">Fragen bearbeiten</target>
@@ -2281,7 +2210,7 @@
       </trans-unit>
       <trans-unit id="1TkPaD1" resname="Regelungen für die Teilnahme am Ferienprogram">
         <source>Regelungen für die Teilnahme am Ferienprogram</source>
-        <target state="needs-translation">Regelungen für die Teilnahme am Ferienprogram</target>
+        <target state="needs-translation">Regelungen für die Teilnahme am Ferienprogramm</target>
       </trans-unit>
       <trans-unit id="RokUi3i" resname="[Default]">
         <source>[Default]</source>
@@ -2383,16 +2312,16 @@
         <source>Jede Verbindung von Ihrem Rechner zu SKB und zwischen den Servern von der Schulkindbetreuung ist durch Verschlüsselung nach aktuellen Standards geschützt.</source>
         <target state="needs-translation">Jede Verbindung von Ihrem Rechner zu SKB und zwischen den Servern von der Schulkindbetreuung ist durch Verschlüsselung nach aktuellen Standards geschützt.</target>
       </trans-unit>
-      <trans-unit id="0qFVV1v" resname="Beim Anmelden setzen wir Cookies ein, um die Funktionalität bequem zu gewährleisten und um sicherzustellen, welcher Daten Ihnen gehört. Wir speichern keine IP-Adressen, Browserdaten, Referer oder andere unnötige Metadaten.">
-        <source>Beim Anmelden setzen wir Cookies ein, um die Funktionalität bequem zu gewährleisten und um sicherzustellen, welcher Daten Ihnen gehört. Wir speichern keine IP-Adressen, Browserdaten, Referer oder andere unnötige Metadaten.</source>
+      <trans-unit id=".pwuZnu" resname="template.datenschutz.cookies">
+        <source>template.datenschutz.cookies</source>
         <target state="needs-translation">Beim Anmelden setzen wir Cookies ein, um die Funktionalität bequem zu gewährleisten und um sicherzustellen, welcher Daten Ihnen gehört. Wir speichern keine IP-Adressen, Browserdaten, Referer oder andere unnötige Metadaten.</target>
       </trans-unit>
-      <trans-unit id="MK3zW3." resname="Alle Server von H2 invent befinden sich in deutschen Rechenzentren und deutsches Datenschutzrecht ist anwendbar. Das Team von SKB hat technisch Zugriff auf Ihre Daten, benutzt diesen aber ausschliesslich im Falle einer Supportanfrage zur Fehleranalyse.">
-        <source>Alle Server von H2 invent befinden sich in deutschen Rechenzentren und deutsches Datenschutzrecht ist anwendbar. Das Team von SKB hat technisch Zugriff auf Ihre Daten, benutzt diesen aber ausschliesslich im Falle einer Supportanfrage zur Fehleranalyse.</source>
+      <trans-unit id="WRdn3Z." resname="template.datenschutz.zugriff">
+        <source>template.datenschutz.zugriff</source>
         <target state="needs-translation">Alle Server von H2 invent befinden sich in deutschen Rechenzentren und deutsches Datenschutzrecht ist anwendbar. Das Team von SKB hat technisch Zugriff auf Ihre Daten, benutzt diesen aber ausschliesslich im Falle einer Supportanfrage zur Fehleranalyse.</target>
       </trans-unit>
-      <trans-unit id="RWdIZdk" resname="Wenn Sie in einer E-Mail, die wir Ihnen zu einer Anmeldung senden, erstmalig einen Link anklicken, speichern wir die Information, dass Ihre E-Mail-Adresse anscheinend funktioniert und korrekt ist.">
-        <source>Wenn Sie in einer E-Mail, die wir Ihnen zu einer Anmeldung senden, erstmalig einen Link anklicken, speichern wir die Information, dass Ihre E-Mail-Adresse anscheinend funktioniert und korrekt ist.</source>
+      <trans-unit id="6rJKWrK" resname="template.datenschutz.confirmation">
+        <source>template.datenschutz.confirmation</source>
         <target state="needs-translation">Wenn Sie in einer E-Mail, die wir Ihnen zu einer Anmeldung senden, erstmalig einen Link anklicken, speichern wir die Information, dass Ihre E-Mail-Adresse anscheinend funktioniert und korrekt ist.</target>
       </trans-unit>
       <trans-unit id="MAcU67K" resname="Wenn Sie per Banküberweisung zahlen, werden zahlungsrelevante Metadaten bei Ihrer und der Bank des Trägers anfallen.">
@@ -2411,28 +2340,8 @@
         <source>Für Informationen zum Datenschutz der Stadt und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.</source>
         <target state="needs-translation">Für Informationen zum Datenschutz der Stadt und der betreuenden Organisationen kontaktieren Sie bitte die jeweiligen Verwaltungen.</target>
       </trans-unit>
-      <trans-unit id="SCjqXLr" resname="#### Anschrift&#10;                        H2 invent GmbH&lt;br&gt;&#10;                        Gewerbestraße 9 (HALLE9)&lt;br&gt;&#10;                        D-79539 Lörrach&lt;br&gt;&#10;&#10;                        Vertretungsberechtiger Geschäftsführer: Andreas Holzmann&lt;br&gt;&#10;                        Telefon: 07621-7925862&lt;br&gt;&#10;                        EMail: info@h2-invent.com&lt;br&gt;&#10;                        Registergericht: Amtsgericht Freiburg im Breisgau&lt;br&gt;&#10;                        Registernummer: HRB 720434&lt;br&gt;&#10;                        Umsatzsteuer-Identifikationsnummer gem. § 27a UStG: DE326041099&lt;br&gt;&#10;                        Inhaltlich Verantwortlicher gem. § 55 II RStV: H2 invent GmbH&lt;br&gt;&#10;&#10;                        #### Urheberecht / Nutzungsbedingungen&#10;                        Die auf unseren Seiten veröffentlichten Inhalte sind urheberrechtlich geschützt. Alle Rechte der hier veröffentlichten Bilder und Dokumente, insbesondere Projektfotografien und -beschreibungen liegen bei der H2 Invent GmbH oder den jeweiligen Rechtegebern.&#10;&#10;                        #### Haftung für Inhalte&#10;                        Die Inhalte unserer Seiten werden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend sperren oder entfernen.&#10;&#10;                        #### Haftung für Links&#10;                        Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.">
-        <source>#### Anschrift
-                        H2 invent GmbH&lt;br&gt;
-                        Gewerbestraße 9 (HALLE9)&lt;br&gt;
-                        D-79539 Lörrach&lt;br&gt;
-
-                        Vertretungsberechtiger Geschäftsführer: Andreas Holzmann&lt;br&gt;
-                        Telefon: 07621-7925862&lt;br&gt;
-                        EMail: info@h2-invent.com&lt;br&gt;
-                        Registergericht: Amtsgericht Freiburg im Breisgau&lt;br&gt;
-                        Registernummer: HRB 720434&lt;br&gt;
-                        Umsatzsteuer-Identifikationsnummer gem. § 27a UStG: DE326041099&lt;br&gt;
-                        Inhaltlich Verantwortlicher gem. § 55 II RStV: H2 invent GmbH&lt;br&gt;
-
-                        #### Urheberecht / Nutzungsbedingungen
-                        Die auf unseren Seiten veröffentlichten Inhalte sind urheberrechtlich geschützt. Alle Rechte der hier veröffentlichten Bilder und Dokumente, insbesondere Projektfotografien und -beschreibungen liegen bei der H2 Invent GmbH oder den jeweiligen Rechtegebern.
-
-                        #### Haftung für Inhalte
-                        Die Inhalte unserer Seiten werden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend sperren oder entfernen.
-
-                        #### Haftung für Links
-                        Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</source>
+      <trans-unit id="vPVqG5v" resname="template.impressum.main">
+        <source>template.impressum.main</source>
         <target state="needs-translation"><![CDATA[#### Anschrift
                         H2 invent GmbH<br>
                         Gewerbestraße 9 (HALLE9)<br>
@@ -2631,9 +2540,8 @@
         <source>Leistungsdatum</source>
         <target state="needs-translation">Leistungsdatum</target>
       </trans-unit>
-      <trans-unit id="orv8ey2" resname="Wie mit Ihnen vereinbart ziehen wir unsere Forderungen in Höhe von %betrag%€ mit dem SEPA-Lastschrift Nr. %mandat% zu der Gläubiger-Identitfikationsnummer %glaubigerid%&#10;        von Ihrem Konto: IBAN %iban%, BIC %bic%, zum Fälligkeitsdatum %einzugsdatum% ein. Wir bitten Sie, für Kontodeckung zu sorgen.">
-        <source>Wie mit Ihnen vereinbart ziehen wir unsere Forderungen in Höhe von %betrag%€ mit dem SEPA-Lastschrift Nr. %mandat% zu der Gläubiger-Identitfikationsnummer %glaubigerid%
-        von Ihrem Konto: IBAN %iban%, BIC %bic%, zum Fälligkeitsdatum %einzugsdatum% ein. Wir bitten Sie, für Kontodeckung zu sorgen.</source>
+      <trans-unit id="lt0cmEN" resname="email.rechnung.lastschrift.abbuchung.main">
+        <source>email.rechnung.lastschrift.abbuchung.main</source>
         <target state="needs-translation">Wie mit Ihnen vereinbart ziehen wir unsere Forderungen in Höhe von %betrag%€ mit dem SEPA-Lastschrift Nr. %mandat% zu der Gläubiger-Identitfikationsnummer %glaubigerid%
         von Ihrem Konto: IBAN %iban%, BIC %bic%, zum Fälligkeitsdatum %einzugsdatum% ein. Wir bitten Sie, für Kontodeckung zu sorgen.</target>
       </trans-unit>
@@ -2777,8 +2685,8 @@
         <source>Cookie &amp; Datenschutzhinweis</source>
         <target state="needs-translation"><![CDATA[Cookie & Datenschutzhinweis]]></target>
       </trans-unit>
-      <trans-unit id="yfU8Biu" resname="Cookies ermöglichen die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden. Weitere Informationen zum Datenschutz erhalten Sie über den folgenden Link">
-        <source>Cookies ermöglichen die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden. Weitere Informationen zum Datenschutz erhalten Sie über den folgenden Link</source>
+      <trans-unit id="LN9l_Md" resname="template.base.cookies.banner">
+        <source>template.base.cookies.banner</source>
         <target state="needs-translation">Cookies ermöglichen die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden. Weitere Informationen zum Datenschutz erhalten Sie über den folgenden Link</target>
       </trans-unit>
       <trans-unit id="qF4Y0UE" resname="Mehr erfahren">
@@ -2869,12 +2777,12 @@
         <source>der %org%</source>
         <target state="needs-translation">der %org%</target>
       </trans-unit>
-      <trans-unit id="5fkQY9w" resname="Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.">
-        <source>Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.</source>
+      <trans-unit id="vlo7BOV" resname="template.bezahlung.lastschrift.hinweis.8wochen">
+        <source>template.bezahlung.lastschrift.hinweis.8wochen</source>
         <target state="needs-translation">Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.</target>
       </trans-unit>
-      <trans-unit id="WQZwCEB" resname="Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.">
-        <source>Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.</source>
+      <trans-unit id="16yAJ8k" resname="template.bezahl.lastschrift.hinweis.termin">
+        <source>template.bezahl.lastschrift.hinweis.termin</source>
         <target state="needs-translation">Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.</target>
       </trans-unit>
       <trans-unit id="8ryOB15" resname="Betreuungszeitfenster zum Auswählen anklicken">
@@ -3313,9 +3221,155 @@
         <source>Automatische Zuteilung</source>
         <target state="needs-translation">Automatische Zuteilung</target>
       </trans-unit>
-      <trans-unit id="EUYnRLI" resname="Die Zuteilung so akzeptieren und in die Datenbank schreiben?">
+      <trans-unit id="qPe4V1d" resname="Die Zuteilung so akzeptieren und in die Datenbank schreiben?">
         <source>Die Zuteilung so akzeptieren und in die Datenbank schreiben?</source>
         <target state="needs-translation">Die Zuteilung so akzeptieren und in die Datenbank schreiben?</target>
+      </trans-unit>
+      <trans-unit id="ODNMSIs" resname="Block nicht gefunden.">
+        <source>Block nicht gefunden.</source>
+        <target>Block nicht gefunden.</target>
+      </trans-unit>
+      <trans-unit id="O9ZB0kI" resname="Bitte mindestens einen Tag auswählen.">
+        <source>Bitte mindestens einen Tag auswählen.</source>
+        <target>Bitte mindestens einen Tag auswählen.</target>
+      </trans-unit>
+      <trans-unit id="zFb7DQf" resname="Block erfolgreich dupliziert.">
+        <source>Block erfolgreich dupliziert.</source>
+        <target>Block erfolgreich dupliziert.</target>
+      </trans-unit>
+      <trans-unit id="QpQPWCK" resname="Bitte Start- und Enddatum auswählen">
+        <source>Bitte Start- und Enddatum auswählen</source>
+        <target>Bitte Start- und Enddatum auswählen</target>
+      </trans-unit>
+      <trans-unit id="A_3J5zC" resname="Ungültiger Zeitraum">
+        <source>Ungültiger Zeitraum</source>
+        <target>Ungültiger Zeitraum</target>
+      </trans-unit>
+      <trans-unit id="MvO6YDO" resname="%count% Kopien erfolgreich erstellt">
+        <source>%count% Kopien erfolgreich erstellt</source>
+        <target>%count% Kopien erfolgreich erstellt</target>
+      </trans-unit>
+      <trans-unit id="o1iMhuF" resname="Bitte geben Sie einen Namen ein">
+        <source>Bitte geben Sie einen Namen ein</source>
+        <target>Bitte geben Sie einen Namen ein</target>
+      </trans-unit>
+      <trans-unit id="y0rg4.e" resname="Tag erfolgreich angelegt">
+        <source>Tag erfolgreich angelegt</source>
+        <target>Tag erfolgreich angelegt</target>
+      </trans-unit>
+      <trans-unit id="CNK2xtZ" resname="Tag erfolgreich gespeichert">
+        <source>Tag erfolgreich gespeichert</source>
+        <target>Tag erfolgreich gespeichert</target>
+      </trans-unit>
+      <trans-unit id="nMYbzTy" resname="Tag erfolgreich gelöscht">
+        <source>Tag erfolgreich gelöscht</source>
+        <target>Tag erfolgreich gelöscht</target>
+      </trans-unit>
+      <trans-unit id="gYtNavE" resname="Gewichtungsscore">
+        <source>Gewichtungsscore</source>
+        <target>Gewichtungsscore</target>
+      </trans-unit>
+      <trans-unit id="C3cQv_N" resname="Direktbuchung deaktiviert (nur über Verknüpfungen auswählbar)">
+        <source>Direktbuchung deaktiviert (nur über Verknüpfungen auswählbar)</source>
+        <target>Direktbuchung deaktiviert (nur über Verknüpfungen auswählbar)</target>
+      </trans-unit>
+      <trans-unit id="kiwa1b4" resname="Angemeldete">
+        <source>Angemeldete</source>
+        <target>Angemeldete</target>
+      </trans-unit>
+      <trans-unit id="CJkB6TP" resname="Neuen stillen Vorgänger anlegen">
+        <source>Neuen stillen Vorgänger anlegen</source>
+        <target>Neuen stillen Vorgänger anlegen</target>
+      </trans-unit>
+      <trans-unit id="vW8UtK_" resname="Anmeldestatus: Angemeldet">
+        <source>Anmeldestatus: Angemeldet</source>
+        <target>Anmeldestatus: Angemeldet</target>
+      </trans-unit>
+      <trans-unit id="RLPsD_K" resname="Über diesen Link können Sie Ihre Bestellung bearbeiten.">
+        <source>Über diesen Link können Sie Ihre Bestellung bearbeiten.</source>
+        <target>Über diesen Link können Sie Ihre Bestellung bearbeiten.</target>
+      </trans-unit>
+      <trans-unit id="710fevw" resname="Diese E-Mail wurde im Auftrag der %s% versandt">
+        <source>Diese E-Mail wurde im Auftrag der %s% versandt</source>
+        <target>Diese E-Mail wurde im Auftrag der %s% versandt</target>
+      </trans-unit>
+
+      <trans-unit id="2Os9R.g" resname="Mit dieser E-Mail erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung">
+        <source>Mit dieser E-Mail erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung</source>
+        <target>Mit dieser E-Mail erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung</target>
+      </trans-unit>
+      <trans-unit id="kMlBSK0" resname="Ferienprogramm duplizieren">
+        <source>Ferienprogramm duplizieren</source>
+        <target>Ferienprogramm duplizieren</target>
+      </trans-unit>
+      <trans-unit id="SkjdsLw" resname="Startdatum">
+        <source>Startdatum</source>
+        <target>Startdatum</target>
+      </trans-unit>
+      <trans-unit id="69mqUMG" resname="Enddatum">
+        <source>Enddatum</source>
+        <target>Enddatum</target>
+      </trans-unit>
+      <trans-unit id="VFdaHHu" resname="Kopien erstellen">
+        <source>Kopien erstellen</source>
+        <target>Kopien erstellen</target>
+      </trans-unit>
+      <trans-unit id="VGiZqsa" resname="Wollen Sie dieses Kind wirklich komplett löschen? Das Kind wird auch aus anderen Betreuungszeitblöcken entfernt und ist danach nicht mehr im System.">
+        <source>Wollen Sie dieses Kind wirklich komplett löschen? Das Kind wird auch aus anderen Betreuungszeitblöcken entfernt und ist danach nicht mehr im System.</source>
+        <target>Wollen Sie dieses Kind wirklich komplett löschen? Das Kind wird auch aus anderen Betreuungszeitblöcken entfernt und ist danach nicht mehr im System.</target>
+      </trans-unit>
+      <trans-unit id=".w5wLfj" resname="Heute liegt keine Krankmeldung vor.">
+        <source>Heute liegt keine Krankmeldung vor.</source>
+        <target>Heute liegt keine Krankmeldung vor.</target>
+      </trans-unit>
+      <trans-unit id="QRQRdxi" resname="pdf.buchung.eltern.header">
+        <source>pdf.buchung.eltern.header</source>
+        <target>Zusammenfassung</target>
+      </trans-unit>
+      <trans-unit id="FzKF.EF" resname="pdf.buchung.kind.header">
+        <source>pdf.buchung.kind.header</source>
+        <target>Zusammenfassung</target>
+      </trans-unit>
+      <trans-unit id="55nj28I" resname="Dieser Block ist nur über eine Abhängigkeit auswählbar.">
+        <source>Dieser Block ist nur über eine Abhängigkeit auswählbar.</source>
+        <target>Dieser Block ist nur über eine Abhängigkeit auswählbar.</target>
+      </trans-unit>
+      <trans-unit id="1n8KuWu" resname="Monatliche Gesamtkosten für Ihre Kinder in der Schulkindbetreuung">
+        <source>Monatliche Gesamtkosten für Ihre Kinder in der Schulkindbetreuung</source>
+        <target>Monatliche Gesamtkosten für Ihre Kinder in der Schulkindbetreuung</target>
+      </trans-unit>
+      <trans-unit id="HO5JTMs" resname="app.meta.header">
+        <source>app.meta.header</source>
+        <target>SKiB ist bisher einzige online Lösung für die Anmeldung und Verwaltung der Schulkindbetreuung und Ferienbetreuung. Die Webanwendung ermöglicht eine direkte Vernetzung zwischen Erziehungsberechtigten, externen Organisationen und der städtischen Verwaltung bzw. Schulträger.</target>
+      </trans-unit>
+      <trans-unit id="3r4L_M3" resname="Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig">
+        <source>Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig</source>
+        <target>Alleinerziehender Elternteil /Erziehungsberechtigter ist berufstätig</target>
+      </trans-unit>
+      <trans-unit id="f8qLOEs" resname="email.app.connect.main">
+        <source>email.app.connect.main</source>
+        <target>Sie haben eben versucht Ihr Handy mit der App zu verbinden. Es sollte sich ein Fenster bei der App geöffnet haben. Bitte tragen Sie den nachfolgenden Code in das Fenster ein und bestätigen Sie mit OK</target>
+      </trans-unit>
+      <trans-unit id="dhhPs7h" resname="Bestätigungscode zur Überprüfung der E-Mail Adresse">
+        <source>Bestätigungscode zur Überprüfung der E-Mail Adresse</source>
+        <target>Bestätigungscode zur Überprüfung der E-Mail Adresse</target>
+      </trans-unit>
+      <trans-unit id="LIWW79c" resname="email.confirm.email.main">
+        <source>email.confirm.email.main</source>
+        <target><![CDATA[Sie haben sich gerade für das Onlineportal zur Schulkindbetreuung angemeldet.
+            <br>Bitte bestätigen Sie Ihre E-Mail durch die Eingabe des Bestätigungscodes in ihrem Browser.]]></target>
+      </trans-unit>
+      <trans-unit id="47DEQpj" resname="">
+        <source></source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="_e9Ai_P" resname="template.zusammenfassung.sepa.8wochen">
+        <source>template.zusammenfassung.sepa.8wochen</source>
+        <target>Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.</target>
+      </trans-unit>
+      <trans-unit id="8ferAjC" resname="app.email.confirmation.information">
+        <source>app.email.confirmation.information</source>
+        <target>Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch in Ihrem Spamordner nach.</target>
       </trans-unit>
     </body>
   </file>

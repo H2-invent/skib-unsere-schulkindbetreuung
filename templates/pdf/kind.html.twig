@@ -10,7 +10,7 @@
         margin: 5px;
     }
 </style>
-<h2>{% trans %}Zusammenfassung{% endtrans %} SKiB</h2>
+<h2>{% trans %}pdf.buchung.kind.header{% endtrans %} SKiB</h2>
 {% set eltern = getEltern(kind,kind.startDate) %}
 
 <h3>{{ kind.vorname }} {{ kind.nachname }} | {% trans %}Geburtstag{% endtrans %}: {{ kind.geburtstag|date('d.m.Y') }}

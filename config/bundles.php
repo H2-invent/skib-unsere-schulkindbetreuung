@@ -25,4 +25,5 @@ return [
     JMS\I18nRoutingBundle\JMSI18nRoutingBundle::class => ['all' => true],
     Knp\DoctrineBehaviors\DoctrineBehaviorsBundle::class => ['all' => true],
     Endroid\QrCodeBundle\EndroidQrCodeBundle::class => ['all' => true],
+    Lexik\Bundle\TranslationBundle\LexikTranslationBundle::class => ['all' => true],
 ];
