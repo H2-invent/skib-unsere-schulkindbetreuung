@@ -64,6 +64,7 @@ RUN tar -zxvf artifact.tgz \
     && rm artifact.tgz
 
 ENV STARTUP_COMMAND_0="php bin/console doc:mig:mig --no-interaction" \
+    STARTUP_COMMAND_1="php bin/console lexik:translations:import" \
     CRON_COMMAND_0="*/10 * * * * php /var/www/html/bin/console app:statistik:generate" \
     nginx_root_directory=/var/www/html/public \
     memory_limit=1024M \
