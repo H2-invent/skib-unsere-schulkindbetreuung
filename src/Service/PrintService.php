@@ -88,9 +88,9 @@ class PrintService
             '<tr><td  align="left" >' . $kind->getSchule()->getOrganisation()->getName() . '</td><td></td></tr>' .
 
             '<tr>' . '<td align="right">' . $this->translator->trans('Ansprechpartner') . ': </td><td></td></tr>'.
-            '<tr><td  align="left" >' . $kind->getSchule()->getOrganisation()->getAnsprechpartner() . '</td><td></td></tr>' .
+            '<tr><td  align="right" colspan="2">' . $kind->getSchule()->getOrganisation()->getAnsprechpartner() . '</td></tr>' .
             '<tr>' . '<td align="right">' . $this->translator->trans('Telefonnummer') . ': </td><td></td></tr>'.
-            '<tr><td  align="left" >' . $kind->getSchule()->getOrganisation()->getTelefon() . '</td><td></td></tr>';
+            '<tr><td  align="right" colspan="2">' . $kind->getSchule()->getOrganisation()->getTelefon() . '</td></tr>';
         '<tr>' . '<td align="right">' . $this->translator->trans('E-Mail') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getEmail() . '</td><td></td></tr>';
         $kontaktDaten .= '</table>';
         $pdf->writeHTMLCell(

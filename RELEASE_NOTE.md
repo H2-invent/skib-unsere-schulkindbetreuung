@@ -23,4 +23,5 @@ __🐛 Bugfixes:__
 * FIx clear ics
 * Fix parent table in pdf
 * Add miration for custom css and fix
+* Fix Eltern PDF HEader Table
 ## Files
