@@ -223,7 +223,7 @@
       </trans-unit>
       <trans-unit id="RZid5J_" resname="Details">
         <source>Details</source>
-        <target state="translated">Details</target>
+        <target state="needs-translation">Details</target>
       </trans-unit>
       <trans-unit id="SRxx08g" resname="Ferieneinstellungen ändern">
         <source>Ferieneinstellungen ändern</source>
@@ -619,7 +619,7 @@
       </trans-unit>
       <trans-unit id="KnjEKsZ" resname="Gluten intolerant">
         <source>Gluten intolerant</source>
-        <target state="translated">Gluten intolerant</target>
+        <target state="needs-translation">Gluten intolerant</target>
       </trans-unit>
       <trans-unit id="y.AkFG7" resname="Kein Schweinefleisch">
         <source>Kein Schweinefleisch</source>
@@ -647,7 +647,7 @@
       </trans-unit>
       <trans-unit id="mvnu8x5" resname="AG">
         <source>AG</source>
-        <target state="translated">AG</target>
+        <target state="needs-translation">AG</target>
       </trans-unit>
       <trans-unit id="eAC9U4w" resname="Notizen">
         <source>Notizen</source>
@@ -687,11 +687,11 @@
       </trans-unit>
       <trans-unit id="fjRcO6e" resname="IBAN">
         <source>IBAN</source>
-        <target state="translated">IBAN</target>
+        <target state="needs-translation">IBAN</target>
       </trans-unit>
       <trans-unit id="2Bz6Sw." resname="BIC">
         <source>BIC</source>
-        <target state="translated">BIC</target>
+        <target state="needs-translation">BIC</target>
       </trans-unit>
       <trans-unit id="4t3IU.b" resname="Kontoinhaber">
         <source>Kontoinhaber</source>
@@ -951,15 +951,15 @@
       </trans-unit>
       <trans-unit id="iaxN3xl" resname="Original Account">
         <source>Original Account</source>
-        <target state="translated">Original Account</target>
+        <target state="needs-translation">Original Account</target>
       </trans-unit>
       <trans-unit id="Z7aWRoY" resname="Dashboard">
         <source>Dashboard</source>
-        <target state="translated">Dashboard</target>
+        <target state="needs-translation">Dashboard</target>
       </trans-unit>
       <trans-unit id="wcIksDz" resname="Admin">
         <source>Admin</source>
-        <target state="translated">Admin</target>
+        <target state="needs-translation">Admin</target>
       </trans-unit>
       <trans-unit id="h7YL9VW" resname="Städte">
         <source>Städte</source>
@@ -975,7 +975,7 @@
       </trans-unit>
       <trans-unit id="UhAi66F" resname="Mailgun">
         <source>Mailgun</source>
-        <target state="translated">Mailgun</target>
+        <target state="needs-translation">Mailgun</target>
       </trans-unit>
       <trans-unit id="0rh74eB" resname="Organisationen">
         <source>Organisationen</source>
@@ -1075,15 +1075,15 @@
       </trans-unit>
       <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
-        <target state="translated">Name</target>
+        <target state="needs-translation">Name</target>
       </trans-unit>
       <trans-unit id="0VOH7Mb" resname="Slug">
         <source>Slug</source>
-        <target state="translated">Slug</target>
+        <target state="needs-translation">Slug</target>
       </trans-unit>
       <trans-unit id="56JB3rr" resname="URL">
         <source>URL</source>
-        <target state="translated">URL</target>
+        <target state="needs-translation">URL</target>
       </trans-unit>
       <trans-unit id="hORe5zQ" resname="Bearbeiten">
         <source>Bearbeiten</source>
@@ -1139,11 +1139,11 @@
       </trans-unit>
       <trans-unit id="uVMhbvx" resname="Last Login">
         <source>Last Login</source>
-        <target state="translated">Last Login</target>
+        <target state="needs-translation">Last Login</target>
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target state="translated">Status</target>
+        <target state="needs-translation">Status</target>
       </trans-unit>
       <trans-unit id="VwsWrux" resname="Zu diesem User wechseln">
         <source>Zu diesem User wechseln</source>
@@ -1171,7 +1171,7 @@
       </trans-unit>
       <trans-unit id="NmSJVXn" resname="Export">
         <source>Export</source>
-        <target state="translated">Export</target>
+        <target state="needs-translation">Export</target>
       </trans-unit>
       <trans-unit id="XqaB_1k" resname="Alle Schuljahre">
         <source>Alle Schuljahre</source>
@@ -1179,11 +1179,11 @@
       </trans-unit>
       <trans-unit id="eJusolC" resname="Download Excel">
         <source>Download Excel</source>
-        <target state="translated">Download Excel</target>
+        <target state="needs-translation">Download Excel</target>
       </trans-unit>
       <trans-unit id="IR0LuM9" resname="Block">
         <source>Block</source>
-        <target state="translated">Block</target>
+        <target state="needs-translation">Block</target>
       </trans-unit>
       <trans-unit id="Qu8dlGM" resname="Dieser Block ist nicht mehr buchbar">
         <source>Dieser Block ist nicht mehr buchbar</source>
@@ -1199,11 +1199,11 @@
       </trans-unit>
       <trans-unit id="3qeTMhR" resname="Min">
         <source>Min</source>
-        <target state="translated">Min</target>
+        <target state="needs-translation">Min</target>
       </trans-unit>
       <trans-unit id="oaWTbTs" resname="Max">
         <source>Max</source>
-        <target state="translated">Max</target>
+        <target state="needs-translation">Max</target>
       </trans-unit>
       <trans-unit id="8HbTOEk" resname="gelöscht">
         <source>gelöscht</source>
@@ -1435,7 +1435,7 @@
       </trans-unit>
       <trans-unit id="FwMioy8" resname="Info">
         <source>Info</source>
-        <target state="translated">Info</target>
+        <target state="needs-translation">Info</target>
       </trans-unit>
       <trans-unit id="RkPL0Rv" resname="Mitarbeiter der Organisation">
         <source>Mitarbeiter der Organisation</source>
@@ -1451,7 +1451,7 @@
       </trans-unit>
       <trans-unit id="R70pB1_" resname="Content">
         <source>Content</source>
-        <target state="translated">Content</target>
+        <target state="needs-translation">Content</target>
       </trans-unit>
       <trans-unit id="4MC8jlF" resname="Sichtbar">
         <source>Sichtbar</source>
@@ -1467,7 +1467,7 @@
       </trans-unit>
       <trans-unit id="o1q81tr" resname="Icon">
         <source>Icon</source>
-        <target state="translated">Icon</target>
+        <target state="needs-translation">Icon</target>
       </trans-unit>
       <trans-unit id="kTWILTI" resname="Datum">
         <source>Datum</source>
@@ -2376,7 +2376,7 @@
       </trans-unit>
       <trans-unit id="Um4Ah8w" resname="Description">
         <source>Description</source>
-        <target state="translated">Description</target>
+        <target state="needs-translation">Description</target>
       </trans-unit>
       <trans-unit id="7JO.aFA" resname="Betreff">
         <source>Betreff</source>
@@ -2384,7 +2384,7 @@
       </trans-unit>
       <trans-unit id="L3dmip3" resname="Message">
         <source>Message</source>
-        <target state="translated">Message</target>
+        <target state="needs-translation">Message</target>
       </trans-unit>
       <trans-unit id="_18n1UV" resname="Detail">
         <source>Detail</source>
