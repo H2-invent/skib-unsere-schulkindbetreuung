@@ -56,7 +56,7 @@ class PrintDatenschutzService
 
 
 
-        $table = $this->templating->render('pdf/agb.html.twig',array('text'=>$text));
+        $table = $this->templating->render('pdf/datenschutz.html.twig',array('text'=>$text));
         $pdf->writeHTMLCell(
             0,
             0,
