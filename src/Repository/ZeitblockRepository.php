@@ -64,6 +64,26 @@ class ZeitblockRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return Zeitblock[]
+     */
+    public function findBookedBlocksByKindAndSchuljahr(Kind $kind, Active $schuljahr): array
+    {
+        return $this->createQueryBuilder('z')
+            ->innerJoin('z.schule', 'schule')
+            ->innerJoin('z.kind', 'kind')
+            ->innerJoin('kind.eltern', 'eltern')
+            ->innerJoin('z.active', 'active')
+            ->andWhere('kind = :kind')->setParameter('kind', $kind)
+            ->andWhere('active = :active')->setParameter('active', $schuljahr)
+            ->andWhere('kind.startDate is not NULL')
+            ->andWhere('eltern.created_at is not NULL')
+            ->andWhere('z.deleted = 0')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
      /**
       * @return Zeitblock[] Returns an array of Zeitblock objects
       */

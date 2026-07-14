@@ -36,9 +36,13 @@ class IcsService
         }
         $this->appointments[]= $this->properties;
     }
+    public function clearAllAppointments(): void
+    {
+        $this->appointments = [];
+    }
     public function add($key){
 
-        array_push($this->appointments,$key);
+        $this->appointments[] = $key;
     }
     public function toString() {
         $rows = $this->buildProps();

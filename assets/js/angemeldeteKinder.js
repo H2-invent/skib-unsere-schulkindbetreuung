@@ -14,7 +14,6 @@ $('.dropdown-item').click(function () {
     dropdown.text(text);
     var type = ele.attr('data-type');
     var value = ele.attr('data-value') == 'null' ? null : ele.attr('data-value');
-    search.block = null;
 
     switch (type) {
         case 'schule':

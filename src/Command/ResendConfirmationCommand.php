@@ -62,7 +62,7 @@ class ResendConfirmationCommand extends Command
             return Command::SUCCESS;
         }
 
-        $kinder = $this->childSearchService->searchChild(array('schuljahr' => $schuljahr->getId()), null, false, null, $schuljahr->getVon(), null, $schuljahr->getStadt());
+        $kinder = $this->childSearchService->searchChild(array('schuljahr' => $schuljahr->getId(),'status'=>'bestaetigt'), null, false, null, $schuljahr->getVon(), null, $schuljahr->getStadt());
         $progressBar = new ProgressBar($output, sizeof($kinder));
         foreach ($kinder as $data) {
             $progressBar->advance();

@@ -62,7 +62,7 @@ class LateRegistrationController extends AbstractController
         if (!$this->lateRegisterService->isValid($lateRegistration, $request)) {
             throw $this->createAccessDeniedException();
         }
-        $this->lateRegisterService->start($lateRegistration);
+        $this->lateRegisterService->start($lateRegistration, $request);
 
         $response = $this->redirectToRoute('workflow_start', ['slug' => $lateRegistration->getStadt()->getSlug()]);
         $response->headers->clearCookie('KindID');

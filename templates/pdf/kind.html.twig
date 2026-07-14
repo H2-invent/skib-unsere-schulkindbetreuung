@@ -10,7 +10,7 @@
         margin: 5px;
     }
 </style>
-<h2>{% trans %}Zusammenfassung{% endtrans %} SKiB</h2>
+<h2>{% trans %}pdf.buchung.kind.header{% endtrans %} SKiB</h2>
 {% set eltern = getEltern(kind,kind.startDate) %}
 
 <h3>{{ kind.vorname }} {{ kind.nachname }} | {% trans %}Geburtstag{% endtrans %}: {{ kind.geburtstag|date('d.m.Y') }}
@@ -19,8 +19,11 @@
 {% if not kind.schule.stadt.hideChildQuestions %}
     <p>{{ 'Allergie'|trans }}: {{ kind.allergie }} | {{ 'Medikamente'|trans }}: {{ kind.medikamente }}
         {% endif %}
+        {% if show_no_price is not defined or show_no_price == 1 %}
         | {{ 'Sicherheitscode'|trans }}: {{ eltern.secCode }} | {{ 'Monatliche Gebühren'|trans }}
-        : {{ getPreisforBetreuungWithoutBeworben(kind,kind.startDate)|number_format(2,',','.') }}€</p>
+        : {{ getPreisforBetreuungWithoutBeworben(kind,kind.startDate)|number_format(2,',','.') }}€
+    {% endif %}
+    </p>
 
     <table cellpadding="3px">
         <thead>

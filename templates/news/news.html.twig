@@ -62,7 +62,7 @@
                                     <td>{{ n.activ?"Ja":'Nein'|trans }}</td>
                                     <td>{{ n.title }}</td>
 
-                                    <td>{{ n.date|date("d.m.Y G:i") }}</td>
+                                    <td>{{ n.date|date("d.m.Y H:i") }}</td>
                                     <td>{% for s in n.schule %}{{ s.name }}<br>{% endfor %}</td>
                                     <div class="modal fade" id="sendReport{{ n.id }}" tabindex="-1" role="dialog"
                                          aria-labelledby="exampleModalLabel" aria-hidden="true">

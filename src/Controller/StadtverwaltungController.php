@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Stadt;
+use App\Entity\Tags;
 use App\Form\Type\FormelType;
 use App\Form\Type\StadtType;
 use App\Repository\KindRepository;
@@ -79,6 +80,7 @@ class StadtverwaltungController extends AbstractController
                 'title' => $title, 'stadt' => $city, 'form' => $form->createView(),
                 'errors' => $errors, 'kind' => $kind, 'eltern' => $kind?->getEltern(),
                 'schule' => $kind?->getSchule(), 'organisation' => $kind?->getSchule()?->getOrganisation(),
+                'tagsWithCounts' => $city->getId() ? $this->getFerienTagsWithCounts($city) : [],
             ]
         );
     }
@@ -129,8 +131,106 @@ class StadtverwaltungController extends AbstractController
                 'title' => $title, 'stadt' => $city, 'form' => $form->createView(),
                 'errors' => $errors, 'kind' => $kind, 'eltern' => $kind?->getEltern(),
                 'schule' => $kind?->getSchule(), 'organisation' => $kind?->getSchule()?->getOrganisation(),
+                'tagsWithCounts' => $this->getFerienTagsWithCounts($city),
             ]
         );
+    }
+
+    /**
+     * @Route("/city_edit/stadtverwaltung/ferien-tags/create", name="admin_stadt_ferien_tag_create", methods={"POST"})
+     */
+    public function createFerienTag(Request $request, TranslatorInterface $translator): JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    {
+        $city = $this->getEditableCity($request);
+        $name = trim((string) $request->request->get('tag_name'));
+
+        if (!$this->isCsrfTokenValid('ferien_tag_create_' . $city->getId(), (string) $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token');
+        }
+
+        if ($name !== '') {
+            $tag = new Tags();
+            $tag->setName($name);
+            $em = $this->managerRegistry->getManager();
+            $em->persist($tag);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('admin_stadt_edit', [
+            'id' => $city->getId(),
+            'snack' => $name === '' ? $translator->trans('Bitte geben Sie einen Namen ein') : $translator->trans('Tag erfolgreich angelegt'),
+        ]);
+    }
+
+    /**
+     * @Route("/city_edit/stadtverwaltung/ferien-tags/update", name="admin_stadt_ferien_tag_update", methods={"POST"})
+     */
+    public function updateFerienTag(Request $request, TranslatorInterface $translator): JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    {
+        $city = $this->getEditableCity($request);
+        $tag = $this->managerRegistry->getRepository(Tags::class)->find($request->request->get('tag_id'));
+        $name = trim((string) $request->request->get('tag_name'));
+
+        if (!$tag || !$this->isCsrfTokenValid('ferien_tag_update_' . $tag->getId(), (string) $request->request->get('_token'))) {
+            throw $this->createNotFoundException('Tag not found');
+        }
+
+        if ($name !== '') {
+            $tag->setName($name);
+            $this->managerRegistry->getManager()->flush();
+        }
+
+        return $this->redirectToRoute('admin_stadt_edit', [
+            'id' => $city->getId(),
+            'snack' => $name === '' ? $translator->trans('Bitte geben Sie einen Namen ein') : $translator->trans('Tag erfolgreich gespeichert'),
+        ]);
+    }
+
+    /**
+     * @Route("/city_edit/stadtverwaltung/ferien-tags/delete", name="admin_stadt_ferien_tag_delete", methods={"POST"})
+     */
+    public function deleteFerienTag(Request $request, TranslatorInterface $translator): JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    {
+        $city = $this->getEditableCity($request);
+        $tag = $this->managerRegistry->getRepository(Tags::class)->find($request->request->get('tag_id'));
+
+        if (!$tag || !$this->isCsrfTokenValid('ferien_tag_delete_' . $tag->getId(), (string) $request->request->get('_token'))) {
+            throw $this->createNotFoundException('Tag not found');
+        }
+
+        $em = $this->managerRegistry->getManager();
+        foreach ($tag->getFeriens() as $ferienblock) {
+            $ferienblock->removeKategorie($tag);
+        }
+        $em->remove($tag);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_stadt_edit', [
+            'id' => $city->getId(),
+            'snack' => $translator->trans('Tag erfolgreich gelöscht'),
+        ]);
+    }
+
+    private function getEditableCity(Request $request): Stadt
+    {
+        $city = $this->managerRegistry->getRepository(Stadt::class)->find($request->request->get('id'));
+        if (!$city || (!$this->getUser()->hasRole('ROLE_ADMIN') && $city !== $this->getUser()->getStadt())) {
+            throw $this->createAccessDeniedException('Wrong City');
+        }
+
+        return $city;
+    }
+
+    private function getFerienTagsWithCounts(Stadt $city): array
+    {
+        return $this->managerRegistry->getRepository(Tags::class)->createQueryBuilder('t')
+            ->select('t AS tag, COUNT(DISTINCT f.id) AS programCount')
+            ->leftJoin('t.feriens', 'f', 'WITH', 'f.stadt = :city')
+            ->setParameter('city', $city)
+            ->groupBy('t.id')
+            ->orderBy('t.name', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     /**

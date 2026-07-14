@@ -36,4 +36,8 @@
         border: 1px solid {{ stadt.hauptfarbe }} !important;
     }
     {% endif %}
+
+    {% if stadt is defined and stadt is not null and stadt.customCss is not empty %}
+    {{ stadt.customCss|raw }}
+    {% endif %}
 </style>

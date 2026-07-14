@@ -17,11 +17,13 @@ use App\Entity\Zeitblock;
 use App\Form\Type\LoerrachEltern;
 use App\Form\Type\LoerrachKind;
 use App\Form\Type\SepaStammdatenType;
+use App\Repository\LateRegistrationRepository;
 use App\Service\AnmeldeEmailService;
 use App\Service\BerechnungsService;
 use App\Service\ElternService;
 use App\Service\ErrorService;
 use App\Service\IcsService;
+use App\Service\LateRegistrationService;
 use App\Service\MailerService;
 use App\Service\PrintAGBService;
 use App\Service\PrintService;
@@ -555,20 +557,24 @@ class LoerrachWorkflowController extends AbstractController
      * @Route("/{slug}/abschluss",name="loerrach_workflow_abschluss",methods={"GET","POST"})
      * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
      */
-    public function abschlussAction(Request             $request,
-                                    ValidatorInterface  $validator,
-                                    TranslatorInterface $translator,
-                                    MailerService       $mailer,
-                                    TCPDFController     $tcpdf,
-                                    PrintService        $print,
-                                    IcsService          $icsService,
-                                    PrintAGBService     $printAGBService,
-                                    AnmeldeEmailService $anmeldeEmailService,
-                                    StamdatenFromCookie $stamdatenFromCookie,
-                                    SchuljahrService    $schuljahrService,
-                                    WorkflowAbschluss   $workflowAbschluss,
-                                    Stadt               $stadt,
-                                    ElternService       $elternService)
+    public function abschlussAction(
+        Request $request,
+        ValidatorInterface $validator,
+        TranslatorInterface $translator,
+        MailerService $mailer,
+        TCPDFController $tcpdf,
+        PrintService $print,
+        IcsService $icsService,
+        PrintAGBService $printAGBService,
+        AnmeldeEmailService $anmeldeEmailService,
+        StamdatenFromCookie $stamdatenFromCookie,
+        SchuljahrService $schuljahrService,
+        WorkflowAbschluss $workflowAbschluss,
+        Stadt $stadt,
+        ElternService $elternService,
+        LateRegistrationService $lateRegistrationService,
+        LateRegistrationRepository $lateRegistrationRepository,
+    )
     {
 
         //Check for Anmeldung open
@@ -616,7 +622,12 @@ class LoerrachWorkflowController extends AbstractController
         $response->headers->clearCookie('UserID');
         $response->headers->clearCookie('SecID');
         $response->headers->clearCookie('KindID');
-        $request->getSession()->remove(SchuljahrService::SESSION_KEY_SCHULJAHR);
+
+        $lateRegistration = $lateRegistrationService->getStartedLateRegistration($request);
+        if ($lateRegistration !== null) {
+            $lateRegistrationService->finish($lateRegistration, $request);
+        }
+
         return $response;
 
     }

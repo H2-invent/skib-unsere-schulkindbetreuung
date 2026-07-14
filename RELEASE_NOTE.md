@@ -8,6 +8,7 @@ __🚀 Features:__
 * set min max to exports
 * fix app API
 * fix bezeichnung of block
+* Add new field to set individual css for each city
 __🐛 Bugfixes:__
 * Fix error in berechnung when child has an appllied block
 * fix error not calculating the startdate when null
@@ -15,5 +16,13 @@ __🐛 Bugfixes:__
 * * shcow blockbezeichnung in workflow blocks
 * create blocks which are no selectable but with vorganger
 * add posibility to duplicate blocks
+* Color contingent Blocks with same child in same color
+* Add block name to excel export and to pdf download
+* fix not showing double kids when accepting
+* Fix resend confirmation
+* FIx clear ics
+* Fix parent table in pdf
+* Add miration for custom css and fix
+* Fix Eltern PDF HEader Table
 * add loki logging
 ## Files

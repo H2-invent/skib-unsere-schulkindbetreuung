@@ -84,10 +84,14 @@ class PrintService
 
             '<tr>' . '<td align="right">' . $this->translator->trans('Sicherheitscode') . ': </td><td  align="left" >' . $eltern->getSecCode() . '</td></tr>' .
             '<tr>' . '<td align="right">' . $this->translator->trans('Anmeldedatum') . ': </td><td  align="left" >' . $eltern->getCreatedAt()->format('d.m.Y') . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Betreuende Organisation') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getName() . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Ansprechpartner') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getAnsprechpartner() . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Telefonnummer') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getTelefon() . '</td></tr>';
-        '<tr>' . '<td align="right">' . $this->translator->trans('E-Mail') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getEmail() . '</td></tr>';
+            '<tr>' . '<td align="right">' . $this->translator->trans('Betreuende Organisation') . ': </td><td></td></tr>'.
+            '<tr><td  align="left" >' . $kind->getSchule()->getOrganisation()->getName() . '</td><td></td></tr>' .
+
+            '<tr>' . '<td align="right">' . $this->translator->trans('Ansprechpartner') . ': </td><td></td></tr>'.
+            '<tr><td  align="right" colspan="2">' . $kind->getSchule()->getOrganisation()->getAnsprechpartner() . '</td></tr>' .
+            '<tr>' . '<td align="right">' . $this->translator->trans('Telefonnummer') . ': </td><td></td></tr>'.
+            '<tr><td  align="right" colspan="2">' . $kind->getSchule()->getOrganisation()->getTelefon() . '</td></tr>';
+        '<tr>' . '<td align="right">' . $this->translator->trans('E-Mail') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getEmail() . '</td><td></td></tr>';
         $kontaktDaten .= '</table>';
         $pdf->writeHTMLCell(
             300,
@@ -163,8 +167,28 @@ class PrintService
         $pdf->setOrganisation($organisation);
         $pdf = $this->preparePDF($pdf, 'Test', 'Kinder Details', 'test', null, $organisation);
         $pdf = $this->addChildDetails($kind, $pdf);
-        $pdf->AddPage('H    ', 'A4');
+        $pdf->AddPage('P', 'A4');
         $pdf = $this->addEltern($elter, $pdf);
+
+        $pdf->AddPage('L', 'A4');
+        $blocks = $kind->getRealZeitblocks()->toArray();
+        $blocks = array_merge($blocks, $kind->getBeworben()->toArray());
+        $table = $this->generateTimeTable($blocks);
+        $kindData = $this->templating->render('pdf/kind.html.twig', array('kind' => $kind, 'table' => $table, 'show_no_price'=>1));
+        $pdf->writeHTMLCell(
+            0,
+            0,
+            20,
+            20,
+            $kindData,
+            0,
+            1,
+            0,
+            true,
+            '',
+            true
+        );
+
         if ($kind->getSchule()->getOrganisation()->getStadt()->getOnlineCheckinEnable()) {
             $pdf->AddPage('H    ', 'A4');
             $pdf = $this->addCard($kind, $pdf);
@@ -523,10 +547,11 @@ class PrintService
                         $table .= '<p>' . $this->translator->trans('Mittagessen') . '</p>';
 
                     }
-                    if (($block->getMin() || $block->getMax())) {
-                        $table .= '<p>' . $this->translator->trans('Warten auf Bestätigung') . '</p>';
+
+                    $table .= $block->getVon()->format('H:i') . ' - ' . $block->getBis()->format('H:i') ;
+                    if ($block->translate()->getBlockbezeichnung()){
+                        $table .= ' (' . $block->translate()->getBlockbezeichnung() . ')';
                     }
-                    $table .= $block->getVon()->format('H:i') . ' - ' . $block->getBis()->format('H:i');
                     if ($cross) {
                         $table .= '<br><div><table width="100%" style="border:none"><tr style="border: none"><td style="border: 1px solid black; width:18px"></td><td style="border: none">' . $this->translator->trans('buchen') . '</td></tr></table></div>';
                     }
