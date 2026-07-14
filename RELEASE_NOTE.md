@@ -26,4 +26,5 @@ __🐛 Bugfixes:__
 * Fix Eltern PDF HEader Table
 * clean up eltern pdf
 * fix not showing name of block in details
-## Files
+* add loki logging
+
