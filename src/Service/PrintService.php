@@ -80,24 +80,24 @@ class PrintService
         );
 
 
-        $kontaktDaten = '<table cellspacing="3px">' .
+        $kontaktDaten = '<table cellspacing="3px" style="width: 650px">' .
 
-            '<tr>' . '<td align="right">' . $this->translator->trans('Sicherheitscode') . ': </td><td  align="left" >' . $eltern->getSecCode() . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Anmeldedatum') . ': </td><td  align="left" >' . $eltern->getCreatedAt()->format('d.m.Y') . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Betreuende Organisation') . ': </td><td></td></tr>'.
-            '<tr><td  align="left" >' . $kind->getSchule()->getOrganisation()->getName() . '</td><td></td></tr>' .
+            '<tr><td align="right">' . $this->translator->trans('Sicherheitscode') . ': ' . $eltern->getSecCode() . '</td></tr>' .
+            '<tr><td align="right">' . $this->translator->trans('Anmeldedatum') . ': ' . $eltern->getCreatedAt()->format('d.m.Y') . '</td></tr>' .
+            '<tr><td align="right">' . $this->translator->trans('Betreuende Organisation') . ': </td></tr>'.
+            '<tr><td  align="right">' . $kind->getSchule()->getOrganisation()->getName() . '</td></tr>' .
 
-            '<tr>' . '<td align="right">' . $this->translator->trans('Ansprechpartner') . ': </td><td></td></tr>'.
-            '<tr><td  align="right" colspan="2">' . $kind->getSchule()->getOrganisation()->getAnsprechpartner() . '</td></tr>' .
-            '<tr>' . '<td align="right">' . $this->translator->trans('Telefonnummer') . ': </td><td></td></tr>'.
-            '<tr><td  align="right" colspan="2">' . $kind->getSchule()->getOrganisation()->getTelefon() . '</td></tr>';
-        '<tr>' . '<td align="right">' . $this->translator->trans('E-Mail') . ': </td><td  align="left" >' . $kind->getSchule()->getOrganisation()->getEmail() . '</td><td></td></tr>';
+            '<tr><td align="right">' . $this->translator->trans('Ansprechpartner') . ': </td></tr>'.
+            '<tr><td  align="right">' . $kind->getSchule()->getOrganisation()->getAnsprechpartner() . '</td></tr>' .
+            '<tr><td align="right">' . $this->translator->trans('Telefonnummer') . ': </td></tr>'.
+            '<tr><td  align="right" >' . $kind->getSchule()->getOrganisation()->getTelefon() . '</td></tr>'.
+            '<tr><td align="right">' . $this->translator->trans('E-Mail') . ': ' . $kind->getSchule()->getOrganisation()->getEmail() . '</td></tr>';
         $kontaktDaten .= '</table>';
         $pdf->writeHTMLCell(
             300,
             0,
             10,
-            65,
+            50,
             $kontaktDaten,
             0,
             1,
@@ -311,7 +311,7 @@ class PrintService
 
 
         if ($imgdata) {
-            $pdf->Image('@' . $imgdata, 140, 20, $w, $h);
+            $pdf->Image('@' . $imgdata, 140, 15, $w, $h);
         }
         return $pdf;
     }
