@@ -25,4 +25,5 @@ __🐛 Bugfixes:__
 * Add miration for custom css and fix
 * Fix Eltern PDF HEader Table
 * * clean up eltern pdf
+* add loki logging
 ## Files
