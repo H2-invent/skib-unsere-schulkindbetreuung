@@ -32,6 +32,7 @@ class DatabaseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $form->get('password')->getData();
 
+            set_time_limit(0);
             return $this->createEncryptedDumpResponse($password);
         }
 
