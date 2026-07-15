@@ -22,7 +22,7 @@ parameters:
     CACHING_DASHBOARD_TIME: '%env(CACHING_DASHBOARD_TIME)%'
     app.log.loki.enabled: '%env(bool:LOKI_ENABLED)%' # handled by \App\DependencyInjection\Compiler\ToggleLokiHandlerPass
     app.log.loki.uri: '%env(LOKI_URI)%'
-    app.log.loki.host: '%env(LOKI_HOST)%'
+    app.log.loki.client: '%env(LOKI_CLIENT)%'
     app.log.loki.log_level: '%env(LOKI_LOG_LEVEL)%'
 
 services:
@@ -65,8 +65,8 @@ services:
                 labels:
                     app: skib
                     env: '%env(APP_ENV)%'
-                    host: '%app.log.loki.host%'
-                client_name: 'skib'
+                    host: '%env(HOSTNAME)%'
+                client_name: '%app.log.loki.client%'
                 curl_options:
                     !php/const CURLOPT_CONNECTTIMEOUT_MS: 200
                     !php/const CURLOPT_TIMEOUT_MS: 500
