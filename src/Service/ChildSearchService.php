@@ -43,6 +43,7 @@ class ChildSearchService
             ->innerJoin('k.eltern', 'eltern')
             ->andWhere('eltern.created_at IS NOT NULL');
 
+        $parameters['status'] ??= 'bestaetigt';
 
         if ($parameters['status'] === 'bestaetigt') {
             if (!$dateTo) {
@@ -52,6 +53,8 @@ class ChildSearchService
                     ->andWhere('k.startDate <= :endDate')->setParameter('endDate', $dateTo);
                 $diff = true;
             }
+        } else {
+            $qb->andWhere('k.startDate IS NOT NULL');
         }
 
         //Schule als Filter ausgewählt

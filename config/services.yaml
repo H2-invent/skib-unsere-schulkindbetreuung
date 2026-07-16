@@ -65,7 +65,6 @@ services:
                 labels:
                     app: skib
                     env: '%env(APP_ENV)%'
-                    host: '%env(HOSTNAME)%'
                 client_name: '%app.log.loki.client%'
                 curl_options:
                     !php/const CURLOPT_CONNECTTIMEOUT_MS: 200
