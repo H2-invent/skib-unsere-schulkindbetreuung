@@ -14,7 +14,10 @@ use App\Entity\Kind;
 use App\Entity\Stadt;
 use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
+use App\Service\Gebuehrenbescheid\FeeSummaryBuilder;
+use App\Service\Gebuehrenbescheid\PrintGebuehrenbescheidService;
 use League\Flysystem\FilesystemOperator;
+use Psr\Log\LoggerInterface;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -46,7 +49,10 @@ class AnmeldeEmailService
         IcsService                         $icsService,
         Environment                        $templating,
         MailerService                      $mailer,
-        private LoerrachWorkflowController $loerrachWorkflowController)
+        private LoerrachWorkflowController $loerrachWorkflowController,
+        private readonly PrintGebuehrenbescheidService $gebuehrenbescheidService,
+        private readonly FeeSummaryBuilder $feeSummaryBuilder,
+        private readonly LoggerInterface $logger)
     {
         $this->print = $print;
         $this->tcpdf = $tcpdf;
@@ -71,7 +77,7 @@ class AnmeldeEmailService
     }
 
 
-    public function sendEmail(Kind $kind, Stammdaten $adresse, Stadt $stadt, $text, $dontSendBeworben = false)
+    public function sendEmail(Kind $kind, Stammdaten $adresse, Stadt $stadt, $text, $dontSendBeworben = false, bool $withGebuehrenbescheid = true)
     {
         $this->attachment = array();
         $sessionLocale = $this->translator->getLocale();
@@ -130,6 +136,10 @@ class AnmeldeEmailService
                 );
             }
 
+            if ($withGebuehrenbescheid) {
+                $this->appendGebuehrenbescheid($kind, $adresse, $stadt);
+            }
+
             if ($adresse->getLanguage()) {
                 $this->translator->setLocale($adresse->getLanguage());
             }
@@ -161,6 +171,67 @@ class AnmeldeEmailService
             }
         }
         return false;
+    }
+
+    /**
+     * Attaches the city-authored Gebührenbescheid PDF, if the city switched it on and wrote a template.
+     *
+     * Only ever called from the branch where the child has no beworben blocks left, because a fee notice must
+     * not bill blocks that are still only applied for.
+     */
+    private function appendGebuehrenbescheid(Kind $kind, Stammdaten $adresse, Stadt $stadt): void
+    {
+        if ($stadt->getSettingsSkibSendGebuehrenbescheid() !== true) {
+            return;
+        }
+
+        // Resolved once and passed down explicitly, so this does not depend on the translator locale being
+        // switched further down in sendEmail().
+        $locale = $adresse->getLanguage() ?: $this->parameterbag->get('kernel.default_locale');
+
+        if (!$this->gebuehrenbescheidService->hasTemplate($stadt, $locale)) {
+            $this->logger->info('Gebuehrenbescheid skipped: no PDF template for locale', [
+                'stadt' => $stadt->getId(),
+                'locale' => $locale,
+                'kind' => $kind->getId(),
+            ]);
+
+            return;
+        }
+
+        try {
+            $fileName = $this->translator->trans('Gebuehrenbescheid') . '_' . $kind->getVorname();
+
+            $this->attachment[] = array(
+                'type' => 'application/pdf',
+                'filename' => $fileName . '.pdf',
+                'body' => $this->gebuehrenbescheidService->render(
+                    $stadt,
+                    $kind,
+                    $adresse,
+                    $kind->getSchule()?->getOrganisation(),
+                    $this->feeSummaryBuilder->build($kind),
+                    $locale,
+                    $fileName,
+                ),
+            );
+        } catch (\Throwable $exception) {
+            // The template is city-authored Twig and the fee total runs through eval(), so a mistake in either
+            // must not stop the confirmation mail from going out.
+            $this->logger->error('Gebuehrenbescheid could not be rendered', [
+                'stadt' => $stadt->getId(),
+                'kind' => $kind->getId(),
+                'exception' => $exception,
+            ]);
+        }
+    }
+
+    /**
+     * @return array<int, array{type: string, filename: string, body: string}>
+     */
+    public function getAttachments(): array
+    {
+        return $this->attachment ?? [];
     }
 
     /**

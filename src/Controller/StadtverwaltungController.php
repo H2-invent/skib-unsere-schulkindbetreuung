@@ -11,6 +11,7 @@ use JsonException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\ExpressionLanguage\SyntaxError;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,6 +56,7 @@ class StadtverwaltungController extends AbstractController
             $city->setGehaltsklassen(array_fill(0,$city->getPreiskategorien(), ''));
         }
         $form = $this->createForm(StadtType::class, $city);
+        $this->removeGebuehrenbescheidSettingsForUnauthorizedUsers($form);
 
         $form->handleRequest($request);
         $errors = array();
@@ -97,6 +99,7 @@ class StadtverwaltungController extends AbstractController
         }
 
         $form = $this->createForm(StadtType::class, $city);
+        $this->removeGebuehrenbescheidSettingsForUnauthorizedUsers($form);
         $form->remove('slug');
         if (!$this->getUser()->hasRole('ROLE_ADMIN')){
            $form->remove('schulkindBetreung');
@@ -219,6 +222,31 @@ class StadtverwaltungController extends AbstractController
         }
 
         return $city;
+    }
+
+    /**
+     * Uses isGranted() rather than User::hasRole() on purpose: hasRole() ignores role_hierarchy, so it could
+     * strip fields that the hierarchy-aware is_granted() in stadtForm.html.twig still tries to render.
+     */
+    private function removeGebuehrenbescheidSettingsForUnauthorizedUsers(FormInterface $form): void
+    {
+        if ($this->isGranted('ROLE_CITY_FEE_NOTICE_EDITOR')) {
+            return;
+        }
+
+        if ($form->has('settingsSkibSendGebuehrenbescheid')) {
+            $form->remove('settingsSkibSendGebuehrenbescheid');
+        }
+
+        if (!$form->has('translations')) {
+            return;
+        }
+
+        foreach ($form->get('translations') as $translationForm) {
+            if ($translationForm->has('pdftemplateGebuehrenbescheid')) {
+                $translationForm->remove('pdftemplateGebuehrenbescheid');
+            }
+        }
     }
 
     private function getFerienTagsWithCounts(Stadt $city): array

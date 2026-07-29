@@ -452,6 +452,19 @@
                                                     <a class="btn btn-outline-primary btn-sm mt-3" href="{{ path('app_send_test_email_for_template',{'template':'stammdatenEdit','stadt':stadt.id}) }}" target="_blank">Testmail senden</a>
                                                 </div>
 
+                                                {% if is_granted('ROLE_CITY_FEE_NOTICE_EDITOR') %}
+                                                    <div class="config-card">
+                                                        <div class="card-title">Gebührenbescheid (PDF)</div>
+                                                        {{ form_row(form.settingsSkibSendGebuehrenbescheid) }}
+                                                        {{ a2lixTranslations.partialTranslations(form.translations, ['pdftemplateGebuehrenbescheid']) }}
+                                                        <p class="text-muted small mb-0 mt-2">Ist die Option aktiv, wird der Gebührenbescheid als PDF an die Buchungsbestätigung angehängt – nur für Kinder, deren Blöcke vollständig bestätigt sind.</p>
+                                                        {% if stadt.id %}
+                                                            <a class="btn btn-outline-primary btn-sm mt-3" href="{{ path('app_gebuehrenbescheid_pdf_preview',{'stadt':stadt.id,'locale':app.request.locale}) }}" target="_blank">PDF-Vorschau</a>
+                                                            <span class="text-muted small ml-2">Bitte zuerst speichern – die Vorschau zeigt den gespeicherten Stand.</span>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endif %}
+
                                                 <div class="config-card">
                                                     <div class="card-title">Verfügbare Variablen</div>
                                                     <div class="row g-4">
@@ -484,7 +497,52 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
+                                                        {% if is_granted('ROLE_CITY_FEE_NOTICE_EDITOR') %}
+                                                            <div class="col-lg-6">
+                                                                <div class="variable-box">
+                                                                    <div class="variable-title">gebuehren <small>(nur im Gebührenbescheid-PDF)</small></div>
+                                                                    <ul class="variable-list">
+                                                                        <li><code>.gesamt</code> Monatliche Gebühr – <b>maßgeblicher Betrag</b> (Berechnungsformel der Stadt, ohne beworbene Blöcke)</li>
+                                                                        <li><code>.jahresGesamt</code> Jahresgebühr = <code>.gesamt</code> × <code>.monate</code></li>
+                                                                        <li><code>.angebote</code> Zeilen der Gebührenfestsetzung; je Angebot <code>.bezeichnung</code>, <code>.tage</code>, <code>.monatlich</code>, <code>.jaehrlich</code></li>
+                                                                        <li><code>.lines</code> Einzelne Wochentage; je Position <code>.wochentagLabel</code>, <code>.von</code>, <code>.bis</code>, <code>.artLabel</code>, <code>.schule</code>, <code>.betrag</code></li>
+                                                                        <li><code>.hasLines</code> false, wenn keine kostenpflichtigen Blöcke gebucht sind</li>
+                                                                        <li><code>.summeDerPositionen</code> Summe der Positionen – <i>nur informativ</i>, kann von <code>.gesamt</code> abweichen (z.&nbsp;B. Geschwisterrabatt)</li>
+                                                                        <li><code>.differsFromLineSum</code> true, wenn beide Beträge abweichen</li>
+                                                                        <li><code>.monate</code> Anzahl der abgerechneten Monate (aus dem Schuljahr abgeleitet)</li>
+                                                                        <li><code>.faelligkeiten</code> Fälligkeitstermine (1. jedes abgerechneten Monats)</li>
+                                                                        <li><code>.zeitraumVon</code>, <code>.zeitraumBis</code>, <code>.schuljahr</code> Betreuungszeitraum</li>
+                                                                        <li><code>.geschwisterAnzahl</code> Weitere Kinder U18 im Haushalt</li>
+                                                                        <li><code>.einkommensklasse</code> Bezeichnung der Gehaltsklasse</li>
+                                                                        <li><code>.stichtag</code> Stichtag der Berechnung, <code>.kundennummer</code> Debitorennummer</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="variable-box">
+                                                                    <div class="variable-title">stadt / organisation / datum</div>
+                                                                    <ul class="variable-list">
+                                                                        <li><code>stadt.name</code>, <code>stadt.adresse</code>, <code>stadt.plz</code>, <code>stadt.ort</code>, <code>stadt.telefon</code>, <code>stadt.email</code>, <code>stadt.stadtHomepage</code>, <code>stadt.ansprechpartner</code></li>
+                                                                        <li><code>eltern.iban</code>, <code>eltern.bic</code>, <code>eltern.kontoinhaber</code>, <code>eltern.sepaInfo</code> für die Bankverbindung</li>
+                                                                        <li><code>kind.schule.name</code> Schule des Kindes</li>
+                                                                        <li><code>organisation.name</code> – kann leer sein</li>
+                                                                        <li><code>datum</code> Datum des Bescheids</li>
+                                                                    </ul>
+                                                                    <p class="mb-0 mt-2">Lassen Sie das Template leer, um die mitgelieferte Standard-Vorlage zu verwenden.</p>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
                                                     </div>
+                                                    {% if is_granted('ROLE_CITY_FEE_NOTICE_EDITOR') %}
+                                                        <div class="mt-3 text-muted small">
+                                                            <p class="mb-1"><b>Hinweise zum Gebührenbescheid-PDF:</b></p>
+                                                            <ul class="mb-0">
+                                                                <li>Im PDF wirkt nur einfaches CSS (<code>border</code>, <code>font-weight</code>, <code>font-size</code>, <code>color</code>, <code>text-align</code>, <code>background-color</code>, <code>width</code>). <b>CSS-Klassen wirken nicht</b> – bitte <code>style="…"</code> direkt am Element bzw. <code>align="right"</code> und <code>cellpadding</code> verwenden.</li>
+                                                                <li>Für Beträge <code>gebuehren.gesamt</code> verwenden, <b>nicht</b> <code>getPreisforBetreuung(...)</code> – letzteres funktioniert in der Vorschau nicht.</li>
+                                                                <li>Der Editor kann Twig-Bedingungen mit <code>&lt;</code> oder <code>&gt;</code> verändern. Solche Vergleiche bitte über den HTML-Modus (<code>&lt; &gt;</code>-Button) einfügen oder vermeiden.</li>
+                                                            </ul>
+                                                        </div>
+                                                    {% endif %}
                                                 </div>
                                             </div>
 
