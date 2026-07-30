@@ -37,7 +37,10 @@ final class PrintGebuehrenbescheidService
     }
 
     /**
-     * Whether a template is available for this locale, the default locale counting as a fallback.
+     * Whether the city itself authored a template for this locale, the default locale counting as a fallback.
+     *
+     * A false result does not stop {@see self::render()}: it then produces the built-in default layout. This is
+     * informational only, e.g. for logging that a city is relying on the default.
      */
     public function hasTemplate(Stadt $stadt, string $locale): bool
     {

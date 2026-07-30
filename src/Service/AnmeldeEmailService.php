@@ -174,7 +174,10 @@ class AnmeldeEmailService
     }
 
     /**
-     * Attaches the city-authored Gebührenbescheid PDF, if the city switched it on and wrote a template.
+     * Attaches the Gebührenbescheid PDF if the city switched it on.
+     *
+     * The toggle alone decides. A city that has not authored a template gets the built-in default layout from
+     * templates/pdf/gebuehrenbescheid.html.twig, which is also what the admin preview shows.
      *
      * Only ever called from the branch where the child has no beworben blocks left, because a fee notice must
      * not bill blocks that are still only applied for.
@@ -190,13 +193,11 @@ class AnmeldeEmailService
         $locale = $adresse->getLanguage() ?: $this->parameterbag->get('kernel.default_locale');
 
         if (!$this->gebuehrenbescheidService->hasTemplate($stadt, $locale)) {
-            $this->logger->info('Gebuehrenbescheid skipped: no PDF template for locale', [
+            $this->logger->info('Gebuehrenbescheid: no city template, using the built-in default layout', [
                 'stadt' => $stadt->getId(),
                 'locale' => $locale,
                 'kind' => $kind->getId(),
             ]);
-
-            return;
         }
 
         try {

@@ -11,6 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PrintGebuehrenbescheidServiceTest extends KernelTestCase
 {
+    /**
+     * hasTemplate() reports whether the CITY authored a template. It does not gate rendering — an empty field
+     * still yields the built-in default layout, see the fallback test below.
+     */
     public function testEmptyAndWhitespaceOnlyTemplatesAreNotConsideredPresent(): void
     {
         self::bootKernel();
