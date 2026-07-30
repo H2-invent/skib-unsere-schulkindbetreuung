@@ -9,7 +9,7 @@
                         <h5>
                             {{ block.translate.titel }}
                         </h5>
-                        {% if block.startVerkauf < today and block.endVerkauf > today %}
+                        {% if block.startVerkauf <= today and block.endVerkauf >= today %}
                             {% if  block.maxAnzahl is  null or block.maxAnzahl - block.KindFerienblocksGebucht|length >0 %}
                                 {% set alter = kind.geburtstag.diff(date('now')).y %}
                                 {% if block.minAlter  is not null and block.minAlter > alter %}
@@ -90,8 +90,8 @@
                             </div>
                             <div class="col-sm-9">
                                 <b>{{ block.startDate|date('d.m.Y') }} {% if block.startDate != block.endDate %}- {{ block.endDate|date('d.m.Y') }}{% endif %}</b><br/>
-                                {% trans %}Begin{% endtrans %}: {{ block.startTime|date('g:i') }}<br/>
-                                {% trans %}Ende{% endtrans %}: {{ block.endTime|date('g:i') }}<br/>
+                                {% trans %}Begin{% endtrans %}: {{ block.startTime|date('H:i') }}<br/>
+                                {% trans %}Ende{% endtrans %}: {{ block.endTime|date('H:i') }}<br/>
                             </div>
                             <div class="col-sm-3">
                                 <p>

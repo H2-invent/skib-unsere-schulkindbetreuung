@@ -172,8 +172,9 @@
                                                     </ul>
                                                     {% if is_granted('ROLE_ORG_CHILD_DELETE') %}
                                                         <hr>
-                                                        <a class="text-danger btn btn-sm d-flex align-items-center justify-content-center"
+                                                        <a class="text-danger btn btn-sm deleteBtn d-flex align-items-center justify-content-center"
                                                            type="DELETE"
+                                                           text="{{ 'Wollen Sie dieses Kind wirklich komplett löschen? Das Kind wird auch aus anderen Betreuungszeitblöcken entfernt und ist danach nicht mehr im System.'|trans }}"
                                                            href="{{ path('delete_child_delete',{'kind_id':kind.id}) }}">{% trans %}Kind entfernen{% endtrans %}</a>
                                                         <p class="mt-2 mb-0" style="line-height: 1.2;">
                                                             <small>

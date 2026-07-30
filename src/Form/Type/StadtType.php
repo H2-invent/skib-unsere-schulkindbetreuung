@@ -84,6 +84,10 @@ class StadtType extends AbstractType
             $stadt->translate('en')->setSettingsSkibPopupRegistrationText('');
             $stadt->translate('fr')->setSettingsSkibPopupRegistrationText('');
 
+            $stadt->translate('de')->setPdftemplateGebuehrenbescheid('');
+            $stadt->translate('en')->setPdftemplateGebuehrenbescheid('');
+            $stadt->translate('fr')->setPdftemplateGebuehrenbescheid('');
+
             foreach ($stadt->getNewTranslations() as $newTranslation) {
                 if (!$stadt->getTranslations()->contains($newTranslation) && !$stadt->getNewTranslations()->isEmpty()) {
                     $stadt->addTranslation($newTranslation);
@@ -239,6 +243,10 @@ class StadtType extends AbstractType
                 TextType::class,
                 ['required' => false, 'label' => 'Text welcher auf dem Button zum abschließen der Anmeldung steht', 'translation_domain' => 'form']
             )
+            ->add('settingsSkibSendGebuehrenbescheid',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Nach Abschluss der Anmeldung Gebührenbescheid per E-Mail an Eltern senden', 'translation_domain' => 'form']
+            )
             ->add('settingsDokumentUploadEnable',
                 CheckboxType::class,
                 ['required' => false, 'label' => 'Die Eltern können bei der Anmeldung zusätzliche Dokumente hochladen', 'translation_domain' => 'form']
@@ -378,6 +386,10 @@ class StadtType extends AbstractType
             ->add('akzentfarbeFehler',
                 TextType::class,
                 ['required' => false, 'label' => 'Akzentfarbe Fehler (HTML Code)', 'translation_domain' => 'form']
+            )
+            ->add('customCss',
+                TextareaType::class,
+                ['attr' => ['rows' => 10], 'required' => false, 'label' => 'Individuelles CSS', 'translation_domain' => 'form', 'help' => 'Dieses CSS wird auf allen Frontend-Seiten dieser Stadt im Header ausgegeben.']
             )
             ->add('translations', TranslationsType::class, [
 
@@ -525,6 +537,11 @@ class StadtType extends AbstractType
                         'emailtemplateStammdatenEdit' => [
                             'attr' => array('rows' => 5, 'class' => 'onlineEditor'),
                             'label' => 'TWIG Template für Email nach Bearbeiten der Stammdaten',
+                            'translation_domain' => 'form'
+                        ],
+                        'pdftemplateGebuehrenbescheid' => [
+                            'attr' => array('rows' => 5, 'class' => 'onlineEditor'),
+                            'label' => 'TWIG Template für Gebührenbescheid-PDF',
                             'translation_domain' => 'form'
                         ]
 

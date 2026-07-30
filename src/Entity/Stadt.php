@@ -136,6 +136,9 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $akzentfarbeFehler;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $customCss;
+
 
     #[ORM\OneToMany(targetEntity: \App\Entity\Active::class, mappedBy: 'stadt')]
     private $actives;
@@ -294,6 +297,9 @@ class Stadt implements TranslatableInterface
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $skibSettingsFinishButtonText;
+
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $settingsSkibSendGebuehrenbescheid = false;
 
     #[ORM\Column(nullable: true)]
     private ?bool $hideChildQuestions = null;
@@ -1439,6 +1445,18 @@ class Stadt implements TranslatableInterface
         return $this;
     }
 
+    public function getSettingsSkibSendGebuehrenbescheid(): bool
+    {
+        return $this->settingsSkibSendGebuehrenbescheid;
+    }
+
+    public function setSettingsSkibSendGebuehrenbescheid(bool $settingsSkibSendGebuehrenbescheid): self
+    {
+        $this->settingsSkibSendGebuehrenbescheid = $settingsSkibSendGebuehrenbescheid;
+
+        return $this;
+    }
+
     public function isHideChildQuestions(): ?bool
     {
         return $this->hideChildQuestions;
@@ -1591,6 +1609,18 @@ class Stadt implements TranslatableInterface
     public function setSkipSettingShowChronicalDeseas(?bool $skip_setting_show_chronicalDeseas): self
     {
         $this->skip_setting_show_chronicalDeseas = $skip_setting_show_chronicalDeseas;
+
+        return $this;
+    }
+
+    public function getCustomCss(): ?string
+    {
+        return $this->customCss;
+    }
+
+    public function setCustomCss(?string $customCss): self
+    {
+        $this->customCss = $customCss;
 
         return $this;
     }

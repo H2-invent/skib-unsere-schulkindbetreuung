@@ -5,7 +5,7 @@
 
 {% block content %}
 
-    {% trans with {'%org%':organisation.name} %}Hiermit senden wir Ihnen ihre Rechnung für die Schulkindbetreuung an der Organisation %org% zu.{% endtrans %}
+    {% trans with {'%org%':organisation.name} %}Hiermit senden wir Ihnen Ihre Rechnung für die Schulkindbetreuung an der Organisation %org% zu.{% endtrans %}
 
     {% if rechnung.summe > 0 %}
         {% trans with {'%betrag%':rechnung.summe|number_format(2,',','.'),'%einzugsdatum%':rechnung.sepa.einzugsDatum|date('d.m.Y')} %}Der berechnet Betrag in Höhe von<br><b>%betrag%€</b> <br> wird am <br><b>%einzugsdatum%</b><br> eingezogen.{% endtrans %}

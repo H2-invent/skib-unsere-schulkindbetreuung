@@ -26,6 +26,7 @@ class AdminUserType extends AbstractType
             'ROLE_CITY_SCHOOL' => 'ROLE_CITY_SCHOOL',
             'ROLE_CITY_REPORT' => 'ROLE_CITY_REPORT',
             'ROLE_CITY_NEWS' => 'ROLE_CITY_NEWS',
+            'ROLE_CITY_FEE_NOTICE_EDITOR' => 'ROLE_CITY_FEE_NOTICE_EDITOR',
         ],
         'Organisation Roles' => [
             'ROLE_ORG_REPORT' => 'ROLE_ORG_REPORT',

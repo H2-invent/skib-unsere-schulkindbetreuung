@@ -43,14 +43,19 @@ class ChildSearchService
             ->innerJoin('k.eltern', 'eltern')
             ->andWhere('eltern.created_at IS NOT NULL');
 
-        if (!$dateTo) {
-            $qb->andWhere('k.startDate <= :fromDate')->setParameter('fromDate', $dateFrom);
-        } else {
-            $qb->andWhere('k.startDate >= :fromDate')->setParameter('fromDate', $dateFrom)
-                ->andWhere('k.startDate <= :endDate')->setParameter('endDate', $dateTo);
-            $diff = true;
-        }
+        $parameters['status'] ??= 'bestaetigt';
 
+        if ($parameters['status'] === 'bestaetigt') {
+            if (!$dateTo) {
+                $qb->andWhere('k.startDate <= :fromDate')->setParameter('fromDate', $dateFrom);
+            } else {
+                $qb->andWhere('k.startDate >= :fromDate')->setParameter('fromDate', $dateFrom)
+                    ->andWhere('k.startDate <= :endDate')->setParameter('endDate', $dateTo);
+                $diff = true;
+            }
+        } else {
+            $qb->andWhere('k.startDate IS NOT NULL');
+        }
 
         //Schule als Filter ausgewählt
         if (isset($parameters['schule']) && $parameters['schule'] !== "") {

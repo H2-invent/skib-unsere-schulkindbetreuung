@@ -133,6 +133,7 @@
                                                         <div class="col-md-4">{{ form_row(form.hauptfarbe) }}</div>
                                                         <div class="col-md-4">{{ form_row(form.akzentfarbe) }}</div>
                                                         <div class="col-md-4">{{ form_row(form.akzentfarbeFehler) }}</div>
+                                                        <div class="col-12">{{ form_row(form.customCss) }}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -342,12 +343,82 @@
                                             <div class="tab-pane fade" id="ferienbetreeuung" role="tabpanel" aria-labelledby="tab-ferienbetreeuung-link">
                                                 <div class="section-head">
                                                     <h2>Ferienbetreuung</h2>
-                                                    <p>Der Bereich ist vorbereitet und kann im gleichen Stil erweitert werden.</p>
+                                                    <p>Verwalte Kategorien-Tags für Ferienprogramme und prüfe direkt, wie oft sie bereits verwendet werden.</p>
                                                 </div>
-                                                <div class="config-card empty-state">
-                                                    <div class="empty-state-icon">☀️</div>
-                                                    <h3>Noch keine Inhalte</h3>
-                                                    <p>Hier können später spezielle Einstellungen für die Ferienbetreuung ergänzt werden.</p>
+
+                                                <div class="config-card">
+                                                    <div class="card-title">Neuen Tag anlegen</div>
+                                                    <p class="text-muted mb-3">Tags stehen anschließend bei der Bearbeitung von Ferienprogrammen als Kategorie zur Auswahl.</p>
+                                                    <div class="row g-3 align-items-end">
+                                                        <div class="col-lg-8">
+                                                            <label class="form-label" for="new_ferien_tag_name">Name des Tags</label>
+                                                            <input type="text" id="new_ferien_tag_name" name="tag_name" class="form-control" placeholder="z. B. Sport, Kreativ, Ausflug">
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <button type="submit"
+                                                                    class="btn btn-primary w-100 mb-0"
+                                                                    formnovalidate
+                                                                    formaction="{{ path('admin_stadt_ferien_tag_create') }}"
+                                                                    formmethod="post">
+                                                                <i class="fa fa-plus me-1"></i> Tag hinzufügen
+                                                            </button>
+                                                            <input type="hidden" name="id" value="{{ stadt.id }}">
+                                                            <input type="hidden" name="_token" value="{{ csrf_token('ferien_tag_create_' ~ stadt.id) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="config-card">
+                                                    <div class="d-flex flex-column flex-md-row justify-content-between gap-2 mb-3">
+                                                        <div>
+                                                            <div class="card-title mb-1">Vorhandene Tags</div>
+                                                            <p class="text-muted mb-0">Bearbeiten oder löschen von Tags inklusive Anzeige zugeordneter Ferienprogramme.</p>
+                                                        </div>
+                                                        <span class="badge bg-light text-dark align-self-start">{{ tagsWithCounts|default([])|length }} Tags</span>
+                                                    </div>
+
+                                                    {% if tagsWithCounts|default([])|length > 0 %}
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover align-middle mb-0">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th style="min-width: 280px;">Tag</th>
+                                                                    <th class="text-center">Zugeordnete Ferienprogramme</th>
+                                                                    <th class="text-end">Aktionen</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                {% for row in tagsWithCounts %}
+                                                                    {% set tag = row.tag %}
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" name="tag_name" value="{{ tag.name }}" class="form-control" form="ferien-tag-update-{{ tag.id }}">
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <span class="badge badge-pill badge-primary px-3 py-2">{{ row.programCount }} Ferienprogramme</span>
+                                                                        </td>
+                                                                        <td class="text-end">
+                                                                            <div class="d-flex justify-content-end gap-2">
+                                                                                <button type="submit" class="btn btn-outline-primary btn-sm mb-0" form="ferien-tag-update-{{ tag.id }}">
+                                                                                    <i class="fa fa-save me-1"></i> Speichern
+                                                                                </button>
+                                                                                <button type="submit" class="btn btn-outline-danger btn-sm mb-0 delete-ferien-tag" form="ferien-tag-delete-{{ tag.id }}" data-count="{{ row.programCount }}">
+                                                                                    <i class="fa fa-trash me-1"></i> Löschen
+                                                                                </button>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="empty-state py-4">
+                                                            <div class="empty-state-icon">🏷️</div>
+                                                            <h3>Noch keine Tags</h3>
+                                                            <p>Lege den ersten Tag an, um Ferienprogramme besser zu kategorisieren.</p>
+                                                        </div>
+                                                    {% endif %}
                                                 </div>
                                             </div>
 
@@ -381,6 +452,19 @@
                                                     <a class="btn btn-outline-primary btn-sm mt-3" href="{{ path('app_send_test_email_for_template',{'template':'stammdatenEdit','stadt':stadt.id}) }}" target="_blank">Testmail senden</a>
                                                 </div>
 
+                                                {% if is_granted('ROLE_CITY_FEE_NOTICE_EDITOR') %}
+                                                    <div class="config-card">
+                                                        <div class="card-title">Gebührenbescheid (PDF)</div>
+                                                        {{ form_row(form.settingsSkibSendGebuehrenbescheid) }}
+                                                        {{ a2lixTranslations.partialTranslations(form.translations, ['pdftemplateGebuehrenbescheid']) }}
+                                                        <p class="text-muted small mb-0 mt-2">Ist die Option aktiv, wird der Gebührenbescheid als PDF an die Buchungsbestätigung angehängt – nur für Kinder, deren Blöcke vollständig bestätigt sind.</p>
+                                                        {% if stadt.id %}
+                                                            <a class="btn btn-outline-primary btn-sm mt-3" href="{{ path('app_gebuehrenbescheid_pdf_preview',{'stadt':stadt.id,'locale':app.request.locale}) }}" target="_blank">PDF-Vorschau</a>
+                                                            <span class="text-muted small ml-2">Bitte zuerst speichern – die Vorschau zeigt den gespeicherten Stand.</span>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endif %}
+
                                                 <div class="config-card">
                                                     <div class="card-title">Verfügbare Variablen</div>
                                                     <div class="row g-4">
@@ -413,7 +497,52 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
+                                                        {% if is_granted('ROLE_CITY_FEE_NOTICE_EDITOR') %}
+                                                            <div class="col-lg-6">
+                                                                <div class="variable-box">
+                                                                    <div class="variable-title">gebuehren <small>(nur im Gebührenbescheid-PDF)</small></div>
+                                                                    <ul class="variable-list">
+                                                                        <li><code>.gesamt</code> Monatliche Gebühr – <b>maßgeblicher Betrag</b> (Berechnungsformel der Stadt, ohne beworbene Blöcke)</li>
+                                                                        <li><code>.jahresGesamt</code> Jahresgebühr = <code>.gesamt</code> × <code>.monate</code></li>
+                                                                        <li><code>.angebote</code> Zeilen der Gebührenfestsetzung; je Angebot <code>.bezeichnung</code>, <code>.tage</code>, <code>.monatlich</code>, <code>.jaehrlich</code></li>
+                                                                        <li><code>.lines</code> Einzelne Wochentage; je Position <code>.wochentagLabel</code>, <code>.von</code>, <code>.bis</code>, <code>.artLabel</code>, <code>.schule</code>, <code>.betrag</code></li>
+                                                                        <li><code>.hasLines</code> false, wenn keine kostenpflichtigen Blöcke gebucht sind</li>
+                                                                        <li><code>.summeDerPositionen</code> Summe der Positionen – <i>nur informativ</i>, kann von <code>.gesamt</code> abweichen (z.&nbsp;B. Geschwisterrabatt)</li>
+                                                                        <li><code>.differsFromLineSum</code> true, wenn beide Beträge abweichen</li>
+                                                                        <li><code>.monate</code> Anzahl der abgerechneten Monate (aus dem Schuljahr abgeleitet)</li>
+                                                                        <li><code>.faelligkeiten</code> Fälligkeitstermine (1. jedes abgerechneten Monats)</li>
+                                                                        <li><code>.zeitraumVon</code>, <code>.zeitraumBis</code>, <code>.schuljahr</code> Betreuungszeitraum</li>
+                                                                        <li><code>.geschwisterAnzahl</code> Weitere Kinder U18 im Haushalt</li>
+                                                                        <li><code>.einkommensklasse</code> Bezeichnung der Gehaltsklasse</li>
+                                                                        <li><code>.stichtag</code> Stichtag der Berechnung, <code>.kundennummer</code> Debitorennummer</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="variable-box">
+                                                                    <div class="variable-title">stadt / organisation / datum</div>
+                                                                    <ul class="variable-list">
+                                                                        <li><code>stadt.name</code>, <code>stadt.adresse</code>, <code>stadt.plz</code>, <code>stadt.ort</code>, <code>stadt.telefon</code>, <code>stadt.email</code>, <code>stadt.stadtHomepage</code>, <code>stadt.ansprechpartner</code></li>
+                                                                        <li><code>eltern.iban</code>, <code>eltern.bic</code>, <code>eltern.kontoinhaber</code>, <code>eltern.sepaInfo</code> für die Bankverbindung</li>
+                                                                        <li><code>kind.schule.name</code> Schule des Kindes</li>
+                                                                        <li><code>organisation.name</code> – kann leer sein</li>
+                                                                        <li><code>datum</code> Datum des Bescheids</li>
+                                                                    </ul>
+                                                                    <p class="mb-0 mt-2">Lassen Sie das Template leer, um die mitgelieferte Standard-Vorlage zu verwenden.</p>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
                                                     </div>
+                                                    {% if is_granted('ROLE_CITY_FEE_NOTICE_EDITOR') %}
+                                                        <div class="mt-3 text-muted small">
+                                                            <p class="mb-1"><b>Hinweise zum Gebührenbescheid-PDF:</b></p>
+                                                            <ul class="mb-0">
+                                                                <li>Im PDF wirkt nur einfaches CSS (<code>border</code>, <code>font-weight</code>, <code>font-size</code>, <code>color</code>, <code>text-align</code>, <code>background-color</code>, <code>width</code>). <b>CSS-Klassen wirken nicht</b> – bitte <code>style="…"</code> direkt am Element bzw. <code>align="right"</code> und <code>cellpadding</code> verwenden.</li>
+                                                                <li>Für Beträge <code>gebuehren.gesamt</code> verwenden, <b>nicht</b> <code>getPreisforBetreuung(...)</code> – letzteres funktioniert in der Vorschau nicht.</li>
+                                                                <li>Der Editor kann Twig-Bedingungen mit <code>&lt;</code> oder <code>&gt;</code> verändern. Solche Vergleiche bitte über den HTML-Modus (<code>&lt; &gt;</code>-Button) einfügen oder vermeiden.</li>
+                                                            </ul>
+                                                        </div>
+                                                    {% endif %}
                                                 </div>
                                             </div>
 
@@ -516,6 +645,20 @@
                                     {{ form_widget(form) }}
                                     {{ form_end(form) }}
 
+                                    {% for row in tagsWithCounts|default([]) %}
+                                        {% set tag = row.tag %}
+                                        <form id="ferien-tag-update-{{ tag.id }}" action="{{ path('admin_stadt_ferien_tag_update') }}" method="post" class="d-none">
+                                            <input type="hidden" name="id" value="{{ stadt.id }}">
+                                            <input type="hidden" name="tag_id" value="{{ tag.id }}">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('ferien_tag_update_' ~ tag.id) }}">
+                                        </form>
+                                        <form id="ferien-tag-delete-{{ tag.id }}" action="{{ path('admin_stadt_ferien_tag_delete') }}" method="post" class="d-none">
+                                            <input type="hidden" name="id" value="{{ stadt.id }}">
+                                            <input type="hidden" name="tag_id" value="{{ tag.id }}">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('ferien_tag_delete_' ~ tag.id) }}">
+                                        </form>
+                                    {% endfor %}
+
                                     {% if stadt is defined and stadt.id is not null %}
                                         <div class="upload-section border-top px-4 py-4">
                                             <div class="section-head mb-3">
@@ -581,6 +724,17 @@
                     $('#city-config-tabs a[href="' + activeTab + '"]').tab('show');
                 }
             } catch (err) {}
+
+            $('.delete-ferien-tag').on('click', function (event) {
+                var count = parseInt($(this).data('count'), 10) || 0;
+                var message = count > 0
+                    ? 'Dieser Tag ist ' + count + ' Ferienprogrammen zugeordnet. Beim Löschen wird diese Zuordnung entfernt. Wirklich löschen?'
+                    : 'Diesen Tag wirklich löschen?';
+
+                if (!confirm(message)) {
+                    event.preventDefault();
+                }
+            });
 
             // auto assign formula test
             const calculateTestValue = async function () {

@@ -100,7 +100,7 @@
     {% endif %}
     bssettings = {
         title: '{% trans %}Cookie & Datenschutzhinweis{% endtrans %}',
-        message: '{% trans %}Cookies ermöglichen die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden. Weitere Informationen zum Datenschutz erhalten Sie über den folgenden Link{% endtrans %}: <b>',
+        message: '{% trans %}template.base.cookies.banner{% endtrans %}: <b>',
         moreLinkLabel: '{% trans %}Mehr erfahren{% endtrans %}</b>',
         messageMaxHeightPercent: 30,
         {% if stadt is defined and stadt is not null %}

@@ -209,9 +209,27 @@ class FerienManagementController extends AbstractController
         $em->remove($ferienblock);
         $em->flush();
         $text = $translator->trans('Erfolgreich gelöscht');
-        return new JsonResponse(array('redirect' => $this->generateUrl('ferien_management_show', array('org_id' => $organisation->getId(), 'snack' => $text))));
+        return new JsonResponse(['redirect' => $this->generateUrl('ferien_management_show', ['org_id' => $organisation->getId(), 'snack' => $text])]);
     }
 
+
+    /**
+     * @Route("/org_ferien/duplicate/form", name="ferien_management_duplicate_form", methods={"GET"})
+     */
+    public function duplicateForm(Request $request)
+    {
+        $organisation = $this->managerRegistry->getRepository(Organisation::class)->find($request->get('org_id'));
+        if ($organisation != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+
+        $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
+
+        return $this->render('ferien_management/duplicateForm.html.twig', array(
+            'org' => $organisation,
+            'block' => $ferienblock,
+        ));
+    }
 
     /**
      * @Route("/org_ferien/duplicate", name="ferien_management_duplicate", methods={"POST"})
@@ -224,22 +242,49 @@ class FerienManagementController extends AbstractController
         }
 
         $ferienblock = $this->managerRegistry->getRepository(Ferienblock::class)->findOneBy(array('id' => $request->get('ferien_id'), 'organisation' => $organisation));
-        $ferienblockNew = clone $ferienblock;
-        $translations = $ferienblock->getTranslations();
-        foreach ($translations as $locale => $fields) {
-            $clone = clone $fields;
-            $clone->setTitel('[copy]' . $clone->getTitel());
-            $ferienblockNew->addTranslation($clone);
+        $startDateRaw = $request->request->get('start_date');
+        $endDateRaw = $request->request->get('end_date');
 
+        if ($startDateRaw === null || $endDateRaw === null) {
+            $text = $translator->trans('Bitte Start- und Enddatum auswählen');
+            return $this->redirectToRoute('ferien_management_duplicate_form', array('org_id' => $organisation->getId(), 'ferien_id' => $ferienblock->getId(), 'snack' => $text));
         }
-        foreach ($ferienblock->getKategorie() as $data) {
-            $ferienblockNew->addKategorie($data);
+
+        $startDate = \DateTime::createFromFormat('Y-m-d', $startDateRaw);
+        $endDate = \DateTime::createFromFormat('Y-m-d', $endDateRaw);
+
+        if ($startDate === false || $endDate === false || $startDate > $endDate) {
+            $text = $translator->trans('Ungültiger Zeitraum');
+            return $this->redirectToRoute('ferien_management_duplicate_form', array('org_id' => $organisation->getId(), 'ferien_id' => $ferienblock->getId(), 'snack' => $text));
         }
+
         $em = $this->managerRegistry->getManager();
-        $em->persist($ferienblockNew);
+        $period = new \DatePeriod($startDate, new \DateInterval('P1D'), (clone $endDate)->modify('+1 day'));
+        $created = 0;
+
+        foreach ($period as $date) {
+            $ferienblockNew = clone $ferienblock;
+            $ferienblockNew->setStartDate(clone $date);
+            $ferienblockNew->setEndDate(clone $date);
+
+            $translations = $ferienblock->getTranslations();
+            foreach ($translations as $fields) {
+                $clone = clone $fields;
+                $clone->setTitel('[Kopie] ' . $clone->getTitel());
+                $ferienblockNew->addTranslation($clone);
+            }
+
+            foreach ($ferienblock->getKategorie() as $data) {
+                $ferienblockNew->addKategorie($data);
+            }
+
+            $em->persist($ferienblockNew);
+            $created++;
+        }
+
         $em->flush();
-        $text = $translator->trans('Erfolgreich kopiert');
-        return new JsonResponse(array('redirect' => $this->generateUrl('ferien_management_edit', array('org_id' => $organisation->getId(), 'ferien_id' => $ferienblockNew->getId(), 'snack' => $text))));
+        $text = $translator->trans('%count% Kopien erfolgreich erstellt', array('%count%' => $created));
+        return $this->redirectToRoute('ferien_management_show', array('org_id' => $organisation->getId(), 'snack' => $text));
 
     }
 
