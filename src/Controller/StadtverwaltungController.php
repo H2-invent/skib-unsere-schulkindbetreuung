@@ -234,8 +234,10 @@ class StadtverwaltungController extends AbstractController
             return;
         }
 
-        if ($form->has('settingsSkibSendGebuehrenbescheid')) {
-            $form->remove('settingsSkibSendGebuehrenbescheid');
+        foreach (['settingsSkibSendGebuehrenbescheid', 'settingsFerienSendGebuehrenbescheid'] as $field) {
+            if ($form->has($field)) {
+                $form->remove($field);
+            }
         }
 
         if (!$form->has('translations')) {
@@ -243,8 +245,10 @@ class StadtverwaltungController extends AbstractController
         }
 
         foreach ($form->get('translations') as $translationForm) {
-            if ($translationForm->has('pdftemplateGebuehrenbescheid')) {
-                $translationForm->remove('pdftemplateGebuehrenbescheid');
+            foreach (['pdftemplateGebuehrenbescheid', 'pdftemplateGebuehrenbescheidFerien'] as $field) {
+                if ($translationForm->has($field)) {
+                    $translationForm->remove($field);
+                }
             }
         }
     }

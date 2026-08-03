@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Repository\StadtRepository;
+use App\Service\Gebuehrenbescheid\PrintFerienGebuehrenbescheidService;
 use App\Service\Gebuehrenbescheid\PrintGebuehrenbescheidService;
 use App\Service\TemplatePreview\PreviewFixtureFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +24,7 @@ final class GebuehrenbescheidPreviewController extends AbstractController
         private readonly StadtRepository $stadtRepository,
         private readonly PreviewFixtureFactory $previewFixtureFactory,
         private readonly PrintGebuehrenbescheidService $printGebuehrenbescheidService,
+        private readonly PrintFerienGebuehrenbescheidService $printFerienGebuehrenbescheidService,
     ) {
     }
 
@@ -52,17 +54,27 @@ final class GebuehrenbescheidPreviewController extends AbstractController
         }
 
         $fixture = $this->previewFixtureFactory->create();
+        $ferien = $request->query->get('variant') === 'ferien';
 
         try {
-            $pdf = $this->printGebuehrenbescheidService->render(
-                $stadt,
-                $fixture->kind,
-                $fixture->eltern,
-                $fixture->organisation,
-                $this->previewFixtureFactory->createStubFeeSummary(),
-                $locale,
-                'Gebuehrenbescheid-Vorschau',
-            );
+            $pdf = $ferien
+                ? $this->printFerienGebuehrenbescheidService->render(
+                    $stadt,
+                    $fixture->eltern,
+                    $fixture->organisation,
+                    $this->previewFixtureFactory->createStubFerienFeeSummary(),
+                    $locale,
+                    'Gebuehrenbescheid-Ferienprogramm-Vorschau',
+                )
+                : $this->printGebuehrenbescheidService->render(
+                    $stadt,
+                    $fixture->kind,
+                    $fixture->eltern,
+                    $fixture->organisation,
+                    $this->previewFixtureFactory->createStubFeeSummary(),
+                    $locale,
+                    'Gebuehrenbescheid-Vorschau',
+                );
         } catch (\Throwable $exception) {
             // A template error is the admin's own typo, so show it to them instead of an error page.
             return new Response(

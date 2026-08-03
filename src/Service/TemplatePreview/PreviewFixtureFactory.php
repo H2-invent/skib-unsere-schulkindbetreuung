@@ -7,6 +7,8 @@ namespace App\Service\TemplatePreview;
 use App\Dto\Gebuehrenbescheid\FeeAngebot;
 use App\Dto\Gebuehrenbescheid\FeeLine;
 use App\Dto\Gebuehrenbescheid\FeeSummary;
+use App\Dto\Gebuehrenbescheid\FerienFeeLine;
+use App\Dto\Gebuehrenbescheid\FerienFeeSummary;
 use App\Dto\TemplatePreview\PreviewFixture;
 use App\Entity\Kind;
 use App\Entity\Organisation;
@@ -112,6 +114,30 @@ final class PreviewFixtureFactory
             zeitraumVon: $von,
             zeitraumBis: $bis,
             schuljahr: $von->format('Y') . '/' . $bis->format('Y'),
+        );
+    }
+
+    /**
+     * Stub figures for the holiday-programme PDF preview.
+     *
+     * Hand-built rather than derived from the fixture entities, so the preview never depends on persisted
+     * Ferienblock bookings.
+     */
+    public function createStubFerienFeeSummary(): FerienFeeSummary
+    {
+        $sommer = new \DateTimeImmutable('first day of august this year');
+
+        $lines = [
+            new FerienFeeLine('Lisa Mustermann', 'Zirkuswoche', $sommer, $sommer->modify('+4 days'), 'Musterhalle', 85.00),
+            new FerienFeeLine('Lisa Mustermann', 'Waldabenteuer', $sommer->modify('+7 days'), $sommer->modify('+11 days'), 'Waldheim', 65.00),
+            new FerienFeeLine('Tim Mustermann', 'Zirkuswoche', $sommer, $sommer->modify('+4 days'), 'Musterhalle', 85.00),
+        ];
+
+        return new FerienFeeSummary(
+            lines: $lines,
+            gesamt: 235.00,
+            stichtag: new \DateTimeImmutable(),
+            kundennummer: 'MUSTER-0001',
         );
     }
 
