@@ -89,11 +89,18 @@ class StadtTranslation implements TranslationInterface
     private $emailtemplateStammdatenEdit;
 
     /**
-     * Twig source of the city-authored Gebührenbescheid PDF, rendered by
+     * Twig source of the city-authored Gebührenbescheid PDF for the Schulkindbetreuung, rendered by
      * {@see \App\Service\Gebuehrenbescheid\PrintGebuehrenbescheidService}.
      */
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $pdftemplateGebuehrenbescheid = null;
+
+    /**
+     * Same, but for the holiday programme, rendered by
+     * {@see \App\Service\Gebuehrenbescheid\PrintFerienGebuehrenbescheidService}.
+     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $pdftemplateGebuehrenbescheidFerien = null;
 
 
     public function getId(): ?int
@@ -494,6 +501,18 @@ class StadtTranslation implements TranslationInterface
     public function setPdftemplateGebuehrenbescheid(?string $pdftemplateGebuehrenbescheid): self
     {
         $this->pdftemplateGebuehrenbescheid = $pdftemplateGebuehrenbescheid;
+
+        return $this;
+    }
+
+    public function getPdftemplateGebuehrenbescheidFerien(): ?string
+    {
+        return $this->pdftemplateGebuehrenbescheidFerien;
+    }
+
+    public function setPdftemplateGebuehrenbescheidFerien(?string $pdftemplateGebuehrenbescheidFerien): self
+    {
+        $this->pdftemplateGebuehrenbescheidFerien = $pdftemplateGebuehrenbescheidFerien;
 
         return $this;
     }

@@ -463,6 +463,17 @@
                                                             <span class="text-muted small ml-2">Bitte zuerst speichern – die Vorschau zeigt den gespeicherten Stand.</span>
                                                         {% endif %}
                                                     </div>
+
+                                                    <div class="config-card">
+                                                        <div class="card-title">Gebührenbescheid Ferienprogramm (PDF)</div>
+                                                        {{ form_row(form.settingsFerienSendGebuehrenbescheid) }}
+                                                        {{ a2lixTranslations.partialTranslations(form.translations, ['pdftemplateGebuehrenbescheidFerien']) }}
+                                                        <p class="text-muted small mb-0 mt-2">Ist die Option aktiv, wird der Gebührenbescheid als PDF an die Bestätigung der Ferienbuchung angehängt. Die Summe ergibt sich aus den gebuchten Ferienangeboten des Haushalts.</p>
+                                                        {% if stadt.id %}
+                                                            <a class="btn btn-outline-primary btn-sm mt-3" href="{{ path('app_gebuehrenbescheid_pdf_preview',{'stadt':stadt.id,'locale':app.request.locale,'variant':'ferien'}) }}" target="_blank">PDF-Vorschau</a>
+                                                            <span class="text-muted small ml-2">Bitte zuerst speichern – die Vorschau zeigt den gespeicherten Stand.</span>
+                                                        {% endif %}
+                                                    </div>
                                                 {% endif %}
 
                                                 <div class="config-card">
@@ -529,6 +540,18 @@
                                                                         <li><code>datum</code> Datum des Bescheids</li>
                                                                     </ul>
                                                                     <p class="mb-0 mt-2">Lassen Sie das Template leer, um die mitgelieferte Standard-Vorlage zu verwenden.</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="variable-box">
+                                                                    <div class="variable-title">gebuehren <small>(im Ferienprogramm-PDF)</small></div>
+                                                                    <ul class="variable-list">
+                                                                        <li><code>.gesamt</code> Summe aller gebuchten Ferienangebote des Haushalts</li>
+                                                                        <li><code>.lines</code> Buchungen; je Buchung <code>.kind</code>, <code>.titel</code>, <code>.von</code>, <code>.bis</code>, <code>.ort</code>, <code>.betrag</code></li>
+                                                                        <li><code>.hasLines</code> false, wenn keine gebührenpflichtigen Buchungen vorliegen</li>
+                                                                        <li><code>.stichtag</code>, <code>.kundennummer</code></li>
+                                                                    </ul>
+                                                                    <p class="mb-0 mt-2">Im Ferienprogramm-PDF gibt es <b>kein</b> <code>kind</code> – der Bescheid gilt für den gesamten Haushalt. Die übrigen Angaben zu <code>gebuehren</code> (Monate, Fälligkeiten, Einkommensklasse) entfallen hier.</p>
                                                                 </div>
                                                             </div>
                                                         {% endif %}
