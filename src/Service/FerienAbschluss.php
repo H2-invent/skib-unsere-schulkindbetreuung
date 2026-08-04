@@ -162,9 +162,7 @@ class FerienAbschluss
     /**
      * Builds the Gebührenbescheid attachment if the city switched it on, otherwise null.
      *
-     * The toggle alone decides; a city that authored no template gets the built-in default layout. Any failure
-     * is logged and swallowed, because a broken city template must not stop the booking confirmation with its
-     * tickets from going out.
+     * The toggle alone decides; a city that authored no template gets the built-in default layout.
      *
      * @param array<int, KindFerienblock> $programm the household's booked blocks
      *
@@ -187,30 +185,20 @@ class FerienAbschluss
             ]);
         }
 
-        try {
-            $fileName = 'Gebuehrenbescheid_Ferienprogramm';
+        $fileName = 'Gebuehrenbescheid_Ferienprogramm';
 
-            return array(
-                'type' => 'application/pdf',
-                'filename' => $fileName . '.pdf',
-                'body' => $this->gebuehrenbescheidService->render(
-                    $stadt,
-                    $adresse,
-                    $this->findOrganisation($programm),
-                    $this->feeSummaryBuilder->build($adresse),
-                    $locale,
-                    $fileName,
-                ),
-            );
-        } catch (\Throwable $exception) {
-            $this->logger->error('Ferien-Gebuehrenbescheid could not be rendered', [
-                'stadt' => $stadt->getId(),
-                'stammdaten' => $adresse->getId(),
-                'exception' => $exception,
-            ]);
-
-            return null;
-        }
+        return [
+            'type' => 'application/pdf',
+            'filename' => $fileName . '.pdf',
+            'body' => $this->gebuehrenbescheidService->render(
+                $stadt,
+                $adresse,
+                $this->findOrganisation($programm),
+                $this->feeSummaryBuilder->build($adresse),
+                $locale,
+                $fileName,
+            ),
+        ];
     }
 
     /**
