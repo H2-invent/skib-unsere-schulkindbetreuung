@@ -1,0 +1,135 @@
+{#
+    Wrapper for the city-authored Gebührenbescheid PDF of the holiday programme.
+
+    `template` holds Twig source edited by a city admin (StadtTranslation::$pdftemplateGebuehrenbescheidFerien).
+    Rendered with template_from_string, so the context below is available to that source.
+
+    Leaner than the Schulkindbetreuung notice: holiday blocks are booked and paid per household at checkout, so
+    there is no income bracket, no monthly billing and no SEPA mandate section. Fields the application does not
+    store (Bescheid-ID, Aktenzeichen) are literal placeholders for the city to replace.
+#}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<style>
+    h1 {
+        font-size: 11pt;
+        font-weight: bold;
+    }
+
+    h2 {
+        font-size: 10pt;
+        font-weight: bold;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    th {
+        border: 1px solid #000000;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    td {
+        border: 1px solid #000000;
+    }
+
+    p.sender {
+        font-size: 7pt;
+    }
+</style>
+
+{% if template|striptags|trim is not empty %}
+    {{ include(template_from_string(template)) }}
+{% else %}
+    <p class="sender">{{ stadt.name }}{% if stadt.adresse %} &middot; {{ stadt.adresse }}{% endif %}{% if stadt.plz or stadt.ort %} &middot; {{ stadt.plz }} {{ stadt.ort }}{% endif %}</p>
+
+    <table style="width: 100%; border-collapse: collapse">
+        <tr>
+            <td style="border: none; width: 55%">
+                {% if gebuehren.kundennummer %}Debitorennummer: {{ gebuehren.kundennummer }}<br>{% endif %}
+                {{ eltern.vorname }} {{ eltern.name }}<br>
+                {{ eltern.strasse }}{% if eltern.adresszusatz %}<br>{{ eltern.adresszusatz }}{% endif %}<br>
+                {{ eltern.plz }} {{ eltern.stadt }}
+            </td>
+            <td style="border: none; width: 45%">
+                <b>{{ stadt.name }}</b><br>
+                {% if stadt.adresse %}{{ stadt.adresse }}<br>{% endif %}
+                {{ stadt.plz }} {{ stadt.ort }}<br>
+                <br>
+                {% if stadt.telefon %}Tel.: {{ stadt.telefon }}<br>{% endif %}
+                {% if stadt.email %}E-Mail: {{ stadt.email }}<br>{% endif %}
+                {% if stadt.stadtHomepage %}Homepage: {{ stadt.stadtHomepage }}<br>{% endif %}
+                <br>
+                Datum: {{ datum|date('d.m.Y') }}<br>
+                Aktenzeichen: Aktenzeichen
+            </td>
+        </tr>
+    </table>
+
+    <h1>Gebührenbescheid über die Teilnahme am Ferienprogramm{% if stadt.ort %} in {{ stadt.ort }}{% endif %}</h1>
+
+    <h1>Bescheid-ID: Bescheid-ID</h1>
+
+    <p>Sehr geehrte Familie {{ eltern.name }},</p>
+
+    <p style="text-align: justify">für die von Ihnen gebuchten Angebote des Ferienprogramms werden die folgenden
+        Gebühren festgesetzt. Die Gebühren richten sich nach dem zum Zeitpunkt der Buchung gültigen
+        Gebührenverzeichnis.</p>
+
+    <h2>Gebührenfestsetzung:</h2>
+
+    {% if gebuehren.hasLines %}
+        {# no nobr: a household with many bookings may legitimately need a page break inside this table #}
+        <table style="width: 100%">
+            <tr>
+                <th style="width: 22%">Kind</th>
+                <th style="width: 30%">Angebot</th>
+                <th style="width: 26%">Zeitraum</th>
+                <th style="width: 22%">Gebühr</th>
+            </tr>
+            {% for line in gebuehren.lines %}
+                <tr>
+                    <td>{{ line.kind }}</td>
+                    <td>{{ line.titel }}{% if line.ort %}<br><span style="font-size: 7pt">{{ line.ort }}</span>{% endif %}</td>
+                    <td>{% if line.von %}{{ line.von|date('d.m.Y') }}{% endif %}{% if line.bis and line.bis != line.von %} bis {{ line.bis|date('d.m.Y') }}{% endif %}</td>
+                    <td>{{ line.betrag|number_format(2, ',', '.') }}&nbsp;&euro;</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td><b>Summe Gebühren</b></td>
+                <td></td>
+                <td><b>{{ gebuehren.gesamt|number_format(2, ',', '.') }}&nbsp;&euro;</b></td>
+            </tr>
+        </table>
+    {% else %}
+        <p>Es liegen keine gebührenpflichtigen Buchungen vor.</p>
+    {% endif %}
+
+    <div nobr="true">
+        <h2>Rechtsbehelfsbelehrung:</h2>
+        <p style="text-align: justify">Gegen diesen Bescheid kann innerhalb eines Monats nach Bekanntgabe
+            Widerspruch bei {{ stadt.name }}{% if stadt.adresse %}, {{ stadt.adresse }}{% endif %}{% if stadt.plz or stadt.ort %},
+            {{ stadt.plz }} {{ stadt.ort }}{% endif %} erhoben werden.</p>
+    </div>
+
+    <p>Wir verarbeiten und speichern Ihre Daten gemäß der DSGVO.</p>
+
+    <p style="text-align: justify">Bei Fragen können Sie sich gerne an {{ stadt.name }}
+        {%- if stadt.telefon %} (Tel.: {{ stadt.telefon }}){% endif %} wenden.</p>
+
+    <p>
+        {% if stadt.ansprechpartner %}Gez. {{ stadt.ansprechpartner }}<br>{% endif %}
+        {{ stadt.name }}
+    </p>
+
+    <p style="text-align: center">+++ Dieser Bescheid ist ohne Unterschrift gültig +++</p>
+{% endif %}
+</body>
+</html>

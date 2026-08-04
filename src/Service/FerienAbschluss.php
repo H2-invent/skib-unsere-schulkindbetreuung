@@ -4,8 +4,14 @@ namespace App\Service;
 
 use App\Entity\Ferienblock;
 use App\Entity\KindFerienblock;
+use App\Entity\Organisation;
+use App\Entity\Stadt;
 use App\Entity\Stammdaten;
+use App\Service\Gebuehrenbescheid\FerienFeeSummaryBuilder;
+use App\Service\Gebuehrenbescheid\PrintFerienGebuehrenbescheidService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Environment;
 
 
@@ -23,7 +29,11 @@ class FerienAbschluss
     private $checkoutPaymentService;
 
 
-    public function __construct( CheckoutPaymentService $checkoutPaymentService, Environment $environment, MailerService $mailerService, IcsService $icsService, EntityManagerInterface $entityManager, FerienPrintService $ferienPrintService)
+    public function __construct( CheckoutPaymentService $checkoutPaymentService, Environment $environment, MailerService $mailerService, IcsService $icsService, EntityManagerInterface $entityManager, FerienPrintService $ferienPrintService,
+        private readonly PrintFerienGebuehrenbescheidService $gebuehrenbescheidService,
+        private readonly FerienFeeSummaryBuilder $feeSummaryBuilder,
+        private readonly ParameterBagInterface $parameterBag,
+        private readonly LoggerInterface $logger)
     {
         $this->em = $entityManager;
         $this->printer = $ferienPrintService;
@@ -133,6 +143,12 @@ class FerienAbschluss
             );
         }
         $attachment[] = array('type' => 'text/calendar', 'filename' => 'Ferienprogramm.ics', 'body' => $this->ics->toString());
+
+        $gebuehrenbescheid = $this->buildGebuehrenbescheid($adresse, $programm);
+        if ($gebuehrenbescheid !== null) {
+            $attachment[] = $gebuehrenbescheid;
+        }
+
         $this->mailer->sendEmail(
             'SKIB Ferienprogramm',
             'info@h2-invent.com',
@@ -143,6 +159,81 @@ class FerienAbschluss
             $attachment);
         return 0;
     }
+    /**
+     * Builds the Gebührenbescheid attachment if the city switched it on, otherwise null.
+     *
+     * The toggle alone decides; a city that authored no template gets the built-in default layout.
+     *
+     * @param array<int, KindFerienblock> $programm the household's booked blocks
+     *
+     * @return array{type: string, filename: string, body: string}|null
+     */
+    private function buildGebuehrenbescheid(Stammdaten $adresse, array $programm): ?array
+    {
+        $stadt = $this->findStadt($programm);
+        if ($stadt === null || $stadt->getSettingsFerienSendGebuehrenbescheid() !== true) {
+            return null;
+        }
+
+        $locale = $adresse->getLanguage() ?: $this->parameterBag->get('kernel.default_locale');
+
+        if (!$this->gebuehrenbescheidService->hasTemplate($stadt, $locale)) {
+            $this->logger->info('Ferien-Gebuehrenbescheid: no city template, using the built-in default layout', [
+                'stadt' => $stadt->getId(),
+                'locale' => $locale,
+                'stammdaten' => $adresse->getId(),
+            ]);
+        }
+
+        $fileName = 'Gebuehrenbescheid_Ferienprogramm';
+
+        return [
+            'type' => 'application/pdf',
+            'filename' => $fileName . '.pdf',
+            'body' => $this->gebuehrenbescheidService->render(
+                $stadt,
+                $adresse,
+                $this->findOrganisation($programm),
+                $this->feeSummaryBuilder->build($adresse),
+                $locale,
+                $fileName,
+            ),
+        ];
+    }
+
+    /**
+     * The holiday programme has no Schule to hang the tenant off, so the city comes from the booked blocks.
+     *
+     * @param array<int, KindFerienblock> $programm
+     */
+    private function findStadt(array $programm): ?Stadt
+    {
+        foreach ($programm as $booking) {
+            $ferienblock = $booking->getFerienblock();
+            $stadt = $ferienblock?->getStadt() ?? $ferienblock?->getOrganisation()?->getStadt();
+            if ($stadt !== null) {
+                return $stadt;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array<int, KindFerienblock> $programm
+     */
+    private function findOrganisation(array $programm): ?Organisation
+    {
+        foreach ($programm as $booking) {
+            $organisation = $booking->getFerienblock()?->getOrganisation();
+            if ($organisation !== null) {
+                return $organisation;
+            }
+        }
+
+        return null;
+    }
+
     public function checkIfStillSpace(Stammdaten $stammdaten){
         $qb = $this->em->getRepository(KindFerienblock::class)->createQueryBuilder('kf')
             ->innerJoin('kf.kind','kind')
