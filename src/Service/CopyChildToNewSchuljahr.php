@@ -184,7 +184,9 @@ class CopyChildToNewSchuljahr
 
     public function sendAnmedebestaetigung(Kind $kind, Stammdaten $stammdaten, Stadt $stadt, $text, $dontSendBeworben = false)
     {
-       $emailMustSended =  $this->anmeldeEmailService->sendEmail($kind, $stammdaten, $stadt, $text, $dontSendBeworben);
+       // No Gebührenbescheid on the school-year rollover: this runs as a bulk copy over every child of a city,
+       // and a fee notice there would not reflect a decision the parents just made.
+       $emailMustSended =  $this->anmeldeEmailService->sendEmail($kind, $stammdaten, $stadt, $text, $dontSendBeworben, false);
        if ($emailMustSended === true){
            $this->anmeldeEmailService->send($kind, $stammdaten);
            return true;
