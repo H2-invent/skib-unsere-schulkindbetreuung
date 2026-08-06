@@ -14,9 +14,7 @@
             <b>{{ kind.vorname }} </b></p>
         {{ include('email/__securityCode.twig') }}
 
-        <p class="text-center">{% trans %}Im Anhang finden Sie zur Kontrolle Ihre Daten und die Ihrer Kinder als PDF.
-                Bitte überprüfen Sie die Daten und melden Sie sich bei Fragen an Ihre betreuende Organisation.
-                Die Kontaktdaten sind in dem angehängten PDF angegeben.{% endtrans %}
+        <p class="text-center">{% trans %}pdf.informationstext.main{% endtrans %}
         </p>
         <p>Ihr Kind ist zu den folgenden Betreuungszeitfenstern auf der Warteliste:</p>{% if kind.warteliste %}
         <ul>{% for warteliste in kind.warteliste %}

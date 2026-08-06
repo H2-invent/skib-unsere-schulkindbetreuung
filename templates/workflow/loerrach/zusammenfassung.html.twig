@@ -353,10 +353,10 @@
                         {% trans %}auf mein Konto gezogenen Lastschriften einzulösen{% endtrans %}.
                     </p>
                     <p>
-                        {% trans %}Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.{% endtrans %}
+                        {% trans %}template.zusammenfassung.sepa.8wochen{% endtrans %}
                     </p>
                     <p>
-                        {% trans %}Information: Die Lastschriften werden zu den Fälligkeitsterminen ausgeführt, die in den Bescheiden, Zahlungsaufforderungen und Vertragsbedingungen ausdrücklich genannt sind. Dort finden Sie auch die genauen Einzugsbeträge.{% endtrans %}
+                        {% trans %}template.bezahl.lastschrift.hinweis.termin{% endtrans %}
                     </p>
                 {% else %}
                     {% trans %}Die Einzugsermächtigung wurde nicht erteilt. Diese muss postalisch erteilt werden. Ein Formular für die Einzugsermächtigung ist der Buchungsbestätigungs-E-Mail angehängt.{% endtrans %}
@@ -377,13 +377,13 @@
         <input id="checkboxStorno" type="checkbox" class="checkboxSelect form-check-input" name="Datenschutz"
                value="Datenschutzhinweis">
         <label class="form-check-label"
-               for="checkboxStorno">{% trans %}Ich habe verstanden, dass meine Anmeldung von den betreuenden Organisationen widerrufen werden kann, wenn die Betreuungskapazitäten überschritten sind. Ein Recht auf Aufnahme zur Betreuung besteht nicht.{% endtrans %}</label>
+               for="checkboxStorno">{% trans %}template.zusammenfassung.checkbox.storniermoeglichkeit{% endtrans %}</label>
     </div>
     <div class="form-check">
         <input id="checkboxDatenschutz" type="checkbox" class="checkboxSelect form-check-input" name="Datenschutz"
                value="Datenschutzhinweis">
         <label class="form-check-label"
-               for="checkboxDatenschutz"> {% trans with{'%s%':stadt.name} %}Ich habe die Datenschutzerklärung der %s%  gelesen und bin damit einverstanden, dass meine Daten und die Daten meiner Kinder elektronisch verarbeitet und an die betreuende Organisation weitergegeben werden.{% endtrans %}</label>
+               for="checkboxDatenschutz"> {% trans with{'%s%':stadt.name} %}template.zusammenfassung.checkbox.datenschutz{% endtrans %}</label>
     </div>
 
 

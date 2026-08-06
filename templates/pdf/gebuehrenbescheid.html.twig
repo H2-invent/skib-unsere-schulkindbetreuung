@@ -1,0 +1,233 @@
+{#
+    Wrapper for the city-authored Gebührenbescheid PDF.
+
+    `template` holds Twig source edited by a city admin (StadtTranslation::$pdftemplateGebuehrenbescheid) and is
+    rendered with template_from_string, the same idiom the email templates in templates/email/ use. include()
+    without `with`/`only` inherits this context, so everything below is available to the city template.
+
+    The fallback below mirrors MusterGebuehrenbescheid.pdf. Fields the application does not store (Bescheid-ID,
+    Aktenzeichen, Zeichen, Fax, Bankname, Mandatsreferenz, Abbuchung/Auszahlung) are printed as literal
+    placeholders, exactly as that reference document does, for the city to replace in the editor.
+
+    TCPDF honours only simple CSS and ignores class selectors entirely, hence the tag-selector style block.
+#}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<style>
+    h1 {
+        font-size: 11pt;
+        font-weight: bold;
+    }
+
+    h2 {
+        font-size: 10pt;
+        font-weight: bold;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    th {
+        border: 1px solid #000000;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    td {
+        border: 1px solid #000000;
+    }
+
+    p.sender {
+        font-size: 7pt;
+    }
+
+    p.hint {
+        font-size: 7pt;
+    }
+</style>
+
+{% if template|striptags|trim is not empty %}
+    {{ include(template_from_string(template)) }}
+{% else %}
+    {% set zeitraum = gebuehren.zeitraumVon and gebuehren.zeitraumBis
+        ? gebuehren.zeitraumVon|date('d.m.Y') ~ ' bis ' ~ gebuehren.zeitraumBis|date('d.m.Y')
+        : '' %}
+
+    <p class="sender">{{ stadt.name }}{% if stadt.adresse %} &middot; {{ stadt.adresse }}{% endif %}{% if stadt.plz or stadt.ort %} &middot; {{ stadt.plz }} {{ stadt.ort }}{% endif %}</p>
+
+    <table style="width: 100%; border-collapse: collapse">
+        <tr>
+            <td style="border: none; width: 55%">
+                {% if gebuehren.kundennummer %}Debitorennummer: {{ gebuehren.kundennummer }}<br>{% endif %}
+                {{ eltern.vorname }} {{ eltern.name }}<br>
+                {{ eltern.strasse }}{% if eltern.adresszusatz %}<br>{{ eltern.adresszusatz }}{% endif %}<br>
+                {{ eltern.plz }} {{ eltern.stadt }}
+            </td>
+            <td style="border: none; width: 45%">
+                <b>{{ stadt.name }}</b><br>
+                {% if stadt.adresse %}{{ stadt.adresse }}<br>{% endif %}
+                {{ stadt.plz }} {{ stadt.ort }}<br>
+                <br>
+                {% if stadt.telefon %}Tel.: {{ stadt.telefon }}<br>{% endif %}
+                {% if stadt.email %}E-Mail: {{ stadt.email }}<br>{% endif %}
+                {% if stadt.stadtHomepage %}Homepage: {{ stadt.stadtHomepage }}<br>{% endif %}
+                <br>
+                Datum: {{ datum|date('d.m.Y') }}<br>
+                Aktenzeichen: Aktenzeichen
+            </td>
+        </tr>
+    </table>
+
+    <h1>Gebührenbescheid über die Inanspruchnahme der Betreuung
+        {%- if kind.schule %} an der {{ kind.schule.name }}{% endif %}
+        {%- if stadt.ort %} in {{ stadt.ort }}{% endif %}</h1>
+
+    <h1>Bescheid-ID: Bescheid-ID</h1>
+
+    <p>Sehr geehrte Familie {{ eltern.name }},</p>
+
+    <p style="text-align: justify">Sie haben Ihr Kind zur Betreuung mit den unten aufgeführten Bausteinen angemeldet. Die Gebühren werden
+        gemäß der Betreuungssatzung {{ stadt.name }} zum 1. eines Monats fällig und richten sich nach dem
+        Gebührenverzeichnis. Änderungen werden unter Berücksichtigung der satzungsgemäßen Fristen im Folgemonat
+        berücksichtigt.{% if gebuehren.monate > 0 %} Die Gebühren werden für <b>{{ gebuehren.monate }} Monate</b>
+        erhoben.{% endif %} Die monatliche Gebühr für die Betreuung Ihres Kindes beträgt:</p>
+
+    <table nobr="true" style="width: 75%">
+        <tr>
+            <td style="width: 45%">Name Kind</td>
+            <td>{{ kind.vorname }} {{ kind.nachname }}</td>
+        </tr>
+        <tr>
+            <td>Geburtsdatum</td>
+            <td>{% if kind.geburtstag %}{{ kind.geburtstag|date('d.m.Y') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <td>Weitere Kinder U18 im selben Haushalt <span style="font-size: 7pt">(Höchststufe Sozialstaffel: maximal 3 Kinder U18)</span></td>
+            <td>{{ gebuehren.geschwisterAnzahl }}</td>
+        </tr>
+        <tr>
+            <td>Schuljahr</td>
+            <td>{{ gebuehren.schuljahr }}</td>
+        </tr>
+    </table>
+
+    <h2>Gebührenfestsetzung:</h2>
+
+    <p style="text-align: justify">Entsprechend des Gebührenverzeichnisses der Betreuungssatzung in der aktuell geltenden Fassung wird
+        folgende Gebühr festgesetzt:</p>
+
+    {# no nobr: with many booked blocks this table may legitimately need to break across pages #}
+    <table style="width: 100%">
+        <tr>
+            <th style="width: 20%">Zeitraum</th>
+            <th style="width: 30%">Betreuungsangebot</th>
+            <th style="width: 16%">gebucht an Tagen</th>
+            <th style="width: 17%">monatl. Gebühr</th>
+            <th style="width: 17%">jährl. Gebühr</th>
+        </tr>
+        {% for angebot in gebuehren.angebote %}
+            <tr>
+                <td>{{ zeitraum }}</td>
+                <td>{{ angebot.bezeichnung }}</td>
+                <td>{{ angebot.tage }}</td>
+                <td>{{ angebot.monatlich|number_format(2, ',', '.') }}&nbsp;&euro;</td>
+                <td>{{ angebot.jaehrlich|number_format(2, ',', '.') }}&nbsp;&euro;</td>
+            </tr>
+        {% endfor %}
+        {% if gebuehren.differsFromLineSum %}
+            <tr>
+                <td></td>
+                <td>Ermäßigung</td>
+                <td></td>
+                <td>{{ (gebuehren.gesamt - gebuehren.summeDerPositionen)|number_format(2, ',', '.') }}&nbsp;&euro;</td>
+                <td>{{ ((gebuehren.gesamt - gebuehren.summeDerPositionen) * gebuehren.monate)|number_format(2, ',', '.') }}&nbsp;&euro;</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td></td>
+            <td><b>Summe Gebühren</b></td>
+            <td></td>
+            <td><b>{{ gebuehren.gesamt|number_format(2, ',', '.') }}&nbsp;&euro;</b></td>
+            <td><b>{{ gebuehren.jahresGesamt|number_format(2, ',', '.') }}&nbsp;&euro;</b></td>
+        </tr>
+    </table>
+
+    {# nobr keeps each heading with its table instead of orphaning it at the foot of a page. #}
+    <div nobr="true">
+        <h2>Ihre Bankverbindung</h2>
+
+        <table style="width: 100%">
+            <tr>
+                <th style="width: 16%"></th>
+                <th style="width: 24%">IBAN/Kontoinhaber</th>
+                <th style="width: 16%">BIC</th>
+                <th style="width: 26%">Bank/Mandatsreferenz</th>
+                <th style="width: 9%">Abbu-chung</th>
+                <th style="width: 9%">Auszahl-ung</th>
+            </tr>
+            <tr>
+                <td>Betreuungs-gebühr</td>
+                <td>{{ eltern.iban }}</td>
+                <td>{{ eltern.bic }}</td>
+                <td>Bank</td>
+                <td>{{ eltern.sepaInfo ? 'Ja' : 'Nein' }}</td>
+                <td>{{ eltern.sepaInfo ? 'Ja' : 'Nein' }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>{{ eltern.kontoinhaber }}</td>
+                <td></td>
+                <td>Mandatsreferenz</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    {% if gebuehren.faelligkeiten is not empty %}
+        <div nobr="true">
+            <h2>Fälligkeitstermine monatliche Gebühr</h2>
+
+            <table style="width: 70%">
+                {% for chunk in gebuehren.faelligkeiten|batch(5) %}
+                    <tr>
+                        {% for faelligkeit in chunk %}<td style="width: 20%">{{ faelligkeit|date('d.m.Y') }}</td>{% endfor %}
+                        {# pad the last row so the grid stays rectangular #}
+                        {% if chunk|length < 5 %}{% for i in 1..(5 - chunk|length) %}<td style="width: 20%"></td>{% endfor %}{% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+
+    {% if eltern.sepaInfo %}
+        <p style="text-align: justify">Sie haben eine Einzugsermächtigung (SEPA-Basislastschriftmandat) erteilt. Dementsprechend erfolgen
+            die Einzüge unter der angegebenen Mandatsreferenz zu den angegebenen Fälligkeitsterminen.</p>
+    {% endif %}
+
+    <div nobr="true">
+        <h2>Rechtsbehelfsbelehrung:</h2>
+        <p style="text-align: justify">Gegen diesen Bescheid kann innerhalb eines Monats nach Bekanntgabe Widerspruch bei
+            {{ stadt.name }}{% if stadt.adresse %}, {{ stadt.adresse }}{% endif %}{% if stadt.plz or stadt.ort %},
+            {{ stadt.plz }} {{ stadt.ort }}{% endif %} erhoben werden.</p>
+    </div>
+
+    <p>Wir verarbeiten und speichern Ihre Daten gemäß der DSGVO.</p>
+
+    <p style="text-align: justify">Bei Fragen können Sie sich gerne an {{ stadt.name }}
+        {%- if stadt.telefon %} (Tel.: {{ stadt.telefon }}){% endif %} wenden.</p>
+
+    <p>
+        {% if stadt.ansprechpartner %}Gez. {{ stadt.ansprechpartner }}<br>{% endif %}
+        {{ stadt.name }}
+    </p>
+
+    <p style="text-align: center">+++ Dieser Bescheid ist ohne Unterschrift gültig +++</p>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid ">
+            <div class="row">
+                <div class=" col-12 card">
+                    <div class="card-header">
+                        <h1>{{ title }}</h1>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            {% trans %}Hier können Sie einen anonymisierten SQL-Dump der Datenbank erstellen.
+                            Personenbezogene Daten werden dabei ersetzt. Der Dump wird in eine mit dem angegebenen
+                            Passwort verschlüsselte ZIP-Datei gepackt und anschließend zum Download angeboten.
+                            Nach dem Download wird die Datei automatisch vom Server gelöscht.{% endtrans %}
+                        </p>
+                        <div class="alert alert-warning">
+                            {% trans %}Bitte bewahren Sie das Passwort sicher auf. Ohne das Passwort kann die
+                            ZIP-Datei nicht mehr geöffnet werden.{% endtrans %}
+                        </div>
+                        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                        {{ form_widget(form) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

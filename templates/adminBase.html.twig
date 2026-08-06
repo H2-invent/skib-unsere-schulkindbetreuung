@@ -56,10 +56,17 @@
                                     class="material-icons">home</i>{% trans %}Städte{% endtrans %}</a></li>
                     <li><a href="{{ path('admin_showAllUser') }}"{{ isActiveNav('admin_showAllUser') ? ' class="active"' }}><i
                                     class="material-icons">people</i>{% trans %}Alle User{% endtrans %}</a></li>
+                    <li><a href="{{ path('de__RG__lexik_translation_overview') }}"{{ isActiveNav('admin_showAllUser') ? ' class="active"' }}><i
+                                    class="material-icons">people</i>{% trans %}Textbauteine{% endtrans %}</a></li>
                     <li><a href="{{ path('content_show') }}"{{ isActiveNav('content_show') ? ' class="active"' }}><i
                                     class="material-icons">inbox</i>{% trans %}Frontpage Content{% endtrans %}</a></li>
                     <li><a href="{{ path('admin_mailgun_index') }}"{{ isActiveNav('admin_mailgun_index') ? ' class="active"' }}><i
                                     class="material-icons">inbox</i>{% trans %}Mailgun{% endtrans %}</a></li>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li><a href="{{ path('admin_database_dump') }}"{{ isActiveNav('admin_database_dump') ? ' class="active"' }}><i
+                                        class="material-icons">storage</i>{% trans %}Datenbank{% endtrans %}</a></li>
+                    {% endif %}
 
                 {% endif %}
 

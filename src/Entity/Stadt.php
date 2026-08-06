@@ -298,6 +298,12 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $skibSettingsFinishButtonText;
 
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $settingsSkibSendGebuehrenbescheid = false;
+
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $settingsFerienSendGebuehrenbescheid = false;
+
     #[ORM\Column(nullable: true)]
     private ?bool $hideChildQuestions = null;
 
@@ -1441,6 +1447,30 @@ class Stadt implements TranslatableInterface
     public function setSkibSettingsFinishButtonText(?string $skibSettingsFinishButtonText): self
     {
         $this->skibSettingsFinishButtonText = $skibSettingsFinishButtonText;
+
+        return $this;
+    }
+
+    public function getSettingsSkibSendGebuehrenbescheid(): bool
+    {
+        return $this->settingsSkibSendGebuehrenbescheid;
+    }
+
+    public function setSettingsSkibSendGebuehrenbescheid(bool $settingsSkibSendGebuehrenbescheid): self
+    {
+        $this->settingsSkibSendGebuehrenbescheid = $settingsSkibSendGebuehrenbescheid;
+
+        return $this;
+    }
+
+    public function getSettingsFerienSendGebuehrenbescheid(): bool
+    {
+        return $this->settingsFerienSendGebuehrenbescheid;
+    }
+
+    public function setSettingsFerienSendGebuehrenbescheid(bool $settingsFerienSendGebuehrenbescheid): self
+    {
+        $this->settingsFerienSendGebuehrenbescheid = $settingsFerienSendGebuehrenbescheid;
 
         return $this;
     }

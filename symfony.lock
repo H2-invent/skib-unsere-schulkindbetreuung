@@ -159,6 +159,9 @@
     "league/oauth2-client": {
         "version": "2.6.1"
     },
+    "lexik/translation-bundle": {
+        "version": "v6.0"
+    },
     "liip/imagine-bundle": {
         "version": "1.8",
         "recipe": {
