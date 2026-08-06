@@ -123,6 +123,10 @@ class StadtType extends AbstractType
                 CheckboxType::class,
                 ['required' => false, 'label' => 'Wir bieten eine Schulkindbetreuung über dieses Portal an', 'translation_domain' => 'form']
             )
+            ->add('parentSickReportsEnabled',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Eltern-Krankmeldungen aktivieren', 'translation_domain' => 'form']
+            )
             ->add('email', TextType::class, ['label' => 'Email', 'translation_domain' => 'form'])
             ->add('adresse', TextType::class, ['label' => 'Straße', 'translation_domain' => 'form'])
             ->add('adresszusatz',

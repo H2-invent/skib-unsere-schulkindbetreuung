@@ -157,6 +157,9 @@
                                                         {% if form.ferienprogramm is defined %}
                                                             <div class="col-md-6">{{ form_row(form.ferienprogramm) }}</div>
                                                         {% endif %}
+                                                        {% if form.parentSickReportsEnabled is defined %}
+                                                            <div class="col-md-6">{{ form_row(form.parentSickReportsEnabled) }}</div>
+                                                        {% endif %}
                                                         {% if form.settingEncryptEmailAttachment is defined %}
                                                             <div class="col-md-6">{{ form_row(form.settingEncryptEmailAttachment) }}</div>
                                                         {% endif %}

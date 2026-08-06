@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ParentSickPortalController extends AbstractController
 {
@@ -31,14 +32,16 @@ class ParentSickPortalController extends AbstractController
     ) {
     }
 
-    #[Route('/eltern/krankmeldung', name: 'parent_sick_request', methods: ['GET', 'POST'])]
-    public function requestLink(Request $request): Response
+    #[Route('/{stadtSlug}/eltern/krankmeldung', name: 'parent_sick_request', methods: ['GET', 'POST'])]
+    public function requestLink(Request $request, string $stadtSlug): Response
     {
-        $stadtSlug = $request->query->get('stadt');
         $stadt = $this->entityManager->getRepository(\App\Entity\Stadt::class)->findOneBy(['slug' => $stadtSlug]);
 
         if (!$stadt instanceof \App\Entity\Stadt) {
             throw $this->createNotFoundException('Stadt nicht gefunden.');
+        }
+        if (!$stadt->isParentSickReportsEnabled()) {
+            throw $this->createNotFoundException('Krankmeldungen sind für diese Stadt nicht aktiviert.');
         }
         $request->getSession()->set(self::SESSION_KEY_STADT_SLUG, $stadt->getSlug());
 
@@ -53,7 +56,7 @@ class ParentSickPortalController extends AbstractController
             $this->portalService->createAndSendAccessLink($access, $stadt);
             $this->addFlash('success', 'Der Link wurde per E-Mail verschickt.');
 
-            return $this->redirectToRoute('parent_sick_request', ['stadt' => $stadt->getSlug()]);
+            return $this->redirectToRoute('parent_sick_request', ['stadtSlug' => $stadt->getSlug()]);
         }
 
         return $this->render('parent_sick/request.html.twig', [
@@ -68,6 +71,10 @@ class ParentSickPortalController extends AbstractController
         $access = $this->accessRepository->findByStringToken($token);
         if (!$access instanceof ParentSickPortalAccess) {
             throw $this->createNotFoundException('Der Zugangscode ist ungültig.');
+        }
+
+        if (!$access->getStadt()?->isParentSickReportsEnabled()) {
+            throw $this->createNotFoundException('Krankmeldungen sind für diese Stadt nicht aktiviert.');
         }
 
         if (!$this->portalService->isLinkValid($access, $request)) {
@@ -91,7 +98,7 @@ class ParentSickPortalController extends AbstractController
         if (!$access instanceof ParentSickPortalAccess) {
             $stadtSlug = $request->getSession()->get(self::SESSION_KEY_STADT_SLUG);
 
-            return $this->redirectToRoute('parent_sick_request', ['stadt' => $stadtSlug]);
+            return $this->redirectToRoute('parent_sick_request', ['stadtSlug' => $stadtSlug]);
         }
 
         $childHistory = $this->kindRepository->findChildHistoryForParentAndSchoolyear($access->getEmail(), $access->getSchuljahr());
@@ -147,7 +154,7 @@ class ParentSickPortalController extends AbstractController
         if (!$access instanceof ParentSickPortalAccess) {
             $stadtSlug = $request->getSession()->get(self::SESSION_KEY_STADT_SLUG);
 
-            return $this->redirectToRoute('parent_sick_request', ['stadt' => $stadtSlug]);
+            return $this->redirectToRoute('parent_sick_request', ['stadtSlug' => $stadtSlug]);
         }
 
         $childHistory = $this->kindRepository->findChildHistoryForParentAndSchoolyear($access->getEmail(), $access->getSchuljahr());
@@ -189,7 +196,7 @@ class ParentSickPortalController extends AbstractController
         $this->addFlash('success', 'Zugriff wurde beendet.');
         $stadtSlug = $request->getSession()->get(self::SESSION_KEY_STADT_SLUG);
 
-        return $this->redirectToRoute('parent_sick_request', ['stadt' => $stadtSlug]);
+        return $this->redirectToRoute('parent_sick_request', ['stadtSlug' => $stadtSlug]);
     }
 
     #[Route('/org_child/krankmeldungen/heute', name: 'org_child_sick_today', methods: ['GET'])]
@@ -199,10 +206,17 @@ class ParentSickPortalController extends AbstractController
         $user = $this->getUser();
         $organisation = $user->getOrganisation();
 
+        if (!$organisation->getStadt()?->isParentSickReportsEnabled()) {
+            throw $this->createNotFoundException('Krankmeldungen sind für diese Stadt nicht aktiviert.');
+        }
+
         $reports = $this->sickReportRepository->findForTodayByOrganisation($organisation);
+        $allReports = $this->sickReportRepository->findAllByOrganisation($organisation);
 
         return $this->render('parent_sick/today_for_org.html.twig', [
             'reports' => $reports,
+            'allReports' => $allReports,
+            'parentSickRequestUrl' => $this->generateUrl('parent_sick_request', ['stadtSlug' => $organisation->getStadt()?->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL),
         ]);
     }
 

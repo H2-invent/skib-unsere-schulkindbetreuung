@@ -65,6 +65,21 @@ class ChildSickReportRepository extends ServiceEntityRepository
     }
 
     /** @return ChildSickReport[] */
+    public function findAllByOrganisation(Organisation $organisation): array
+    {
+        return $this->createQueryBuilder('report')
+            ->innerJoin('report.kind', 'kind')
+            ->innerJoin('kind.schule', 'schule')
+            ->innerJoin('schule.organisation', 'organisation')
+            ->andWhere('organisation = :organisation')->setParameter('organisation', $organisation)
+            ->orderBy('report.von', 'DESC')
+            ->addOrderBy('kind.nachname', 'ASC')
+            ->addOrderBy('kind.vorname', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /** @return ChildSickReport[] */
     public function findForTodayByOrganisation(Organisation $organisation): array
     {
         $todayStart = (new \DateTime())->setTime(0, 0, 0);
