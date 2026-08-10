@@ -108,6 +108,13 @@ class DeleteSchoolYearChildrenService
 
         $assignment = $this->entityManager->getRepository(AutoBlockAssignmentChild::class)->findOneBy(['kind' => $child]);
         if ($assignment !== null) {
+            // The Zeitblock is intentionally retained. Clear its eager inverse
+            // reference before cascade-removing the assignment rows; otherwise
+            // Doctrine still discovers the removed draft row through Zeitblock
+            // while computing the change set.
+            foreach ($assignment->getZeitblocks()->toArray() as $assignmentZeitblock) {
+                $assignmentZeitblock->getZeitblock()?->setAutoBlockAssignmentChildZeitblock(null);
+            }
             $this->entityManager->remove($assignment);
         }
     }
