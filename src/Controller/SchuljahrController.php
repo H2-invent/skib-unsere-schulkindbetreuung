@@ -6,9 +6,11 @@ use App\Entity\Active;
 use App\Entity\Schule;
 use App\Entity\Stadt;
 use App\Form\Type\SchuljahrType;
+use App\Service\DeleteSchoolYearChildrenService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -141,5 +143,34 @@ class SchuljahrController extends AbstractController
         $text = $translator->trans('Erfolgreich gelöscht');
         return $this->redirectToRoute('city_admin_schuljahr_anzeige', array('id' => $activity->getStadt()->getId(), 'snack' => $text));
 
+    }
+
+    /**
+     * @Route("city_admin/stadtschuljahr/kinder-loeschen", name="city_admin_schuljahr_kinder_delete", methods={"POST"})
+     */
+    public function deleteChildren(
+        Request $request,
+        TranslatorInterface $translator,
+        DeleteSchoolYearChildrenService $deleteSchoolYearChildrenService
+    ): Response {
+        $activity = $this->managerRegistry->getRepository(Active::class)->find($request->request->get('id'));
+
+        if ($activity === null || $activity->getStadt() != $this->getUser()->getStadt()) {
+            throw $this->createNotFoundException();
+        }
+
+        if (!$this->isCsrfTokenValid('delete_school_year_children_' . $activity->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Ungültiges CSRF-Token.');
+        }
+
+        $numberOfChildren = $deleteSchoolYearChildrenService->delete($activity);
+        $text = $translator->trans('%count% Kinder und ihre zugehörigen Daten wurden gelöscht.', [
+            '%count%' => $numberOfChildren,
+        ]);
+
+        return $this->redirectToRoute('city_admin_schuljahr_anzeige', [
+            'id' => $activity->getStadt()->getId(),
+            'snack' => $text,
+        ]);
     }
 }
