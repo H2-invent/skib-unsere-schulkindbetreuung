@@ -58,6 +58,16 @@ final class DeleteSchoolYearChildrenService
                     $parents[$parent->getId()] = $parent;
                 }
 
+                $this->removeAutoBlockAssignment($child);
+            }
+
+            // Delete the complete auto-assignment aggregates before loading and
+            // changing Zeitblock collections. This prevents retained Zeitblock
+            // instances from pulling already removed draft entities back into
+            // Doctrine's persist graph.
+            $this->entityManager->flush();
+
+            foreach ($children as $child) {
                 $this->removeChildData($child);
                 $this->entityManager->remove($child);
             }
@@ -109,11 +119,14 @@ final class DeleteSchoolYearChildrenService
                 $this->entityManager->remove($entity);
             }
         }
+    }
 
+    private function removeAutoBlockAssignment(Kind $child): void
+    {
         $assignment = $this->autoBlockAssignmentChildRepository->findOneBy(['kind' => $child]);
         if ($assignment !== null) {
-            // AutoBlockAssignmentChild cascades the removal to all of its
-            // AutoBlockAssignmentChildZeitblock entities.
+            // The entity mapping cascades this removal to every associated
+            // AutoBlockAssignmentChildZeitblock entity.
             $this->entityManager->remove($assignment);
         }
     }
