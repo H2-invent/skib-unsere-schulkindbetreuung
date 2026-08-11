@@ -104,7 +104,12 @@ class Zeitblock implements TranslatableInterface
     #[ORM\ManyToMany(targetEntity: Kind::class, mappedBy: 'movedToWaiting')]
     private Collection $movedToWaitingKid;
 
-    #[ORM\OneToOne(mappedBy: 'zeitblock', targetEntity: AutoBlockAssignmentChildZeitblock::class, fetch: 'EAGER')]
+    #[ORM\OneToOne(
+        mappedBy: 'zeitblock',
+        targetEntity: AutoBlockAssignmentChildZeitblock::class,
+        cascade: ['persist'],
+        fetch: 'EAGER',
+    )]
     private ?AutoBlockAssignmentChildZeitblock $autoBlockAssignmentChildZeitblock = null;
 
     public function __construct()
