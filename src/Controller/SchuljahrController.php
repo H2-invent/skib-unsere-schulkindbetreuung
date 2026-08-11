@@ -161,8 +161,11 @@ final class SchuljahrController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $csrfToken = $request->request->getString('_token');
-        if (!$this->isCsrfTokenValid('delete_school_year_children_' . $activity->getId(), $csrfToken)) {
+        $csrfToken = $request->request->get('_token');
+        if (
+            !is_string($csrfToken)
+            || !$this->isCsrfTokenValid('delete_school_year_children_' . $activity->getId(), $csrfToken)
+        ) {
             throw $this->createAccessDeniedException('Ungültiges CSRF-Token.');
         }
 
