@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Active;
@@ -34,7 +36,8 @@ class KindRepository extends ServiceEntityRepository
             ->andWhere('eltern.created_at is not NULL')
 
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
     public function findActualWorkingCopybyKind(Kind $kind): ?Kind
     {
@@ -242,5 +245,25 @@ class KindRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+     * @return Kind[]
+     */
+    public function findBySchoolYear(Active $schoolYear): array
+    {
+        return $this->createQueryBuilder('child')
+            ->select('DISTINCT child')
+            ->leftJoin('child.zeitblocks', 'booked')
+            ->leftJoin('child.beworben', 'applied')
+            ->leftJoin('child.warteliste', 'waiting')
+            ->leftJoin('child.movedToWaiting', 'moved')
+            ->where('booked.active = :schoolYear')
+            ->orWhere('applied.active = :schoolYear')
+            ->orWhere('waiting.active = :schoolYear')
+            ->orWhere('moved.active = :schoolYear')
+            ->setParameter('schoolYear', $schoolYear)
+            ->getQuery()
+            ->getResult();
     }
 }
