@@ -31,6 +31,15 @@
                                         <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
                                             <a class="dropdown-item" href="{{ path('city_admin_schuljahr_edit',{'id':s.id}) }}">{% trans %}Bearbeiten{% endtrans %}</a>
                                             <a class="dropdown-item" href="{{ path('city_admin_schuljahr_delete',{'id':s.id}) }}">{% trans %}Löschen{% endtrans %}</a>
+                                            <form method="post"
+                                                  action="{{ path('city_admin_schuljahr_kinder_delete') }}"
+                                                  onsubmit="return confirm('{{ 'Wirklich alle Kinder, Eltern, Rechnungen und zugehörigen Daten dieses Schuljahres unwiderruflich löschen? Die Zeitblöcke bleiben erhalten.'|trans|e('js') }}');">
+                                                <input type="hidden" name="id" value="{{ s.id }}">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete_school_year_children_' ~ s.id) }}">
+                                                <button class="dropdown-item text-danger" type="submit">
+                                                    {% trans %}Alle Kinder und Daten löschen{% endtrans %}
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </td>
