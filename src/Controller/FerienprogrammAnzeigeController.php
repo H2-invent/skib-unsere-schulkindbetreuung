@@ -15,11 +15,9 @@ final class FerienprogrammAnzeigeController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/{slug}/ferienprogramm", name="ferienprogramm_anzeige", methods={"GET"})
-     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
-     */
-    public function __invoke(Stadt $stadt): Response
+    #[Route('/{slug}/ferienprogramm', name: 'ferienprogramm_anzeige', methods: ['GET'])]
+    #[ParamConverter('stadt', options: ['mapping' => ['slug' => 'slug']])]
+    public function index(Stadt $stadt): Response
     {
         if (!$stadt->getActive() || $stadt->getDeleted() || !$stadt->getFerienprogramm()) {
             throw $this->createNotFoundException();

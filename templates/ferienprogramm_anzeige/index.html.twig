@@ -15,46 +15,46 @@
         </p>
     </div>
 
-    {% for block in ferienprogramme %}
+    {% for ferienprogramm in ferienprogramme %}
         <article class="card mb-4">
             <div class="card-body">
                 <div class="d-flex flex-column flex-md-row justify-content-between">
                     <div>
-                        <h3 class="card-title h4">{{ block.translate.titel }}</h3>
+                        <h3 class="card-title h4">{{ ferienprogramm.translate.titel }}</h3>
                         <p class="mb-2">
-                            <strong>{{ block.startDate|date('d.m.Y') }}{% if block.startDate|date('Y-m-d') != block.endDate|date('Y-m-d') %} – {{ block.endDate|date('d.m.Y') }}{% endif %}</strong>,
-                            {{ block.startTime|date('H:i') }} – {{ block.endTime|date('H:i') }} {{ 'Uhr'|trans }}
+                            <strong>{{ ferienprogramm.startDate|date('d.m.Y') }}{% if ferienprogramm.startDate|date('Y-m-d') != ferienprogramm.endDate|date('Y-m-d') %} – {{ ferienprogramm.endDate|date('d.m.Y') }}{% endif %}</strong>,
+                            {{ ferienprogramm.startTime|date('H:i') }} – {{ ferienprogramm.endTime|date('H:i') }} {{ 'Uhr'|trans }}
                         </p>
                     </div>
                     <div class="text-md-right mb-3">
-                        {% if block.startVerkauf <= today %}
+                        {% if ferienprogramm.startVerkauf <= today %}
                             <span class="badge badge-success">{{ 'Anmeldung geöffnet'|trans }}</span>
                         {% else %}
                             <span class="badge badge-info">
-                                {{ 'Anmeldung ab'|trans }} {{ block.startVerkauf|date('d.m.Y') }}
+                                {{ 'Anmeldung ab'|trans }} {{ ferienprogramm.startVerkauf|date('d.m.Y') }}
                             </span>
                         {% endif %}
                     </div>
                 </div>
 
-                {% if block.translate.infoText %}
-                    <p>{{ block.translate.infoText|nl2br }}</p>
+                {% if ferienprogramm.translate.infoText %}
+                    <p>{{ ferienprogramm.translate.infoText|nl2br }}</p>
                 {% endif %}
 
                 <dl class="row mb-0">
                     <dt class="col-sm-3">{{ 'Ort'|trans }}</dt>
-                    <dd class="col-sm-9">{{ block.ort|nl2br }}</dd>
+                    <dd class="col-sm-9">{{ ferienprogramm.ort|nl2br }}</dd>
 
                     <dt class="col-sm-3">{{ 'Anmeldezeitraum'|trans }}</dt>
-                    <dd class="col-sm-9">{{ block.startVerkauf|date('d.m.Y') }} – {{ block.endVerkauf|date('d.m.Y') }}</dd>
+                    <dd class="col-sm-9">{{ ferienprogramm.startVerkauf|date('d.m.Y') }} – {{ ferienprogramm.endVerkauf|date('d.m.Y') }}</dd>
 
                     <dt class="col-sm-3">{{ 'Preise'|trans }}</dt>
                     <dd class="col-sm-9">
                         <ul class="list-unstyled mb-0">
-                            {% for preis in block.preis %}
+                            {% for preis in ferienprogramm.preis %}
                                 <li>
-                                    {% if block.namePreise[loop.index0] is defined and block.namePreise[loop.index0] %}
-                                        {{ block.namePreise[loop.index0] }}:
+                                    {% if ferienprogramm.namePreise[loop.index0] is defined and ferienprogramm.namePreise[loop.index0] %}
+                                        {{ ferienprogramm.namePreise[loop.index0] }}:
                                     {% endif %}
                                     <strong>{{ preis|number_format(2, ',', '.') }} €</strong>
                                 </li>
