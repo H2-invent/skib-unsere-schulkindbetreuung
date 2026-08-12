@@ -1,0 +1,68 @@
+{% extends 'workflow/base.html.twig' %}
+
+{% block header %}
+    <div class="col-md-8 mb-4 white-text text-center text-md-left">
+        <h1 class="h1-responsive">{{ 'Ferienprogramm'|trans }}</h1>
+        <hr class="hr-light">
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="mb-4">
+        <h2>{{ 'Buchbare Ferienprogramme'|trans }}</h2>
+        <p class="text-muted">
+            {{ 'Hier finden Sie alle zukünftigen Ferienprogramme, deren Anmeldezeitraum aktuell geöffnet ist.'|trans }}
+        </p>
+    </div>
+
+    {% for block in ferienprogramme %}
+        <article class="card mb-4">
+            <div class="card-body">
+                <div class="d-flex flex-column flex-md-row justify-content-between">
+                    <div>
+                        <h3 class="card-title h4">{{ block.translate.titel }}</h3>
+                        <p class="mb-2">
+                            <strong>{{ block.startDate|date('d.m.Y') }}{% if block.startDate|date('Y-m-d') != block.endDate|date('Y-m-d') %} – {{ block.endDate|date('d.m.Y') }}{% endif %}</strong>,
+                            {{ block.startTime|date('H:i') }} – {{ block.endTime|date('H:i') }} {{ 'Uhr'|trans }}
+                        </p>
+                    </div>
+                    <div class="text-md-right mb-3">
+                        <span class="badge badge-success">{{ 'Anmeldung geöffnet'|trans }}</span>
+                    </div>
+                </div>
+
+                {% if block.translate.infoText %}
+                    <p>{{ block.translate.infoText|nl2br }}</p>
+                {% endif %}
+
+                <dl class="row mb-0">
+                    <dt class="col-sm-3">{{ 'Ort'|trans }}</dt>
+                    <dd class="col-sm-9">{{ block.ort|nl2br }}</dd>
+
+                    <dt class="col-sm-3">{{ 'Anmeldezeitraum'|trans }}</dt>
+                    <dd class="col-sm-9">{{ block.startVerkauf|date('d.m.Y') }} – {{ block.endVerkauf|date('d.m.Y') }}</dd>
+
+                    <dt class="col-sm-3">{{ 'Preise'|trans }}</dt>
+                    <dd class="col-sm-9">
+                        <ul class="list-unstyled mb-0">
+                            {% for preis in block.preis %}
+                                <li>
+                                    {% if block.namePreise[loop.index0] is defined and block.namePreise[loop.index0] %}
+                                        {{ block.namePreise[loop.index0] }}:
+                                    {% endif %}
+                                    <strong>{{ preis|number_format(2, ',', '.') }} €</strong>
+                                </li>
+                            {% else %}
+                                <li>{{ 'Keine Preisangabe'|trans }}</li>
+                            {% endfor %}
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+        </article>
+    {% else %}
+        <div class="alert alert-info" role="status">
+            {{ 'Aktuell sind keine zukünftigen Ferienprogramme buchbar.'|trans }}
+        </div>
+    {% endfor %}
+{% endblock %}

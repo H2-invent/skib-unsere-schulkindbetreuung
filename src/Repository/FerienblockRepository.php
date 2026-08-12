@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Ferienblock;
+use App\Entity\Stadt;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -19,6 +20,32 @@ class FerienblockRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Ferienblock::class);
+    }
+
+    /**
+     * Returns future holiday programmes whose booking period is currently open.
+     *
+     * @return Ferienblock[]
+     */
+    public function findBookableUpcomingForCity(Stadt $stadt, \DateTimeInterface $today): array
+    {
+        $programmes = $this->createQueryBuilder('ferienblock')
+            ->andWhere('ferienblock.stadt = :stadt')
+            ->andWhere('ferienblock.startDate >= :today')
+            ->andWhere('ferienblock.startVerkauf <= :today')
+            ->andWhere('ferienblock.endVerkauf >= :today')
+            ->setParameter('stadt', $stadt)
+            ->setParameter('today', $today)
+            ->orderBy('ferienblock.startDate', 'ASC')
+            ->addOrderBy('ferienblock.StartTime', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        return array_values(array_filter(
+            $programmes,
+            static fn (Ferienblock $programme): bool => $programme->getMaxAnzahl() === null
+                || $programme->getKindFerienblocksGebucht()->count() < $programme->getMaxAnzahl(),
+        ));
     }
 
     // /**
