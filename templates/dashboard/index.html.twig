@@ -8,6 +8,37 @@
                 <div class="col-lg-6"id="chartRow"></div>
                 <div class="col-lg-6" id="orgRow"></div>
             </div>
+            {% if todaySickReports is defined and todaySickReports|length > 0 %}
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h2 class="h4 mb-0">Heute krank gemeldete Kinder</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped mb-0">
+                                <thead>
+                                <tr>
+                                    <th>Kind</th>
+                                    <th>Schule</th>
+                                    <th>Zeitraum</th>
+                                    <th>Bemerkung</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for report in todaySickReports %}
+                                    <tr>
+                                        <td>{{ report.kind.vorname }} {{ report.kind.nachname }}</td>
+                                        <td>{{ report.kind.schule ? report.kind.schule.name : '-' }}</td>
+                                        <td>{{ report.von|date('d.m.Y') }} - {{ report.bis|date('d.m.Y') }}</td>
+                                        <td>{{ report.bemerkung ?: '-' }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
             <section>
                 <div id="stundenplanRow"></div>
             </section>

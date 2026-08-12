@@ -158,10 +158,12 @@
                                 {{ isActiveNav('orgCheckin_how_all_kids') ? ' class="active"' }}> <i
                                     class="material-icons">people</i> {% trans %}Anwesende Kinder{% endtrans %}
                         </a></li>
-                    <li><a href="{{ path('org_child_sick_today') }}"
-                                {{ isActiveNav('org_child_sick_today') ? ' class="active"' }}> <i
-                                    class="material-icons">sick</i> {% trans %}Krankmeldungen heute{% endtrans %}
-                        </a></li>
+                    {% if app.user.organisation.stadt.parentSickReportsEnabled is defined and app.user.organisation.stadt.parentSickReportsEnabled %}
+                        <li><a href="{{ path('org_child_sick_today') }}"
+                                    {{ isActiveNav('org_child_sick_today') ? ' class="active"' }}> <i
+                                        class="material-icons">sick</i> {% trans %}Krankmeldungen heute{% endtrans %}
+                            </a></li>
+                    {% endif %}
 
                 {% endif %}
 

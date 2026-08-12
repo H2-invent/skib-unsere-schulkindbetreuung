@@ -48,11 +48,11 @@
                                     <tr>
                                         <td>{{ entry.email }}</td>
                                         <td>{{ entry.schuljahr.von | date('Y') }}/{{ entry.schuljahr.bis | date('Y') }}</td>
-                                        <td>{{ entry.createdAt | format_datetime() }}</td>
+                                        <td data-order="{{ entry.createdAt | date('U') }}">{{ entry.createdAt | format_datetime() }}</td>
                                         {% if entry.usedAt is null %}
                                             <td>-</td>
                                         {% else %}
-                                            <td>{{ entry.usedAt | format_datetime() }}</td>
+                                            <td data-order="{{ entry.createdAt | date('U') }}">{{ entry.usedAt | format_datetime() }}</td>
                                         {% endif %}
                                     </tr>
                                 {% endfor %}

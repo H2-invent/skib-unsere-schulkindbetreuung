@@ -1,0 +1,6 @@
+{% if parentSickRequestUrl is defined and parentSickRequestUrl %}
+    <p class="text-center">
+        {% trans %}Über das Elterndashboard können Sie Ihre Buchungen und Anträge einsehen sowie Krankmeldungen für Ihr Kind eintragen.{% endtrans %}<br>
+        <a href="{{ parentSickRequestUrl }}">{{ parentSickRequestUrl }}</a>
+    </p>
+{% endif %}
