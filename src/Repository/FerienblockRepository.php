@@ -6,8 +6,6 @@ use App\Entity\Ferienblock;
 use App\Entity\Stadt;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Validator\Constraints\DateTime;
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Ferienblock|null find($id, $lockMode = null, $lockVersion = null)
@@ -29,22 +27,27 @@ class FerienblockRepository extends ServiceEntityRepository
      */
     public function findUpcomingBookableForCity(Stadt $stadt, \DateTimeInterface $today): array
     {
-        $programmes = $this->createQueryBuilder('ferienblock')
+        return $this->createQueryBuilder('ferienblock')
+            ->leftJoin(
+                'ferienblock.kindFerienblocks',
+                'booking',
+                'WITH',
+                'booking.state = :bookedState',
+            )
+            ->leftJoin('booking.kind', 'bookedChild', 'WITH', 'bookedChild.fin = :activeChild')
             ->andWhere('ferienblock.stadt = :stadt')
             ->andWhere('ferienblock.startDate >= :today')
             ->andWhere('ferienblock.endVerkauf >= :today')
+            ->groupBy('ferienblock.id')
+            ->having('ferienblock.maxAnzahl IS NULL OR COUNT(bookedChild.id) < ferienblock.maxAnzahl')
             ->setParameter('stadt', $stadt)
             ->setParameter('today', $today)
+            ->setParameter('bookedState', 10)
+            ->setParameter('activeChild', true)
             ->orderBy('ferienblock.startDate', 'ASC')
             ->addOrderBy('ferienblock.StartTime', 'ASC')
             ->getQuery()
             ->getResult();
-
-        return array_values(array_filter(
-            $programmes,
-            static fn (Ferienblock $programme): bool => $programme->getMaxAnzahl() === null
-                || $programme->getKindFerienblocksGebucht()->count() < $programme->getMaxAnzahl(),
-        ));
     }
 
     // /**
