@@ -2,25 +2,26 @@
 
 namespace App\Controller;
 
+use App\Entity\Stadt;
 use App\Repository\FerienblockRepository;
-use App\Repository\StadtRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 final class FerienprogrammAnzeigeController extends AbstractController
 {
-    public function __construct(
-        private readonly FerienblockRepository $ferienblockRepository,
-        private readonly StadtRepository $stadtRepository,
-    ) {
+    public function __construct(private readonly FerienblockRepository $ferienblockRepository)
+    {
     }
 
-    #[Route('/{slug}/ferienprogramm', name: 'ferienprogramm_anzeige', methods: ['GET'])]
-    public function __invoke(string $slug): Response
+    /**
+     * @Route("/{slug}/ferienprogramm", name="ferienprogramm_anzeige", methods={"GET"})
+     * @ParamConverter("stadt", options={"mapping"={"slug"="slug"}})
+     */
+    public function __invoke(Stadt $stadt): Response
     {
-        $stadt = $this->stadtRepository->findOneBy(['slug' => $slug, 'active' => true, 'deleted' => false]);
-        if ($stadt === null) {
+        if (!$stadt->getActive() || $stadt->getDeleted() || !$stadt->getFerienprogramm()) {
             throw $this->createNotFoundException();
         }
 
