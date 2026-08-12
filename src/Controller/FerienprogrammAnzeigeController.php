@@ -29,7 +29,8 @@ final class FerienprogrammAnzeigeController extends AbstractController
 
         return $this->render('ferienprogramm_anzeige/index.html.twig', [
             'stadt' => $stadt,
-            'ferienprogramme' => $this->ferienblockRepository->findBookableUpcomingForCity($stadt, $today),
+            'ferienprogramme' => $this->ferienblockRepository->findUpcomingBookableForCity($stadt, $today),
+            'today' => $today,
         ]);
     }
 }

@@ -9,9 +9,9 @@
 
 {% block content %}
     <div class="mb-4">
-        <h2>{{ 'Buchbare Ferienprogramme'|trans }}</h2>
+        <h2>{{ 'Ferienprogramme'|trans }}</h2>
         <p class="text-muted">
-            {{ 'Hier finden Sie alle zukünftigen Ferienprogramme, deren Anmeldezeitraum aktuell geöffnet ist.'|trans }}
+            {{ 'Hier finden Sie alle zukünftigen Ferienprogramme, die aktuell oder demnächst buchbar sind.'|trans }}
         </p>
     </div>
 
@@ -27,7 +27,13 @@
                         </p>
                     </div>
                     <div class="text-md-right mb-3">
-                        <span class="badge badge-success">{{ 'Anmeldung geöffnet'|trans }}</span>
+                        {% if block.startVerkauf <= today %}
+                            <span class="badge badge-success">{{ 'Anmeldung geöffnet'|trans }}</span>
+                        {% else %}
+                            <span class="badge badge-info">
+                                {{ 'Anmeldung ab'|trans }} {{ block.startVerkauf|date('d.m.Y') }}
+                            </span>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -62,7 +68,7 @@
         </article>
     {% else %}
         <div class="alert alert-info" role="status">
-            {{ 'Aktuell sind keine zukünftigen Ferienprogramme buchbar.'|trans }}
+            {{ 'Aktuell sind keine zukünftigen Ferienprogramme vorhanden.'|trans }}
         </div>
     {% endfor %}
 {% endblock %}

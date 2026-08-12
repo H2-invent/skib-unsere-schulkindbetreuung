@@ -23,16 +23,15 @@ class FerienblockRepository extends ServiceEntityRepository
     }
 
     /**
-     * Returns future holiday programmes whose booking period is currently open.
+     * Returns future holiday programmes whose booking period has not ended yet.
      *
      * @return Ferienblock[]
      */
-    public function findBookableUpcomingForCity(Stadt $stadt, \DateTimeInterface $today): array
+    public function findUpcomingBookableForCity(Stadt $stadt, \DateTimeInterface $today): array
     {
         $programmes = $this->createQueryBuilder('ferienblock')
             ->andWhere('ferienblock.stadt = :stadt')
             ->andWhere('ferienblock.startDate >= :today')
-            ->andWhere('ferienblock.startVerkauf <= :today')
             ->andWhere('ferienblock.endVerkauf >= :today')
             ->setParameter('stadt', $stadt)
             ->setParameter('today', $today)
