@@ -2,8 +2,16 @@ import $ from "jquery";
 
  function addFormToCollection($collectionHolderClass) {
     var $collectionHolder = $('.' + $collectionHolderClass);
+    if (!$collectionHolder.length) {
+        return;
+    }
+
     var prototype = $collectionHolder.data('prototype');
-    var index = $collectionHolder.data('index');
+    var index = Number($collectionHolder.data('index'));
+    if (!prototype || Number.isNaN(index)) {
+        return;
+    }
+
     var newForm = prototype;
     newForm = newForm.replace(/__name__/g, index);
     $collectionHolder.data('index', index + 1);
@@ -32,9 +40,14 @@ function initKeycloakGroups(){
       $('.add_item_link').off('click');
 
     $('.add_item_link').each(function() {
-        var perber = $('.'+$(this).data('collectionHolderClass')).find('div').length+2;
-        $(this).text($(this).text().replace(/[0-9]/gm,perber))
         var $groupsCollectionHolder = $('.'+$(this).data('collectionHolderClass'));
+        if (!$groupsCollectionHolder.length || !$groupsCollectionHolder.data('prototype')) {
+            $(this).prop('disabled', true);
+            return;
+        }
+
+        var perber = $groupsCollectionHolder.find('div').length+2;
+        $(this).text($(this).text().replace(/[0-9]/gm,perber))
         $groupsCollectionHolder.find('.card').each(function() {
             addTagFormDeleteLink($(this));
         });
