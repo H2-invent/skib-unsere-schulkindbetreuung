@@ -34,8 +34,8 @@
                 {{ form_row(form.geschwisters.vars.prototype.geburtsdatum)|e('html_attr') }}
             </div>'>
     </div>
+    <button type="button"
+            class="add_item_link btn btn-light btn-sm add_item_link mt-3"
+            data-collection-holder-class="geschwisterHolder">+ {{ 'Geschwisterkind hinzufügen'|trans }}
+    </button>
 {% endif %}
-<button type="button"
-        class="add_item_link btn btn-light btn-sm add_item_link mt-3"
-        data-collection-holder-class="geschwisterHolder">+ {{ 'Geschwisterkind hinzufügen'|trans }}
-</button>
