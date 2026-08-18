@@ -15,6 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use function Doctrine\ORM\QueryBuilder;
@@ -170,9 +171,9 @@ class WidgetController extends AbstractController
 
 
         if (sizeof($sepa) == 0 && $active !== null) {
-            return new JsonResponse(array('title' => $translator->trans('SEPA Lastschrift fällig'), 'small' => '', 'anzahl' => 1, 'symbol' => 'attach_money'));
-        } else {
-            return 0;
+            return new JsonResponse(['title' => $translator->trans('SEPA Lastschrift fällig'), 'small' => '', 'anzahl' => 1, 'symbol' => 'attach_money']);
         }
+
+        return new JsonResponse([], Response::HTTP_NOT_FOUND);
     }
 }
