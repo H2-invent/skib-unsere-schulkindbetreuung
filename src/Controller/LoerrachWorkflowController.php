@@ -608,7 +608,7 @@ class LoerrachWorkflowController extends AbstractController
 
 // Daten speichern und fixieren
         $adresse->setLanguage($request->getLocale());
-        $workflowAbschluss->abschluss($adresse, $stadt, $kindeToEdit);
+        $stammdaten = $workflowAbschluss->abschluss($adresse, $stadt, $kindeToEdit);
         $kinder = $adresse->getKinds();
 //Emails an die Eltern senden
 
@@ -625,7 +625,7 @@ class LoerrachWorkflowController extends AbstractController
 
         $lateRegistration = $lateRegistrationService->getStartedLateRegistration($request);
         if ($lateRegistration !== null) {
-            $lateRegistrationService->finish($lateRegistration, $request);
+            $lateRegistrationService->finish($lateRegistration, $request, $stammdaten);
         }
 
         return $response;

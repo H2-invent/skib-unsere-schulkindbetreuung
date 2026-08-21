@@ -40,6 +40,10 @@ class LateRegistration
     #[ORM\Column(type: 'uuid')]
     private ?Uuid $token = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->token = Uuid::v7();
@@ -141,6 +145,18 @@ class LateRegistration
     public function setToken(Uuid $token): self
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

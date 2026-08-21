@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\LateRegistration;
+use App\Entity\Stammdaten;
 use App\Repository\LateRegistrationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\UriSigner;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 class LateRegistrationService
@@ -24,6 +26,7 @@ class LateRegistrationService
         private RouterInterface $router,
         private EntityManagerInterface $entityManager,
         private LateRegistrationRepository $lateRegistrationRepository,
+        private TranslatorInterface $translator,
     )
     {
     }
@@ -31,7 +34,7 @@ class LateRegistrationService
     public function create(LateRegistration $lateRegistration): void
     {
         $this->addSignedUri($lateRegistration);
-        $this->sendEmail($lateRegistration);
+        $this->sendRegistrationEmail($lateRegistration);
         $this->entityManager->persist($lateRegistration);
         $this->entityManager->flush();
     }
@@ -43,7 +46,7 @@ class LateRegistrationService
         $session->set(self::SESSION_KEY_LATE_REGISTRATION, $lateRegistration->getId());
     }
 
-    public function finish(LateRegistration $lateRegistration, Request $request): void
+    public function finish(LateRegistration $lateRegistration, Request $request, Stammdaten $stammdaten): void
     {
         $lateRegistration->setUsedAtValue();
         $this->entityManager->persist($lateRegistration);
@@ -52,6 +55,8 @@ class LateRegistrationService
         $session = $request->getSession();
         $session->remove(self::SESSION_KEY_LATE_REGISTRATION);
         $session->remove(SchuljahrService::SESSION_KEY_SCHULJAHR);
+
+        $this->sendHasBeenUsedEmail($lateRegistration, $stammdaten);
     }
 
     public function isValid(LateRegistration $lateRegistration, Request $request): bool
@@ -90,7 +95,7 @@ class LateRegistrationService
         $lateRegistration->setUri($signedUri);
     }
 
-    private function sendEmail(LateRegistration $lateRegistration): void
+    private function sendRegistrationEmail(LateRegistration $lateRegistration): void
     {
         $mailContent = $this->twig->render('email/late_registration.html.twig', [
             'uri' => $lateRegistration->getUri(),
@@ -101,7 +106,29 @@ class LateRegistrationService
             $lateRegistration->getStadt()->getName(),
             'noreply@unsere-schulkindbetreuung.de',
             $lateRegistration->getEmail(),
-            'Einmallink zur Anmeldung',
+            $this->translator->trans('Einmallink zur Anmeldung'),
+            $mailContent,
+            'noreply@unsere-schulkindbetreuung.de',
+        );
+    }
+
+    private function sendHasBeenUsedEmail(LateRegistration $lateRegistration, Stammdaten $stammdaten): void
+    {
+        $email = $lateRegistration->getUser()?->getEmail();
+        if ($email === null) {
+            return;
+        }
+
+        $mailContent = $this->twig->render('email/late_registration_finished.html.twig', [
+            'lateRegistration' => $lateRegistration,
+            'stammdaten' => $stammdaten,
+        ]);
+
+        $this->mailerService->sendEmail(
+            $lateRegistration->getStadt()->getName(),
+            'noreply@unsere-schulkindbetreuung.de',
+            $email,
+            $this->translator->trans('Nachmeldung abgeschlossen'),
             $mailContent,
             'noreply@unsere-schulkindbetreuung.de',
         );
