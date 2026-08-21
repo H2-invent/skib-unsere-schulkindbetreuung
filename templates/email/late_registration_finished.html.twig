@@ -5,8 +5,14 @@
 
 {% block content %}
     <h4 class="text-center">
-        {% trans %}Die Nachmeldung wurde erfolgreich abgeschlossen.{% endtrans %}
+        {% trans %}Die Nachmeldung wurde erfolgreich abgeschlossen. Bitte bearbeiten Sie die Nachmeldung zum nächstmöglichen Zeitpunkt.{% endtrans %}
     </h4>
+
+    <center>
+        <button href="{{ absolute_url(path('block_schule_schow', {'id': stammdaten.kinds.0.schule.id })) }}">
+            {% trans %}Bearbeiten{% endtrans %}
+        </button>
+    </center>
 
     <p class="text-center">
         <b>{{ stammdaten.vorname }} {{ stammdaten.name }}</b>
@@ -22,7 +28,11 @@
 
     <ul>
         {% for kind in stammdaten.kinds %}
-            <li><b>{{ kind.vorname }} {{ kind.nachname }}</b></li>
+            <li>
+                <b>{{ kind.vorname }} {{ kind.nachname }}</b>
+            </li>
         {% endfor %}
     </ul>
+
+
 {% endblock %}
