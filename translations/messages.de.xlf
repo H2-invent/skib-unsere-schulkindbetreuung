@@ -3376,13 +3376,13 @@
         <source>Nutzen Sie diesen Link, um zur Nachmeldung zu gelangen. Er ist nur 3 Tage gültig.</source>
         <target>Nutzen Sie diesen Link, um zur Nachmeldung zu gelangen. Er ist nur 3 Tage gültig.</target>
       </trans-unit>
-      <trans-unit id="JDt7RHW" resname="Die Nachmeldung wurde erfolgreich abgeschlossen.">
-        <source>Die Nachmeldung wurde erfolgreich abgeschlossen.</source>
-        <target>Die Nachmeldung wurde erfolgreich abgeschlossen.</target>
-      </trans-unit>
       <trans-unit id="cyTbnlf" resname="Folgende Kinder wurden angemeldet:">
         <source>Folgende Kinder wurden angemeldet:</source>
         <target>Folgende Kinder wurden angemeldet:</target>
+      </trans-unit>
+      <trans-unit id="1CiFsXq" resname="Die Nachmeldung wurde erfolgreich abgeschlossen. Bitte bearbeiten Sie die Nachmeldung zum nächstmöglichen Zeitpunkt.">
+        <source>Die Nachmeldung wurde erfolgreich abgeschlossen. Bitte bearbeiten Sie die Nachmeldung zum nächstmöglichen Zeitpunkt.</source>
+        <target>Die Nachmeldung wurde erfolgreich abgeschlossen. Bitte bearbeiten Sie die Nachmeldung zum nächstmöglichen Zeitpunkt.</target>
       </trans-unit>
     </body>
   </file>
