@@ -1,0 +1,28 @@
+{% extends 'email/base.html.twig' %}
+{% block header %}
+    {% trans %}Nachmeldung abgeschlossen{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <h4 class="text-center">
+        {% trans %}Die Nachmeldung wurde erfolgreich abgeschlossen.{% endtrans %}
+    </h4>
+
+    <p class="text-center">
+        <b>{{ stammdaten.vorname }} {{ stammdaten.name }}</b>
+        <br>
+        {{ lateRegistration.email }}
+    </p>
+
+    <br>
+
+    <p class="text-center">
+        {% trans %}Folgende Kinder wurden angemeldet:{% endtrans %}
+    </p>
+
+    <ul>
+        {% for kind in stammdaten.kinds %}
+            <li><b>{{ kind.vorname }} {{ kind.nachname }}</b></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

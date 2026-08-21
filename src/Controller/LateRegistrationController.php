@@ -39,6 +39,7 @@ class LateRegistrationController extends AbstractController
             /** @var LateRegistration $lateRegistration */
             $lateRegistration = $form->getData();
             $lateRegistration->setStadt($stadt);
+            $lateRegistration->setUser($user);
             $this->lateRegisterService->create($lateRegistration);
 
             // redirect to self to clear form data

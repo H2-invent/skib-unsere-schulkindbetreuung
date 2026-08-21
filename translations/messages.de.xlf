@@ -197,7 +197,6 @@
         <source>Ferienprogramm erstellen</source>
         <target state="needs-translation">Ferienprogramm erstellen</target>
       </trans-unit>
-
       <trans-unit id="4BJxmLO" resname="Gutscheine bearbeiten">
         <source>Gutscheine bearbeiten</source>
         <target state="needs-translation">Gutscheine bearbeiten</target>
@@ -758,7 +757,6 @@
         <source>Rechnungsnummer</source>
         <target state="needs-translation">Rechnungsnummer</target>
       </trans-unit>
-
       <trans-unit id="OsNmCHb" resname="Ansprechpartner">
         <source>Ansprechpartner</source>
         <target state="needs-translation">Ansprechpartner</target>
@@ -1656,7 +1654,6 @@
         <source>Hiermit bestägen wir Ihnen die Anmeldung Ihrer Kinder</source>
         <target state="needs-translation">Hiermit bestägen wir Ihnen die Anmeldung Ihrer Kinder</target>
       </trans-unit>
-
       <trans-unit id="L3ZouTV" resname="Mit freundlichen Grüßen Ihr">
         <source>Mit freundlichen Grüßen Ihr</source>
         <target state="needs-translation">Mit freundlichen Grüßen Ihr</target>
@@ -1969,7 +1966,6 @@
         <source>Anmeldezeitraum</source>
         <target state="needs-translation">Anmeldezeitraum</target>
       </trans-unit>
-
       <trans-unit id="g.B9xuk" resname="Termin">
         <source>Termin</source>
         <target state="needs-translation">Termin</target>
@@ -2094,7 +2090,6 @@
         <source>Bezahlmethode</source>
         <target state="needs-translation">Bezahlmethode</target>
       </trans-unit>
-
       <trans-unit id="QVYIDc4" resname="IP Adresse">
         <source>IP Adresse</source>
         <target state="needs-translation">IP Adresse</target>
@@ -2151,7 +2146,6 @@
         <source>Preise Bearbeiten</source>
         <target state="needs-translation">Preise Bearbeiten</target>
       </trans-unit>
-
       <trans-unit id="bTQW9ci" resname="Fragen bearbeiten">
         <source>Fragen bearbeiten</source>
         <target state="needs-translation">Fragen bearbeiten</target>
@@ -3293,7 +3287,6 @@
         <source>Diese E-Mail wurde im Auftrag der %s% versandt</source>
         <target>Diese E-Mail wurde im Auftrag der %s% versandt</target>
       </trans-unit>
-
       <trans-unit id="2Os9R.g" resname="Mit dieser E-Mail erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung">
         <source>Mit dieser E-Mail erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung</source>
         <target>Mit dieser E-Mail erhalten Sie erneut den Sicherheitscode zum Ändern Ihrer Anmeldung in unserer Schulkindbetreuung</target>
@@ -3370,6 +3363,26 @@
       <trans-unit id="8ferAjC" resname="app.email.confirmation.information">
         <source>app.email.confirmation.information</source>
         <target>Wir haben Ihnen einen Bestätigungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen Code aus der E-Mail hier ein. Dies ist notwendig um die Daten Ihrer Kinder bestmöglich zu schützen. Dies kann einige Minuten dauern. Bitte sehen Sie auch in Ihrem Spamordner nach.</target>
+      </trans-unit>
+      <trans-unit id="XCQECnD" resname="Einmallink zur Anmeldung">
+        <source>Einmallink zur Anmeldung</source>
+        <target>Einmallink zur Anmeldung</target>
+      </trans-unit>
+      <trans-unit id=".eUCE2V" resname="Nachmeldung abgeschlossen">
+        <source>Nachmeldung abgeschlossen</source>
+        <target>Nachmeldung abgeschlossen</target>
+      </trans-unit>
+      <trans-unit id="roOzffb" resname="Nutzen Sie diesen Link, um zur Nachmeldung zu gelangen. Er ist nur 3 Tage gültig.">
+        <source>Nutzen Sie diesen Link, um zur Nachmeldung zu gelangen. Er ist nur 3 Tage gültig.</source>
+        <target>Nutzen Sie diesen Link, um zur Nachmeldung zu gelangen. Er ist nur 3 Tage gültig.</target>
+      </trans-unit>
+      <trans-unit id="JDt7RHW" resname="Die Nachmeldung wurde erfolgreich abgeschlossen.">
+        <source>Die Nachmeldung wurde erfolgreich abgeschlossen.</source>
+        <target>Die Nachmeldung wurde erfolgreich abgeschlossen.</target>
+      </trans-unit>
+      <trans-unit id="cyTbnlf" resname="Folgende Kinder wurden angemeldet:">
+        <source>Folgende Kinder wurden angemeldet:</source>
+        <target>Folgende Kinder wurden angemeldet:</target>
       </trans-unit>
     </body>
   </file>
