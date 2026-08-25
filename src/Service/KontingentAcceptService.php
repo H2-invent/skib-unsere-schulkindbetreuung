@@ -3,8 +3,10 @@
 namespace App\Service;
 
 use App\Entity\Kind;
+use App\Entity\Stadt;
 use App\Entity\Zeitblock;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class KontingentAcceptService
@@ -24,7 +26,6 @@ class KontingentAcceptService
 
     public function acceptKind(Zeitblock $zeitblock, Kind $kind, $silent = false)
     {
-
         if (!in_array($kind, $zeitblock->getKinderBeworben()->toArray())) {
             return false;
         }
@@ -37,7 +38,7 @@ class KontingentAcceptService
         $this->em->persist($kindWorkingcopy);
         $this->em->flush();
         if (!$silent) {
-            $this->beworbenCheck($kind);
+            $this->sendAcceptanceMailIfNoMoreBeworben($kind);
         }
 
         return true;
@@ -69,16 +70,33 @@ class KontingentAcceptService
 
     }
 
-    public function beworbenCheck(Kind $kind)
+    public function sendAcceptanceMailIfNoMoreBeworben(Kind $kind): void
     {
-
-        if (sizeof($kind->getBeworben()->toArray()) === 0) {// es gibt keine beworbenen Zeitblöcke mehr. Das kind soll nun eine Buchungsbestätigung erhalten
-            foreach ($kind->getBeworben() as $data) {
-                $kind->removeBeworben($data);
-            }
-            $this->anmeldeEmailService->sendEmail($kind, $this->elternService->getLatestElternFromChild($kind), $kind->getZeitblocks()[0]->getSchule()->getStadt(), $this->translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:'));
-            $this->anmeldeEmailService->send($kind, $this->elternService->getLatestElternFromChild($kind));
+        if (count($kind->getBeworben()->toArray()) !== 0) {
+            // Es gibt noch beworbene Zeitblöcke. Eine Buchungsbestätigung soll noch nicht geschickt werden.
+            return;
         }
-        return false;
+
+        $this->anmeldeEmailService->sendEmail($kind,
+            $this->elternService->getLatestElternFromChild($kind),
+            $this->getStadt($kind),
+            $this->translator->trans('Hiermit bestägen wir Ihnen die Anmeldung Ihrers Kindes:')
+        );
+        $this->anmeldeEmailService->send($kind, $this->elternService->getLatestElternFromChild($kind));
+    }
+
+    /**
+     * @throws RuntimeException
+     */
+    public function getStadt(Kind $kind): Stadt
+    {
+        foreach ($kind->getZeitblocks() as $zeitblock) {
+            $stadt = $zeitblock->getSchule()?->getStadt();
+            if ($stadt !== null) {
+                return $stadt;
+            }
+        }
+
+        throw new RuntimeException("Could not find Stadt from Child Zeitblocks");
     }
 }

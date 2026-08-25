@@ -60,7 +60,7 @@ class KontingentController extends AbstractController
         $kind = $this->managerRegistry->getRepository(Kind::class)->find($kindId);
         try {
             if ($kind && $kind->getSchule()->getOrganisation() === $this->getUser()->getOrganisation()){
-                $this->acceptService->beworbenCheck($kind);
+                $this->acceptService->sendAcceptanceMailIfNoMoreBeworben($kind);
             }else{
                 $this->addFlash('danger',$translator->trans('Kind nicht vorhanden.'));
             }
