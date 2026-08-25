@@ -24,6 +24,8 @@ parameters:
     app.log.loki.uri: '%env(LOKI_URI)%'
     app.log.loki.client: '%env(LOKI_CLIENT)%'
     app.log.loki.log_level: '%env(LOKI_LOG_LEVEL)%'
+    app.feature_flags:
+        late_registration_finish_mail: '%env(bool:FEATURE_LATE_REGISTRATION_FINISH_MAIL)%'
 
 services:
     # default configuration for services in *this* file

@@ -27,6 +27,7 @@ class LateRegistrationService
         private EntityManagerInterface $entityManager,
         private LateRegistrationRepository $lateRegistrationRepository,
         private TranslatorInterface $translator,
+        private readonly FeatureFlagService $featureFlagService,
     )
     {
     }
@@ -56,7 +57,9 @@ class LateRegistrationService
         $session->remove(self::SESSION_KEY_LATE_REGISTRATION);
         $session->remove(SchuljahrService::SESSION_KEY_SCHULJAHR);
 
-        $this->sendHasBeenUsedEmail($lateRegistration, $stammdaten);
+        if ($this->featureFlagService->isEnabled(FeatureFlagService::FEATURE_LATE_REGISTRATION_FINISH_MAIL)) {
+            $this->sendHasBeenUsedEmail($lateRegistration, $stammdaten);
+        }
     }
 
     public function isValid(LateRegistration $lateRegistration, Request $request): bool
