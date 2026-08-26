@@ -12,23 +12,22 @@ use App\Repository\AutoBlockAssignmentChildRepository;
 use App\Repository\AutoBlockAssignmentRepository;
 use App\Repository\KindRepository;
 use App\Repository\ZeitblockRepository;
+use App\Service\WeightScoreService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerAwareTrait;
-use RuntimeException;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 class DraftCreator
 {
     use LoggerAwareTrait;
 
     public function __construct(
-        private ExpressionLanguage $expressionLanguage,
         private AutoBlockAssignmentRepository $autoBlockAssignmentRepository,
         private AutoBlockAssignmentChildRepository $autoBlockAssignmentChildRepository,
         private ZeitblockRepository $zeitblockRepository,
         private KindRepository $kindRepository,
         private EntityManagerInterface $entityManager,
         private DraftCreationValidator $draftCreationValidator,
+        private WeightScoreService $weightScoreService,
     )
     {
     }
@@ -45,28 +44,16 @@ class DraftCreator
 
     private function calculateWeights(Organisation $organisation, AutoBlockAssignment $autoBlockAssignment, Active $schuljahr): void
     {
-        $stadt = $organisation->getStadt();
-        if ($stadt === null) {
-            throw new RuntimeException("No stadt found for organisation: " . $organisation->getId());
-        }
-
         $kinder = $this->kindRepository->findKindWithBeworbenZeitblocksForSchuljahr($organisation, $schuljahr);
-
-        $formulaString = $stadt->getAutoAssignFormula();
-        $formulaParsed = $this->expressionLanguage->parse($formulaString, ['kind', 'eltern', 'schule', 'organisation']);
+        $weightScoreCalculator = $this->weightScoreService->createCalculator($organisation);
 
         foreach ($kinder as $kind) {
-            $weight = $this->expressionLanguage->evaluate($formulaParsed, [
-                'kind' => $kind,
-                'eltern' => $kind->getEltern(),
-                'schule' => $kind->getSchule(),
-                'organisation' => $organisation,
-            ]);
+            $weight = $weightScoreCalculator($kind);
 
             $autoBlockAssignmentChild = (new AutoBlockAssignmentChild())
                 ->setAutoBlockAssignment($autoBlockAssignment)
                 ->setKind($kind)
-                ->setWeight((float)$weight)
+                ->setWeight($weight)
             ;
             $autoBlockAssignment->addChild($autoBlockAssignmentChild);
             $this->entityManager->persist($autoBlockAssignmentChild);
