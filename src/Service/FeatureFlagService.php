@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 class FeatureFlagService
 {
     public const FEATURE_LATE_REGISTRATION_FINISH_MAIL = 'late_registration_finish_mail';
+    public const FEATURE_LIVE_SCORING = 'live_scoring';
 
     /**
      * @param array<string, bool> $flags

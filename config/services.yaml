@@ -26,6 +26,7 @@ parameters:
     app.log.loki.log_level: '%env(LOKI_LOG_LEVEL)%'
     app.feature_flags:
         late_registration_finish_mail: '%env(bool:FEATURE_LATE_REGISTRATION_FINISH_MAIL)%'
+        live_scoring: '%env(bool:FEATURE_LIVE_SCORING)%'
 
 services:
     # default configuration for services in *this* file
