@@ -1,0 +1,579 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block style %}
+    {{ parent() }}
+    <style>
+        .score-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 45px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #000;
+            background: linear-gradient(90deg,
+                hsl(calc(var(--score-pct, 0.5) * 120), 70%, 50%),
+                hsl(calc(var(--score-pct, 0.5) * 120), 70%, 60%)
+            );
+        }
+        .weekday-card {
+            margin-bottom: 1.5rem;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        .weekday-card .card-header {
+            background: linear-gradient(135deg, rgb(0,88,176) 0%, rgb(0,0,148) 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 12px 20px;
+            border: none;
+        }
+        .weekday-card .card-header .material-icons {
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        .block-item {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin: 10px 15px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .block-header-btn {
+            width: 100%;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .block-header-btn:hover {
+            background: #e9ecef;
+        }
+        .block-header-btn:focus {
+            outline: none;
+            box-shadow: inset 0 0 0 2px #667eea;
+        }
+        .block-header-btn .block-time {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #333;
+        }
+        .block-header-btn .block-name {
+            color: #666;
+            margin-left: 10px;
+        }
+        .block-header-btn .collapse-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .block-header-btn .collapse-indicator .material-icons {
+            transition: transform 0.2s;
+            color: #666;
+        }
+        .block-header-btn.collapsed .collapse-indicator .material-icons.rotate-icon {
+            transform: rotate(-90deg);
+        }
+        .block-content {
+            border-top: 1px solid #e9ecef;
+        }
+        .child-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .child-list-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            gap: 15px;
+            transition: background 0.15s;
+            cursor: pointer;
+        }
+        .child-list-item:last-child {
+            border-bottom: none;
+        }
+        .child-list-item:hover {
+            background: #f0f4ff;
+        }
+        .child-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .child-name {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #333;
+        }
+        .child-meta {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 2px;
+        }
+        .child-meta .highlight {
+            color: #d63384;
+            font-weight: 600;
+        }
+        .child-actions {
+            display: flex;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+        .child-actions .btn {
+            padding: 6px 10px;
+        }
+        .child-details-panel {
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            padding: 20px;
+        }
+        .child-details-panel h6 {
+            color: #495057;
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #667eea;
+            display: inline-block;
+        }
+        .capacity-indicator {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        .pending-count {
+            background: #dc3545;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .other-blocks-badge {
+            background: #17a2b8;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <section class="dashboard-counts section-padding">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h1 class="mb-0">{% trans %}Schnellzulassung{% endtrans %}</h1>
+                            <p class="text-muted mb-0">{{ schule.name }}</p>
+                        </div>
+                        <div>
+                            <span class="badge badge-danger total-pending-badge" style="font-size: 1rem; padding: 10px 15px;">
+                                <span class="total-pending-count">{{ totalPending }}</span> {% trans %}offene Anmeldungen{% endtrans %}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <a href="{{ path('block_schule_schow', {id: schule.id}) }}" class="btn btn-light">
+                            <i class="material-icons" style="vertical-align: middle;">arrow_back</i>
+                            {% trans %}Zurück zu Blöcken{% endtrans %}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    {% if weekdayGroups|length == 0 %}
+                        <div class="alert alert-success">
+                            <i class="material-icons" style="vertical-align: middle;">check_circle</i>
+                            {% trans %}Keine offenen Anmeldungen vorhanden.{% endtrans %}
+                        </div>
+                    {% else %}
+                        <div class="quick-approval-content">
+                        {% for wochentag, dayData in weekdayGroups %}
+                            <div class="card weekday-card" data-wochentag="{{ wochentag }}">
+                                <div class="card-header">
+                                    <i class="material-icons">event</i>
+                                    {{ dayData.name }}
+                                    <span class="badge badge-light ml-2 weekday-pending-count">{{ dayData.blocks|reduce((carry, b) => carry + b.kinder|length, 0) }} offen</span>
+                                </div>
+                                <div class="card-body p-0">
+                                    {% for blockId, blockData in dayData.blocks %}
+                                        {% set zeitblock = blockData.zeitblock %}
+                                        {% set blockKinder = blockData.kinder %}
+                                        <div class="block-item block-card" data-block-id="{{ blockId }}">
+                                            <button class="block-header-btn" type="button" data-toggle="collapse" data-target="#block-{{ blockId }}" aria-expanded="true">
+                                                <div>
+                                                    <span class="block-time">
+                                                        <i class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 5px;">schedule</i>
+                                                        {{ zeitblock.von|date('H:i') }} - {{ zeitblock.bis|date('H:i') }}
+                                                    </span>
+                                                    {% if zeitblock.translate.blockbezeichnung %}
+                                                        <span class="block-name">{{ zeitblock.translate.blockbezeichnung }}</span>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="collapse-indicator">
+                                                    {% if zeitblock.max is not null %}
+                                                        <span class="capacity-indicator badge {% if zeitblock.max != 0 and (getChildsOnSpecificTimeCached(zeitblock) + blockKinder|length) > zeitblock.max %}badge-warning{% else %}badge-light{% endif %}">
+                                                            <i class="material-icons" style="font-size: 14px; vertical-align: middle;">people</i>
+                                                            {{ getChildsOnSpecificTimeCached(zeitblock) }}/{{ zeitblock.max }}
+                                                        </span>
+                                                    {% endif %}
+                                                    <span class="pending-count block-pending-count">{{ blockKinder|length }} offen</span>
+                                                    <i class="material-icons rotate-icon">expand_more</i>
+                                                </div>
+                                            </button>
+                                            <div class="collapse show block-content" id="block-{{ blockId }}">
+                                                <ul class="child-list">
+                                                    {% for kind in blockKinder %}
+                                                        {% set eltern = getEltern(kind, kind.startDate) %}
+                                                        {% set kindScore = scores[kind.id] ?? {score: 0, pct: 1} %}
+                                                        <li class="child-list-item" id="child-row-{{ zeitblock.id }}-{{ kind.id }}">
+                                                            <span class="score-badge" style="--score-pct: {{ kindScore.pct }}" title="Gewichtungsscore">
+                                                                {{ kindScore.score|format_number }}
+                                                            </span>
+                                                            <div class="child-info">
+                                                                <div class="child-name">{{ kind.vorname }} {{ kind.nachname }}</div>
+                                                                <div class="child-meta">
+                                                                    {{ kind.klasseString }} &bull;
+                                                                    {{ getBerufstatig(kind) }}
+                                                                    {% if eltern.alleinerziehend %}&bull; <span class="highlight">Alleinerziehend</span>{% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <div class="child-actions">
+                                                                {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
+                                                                    <a href="{{ path('kontingent_accept_kid', {block_id: zeitblock.id, kind_id: kind.id}) }}"
+                                                                       class="btn btn-sm btn-success child-action-btn"
+                                                                       data-action="accept"
+                                                                       title="Zulassen">
+                                                                        <i class="material-icons">check</i>
+                                                                    </a>
+                                                                    <a href="{{ path('kontingent_accept_kid_AllBlocks', {block_id: zeitblock.id, kind_id: kind.id}) }}"
+                                                                       class="btn btn-sm btn-outline-success child-action-btn"
+                                                                       data-action="accept-all"
+                                                                       data-kind-id="{{ kind.id }}"
+                                                                       data-confirm-title="{{ 'Alle Blöcke zulassen'|trans }}"
+                                                                       data-confirm-text="{{ 'Sie lassen dieses Kind für alle Blöcke zu, zu dem dieses angemeldet ist.'|trans }}"
+                                                                       title="Alle Blöcke zulassen">
+                                                                        <i class="material-icons">done_all</i>
+                                                                    </a>
+                                                                    <a href="{{ path('warteliste_add_kid', {block_id: zeitblock.id, kind_id: kind.id}) }}"
+                                                                       class="btn btn-sm btn-outline-secondary child-action-btn"
+                                                                       data-action="waitlist"
+                                                                       data-confirm-title="{{ 'Auf Warteliste'|trans }}"
+                                                                       data-confirm-text="{{ 'Kind auf Warteliste setzen?'|trans }}"
+                                                                       title="Auf Warteliste">
+                                                                        <i class="material-icons">playlist_add</i>
+                                                                    </a>
+                                                                    <a href="{{ path('kontingent_remove_kid', {block_id: zeitblock.id, kind_id: kind.id}) }}"
+                                                                       class="btn btn-sm btn-outline-danger child-action-btn"
+                                                                       data-action="reject"
+                                                                       data-confirm-title="{{ 'Ablehnen'|trans }}"
+                                                                       data-confirm-text="{{ 'Dieses Kind wirklich für diesen Block ablehnen?'|trans }}"
+                                                                       title="Ablehnen">
+                                                                        <i class="material-icons">close</i>
+                                                                    </a>
+                                                                {% endif %}
+                                                                <button class="btn btn-sm btn-outline-info"
+                                                                        type="button"
+                                                                        data-toggle="collapse"
+                                                                        data-target="#details-{{ zeitblock.id }}-{{ kind.id }}"
+                                                                        title="Details anzeigen">
+                                                                    <i class="material-icons">info</i>
+                                                                </button>
+                                                                <a href="{{ path('child_detail', {kind_id: kind.id, spezial_kind_id: kind.id, date: kind.startDate|date('d.m.Y')}) }}"
+                                                                   class="btn btn-sm btn-outline-primary"
+                                                                   target="_blank"
+                                                                   title="Detailseite öffnen">
+                                                                    <i class="material-icons">open_in_new</i>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                        <div class="collapse child-details-panel" id="details-{{ zeitblock.id }}-{{ kind.id }}">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <h6>Kind</h6>
+                                                                    <table class="table table-sm table-borderless mb-0">
+                                                                        <tr>
+                                                                            <td class="text-muted" style="width: 120px;">Geburtstag</td>
+                                                                            <td>{{ kind.geburtstag|date('d.m.Y') }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Klasse</td>
+                                                                            <td>{{ kind.klasseString }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Startdatum</td>
+                                                                            <td>{{ kind.startDate|date('d.m.Y') }}</td>
+                                                                        </tr>
+                                                                        {% if kind.bemerkung %}
+                                                                            <tr>
+                                                                                <td class="text-muted">Bemerkung</td>
+                                                                                <td>{{ kind.bemerkung|nl2br }}</td>
+                                                                            </tr>
+                                                                        {% endif %}
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <h6>Erziehungsberechtigter</h6>
+                                                                    <table class="table table-sm table-borderless mb-0">
+                                                                        <tr>
+                                                                            <td class="text-muted" style="width: 120px;">Name</td>
+                                                                            <td>{{ eltern.vorname }} {{ eltern.name }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">E-Mail</td>
+                                                                            <td>{{ eltern.email }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Telefon</td>
+                                                                            <td>{{ eltern.phoneNumber ?? '-' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Beruflich</td>
+                                                                            <td>{{ getBerufstatig(kind) }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-muted">Alleinerziehend</td>
+                                                                            <td>{{ eltern.alleinerziehend ? 'Ja' : 'Nein' }}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mt-3 pt-3 border-top">
+                                                                <strong>Weitere beworbene Blöcke:</strong>
+                                                                {% set otherBlocks = kind.beworben|filter(b => b.id != zeitblock.id and b.schule.id == schule.id and not b.deleted) %}
+                                                                {% if otherBlocks|length > 0 %}
+                                                                    <div class="mt-2">
+                                                                        {% for b in otherBlocks %}
+                                                                            <span class="other-blocks-badge">{{ b.wochentagString }} {{ b.von|date('H:i') }}-{{ b.bis|date('H:i') }}</span>
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                {% else %}
+                                                                    <span class="text-muted ml-2">Keine weiteren</span>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block jquery %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            // Toggle collapse icon rotation for block headers
+            $('.block-header-btn').on('click', function() {
+                $(this).toggleClass('collapsed');
+            });
+
+            // Make child-list-item clickable to expand/collapse details
+            $('.child-list-item').on('click', function(e) {
+                // Don't toggle if clicking on a button or link
+                if ($(e.target).closest('a, button').length > 0) {
+                    return;
+                }
+                var detailsId = $(this).attr('id').replace('child-row-', 'details-');
+                $('#' + detailsId).collapse('toggle');
+            });
+
+            // AJAX action handling for child action buttons
+            $('.child-action-btn').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                var $btn = $(this);
+                var url = $btn.attr('href');
+                var action = $btn.data('action');
+                var kindId = $btn.data('kind-id');
+                var confirmTitle = $btn.data('confirm-title');
+                var confirmText = $btn.data('confirm-text');
+
+                // Show confirm dialog for actions that need it
+                if (confirmText && action !== 'accept') {
+                    if (!confirm((confirmTitle ? confirmTitle + '\n\n' : '') + confirmText)) {
+                        return;
+                    }
+                }
+
+                var $childItem = $btn.closest('.child-list-item');
+                var $detailsPanel = $childItem.next('.child-details-panel');
+                var $blockCard = $btn.closest('.block-card');
+                var $weekdayCard = $btn.closest('.weekday-card');
+
+                // Show loading state
+                $childItem.css({
+                    'opacity': '0.5',
+                    'pointer-events': 'none'
+                });
+
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    dataType: 'json',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                }).done(function(response) {
+                    // Check for error flag in response
+                    if (response.error === true) {
+                        // Error - restore state and show message
+                        $childItem.css({
+                            'opacity': '1',
+                            'pointer-events': 'auto'
+                        });
+                        alert(response.snack || 'Ein Fehler ist aufgetreten.');
+                        return;
+                    }
+
+                    // Success - animate and remove element(s)
+                    if (action === 'accept-all' && kindId) {
+                        // Remove all rows for this child across all blocks
+                        removeChildFromAllBlocks(kindId);
+                    } else {
+                        // Remove just this row
+                        removeChildRow($childItem, $detailsPanel, $blockCard, $weekdayCard);
+                    }
+
+                    // Show success snackbar if available
+                    if (response.snack && typeof showSnackbar === 'function') {
+                        showSnackbar(response.snack);
+                    }
+                }).fail(function(xhr) {
+                    // Network/server error - restore state
+                    $childItem.css({
+                        'opacity': '1',
+                        'pointer-events': 'auto'
+                    });
+                    var errorMsg = 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.';
+                    try {
+                        var resp = JSON.parse(xhr.responseText);
+                        if (resp.snack) {
+                            errorMsg = resp.snack;
+                        }
+                    } catch (e) {}
+                    alert(errorMsg);
+                });
+            });
+
+            function removeChildRow($childItem, $detailsPanel, $blockCard, $weekdayCard) {
+                // Animate out
+                $childItem.css({
+                    'transition': 'all 0.3s ease-out',
+                    'max-height': $childItem.outerHeight() + 'px',
+                    'overflow': 'hidden'
+                });
+
+                if ($detailsPanel.length) {
+                    $detailsPanel.collapse('hide');
+                }
+
+                setTimeout(function() {
+                    $childItem.css({
+                        'max-height': '0',
+                        'opacity': '0',
+                        'padding-top': '0',
+                        'padding-bottom': '0',
+                        'margin': '0',
+                        'border': 'none'
+                    });
+                }, 10);
+
+                setTimeout(function() {
+                    $childItem.remove();
+                    if ($detailsPanel.length) {
+                        $detailsPanel.remove();
+                    }
+                    updatePendingCounts($blockCard, $weekdayCard);
+                }, 350);
+            }
+
+            function removeChildFromAllBlocks(kindId) {
+                // Find all rows for this child
+                $('[id^="child-row-"][id$="-' + kindId + '"]').each(function() {
+                    var $childItem = $(this);
+                    var $detailsPanel = $childItem.next('.child-details-panel');
+                    var $blockCard = $childItem.closest('.block-card');
+                    var $weekdayCard = $childItem.closest('.weekday-card');
+
+                    removeChildRow($childItem, $detailsPanel, $blockCard, $weekdayCard);
+                });
+            }
+
+            function updatePendingCounts($blockCard, $weekdayCard) {
+                // Update block pending count
+                var blockRemaining = $blockCard.find('.child-list-item').length;
+                var $blockBadge = $blockCard.find('.block-pending-count');
+                $blockBadge.text(blockRemaining + ' offen');
+
+                if (blockRemaining === 0) {
+                    $blockCard.slideUp(300, function() {
+                        $(this).remove();
+                        updateWeekdayCard($weekdayCard);
+                    });
+                } else {
+                    updateWeekdayCard($weekdayCard);
+                }
+            }
+
+            function updateWeekdayCard($weekdayCard) {
+                // Count remaining children in this weekday
+                var weekdayTotal = 0;
+                $weekdayCard.find('.block-card').each(function() {
+                    weekdayTotal += $(this).find('.child-list-item').length;
+                });
+
+                var $weekdayBadge = $weekdayCard.find('.weekday-pending-count');
+                $weekdayBadge.text(weekdayTotal + ' offen');
+
+                if (weekdayTotal === 0) {
+                    $weekdayCard.slideUp(300, function() {
+                        $(this).remove();
+                        updateTotalCount();
+                    });
+                } else {
+                    updateTotalCount();
+                }
+            }
+
+            function updateTotalCount() {
+                // Count all remaining children
+                var total = $('.child-list-item').length;
+                $('.total-pending-count').text(total);
+
+                if (total === 0) {
+                    $('.quick-approval-content').html(
+                        '<div class="alert alert-success text-center">' +
+                        '<i class="material-icons" style="vertical-align: middle; font-size: 48px;">check_circle</i>' +
+                        '<h4 class="mt-3">Alle Anmeldungen bearbeitet!</h4>' +
+                        '<p class="mb-0">Es gibt keine weiteren offenen Anmeldungen für diese Schule.</p>' +
+                        '</div>'
+                    );
+                }
+            }
+        });
+    </script>
+{% endblock %}
+
