@@ -27,11 +27,19 @@
                                 </h5>
 
                                 <a href="{{ path('block_schule_schow',{'id':s.id}) }}"
-                                   class="btn btn-light btn-sm">{% trans %}Blöcke{% endtrans %}</a>
+                                   class="btn btn-light btn-sm">{% trans %}Blöcke{% endtrans %}
+                                </a>
                                 {% if is_granted('ROLE_ORG_SHOOL') %}
                                     <a
                                             href="{{ path('city_admin_schule_edit',{'id':s.id}) }}"
                                             class="btn btn-light btn-sm">{% trans %}Bearbeiten{% endtrans %}
+                                    </a>
+                                {% endif %}
+                                {% if isFeatureEnabled(constant('App\\Service\\FeatureFlagService::FEATURE_LIVE_SCORING')) and getAnzahlBeworben(s)|length > 0 and is_granted('ROLE_ORG_ACCEPT_CHILD') %}
+                                    <a href="{{ path('kontingent_quick_approval_school', {schuleId: s.id}) }}"
+                                       class="btn btn-light btn-sm">
+                                        {% trans %}Zulassung{% endtrans %}
+                                        <span class="badge badge-light ml-1">{{ getAnzahlBeworbenTotal(s) }}</span>
                                     </a>
                                 {% endif %}
                             </div>

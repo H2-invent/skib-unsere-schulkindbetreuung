@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Kind;
+use App\Entity\Schule;
 use App\Entity\Zeitblock;
+use App\Service\FeatureFlagService;
 use App\Service\KontingentAcceptService;
+use App\Service\WeightScoreService;
 use Doctrine\Persistence\ManagerRegistry;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
@@ -31,7 +34,10 @@ class KontingentController extends AbstractController
         KontingentAcceptService $kontingentAcceptService,
         LoggerInterface $logger,
         private ManagerRegistry $managerRegistry,
-    private LoerrachWorkflowController $loerrachWorkflowController)
+        private LoerrachWorkflowController $loerrachWorkflowController,
+        private WeightScoreService $weightScoreService,
+        private FeatureFlagService $featureFlagService,
+    )
     {
         $this->acceptService = $kontingentAcceptService;
         $this->logger = $logger;
@@ -94,8 +100,15 @@ class KontingentController extends AbstractController
             ;
         });
 
-        return $this->render('kontingent/child.html.twig', array('fictiveDate'=>$fictiveDate,'text' => $translator->trans('Akzeptieren oder lehnen Sie ein Kind für diesen Block ab'), 'block' => $block, 'kinder' => $kinder));
+        $scores = $this->weightScoreService->calculateScoresForView($kinder, $block->getSchule()->getOrganisation());
 
+        return $this->render('kontingent/child.html.twig', [
+            'fictiveDate' => $fictiveDate,
+            'text' => $translator->trans('Akzeptieren oder lehnen Sie ein Kind für diesen Block ab'),
+            'block' => $block,
+            'kinder' => $kinder,
+            'scores' => $scores,
+        ]);
     }
 
     /**
@@ -175,10 +188,10 @@ class KontingentController extends AbstractController
         $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
         try {
             $this->acceptService->acceptKind($block, $kind);
-            return new JsonResponse(array('snack' => $translator->trans('Erfolgreich gespeichert')));
+            return new JsonResponse(array('error' => false, 'snack' => $translator->trans('Erfolgreich gespeichert')));
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
-            return new JsonResponse(array('snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
+            return new JsonResponse(array('error' => true, 'snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
         }
     }
 
@@ -194,10 +207,10 @@ class KontingentController extends AbstractController
         $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
         try {
             $this->acceptService->acceptKind($block, $kind,true);
-            return new JsonResponse(array('snack' => $translator->trans('Erfolgreich gespeichert')));
+            return new JsonResponse(array('error' => false, 'snack' => $translator->trans('Erfolgreich gespeichert')));
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
-            return new JsonResponse(array('snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
+            return new JsonResponse(array('error' => true, 'snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
         }
     }
     /**
@@ -212,10 +225,10 @@ class KontingentController extends AbstractController
         $kind = $this->managerRegistry->getRepository(Kind::class)->find($request->get('kind_id'));
         try {
             $this->acceptService->acceptAllZeitblockOfSpecificKind($kind);
-            return new JsonResponse(array('snack' => $translator->trans('Erfolgreich gespeichert')));
+            return new JsonResponse(array('error' => false, 'snack' => $translator->trans('Erfolgreich gespeichert')));
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
-            return new JsonResponse(array('snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
+            return new JsonResponse(array('error' => true, 'snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
         }
     }
     /**
@@ -237,13 +250,91 @@ class KontingentController extends AbstractController
                 $em = $this->managerRegistry->getManager();
                 $em->persist($kind);
                 $em->flush();
-                return new JsonResponse(array('snack' => $translator->trans('Erfolgreich gespeichert')));
+                return new JsonResponse(array('error' => false, 'snack' => $translator->trans('Erfolgreich gespeichert')));
 
             }
+            return new JsonResponse(array('error' => true, 'snack' => $translator->trans('Kind nicht in diesem Block gefunden.')));
         } catch (\Exception $e) {
             $logger = $this->get('logger');
             $logger->err('Kind could not be removed from block: ' . json_encode($kind));
-            return new JsonResponse(array('snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
+            return new JsonResponse(array('error' => true, 'snack' => $translator->trans('Fehler. Bitte versuchen Sie es erneut.')));
         }
+    }
+
+    /**
+     * @Route("/org_accept/quick-approval/{schuleId}", name="kontingent_quick_approval_school", methods={"GET"})
+     */
+    public function showQuickApprovalForSchool(Request $request, TranslatorInterface $translator, int $schuleId): Response
+    {
+        if (!$this->featureFlagService->isEnabled(FeatureFlagService::FEATURE_LIVE_SCORING)) {
+            throw $this->createNotFoundException();
+        }
+
+        $schule = $this->managerRegistry->getRepository(Schule::class)->find($schuleId);
+        if ($schule === null || $schule->getOrganisation() !== $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+
+        $kinder = $this->managerRegistry->getRepository(Kind::class)->findAllBeworbenKinderBySchule($schule);
+
+        // Group children by Zeitblock
+        $blockGroups = [];
+        foreach ($kinder as $kind) {
+            foreach ($kind->getBeworben() as $zeitblock) {
+                if ($zeitblock->getSchule() === $schule && !$zeitblock->getDeleted()) {
+                    $blockId = $zeitblock->getId();
+                    if (!isset($blockGroups[$blockId])) {
+                        $blockGroups[$blockId] = [
+                            'zeitblock' => $zeitblock,
+                            'kinder' => [],
+                        ];
+                    }
+                    $blockGroups[$blockId]['kinder'][] = $kind;
+                }
+            }
+        }
+
+        // Sort blocks by wochentag then von time
+        uasort($blockGroups, static function ($a, $b) {
+            $dayCompare = $a['zeitblock']->getWochentag() <=> $b['zeitblock']->getWochentag();
+            if ($dayCompare !== 0) {
+                return $dayCompare;
+            }
+            return $a['zeitblock']->getVon() <=> $b['zeitblock']->getVon();
+        });
+
+        // Group by weekday for template
+        $weekdayGroups = [];
+        foreach ($blockGroups as $blockId => $group) {
+            $wochentag = $group['zeitblock']->getWochentag();
+            $dayName = $group['zeitblock']->getWochentagString();
+            if (!isset($weekdayGroups[$wochentag])) {
+                $weekdayGroups[$wochentag] = [
+                    'name' => $dayName,
+                    'blocks' => [],
+                ];
+            }
+            $weekdayGroups[$wochentag]['blocks'][$blockId] = $group;
+        }
+
+        // Sort weekdays (Monday first)
+        ksort($weekdayGroups);
+
+        // Calculate total pending applications (sum of all child-block combinations)
+        $totalPending = 0;
+        foreach ($blockGroups as $group) {
+            $totalPending += count($group['kinder']);
+        }
+
+        // Calculate scores for all unique children
+        $allKinder = array_unique($kinder, SORT_REGULAR);
+        $scores = $this->weightScoreService->calculateScoresForView($allKinder, $schule->getOrganisation());
+
+        return $this->render('kontingent/quick_approval_school.html.twig', [
+            'schule' => $schule,
+            'weekdayGroups' => $weekdayGroups,
+            'scores' => $scores,
+            'totalPending' => $totalPending,
+        ]);
     }
 }

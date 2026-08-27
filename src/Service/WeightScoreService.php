@@ -51,4 +51,38 @@ class WeightScoreService
     {
         return $this->createCalculator($organisation, $formula)($kind);
     }
+
+    /**
+     * Calculate scores for multiple children with percentile for gradient coloring.
+     *
+     * @param Kind[] $kinder
+     * @return array<int, array{score: float, pct: float}>
+     */
+    public function calculateScoresForView(array $kinder, Organisation $organisation): array
+    {
+        if (empty($kinder)) {
+            return [];
+        }
+
+        $calculator = $this->createCalculator($organisation);
+        $scores = [];
+
+        foreach ($kinder as $kind) {
+            $scores[$kind->getId()] = ['score' => $calculator($kind), 'pct' => 0.0];
+        }
+
+        // Find min/max for percentile calculation
+        $allScores = array_column($scores, 'score');
+        $minScore = min($allScores);
+        $maxScore = max($allScores);
+        $range = $maxScore - $minScore;
+
+        // Calculate percentile for each score (0 = lowest/red, 1 = highest/green)
+        // If all scores are the same (range = 0), default to 1.0 (green)
+        foreach ($scores as $kindId => &$data) {
+            $data['pct'] = $range > 0 ? ($data['score'] - $minScore) / $range : 1.0;
+        }
+
+        return $scores;
+    }
 }
