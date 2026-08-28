@@ -52,7 +52,7 @@ class AppExtension extends AbstractExtension
             'accounting_overview' => ['accounting_sepa_detail'],
             'accounting_showdata' => ['edit_stammdaten_edit'],
             'admin_stadt' => ['admin_stadt_detail', 'admin_stadt_edit_admin'],
-            'block_schulen_schow' => ['kontingent_show_kids'],
+            'block_schulen_schow' => ['kontingent_show_kids', 'kontingent_quick_approval_school', 'block_schule_schow'],
             'child_show' => ['child_detail', 'child_edit', 'child_show_child'],
             'city_admin_news_anzeige' => ['city_admin_news_neu', 'city_admin_news_edit'],
             'city_admin_organisation_detail' => ['city_admin_organisation_edit'],

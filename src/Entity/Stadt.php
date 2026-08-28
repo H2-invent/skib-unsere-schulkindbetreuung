@@ -345,9 +345,11 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(options: ['default' => false])]
     private ?bool $parentSickReportsEnabled = false;
 
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $settingsFeatureLateRegistrationFinishMail = false;
 
-
-
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $settingsFeatureLiveScoring = false;
 
 
     public function __construct()
@@ -1651,6 +1653,30 @@ class Stadt implements TranslatableInterface
     public function setCustomCss(?string $customCss): self
     {
         $this->customCss = $customCss;
+
+        return $this;
+    }
+
+    public function isSettingsFeatureLateRegistrationFinishMail(): ?bool
+    {
+        return $this->settingsFeatureLateRegistrationFinishMail;
+    }
+
+    public function setSettingsFeatureLateRegistrationFinishMail(bool $settingsFeatureLateRegistrationFinishMail): self
+    {
+        $this->settingsFeatureLateRegistrationFinishMail = $settingsFeatureLateRegistrationFinishMail;
+
+        return $this;
+    }
+
+    public function isSettingsFeatureLiveScoring(): ?bool
+    {
+        return $this->settingsFeatureLiveScoring;
+    }
+
+    public function setSettingsFeatureLiveScoring(bool $settingsFeatureLiveScoring): self
+    {
+        $this->settingsFeatureLiveScoring = $settingsFeatureLiveScoring;
 
         return $this;
     }

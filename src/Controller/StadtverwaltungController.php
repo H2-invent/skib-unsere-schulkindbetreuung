@@ -7,6 +7,7 @@ use App\Entity\Tags;
 use App\Form\Type\FormelType;
 use App\Form\Type\StadtType;
 use App\Repository\KindRepository;
+use App\Service\WeightScoreService;
 use JsonException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Throwable;
 
 class StadtverwaltungController extends AbstractController
 {
@@ -106,6 +108,8 @@ class StadtverwaltungController extends AbstractController
            $form->remove('ferienprogramm');
             $form->remove('active');
             $form->remove('settingEncryptEmailAttachment');
+            $form->remove('settingsFeatureLateRegistrationFinishMail');
+            $form->remove('settingsFeatureLiveScoring');
        }
 
         $form->handleRequest($request);
@@ -309,7 +313,7 @@ class StadtverwaltungController extends AbstractController
      */
     public function formulaTest(
         Request $request,
-        ExpressionLanguage $expressionLanguage,
+        WeightScoreService $weightScoreService,
         KindRepository $kindRepository
     ): JsonResponse
     {
@@ -326,13 +330,8 @@ class StadtverwaltungController extends AbstractController
         }
 
         try {
-            $weight = $expressionLanguage->evaluate($formula, [
-                'kind' => $kind,
-                'eltern' => $kind->getEltern(),
-                'schule' => $kind->getSchule(),
-                'organisation' => $kind->getSchule()?->getOrganisation(),
-            ]);
-        } catch (SyntaxError $e) {
+            $weight = $weightScoreService->calculateSingleWithFormula($kind, $kind->getSchule()->getOrganisation(), $formula);
+        } catch (Throwable) {
             return new JsonResponse([], 400);
         }
 
