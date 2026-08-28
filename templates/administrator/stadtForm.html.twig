@@ -163,6 +163,12 @@
                                                         {% if form.settingEncryptEmailAttachment is defined %}
                                                             <div class="col-md-6">{{ form_row(form.settingEncryptEmailAttachment) }}</div>
                                                         {% endif %}
+                                                        {% if form.settingsFeatureLateRegistrationFinishMail is defined %}
+                                                            <div class="col-md-6">{{ form_row(form.settingsFeatureLateRegistrationFinishMail) }}</div>
+                                                        {% endif %}
+                                                        {% if form.settingsFeatureLiveScoring is defined %}
+                                                            <div class="col-md-6">{{ form_row(form.settingsFeatureLiveScoring) }}</div>
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>

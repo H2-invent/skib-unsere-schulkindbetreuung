@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Twig\Extension;
 
+use App\Entity\Stadt;
 use App\Service\FeatureFlagService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -22,8 +23,8 @@ class FeatureFlagExtension extends AbstractExtension
         ];
     }
 
-    public function isFeatureEnabled(string $feature): bool
+    public function isFeatureEnabled(string $feature, ?Stadt $stadt = null): bool
     {
-        return $this->featureFlagService->isEnabled($feature);
+        return $this->featureFlagService->isEnabled($feature, $stadt);
     }
 }
