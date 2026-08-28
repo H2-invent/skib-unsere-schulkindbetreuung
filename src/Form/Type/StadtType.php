@@ -283,6 +283,14 @@ class StadtType extends AbstractType
                 'expanded' => true,
                 'required' => false
             ])
+            ->add('settingsFeatureLateRegistrationFinishMail',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Feature: Nachmeldungs-Mail', 'translation_domain' => 'form']
+            )
+            ->add('settingsFeatureLiveScoring',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Feature: Live Scoring', 'translation_domain' => 'form']
+            )
             ->add('emailDokumente_confirm', EntityType::class, [
                 // looks for choices from this entity
                 'class' => File::class,

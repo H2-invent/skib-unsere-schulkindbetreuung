@@ -57,7 +57,7 @@ class LateRegistrationService
         $session->remove(self::SESSION_KEY_LATE_REGISTRATION);
         $session->remove(SchuljahrService::SESSION_KEY_SCHULJAHR);
 
-        if ($this->featureFlagService->isEnabled(FeatureFlagService::FEATURE_LATE_REGISTRATION_FINISH_MAIL)) {
+        if ($this->featureFlagService->isEnabled(FeatureFlagService::FEATURE_LATE_REGISTRATION_FINISH_MAIL, $lateRegistration->getStadt())) {
             $this->sendHasBeenUsedEmail($lateRegistration, $stammdaten);
         }
     }
