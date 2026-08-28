@@ -10,7 +10,7 @@
                 <div class="col text-right">
                     {% if isFeatureEnabled(constant('App\\Service\\FeatureFlagService::FEATURE_LIVE_SCORING')) and getAnzahlBeworben(schule)|length > 0 and is_granted('ROLE_ORG_ACCEPT_CHILD') %}
                         <a href="{{ path('kontingent_quick_approval_school', {schuleId: schule.id}) }}"
-                           class="btn btn-success mr-2">
+                           class="btn btn-danger mr-2">
                             {% trans %}Schnellzulassung{% endtrans %}
                             <span class="badge badge-light">{{ getAnzahlBeworbenTotal(schule) }}</span>
                         </a>
