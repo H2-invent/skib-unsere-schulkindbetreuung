@@ -9,6 +9,7 @@ use App\Entity\Kind;
 use App\Entity\Organisation;
 use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
+use App\Entity\Schule;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -265,5 +266,44 @@ class KindRepository extends ServiceEntityRepository
             ->setParameter('schoolYear', $schoolYear)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * Find all children with pending (beworben) applications for a given school.
+     * Eager loads beworben blocks to avoid N+1 queries.
+     *
+     * @return Kind[]
+     */
+    public function findAllBeworbenKinderBySchule(Schule $schule): array
+    {
+        return $this->createQueryBuilder('k')
+            ->select('k', 'beworben')
+            ->innerJoin('k.beworben', 'beworben')
+            ->innerJoin('k.eltern', 'eltern')
+            ->andWhere('beworben.schule = :schule')
+            ->andWhere('beworben.deleted = false')
+            ->andWhere('k.startDate IS NOT NULL')
+            ->andWhere('eltern.created_at IS NOT NULL')
+            ->setParameter('schule', $schule)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Count total open applications (child-block combinations) for a school.
+     */
+    public function countBeworbenBySchule(Schule $schule): int
+    {
+        return (int) $this->createQueryBuilder('k')
+            ->select('COUNT(k.id)')
+            ->innerJoin('k.beworben', 'beworben')
+            ->innerJoin('k.eltern', 'eltern')
+            ->andWhere('beworben.schule = :schule')
+            ->andWhere('beworben.deleted = false')
+            ->andWhere('k.startDate IS NOT NULL')
+            ->andWhere('eltern.created_at IS NOT NULL')
+            ->setParameter('schule', $schule)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

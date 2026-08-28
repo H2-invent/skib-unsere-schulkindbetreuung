@@ -23,6 +23,7 @@ class SchulenExtension extends AbstractExtension
         return array(
             new TwigFunction('getAnzahlBeworben', array($this, 'getAnzahlBeworben')),
             new TwigFunction('getAnzahlBeworbenKids', array($this, 'getAnzahlBeworbenKids')),
+            new TwigFunction('getAnzahlBeworbenTotal', array($this, 'getAnzahlBeworbenTotal')),
         );
     }
 
@@ -37,6 +38,19 @@ class SchulenExtension extends AbstractExtension
 
         return $blocks;
     }
+
+    /**
+     * Get total count of open applications (child-block combinations) for a school
+     */
+    public function getAnzahlBeworbenTotal(Schule $schule): int
+    {
+        try {
+            return $this->em->getRepository(Kind::class)->countBeworbenBySchule($schule);
+        } catch (\Exception $exception) {
+            return 0;
+        }
+    }
+
     public function getAnzahlBeworbenKids(Zeitblock $block)
     {
 

@@ -41,18 +41,24 @@
                                     <th>{% trans %}Schuljahr{% endtrans %}</th>
                                     <th>{% trans %}Geschickt am{% endtrans %}</th>
                                     <th>{% trans %}Genutzt am{% endtrans %}</th>
+                                    <th>{% trans %}Geschickt von{% endtrans %}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for entry in history %}
+                                {% for lateRegistration in history %}
                                     <tr>
-                                        <td>{{ entry.email }}</td>
-                                        <td>{{ entry.schuljahr.von | date('Y') }}/{{ entry.schuljahr.bis | date('Y') }}</td>
-                                        <td data-order="{{ entry.createdAt | date('U') }}">{{ entry.createdAt | format_datetime() }}</td>
-                                        {% if entry.usedAt is null %}
+                                        <td>{{ lateRegistration.email }}</td>
+                                        <td>{{ lateRegistration.schuljahr.von | date('Y') }}/{{ lateRegistration.schuljahr.bis | date('Y') }}</td>
+                                        <td data-order="{{ lateRegistration.createdAt | date('U') }}">{{ lateRegistration.createdAt | format_datetime() }}</td>
+                                        {% if lateRegistration.usedAt is null %}
                                             <td>-</td>
                                         {% else %}
-                                            <td data-order="{{ entry.createdAt | date('U') }}">{{ entry.usedAt | format_datetime() }}</td>
+                                            <td data-order="{{ lateRegistration.createdAt | date('U') }}">{{ lateRegistration.usedAt | format_datetime() }}</td>
+                                        {% endif %}
+                                        {% if lateRegistration.user is null %}
+                                            <td>-</td>
+                                        {% else %}
+                                            <td>{{ lateRegistration.user.vorname }} {{ lateRegistration.user.nachname }}</td>
                                         {% endif %}
                                     </tr>
                                 {% endfor %}

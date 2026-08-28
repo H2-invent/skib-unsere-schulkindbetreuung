@@ -61,10 +61,10 @@ class WartelisteController extends AbstractController
         try {
             $this->wartelisteService->addKindToWarteliste($kind, $zeitblock);
         } catch (\Exception $e) {
-            return new JsonResponse(['snack' => $this->translator->trans('Fehler, bitte laden Sie die Seite neu')]);
+            return new JsonResponse(['error' => true, 'snack' => $this->translator->trans('Fehler, bitte laden Sie die Seite neu')]);
 
         }
-        return new JsonResponse(['snack' => $this->translator->trans('Kind erfolgreich auf Warteliste verschoben.')]);
+        return new JsonResponse(['error' => false, 'snack' => $this->translator->trans('Kind erfolgreich auf Warteliste verschoben.')]);
 
     }
     #[Route('/org_accept/warteliste/kid/add_complete/{kind_id}', name: 'warteliste_add_completekid')]
@@ -83,10 +83,10 @@ class WartelisteController extends AbstractController
             }
 
         } catch (\Exception) {
-            return new JsonResponse(['snack' => $this->translator->trans('Fehler, bitte laden Sie die Seite neu')]);
+            return new JsonResponse(['error' => true, 'snack' => $this->translator->trans('Fehler, bitte laden Sie die Seite neu')]);
 
         }
-        return new JsonResponse(['snack' => $this->translator->trans('Kind erfolgreich auf Warteliste verschoben.')]);
+        return new JsonResponse(['error' => false, 'snack' => $this->translator->trans('Kind erfolgreich auf Warteliste verschoben.')]);
 
     }
 
@@ -105,10 +105,10 @@ class WartelisteController extends AbstractController
         try {
             $this->wartelisteService->removeKindFromWarteliste($kind, $zeitblock);
         } catch (\Exception) {
-            return new JsonResponse(['snack' => $this->translator->trans('Fehler, bitte laden Sie die Seite neu')]);
+            return new JsonResponse(['error' => true, 'snack' => $this->translator->trans('Fehler, bitte laden Sie die Seite neu')]);
 
         }
-        return new JsonResponse(['snack' => $this->translator->trans('Kind erfolgreich aus die Warteliste entfernt')]);
+        return new JsonResponse(['error' => false, 'snack' => $this->translator->trans('Kind erfolgreich aus die Warteliste entfernt')]);
     }
 
     #[Route('/org_accept/warteliste/kid/accept/{kind_id}/{block_id}', name: 'warteliste_accept_kid',methods: 'GET')]
@@ -135,10 +135,10 @@ class WartelisteController extends AbstractController
             $this->wartelisteService->acceptChildFromWaitingListForSpecificTime($kind, $zeitblock,$date);
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
-            return new JsonResponse(['snack' => $this->translator->trans('Fehler, bitte laden Sie die Seite neu')]);
+            return new JsonResponse(['error' => true, 'snack' => $this->translator->trans('Fehler, bitte laden Sie die Seite neu')]);
 
         }
-        return new JsonResponse(['snack' => $this->translator->trans('Kind erfolgreich in Betreuung verschoben')]);
+        return new JsonResponse(['error' => false, 'snack' => $this->translator->trans('Kind erfolgreich in Betreuung verschoben')]);
 
     }
 }

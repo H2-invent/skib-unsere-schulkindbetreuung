@@ -8,7 +8,14 @@
                     <h1>{{ schule.name }}</h1>
                 </div>
                 <div class="col text-right">
-                    <div class="dropdown">
+                    {% if isFeatureEnabled(constant('App\\Service\\FeatureFlagService::FEATURE_LIVE_SCORING')) and getAnzahlBeworben(schule)|length > 0 and is_granted('ROLE_ORG_ACCEPT_CHILD') %}
+                        <a href="{{ path('kontingent_quick_approval_school', {schuleId: schule.id}) }}"
+                           class="btn btn-danger mr-2">
+                            {% trans %}Schnellzulassung{% endtrans %}
+                            <span class="badge badge-light">{{ getAnzahlBeworbenTotal(schule) }}</span>
+                        </a>
+                    {% endif %}
+                    <div class="dropdown d-inline-block">
                         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ schuljahre[0].von|date('d.m.Y') }} - {{ schuljahre[0].bis|date('d.m.Y') }}
