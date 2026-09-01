@@ -92,12 +92,13 @@
                                             and nextKind.startDate|date('Y-m-d') == kind.startDate|date('Y-m-d')
                                         %}
                                         {% set eltern = getEltern(kind, kind.startDate) %}
-                                        {% set kindScore = scores[kind.id] ?? {score: 0, pct: 1} %}
+
                                         <div class="col-3 pb-4">
                                             <div class="card h-100 text-center"
                                             style="border-top: solid 10px {{ kind.tracing|pastel_color }} ">
                                                 <div class="card-body">
                                                     {% if isFeatureEnabled(constant('App\\Service\\FeatureFlagService::FEATURE_LIVE_SCORING')) %}
+                                                        {% set kindScore = scores[kind.id] ?? {score: 0, pct: 1} %}
                                                     <div class="mb-3">
                                                         <span class="score-badge score-badge-lg" style="--score-pct: {{ kindScore.pct }}">
                                                             {{ kindScore.score|format_number }}
@@ -313,9 +314,10 @@
                                         <tbody>
                                         {% for k in kinder %}
                                             {% set eltern = getEltern(k,k.startDate) %}
-                                            {% set kScore = scores[k.id] ?? {score: 0, pct: 1} %}
+
                                             <tr>
                                                 {% if isFeatureEnabled(constant('App\\Service\\FeatureFlagService::FEATURE_LIVE_SCORING')) %}
+                                                    {% set kScore = scores[k.id] ?? {score: 0, pct: 1} %}
                                                 <td>
                                                     <span class="score-badge" style="--score-pct: {{ kScore.pct }}">
                                                         {{ kScore.score|format_number }}
