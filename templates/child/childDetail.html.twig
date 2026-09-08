@@ -10,6 +10,13 @@
                             <div class="col text-right">
                                 <a href="{{ path('child_detail_print',{'kind_id':k.id,'date':date|date('d.m.Y')}) }}"
                                    class="btn btn-primary">Drucken</a>
+                                {% if k.schule.stadt.settingsSkibSendGebuehrenbescheid %}
+                                    <a href="{{ path('child_detail_gebuehrenbescheid_download', {'kindId': k.id, 'date': date|date('d.m.Y')}) }}"
+                                       class="btn btn-primary">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                        {{ 'Gebührenbescheid herunterladen'|trans }}
+                                    </a>
+                                {% endif %}
                                 {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
                                     <a class="btn btn-primary"
                                        href="{{ path('kontingent_resend_confirmation',{'kindId':k.id}) }}">{% trans %}Bestätigung erneut versenden{% endtrans %}</a>
@@ -205,11 +212,13 @@
                                                 {% for z in k.BetreungsblocksReal %}
                                                     {% if z.deleted == false %}
                                                         <li class="list-group-item">{{ z.WochentagString }} {{ z.von|date('H:i') }}
-                                                            - {{ z.bis|date('H:i') }} {% if is_granted('ROLE_PREVIOUS_ADMIN') %} {% if z.translate.blockbezeichnung is not null %}({{ z.translate.blockbezeichnung }}){% endif %}
-                                                                <a
-                                                                        href="{{ path('child_admin_remove_block',{'childId':k.id,'blockId':z.id}) }}">
+                                                            - {{ z.bis|date('H:i') }} {% if z.translate.blockbezeichnung is not null %}({{ z.translate.blockbezeichnung }}){% endif %}
+                                                            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                                                                <a href="{{ path('child_admin_remove_block',{'childId':k.id,'blockId':z.id}) }}">
                                                                     <i class="fa fa-trash"></i>
-                                                                </a> {% endif %}</li>
+                                                                </a>
+                                                            {% endif %}
+                                                        </li>
                                                     {% endif %}
                                                 {% endfor %}
                                             </ul>
