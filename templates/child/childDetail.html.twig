@@ -10,6 +10,13 @@
                             <div class="col text-right">
                                 <a href="{{ path('child_detail_print',{'kind_id':k.id,'date':date|date('d.m.Y')}) }}"
                                    class="btn btn-primary">Drucken</a>
+                                {% if k.schule.stadt.settingsSkibSendGebuehrenbescheid %}
+                                    <a href="{{ path('child_detail_gebuehrenbescheid_download', {'kindId': k.id, 'date': date|date('d.m.Y')}) }}"
+                                       class="btn btn-primary">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                        {{ 'Gebührenbescheid herunterladen'|trans }}
+                                    </a>
+                                {% endif %}
                                 {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
                                     <a class="btn btn-primary"
                                        href="{{ path('kontingent_resend_confirmation',{'kindId':k.id}) }}">{% trans %}Bestätigung erneut versenden{% endtrans %}</a>

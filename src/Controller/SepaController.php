@@ -110,11 +110,16 @@ class SepaController extends AbstractController
         }
 
         if ($year) {
-
-            $qb->innerJoin('kinds.zeitblocks', 'zeitbocks')
-                ->andWhere('zeitbocks.active = :year')
+            $qb->leftJoin('kinds.zeitblocks', 'zeitblocks')
+                ->leftJoin('kinds.beworben', 'beworben')
+                ->andWhere(
+                    $qb->expr()->orX(
+                        'zeitblocks.active = :year',
+                        'beworben.active = :year'
+                    )
+                )
                 ->setParameter('year', $year);
-        };
+        }
         $qb->orderBy('stammdaten.startDate', 'ASC');
         $query = $qb->getQuery();
         $stammdaten = $query->getResult();
