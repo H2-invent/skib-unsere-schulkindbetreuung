@@ -9,6 +9,7 @@ __🚀 Features:__
 * fix app API
 * fix bezeichnung of block
 * Add new field to set individual css for each city
+* Fix score in kontingent controller when no scoring formular is set
 __🐛 Bugfixes:__
 * Fix error in berechnung when child has an appllied block
 * fix error not calculating the startdate when null

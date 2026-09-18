@@ -100,7 +100,13 @@ class KontingentController extends AbstractController
             ;
         });
 
-        $scores = $this->weightScoreService->calculateScoresForView($kinder, $block->getSchule()->getOrganisation());
+        try {
+            $scores = $this->weightScoreService->calculateScoresForView($kinder, $block->getSchule()->getOrganisation());
+
+        }catch (\Exception $exception){
+            $this->logger->warning($exception->getMessage());
+            $scores = [];
+        }
 
         return $this->render('kontingent/child.html.twig', [
             'fictiveDate' => $fictiveDate,
