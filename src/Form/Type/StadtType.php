@@ -560,16 +560,15 @@ class StadtType extends AbstractType
                             'translation_domain' => 'form'
                         ],
                         'pdftemplateGebuehrenbescheid' => [
-                            'attr' => array('rows' => 5, 'class' => 'onlineEditor'),
+                            'attr' => array('rows' => 10),
                             'label' => 'TWIG Template für Gebührenbescheid-PDF',
                             'translation_domain' => 'form'
                         ],
                         'pdftemplateGebuehrenbescheidFerien' => [
-                            'attr' => array('rows' => 5, 'class' => 'onlineEditor'),
+                            'attr' => array('rows' => 10),
                             'label' => 'TWIG Template für Gebührenbescheid-PDF (Ferienprogramm)',
                             'translation_domain' => 'form'
                         ]
-
                     ]
                 ]
             )
