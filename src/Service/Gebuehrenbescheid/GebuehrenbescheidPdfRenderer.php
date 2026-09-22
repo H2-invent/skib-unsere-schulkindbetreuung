@@ -77,13 +77,12 @@ final class GebuehrenbescheidPdfRenderer
             if ($organisation !== null) {
                 $pdf->setOrganisation($organisation);
             }
+            $stadt = $organisation?->getStadt() ?? $context['stadt'] ?? null;
 
-            // Passing null for the Stadt is deliberate: preparePDF() lets the city logo win over the
-            // organisation's, and the fee notice carries the provider's branding like every other PDF here.
-            $pdf = $this->printService->preparePDF($pdf, $fileName, '', $fileName, null, $organisation);
+            $pdf = $this->printService->preparePDF($pdf, $fileName, '', $fileName, $stadt, $organisation, PrintService::PICTURE_LEFT);
 
             $html = $this->twig->render($wrapperTemplate, $context);
-            $top = $organisation?->getImage() ? self::TOP_WITH_LOGO : self::TOP_WITHOUT_LOGO;
+            $top = $organisation?->getImage() || $stadt?->getLogoStadt() ? self::TOP_WITH_LOGO : self::TOP_WITHOUT_LOGO;
             $pdf->writeHTMLCell(0, 0, 20, $top, $html, 0, 1, 0, true, '', true);
 
             return $pdf->Output($fileName . '.pdf', 'S');

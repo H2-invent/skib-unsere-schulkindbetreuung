@@ -51,7 +51,7 @@ final class GebuehrenbescheidDownloadController extends AbstractController
             throw $this->createNotFoundException('Der Gebührenbescheid ist für diese Stadt nicht aktiviert.');
         }
 
-        $date = $this->resolveDate($request->query->getString('date'));
+        $date = $this->resolveDate($request->query->get('date'));
         $eltern = $this->elternService->getElternForSpecificTimeAndKind($kind, $date);
         $locale = $eltern->getLanguage() ?: (string) $this->getParameter('kernel.default_locale');
         $fileName = sprintf('Gebuehrenbescheid_%s_%s', $kind->getVorname(), $kind->getNachname());
@@ -69,11 +69,7 @@ final class GebuehrenbescheidDownloadController extends AbstractController
             Response::HTTP_OK,
             ['Content-Type' => 'application/pdf'],
         );
-        $response->headers->setContentDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $fileName . '.pdf',
-            'gebuehrenbescheid.pdf',
-        );
+        $response->headers->set('Content-Disposition', ResponseHeaderBag::DISPOSITION_ATTACHMENT . '; filename="' . $fileName . '.pdf"');
 
         return $response;
     }

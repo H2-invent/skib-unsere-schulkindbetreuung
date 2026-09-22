@@ -26,6 +26,8 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
 class PrintService
 {
+    public const PICTURE_LEFT = 15;
+    public const PICTURE_RIGHT = 140;
 
     private $templating;
     private $translator;
@@ -262,9 +264,8 @@ class PrintService
         return $pdf->Output($fileName . ".pdf", $type); // This will output the PDF as a Download
     }
 
-    public function preparePDF(\TCPDF $pdf, $title, $author, $subject, ?Stadt $stadt, ?Organisation $organisation)
+    public function preparePDF(\TCPDF $pdf, $title, $author, $subject, ?Stadt $stadt, ?Organisation $organisation, int $picturePosition = self::PICTURE_RIGHT)
     {
-
         $pdf->SetAuthor($author);
         $pdf->SetTitle($title);
         $pdf->SetSubject($subject);
@@ -311,7 +312,7 @@ class PrintService
 
 
         if ($imgdata) {
-            $pdf->Image('@' . $imgdata, 140, 15, $w, $h);
+            $pdf->Image('@' . $imgdata, $picturePosition, 15, $w, $h);
         }
         return $pdf;
     }

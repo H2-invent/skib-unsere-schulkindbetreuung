@@ -44,15 +44,12 @@ class KontingentAcceptService
         return true;
     }
 
-    public function acceptAllZeitblockOfSpecificKind(Kind $kind, $silent = false):bool
+    public function acceptAllZeitblockOfSpecificKind(Kind $kind, $silent = false): void
     {
-
-
         $beworbenBlocks = $kind->getBeworben();
         foreach ($beworbenBlocks as $beworbenBlock) {
             $this->acceptKind($beworbenBlock, $kind, $silent);
         }
-        return true;
     }
 
     public function acceptAllkindOfZeitblock(Zeitblock $zeitblock)
