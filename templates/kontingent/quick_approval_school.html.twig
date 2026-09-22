@@ -324,6 +324,12 @@
                                                                             <td class="text-muted">Startdatum</td>
                                                                             <td>{{ kind.startDate|date('d.m.Y') }}</td>
                                                                         </tr>
+                                                                        {% if eltern.createdAt is not null %}
+                                                                        <tr>
+                                                                            <td class="text-muted">Erstellt am</td>
+                                                                            <td>{{ eltern.createdAt|date('d.m.Y') }}</td>
+                                                                        </tr>
+                                                                        {% endif %}
                                                                         {% if kind.bemerkung %}
                                                                             <tr>
                                                                                 <td class="text-muted">Bemerkung</td>
