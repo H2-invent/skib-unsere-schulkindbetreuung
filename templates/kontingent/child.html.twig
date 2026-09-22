@@ -1,32 +1,5 @@
 {% extends 'adminBase.html.twig' %}
 
-{% block style %}
-    {{ parent() }}
-    <style>
-        .score-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 50px;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 1rem;
-            color: #000;
-            background: linear-gradient(90deg,
-                hsl(calc(var(--score-pct, 0.5) * 120), 70%, 50%),
-                hsl(calc(var(--score-pct, 0.5) * 120), 70%, 60%)
-            );
-        }
-        .score-badge-lg {
-            min-width: 70px;
-            padding: 8px 16px;
-            font-size: 1.5rem;
-            border-radius: 6px;
-        }
-    </style>
-{% endblock %}
-
 {% block content %}
     <section class="dashboard-counts section-padding">
         <div class="container-fluid ">

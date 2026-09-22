@@ -40,21 +40,30 @@
             </div>
             <div id="blockContent">
                 <div class="row" id="blockContentContent">
-                    {% for k in kinder %}
-                        {% if k.startDate is null %}
+                    {% for kind in kinder %}
+                        {% if kind.startDate is null %}
                             {% set startDate = "now"|date_modify("first day of next month") %}
                         {% else %}
-                            {% set startDate = k.startDate %}
+                            {% set startDate = kind.startDate %}
                         {% endif %}
 
-                        {% set eltern = getEltern(k,k.startDate) %}
+                        {% set eltern = getEltern(kind,kind.startDate) %}
                         <div class="col-3 pb-4">
                             <div class="card h-100 text-center">
                                 <div class="card-body">
-                                    <h2>{{ k.vorname }} {{ k.nachname }}</h2>
+                                    {% if isFeatureEnabled(constant('App\\Service\\FeatureFlagService::FEATURE_LIVE_SCORING')) %}
+                                        {% set kindScore = scores[kind.id] ?? {score: 0, pct: 1} %}
+                                        <div class="mb-3">
+                                                        <span class="score-badge score-badge-lg" style="--score-pct: {{ kindScore.pct }}">
+                                                            {{ kindScore.score|format_number }}
+                                                        </span>
+                                            <div class="small text-muted mt-1">Gewichtung</div>
+                                        </div>
+                                    {% endif %}
+                                    <h2>{{ kind.vorname }} {{ kind.nachname }}</h2>
                                     <p>
-                                        {% if k.startDate is null %}
-                                    <p class="badge badge-warning">Achtung kein Startdatum vorhanden</p>
+                                        {% if kind.startDate is null %}
+                                    <p class="badge badge-warning">Achtung kein Startdatum vorhanden</p><br>
                                         {% endif %}
                                         {{ 'Wunsch Startdatum:'|trans }} <b>{{ startDate|date('d.m.Y') }}</b><br>
                                         Anzahl Kinder zum Startdatum:
@@ -63,37 +72,37 @@
                                     </p>
                                     <p>
                                         <small>{{ 'Erstellt am:'|trans }}
-                                            <b>{{ k.eltern.createdAt|date('d.m.Y H:i') }}</b></small>
+                                            <b>{{ kind.eltern.createdAt|date('d.m.Y H:i') }}</b></small>
                                     </p>
                                     {% if is_granted('ROLE_ORG_ACCEPT_CHILD') %}
-                                        <label for="fictiveDate{{ k.id }}">Datum des Betreuungsbeginns:</label>
+                                        <label for="fictiveDate{{ kind.id }}">Datum des Betreuungsbeginns:</label>
                                         <input
                                                 class="startDateSelector"
-                                                id="fictiveDate{{ k.id }}"
+                                                id="fictiveDate{{ kind.id }}"
                                                 type="date"
                                                 name="fictiveDate"
-                                                data-target="#sendWarteliste_accept_kind{{ k.id }}"
-                                                data-mindate="{{ findLatestChildForChild(k).startDate|date('Y-m-d') }}"
-                                                value="{{ findLatestChildForChild(k).startDate|date('Y-m-d') }}"
+                                                data-target="#sendWarteliste_accept_kind{{ kind.id }}"
+                                                data-mindate="{{ findLatestChildForChild(kind).startDate|date('Y-m-d') }}"
+                                                value="{{ findLatestChildForChild(kind).startDate|date('Y-m-d') }}"
                                         />
                                         <div class="btn-group btn-group-sm" role="group">
 
 
                                             <a
-                                                    href="{{ path('warteliste_accept_kid',{'block_id':block.id,'kind_id':k.id,'date':  findLatestChildForChild(k).startDate|date('Y-m-d')  }) }}"
+                                                    href="{{ path('warteliste_accept_kid',{'block_id':block.id,'kind_id':kind.id,'date':  findLatestChildForChild(kind).startDate|date('Y-m-d')  }) }}"
                                                     class="btn btn-light deleteAjaxConfirm"
-                                                    id="sendWarteliste_accept_kind{{ k.id }}"
+                                                    id="sendWarteliste_accept_kind{{ kind.id }}"
                                                     data-title="{{ 'Kind in Betreuung übernehmen'|trans }}"
                                                     data-text="{{ 'Wollen Sie dieses Kind aus der Warteliste in die Betreuung übernehmen?'|trans }}"><i
                                                         class="material-icons"><span
                                                             class="material-symbols-outlined">check</span></i></a>
-                                            <a href="{{ path('warteliste_remove_kid',{'block_id':block.id,'kind_id':k.id}) }}"
+                                            <a href="{{ path('warteliste_remove_kid',{'block_id':block.id,'kind_id':kind.id}) }}"
                                                class="btn btn-light deleteAjaxConfirm"
                                                data-title="{{ 'Kind aus Warteliste löschen'|trans }}"
                                                data-text="{{ 'Wollen Sie dieses Kind aus der Warteliste löschen?'|trans }}"><i
                                                         class="material-icons"><span class="material-symbols-outlined">delete</span></i></a>
 
-                                            <a href="{{ path('child_detail',{'kind_id':k.id,'spezial_kind_id':k.id,'date':startDate|date('d.m.Y')}) }}"
+                                            <a href="{{ path('child_detail',{'kind_id':kind.id,'spezial_kind_id':kind.id,'date':startDate|date('d.m.Y')}) }}"
                                                target="_blank"
                                                class="btn btn-light">
                                                 <i class="material-icons">info</i>
@@ -103,16 +112,16 @@
                                     <hr>
                                     <p class="mt-3">
                                         <a type="button" class="btn btn-sm btn-light" data-toggle="modal"
-                                           data-target="#kind{{ k.id }}">Infos zum Kind</a>
+                                           data-target="#kind{{ kind.id }}">Infos zum Kind</a>
                                     </p>
                                     <ul class="mt-2 text-left small" style="padding-left: 15px;">
-                                        <li>{{ getBerufstatig(k) }}</li>
+                                        <li>{{ getBerufstatig(kind) }}</li>
                                         <li>{{ eltern.alleinerziehend?"Alleinerziehend":'Nicht alleinerziehend'|trans }}</li>
                                     </ul>
 
                                 </div>
                             </div>
-                            <div class="modal fade" id="kind{{ k.id }}" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="kind{{ kind.id }}" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
@@ -129,19 +138,19 @@
                                                 <tbody>
                                                 <tr>
                                                     <td>{{ 'Name'|trans }}</td>
-                                                    <td>{{ k.vorname }} {{ k.nachname }}</td>
+                                                    <td>{{ kind.vorname }} {{ kind.nachname }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>{{ 'Geburtstag'|trans }}</td>
-                                                    <td>{{ k.geburtstag|date('d.m.Y') }}</td>
+                                                    <td>{{ kind.geburtstag|date('d.m.Y') }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>{{ 'Jahrgangsstufe'|trans }}</td>
-                                                    <td>{{ k.klasseString }}</td>
+                                                    <td>{{ kind.klasseString }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>{{ 'Info'|trans }}</td>
-                                                    <td>{{ k.bemerkung }}</td>
+                                                    <td>{{ kind.bemerkung }}</td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -154,7 +163,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>{{ 'Berufliche Situation'|trans }}</td>
-                                                    <td>{{ getBerufstatig(k) }}</td>
+                                                    <td>{{ getBerufstatig(kind) }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>{{ 'Alleinerziehend'|trans }}</td>
@@ -164,7 +173,7 @@
                                             </table>
                                             <table class="table table-data">
                                                 <tbody>
-                                                {% include 'widget/__elternTabelle_reduced.html.twig' with {'stadt':k.schule.stadt, 'eltern':eltern} %}
+                                                {% include 'widget/__elternTabelle_reduced.html.twig' with {'stadt':kind.schule.stadt, 'eltern':eltern} %}
                                                 </tbody>
                                             </table>
                                         </div>
