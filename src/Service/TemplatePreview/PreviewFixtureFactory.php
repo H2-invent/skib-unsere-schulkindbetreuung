@@ -12,6 +12,7 @@ use App\Dto\Gebuehrenbescheid\FerienFeeSummary;
 use App\Dto\TemplatePreview\PreviewFixture;
 use App\Entity\Kind;
 use App\Entity\Organisation;
+use App\Entity\Schule;
 use App\Entity\Stammdaten;
 use App\Entity\Zeitblock;
 
@@ -44,18 +45,20 @@ final class PreviewFixtureFactory
         $eltern->setBic('BYLADEM1001');
         $eltern->setKontoinhaber('Max Mustermann');
 
+        $schule = new Schule();
+        $schule->setName('Musterschule');
+
         $kind = new Kind();
         $kind->setVorname('Lisa');
         $kind->setNachname('Mustermann');
         $kind->setGeburtstag(new \DateTime('2015-06-01'));
         $kind->setVegetarisch(true);
         $kind->setAusfluege(true);
+        $kind->setSchule($schule);
         $kind->setEltern($eltern);
 
         $organisation = new Organisation();
         $organisation->setName('Musterträger e.V.');
-        // The PDF footer (App\Service\pdfFooter) prints the address, contact and bank lines, so a name-only
-        // organisation would render an almost empty footer in the preview.
         $organisation->setAdresse('Trägerweg 2');
         $organisation->setPlz('12345');
         $organisation->setOrt('Musterstadt');

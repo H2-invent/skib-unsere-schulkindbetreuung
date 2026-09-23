@@ -260,6 +260,12 @@
                                                                        title="Zulassen">
                                                                         <i class="material-icons">check</i>
                                                                     </a>
+                                                                    <a href="{{ path('kontingent_accept_kid_silent', {block_id: zeitblock.id, kind_id: kind.id}) }}"
+                                                                       class="btn btn-sm btn-outline-success child-action-btn"
+                                                                       data-action="accept-silent"
+                                                                       title="Zulassen ohne Benachrichtigung">
+                                                                        <i class="material-icons">voice_over_off</i>
+                                                                    </a>
                                                                     <a href="{{ path('kontingent_accept_kid_AllBlocks', {block_id: zeitblock.id, kind_id: kind.id}) }}"
                                                                        class="btn btn-sm btn-outline-success child-action-btn"
                                                                        data-action="accept-all"
@@ -318,6 +324,12 @@
                                                                             <td class="text-muted">Startdatum</td>
                                                                             <td>{{ kind.startDate|date('d.m.Y') }}</td>
                                                                         </tr>
+                                                                        {% if eltern.createdAt is not null %}
+                                                                        <tr>
+                                                                            <td class="text-muted">Erstellt am</td>
+                                                                            <td>{{ eltern.createdAt|date('d.m.Y') }}</td>
+                                                                        </tr>
+                                                                        {% endif %}
                                                                         {% if kind.bemerkung %}
                                                                             <tr>
                                                                                 <td class="text-muted">Bemerkung</td>
@@ -414,7 +426,8 @@
                 var confirmText = $btn.data('confirm-text');
 
                 // Show confirm dialog for actions that need it
-                if (confirmText && action !== 'accept') {
+                const actionsWithoutConfirm = ['accept', 'accept-silent'];
+                if (confirmText && !actionsWithoutConfirm.includes(action)) {
                     if (!confirm((confirmTitle ? confirmTitle + '\n\n' : '') + confirmText)) {
                         return;
                     }

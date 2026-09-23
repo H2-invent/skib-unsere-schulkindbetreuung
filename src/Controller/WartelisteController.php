@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Kind;
 use App\Entity\Zeitblock;
 use App\Service\WartelisteService;
+use App\Service\WeightScoreService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,6 +22,7 @@ class WartelisteController extends AbstractController
         private WartelisteService   $wartelisteService,
         private TranslatorInterface $translator,
         private LoggerInterface $logger,
+        private readonly WeightScoreService $weightScoreService,
     )
     {
     }
@@ -36,11 +38,16 @@ class WartelisteController extends AbstractController
         }
         $fictiveDate = $request->get('fictiveDate') ? new \DateTime($request->get('fictiveDate')) : (new \DateTime())->modify('first day of next month');
 
+        $kinder = $zeitblock->getWartelisteKinder();
+        $organisation = $zeitblock->getSchule()?->getOrganisation() ?? $this->getUser()->getOrganisation();
+        $scores = $this->weightScoreService->calculateScoresForView($kinder->toArray(), $organisation);
+
         return $this->render('warteliste/index.html.twig', [
-            'kinder' => $zeitblock->getWartelisteKinder(),
+            'kinder' => $kinder,
             'text' => 'Warteliste',
             'block' => $zeitblock,
             'fictiveDate' => $fictiveDate,
+            'scores' => $scores,
         ]);
     }
 

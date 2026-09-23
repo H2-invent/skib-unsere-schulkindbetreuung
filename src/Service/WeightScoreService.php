@@ -11,6 +11,7 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 class WeightScoreService
 {
     private const EXPRESSION_VARIABLES = ['kind', 'eltern', 'schule', 'organisation'];
+    private const DEFAULT_FORMULA = '0';
 
     public function __construct(
         private readonly ExpressionLanguage $expressionLanguage,
@@ -29,8 +30,8 @@ class WeightScoreService
             throw new RuntimeException("No stadt found for organisation: " . $organisation->getId());
         }
 
-        $formulaString ??= $stadt->getAutoAssignFormula();
-        $formulaParsed = $this->expressionLanguage->parse($formulaString, self::EXPRESSION_VARIABLES);
+        $formulaToUse = $formulaString ?? $stadt->getAutoAssignFormula() ?? self::DEFAULT_FORMULA;
+        $formulaParsed = $this->expressionLanguage->parse($formulaToUse, self::EXPRESSION_VARIABLES);
 
         return function (Kind $kind) use ($organisation, $formulaParsed): float {
             return (float) $this->expressionLanguage->evaluate($formulaParsed, [
