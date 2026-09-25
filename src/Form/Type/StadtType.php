@@ -21,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -290,6 +291,14 @@ class StadtType extends AbstractType
             ->add('settingsFeatureLiveScoring',
                 CheckboxType::class,
                 ['required' => false, 'label' => 'Feature: Live Scoring', 'translation_domain' => 'form']
+            )
+            ->add('settingsAlternativeRegistrationForm',
+                CheckboxType::class,
+                ['required' => false, 'label' => 'Eigenes Anmeldungs-/Änderungsformular nutzen', 'translation_domain' => 'form']
+            )
+            ->add('settingsAlternativeRegistrationFormUrl',
+                UrlType::class,
+                ['default_protocol' => 'https', 'required' => false, 'label' => 'Link zu eigenem Anmeldungs-/Änderungsformular', 'translation_domain' => 'form']
             )
             ->add('emailDokumente_confirm', EntityType::class, [
                 // looks for choices from this entity
