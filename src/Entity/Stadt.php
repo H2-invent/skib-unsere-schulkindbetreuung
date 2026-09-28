@@ -351,6 +351,12 @@ class Stadt implements TranslatableInterface
     #[ORM\Column(options: ['default' => false])]
     private ?bool $settingsFeatureLiveScoring = false;
 
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $settingsAlternativeRegistrationForm = false;
+
+    #[ORM\Column(length: 1027, nullable: true)]
+    private ?string $settingsAlternativeRegistrationFormUrl = null;
+
 
     public function __construct()
     {
@@ -1677,6 +1683,30 @@ class Stadt implements TranslatableInterface
     public function setSettingsFeatureLiveScoring(bool $settingsFeatureLiveScoring): self
     {
         $this->settingsFeatureLiveScoring = $settingsFeatureLiveScoring;
+
+        return $this;
+    }
+
+    public function isSettingsAlternativeRegistrationForm(): ?bool
+    {
+        return $this->settingsAlternativeRegistrationForm;
+    }
+
+    public function setSettingsAlternativeRegistrationForm(bool $settingsAlternativeRegistrationForm): self
+    {
+        $this->settingsAlternativeRegistrationForm = $settingsAlternativeRegistrationForm;
+
+        return $this;
+    }
+
+    public function getSettingsAlternativeRegistrationFormUrl(): ?string
+    {
+        return $this->settingsAlternativeRegistrationFormUrl;
+    }
+
+    public function setSettingsAlternativeRegistrationFormUrl(?string $settingsAlternativeRegistrationFormUrl): self
+    {
+        $this->settingsAlternativeRegistrationFormUrl = $settingsAlternativeRegistrationFormUrl;
 
         return $this;
     }
