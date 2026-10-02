@@ -27,24 +27,76 @@
                                     {% for r in sepa.rechnungen %}
                                         <tr>
                                             <td> <div class="btn-group">
-                                                    <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="invoiceActions{{ r.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="{% trans %}Aktionen{% endtrans %}">
                                                         <i class="material-icons">more_vert</i>
                                                     </button>
-                                                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex2">
-                                                        <a class="dropdown-item"  href="{{ path('accounting_sepa_print',{'id':r.id}) }}">PDF-Drucken</a>
-
+                                                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="invoiceActions{{ r.id }}">
+                                                        <button class="dropdown-item" type="button" data-toggle="modal" data-target="#childInvoiceDetails{{ r.id }}">
+                                                            {% trans %}Kinderbeiträge ansehen{% endtrans %}
+                                                        </button>
+                                                        <a class="dropdown-item" href="{{ path('accounting_sepa_print', {'id': r.id}) }}">{% trans %}Rechnung herunterladen{% endtrans %}</a>
                                                     </div>
                                                 </div></td>
 
                                             <td>{{ r.stammdaten.vorname }} {{ r.stammdaten.name }}</td>
                                             <td>{{ r.stammdaten.kundennummerForOrg(sepa.organisation.id)?r.stammdaten.kundennummerForOrg(sepa.organisation.id).kundennummer:'' }}</td>
                                             <td>{{ r.summe|number_format(2,',','.') }}</td>
-                                            <td>{{ r.kinder|length }}</td>
+                                            <td>{{ r.kinderRechnungen|length > 0 ? r.kinderRechnungen|length : r.kinder|length }}</td>
 
                                         </tr>
                                     {% endfor %}
                                     </tbody>
                                 </table>
+                                {% for r in sepa.rechnungen %}
+                                    <div class="modal fade" id="childInvoiceDetails{{ r.id }}" tabindex="-1" role="dialog" aria-labelledby="childInvoiceDetailsLabel{{ r.id }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="childInvoiceDetailsLabel{{ r.id }}">
+                                                        {% trans %}Kinderbeiträge{% endtrans %}: {{ r.stammdaten.vorname }} {{ r.stammdaten.name }}
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="{% trans %}Schließen{% endtrans %}"><span aria-hidden="true">&times;</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {% if r.kinderRechnungen|length > 0 %}
+                                                        <div class="table-responsive">
+                                                            <table class="table table-sm">
+                                                                <thead><tr>
+                                                                    <th>{% trans %}Kind{% endtrans %}</th>
+                                                                    <th class="text-right">{% trans %}Betrag vor Rabatt{% endtrans %}</th>
+                                                                    <th class="text-right">{% trans %}Rabatt{% endtrans %}</th>
+                                                                    <th class="text-right">{% trans %}Kinderbeitrag{% endtrans %}</th>
+                                                                </tr></thead>
+                                                                <tbody>
+                                                                {% for childInvoice in r.kinderRechnungen %}
+                                                                    <tr>
+                                                                        <td>{{ childInvoice.kind.vorname }} {{ childInvoice.kind.nachname }}</td>
+                                                                        <td class="text-right">{{ childInvoice.bruttoSumme|number_format(2, ',', '.') }}&nbsp;€</td>
+                                                                        <td class="text-right">{{ childInvoice.rabatt|number_format(2, ',', '.') }}&nbsp;€</td>
+                                                                        <td class="text-right"><strong>{{ childInvoice.summe|number_format(2, ',', '.') }}&nbsp;€</strong></td>
+                                                                    </tr>
+                                                                {% endfor %}
+                                                                </tbody>
+                                                                <tfoot><tr>
+                                                                    <th colspan="3">{% trans %}Rechnungssumme{% endtrans %}</th>
+                                                                    <th class="text-right">{{ r.summe|number_format(2, ',', '.') }}&nbsp;€</th>
+                                                                </tr></tfoot>
+                                                            </table>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="alert alert-info mb-0" role="alert">{% trans %}Für diese ältere Rechnung sind keine einzelnen Kinderbeiträge gespeichert.{% endtrans %}</div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light" data-dismiss="modal">{% trans %}Schließen{% endtrans %}</button>
+                                                    <a class="btn btn-primary" href="{{ path('accounting_sepa_print', {'id': r.id}) }}">
+                                                        <i class="fa fa-download" aria-hidden="true"></i> {% trans %}Rechnung herunterladen{% endtrans %}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
