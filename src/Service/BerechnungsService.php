@@ -2,24 +2,33 @@
 
 namespace App\Service;
 
+use App\Dto\ChildFeeCalculation;
 use App\Entity\Kind;
 use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
 
-class BerechnungsService
+final class BerechnungsService
 {
+    private bool $withBeworben = true;
 
-    private ElternService $elternService;
-    private $withBeworben = true;
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(ElternService $elternService, EntityManagerInterface $entityManager)
+    public function __construct(
+        private readonly ElternService $elternService,
+        private readonly EntityManagerInterface $entityManager,
+    )
     {
-        $this->elternService = $elternService;
-        $this->entityManager = $entityManager;
     }
 
-    public function getPreisforBetreuung(Kind $kind, $withBeworben = true, \DateTime $stichtag = null, $demo = false): float
+    public function getPreisforBetreuung(Kind $kind, bool $withBeworben = true, ?\DateTime $stichtag = null, bool $demo = false): float
+    {
+        return $this->calculatePreisforBetreuung($kind, $withBeworben, $stichtag, $demo)->summe;
+    }
+
+    public function calculatePreisforBetreuung(
+        Kind $kind,
+        bool $withBeworben = true,
+        ?\DateTime $stichtag = null,
+        bool $demo = false,
+    ): ChildFeeCalculation
     {
         $this->withBeworben = $withBeworben;
         $stadt = $kind->getSchule()->getStadt();
@@ -31,16 +40,25 @@ class BerechnungsService
         $geschwister = $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($adresse, $stichtag, $demo);
         unset($geschwister[$kind->getTracing()]);
         $kinder = $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($adresse, $stichtag, $demo);
+        $bruttoSumme = (float) $this->getBetragforKindBetreuung($kind, $adresse);
         $summe = 0;
         $formel = $stadt->getBerechnungsFormel();
         if ($kind->getSchuljahr() and $kind->getSchuljahr()->getSpecialCalculationFormular()){
             $formel = $kind->getSchuljahr()->getSpecialCalculationFormular();
         }
         eval($formel);
-        return $summe;
+
+        $summe = round((float) $summe, 2);
+        $bruttoSumme = round($bruttoSumme, 2);
+
+        return new ChildFeeCalculation(
+            summe: $summe,
+            bruttoSumme: $bruttoSumme,
+            rabatt: round(max(0.0, $bruttoSumme - $summe), 2),
+        );
     }
 
-    private function getBetragforKindBetreuung(Kind $kind, Stammdaten $eltern)
+    private function getBetragforKindBetreuung(Kind $kind, Stammdaten $eltern): float
     {
         $summe = 0;
         $blocks = $kind->getZeitblocks()->toArray();
@@ -54,10 +72,10 @@ class BerechnungsService
             }
         }
 
-        return $summe;
+        return (float) $summe;
     }
 
-    public function getGesamtPreisProStammdatenZeitpunk(Stammdaten $stammdaten, \DateTime $dateTime)
+    public function getGesamtPreisProStammdatenZeitpunk(Stammdaten $stammdaten, \DateTime $dateTime): float
     {
         $stammdaten = $this->entityManager->getRepository(Stammdaten::class)->findStammdatenFromStammdatenByDate($stammdaten, $dateTime);
         $kinder = $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($stammdaten, $dateTime);

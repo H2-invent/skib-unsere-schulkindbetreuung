@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Active;
 use App\Entity\Kind;
+use App\Entity\KinderRechnung;
 use App\Entity\Organisation;
 use App\Entity\Rechnung;
 use App\Entity\Sepa;
@@ -186,8 +187,7 @@ class SepaCreateService
             $rechnung->addZeitblock($data);
         }
 
-        $rechnung->addKinder($kind);
-        $rechnung->setSumme($rechnung->getSumme() + $this->berechnungsService->getPreisforBetreuung($kind, false));
+        $this->addChildInvoice($rechnung, $kind);
 
 
         $table = $this->environment->render('rechnung/tabelle.html.twig', array('rechnung' => $rechnung, 'organisation' => $organisation));
@@ -226,8 +226,7 @@ class SepaCreateService
             foreach ($kind->getRealZeitblocks() as $data) {
                 $rechnung->addZeitblock($data);
             }
-            $rechnung->addKinder($kind);
-            $rechnung->setSumme($rechnung->getSumme() + $this->berechnungsService->getPreisforBetreuung($kind, false, $dateTime));
+            $this->addChildInvoice($rechnung, $kind, $dateTime);
         }
 
 
@@ -235,6 +234,24 @@ class SepaCreateService
         $rechnung->setPdf($table);
 
         return $rechnung;
+    }
+
+    private function addChildInvoice(Rechnung $invoice, Kind $child, ?\DateTime $calculationDate = null): void
+    {
+        $calculation = $this->berechnungsService->calculatePreisforBetreuung(
+            $child,
+            false,
+            $calculationDate,
+        );
+        $childInvoice = (new KinderRechnung())
+            ->setKind($child)
+            ->setSumme($calculation->summe)
+            ->setBruttoSumme($calculation->bruttoSumme)
+            ->setRabatt($calculation->rabatt);
+
+        $invoice->addKinder($child);
+        $invoice->addKinderRechnung($childInvoice);
+        $invoice->setSumme($invoice->getSumme() + $childInvoice->getSumme());
     }
 
     public function fillSepa(Sepa $sepa)

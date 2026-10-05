@@ -94,6 +94,11 @@
                                                                href="{{ path('accounting_sepa_printXML',{'id':s.id}) }}">{% trans %}Download SEPA-XML{% endtrans %}</a>
                                                             <a class="dropdown-item"
                                                                href="{{ path('accounting_sepa_printExcel',{'sepa_id':s.id}) }}">{% trans %}Download Excel{% endtrans %}</a>
+                                                            {% if is_granted('ROLE_ORG_INFOMA_EXPORT') %}
+                                                                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#infomaExport{{ s.id }}">
+                                                                    {% trans %}Download Infoma-CSV{% endtrans %}
+                                                                </button>
+                                                            {% endif %}
                                                             <a class="dropdown-item deleteBtn" type="GET"
                                                                href="{{ path('accounting_send_bill',{'sepa_id':s.id}) }}">{% trans %}Rechnung an alle Erziehungsberechtigten versenden{% endtrans %}</a>
 
@@ -111,6 +116,25 @@
                                         {% endfor %}
                                         </tbody>
                                     </table>
+                                    {% for s in sepa %}
+                                            {% if is_granted('ROLE_ORG_INFOMA_EXPORT') %}
+                                                <div class="modal fade" id="infomaExport{{ s.id }}" tabindex="-1" role="dialog" aria-labelledby="infomaExportLabel{{ s.id }}" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document"><div class="modal-content">
+                                                        <form method="post" action="{{ path('accounting_sepa_print_infoma') }}">
+                                                            <div class="modal-header"><h5 class="modal-title" id="infomaExportLabel{{ s.id }}">{% trans %}Infoma-CSV erstellen{% endtrans %}</h5><button type="button" class="close" data-dismiss="modal" aria-label="Schließen"><span aria-hidden="true">&times;</span></button></div>
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="sepa_id" value="{{ s.id }}"><input type="hidden" name="_token" value="{{ csrf_token('infoma-export-' ~ s.id) }}">
+                                                                <div class="form-group"><label for="infomaExternalSystemId{{ s.id }}">{% trans %}Infoma Extern-ID{% endtrans %}</label><input class="form-control" id="infomaExternalSystemId{{ s.id }}" name="external_system_id" maxlength="10" required pattern="[A-Za-z0-9.-]+" placeholder="EXTSYS"></div>
+                                                                <div class="form-group"><label for="infomaPaymentMethod{{ s.id }}">{% trans %}Zahlungsformcode{% endtrans %}</label><input class="form-control" id="infomaPaymentMethod{{ s.id }}" name="payment_method_code" maxlength="20" required pattern="[A-Za-z0-9.-]+" placeholder="SEPA-LS"></div>
+                                                                <div class="form-group"><label for="infomaAccount{{ s.id }}">{% trans %}Erlöskonto{% endtrans %}</label><input class="form-control" id="infomaAccount{{ s.id }}" name="account" maxlength="20" required pattern="[A-Za-z0-9.-]+"></div>
+                                                                <div class="form-group"><label for="infomaCounterAccount{{ s.id }}">{% trans %}Bank-/Verrechnungskonto{% endtrans %}</label><input class="form-control" id="infomaCounterAccount{{ s.id }}" name="counter_account" maxlength="20" required pattern="[A-Za-z0-9.-]+"></div>
+                                                            </div>
+                                                            <div class="modal-footer"><button type="button" class="btn btn-light" data-dismiss="modal">{% trans %}Abbrechen{% endtrans %}</button><button type="submit" class="btn btn-primary">{% trans %}CSV herunterladen{% endtrans %}</button></div>
+                                                        </form>
+                                                    </div></div>
+                                                </div>
+                                            {% endif %}
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
