@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Dto\ChildFeeCalculation;
 use App\Entity\Kind;
 use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,17 +17,7 @@ final class BerechnungsService
     {
     }
 
-    public function getPreisforBetreuung(Kind $kind, bool $withBeworben = true, ?\DateTime $stichtag = null, bool $demo = false): float
-    {
-        return $this->calculatePreisforBetreuung($kind, $withBeworben, $stichtag, $demo)->summe;
-    }
-
-    public function calculatePreisforBetreuung(
-        Kind $kind,
-        bool $withBeworben = true,
-        ?\DateTime $stichtag = null,
-        bool $demo = false,
-    ): ChildFeeCalculation
+    public function getPreisforBetreuung(Kind $kind, $withBeworben = true, \DateTime $stichtag = null, $demo = false): float
     {
         $this->withBeworben = $withBeworben;
         $stadt = $kind->getSchule()->getStadt();
@@ -40,22 +29,13 @@ final class BerechnungsService
         $geschwister = $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($adresse, $stichtag, $demo);
         unset($geschwister[$kind->getTracing()]);
         $kinder = $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($adresse, $stichtag, $demo);
-        $bruttoSumme = (float) $this->getBetragforKindBetreuung($kind, $adresse);
         $summe = 0;
         $formel = $stadt->getBerechnungsFormel();
         if ($kind->getSchuljahr() and $kind->getSchuljahr()->getSpecialCalculationFormular()){
             $formel = $kind->getSchuljahr()->getSpecialCalculationFormular();
         }
         eval($formel);
-
-        $summe = round((float) $summe, 2);
-        $bruttoSumme = round($bruttoSumme, 2);
-
-        return new ChildFeeCalculation(
-            summe: $summe,
-            bruttoSumme: $bruttoSumme,
-            rabatt: round(max(0.0, $bruttoSumme - $summe), 2),
-        );
+        return $summe;
     }
 
     private function getBetragforKindBetreuung(Kind $kind, Stammdaten $eltern): float

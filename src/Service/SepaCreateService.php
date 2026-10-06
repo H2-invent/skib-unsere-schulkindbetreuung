@@ -236,22 +236,22 @@ class SepaCreateService
         return $rechnung;
     }
 
-    private function addChildInvoice(Rechnung $invoice, Kind $child, ?\DateTime $calculationDate = null): void
+    private function addChildInvoice(Rechnung $rechnung, Kind $child, ?\DateTime $calculationDate = null): void
     {
-        $calculation = $this->berechnungsService->calculatePreisforBetreuung(
+        $calculation = $this->berechnungsService->getPreisforBetreuung(
             $child,
             false,
             $calculationDate,
         );
         $childInvoice = (new KinderRechnung())
             ->setKind($child)
-            ->setSumme($calculation->summe)
-            ->setBruttoSumme($calculation->bruttoSumme)
-            ->setRabatt($calculation->rabatt);
+            ->setRechnung($rechnung)
+            ->setSumme($calculation)
+        ;
 
-        $invoice->addKinder($child);
-        $invoice->addKinderRechnung($childInvoice);
-        $invoice->setSumme($invoice->getSumme() + $childInvoice->getSumme());
+        $rechnung->addKinder($child);
+        $rechnung->addKinderRechnung($childInvoice);
+        $rechnung->setSumme($rechnung->getSumme() + $childInvoice->getSumme());
     }
 
     public function fillSepa(Sepa $sepa)

@@ -84,23 +84,23 @@ final class SepaDetailController extends AbstractController
             throw $this->createAccessDeniedException('Ungültiges CSRF-Token.');
         }
 
-        $revenueAccount = trim((string) $request->request->get('account'));
-        $bankAccount = trim((string) $request->request->get('counter_account'));
-        $externalSystemId = trim((string) $request->request->get('external_system_id'));
-        $paymentMethodCode = trim((string) $request->request->get('payment_method_code'));
-        foreach ([$revenueAccount, $bankAccount, $externalSystemId, $paymentMethodCode] as $value) {
-            if (!preg_match('/^[A-Za-z0-9.-]+$/', $value)) {
-                throw new BadRequestHttpException('Bitte geben Sie gültige Infoma-Codes und Konten an.');
+        $externalSystemId = trim((string) $request->request->get('external_id'));
+        $sachkonto = trim((string) $request->request->get('sachkonto'));
+        $kostenstelle = trim((string) $request->request->get('kostenstelle'));
+        $kostentraeger = trim((string) $request->request->get('kostentraeger'));
+        foreach ([$sachkonto, $kostenstelle, $kostentraeger] as $value) {
+            if (!is_numeric($value)) {
+                throw new BadRequestHttpException('Bitte geben Sie gültige Konten an.');
             }
         }
 
         try {
             $csv = $exportService->generate(
                 $sepa,
-                $revenueAccount,
-                $bankAccount,
                 $externalSystemId,
-                $paymentMethodCode,
+                $sachkonto,
+                $kostenstelle,
+                $kostentraeger,
             );
         } catch (\InvalidArgumentException $exception) {
             throw new BadRequestHttpException($exception->getMessage(), $exception);
@@ -109,7 +109,7 @@ final class SepaDetailController extends AbstractController
         $response = new Response($csv, Response::HTTP_OK, ['Content-Type' => 'text/csv; charset=UTF-8']);
         $response->headers->set('Content-Disposition', $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'INFOMA_SEPA_ID'.$sepa->getId().'.csv',
+            'INFOMA_SEPA_ID'.$sepa->getId().'.txt',
         ));
 
         return $response;

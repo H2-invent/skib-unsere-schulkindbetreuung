@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\KinderRechnungRepository;
 use Doctrine\ORM\Mapping as ORM;
+use function number_format;
+use function round;
 
-#[ORM\Entity]
-#[ORM\Table(name: 'kinder_rechnung', uniqueConstraints: [
-    new ORM\UniqueConstraint(name: 'uniq_kinder_rechnung_kind', columns: ['rechnung_id', 'kind_id']),
-])]
+#[ORM\Entity(repositoryClass: KinderRechnungRepository::class)]
 class KinderRechnung
 {
     #[ORM\Id]
@@ -27,12 +27,6 @@ class KinderRechnung
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     private string $summe = '0.00';
-
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private string $bruttoSumme = '0.00';
-
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private string $rabatt = '0.00';
 
     public function getId(): ?int
     {
@@ -73,37 +67,8 @@ class KinderRechnung
 
     public function setSumme(float $summe): self
     {
-        $this->summe = $this->money($summe);
+        $this->summe = number_format(round($summe, 2), 2, '.', '');
 
         return $this;
-    }
-
-    public function getBruttoSumme(): float
-    {
-        return (float) $this->bruttoSumme;
-    }
-
-    public function setBruttoSumme(float $bruttoSumme): self
-    {
-        $this->bruttoSumme = $this->money($bruttoSumme);
-
-        return $this;
-    }
-
-    public function getRabatt(): float
-    {
-        return (float) $this->rabatt;
-    }
-
-    public function setRabatt(float $rabatt): self
-    {
-        $this->rabatt = $this->money($rabatt);
-
-        return $this;
-    }
-
-    private function money(float $amount): string
-    {
-        return number_format(round($amount, 2), 2, '.', '');
     }
 }
