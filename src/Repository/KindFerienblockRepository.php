@@ -46,7 +46,6 @@ class KindFerienblockRepository extends ServiceEntityRepository
             ->join('k.kind','kind')
             ->andWhere('kind.fin = true')
             ->orderBy('k.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
