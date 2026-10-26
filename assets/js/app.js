@@ -46,6 +46,13 @@ import snackbar from 'snackbarjs';
 import {initTabs} from 'h2-invent-material-tabs';
 import {Dropzone} from "dropzone";
 import {initKeycloakGroups} from "./PersonenberechtigterInit";
+import {EditorView, basicSetup} from "codemirror";
+import {keymap} from "@codemirror/view";
+import {indentWithTab} from "@codemirror/commands";
+import {twigLanguage} from "@ssddanbrown/codemirror-lang-twig";
+import {htmlLanguage} from "@codemirror/lang-html";
+import {LanguageSupport, LRLanguage} from "@codemirror/language";
+import {parseMixed} from "@lezer/common";
 
 global.Chart = Chart;
 let formBuilderLoc;
@@ -155,7 +162,41 @@ $(window).on('load', function () {
         formBuilderLoc = $('#surveyBuilder').formBuilder(options);
     }
 
-// Load a plugin.
+    initWYSIWYGEditor();
+    initCodeEditor();
+    initKeycloakGroups();
+    initdateRangepicker();
+    initDeleteBtn();
+    initSelectDate();
+    initDeleteAjax();
+    initSendFictiveDate();
+
+    $(document).on('click', '.loadInTarget', function (e) {
+        e.preventDefault();
+        var ele = $(this);
+        var url = ele.attr('href');
+        var target = ele.attr('data-target');
+        $(target).load(url + ' ' + target);
+        var text = ele.text();
+        var dropdown = ele.closest('.dropdown').find('button');
+        dropdown.text(text);
+    });
+
+    $(document).on('click', '.loadContent', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $('#loadContentModal').modal('show');
+        $('#loadContentModal .modal-content').load(url, function (e) {
+            $('input[type="time"]').jqclockpicker({
+                autoclose: true,
+                donetext: "OK"
+            });
+        });
+
+    });
+});
+
+function initWYSIWYGEditor() {
     $.trumbowyg.svgPath = icon;
     $('.onlineEditor').trumbowyg({
         autogrow: true,
@@ -197,41 +238,47 @@ $(window).on('load', function () {
             ]
         }
     });
+}
 
-    initKeycloakGroups();
-
-
-    initdateRangepicker();
-    initDeleteBtn();
-    initSelectDate();
-    inintDeleteAjax();
-    initSendFictiveDate();
-    $(document).on('click', '.loadInTarget', function (e) {
-        e.preventDefault();
-        var ele = $(this);
-        var url = ele.attr('href');
-        var target = ele.attr('data-target');
-        $(target).load(url + ' ' + target);
-        var text = ele.text();
-        var dropdown = ele.closest('.dropdown').find('button');
-        dropdown.text(text);
+function initCodeEditor() {
+    // mushing twig and html together to have syntax highlighting for both (kinda)
+    const twigHtmlLanguage = LRLanguage.define({
+        parser: twigLanguage.parser.configure({
+            wrap: parseMixed((node) =>
+                node.name === "PlainText" ? {parser: htmlLanguage.parser} : null
+            )
+        }),
+        languageData: {
+            commentTokens: {block: {open: "{#", close: "#}"}}
+        }
     });
 
-    $(document).on('click', '.loadContent', function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        $('#loadContentModal').modal('show');
-        $('#loadContentModal .modal-content').load(url, function (e) {
-            $('input[type="time"]').jqclockpicker({
-                autoclose: true,
-                donetext: "OK"
-            });
+    // we hide the rendered textarea and sync the changes with the code editor
+    $('.codeEditor').each(function () {
+        const textarea = this;
+
+        const view = new EditorView({
+            doc: textarea.value,
+            extensions: [
+                basicSetup,
+                new LanguageSupport(twigHtmlLanguage),
+                keymap.of([indentWithTab]),
+                EditorView.lineWrapping,
+                EditorView.theme({
+                    ".ͼn": { color: "#085" }
+                }),
+                EditorView.updateListener.of((update) => {
+                    if (update.docChanged) {
+                        textarea.value = update.state.doc.toString();
+                    }
+                })
+            ]
         });
 
+        textarea.parentNode.insertBefore(view.dom, textarea.nextSibling);
+        textarea.style.display = 'none';
     });
-
-
-});
+}
 
 function initdateRangepicker() {
     $('input[type="date"]').each(function () {
@@ -322,7 +369,7 @@ function initDeleteBtn() {
 }
 
 
-function inintDeleteAjax() {
+function initDeleteAjax() {
     $(document).on('click', '.deleteAjax', function (e) {
         e.preventDefault();
         var url = $(this).attr('href');

@@ -173,7 +173,7 @@ class SepaController extends AbstractController
                 $this->em->remove($data);
 
             }
-            $this->em->flush();;
+            $this->em->flush();
             $kundennummer = $form->getData();
             $kundennummer->setOrganisation($organisation);
             $kundennummer->setStammdaten($stammdaten);
