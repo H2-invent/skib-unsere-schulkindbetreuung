@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\StadtTranslationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslationTrait;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: StadtTranslationRepository::class)]
 class StadtTranslation implements TranslationInterface
 {
     use TranslationTrait;

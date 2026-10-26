@@ -241,21 +241,21 @@ function initWYSIWYGEditor() {
 }
 
 function initCodeEditor() {
+    // mushing twig and html together to have syntax highlighting for both (kinda)
+    const twigHtmlLanguage = LRLanguage.define({
+        parser: twigLanguage.parser.configure({
+            wrap: parseMixed((node) =>
+                node.name === "PlainText" ? {parser: htmlLanguage.parser} : null
+            )
+        }),
+        languageData: {
+            commentTokens: {block: {open: "{#", close: "#}"}}
+        }
+    });
+
     // we hide the rendered textarea and sync the changes with the code editor
     $('.codeEditor').each(function () {
         const textarea = this;
-
-        // mushing twig and html together to have syntax highlighting for both (kinda)
-        const twigHtmlLanguage = LRLanguage.define({
-            parser: twigLanguage.parser.configure({
-                wrap: parseMixed((node) =>
-                    node.name === "PlainText" ? {parser: htmlLanguage.parser} : null
-                )
-            }),
-            languageData: {
-                commentTokens: {block: {open: "{#", close: "#}"}}
-            }
-        });
 
         const view = new EditorView({
             doc: textarea.value,
@@ -275,7 +275,7 @@ function initCodeEditor() {
             ]
         });
 
-        textarea.parentNode.insertBefore(view.dom, textarea.nextSibling)
+        textarea.parentNode.insertBefore(view.dom, textarea.nextSibling);
         textarea.style.display = 'none';
     });
 }
