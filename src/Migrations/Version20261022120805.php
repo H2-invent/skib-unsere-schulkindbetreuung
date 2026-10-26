@@ -36,8 +36,7 @@ final class Version20261022120805 extends AbstractMigration implements Container
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
         $stadtTranslationRepository = $entityManager->getRepository(StadtTranslation::class);
 
-//        $translations = $stadtTranslationRepository->findAll();
-        $translations = [$stadtTranslationRepository->find(31)];
+        $translations = $stadtTranslationRepository->findAll();
 
         foreach ($translations as $translation) {
             $hasChanged = false;
