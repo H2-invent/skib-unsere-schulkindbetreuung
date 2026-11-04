@@ -55,7 +55,7 @@ class HealthCheckController extends AbstractController
     }
 
     /**
-     * We have problems with Doctrine Proxy classes not existing in the past, so this check is needed for restart.
+     * We had problems with Doctrine Proxy classes not existing in the past, so this check is needed for restart.
      */
     private function areDoctrineProxiesHealthy(): bool
     {
