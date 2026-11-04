@@ -9,6 +9,7 @@ use Monolog\LogRecord;
 class ExcludeHealthCheckHandler extends FilterHandler
 {
     private const EXCLUDED_ROUTES = [
+        'app_health',
         'app_health_liveness',
         'app_health_readiness',
     ];

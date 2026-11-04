@@ -17,6 +17,12 @@ class HealthCheckController extends AbstractController
     {
     }
 
+    #[Route('/health', name: 'app_health')]
+    public function health(): Response
+    {
+        return new Response(status: Response::HTTP_OK);
+    }
+
     #[Route('/health/live', name: 'app_health_liveness')]
     public function live(): Response
     {
