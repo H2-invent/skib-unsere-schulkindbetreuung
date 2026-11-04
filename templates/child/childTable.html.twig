@@ -7,7 +7,7 @@
             <th>{% trans %}Vorname{% endtrans %}</th>
             <th>{% trans %}Nachname{% endtrans %}</th>
             <th>{% trans %}Erziehungsberechtigter{% endtrans %}</th>
-            <th>{% trans %}Notfallkontakt{% endtrans %}</th>
+            <th>{% trans %}Eltern Tel.{% endtrans %}</th>
             <th>{% trans %}Schule{% endtrans %}</th>
             <th>{% trans %}Klasse{% endtrans %}</th>
             <th>{% trans %}Masernimpfung{% endtrans %}</th>
@@ -62,7 +62,7 @@
                 <td>{{ k.vorname }}</td>
                 <td>{{ k.nachname }}</td>
                 <td>{{ eltern.vorname }} {{ eltern.name }}</td>
-                <td>{{ eltern.notfallkontakt }}</td>
+                <td>{{ eltern.phoneNumber }}</td>
                 <td>{{ k.schule.name }}</td>
                 <td>{{ k.klasseString }}</td>
                 <td>{{ k.masernImpfung?"Ja"|trans:'Nein'|trans }}</td>
