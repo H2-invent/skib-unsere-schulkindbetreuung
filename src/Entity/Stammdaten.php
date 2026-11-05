@@ -844,7 +844,7 @@ class Stammdaten implements GroupSequenceProviderInterface
     }
 
     /**
-     * @return Collection|Kundennummern[]
+     * @return ?Kundennummern
      */
     public function getKundennummerForOrg($orgId)
     {
