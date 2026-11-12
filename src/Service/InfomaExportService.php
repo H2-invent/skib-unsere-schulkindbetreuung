@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use _PHPStan_18cddd6e5\Nette\Utils\DateTime;
 use App\Entity\Kind;
 use App\Entity\KinderRechnung;
 use App\Entity\Rechnung;
@@ -56,6 +57,7 @@ final class InfomaExportService
             'Zusatzinfo-Code'              => '',
             'Zusatzinfo-Text'              => '',
             'Nur Adressfortschreibung'     => '',
+            'Leerzeichen'     => '',
         ];
 
         return implode(self::CSV_DELIMITER, $kopfsatz);
@@ -82,13 +84,13 @@ final class InfomaExportService
             'Zeilennummer'                    => $counter * 10_000,
             'Belegart'                        => 'Rechnung',
             'Belegnummer'                     => $kinderRechnung->getId(),
-            'Externe Belegnummer'             => '',
+            'Externe Belegnummer'             => $kinderRechnung->getId().'-510'.'-'.(new DateTime())->format('m').'-'.(new DateTime())->format('Y'),
             'Storno'                          => '',
             'Belegdatum'                      => $rechnungsDatum->format('d.m.Y'),
             'Buchungsdatum'                   => $rechnungsDatum->format('d.m.Y'),
-            'Kontoart'                        => 'Sachkonto',
-            'Kontonummer'                     => $sachkonto,
-            'Externe Kontonummer'             => '',
+            'Kontoart'                        => 'Debitor',
+            'Kontonummer'                     =>  $eltern->getKundennummerForOrg($sepa->getOrganisation()?->getId())?->getKundennummer(),
+            'Externe Kontonummer'             =>  $eltern->getKundennummerForOrg($sepa->getOrganisation()?->getId())?->getKundennummer(),
             'Buchungsart'                     => '',
             'MwSt. %'                         => '',
             'MwSt, Berechnungsart'            => 'Normale MwSt.',
@@ -103,13 +105,13 @@ final class InfomaExportService
             'Ausgleich mit Belegart'          => '',
             'Ausgleich mit Belegnr.'          => '',
             'Ausgleich mit ext. Belegnr.'     => '',
-            'Kostenstellencode'               => $kostenstelle,
-            'Kostenträgercode'                => $kostentraeger,
+            'Kostenstellencode'               => '',
+            'Kostenträgercode'                => '',
             'Menge'                           => '',
             'Zusatzinfo-Code'                 => '',
             'Zusatzinfo-Text'                 => '',
             'Gemeindenr.'                     => '01',
-            'Adressnr.'                       => $eltern->getKundennummerForOrg($sepa->getOrganisation()?->getId())?->getKundennummer(),
+            'Adressnr.'                       => '',
             'Abgabenart'                      => '510',
             'Objektnr.'                       => '',
             'Veranlagungsjahr'                => '',
@@ -128,7 +130,7 @@ final class InfomaExportService
             'Vorabdotierungsnummer'           => '',
             'DocID'                           => '',
             'Investitionsnummer'              => '',
-            'Erweiterter Belegtext'           => '',
+            'Erweiterter Belegtext'           => "Betreuungsentgelt_{$rechnungsDatum1->format('m/Y')}_{$kind1->getVorname()}_{$kind1->getNachname()}",
             'Vorgangsnummer'                  => '',
             'Mahndatum'                       => '',
             'Shortcut Dimension 3 Code'       => '',
@@ -137,7 +139,7 @@ final class InfomaExportService
             'Shortcut Dimension 6 Code'       => '',
             'Shortcut Dimension 7 Code'       => '',
             'Shortcut Dimension 8 Code'       => '',
-            'Kassenzeichen'                   => '',
+            'Kassenzeichen'                   => $kinderRechnung->getId().'-510'.'-'.(new DateTime())->format('m').'-'.(new DateTime())->format('Y'),
             'Mahnmethodencode'                => '',
             'Abwarten'                        => '',
             'Ursachencode'                    => '',
@@ -145,7 +147,7 @@ final class InfomaExportService
             'BIC'                             => $eltern->getBic(),
             'IBAN'                            => $eltern->getIban(),
             'Mandatsreferenz'                 => $this->generateMandatsreferenz($kind),
-            'Unterschrift Mandat'             => '',
+            'Unterschrift Mandat'             => $eltern->getCreatedAt()->format('d.m.Y'),
             'Ländercode Bank'                 => '',
             'Prenotifikationsdatum'           => '',
         ];
@@ -174,7 +176,7 @@ final class InfomaExportService
             'Zeilennummer'                    => $counter * 10_000,
             'Belegart'                        => 'Rechnung',
             'Belegnummer'                     => $kinderRechnung->getId(),
-            'Externe Belegnummer'             => '',
+            'Externe Belegnummer'             => $kinderRechnung->getId().'-510'.'-'.(new DateTime())->format('m').'-'.(new DateTime())->format('Y'),
             'Kontoart'                        => 'Sachkonto',
             'Kontonummer'                     => $sachkonto,
             'Buchungsart'                     => 'Verkauf',
@@ -188,7 +190,7 @@ final class InfomaExportService
             'Zusatzinfo-Code'                 => '',
             'Zusatzinfo-Text'                 => '',
             'Gemeindenr.'                     => '01',
-            'Adressnr.'                       => $eltern->getKundennummerForOrg($sepa->getOrganisation()?->getId())?->getKundennummer(),
+            'Adressnr.'                       => '',
             'Abgabenart'                      => '510',
             'Objektnr.'                       => '',
             'Veranlagungsjahr'                => '',

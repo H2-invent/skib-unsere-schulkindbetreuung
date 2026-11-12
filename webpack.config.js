@@ -70,6 +70,12 @@ Encore
     .autoProvidejQuery()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
+    .configureMiniCssExtractPlugin(
+        (loaderOptions) => {},
+        (pluginOptions) => {
+            pluginOptions.ignoreOrder = true;
+        }
+    )
     // create hashed filenames (e.g. app.abc123.css)
     //.enableVersioning()
 
