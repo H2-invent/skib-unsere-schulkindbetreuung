@@ -102,7 +102,7 @@ class StadtverwaltungController extends AbstractController
 
         $form = $this->createForm(StadtType::class, $city);
         $this->removeGebuehrenbescheidSettingsForUnauthorizedUsers($form);
-        $form->remove('slug');
+
         if (!$this->getUser()->hasRole('ROLE_ADMIN')){
            $form->remove('schulkindBetreung');
            $form->remove('ferienprogramm');
@@ -110,6 +110,7 @@ class StadtverwaltungController extends AbstractController
             $form->remove('settingEncryptEmailAttachment');
             $form->remove('settingsFeatureLateRegistrationFinishMail');
             $form->remove('settingsFeatureLiveScoring');
+            $form->remove('slug');
        }
 
         $form->handleRequest($request);
