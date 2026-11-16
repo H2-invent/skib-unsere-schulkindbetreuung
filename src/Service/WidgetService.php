@@ -66,11 +66,13 @@ class WidgetService
     {
         $now = new \DateTime();
         try {
-            if ($zeitblock->getActive()->getBis() < $now) {
-                $now = $zeitblock->getActive()->getBis();
+            $schuljahr = $zeitblock->getActive();
+
+            if ($schuljahr !== null && $schuljahr->getBis() < $now) {
+                $now = $schuljahr->getBis();
             }
-            if ($zeitblock->getActive()->getVon() > $now) {
-                $now = $zeitblock->getActive()->getVon();
+            if ($schuljahr !== null && $schuljahr->getVon() > $now) {
+                $now = $schuljahr->getVon();
             }
 
             $cache = new FilesystemAdapter();

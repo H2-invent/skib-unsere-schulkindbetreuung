@@ -384,7 +384,7 @@ class StadtType extends AbstractType
             )
             ->add('gehaltsklassen', CollectionType::class, [
                 'entry_type' => TextType::class,
-                'entry_options' => array('label' => 'Bezeichnung der Gehaltsklassen', 'translation_domain' => 'form')
+                'entry_options' => ['label' => 'Bezeichnung der Gehaltsklassen', 'translation_domain' => 'form']
             ])
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
@@ -425,156 +425,156 @@ class StadtType extends AbstractType
                     'fields' => [
                         'datenschutz' => [
 
-                            'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 6, 'class' => 'onlineEditor'],
                             'label' => 'Datenschutz',
                             'translation_domain' => 'form'
                         ],
                         'infoText' => [
 
-                            'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 6, 'class' => 'onlineEditor'],
                             'label' => 'Infotext',
                             'translation_domain' => 'form'
                         ],
                         'agb' => [
 
-                            'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 6, 'class' => 'onlineEditor'],
                             'label' => 'Allgemeine Vertragsbedingungen',
                             'translation_domain' => 'form'
                         ],
                         'catererInfo' => [
 
-                            'attr' => array('rows' => 6,),
+                            'attr' => ['rows' => 6,],
                             'label' => 'Information zum Caterer',
                             'translation_domain' => 'form'
                         ],
                         'careBlockInfo' => [
 
-                            'attr' => array('rows' => 6,),
+                            'attr' => ['rows' => 6,],
                             'label' => 'Information zum Caterer',
                             'translation_domain' => 'form'
                         ],
                         'coverText' => [
 
-                            'attr' => array('rows' => 6, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 6, 'class' => 'onlineEditor'],
                             'label' => 'Text in der "Wichtig" Box auf der Startseite',
                             'translation_domain' => 'form'
                         ],
 
                         'settingKinderimKigaHelp' => [
 
-                            'attr' => array('rows' => 3,),
+                            'attr' => ['rows' => 3,],
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
                             'translation_domain' => 'form'
                         ],
                         'settingGehaltsklassenHelp' => [
 
-                            'attr' => array('rows' => 3,),
+                            'attr' => ['rows' => 3,],
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
                             'translation_domain' => 'form'
                         ],
                         'settingsSozielHilfeEmpfangerHelp' => [
 
-                            'attr' => array('rows' => 3,),
+                            'attr' => ['rows' => 3,],
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
                             'translation_domain' => 'form'
                         ],
                         'settingsAnzahlKindergeldempfangerHelp' => [
 
-                            'attr' => array('rows' => 3,),
+                            'attr' => ['rows' => 3,],
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
                             'translation_domain' => 'form'
                         ],
                         'settingsEingabeDerGeschwisterHelp' => [
 
-                            'attr' => array('rows' => 3,),
+                            'attr' => ['rows' => 3,],
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
                             'translation_domain' => 'form'
                         ],
                         'settingsEingabeDerGeschwisterHelpUpload' => [
 
-                            'attr' => array('rows' => 3,),
+                            'attr' => ['rows' => 3,],
                             'label' => 'Hilfetext (Hilfetext für den Upload von Dateien. Als verifikation für den Erhalt von Kindergeld. Leerlassen wenn es keinen Upload geben soll.)',
                             'translation_domain' => 'form'
                         ],
                         'settingsweiterePersonenberechtigteHelp' => [
 
-                            'attr' => array('rows' => 3,),
+                            'attr' => ['rows' => 3,],
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
                             'translation_domain' => 'form'
                         ],
                         'settingsChronicalDesesHelp' => [
 
-                            'attr' => array('rows' => 3,),
+                            'attr' => ['rows' => 3,],
                             'label' => 'Hilfetext (Text in den Fragezeigen)',
                             'translation_domain' => 'form'
                         ],
                         'schulindbetreuungPreiseFreitext' => [
-                            'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 3, 'class' => 'onlineEditor'],
                             'label' => 'Freitext, welcher bei der Informationen->Preise unter der Preistabelle angezeigt werden soll ',
                             'translation_domain' => 'form'
                         ],
                         'schulkindbetreuungBlockDeaktiviertText' => [
-                            'attr' => array('rows' => 1, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 1, 'class' => 'onlineEditor'],
                             'label' => 'Welche Nachricht soll Eltern angezeigt werden, wenn ein Zeitblock deaktiviert worden ist',
                             'translation_domain' => 'form'
                         ],
                         'settings_skib_shoolyear_naming' => [
-                            'attr' => array('rows' => 1),
+                            'attr' => ['rows' => 1],
                             'label' => 'Bezeichnung der Schuljahre (JSON-Array)',
                             'translation_domain' => 'form'
                         ],
                         'settingsSkibTextWhenClosed' => [
-                            'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 3, 'class' => 'onlineEditor'],
                             'label' => 'Text, welcher den Eltern angezeigt wird, wenn die Anmeldung geschlossen ist',
                             'translation_domain' => 'form'
                         ],
                         'popUpTextVorBezahlung' => [
-                            'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 3, 'class' => 'onlineEditor'],
                             'label' => 'Text, welcher den Eltern angezeigt wird, bevor diese Ihre Bankdaten eingeben können. Diese Meldung muss quitiert werden bevor sie weitergeleitet werden',
                             'translation_domain' => 'form'
                         ],
                         'settingsSkibPopupRegistrationText' => [
-                            'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 3, 'class' => 'onlineEditor'],
                             'label' => 'Text des Popups, welches den Eltern vor Abschluss der Registrierung angezeigt wird.',
                             'translation_domain' => 'form'
                         ],
                         'settingsExtraTextEmailAnmeldungMitBeworben' => [
-                            'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 3, 'class' => 'onlineEditor'],
                             'label' => 'Text welcher in der E-Mail für eine Anmeldung mit beworbenen Zeitblöcken zusätzlich angezeigt wird. (Markdown)',
                             'translation_domain' => 'form'
                         ],
                         'settingsExtraTextEmailAnmeldung' => [
-                            'attr' => array('rows' => 3, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 3, 'class' => 'onlineEditor'],
                             'label' => 'Text welcher in der E-Mail für eine Anmeldung ohne beworbenen Zeitblöcken zusätzlich angezeigt wird. (Markdown)',
                             'translation_domain' => 'form'
                         ],
                         'emailtemplateAnmeldung' => [
-                            'attr' => array('rows' => 5, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 5, 'class' => 'codeEditor'],
                             'label' => 'TWIG Template für Anmelde-Email',
                             'translation_domain' => 'form'
                         ],
                         'emailtemplateBuchung' => [
-                            'attr' => array('rows' => 5, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 5, 'class' => 'codeEditor'],
                             'label' => 'TWIG Template für Anmeldebestätigung-Email',
                             'translation_domain' => 'form'
                         ],
                         'emailtemplateAbmeldung' => [
-                            'attr' => array('rows' => 5, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 5, 'class' => 'codeEditor'],
                             'label' => 'TWIG Template für E-Mail bei Abmeldung',
                             'translation_domain' => 'form'
                         ],
                         'emailtemplateStammdatenEdit' => [
-                            'attr' => array('rows' => 5, 'class' => 'onlineEditor'),
+                            'attr' => ['rows' => 5, 'class' => 'codeEditor'],
                             'label' => 'TWIG Template für Email nach Bearbeiten der Stammdaten',
                             'translation_domain' => 'form'
                         ],
                         'pdftemplateGebuehrenbescheid' => [
-                            'attr' => array('rows' => 10),
+                            'attr' => ['rows' => 10, 'class' => 'codeEditor'],
                             'label' => 'TWIG Template für Gebührenbescheid-PDF',
                             'translation_domain' => 'form'
                         ],
                         'pdftemplateGebuehrenbescheidFerien' => [
-                            'attr' => array('rows' => 10),
+                            'attr' => ['rows' => 10, 'class' => 'codeEditor'],
                             'label' => 'TWIG Template für Gebührenbescheid-PDF (Ferienprogramm)',
                             'translation_domain' => 'form'
                         ]

@@ -101,9 +101,9 @@
         <source> am %d% von %s% bis %e% Uhr</source>
         <target state="translated"> on %d% from %s% to %e%</target>
       </trans-unit>
-      <trans-unit id="wyfWzSw" resname=" in der Klasse: %klasse%">
-        <source> in der Klasse: %klasse%</source>
-        <target state="translated"> in class: %klasse%</target>
+      <trans-unit id="wyfWzSw" resname=" in der %klasse%">
+        <source> in der %klasse%</source>
+        <target state="translated"> in %klasse%</target>
       </trans-unit>
       <trans-unit id="_S8zNXy" resname="Email mit Sicherheitscode">
         <source>Email mit Sicherheitscode</source>

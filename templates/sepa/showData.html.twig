@@ -32,7 +32,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>{% trans %}Kundennummer{% endtrans %}</th>
+                                        <th>{% trans %}Adressnummer{% endtrans %}</th>
                                         <th>{% trans %}Name{% endtrans %}</th>
                                         <th>{% trans %}E-Mail{% endtrans %}</th>
                                         <th>{% trans %}Adresse{% endtrans %}</th>
@@ -54,7 +54,7 @@
                                                 <div class="dropdown-menu dropdown-menu-left"
                                                      aria-labelledby="ex2">
                                                     <a class="dropdown-item"
-                                                       href="{{ path('accounting_showdata_customerid', {'id':organisation.id, 'stammdaten_id':s.id}) }}">{% trans %}Kundennummer zuweisen/ändern{% endtrans %}</a>
+                                                       href="{{ path('accounting_showdata_customerid', {'id':organisation.id, 'stammdaten_id':s.id}) }}">{% trans %}Adressnummer zuweisen/ändern{% endtrans %}</a>
                                                     {% if app.user and is_granted('ROLE_ORG_SEE_PRICE') %}
                                                         <a class="dropdown-item loadContent"
                                                            href="{{ path('accounting_showdata_montly',{'stammdatenId':s.id}) }}"

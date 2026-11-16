@@ -218,8 +218,10 @@ class ChildController extends AbstractController
             $fileName = $block->getSchule()->getName() . '-' . $block->getWochentagString() . '-' . $block->getVon()->format('H:i') . '-' . $block->getBis()->format('H:i');
             $text .= $translator->trans(' am %d% von %s% bis %e% Uhr', array('%d%' => $block->getWochentagString(), '%s%' => $block->getVon()->format('H:i'), '%e%' => $block->getBis()->format('H:i')));
         }
-        if ($request->get('klasse')) {
-            $text .= $translator->trans(' in der Klasse: %klasse%', array('%klasse%' => $request->get('klasse')));
+        if ($request->get('klasse') !== '') {
+            $klassArr = $organisation->getStadt()?->translate()?->getSettingsSkibShoolyearNamingArray() ?? [];
+            $class = $klassArr[$request->get('klasse')] ?? '';
+            $text .= $translator->trans(' in der %klasse%', ['%klasse%' => $class]);
         }
         $status = $request->get('status', 'bestaetigt');
 
