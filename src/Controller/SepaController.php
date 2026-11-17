@@ -66,6 +66,26 @@ class SepaController extends AbstractController
 
 
     /**
+     * @Route("/org_accounting/delete/{sepa_id}", name="accounting_delete_billings",methods={"GET"})
+     */
+    public function delete(Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator, int $sepa_id)
+    {
+        set_time_limit(600);
+        $sepa = $this->managerRegistry->getRepository(Sepa::class)->find($sepa_id);
+
+        if (!$sepa || $sepa->getOrganisation() != $this->getUser()->getOrganisation()) {
+            throw new \Exception('Wrong Organisation');
+        }
+        foreach ($sepa->getRechnungen() as $rechnung) {
+            $this->em->remove($rechnung);
+        }
+        $this->em->flush();
+        $this->em->remove($sepa);
+        $this->em->flush();
+        return $this->redirectToRoute('accounting_overview', ['id' => $sepa->getOrganisation()->getId()]);
+    }
+
+    /**
      * @Route("/org_accounting/sendBill", name="accounting_send_bill",methods={"GET"})
      */
     public function sendBill(TranslatorInterface $translator, Request $request, SepaCreateService $sepaCreateService, ValidatorInterface $validator)
@@ -101,10 +121,10 @@ class SepaController extends AbstractController
             ->andWhere($qb->expr()->isNotNull('stammdaten.created_at'));
         if (!$request->get('year_id')) {
             $year = $this->managerRegistry->getRepository(Active::class)->findActiveSchuljahrFromCity($this->getUser()->getOrganisation()->getStadt());
-        }else {
+        } else {
             if ($request->get('year_id') == 'all') {
                 $year = null;
-            }else{
+            } else {
                 $year = $this->managerRegistry->getRepository(Active::class)->find($request->get('year_id'));
             }
         }
@@ -125,7 +145,7 @@ class SepaController extends AbstractController
             }
         }
 
-        return $this->render('sepa/showData.html.twig', array('organisation' => $organisation, 'stammdaten' => $sRes,'schuljahr'=>$year));
+        return $this->render('sepa/showData.html.twig', array('organisation' => $organisation, 'stammdaten' => $sRes, 'schuljahr' => $year));
     }
 
     /**
@@ -168,7 +188,7 @@ class SepaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $kundennummern = $this->em->getRepository(Kundennummern::class)->findAllKundennummernByStammdatenAndOrganisation($stammdaten,$organisation);
+            $kundennummern = $this->em->getRepository(Kundennummern::class)->findAllKundennummernByStammdatenAndOrganisation($stammdaten, $organisation);
             foreach ($kundennummern as $data) {
                 $this->em->remove($data);
 
@@ -178,12 +198,12 @@ class SepaController extends AbstractController
             $kundennummer->setOrganisation($organisation);
             $kundennummer->setStammdaten($stammdaten);
 
-            $stammdaten = $this->em->getRepository(Stammdaten::class)->findBy(array('tracing'=>$stammdaten->getTracing()));
-            foreach ($stammdaten as $data){
-               $kdn = clone $kundennummer;
-               $kdn->setOrganisation($organisation);
-               $kdn->setStammdaten($data);
-               $this->em->persist($kdn);
+            $stammdaten = $this->em->getRepository(Stammdaten::class)->findBy(array('tracing' => $stammdaten->getTracing()));
+            foreach ($stammdaten as $data) {
+                $kdn = clone $kundennummer;
+                $kdn->setOrganisation($organisation);
+                $kdn->setStammdaten($data);
+                $this->em->persist($kdn);
             }
             $this->em->flush();
 

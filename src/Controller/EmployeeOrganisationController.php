@@ -36,6 +36,7 @@ class EmployeeOrganisationController extends AbstractController
             'ROLE_ORG_CHILD_SHOW' => 'ROLE_ORG_CHILD_SHOW',
             'ROLE_ORG_CHILD_DOCUMENT_DELETE' => 'ROLE_ORG_CHILD_DOCUMENT_DELETE',
             'ROLE_ORG_ACCOUNTING'=>'ROLE_ORG_ACCOUNTING',
+            'ROLE_ORG_DELETE_SEPA'=>'ROLE_ORG_DELETE_SEPA',
             'ROLE_ORG_INFOMA_EXPORT' => 'ROLE_ORG_INFOMA_EXPORT',
             'ROLE_ORG_BLOCK_MANAGEMENT'=>'ROLE_ORG_BLOCK_MANAGEMENT',
             'ROLE_ORG_BLOCK_DELETE'=>'ROLE_ORG_BLOCK_DELETE',
@@ -54,7 +55,7 @@ class EmployeeOrganisationController extends AbstractController
             'ROLE_ORG_FERIEN_ADMIN'=>'ROLE_ORG_FERIEN_ADMIN',
             'ROLE_ORG_FERIEN_STORNO'=>'ROLE_ORG_FERIEN_STORNO',
             'ROLE_ORG_CHECKIN_SHOW'=>'ROLE_ORG_CHECKIN_SHOW',
-            'ROLE_ORG_KVJS'=>'ROLE_ORG_KVJS'
+            'ROLE_ORG_KVJS'=>'ROLE_ORG_KVJS',
         ];
     }
     /**

@@ -99,8 +99,13 @@
                                                                     {% trans %}Download Infoma-CSV{% endtrans %}
                                                                 </button>
                                                             {% endif %}
+
                                                             <a class="dropdown-item deleteBtn" type="GET"
                                                                href="{{ path('accounting_send_bill',{'sepa_id':s.id}) }}">{% trans %}Rechnung an alle Erziehungsberechtigten versenden{% endtrans %}</a>
+                                                            {% if is_granted('ROLE_ORG_DELETE_SEPA') %}
+                                                                <a class="dropdown-item delete-btn"
+                                                                   href="{{ path('accounting_delete_billings',{'sepa_id':s.id}) }}">{% trans %}Lösche Eintrag{% endtrans %}</a>
+                                                            {% endif %}
 
                                                         </div>
                                                     </div>
