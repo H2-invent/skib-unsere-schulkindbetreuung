@@ -26,7 +26,7 @@ RUN tar \
     --exclude='./var/log' \
     -zcvf /artifact.tgz .
 
-FROM reg.h2-invent.com/public-system-design/debian-php83-cron-webserver:4.0.1
+FROM reg.h2-invent.com/public-system-design/debian-php83-cron-webserver:4.0.2
 ARG VERSION=development
 
 LABEL version="${VERSION}" \
