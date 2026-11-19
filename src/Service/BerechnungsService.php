@@ -6,17 +6,15 @@ use App\Entity\Kind;
 use App\Entity\Stammdaten;
 use Doctrine\ORM\EntityManagerInterface;
 
-class BerechnungsService
+final class BerechnungsService
 {
+    private bool $withBeworben = true;
 
-    private ElternService $elternService;
-    private $withBeworben = true;
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(ElternService $elternService, EntityManagerInterface $entityManager)
+    public function __construct(
+        private readonly ElternService $elternService,
+        private readonly EntityManagerInterface $entityManager,
+    )
     {
-        $this->elternService = $elternService;
-        $this->entityManager = $entityManager;
     }
 
     public function getPreisforBetreuung(Kind $kind, $withBeworben = true, \DateTime $stichtag = null, $demo = false): float
@@ -40,7 +38,7 @@ class BerechnungsService
         return $summe;
     }
 
-    private function getBetragforKindBetreuung(Kind $kind, Stammdaten $eltern)
+    private function getBetragforKindBetreuung(Kind $kind, Stammdaten $eltern): float
     {
         $summe = 0;
         $blocks = $kind->getZeitblocks()->toArray();
@@ -54,10 +52,10 @@ class BerechnungsService
             }
         }
 
-        return $summe;
+        return (float) $summe;
     }
 
-    public function getGesamtPreisProStammdatenZeitpunk(Stammdaten $stammdaten, \DateTime $dateTime)
+    public function getGesamtPreisProStammdatenZeitpunk(Stammdaten $stammdaten, \DateTime $dateTime): float
     {
         $stammdaten = $this->entityManager->getRepository(Stammdaten::class)->findStammdatenFromStammdatenByDate($stammdaten, $dateTime);
         $kinder = $this->elternService->getKinderProStammdatenAnEinemZeitpunkt($stammdaten, $dateTime);
